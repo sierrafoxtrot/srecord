@@ -31,6 +31,7 @@
 #include <srec/output/file/dec_binary.h>
 #include <srec/output/file/emon52.h>
 #include <srec/output/file/fastload.h>
+#include <srec/output/file/formatted_binary.h>
 #include <srec/output/file/four_packed_code.h>
 #include <srec/output/file/intel.h>
 #include <srec/output/file/mos_tech.h>
@@ -133,6 +134,11 @@ srec_arglex::get_output()
     case token_fast_load:
 	token_next();
 	ofp = new srec_output_file_fastload(fn);
+	break;
+
+    case token_formatted_binary:
+	token_next();
+	ofp = new srec_output_file_formatted_binary(fn);
 	break;
 
     case token_four_packed_code:

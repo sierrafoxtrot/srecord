@@ -63,6 +63,7 @@ public:
 	token_exclude,
 	token_fast_load,
 	token_fill,
+	token_formatted_binary,
 	token_four_packed_code,
 	token_guess,
 	token_intel,

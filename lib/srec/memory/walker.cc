@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -30,18 +30,24 @@ srec_memory_walker::srec_memory_walker()
 }
 
 
-srec_memory_walker::srec_memory_walker(const srec_memory_walker &)
-{
-}
-
-
-srec_memory_walker &
-srec_memory_walker::operator=(const srec_memory_walker &)
-{
-	return *this;
-}
-
-
 srec_memory_walker::~srec_memory_walker()
+{
+}
+
+
+void
+srec_memory_walker::notify_upper_bound(unsigned long)
+{
+}
+
+
+void
+srec_memory_walker::observe_header(const srec_record *)
+{
+}
+
+
+void
+srec_memory_walker::observe_start_address(const srec_record *)
 {
 }

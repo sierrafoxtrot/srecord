@@ -215,12 +215,25 @@ srec_memory::compare(const srec_memory &lhs, const srec_memory &rhs)
 }
 
 
+unsigned long
+srec_memory::get_upper_bound()
+    const
+{
+    if (nchunks == 0)
+	return 0;
+    return chunk[nchunks - 1]->get_upper_bound();
+}
+
+
 void
 srec_memory::walk(srec_memory_walker *w)
     const
 {
+    w->notify_upper_bound(get_upper_bound());
+    w->observe_header(get_header());
     for (int j = 0; j < nchunks; ++j)
        	chunk[j]->walk(w);
+    w->observe_start_address(get_start_address());
 }
 
 

@@ -259,6 +259,12 @@ private:
       * this object.  Only to be used the the assignment operator.
       */
     void copy(const srec_memory &src);
+
+    /**
+      * The get_upper_bound method is used to obtain the upper bound
+      * (maximum address plus one) of the memory image.
+      */
+    unsigned long get_upper_bound() const;
 };
 
 /**

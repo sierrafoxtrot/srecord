@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -26,30 +26,9 @@
 #include <srec/output.h>
 
 
-srec_memory_walker_writer::srec_memory_walker_writer()
-	: op(0)
+srec_memory_walker_writer::srec_memory_walker_writer(srec_output *arg) :
+    op(arg)
 {
-	// bug!
-}
-
-
-srec_memory_walker_writer::srec_memory_walker_writer(srec_output *arg)
-	: op(arg)
-{
-}
-
-
-srec_memory_walker_writer::srec_memory_walker_writer(const srec_memory_walker_writer &arg)
-	: op(arg.op)
-{
-}
-
-
-srec_memory_walker_writer &
-srec_memory_walker_writer::operator=(const srec_memory_walker_writer &arg)
-{
-	op = arg.op;
-	return *this;
 }
 
 
@@ -59,8 +38,29 @@ srec_memory_walker_writer::~srec_memory_walker_writer()
 
 
 void
-srec_memory_walker_writer::observe(unsigned long address, const void *data,
-	int length)
+srec_memory_walker_writer::notify_upper_bound(unsigned long address)
 {
-	op->write_data(address, data, length);
+    op->notify_upper_bound(address);
+}
+
+
+void
+srec_memory_walker_writer::observe(unsigned long address, const void *data,
+    int length)
+{
+    op->write_data(address, data, length);
+}
+
+
+void
+srec_memory_walker_writer::observe_header(const srec_record *rp)
+{
+    op->write_header(rp);
+}
+
+
+void
+srec_memory_walker_writer::observe_start_address(const srec_record *rp)
+{
+    op->write_start_address(rp);
 }

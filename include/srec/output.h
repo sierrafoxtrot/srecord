@@ -150,6 +150,14 @@ public:
       */
     virtual const string filename() const = 0;
 
+    /**
+      * The notify_upper_bound method is used to notify the output class
+      * of the upper bound (highest address plus one) of the output
+      * to come.  Shall be called before the hread or any data records
+      * are written.
+      */
+    virtual void notify_upper_bound(unsigned long addr);
+
 protected:
     /**
       * The default constructor.  Only dervived classes may use.

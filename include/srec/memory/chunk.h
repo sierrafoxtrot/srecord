@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,33 +27,114 @@
 
 #include <stddef.h>
 
+/**
+  * The srec_memory_chunk class is used to represent portion of memory.
+  * Not all bytes are actually set, so there is a bit map of which bytes
+  * actually contain data.
+  */
 class srec_memory_chunk
 {
 public:
-	enum { size = 7 * 256 };
+    enum {
+    /**
+      * The size value is the size, in bytes, of each memory chunk.
+      */
+    size = 7 * 256 };
 
-	srec_memory_chunk(unsigned long);
-	srec_memory_chunk(const srec_memory_chunk &);
-	srec_memory_chunk &operator=(const srec_memory_chunk &);
-	~srec_memory_chunk();
+    /**
+      * The constructor.
+      */
+    srec_memory_chunk(unsigned long address);
 
-	void set(unsigned long address, int data);
-	int get(unsigned long);
-	bool set_p(unsigned long) const;
+    /**
+      * The copy constructor.
+      */
+    srec_memory_chunk(const srec_memory_chunk &);
 
-	void walk(class srec_memory_walker *) const;
+    /**
+      * The assignment operator.
+      */
+    srec_memory_chunk &operator=(const srec_memory_chunk &);
 
-	unsigned long get_address() const { return address; }
+    /**
+      * The destructor.
+      */
+    ~srec_memory_chunk();
 
-	static bool equal(const srec_memory_chunk &, const srec_memory_chunk &);
-	bool find_next_data(unsigned long &, void *, size_t &) const;
+    /**
+      * The set method is used to set the byte at the given offset within
+      * the chunk.
+      */
+    void set(unsigned long offset, int value);
+
+    /**
+      * The get method is used to get the value at the given offset
+      * within the chunk.
+      */
+    int get(unsigned long offset);
+
+    /**
+      * The get_p method is used to determine whether the byte at the
+      * given offset within the chunk contains valid data.
+      */
+    bool set_p(unsigned long) const;
+
+    /**
+      * The walk method is used to iterate across all of the bytes which
+      * are set within the chunk, calling the walker's observe method.
+      */
+    void walk(class srec_memory_walker *) const;
+
+    /**
+      * The get_address method is used to get the address of the memory
+      * chunk.	This is NOT the address of the first byte, it is the
+      * chunk number.  To calculate the byte address, multiply by size.
+      */
+    unsigned long get_address() const { return address; }
+
+    /**
+      * The equal class method is used to determine wherther two memory
+      * chunks are equal.  The must have the same address, the same bit
+      * mask, and the same byte values on the valid bytes.
+      */
+    static bool equal(const srec_memory_chunk &, const srec_memory_chunk &);
+
+    /**
+      * The find_next_data method is used when iteratinbg across all of
+      * the bytes set within the chunk.
+      */
+    bool find_next_data(unsigned long &, void *, size_t &) const;
+
+    /**
+      * The get_upper_bound method is used to determine the upper bound
+      * (offset of last byte with valid data, plus one) of the chunk.
+      * It returns a memory byte address, NOT the chunk offset.
+      */
+    unsigned long get_upper_bound() const;
 
 private:
-	unsigned long address;
-	unsigned char data[size];
-	unsigned char mask[(size + 7) / 8];
+    /**
+      * The address of the memory chunk.  This is NOT the address of
+      * the first byte, it is the chunk number.  To calculate the byte
+      * address, multiply by size.
+      */
+    unsigned long address;
 
-	srec_memory_chunk();
+    /**
+      * The data array is used to remember the valus of valid data bytes.
+      */
+    unsigned char data[size];
+
+    /**
+      * The mask array is used to remember which values in the data
+      * array contain valid values.
+      */
+    unsigned char mask[(size + 7) / 8];
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_memory_chunk();
 };
 
 bool operator == (const srec_memory_chunk &, const srec_memory_chunk &);

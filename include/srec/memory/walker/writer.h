@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,18 +27,57 @@
 
 #include <srec/memory/walker.h>
 
-class srec_memory_walker_writer: public srec_memory_walker
+/**
+  * The srec_memory_walker_writer class is used to write data to and
+  * output stream when a memory image is walked.
+  */
+class srec_memory_walker_writer:
+    public srec_memory_walker
 {
 public:
-	virtual ~srec_memory_walker_writer();
-	srec_memory_walker_writer(class srec_output *);
-	srec_memory_walker_writer(const srec_memory_walker_writer &);
-	srec_memory_walker_writer &operator=(const srec_memory_walker_writer &);
-	virtual void observe(unsigned long, const void *, int);
+    /**
+      * the destructor.
+      */
+    virtual ~srec_memory_walker_writer();
+
+    /**
+      * The constructor.
+      */
+    srec_memory_walker_writer(class srec_output *);
+
+    // See base class for documentation.
+    virtual void observe(unsigned long, const void *, int);
+
+    // See base class for documentation.
+    void notify_upper_bound(long unsigned);
+
+    // See base class for documentation.
+    void observe_header(const srec_record *);
+
+    // See base class for documentation.
+    void observe_start_address(const srec_record *);
 
 private:
-	class srec_output *op;
-	srec_memory_walker_writer();
+    /**
+      * The op instance variabel is used to remember where to send
+      * the output.
+      */
+    class srec_output *op;
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_memory_walker_writer();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_memory_walker_writer(const srec_memory_walker_writer &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_memory_walker_writer &operator=(const srec_memory_walker_writer &);
 };
 
 #endif // INCLUDE_SREC_MEMORY_WALKER_WRITER_H

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -25,16 +25,63 @@
 
 #pragma interface "srec_memory_walker"
 
+class srec_record; // forward
+
+/**
+  * The srec_memory_walker class is used to represent an abstract handler
+  * for the action to perform when walking a memory image.
+  */
 class srec_memory_walker
 {
 public:
-	virtual ~srec_memory_walker();
-	virtual void observe(unsigned long, const void *, int) = 0;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_memory_walker();
+
+    /**
+      * The observe method is used by the memory walker to provide data.
+      * Derived classes are required to impliment this method, and do
+      * something with the data.
+      */
+    virtual void observe(unsigned long, const void *, int) = 0;
+
+    /**
+      * The notify_upper_bound method is used to notify the walker of
+      * the upper bound (highest address plus one) of the observe calls
+      * to come.  Shall be called before the any observe calls are made.
+      * By default, nothing happens.
+      */
+    virtual void notify_upper_bound(unsigned long);
+
+    /**
+      * The observe_header method is used to inform the walker of the
+      * header record.  The default does nothing.
+      */
+    virtual void observe_header(const srec_record * = 0);
+
+    /**
+      * The observe_start_address method is used to inform the walker
+      * of the start address record.  The default does nothing.
+      */
+    virtual void observe_start_address(const srec_record * = 0);
 
 protected:
-	srec_memory_walker();
-	srec_memory_walker(const srec_memory_walker &);
-	srec_memory_walker &operator=(const srec_memory_walker &);
+    /**
+      * The default constructor.  May only be called by derived classes.
+      */
+    srec_memory_walker();
+
+private:
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_memory_walker(const srec_memory_walker &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_memory_walker &operator=(const srec_memory_walker &);
 };
 
 #endif // INCLUDE_SREC_MEMORY_WALKER_H

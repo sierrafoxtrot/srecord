@@ -33,6 +33,7 @@ using namespace std;
 #include <srec/input/file/dec_binary.h>
 #include <srec/input/file/emon52.h>
 #include <srec/input/file/fastload.h>
+#include <srec/input/file/formatted_binary.h>
 #include <srec/input/file/four_packed_code.h>
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
@@ -105,6 +106,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
 	{ "-Elektor_Monitor52",	token_emon52,	},
 	{ "-Exclude",	token_exclude,		},
 	{ "-Fast_Load",	token_fast_load,	},
+	{ "-Formatted_Binary",	token_formatted_binary,	},
 	{ "-Fill",	token_fill,		},
 	{ "-Four_Packed_Code", token_four_packed_code, },
 	{ "-GUess",	token_guess,		},
@@ -511,6 +513,11 @@ srec_arglex::get_input()
     case token_fast_load:
 	token_next();
 	ifp = new srec_input_file_fastload(fn);
+	break;
+
+    case token_formatted_binary:
+	token_next();
+	ifp = new srec_input_file_formatted_binary(fn);
 	break;
 
     case token_four_packed_code:

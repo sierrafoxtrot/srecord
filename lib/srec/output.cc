@@ -195,3 +195,9 @@ srec_output::write_start_address(const srec_record *rp)
 	write(record);
     }
 }
+
+
+void
+srec_output::notify_upper_bound(unsigned long)
+{
+}
