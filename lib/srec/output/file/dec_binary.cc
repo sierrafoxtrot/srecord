@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2001 Peter Miller;
+ *	Copyright (C) 2001, 2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -188,7 +188,7 @@ srec_output_file_dec_binary::preferred_block_size_calculate()
 	//
 	// Because we don't cross BLOCK_SIZE boundaries, we need a number
 	// less than srec_record::max_data_length that, when you add 7
-	// and double, gioves
+	// and double, gives
 	//
 	int max = BLOCK_SIZE;
 	for (;;)
@@ -201,4 +201,12 @@ srec_output_file_dec_binary::preferred_block_size_calculate()
 #else
 	return srec_record::max_data_length;
 #endif
+}
+
+
+const char *
+srec_output_file_dec_binary::mode()
+	const
+{
+	return "wb";
 }

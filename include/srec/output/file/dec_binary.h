@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001 Peter Miller;
+//	Copyright (C) 2001, 2002 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -63,6 +63,9 @@ public:
 
 	// See base class for documentation.
 	void address_length_set(int);
+
+	// See base class for documentation.
+	const char *mode() const;
 
 private:
 	/**
