@@ -191,7 +191,7 @@ srec_memory::walk(srec_memory_walker *w)
 
 
 unsigned long
-srec_memory::reader(srec_input *ifp)
+srec_memory::reader(srec_input *ifp, bool barf)
 {
 	unsigned long result = 0;
 	srec_record record;
@@ -209,15 +209,30 @@ srec_memory::reader(srec_input *ifp)
 			{
 				srec_record::address_t address =
 					record.get_address() + j;
-				if (set_p(address))
+				int n = record.get_data(j);
+				if (barf && set_p(address))
 				{
-					ifp->warning
-					(
-						"duplicate %08lX value",
-						(long)address
-					);
+					int old = get(address);
+					if (n == old)
+					{
+						ifp->warning
+						(
+							"redundant %08lX value",
+							(long)address
+						);
+					}
+					else
+					{
+						ifp->fatal_error
+						(
+		 "contradictory %08lX value (previous = %02X, this one = %02X)",
+							(long)address,
+							old,
+							n
+						);
+					}
 				}
-				set(address, record.get_data(j));
+				set(address, n);
 			}
 			break;
 

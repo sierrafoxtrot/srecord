@@ -136,3 +136,23 @@ srec_output_file::seek_to(unsigned long address)
 	if (fseek(fp, address, 0) < 0)
 		fatal_error_errno("seek %ld", address);
 }
+
+
+void
+srec_output_file::put_string(const char *s)
+{
+	while (*s)
+		put_char(*s++);
+}
+
+
+void
+srec_output_file::put_stringf(const char *fmt, ...)
+{
+	va_list ap;
+	va_start(ap, fmt);
+	char buffer[1000];
+	vsprintf(buffer, fmt, ap);
+	va_end(ap);
+	put_string(buffer);
+}

@@ -95,7 +95,7 @@ main(int argc, char **argv)
 	for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
 	{
 		srec_input *ifp = *it;
-		unsigned long taddr2 = mp->reader(ifp);
+		unsigned long taddr2 = mp->reader(ifp, true);
 		if (taddr < taddr2)
 			taddr = taddr2;
 		delete ifp;

@@ -62,4 +62,19 @@ program being executed.
 All other options will produce a diagnostic error.
 .so z_options.so
 .so z_exit.so
+.SH EXAMPLE
+A common use for the \fI\*(n)\fP command is to verify that a particular
+signature is present in the code.  In this example, the signature is
+in a file called``signature'', and the EPROM image is in a file
+called ``image''.  We assume they are both Motorola S-Record format,
+although this will work for all formats:
+.RS
+.ft CW
+\*(n) signature  image -crop -within signature
+.ft R
+.RE
+The signature need not be at the start of memory, nor need it be one
+single contiguous piece of memory.  In the above example, the portions
+of the image which have the same address range as the signature are
+compared with the signature.
 .so z_copyright.so

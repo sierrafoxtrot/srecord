@@ -52,18 +52,13 @@ This option says to use the Motorola S-Record format to read the file.
 You may specify zero or more \fIfilters\fP to be applied.
 Filters are applied in the order given.
 .TP 8n
-\fB\-Crop\fP \fIminimum\fP \fImaximum\fP
+\fB\-Crop\fP \fIaddress-range\fP
 This filter may be used to isolate a section of data, and discard the
-rest.  The minimum is inclusive, the maximum is exclusive (one more then
-the last address).  If the maximum is given as zero then the range extends
-to the end of the address space.  More than one address pair may be given.
+rest.
 .TP 8n
-\fB\-Exclude\fP \fIminimum\fP \fImaximum\fP
+\fB\-Exclude\fP \fIaddress-range\fP
 This filter may be used to exclude a section of data, and keep the rest.
-The minimum is inclusive, the maximum is exclusive (one more then the
-last address).  If the maximum is given as zero then the range extends
-to the end of the address space.  The is the precise opposite of the
-\fB\-Crop\fP filter.  More than one address pair may be given.
+The is the logical complement of the \fB\-Crop\fP filter.
 .TP 8n
 \fB\-Big_Endian_Length\fP \fIaddress\fP [ \fInbytes\fP ]
 This filter may be used to insert the length of the data (high water
@@ -77,7 +72,7 @@ minus low water) into the data.  This includes the length itself.
 The value will be written with the least significant byte first.
 The number of bytes defaults to 4.
 .TP 8n
-\fB\-Fill\fP \fIvalue\fP \fIminimum\fP \fImaximum\fP
+\fB\-Fill\fP \fIvalue\fP \fIaddress-range\fP
 This filter may be used to fill any gaps in the data with bytes equal
 to \fIvalue\fP.  The fill will only occur in the address range given.
 .TP 8n
@@ -85,3 +80,27 @@ to \fIvalue\fP.  The fill will only occur in the address range given.
 This filter may be used to
 offset the addresses by the given number of bytes.
 No data is lost, the addresses will wrap around in 32 bits, if necessary.
+.SS Address Ranges
+There are three ways to specify an address range:
+.TP 8n
+\fIminimum\fP \fImaximum\fP
+If you specify two number on the command line (decimal, octal and
+hexadecimal are understood, using the C conventions) this is an explicit
+address range.  The minimum is inclusive, the maximum is exclusive (one
+more then the last address).  If the maximum is given as zero then the
+range extends to the end of the address space.
+.TP 8n
+\fB\-Within\fP \fIinput-specification\fP
+This says to use the specified input file as a mask.  The crop region
+includes all the places the specified input has data, and holes where
+it has holes.  The input specification need not be just a file name,
+it may be anything any other input specification can be.
+.TP 8n
+\fB\-OVER\fP \fIinput-specification\fP
+This says to use the specified input file as a mask.  The crop region
+extends from the minimum to the maximum address used by the input, and
+fills any holes.  The input specification need not be just a file name,
+it may be anything any other input specification can be.
+.PP
+In addition, all of these methods may be used, and used more than once,
+and the results will be added together.

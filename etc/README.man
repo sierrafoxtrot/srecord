@@ -47,6 +47,11 @@ The Intel hexadecimal format is understood for both reading and writing.
 .TP 8n
 Binary
 Binary files can both be read and written.
+.TP 8n
+C
+It is also possible to write a C array declaration which contains the data.
+This can be useful when you want to embed download data into another program.
+This format cannot be read.
 .SS The Tools
 The primary tools of the package are \fIsrec_cat\fP and \fIsrec_cmp\fP.
 All of the tools understand all of the file formats, and all of the filters.

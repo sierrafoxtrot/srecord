@@ -42,18 +42,102 @@ program is used to assemble the given input files into a single output
 file.  
 The use of filters (see below) allows significant manipulations to be
 performed by this command.
+.PP
+A warning will be emitted for each address wich is redundantly se to the
+same value.  A fatal error will be issued if any address is set with
+contradictory values.
+To supress this behaviour, use an \fB\-exclude \-within\fP filter.
 .so o_input.so
 .br
 .ne 1i
 .SH OPTIONS
 The following options are understood:
 .TP 8n
-\fB\-Output\fP \fIfilename\fP
+\fB\-Output\fP \fIfilename\fP [ \fIformat\fP ]
+.RS
 This option may be used to specify the output file to be used.
 The special file name ``-'' is understood to mean the standard output.
 Output defaults to the standard output if this option is not used.
 .PP
+The \fIformat\fP may be specified as:
+.TP 8n
+\fB\-Binary\fP
+A raw binary file will be written.
+.TP 8n
+\fB\-C-Array\fP \fIidentifier\fP
+A C array declaration will be written.
+The \fIidentifier\fP is the name of the variable to be defined.
+.TP 8n
+\fB\-Intel\fP
+An Intel hex format file will be written.
+.TP 8n
+\fB\-Motorola\fP
+A Motorola S-Record file will be written.
+(This is the default.)
+.RE
+.PP
 All other options will produce a diagnostic error.
 .so z_options.so
 .so z_exit.so
+.SH EXAMPLES
+The \fI\*(n)\fP command is very powerful, due to the ability to combine
+the the input filters in almost unlimited ways.
+.SS Converting File Formats
+The simplest case is converting files from Intel hex format to Motorola
+S-Record format:
+.RS
+.ft CW
+\*(n) \fIintel-file\fP -intel -o \fIsrec-file\fP
+.ft R
+.RE
+Converting the other was is just as simple:
+.RS
+.ft CW
+\*(n) \fIsrec-file\fP -o \fIintel-file\fP -intel
+.ft R
+.RE
+In each case, the default format is Motorola S-Record format,
+so it does not need to be specified.
+.SS Cropping the Data
+A common activity is to crop your data to match your EPROM location.
+Your linker may add other junk that you are not interested in, \fIe.g.\fP
+at the RAM location.  In this example, there is a 1MB EPROM at the 2MB
+boundary:
+.RS
+.ft CW
+\*(n) \fIinfile\fP -crop 0x200000 0x300000 -o \fIoutfile\fP
+.ft R
+.RE
+The lower bound is inclusive, the upper bound is exclusive.
+.SS Address Offset
+Just possibly, you have a moronic EPROM programmer, and it barfs if the
+eprom doesn't start at zero.  Rather than butcher the linker command file,
+just offset the addresses:
+.RS
+.ft CW
+\*(n) \fIinfile\fP -crop 0x200000 0x300000 -offset -0x200000 -o \fIoutfile\fP
+.ft R
+.RE
+This example also demonstrates how the input filters may be chained together.
+.SH Filling the Blanks
+It is possible to fill the blanks where our data does not lie.
+The simplest example of this fills the entire EPROM:
+.RS
+.ft CW
+\*(n) \fIinfile\fP -fill 0x00 0x200000 0x300000 -o \fIoutfile\fP
+.ft R
+.RE
+This example fills the holes, if any, with zeros.
+You must specify a range - with a 32-bit address space,
+filling everything generates \fIhuge\fP load files.
+.PP
+If you only want to fill the gaps in your data,
+and don't want to fill the entire EPROM, try:
+.RS
+.ft CW
+\*(n) \fIinfile\fP -fill 0x00 -over \fIinfile\fP -o \fIoutfile\fP
+.ft R
+.RE
+This example demonstrates the fact that wherever an address range may be
+specified, the \fB\-over\fP and \fB\-within\fP options may be used.
 .so z_copyright.so

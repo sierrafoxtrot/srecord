@@ -17,43 +17,30 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: interface definition for lib/srec/output/file.cc
+ * MANIFEST: functions to impliment deriving an interval from an input file
  */
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_H
-#define INCLUDE_SREC_OUTPUT_FILE_H
+#include <interval.h>
+#include <srec/input.h>
+#include <srec/input/interval.h>
+#include <srec/record.h>
 
-#pragma interface
 
-#include <string>
-#include <srec/output.h>
-
-class srec_output_file: public srec_output
+interval
+srec_input_interval(srec_input *ifp)
 {
-public:
-	srec_output_file();
-	srec_output_file(const char *);
-	virtual ~srec_output_file();
-	virtual const string filename() const;
-
-protected:
-	void put_char(int);
-	void put_nibble(int);
-	void put_byte(int);
-	void checksum_reset();
-	int checksum_get();
-	void seek_to(unsigned long);
-	void put_string(const char *);
-	void put_stringf(const char *, ...);
-
-private:
-	string file_name;
-	int line_number;
-	void *fp;
-	int checksum;
-
-	srec_output_file(const srec_output_file &);
-	srec_output_file &operator=(const srec_output_file &);
-};
-
-#endif /* INCLUDE_SREC_OUTPUT_FILE_H */
+	interval range;
+	srec_record record;
+	while (ifp->read(record))
+	{
+		if (record.get_type() != srec_record::type_data)
+			continue;
+		range +=
+			interval
+			(
+				record.get_address(),
+				record.get_address() + record.get_length()
+			);
+	}
+	return range;
+}

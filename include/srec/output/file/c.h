@@ -17,43 +17,35 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: interface definition for lib/srec/output/file.cc
+ * MANIFEST: interface definition for lib/srec/output/file/c.cc
  */
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_H
-#define INCLUDE_SREC_OUTPUT_FILE_H
+#ifndef INCLUDE_SREC_OUTPUT_FILE_C_H
+#define INCLUDE_SREC_OUTPUT_FILE_C_H
+
+#include <srec/output/file.h>
 
 #pragma interface
 
-#include <string>
-#include <srec/output.h>
-
-class srec_output_file: public srec_output
+class srec_output_file_c: public srec_output_file
 {
 public:
-	srec_output_file();
-	srec_output_file(const char *);
-	virtual ~srec_output_file();
-	virtual const string filename() const;
-
-protected:
-	void put_char(int);
-	void put_nibble(int);
-	void put_byte(int);
-	void checksum_reset();
-	int checksum_get();
-	void seek_to(unsigned long);
-	void put_string(const char *);
-	void put_stringf(const char *, ...);
+	virtual ~srec_output_file_c();
+	srec_output_file_c();
+	srec_output_file_c(const char *, const char *);
+	virtual void write(const srec_record &);
 
 private:
-	string file_name;
-	int line_number;
-	void *fp;
-	int checksum;
-
-	srec_output_file(const srec_output_file &);
-	srec_output_file &operator=(const srec_output_file &);
+	string prefix;
+	unsigned long taddr;
+	class interval range;
+	bool header_done;
+	int column;
+	unsigned long current_address;
+	void emit_header();
+	void emit_byte(int);
+	srec_output_file_c(const srec_output_file_c &);
+	srec_output_file_c &operator=(const srec_output_file_c &);
 };
 
-#endif /* INCLUDE_SREC_OUTPUT_FILE_H */
+#endif /* INCLUDE_SREC_OUTPUT_FILE_C_H */

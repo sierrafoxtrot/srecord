@@ -33,15 +33,20 @@ public:
 	enum
 	{
 		token_binary = arglex::token_MAX,
+		token_c_array,
 		token_crop,
 		token_exclude,
 		token_fill,
 		token_intel,
-		token_length_le,
 		token_length_be,
+		token_length_le,
 		token_motorola,
 		token_offset,
 		token_output,
+		token_over,
+		token_paren_begin,
+		token_paren_end,
+		token_within,
 		token_MAX
 	};
 
@@ -55,8 +60,11 @@ private:
 	srec_arglex();
 	srec_arglex(const srec_arglex &);
 	srec_arglex &operator=(const srec_arglex &);
+	class interval get_interval_inner(const char *);
 	class interval get_interval(const char *);
 	void get_address_and_nbytes(const char *, unsigned long &, int &);
+	bool stdin_used;
+	bool stdout_used;
 };
 
 #endif /* INCLUDE_SREC_ARGLEX_H */

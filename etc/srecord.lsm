@@ -63,6 +63,7 @@ Motorola S-Record,
 Intel,
 Binary.
 These file formats may be read and written.
+Also, C array definitions for output only.
 .in -2n
 .sp
 *

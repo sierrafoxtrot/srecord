@@ -49,6 +49,7 @@ EPROM load files.
 
 * The SRecord package understands a number of file formats: Motorola
   S-Record, Intel, Binary.  These file formats may be read and written.
+  Also C array definitions, for output only.
 
 * The SRecord package has a number of tools: srec_cat for copying and
   and converting files, andsrec_cmp for comparing files.
