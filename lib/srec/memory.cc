@@ -59,8 +59,11 @@ srec_memory::srec_memory(const srec_memory &arg) :
 srec_memory &
 srec_memory::operator=(const srec_memory &arg)
 {
-    clear();
-    copy(arg);
+    if (&arg != this)
+    {
+	clear();
+	copy(arg);
+    }
     return *this;
 }
 
@@ -79,7 +82,7 @@ srec_memory::clear()
     for (int j = 0; j < nchunks; ++j)
 	delete chunk[j];
     if (chunk)
-	delete chunk;
+	delete [] chunk;
     nchunks = 0;
     nchunks_max = 0;
     chunk = 0;
@@ -91,10 +94,14 @@ void
 srec_memory::copy(const srec_memory &arg)
 {
     nchunks = arg.nchunks;
-    nchunks_max = arg.nchunks_max;
+    while (nchunks_max < nchunks)
+	nchunks_max = nchunks_max * 2 + 4;
     chunk = new (srec_memory_chunk *)[nchunks_max];
     for (int j = 0; j < nchunks; ++j)
-       	chunk[j] = new srec_memory_chunk(arg.chunk[j][0]);
+    {
+	// use copy-new to make the copies 
+       	chunk[j] = new srec_memory_chunk(*(arg.chunk[j]));
+    }
 }
 
 
@@ -139,7 +146,7 @@ srec_memory::find(unsigned long address)
     	    new (srec_memory_chunk *)[nchunks_max];
 	for (int j = 0; j < nchunks; ++j)
     	    tmp[j] = chunk[j];
-	delete chunk;
+	delete [] chunk;
 	chunk = tmp;
     }
 
