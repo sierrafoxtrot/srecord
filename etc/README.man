@@ -226,3 +226,12 @@ l l l.
 Peter Miller;E-Mail:;millerp@canb.auug.org.au
 \f(CW/\e/\e*\fP;WWW:;http://www.canb.auug.org.au/~millerp/
 .TE
+.br
+.bp
+.SH RELEASE NOTES
+.XX "" "Release Notes"
+This section details the various features and bug fixes of the various
+releases.  For excruciating and complete detail, and also credits for
+those of you who have generously sent me suggestions and bug reports,
+see the \fIetc/CHANGES.*\fP files.
+.so new.so

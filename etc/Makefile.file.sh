@@ -20,8 +20,12 @@
 #
 # MANIFEST: shell script to generate Makefile fragment for each source file
 #
+depfile=no-such-file-or-directory
 case $# in
 2)
+	;;
+3)
+	depfile="$3";
 	;;
 *)
 	echo "usage: $0 filename resolved-filename" 1>&2
@@ -52,21 +56,6 @@ case $file in
 	echo "	sed -e 's/[yY][yY]/${yy}_/g' y.tab.c > ${stem}.gen.cc"
 	echo "	sed -e 's/[yY][yY]/${yy}_/g' y.tab.h > ${stem}.gen.h"
 	echo "	rm y.tab.c y.tab.h"
-
-	depfile=$file.d
-	if [ -r $depfile ]; then
-		dep=`sed -e '1d' -e '$d' -e 's_.arch]/__' $depfile`
-	else
-		depfile=$rfn.d
-		if [ -r $depfile ]; then
-			dep=`sed -e '1d' -e '$d' -e 's_.arch]/__' $depfile`
-		fi
-	fi
-
-	echo ""
-	echo "${stem}.gen.o: ${stem}.gen.cc" $dep
-	echo "	\$(CXX) \$(CPPFLAGS) \$(CXXFLAGS) -I$dir -Iinclude -c ${stem}.gen.cc"
-	echo "	mv ${root}.gen.o ${stem}.gen.o"
 	;;
 
 */*.cc)
@@ -74,14 +63,9 @@ case $file in
 	stem=`echo $file | sed 's/\.cc$//'`
 	dir=`dirname $file`
 
-	depfile=$file.d
+	dep=
 	if [ -r $depfile ]; then
-		dep=`sed -e '1d' -e '$d' -e 's_.arch]/__' $depfile`
-	else
-		depfile=$rfn.d
-		if [ -r $depfile ]; then
-			dep=`sed -e '1d' -e '$d' -e 's_.arch]/__' $depfile`
-		fi
+		dep=`sed -e 's_.arch]/__' $depfile`
 	fi
 
 	echo ""
@@ -94,15 +78,9 @@ man/man[0-9]/*.[0-9])
 	dir=`dirname $file`
 	stem=`echo $file | sed 's|^man/\(.*\)|\1|'`
 
-	depfile=$file.d
 	dep=
 	if [ -r $depfile ]; then
-		dep=`sed -e '1d' -e '$d' -e 's_.arch]/__' $depfile`
-	else
-		depfile=$rfn.d
-		if [ -r $depfile ]; then
-			dep=`sed -e '1d' -e '$d' -e 's_.arch]/__' $depfile`
-		fi
+		dep=`sed -e 's_.arch]/__' $depfile`
 	fi
 
 	echo ""
@@ -110,6 +88,27 @@ man/man[0-9]/*.[0-9])
 	echo "	\$(SOELIM) -I$dir -Ietc $file > tmp"
 	echo "	\$(INSTALL_DATA) tmp \$@"
 	echo "	@rm -f tmp"
+	;;
+
+etc/*.man)
+	base=`echo $file | sed 's|etc/\(.*\).man$|\1|'`
+
+	dep=
+	if [ -r $depfile ]; then
+		dep=`sed -e 's_.arch]/__' $depfile`
+	fi
+
+	echo ""
+	echo "etc/$base.ps: $file" $dep
+	echo "	\$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc $file | \$(GROFF) -t -man > \$@"
+
+	echo ""
+	echo "etc/$base.dvi: $file" $dep
+	echo "	\$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc $file | \$(GROFF) -Tdvi -t -man > \$@"
+
+	echo ""
+	echo "etc/$base.txt: $file" $dep
+	echo "	\$(SOELIM) -I. -Iman/man1 -Iman/man5 -I. $file | \$(GROFF) -Tascii -t -man > \$@"
 	;;
 
 test/*/*.sh)

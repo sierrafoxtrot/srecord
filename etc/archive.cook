@@ -57,6 +57,13 @@ source_file_order =
 			 * This is for building the RPM package
 			 */
 			[project_minus].spec
+
+			/*
+			 * for the reference manual
+			 */
+			etc/ref-index.so
+			etc/ref-parts.so
+			etc/new.so
 		-
 			README
 		]
@@ -70,7 +77,11 @@ source_file_order =
  * information is included in the Makefile.
  */
 
-makefile-per-file = [prepost "" ",M" [source_files]];
+makefile-per-file =
+	[addsuffix ",M"
+		[source_files]
+		[fromto %0%.y %0%.gen.cc [match_mask %0%.y [source_files]]]
+	];
 
 Makefile.in: etc/Makefile.head etc/Makefile.sh etc/Makefile.awk
 	/* [vs_file] */
@@ -85,8 +96,9 @@ Makefile.in: etc/Makefile.head etc/Makefile.sh etc/Makefile.awk
 %0%,M: etc/Makefile.file.sh etc/Makefile.awk
 {
 	sh [resolve etc/Makefile.file.sh] %0% [resolve %0%]
-		| [awk] -f [resolve etc/Makefile.awk]
-		> [target];
+		[resolve [match_mask %%0%%,Md [need]]]
+	| [awk] -f [resolve etc/Makefile.awk]
+	> [target];
 }
 
 archive/[project_minus].tar.gz: [source_file_order]
@@ -132,10 +144,27 @@ etc/%.man.d: etc/%.man
 	[c_incl] -nc -ns -api -nrec
 		--lang\=roff
 		[addprefix "-I" [search_list]]
+		[prepost "-I" "/man/man1" [search_list]]
+		[prepost "-I" "/man/man5" [search_list]]
 		[prepost "-I" "/etc" [search_list]]
 		[resolve etc/%.man]
 		-prefix "'cascade etc/%.man ='"
 		-suffix "';'"
+		[addprefix "-rlp=" [search_list]]
+		-o [target];
+}
+
+etc/%.man,M:: etc/%.man,Md;
+
+etc/%.man,Md: etc/%.man
+{
+	[c_incl] -nc -ns -api
+		--lang\=roff
+		[addprefix "-I" [search_list]]
+		[prepost "-I" "/man/man1" [search_list]]
+		[prepost "-I" "/man/man5" [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		[resolve etc/%.man]
 		[addprefix "-rlp=" [search_list]]
 		-o [target];
 }
@@ -200,6 +229,20 @@ etc/[project_short].html.d: etc/[project_short].html
 		-slp [arch] "'[arch]'" /* substitute leading path */
 		-o [target];
 }
+
+etc/[project_short].html,M:: etc/[project_short].html,Md;
+
+etc/[project_short].html,Md: etc/[project_short].html
+{
+	c_incl -nc -ns -eia -r
+		[prepost "-I" /[arch]/etc [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		[resolve etc/[project_short].html]
+		[prepost "-rlp=" "" [search_list]] /* remove leading path */
+		-slp [arch] "'[arch]'" /* substitute leading path */
+		-o [target];
+}
+
 #include-cooked-nowarn etc/[project_short].html.d
 
 archive/[project_short].html: etc/[project_short].html etc/ssp.awk
@@ -228,6 +271,20 @@ etc/[project_short].lsm.d: etc/[project_short].lsm
 		-slp [arch] "'[arch]'" /* substitute leading path */
 		-o [target];
 }
+
+etc/[project_short].lsm,M:: etc/[project_short].lsm,Md;
+
+etc/[project_short].lsm,Md: etc/[project_short].lsm
+{
+	c_incl -nc -ns -eia -r
+		[prepost "-I" /[arch]/etc [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		[resolve etc/[project_short].lsm]
+		[prepost "-rlp=" "" [search_list]] /* remove leading path */
+		-slp [arch] "'[arch]'" /* substitute leading path */
+		-o [target];
+}
+
 #include-cooked-nowarn etc/[project_short].lsm.d
 
 archive/[project_minus].lsm: etc/[project_short].lsm etc/ssp.awk

@@ -26,6 +26,7 @@ AC_PROG_CPP
 AC_PROG_INSTALL
 AC_PROG_YACC
 AC_PROG_RANLIB
+AC_CHECK_PROGS(GROFF, groff roff)
 AC_CHECK_PROGS(SOELIM, roffpp gsoelim soelim)
 
 dnl
@@ -42,5 +43,39 @@ fi
 AC_SUBST(SH)
 AC_DEFINE_UNQUOTED(CONF_SHELL, ["$SH"])
 AC_MSG_RESULT($SH)
+
+dnl
+dnl	If the soelim program exists, and understands the -I option,
+dnl	arrange for the Makefile to install the .ps files from the
+dnl	documentation source files.
+dnl
+if test -n "$SOELIM"
+then
+  if $SOELIM -I. /dev/null > /dev/null 2>&1
+  then
+    : nothing
+  else
+    AC_MSG_RESULT([])
+    AC_MSG_RESULT([	The $SOELIM program does not understand the -I])
+    AC_MSG_RESULT([	option.  There is a patch available for GNU Groff])
+    AC_MSG_RESULT([	which makes this work correctly.  See the BUILDING])
+    AC_MSG_RESULT([	file for details.])
+    GROFF=
+  fi
+fi
+if test -n "$GROFF"
+then
+  HAVE_GROFF=yes
+else
+  HAVE_GROFF=no
+  AC_MSG_RESULT([])
+  AC_MSG_RESULT([	The Aegis documentation set and manual pages will])
+  AC_MSG_RESULT([	be formatted and installed installed if you first])
+  AC_MSG_RESULT([	install GNU Groff and then re-run this ./configure])
+  AC_MSG_RESULT([	script.  Remember to use \`\`rm config.cache''])
+  AC_MSG_RESULT([	before you do.])
+  AC_MSG_RESULT([])
+fi
+AC_SUBST(HAVE_GROFF)
 
 AC_OUTPUT(Makefile)

@@ -95,9 +95,11 @@ YACC = @YACC@
 LIBS = @LIBS@
 
 #
-# The program used to format the documentation.
+# commands used to format the documents
 #
+SOELIM = @SOELIM@
 GROFF = @GROFF@
+HAVE_GROFF = @HAVE_GROFF@
 
 #
 # shell to use to run tests and commands

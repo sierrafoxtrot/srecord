@@ -320,6 +320,11 @@ For more information, see
 .br
 .ne 1.5i
 .PP
+If you have GNU Groff installed, the build will also create a
+.I etc/reference.ps
+file.  This contains the README file, this BUILDING file,
+and all of the man pages.
+.PP
 You can remove the program binaries and object files from the
 source directory by using the
 .RS

@@ -1,0 +1,45 @@
+.\"
+.\"	srecord - manipulate eprom load files
+.\"	Copyright (C) 1998 Peter Miller;
+.\"	All rights reserved.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.\"
+.\" MANIFEST: description of new 1.1 features
+.\"
+.PP
+.if n *
+.if t \(bu
+This release includes file format man pages.
+The web page also includes a PostScript reference manual,
+containing all of the man pages.
+.PP
+.if n *
+.if t \(bu
+The Intel hex format now has full 32-bit support.
+.PP
+.if n *
+.if t \(bu
+The Tektronix hex format is now supported (only the 16-bit version,
+Extended tektronix hex is not yet suppported).
+.PP
+.if n *
+.if t \(bu
+There is a new \fIsplit\fP filter, useful for wide data buses and memory
+striping.
+.\" ------------------------------------------------------------------------
+.\"	Add new entries above this line.
+.SS Version 1.1
+First public release.

@@ -117,6 +117,11 @@ ${stem}.gen.o"
 		recursive_mkdir $src $dst mandir
 		;;
 
+	etc/*.man)
+		stem=`echo $file | sed 's|.man$||'`
+		clean_files="$clean_files ${stem}.ps ${stem}.dvi ${stem}.txt"
+		;;
+
 	*)
 		;;
 	esac
@@ -146,7 +151,15 @@ echo ""
 echo "#"
 echo "# The real default target"
 echo "#"
-echo "all:" ${all}
+echo 'all: bin-all doc-all'
+echo ''
+echo 'bin-all:' ${all}
+echo ''
+echo 'doc-all: doc-${HAVE_GROFF}'
+echo ''
+echo 'doc-yes: etc/reference.ps'
+echo ''
+echo 'doc-no:'
 
 echo ""
 echo "lib_obj =" $lib_files
@@ -201,8 +214,12 @@ echo "	rm -f config.status config.cache config.log"
 echo ""
 echo "install-bin:" ${install_bin}
 
-echo ""
-echo "install-man:" $man_files
+echo ''
+echo 'install-man: install-man-${HAVE_GROFF}'
+echo ''
+echo 'install-man-yes:' $man_files
+echo ''
+echo 'install-man-no:'
 
 echo ""
 echo "install: install-bin install-man"

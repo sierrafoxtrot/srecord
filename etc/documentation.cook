@@ -53,6 +53,19 @@ man/man%1/%2.%1.d: man/man%1/%2.%1
 		-o [target];
 }
 
+man/man%1/%2.%1,M:: man/man%1/%2.%1,Md;
+
+man/man%1/%2.%1,Md: man/man%1/%2.%1
+{
+	[c_incl] -nc -ns -api
+		--lang\=roff
+		[prepost "-I" "/man/man%1" [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		[resolve man/man%1/%2.%1]
+		[addprefix "-rlp=" [search_list]]
+		-o [target];
+}
+
 man/man%1/%2.so.d: man/man%1/%2.so
 	set no-cascade
 {
@@ -62,6 +75,19 @@ man/man%1/%2.so.d: man/man%1/%2.so
 		[prepost "-I" "/etc" [search_list]]
 		[resolve man/man%1/%2.so]
 		-prefix "'cascade man/man%1/%2.so ='"
+		-suffix "';'"
+		[addprefix "-rlp=" [search_list]]
+		-o [target];
+}
+
+etc/%.so.d: etc/%.so
+	set no-cascade
+{
+	[c_incl] -nc -ns -api -nrec
+		--lang\=roff
+		[prepost "-I" "/etc" [search_list]]
+		[resolve etc/%.so]
+		-prefix "'cascade etc/%.so ='"
 		-suffix "';'"
 		[addprefix "-rlp=" [search_list]]
 		-o [target];
@@ -79,7 +105,7 @@ etc/%.ps.gz: etc/%.man
 		[prepost "-I" "/man/man1" [search_list]] /* refman */
 		[addprefix "-I" [search_list]] /* refman */
 		[resolve etc/%.man]
-	| groff -t -p -mpic -mpspic -man
+	| groff -t -man
 	| gzip -9
 	> [target];
 }
@@ -104,3 +130,13 @@ etc/ref-parts.so: [match_mask man/man%1/%2.%1 [source_files]]
 		[match_mask man/man%1/%2.%1 [source_files]]
 	> [target];
 }
+
+etc/new.so: : etc/new.sh [match_mask etc/new.%.so [source_files]]
+{
+	sh [resolve etc/new.sh] -r
+		[fromto etc/new.%.so new.%.so
+			[match_mask etc/new.%.so [need]]
+		]
+	> [target];
+}
+#include-cooked-nowarn etc/new.so.d

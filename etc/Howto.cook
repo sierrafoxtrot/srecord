@@ -269,6 +269,20 @@ c_incl = c_incl;
 		-o [target];
 }
 
+%1/%2/%0%.c,M:: %1/%2/%0%.c,Md;
+
+%1/%2/%0%.c,Md: %1/%2/%0%.c
+{
+	[c_incl] -nc -ns
+		[cc_include_flags]
+		[prepost -I /%1/%2 [search_list]]
+		[resolve %1/%2/%0%.c]
+		-nsri
+		[prepost "-rlp=" "" [search_list]]
+		-slp [arch] "'[arch]'"
+		-o [target];
+}
+
 %1/%2/%0%.h.d: %1/%2/%0%.h
 	set no-cascade
 {
@@ -293,6 +307,20 @@ c_incl = c_incl;
 		[resolve %1/%2/%0%.cc]
 		-prefix "'cascade %1/%2/%0%.cc ='"
 		-suffix "';'"
+		-nsri
+		[prepost "-rlp=" "" [search_list]]
+		-slp [arch] "'[arch]'"
+		-o [target];
+}
+
+%1/%2/%0%.cc,M:: %1/%2/%0%.cc,Md;
+
+%1/%2/%0%.cc,Md: %1/%2/%0%.cc
+{
+	[c_incl] -nc -ns
+		[cc_include_flags]
+		[prepost -I /%1/%2 [search_list]]
+		[resolve %1/%2/%0%.cc]
 		-nsri
 		[prepost "-rlp=" "" [search_list]]
 		-slp [arch] "'[arch]'"
@@ -387,7 +415,7 @@ leaf_file_accept = [leaf_file_accept] etc/version.so;
  * (solely from primary source files) will fail.  It is recommended that
  * relationships such as this be placed in a primary source cookbook.
  */
-cascade etc/README.man = etc/version.so;
+cascade etc/README.man = etc/version.so etc/new.so;
 cascade man/man1/srec_cat.1 = etc/version.so;
 cascade man/man1/srec_cmp.1 = etc/version.so;
 cascade lib/common/versn_stamp.cc = include/patchlevel.h ;
