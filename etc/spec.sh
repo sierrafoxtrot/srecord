@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 1998 Peter Miller;
+#	Copyright (C) 1998, 2001 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -27,8 +27,8 @@ echo "Version: ${version}"
 echo 'Release: 1'
 echo 'Copyright: GPL'
 echo 'Group: Development/Tools'
-echo "Source: http://www.canb.auug.org.au/~millerp/srecord-${version}.tar.gz"
-echo 'URL: http://www.canb.auug.org.au/~millerp/srecord.html'
+echo "Source: http://www.canb.auug.org.au/~millerp/srecord/srecord-${version}.tar.gz"
+echo 'URL: http://www.canb.auug.org.au/~millerp/srecord/'
 echo 'BuildRoot: /tmp/srecord-build-root'
 
 prefix=/usr

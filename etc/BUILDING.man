@@ -41,24 +41,10 @@ fetch and install before you proceed with your installation of SRecord.
 GNU Groff
 The documentation for the
 .I SRecord
-package was prepared using the GNU Groff package.
+package was prepared using the GNU Groff package (version 1.14 or later).
 This distribution includes full documentation,
 which may be processed into PostScript or DVI files
 at install time \- if GNU Groff has been installed.
-.TP 8n
-GNU Groff patch
-There is a patch for GNU Groff available,
-which gives
-.IR groff (1)
-and
-.IR gsoelim (1)
-a \fB\-B\fP\fIpath\fP option.
-This adds an include file search path, similar to
-.IR cpp (1).
-The Makefile assumes this is available.
-The patch is at
-\f(CWhttp://www.canb.auug.org.au/~millerp/groff-1.10.patch.gz\fP
-or its mirrors.
 .TP 8n
 GCC
 You may also want to consider fetching and installing the GNU C Compiler

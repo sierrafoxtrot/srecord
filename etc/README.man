@@ -155,7 +155,7 @@ is available on the Web from:
 tab(;);
 l l s
 l l l.
-URL:;http://www.canb.auug.org.au/~millerp/
+URL:;http://www.canb.auug.org.au/~millerp/srecord/
 File:;srecord.html;# the SRecord page
 File:;srecord-\*(v).README;# Description, from the tar file
 File:;srecord-\*(v).lsm;# Description, LSM format

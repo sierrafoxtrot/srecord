@@ -102,7 +102,7 @@ EPROM, srecord, motorola, intel
 .SH Author:
 millerp@canb.auug.org.au (Peter Miller)
 .SH Primary-site:
-http://www.canb.auug.org.au/~millerp/
+http://www.canb.auug.org.au/~millerp/srecord/
 .TS
 lf(CW) l.
 srecord-\*(v).README	Description, from the tar file
