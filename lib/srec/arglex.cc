@@ -108,6 +108,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
 	{ "-SPEctrum",  token_spectrum,		},
 	{ "-SPlit",	token_split,		},
 	{ "-S_record",	token_motorola,		},
+	{ "-STewie",	token_stewie,		},
 	{ "-Tektronix",	token_tektronix,	},
 	{ "-Tektronix_Extended", token_tektronix_extended, },
 	{ "-Texas_Instruments_Tagged", token_ti_tagged, },

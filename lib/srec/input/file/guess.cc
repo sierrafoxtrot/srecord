@@ -41,6 +41,7 @@
 #include <srec/input/file/spasm.h>
 #include <srec/input/file/spectrum.h>
 #include <srec/input/file/srecord.h>
+#include <srec/input/file/stewie.h>
 #include <srec/input/file/tektronix.h>
 #include <srec/input/file/tektronix_extended.h>
 #include <srec/input/file/ti_tagged.h>
@@ -160,6 +161,12 @@ create_srecord(const char *fn)
 }
 
 static srec_input *
+create_stewie(const char *fn)
+{
+    return new srec_input_file_stewie(fn);
+}
+
+static srec_input *
 create_tektronix(const char *fn)
 {
     return new srec_input_file_tektronix(fn);
@@ -212,6 +219,7 @@ static func_p table[] =
     create_spasm,
     create_spectrum,
     create_srecord,
+    create_stewie,
     create_tektronix,
     create_tektronix_extended,
     create_ti_tagged,

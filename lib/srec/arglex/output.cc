@@ -44,6 +44,7 @@
 #include <srec/output/file/spasm.h>
 #include <srec/output/file/spectrum.h>
 #include <srec/output/file/srecord.h>
+#include <srec/output/file/stewie.h>
 #include <srec/output/file/tektronix_extended.h>
 #include <srec/output/file/tektronix.h>
 #include <srec/output/file/ti_tagged.h>
@@ -226,6 +227,11 @@ srec_arglex::get_output()
     case token_spectrum:
 	token_next();
 	ofp = new srec_output_file_spectrum(fn);
+	break;
+
+    case token_stewie:
+	token_next();
+	ofp = new srec_output_file_stewie(fn);
 	break;
 
     case token_tektronix:

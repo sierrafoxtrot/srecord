@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2003 Peter Miller;
+//	Copyright (C) 1998-2004 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -88,6 +88,8 @@ srec_input_file::get_fp()
 	if (!vfp)
 		fatal_error_errno("open");
 	is_text = !strchr(the_mode, 'b');
+	if (!is_text)
+	    line_number = 0;
     }
     return vfp;
 }
@@ -113,8 +115,13 @@ const string
 srec_input_file::filename_and_line()
     const
 {
+    if (!vfp)
+	return file_name;
     char buffer[20];
-    sprintf(buffer, ": %d", line_number);
+    if (is_text)
+	sprintf(buffer, ": %d", line_number);
+    else
+	sprintf(buffer, ": 0x%04X", line_number);
     return (file_name + buffer);
 }
 
@@ -156,7 +163,9 @@ srec_input_file::get_char()
 	    c = '\r';
 	}
     }
-    prev_was_newline = (c == '\n');
+    if (!is_text && c >= 0)
+	++line_number;
+    prev_was_newline = (is_text && c == '\n');
     return c;
 }
 
@@ -167,7 +176,9 @@ srec_input_file::get_char_undo(int c)
     if (c >= 0)
     {
 	FILE *fp = (FILE *)get_fp();
-	prev_was_newline = 0;
+	prev_was_newline = false;
+	if (!is_text)
+	    --line_number;
 	ungetc(c, fp);
     }
 }

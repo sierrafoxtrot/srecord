@@ -100,6 +100,7 @@ public:
 	token_spasm_le,
 	token_spectrum,
 	token_split,
+	token_stewie,
 	token_tektronix,
 	token_tektronix_extended,
 	token_ti_tagged,

@@ -45,6 +45,7 @@ using namespace std;
 #include <srec/input/file/spasm.h>
 #include <srec/input/file/spectrum.h>
 #include <srec/input/file/srecord.h>
+#include <srec/input/file/stewie.h>
 #include <srec/input/file/tektronix_extended.h>
 #include <srec/input/file/tektronix.h>
 #include <srec/input/file/ti_tagged.h>
@@ -226,6 +227,11 @@ srec_arglex::get_input()
     case token_spectrum:
 	token_next();
 	ifp = new srec_input_file_spectrum(fn);
+	break;
+
+    case token_stewie:
+	token_next();
+	ifp = new srec_input_file_stewie(fn);
 	break;
 
     case token_tektronix:
