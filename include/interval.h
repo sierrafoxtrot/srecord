@@ -53,6 +53,8 @@ public:
 	data_t get_lowest() const;
 	data_t get_highest() const;
 
+	void print(class ostream &) const;
+
 private:
 	size_t length;
 	size_t size;
@@ -127,6 +129,13 @@ inline interval
 operator - (const interval &arg)
 {
 	return (interval(0, 0) - arg);
+}
+
+inline class ostream &
+operator << (ostream &os, const interval &val)
+{
+	val.print(os);
+	return os;
 }
 
 #endif /* INCLUDE_INTERVAL_H */

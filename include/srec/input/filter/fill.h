@@ -17,43 +17,33 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: interface definition for lib/srec/arglex.cc
+ * MANIFEST: interface definition for lib/srec/input/filter/fill.cc
  */
 
-#ifndef INCLUDE_SREC_ARGLEX_H
-#define INCLUDE_SREC_ARGLEX_H
+#ifndef INCLUDE_SREC_INPUT_FILTER_FILL_H
+#define INCLUDE_SREC_INPUT_FILTER_FILL_H
 
-#include <arglex.h>
+#include <interval.h>
+#include <srec/input/filter.h>
+#include <srec/record.h>
 
 #pragma interface
 
-class srec_arglex: public arglex
+class srec_input_filter_fill: public srec_input_filter
 {
 public:
-	enum
-	{
-		token_binary = arglex::token_MAX,
-		token_crop,
-		token_exclude,
-		token_fill,
-		token_intel,
-		token_motorola,
-		token_offset,
-		token_output,
-		token_MAX
-	};
-
-	~srec_arglex();
-	srec_arglex(int, char **);
-
-	class srec_input *get_input();
-	class srec_output *get_output();
+	virtual ~srec_input_filter_fill();
+	srec_input_filter_fill(srec_input *, int, const interval &);
+	virtual int read(srec_record &);
 
 private:
-	srec_arglex();
-	srec_arglex(const srec_arglex &);
-	srec_arglex &operator=(const srec_arglex &);
-	class interval get_interval(const char *);
+	int filler_value;
+	unsigned char *filler_block;
+	interval range;
+	srec_record data;
+	srec_input_filter_fill();
+	srec_input_filter_fill(const srec_input_filter_fill &);
+	srec_input_filter_fill &operator=(const srec_input_filter_fill &);
 };
 
-#endif /* INCLUDE_SREC_ARGLEX_H */
+#endif /* INCLUDE_SREC_INPUT_FILTER_FILL_H */

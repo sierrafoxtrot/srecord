@@ -29,6 +29,7 @@
 #include <srec/input/file/intel.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/filter/crop.h>
+#include <srec/input/filter/fill.h>
 #include <srec/input/filter/offset.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/intel.h>
@@ -49,6 +50,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-BINary",	token_binary,	},
 		{ "-Crop",	token_crop,	},
 		{ "-Exclude",	token_exclude,	},
+		{ "-Fill",	token_fill,	},
 		{ "-Intel",	token_intel,	},
 		{ "-Motorola",	token_motorola,	},
 		{ "-OFfset",	token_offset,	},
@@ -85,10 +87,10 @@ srec_arglex::~srec_arglex()
 interval
 srec_arglex::get_interval(const char *name)
 {
-	if (token_next() != token_number)
+	if (token_cur() != token_number)
 	{
 		cerr << "the " << name
-			<< " filter requires two numeric arguments" << endl;
+			<< " range requires two numeric arguments" << endl;
 		exit(1);
 	}
 	interval range;
@@ -173,13 +175,38 @@ srec_arglex::get_input()
 		switch (token_cur())
 		{
 		case token_crop:
+			token_next();
 			ifp = new srec_input_filter_crop(ifp,
 				get_interval("-Crop"));
 			continue;
 
 		case token_exclude:
+			token_next();
 			ifp = new srec_input_filter_crop(ifp,
 				-get_interval("-Exclude"));
+			continue;
+
+		case token_fill:
+			{
+				if (token_next() != token_number) 
+				{
+					cerr <<
+					"the -fill filter requires a fill value"
+						<< endl;
+					exit(1);
+				}
+				int filler = value_number();
+				if (filler < 0 || filler >= 256)
+				{
+					cerr << "fill value " << filler
+						<< " out of range (0..255)"
+						<< endl;
+					exit(1);
+				}
+				token_next();
+				interval range = get_interval("-Fill");
+				ifp = new srec_input_filter_fill(ifp, filler, range);
+			}
 			continue;
 
 		case token_offset:

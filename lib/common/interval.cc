@@ -24,6 +24,7 @@
 
 #include <assert.h>
 #include <interval.h>
+#include <iostream.h>
 
 
 /*
@@ -54,6 +55,15 @@ interval::interval()
 	scan_next_datum = 0;
 	data = 0;
 	assert(valid());
+}
+
+
+static inline long long
+promote(interval::data_t datum, size_t pos)
+{
+	if (datum == 0 && (pos & 1))
+		return (1LL << 32);
+	return datum;
 }
 
 
@@ -88,8 +98,16 @@ interval::interval(data_t first, data_t last)
 	data = new data_t[size + 1];
 	scan_index = 0;
 	scan_next_datum = 0;
-	data[0] = first;
-	data[1] = last;
+	if (first <= promote(last, 1))
+	{
+		data[0] = first;
+		data[1] = last;
+	}
+	else
+	{
+		data[0] = last;
+		data[1] = first;
+	}
 	data[2] = 2;
 	assert(valid());
 }
@@ -210,15 +228,6 @@ interval::valid()
 		if (data[j - 1] >= data[j])
 			return false;
 	return true;
-}
-
-
-static inline long long
-promote(interval::data_t datum, size_t pos)
-{
-	if (datum == 0 && (pos & 1))
-		return (1LL << 32);
-	return datum;
 }
 
 
@@ -712,4 +721,21 @@ interval::get_highest()
 {
 	assert(valid());
 	return (length > 0 ? data[length - 1] : 0);
+}
+
+
+void
+interval::print(ostream &os)
+	const
+{
+	if (length != 2)
+		os << "(";
+	for (size_t j = 0; j < length; j += 2)
+	{
+		if (j)
+			os << ", ";
+		os << "(" << data[j] << ", " << (data[j + 1] - 1) << ")";
+	}
+	if (length != 2)
+		os << ")";
 }
