@@ -62,6 +62,7 @@ public:
 		token_mos_tech,
 		token_motorola,
 		token_multiple,
+		token_not,
 		token_offset,
 		token_or,
 		token_output,

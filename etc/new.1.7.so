@@ -19,10 +19,16 @@
 .\"
 .\" MANIFEST: description of new 1.6 features
 .\"
-.\" .PP
-.\" .if n *
-.\" .if t \(bu
-.\" .\" change NN
+.PP
+.if n *
+.if t \(bu
+.\" change 17
+There is a new bit-wise NOT filter, which may be used to invert the data.
+.PP
+.if n *
+.if t \(bu
+.\" change 16
+A couple of bugs have been fixed in the CRC filters.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.7

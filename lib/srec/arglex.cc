@@ -47,6 +47,7 @@
 #include <srec/input/filter/length.h>
 #include <srec/input/filter/maximum.h>
 #include <srec/input/filter/minimum.h>
+#include <srec/input/filter/not.h>
 #include <srec/input/filter/offset.h>
 #include <srec/input/filter/or.h>
 #include <srec/input/filter/split.h>
@@ -111,6 +112,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-MOS_Technologies", token_mos_tech,	},
 		{ "-Motorola",	token_motorola,		},
 		{ "-MULTiple",	token_multiple,		},
+		{ "-NOT",	token_not,		},
 		{ "-OFfset",	token_offset,		},
 		{ "-OR",	token_or,		},
 		{ "-Output",	token_output,		},
@@ -437,6 +439,11 @@ srec_arglex::get_input()
 		case token_byte_swap:
 			token_next();
 			ifp = new srec_input_filter_byte_swap(ifp);
+			continue;
+
+		case token_not:
+			token_next();
+			ifp = new srec_input_filter_not(ifp);
 			continue;
 
 		case token_crc16_be:

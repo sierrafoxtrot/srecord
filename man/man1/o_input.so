@@ -183,6 +183,11 @@ This filter may be used to bit-wise OR a \fIvalue\fP to every data byte.
 This is useful if you need to set bits.
 Only existing data is altered, no holes are filled.
 .TP 8n
+\fB\-NOT\fP
+This filter may be used to bit-wise NOT the value of every data byte.
+This is useful if you need to invert the data.
+Only existing data is altered, no holes are filled.
+.TP 8n
 \fB\-Big_Endian_Length\fP \fIaddress\fP [ \fInbytes\fP ]
 This filter may be used to insert the length of the data (high water
 minus low water) into the data.  This includes the length itself.
