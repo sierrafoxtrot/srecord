@@ -68,16 +68,16 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-cat > test.ok.uue << 'fubar'
-S00600004844521B
+cat > test.ok.srec << 'fubar'
+S0220000687474703A2F2F737265636F72642E736F75726365666F7267652E6E65742F1D
 S123000002202441303132332C0A3438203635203643203643203646203243203230203528
-S11900203720364620373220364320363420323120304120030A06
+S12100203720364620373220364320363420323120304120030A2453303437332C0A83
 S5030002FA
 S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.ok.uue -o test.ok -bin
+$bin/srec_cat test.ok.srec -o test.ok -bin
 if test $? -ne 0; then no_result; fi
 
 $bin/srec_cat test.in -offset 0x123 -o test.out -asc-hex

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,24 +27,75 @@
 
 #include <srec/output/file.h>
 
-class srec_output_file_ascii_hex: public srec_output_file
+/**
+  * The srec_output_file_ascii_hex class is used to write a file in
+  * Ascii-Hex-Space format.
+  */
+class srec_output_file_ascii_hex:
+    public srec_output_file
 {
 public:
-	virtual ~srec_output_file_ascii_hex();
-	srec_output_file_ascii_hex();
-	srec_output_file_ascii_hex(const char *);
-	void write(const srec_record &);
-	virtual void line_length_set(int);
-	virtual void address_length_set(int);
-	virtual int preferred_block_size_get() const;
+    /**
+      * The destrutcor.
+      */
+    virtual ~srec_output_file_ascii_hex();
+
+    /**
+      * The constructor.
+      */
+    srec_output_file_ascii_hex(const char *filename);
+
+    // See base class for documentation.
+    void write(const srec_record &);
+
+    // See base class for documentation.
+    void line_length_set(int);
+
+    // See base class for documentation.
+    void address_length_set(int);
+
+    // See base class for documentation.
+    int preferred_block_size_get() const;
 
 private:
-	unsigned long address;
-	int column;
-	int pref_block_size;
-	int address_length;
-	srec_output_file_ascii_hex(const srec_output_file_ascii_hex &);
-	srec_output_file_ascii_hex &operator=(const srec_output_file_ascii_hex &);
+    /**
+      * The address instance variable is used to remember where we are
+      * up to in the output.  Used to limit the number of $A line emitted.
+      */
+    unsigned long address;
+
+    /**
+      * The column instance variable is used to remember which column
+      * we are up to in the output.  Used to limit the length of lines
+      * in the output.
+      */
+    int column;
+
+    /**
+      * The pref_block_size instance variable is used to remember the
+      * number of bytes in the preferred block size.
+      */
+    int pref_block_size;
+
+    /**
+        The fubar instance variable is used to remember
+      */
+    int address_length;
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_output_file_ascii_hex();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_output_file_ascii_hex(const srec_output_file_ascii_hex &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_output_file_ascii_hex &operator=(const srec_output_file_ascii_hex &);
 };
 
 #endif // INCLUDE_SREC_OUTPUT_FILE_ASCII_HEX_H

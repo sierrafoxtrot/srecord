@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2000, 2001 Peter Miller;
+.\"	Copyright (C) 2000, 2001, 2003 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -25,14 +25,18 @@
 srec_ascii_hex \- Ascii-Hex file format
 .XX "srec_ascii_hex(5)" "Ascii-Hex file format"
 .SH DESCRIPTION
-This format is also known as the \fIAscii-Space-Hex\fP format.
+This format is also known as the \fIAscii-Space-Hex\fP or
+\fIAscii-Hex-Space\fP format.
 If you know who invented this format, please let me know.  If you have
 a better or more complete description, I'd like to know that, too.
 .PP
-The file startes with a Crontrol-B character (0x02).
+The file starts with a start-of-text (STX or Control-B) character (0x02).
+Everything before the STX is ignored.
 .LP
-Each data byte is represented as 2 hexadecimal characters,
-and is separated by white space from all other data bytes.
+Each data byte is represented as 2 hexadecimal characters, followd by
+an "execution character".  The default execution character is a space,
+although many programs which write this format omit the space
+character immediately preceeding end-of-line.
 .LP
 The address for data bytes is set by using a sequence of
 \f[CW]$A\fP\f[CI]nnnn\fP\f[CW],\fP characters, where \fInnnn\fP is the
@@ -40,8 +44,21 @@ The address for data bytes is set by using a sequence of
 There is no need for an address record unless there are gaps.  Implicitly,
 the file starts a address 0 if no address is set before the first
 data byte.
-.LP
-The file ends with a Control-C character (0x03).
+.PP
+The file ends with an end-of-text (ETX or Control-C) character (0x03).
+Everything following the ETX is ignored.
+.PP
+It is also possible to specify a running 16-bit checksum using a sequence
+of \f[CW]$S\fP\f[CI]nnnn\fP\f[CW],\fP characters, although this usually
+appears \fIafter\fP the ETX character and is thus often ignored.
+.SS Variant Forms
+In addition to a space character, the execution character can also be
+percent (%) called "ascii-hex-percent" format, apostrophe (') or comma
+(,) called "ascii-hex-comma" format.  The file must use the same execution
+character throughout.
+.PP
+If the execution character is a comma, the address and checksum commands
+are terminated by a dot (.) rather than a comma (,).
 .SS Size Multiplier
 In general, binary data will expand in sized by approximately 3.0 times
 when represented with this format.

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -26,142 +26,123 @@
 #include <srec/record.h>
 
 
-srec_output_file_ascii_hex::srec_output_file_ascii_hex()
-	: srec_output_file(),
-	  address(0),
-	  column(0),
-	  pref_block_size(16),
-	  address_length(2)
+srec_output_file_ascii_hex::srec_output_file_ascii_hex(const char *filename) :
+    srec_output_file(filename),
+    address(0),
+    column(0),
+    pref_block_size(16),
+    address_length(2)
 {
-}
-
-
-srec_output_file_ascii_hex::srec_output_file_ascii_hex(const char *filename)
-	: srec_output_file(filename),
-	  address(0),
-	  column(0),
-	  pref_block_size(16),
-	  address_length(2)
-{
-}
-
-
-srec_output_file_ascii_hex::srec_output_file_ascii_hex(const srec_output_file_ascii_hex &)
-	: srec_output_file(),
-	  address(0),
-	  column(0),
-	  pref_block_size(32),
-	  address_length(2)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
-srec_output_file_ascii_hex &
-srec_output_file_ascii_hex::operator=(const srec_output_file_ascii_hex &)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-	return *this;
 }
 
 
 srec_output_file_ascii_hex::~srec_output_file_ascii_hex()
 {
-	// check for termination record
+    // check for termination record
 }
 
 
 void
 srec_output_file_ascii_hex::write(const srec_record &record)
 {
-	switch (record.get_type())
+    switch (record.get_type())
+    {
+    case srec_record::type_header:
+	// All header data is discarded
+	put_char(2);
+	column = 1;
+	break;
+
+    case srec_record::type_data:
+	if (address != record.get_address())
 	{
-	case srec_record::type_header:
-		// All header data is discarded
-		put_char(2);
-		column = 1;
-		break;
-
-	case srec_record::type_data:
-		if (address != record.get_address())
-		{
-			if (column + 4 > pref_block_size)
-			{
-				put_char('\n');
-				column = 0;
-			}
-			else if (column)
-				put_char(' ');
-			address = record.get_address();
-			int width = 2;
-			if (address >= 0x1000000)
-				width = 4;
-			if (address >= 0x10000)
-				width = 3;
-			if (width < address_length)
-				width = address_length;
-			put_stringf("$A%0*lX,\n", width * 2, address);
-			column = 0;
-		}
-		for (int j = 0; j < record.get_length(); ++j)
-		{
-			if (column)
-				put_char(' ');
-			put_byte(record.get_data(j));
-			++address;
-			++column;
-			if (column >= pref_block_size)
-			{
-				put_char('\n');
-				column = 0;
-			}
-		}
-		break;
-
-	case srec_record::type_data_count:
-		// ignore
-		break;
-
-	case srec_record::type_start_address:
-		if (column)
-			put_char(' ');
-		put_char(3);
+	    if (column + 4 > pref_block_size)
+	    {
 		put_char('\n');
 		column = 0;
-		break;
-
-	case srec_record::type_unknown:
-		fatal_error("can't write unknown record type");
+	    }
+	    else if (column)
+		put_char(' ');
+	    address = record.get_address();
+	    int width = 2;
+	    if (address >= 0x1000000)
+		width = 4;
+	    if (address >= 0x10000)
+		width = 3;
+	    if (width < address_length)
+		width = address_length;
+	    // important not to disturb the checksum, don't use put_byte
+	    put_stringf("$A%0*lX,\n", width * 2, address);
+	    column = 0;
 	}
+	for (int j = 0; j < record.get_length(); ++j)
+	{
+	    if (column)
+	       	put_char(' ');
+	    put_byte(record.get_data(j));
+	    ++address;
+	    ++column;
+	    if (column >= pref_block_size)
+	    {
+	       	put_char('\n');
+	       	column = 0;
+	    }
+	}
+	break;
+
+    case srec_record::type_data_count:
+	// ignore
+	break;
+
+    case srec_record::type_start_address:
+	if (column)
+	    put_char(' ');
+	put_char(3);
+	put_char('\n');
+	column = 0;
+
+	if (!data_only_flag)
+	{
+	    //
+	    // According to the documentation we emit the checksum after
+	    // the ETX, which should mean that it is ignored (?!?)
+	    //
+	    put_stringf("$S%4.4X,\n", checksum_get16());
+	}
+	break;
+
+    case srec_record::type_unknown:
+	fatal_error("can't write unknown record type");
+    }
 }
 
 
 void
 srec_output_file_ascii_hex::line_length_set(int linlen)
 {
-	int n = (linlen + 1) / 3;
-	if (n < 1)
-		n = 1;
-	if (n > srec_record::max_data_length)
-		n = srec_record::max_data_length;
-	pref_block_size = n;
+    int n = (linlen + 1) / 3;
+    if (n < 1)
+	n = 1;
+    if (n > srec_record::max_data_length)
+	n = srec_record::max_data_length;
+    pref_block_size = n;
 }
 
 
 void
 srec_output_file_ascii_hex::address_length_set(int n)
 {
-	if (n < 2)
-		n = 2;
-	if (n > 4)
-		n = 4;
-	address_length = n;
+    if (n < 2)
+	n = 2;
+    if (n > 4)
+	n = 4;
+    address_length = n;
 }
 
 
 int
 srec_output_file_ascii_hex::preferred_block_size_get()
-	const
+    const
 {
-	return pref_block_size;
+    return pref_block_size;
 }

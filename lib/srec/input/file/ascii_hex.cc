@@ -88,6 +88,17 @@ srec_input_file_ascii_hex::read_inner(srec_record &record)
 	    if (sep >= 0 && !isspace((unsigned char)sep))
 		fatal_error("not execution character");
 	    ++address;
+	    switch (peek_char())
+	    {
+	    case '\'':
+	    case ',':
+	    case '%':
+	    case ' ':
+		// The documentation calls these an "execution" character.
+		// Strictly speaking, the space isn't optional.
+		get_char();
+		break;
+	    }
 	    return 1;
 	}
 	c = get_char();
@@ -108,19 +119,39 @@ srec_input_file_ascii_hex::read_inner(srec_record &record)
 	    fatal_error("illegal character");
 
 	case '$':
-	    if (get_char() != 'A')
-		fatal_error("unknown command");
-	    address = 0;
-	    int n = 0;
-	    for (n = 0; n < 4 && peek_char() != ','; ++n)
+	    int command = get_char();
+	    unsigned long value = 0;
+	    for (;;)
 	    {
-		int b = get_byte();
-		address = (address << 8) + b;
+		value = (value << 4) + get_nibble();
+		int c = get_char();
+		if (c == ',' || c == '.')
+		    break;
+		get_char_undo(c);
 	    }
-	    if (n < 2)
-		fatal_error("short address");
-	    if (get_char() != ',')
-		fatal_error("comma expected");
+	    switch (command)
+	    {
+	    default:
+		fatal_error("unknown command");
+
+	    case 'A':
+		address = value;
+		break;
+
+	    case 'S':
+		unsigned short chk1 = checksum_get16();
+		unsigned short chk2 = value & 0xFFFF;
+		if (chk1 != chk2)
+		{
+		    fatal_error
+		    (
+			"checksum mismatch (%4.4X != %4.4X)",
+			chk1,
+			chk2
+		    );
+		}
+		break;
+	    }
 	    break;
 	}
     }
