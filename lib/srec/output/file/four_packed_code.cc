@@ -236,6 +236,15 @@ srec_output_file_four_packed_code::write(const srec_record &record)
 		break;
 
 	case srec_record::type_data:
+		if (record.get_address() + record.get_length() > (1UL << 16))
+		{
+			fatal_error
+			(
+				"data address (0x%lX..0x%lX) too large",
+				record.get_address(),
+				record.get_address() + record.get_length() - 1
+			);
+		}
 		write_inner
 		(
 			record.get_address(),

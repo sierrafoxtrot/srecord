@@ -55,7 +55,6 @@ srec_output_file_mos_tech::operator=(const srec_output_file_mos_tech &)
 
 srec_output_file_mos_tech::~srec_output_file_mos_tech()
 {
-	/* check for data count record */
 	/* check for termination record */
 }
 
@@ -72,6 +71,15 @@ srec_output_file_mos_tech::write(const srec_record &record)
 	case srec_record::type_data:
 		if (record.get_length() < 1)
 			return;
+		if (record.get_address() + record.get_length() > (1UL << 16))
+		{
+			fatal_error
+			(
+				"data address (0x%lX..0x%lX) too large",
+				record.get_address(),
+				record.get_address() + record.get_length() - 1
+			);
+		}
 		put_char(';');
 		checksum_reset();
 		put_byte(record.get_length());

@@ -109,12 +109,13 @@ srec_output_file_tektronix::write(const srec_record &record)
 	case srec_record::type_data:
 		if (record.get_length() == 0)
 			break; /* ignore */
-		if (record.get_address() >= (1UL << 16))
+		if (record.get_address() + record.get_length() > (1UL << 16))
 		{
 			fatal_error
 			(
-				"data address (%08lX) too large",
-				record.get_address()
+				"data address (0x%lX..0x%lX) too large",
+				record.get_address(),
+				record.get_address() + record.get_length() - 1
 			);
 		}
 		write_inner

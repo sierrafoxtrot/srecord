@@ -20,7 +20,7 @@
 .\" MANIFEST: manual entry for the srec_signetics.5 command
 .\"
 .ds n) srec_signetics
-.TH \*(n) 1 SRecord "Reference Manual"
+.TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 \*(n) \- Signetics file format
 .XX "srec_signetics(5)" "Signetics file format"
@@ -74,7 +74,7 @@ it does not matter if you use a..f or A..F.
 Unfortunately the colon was chosen for the Signetics file format, similar
 to the Intel format (see \fIsrec_intel\fP(5) for more information).
 However, SRecord is able to automatically detect the dofference between
-the two format, when you use the \fB\f-Guess\fP format specifier.
+the two format, when you use the \fB\-Guess\fP format specifier.
 .SS Address Field
 This is the address where the first data byte of the record should be
 stored.  After storing that data byte, the address is incremented by 1

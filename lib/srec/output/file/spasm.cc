@@ -46,6 +46,16 @@ srec_output_file_spasm::write(const srec_record &record)
 	if (record.get_type() != srec_record::type_data)
 		return;
 
+	if (record.get_address() + record.get_length() > (1UL << 17))
+	{
+		fatal_error
+		(
+			"data address (0x%lX..0x%lX) too large",
+			record.get_address(),
+			record.get_address() + record.get_length() - 1
+		);
+	}
+
 	long address = record.get_address();
 	int j = 0;
 	if (address & 1)

@@ -114,6 +114,15 @@ srec_output_file_ti_tagged::write(const srec_record &record)
 		break;
 
 	case srec_record::type_data:
+		if (record.get_address() + record.get_length() > (1UL << 16))
+		{
+			fatal_error
+			(
+				"data address (0x%lX..0x%lX) too large",
+				record.get_address(),
+				record.get_address() + record.get_length() - 1
+			);
+		}
 		if (address != record.get_address())
 		{
 			if (column + 5 > line_length)
