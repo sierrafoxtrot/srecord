@@ -67,6 +67,12 @@ See
 .IR srec_tektronix (5)
 for a description of this file format.
 .TP 8n
+\fB\-Tektronix_Extended\fP
+This option says to use the Tektronix extended hex format to read the file.
+See
+.IR srec_tektronix_extended (5)
+for a description of this file format.
+.TP 8n
 \fB\-Texas_Instruments_Tagged\fP
 This option says to use the Texas Instruments Tagged format to read the file.
 See

@@ -59,6 +59,7 @@ public:
 		token_paren_end,
 		token_split,
 		token_tektronix,
+		token_tektronix_extended,
 		token_ti_tagged,
 		token_unsplit,
 		token_within,

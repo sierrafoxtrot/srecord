@@ -60,8 +60,9 @@ The Motorola hexadecimal S-Record format is understood for both reading
 and writing.
 (Also known as the Exorciser, Exormacs or Exormax format.)
 .TP 8n
-Tektronix
-The Tektronix hexadecimal format is understood for both reading and writing.
+Tektronix (Extended)
+The Tektronix hexadecimal format and the Tektronix Extended hexadecimal
+format are both understood for both reading and writing.
 .TP 8n
 Texas Instruments Tagged
 The Tektronix hexadecimal format is understood for both reading and writing.
