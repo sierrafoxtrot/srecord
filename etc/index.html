@@ -273,6 +273,13 @@ The <i>crc</i> filters may be used to insert an inustry standard cyclic
 redundancy check (CRC) into the data.
 .br
 <dt>
+checksum
+<dd>
+The <i>checksum</i> filters may be used to insert a checksum into
+the data.  Positive, negative and bit-not checksums are available,
+as well as big-endian and little-endian byte orders.
+.br
+<dt>
 crop
 <dd>
 The <i>crop</i> filter may be used to isolate an input address range,
@@ -289,6 +296,18 @@ fill
 <dd>
 The <i>fill</i> filter may be used to fill holes in the data with a
 given byte value.
+.br
+<dt>
+unfill
+<dd>
+The <i>unfill</i> filter may be used to make holes in the data for bytes
+with a given value.
+.br
+<dt>
+random fill
+<dd>
+The <i>random fill</i> filter may be used to fill holes in the data with
+random byte values.
 .br
 <dt>
 length

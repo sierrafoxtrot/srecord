@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002, 2004 Peter Miller;
+//	Copyright (C) 2004 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -17,53 +17,49 @@
 //	along with this program; if not, write to the Free Software
 //	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_input_filter_fill class
+// MANIFEST: functions to impliment the srec_input_filter_random_fill class
 //
 
-#pragma implementation "srec_input_filter_fill"
+#pragma implementation "srec_input_filter_random_fill"
 
 #include <interval.h>
-#include <srec/input/filter/fill.h>
+#include <r250.h>
+#include <srec/input/filter/random_fill.h>
 #include <srec/record.h>
 
 
-srec_input_filter_fill::srec_input_filter_fill(srec_input *a1, int a2,
+srec_input_filter_random_fill::srec_input_filter_random_fill(srec_input *a1,
 	const interval &a3) :
     srec_input_filter(a1),
-    filler_value(a2),
-    filler_block(0),
     range(a3)
 {
 }
 
 
-srec_input_filter_fill::~srec_input_filter_fill()
+srec_input_filter_random_fill::~srec_input_filter_random_fill()
 {
-    if (filler_block)
-	delete [] filler_block;
 }
 
 
 int
-srec_input_filter_fill::generate(srec_record &record)
+srec_input_filter_random_fill::generate(srec_record &record)
 {
     if (range.empty())
 	return 0;
-    interval chunk(range.get_lowest(), range.get_lowest() + 256);
+    unsigned char buffer[srec_record::max_data_length];
+    interval chunk(range.get_lowest(), range.get_lowest() + sizeof(buffer));
     chunk *= range;
     chunk.first_interval_only();
-    if (!filler_block)
-    {
-	filler_block = new unsigned char [256];
-	memset(filler_block, filler_value, 256);
-    }
+    int nbytes = chunk.get_highest() - chunk.get_lowest();
+    for (int j = 0; j < nbytes; ++j)
+	buffer[j] = r250();
     record =
 	srec_record
 	(
     	    srec_record::type_data,
     	    chunk.get_lowest(),
-    	    filler_block,
-    	    chunk.get_highest() - chunk.get_lowest()
+    	    buffer,
+    	    nbytes
 	);
     range -= chunk;
     return 1;
@@ -71,7 +67,7 @@ srec_input_filter_fill::generate(srec_record &record)
 
 
 int
-srec_input_filter_fill::read(srec_record &record)
+srec_input_filter_random_fill::read(srec_record &record)
 {
     if (!srec_input_filter::read(record))
 	return generate(record);
@@ -80,8 +76,8 @@ srec_input_filter_fill::read(srec_record &record)
 	range -=
     	    interval
     	    (
-		record.get_address(),
-		record.get_address() + record.get_length()
+       		record.get_address(),
+       		record.get_address() + record.get_length()
     	    );
     }
     return 1;

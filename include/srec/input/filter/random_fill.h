@@ -20,50 +20,37 @@
 // MANIFEST: interface definition for lib/srec/input/filter/fill.cc
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILTER_FILL_H
-#define INCLUDE_SREC_INPUT_FILTER_FILL_H
+#ifndef INCLUDE_SREC_INPUT_FILTER_RANDOM_FILL_H
+#define INCLUDE_SREC_INPUT_FILTER_RANDOM_FILL_H
 
-#pragma interface "srec_input_filter_fill"
+#pragma interface "srec_input_filter_random_fill"
 
 #include <interval.h>
 #include <srec/input/filter.h>
 #include <srec/record.h>
 
 /**
-  * The srec_input_filter_fill class is used to represent a filter
-  * which replaces in set data locations with constant data.
+  * The srec_input_filter_random_fill class is used to represent a filter
+  * which replaces in set data locations with random data.
   */
-class srec_input_filter_fill:
+class srec_input_filter_random_fill:
     public srec_input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_fill();
+    virtual ~srec_input_filter_random_fill();
 
     /**
       * The constructor.
       */
-    srec_input_filter_fill(srec_input *, int, const interval &);
+    srec_input_filter_random_fill(srec_input *, const interval &);
 
     // See base class for documentation.
     virtual int read(srec_record &);
 
 private:
-    /**
-      * The filler_value instance variable is used to remember the value
-      * to assign to fill bytes.
-      */
-    int filler_value;
-
-    /**
-      * The filler_block instance variable is used to remember the base
-      * of a dynamically allocated array of bytes, used to construct
-      * filler block records.
-      */
-    unsigned char *filler_block;
-
     /**
       * The range instance variable is used to remember the range of
       * addresses to be filled.  As fill blocks are produced the range
@@ -79,17 +66,18 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_fill();
+    srec_input_filter_random_fill();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_fill(const srec_input_filter_fill &);
+    srec_input_filter_random_fill(const srec_input_filter_random_fill &);
 
     /**
-      * The assignment.  Do not use.
+      * The assignment operator.  Do not use.
       */
-    srec_input_filter_fill &operator=(const srec_input_filter_fill &);
+    srec_input_filter_random_fill &operator=(
+	const srec_input_filter_random_fill &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILTER_FILL_H
+#endif // INCLUDE_SREC_INPUT_FILTER_RANDOM_FILL_H

@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 2000-2003 Peter Miller;
+.\"	Copyright (C) 1998, 2000-2004 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -172,6 +172,11 @@ The \fIbyte swap\fP filter may be used to swap pairs of add and even bytes.
 .TP 8n
 CRC
 The \fIcrc\fP filters may be used to insert a CRC into the data. 
+.TP
+checksum
+The \fIchecksum\fP filters may be used to insert a checksum into
+the data.  Positive, negative and bit-not checksums are available,
+as well as big-endian and little-endian byte orders.
 .TP 8n
 crop
 The \fIcrop\fP filter may be used to isolate an input address range,
@@ -184,6 +189,14 @@ or ranges, and keep the rest.
 fill
 The \fIfill\fP filter may be used to fill any holes in the data
 with a nominated value.
+.TP 8n
+unfill
+The \fIunfill\fP filter may be used to make holes in the data at bytes
+with a nominated value.
+.TP 8n
+random fill
+The \fIrandom fill\fP filter may be used to fill holes in the data with
+random byte values.
 .TP 8n
 length
 The \fIlength\fP filter may be used to insert the data length into the data.

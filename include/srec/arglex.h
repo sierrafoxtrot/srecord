@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2003 Peter Miller;
+//	Copyright (C) 1998-2004 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -90,6 +90,7 @@ public:
 	token_over,
 	token_paren_begin,
 	token_paren_end,
+	token_random_fill,
 	token_round_down,
 	token_round_nearest,
 	token_round_up,

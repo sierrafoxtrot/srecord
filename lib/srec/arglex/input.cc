@@ -64,6 +64,7 @@ using namespace std;
 #include <srec/input/filter/not.h>
 #include <srec/input/filter/offset.h>
 #include <srec/input/filter/or.h>
+#include <srec/input/filter/random_fill.h>
 #include <srec/input/filter/split.h>
 #include <srec/input/filter/unfill.h>
 #include <srec/input/filter/unsplit.h>
@@ -328,6 +329,14 @@ srec_arglex::get_input()
 		}
 		interval range = get_interval("-Fill");
 		ifp = new srec_input_filter_fill(ifp, filler, range);
+	    }
+	    continue;
+
+	case token_random_fill:
+	    {
+		token_next();
+		interval range = get_interval("-Random_Fill");
+		ifp = new srec_input_filter_random_fill(ifp, range);
 	    }
 	    continue;
 

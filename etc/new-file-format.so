@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2001, 2002 Peter Miller;
+.\"	Copyright (C) 2001, 2002, 2004 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -69,9 +69,11 @@ Add the new format to the command line argument type enum.
 .TP 8n
 lib/srec/arglex.cc
 Add the new format to the array of command line arguments types.
+.TP 8n
+lib/srec/arglex/input.cc
 Add the new format to the code which parses input formats.
 .TP 8n
-lib/srec/arglex_output.cc
+lib/srec/arglex/output.cc
 Add the new format to the code which parses output formats.
 .TP 8n
 lib/srec/input/file/guess.cc

@@ -93,6 +93,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
 	{ "-OR",	token_or,		},
 	{ "-Output",	token_output,		},
 	{ "-OVer",	token_over,		},
+	{ "-Random_Fill", token_random_fill,	},
 	{ "-RAw",	token_binary,		},
 	{ "-Round_Up",	token_round_up,		},
 	{ "-Round_Down", token_round_down,	},
