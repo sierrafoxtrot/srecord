@@ -38,14 +38,15 @@ srec_memory_walker_crc16::~srec_memory_walker_crc16()
 
 void
 srec_memory_walker_crc16::observe(unsigned long address, const void *data,
-	int length)
+    int length)
 {
-	checksum.nextbuf(data, length);
+    checksum.nextbuf(data, length);
 }
 
 
 unsigned
 srec_memory_walker_crc16::get()
+    const
 {
-	return checksum.get();
+    return checksum.get();
 }

@@ -47,11 +47,11 @@ public:
       *     The deeper input source being checksummed.
       * @param address
       *     The address to place the checksum.
-      * @pram length
+      * @param length
       *     The number of bytes of checksum to be placed into the result.
-      * @pram order
+      * @param order
       *     The byte order: false => bigendian, true => little endian.
-      * @pram width
+      * @param width
       *     The width of the values being summed.  Usually 1 byte, but
       *     wider combinations are possible.  If you use something
       *     wider, it is assumed that they are alligned on multiples of

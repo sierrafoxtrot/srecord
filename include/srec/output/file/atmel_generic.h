@@ -27,21 +27,67 @@
 
 #include <srec/output/file.h>
 
-class srec_output_file_atmel_generic: public srec_output_file
+/**
+  * The srec_output_file_ascii_hex class is used to write a file in
+  * Atmel Generic format.
+  */
+class srec_output_file_atmel_generic:
+    public srec_output_file
 {
 public:
-	virtual ~srec_output_file_atmel_generic();
-	srec_output_file_atmel_generic();
-	srec_output_file_atmel_generic(const char *, bool);
-	void write(const srec_record &);
-	virtual void line_length_set(int);
-	virtual void address_length_set(int);
-	virtual int preferred_block_size_get() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_output_file_atmel_generic();
+
+    /**
+      * The default constructor.
+      * Output will be written to the standard output.
+      */
+    srec_output_file_atmel_generic();
+
+    /**
+      * The constructor.
+      *
+      * @param filename
+      *     The file to write the data to, or "-" to mean the standard
+      *     output.
+      * @param bigend
+      *     The byte order of the output, true means big endian, and
+      *     false means little endian.
+      */
+    srec_output_file_atmel_generic(const char *filename, bool bigend);
+
+    // See base class for documentation.
+    void write(const srec_record &);
+
+    // See base class for documentation.
+    virtual void line_length_set(int);
+
+    // See base class for documentation.
+    virtual void address_length_set(int);
+
+    // See base class for documentation.
+    virtual int preferred_block_size_get() const;
 
 private:
-	bool bigend;
-	srec_output_file_atmel_generic(const srec_output_file_atmel_generic &);
-	srec_output_file_atmel_generic &operator=(const srec_output_file_atmel_generic &);
+    /**
+      * The bugend instance variable is used to remember the byte order
+      * of the output, true means big endian, and false means little
+      * endian.
+      */
+    bool bigend;
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_output_file_atmel_generic(const srec_output_file_atmel_generic &);
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_output_file_atmel_generic &operator=(
+	const srec_output_file_atmel_generic &);
 };
 
 #endif // INCLUDE_SREC_OUTPUT_FILE_ATMEL_GENERIC_H

@@ -28,18 +28,49 @@
 #include <crc32.h>
 #include <srec/memory/walker.h>
 
-class srec_memory_walker_crc32: public srec_memory_walker
+/**
+  * The srec_memory_walker_crc32 class is used to represent the parse
+  * state of a memory walker which calculates a running CRC32 checksum.
+  */
+class srec_memory_walker_crc32:
+    public srec_memory_walker
 {
 public:
-	virtual ~srec_memory_walker_crc32();
-	srec_memory_walker_crc32();
-	void observe(unsigned long, const void *, int);
-	unsigned get();
+    /**
+      * The destructor.
+      */
+    virtual ~srec_memory_walker_crc32();
+
+    /**
+      * The default constructor.
+      */
+    srec_memory_walker_crc32();
+
+    // See base class for documentation.
+    void observe(unsigned long, const void *, int);
+
+    /**
+      * The get method is used to get the CRC32 checksum once all memory
+      * chunks have been processed by calls to our observe method.
+      */
+    unsigned get() const;
 
 private:
-	crc32 checksum;
-	srec_memory_walker_crc32(const srec_memory_walker_crc32 &);
-	srec_memory_walker_crc32 &operator=(const srec_memory_walker_crc32 &);
+    /**
+      * The checksum instance variable is used to remember the running
+      * state of the CRC32 checksum calculation.
+      */
+    crc32 checksum;
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_memory_walker_crc32(const srec_memory_walker_crc32 &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_memory_walker_crc32 &operator=(const srec_memory_walker_crc32 &);
 };
 
 #endif // INCLUDE_SREC_MEMORY_WALKER_CRC32_H

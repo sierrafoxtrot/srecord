@@ -46,7 +46,7 @@ public:
       * @param deeper
       *     The input source to be filtered.
       */
-    srec_input_filter_not(srec_input *);
+    srec_input_filter_not(srec_input *deeper);
 
     // See base class for documentation.
     virtual int read(srec_record &);

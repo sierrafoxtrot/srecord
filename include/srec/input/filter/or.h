@@ -46,10 +46,10 @@ public:
       *
       * @param deeper
       *     The deeper input to be used as a data source.
-      * @param mask
+      * @param value
       *     The value to be bit-wise ORed with each incoming data byte.
       */
-    srec_input_filter_or(srec_input *, int);
+    srec_input_filter_or(srec_input *deeper, int value);
 
     // See base class for documentation.
     virtual int read(srec_record &);
