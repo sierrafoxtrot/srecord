@@ -106,3 +106,14 @@ srec_record::encode_big_endian(data_t *buffer, address_t value, int length)
 		value >>= 8;
 	}
 }
+
+
+void
+srec_record::encode_little_endian(data_t *buffer, address_t value, int length)
+{
+	while (length-- > 0)
+	{
+		*buffer++ = value;
+		value >>= 8;
+	}
+}

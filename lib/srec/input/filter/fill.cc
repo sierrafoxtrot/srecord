@@ -77,7 +77,11 @@ srec_input_filter_fill::read(srec_record &record)
 	if (data.get_type() == srec_record::type_unknown)
 	{
 		if (!srec_input_filter::read(data))
+		{
+			if (!range.empty())
+				goto generate;
 			return 0;
+		}
 	}
 	switch (data.get_type())
 	{
@@ -96,6 +100,7 @@ srec_input_filter_fill::read(srec_record &record)
 	case srec_record::type_termination:
 		if (range.empty())
 			break;
+		generate:
 		interval chunk(range.get_lowest(), range.get_lowest() + 256);
 		chunk *= range;
 		chunk.first_interval_only();

@@ -60,6 +60,7 @@ public:
 	static int maximum_data_length(address_t);
 	static address_t decode_big_endian(data_t *, int);
 	static void encode_big_endian(data_t *, address_t, int);
+	static void encode_little_endian(data_t *, address_t, int);
 
 private:
 	type		itype;

@@ -53,8 +53,9 @@ EPROM load files.
 * The SRecord package has a number of tools: srec_cat for copying and
   and converting files, andsrec_cmp for comparing files.
 
-* The SRecord package has a number for filters:crop to keep address
-  ranges, exclude to remove address ranges, and offset toadjust addresses.
+* The SRecord package has a number for filters: crop to keep address
+  ranges, exclude to remove address ranges, fill to plug hol sin the data,
+  length to insert the data length, and offset to adjust addresses.
 
 More than one filter may be applied to each input file.  Different filters
 may be applied to each input file.  All filters may be applied to all

@@ -73,6 +73,13 @@ exclude
 The \fIexclude\fP filter may be used to exclude an input address range,
 or ranges, and keep the rest.
 .TP 8n
+fill
+The \fIfill\fP filter may be used to fill any holes in the data
+with a nominated value.
+.TP 8n
+length
+The \fIlength\fP filter may be used to insert the data length into the data.
+.TP 8n
 offset
 The \fIoffset\fP filter may be used to offset the address of data records,
 both forwards and backwards.

@@ -30,6 +30,7 @@
 #include <srec/input/file/srecord.h>
 #include <srec/input/filter/crop.h>
 #include <srec/input/filter/fill.h>
+#include <srec/input/filter/length.h>
 #include <srec/input/filter/offset.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/intel.h>
@@ -52,6 +53,8 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Exclude",	token_exclude,	},
 		{ "-Fill",	token_fill,	},
 		{ "-Intel",	token_intel,	},
+		{ "-Big_Endian_Length",	token_length_be, },
+		{ "-Little_Endian_Length", token_length_le, },
 		{ "-Motorola",	token_motorola,	},
 		{ "-OFfset",	token_offset,	},
 		{ "-Output",	token_output,	},
@@ -115,6 +118,41 @@ srec_arglex::get_interval(const char *name)
 			break;
 	}
 	return range;
+}
+
+
+void
+srec_arglex::get_address_and_nbytes(const char *name, unsigned long &address,
+	int &nbytes)
+{
+	if (token_next() != token_number)
+	{
+		cerr << "the " << name
+			<< " filter requires an address and a byte count"
+			<< endl;
+		exit(1);
+	}
+	address = value_number();
+	nbytes = 4;
+	if (token_next() == token_number)
+	{
+		nbytes = value_number(); 
+		token_next();
+		if (nbytes < 1 || nbytes > 8)
+		{
+			cerr << "the " << name << " byte count " << nbytes
+				<< " is out of range (1..8)"
+				<< endl;
+			exit(1);
+		}
+	}
+	if ((long long)address + nbytes > (1LL << 32))
+	{
+		cerr << "the " << name << " address (" << address
+			<< ") and byte count (" << nbytes
+			<< ") may not span the top of memory" << endl;
+		exit(1);
+	}
 }
 
 
@@ -206,6 +244,48 @@ srec_arglex::get_input()
 				token_next();
 				interval range = get_interval("-Fill");
 				ifp = new srec_input_filter_fill(ifp, filler, range);
+			}
+			continue;
+
+		case token_length_be:
+			{
+				unsigned long address;
+				int nbytes;
+				get_address_and_nbytes
+				(
+					"-Big_Endian_Length",
+					address,
+					nbytes
+				);
+				ifp =
+					new srec_input_filter_length
+					(
+						ifp,
+						address,
+						nbytes,
+						0
+					);
+			}
+			continue;
+
+		case token_length_le:
+			{
+				unsigned long address;
+				int nbytes;
+				get_address_and_nbytes
+				(
+					"-Little_Endian_Length",
+					address,
+					nbytes
+				);
+				ifp =
+					new srec_input_filter_length
+					(
+						ifp,
+						address,
+						nbytes,
+						1
+					);
 			}
 			continue;
 

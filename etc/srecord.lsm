@@ -78,6 +78,8 @@ and
 The SRecord package has a number for filters:
 \fIcrop\fP to keep address ranges,
 \fIexclude\fP to remove address ranges,
+\fIfill\fP to fill daya hols,
+\fIlength\fP to inset data length,
 and
 \fIoffset\fP to adjust addresses.
 .in -2n

@@ -65,6 +65,18 @@ last address).  If the maximum is given as zero then the range extends
 to the end of the address space.  The is the precise opposite of the
 \fB\-Crop\fP filter.  More than one address pair may be given.
 .TP 8n
+\fB\-Big_Endian_Length\fP \fIaddress\fP [ \fInbytes\fP ]
+This filter may be used to insert the length of the data (high water
+minus low water) into the data.  This includes the length itself.
+The value will be written with the most significant byte first.
+The number of bytes defaults to 4.
+.TP 8n
+\fB\-Little_Endian_Length\fP \fIaddress\fP [ \fInbytes\fP ]
+This filter may be used to insert the length of the data (high water
+minus low water) into the data.  This includes the length itself.
+The value will be written with the least significant byte first.
+The number of bytes defaults to 4.
+.TP 8n
 \fB\-Fill\fP \fIvalue\fP \fIminimum\fP \fImaximum\fP
 This filter may be used to fill any gaps in the data with bytes equal
 to \fIvalue\fP.  The fill will only occur in the address range given.
