@@ -218,6 +218,15 @@ srec_input_file::get_byte()
 
 
 int
+srec_input_file::get_word()
+{
+	int b1 = get_byte();
+	int b2 = get_byte();
+	return ((b1 << 8) | b2);
+}
+
+
+int
 srec_input_file::checksum_get()
 {
 	return (checksum & 0xFF);

@@ -38,10 +38,11 @@ public:
 	virtual const string filename_and_line() const;
 
 protected:
-	int get_char();
+	virtual int get_char();
 	int peek_char();
 	int get_nibble();
 	virtual int get_byte();
+	int get_word();
 	int checksum_get();
 	void checksum_add(int n) { checksum += (unsigned char)n; }
 	void checksum_reset();

@@ -27,10 +27,11 @@
 #include <srec/arglex.h>
 #include <srec/input/file/ascii_hex.h>
 #include <srec/input/file/binary.h>
-#include <srec/input/file/wilson.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix.h>
+#include <srec/input/file/ti_tagged.h>
+#include <srec/input/file/wilson.h>
 #include <srec/input/filter/and.h>
 #include <srec/input/filter/byte_swap.h>
 #include <srec/input/filter/checksum.h>
@@ -48,10 +49,11 @@
 #include <srec/output/file/ascii_hex.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/c.h>
-#include <srec/output/file/wilson.h>
 #include <srec/output/file/intel.h>
 #include <srec/output/file/srecord.h>
 #include <srec/output/file/tektronix.h>
+#include <srec/output/file/ti_tagged.h>
+#include <srec/output/file/wilson.h>
 
 
 srec_arglex::srec_arglex()
@@ -69,6 +71,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ ")",		token_paren_end,	},
 		{ "-AND",	token_and,		},
 		{ "-Ascii_Hexadecimal",	token_ascii_hex, },
+		{ "-Ascii_Space_Hexadecimal", token_ascii_hex, },
 		{ "-Big_Endian_Checksum", token_checksum_be, },
 		{ "-Big_Endian_Length",	token_length_be, },
 		{ "-Big_Endian_MAximum", token_maximum_be, },
@@ -93,6 +96,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-SPlit",	token_split,		},
 		{ "-S_record",	token_motorola,		},
 		{ "-Tektronix",	token_tektronix,	},
+		{ "-Texas_Instruments_Tagged", token_ti_tagged, },
 		{ "-Un_SPlit",	token_unsplit,		},
 		{ "-WILson",	token_wilson,		},
 		{ "-Within",	token_within,		},
@@ -303,6 +307,11 @@ srec_arglex::get_input()
 	case token_tektronix:
 		token_next();
 		ifp = new srec_input_file_tektronix(fn);
+		break;
+
+	case token_ti_tagged:
+		token_next();
+		ifp = new srec_input_file_ti_tagged(fn);
 		break;
 
 	case token_binary:
@@ -791,6 +800,11 @@ srec_arglex::get_output()
 	case token_tektronix:
 		token_next();
 		ofp = new srec_output_file_tektronix(fn);
+		break;
+
+	case token_ti_tagged:
+		token_next();
+		ofp = new srec_output_file_ti_tagged(fn);
 		break;
 
 	case token_binary:

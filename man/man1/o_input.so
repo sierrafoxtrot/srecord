@@ -38,15 +38,15 @@ is specified by the argument \fIafter\fP the file name.
 The format defaults to Motorola S-Record if not specified.
 The format specified are:
 .TP 8n
+\fB\-Ascii-Hex\fP
+This option says to use the Ascii-Hex format to read the file.
+See
+.IR srec_ascii_hex (5)
+for a description of this file format.
+.TP 8n
 \fB\-Binary\fP
 This option says the file is a raw binary file, and should be read literally.
 (May also be written \-Raw.)
-.TP 8n
-\fB\-WILson\fP
-This option says to use the wilson format to read the file.
-See
-.IR srec_wilson (5)
-for a description of this file format.
 .TP 8n
 \fB\-Intel\fP
 This option says to use the Intel hex format to read the file.
@@ -65,6 +65,18 @@ for a description of this file format.
 This option says to use the Tektronix hex format to read the file.
 See
 .IR srec_tektronix (5)
+for a description of this file format.
+.TP 8n
+\fB\-Texas_Instruments_Tagged\fP
+This option says to use the Texas Instruments Tagged format to read the file.
+See
+.IR srec_ti_tagged (5)
+for a description of this file format.
+.TP 8n
+\fB\-WILson\fP
+This option says to use the wilson format to read the file.
+See
+.IR srec_wilson (5)
 for a description of this file format.
 .SS Input Filters
 You may specify zero or more \fIfilters\fP to be applied.

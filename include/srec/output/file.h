@@ -38,9 +38,10 @@ public:
 	static void data_only();
 
 protected:
-	void put_char(int);
+	virtual void put_char(int);
 	void put_nibble(int);
 	virtual void put_byte(int);
+	virtual void put_word(int);
 	void checksum_reset();
 	void checksum_add(int n) { checksum += (unsigned char)n; }
 	int checksum_get();

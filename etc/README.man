@@ -53,14 +53,19 @@ This format cannot be read.
 .TP 8n
 Intel
 The Intel hexadecimal format is understood for both reading and writing.
+(Also known as the Intel MCS-86 Object format.)
 .TP 8n
 Motorola S-Record
 The Motorola hexadecimal S-Record format is understood for both reading
 and writing.
-(Also known as the Exormacs or Exormax format.)
+(Also known as the Exorciser, Exormacs or Exormax format.)
 .TP 8n
 Tektronix
 The Tektronix hexadecimal format is understood for both reading and writing.
+.TP 8n
+Texas Instruments Tagged
+The Tektronix hexadecimal format is understood for both reading and writing.
+(Also known as the TI-tagged or TI-SDSMAC format.)
 .TP 8n
 Wilson
 The Wilson format is understood for both reading and writing.

@@ -146,6 +146,14 @@ srec_output_file::put_byte(int n)
 }
 
 
+void
+srec_output_file::put_word(int n)
+{
+	put_byte(n >> 8);
+	put_byte(n);
+}
+
+
 int
 srec_output_file::checksum_get()
 {
