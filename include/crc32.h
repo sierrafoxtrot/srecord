@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Peter Miller;
+ *	Copyright (C) 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -25,6 +25,8 @@
 
 #pragma interface "crc32"
 
+#include <stddef.h>
+
 class crc32
 {
 public:
@@ -32,8 +34,9 @@ public:
 	crc32();
 	crc32(const crc32 &);
 	crc32 &operator=(const crc32 &);
-	unsigned long get() const { return state; }
+	unsigned long get() const;
 	void next(unsigned char);
+	void nextbuf(const void *, size_t);
 private:
 	unsigned long state;
 };

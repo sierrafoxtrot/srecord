@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Peter Miller;
+ *	Copyright (C) 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -40,8 +40,7 @@ void
 srec_memory_walker_crc32::observe(unsigned long address, const void *data,
 	int length)
 {
-	for (int j = 0; j < length; ++j)
-		checksum.next(((unsigned char *)data)[j]);
+	checksum.nextbuf(data, length);
 }
 
 
