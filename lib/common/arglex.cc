@@ -123,7 +123,7 @@ arglex::table_set(table_ty *tp)
 
 static char *partial;
 
-int
+bool
 arglex_compare(char *formal, char *actual)
 {
 	for (;;)
@@ -152,7 +152,7 @@ arglex_compare(char *formal, char *actual)
 			 * optional characters
 			 */
 			if (ac == fc && arglex_compare(formal, actual))
-				return 1;
+				return true;
 			/*
 			 * skip forward to next
 			 * mandatory character, or after '_'
@@ -175,13 +175,13 @@ arglex_compare(char *formal, char *actual)
 			 * the '*', too, a la glob.
 			 */
 			if (!ac)
-				return 0;
+				return false;
 			partial = actual - 1;
-			return 1;
+			return true;
 
 		case '\\':
 			if (actual[-1] != *formal++)
-				return 0;
+				return false;
 			break;
 
 		case 'A': case 'B': case 'C': case 'D': case 'E':
@@ -198,7 +198,7 @@ arglex_compare(char *formal, char *actual)
 			 * mandatory characters
 			 */
 			if (fc != ac)
-				return 0;
+				return false;
 			break;
 		}
 	}

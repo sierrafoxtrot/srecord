@@ -27,16 +27,39 @@
 
 #include <quit.h>
 
+/**
+  * The quit_normal class is used to represent a quit handler which
+  * behaves in the "normal" way: print error message son the standard
+  * error, and exit via the gloibal ::exit function.
+  */
 class quit_normal:
 	public quit
 {
 public:
+	/**
+	  * The destructor.
+	  */
 	virtual ~quit_normal();
+
+	/**
+	  * The default constructor.
+	  */
 	quit_normal();
+
+	/**
+	  * The copy constructor.
+	  */
 	quit_normal(const quit_normal &);
+
+	/**
+	  * The assignment operator.
+	  */
 	quit_normal &operator=(const quit_normal &);
 
+	// see base class for documentation
 	virtual void exit(int);
+
+	// see base class for documentation
 	virtual void message_v(const char *, va_list);
 };
 

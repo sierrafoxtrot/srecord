@@ -65,10 +65,6 @@ public:
 	  *
 	  * Note: there is no guarantee that a header record will appear
 	  * first, or that a start address record will appear last.
-	  *
-	  * The file name and line number are automatically included
-	  * in the message.  The filename_and_line method is called to
-	  * determine them.
 	  */
 	virtual int read(class srec_record &) = 0;
 
@@ -84,16 +80,18 @@ public:
 	  */
 	virtual void fatal_error(const char *, ...) const
 							    FORMAT_PRINTF(2, 3);
-
 	/**
 	  * The fatal_error_errno method is used to report problems
 	  * reading the input file.  Do not put a newline at athe end
 	  * of the message.  The string equivalent of errno is appended
 	  * to the error message.  This method does not return.
+	  *
+	  * The file name and line number are automatically included
+	  * in the message.  The filename_and_line method is called to
+	  * determine them.
 	  */
 	virtual void fatal_error_errno(const char *, ...) const
 							    FORMAT_PRINTF(2, 3);
-
 	/**
 	  * The warning method is used to report potential (but non-fatal)
 	  * problems parsing the file.	Do not put a newline at the
@@ -106,7 +104,6 @@ public:
 	  */
 	virtual void warning(const char *, ...) const
 							    FORMAT_PRINTF(2, 3);
-
 	/**
 	  * The filename method is used to get the name of the input file
 	  * being processed.  Derived classes must supply this method.

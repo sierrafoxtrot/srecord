@@ -33,7 +33,7 @@ public:
 	virtual ~srec_output_file_ascii_hex();
 	srec_output_file_ascii_hex();
 	srec_output_file_ascii_hex(const char *);
-	void write(const class srec_record &);
+	void write(const srec_record &);
 	virtual void line_length_set(int);
 	virtual void address_length_set(int);
 	virtual int preferred_block_size_get() const;

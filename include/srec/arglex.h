@@ -101,7 +101,7 @@ public:
 	  * The constructor.  Pass the argc and argv as given to main;
 	  * there is not need to change the values at all.
 	  */
-	srec_arglex(int, char **);
+	srec_arglex(int argc, char **argv);
 
 	/**
 	  * The get_input method is used to parse an input specification
@@ -138,7 +138,7 @@ private:
 	  * line) a fatal error will be issued and the method call will
 	  * not return.
 	  */
-	class interval get_interval_inner(const char *);
+	class interval get_interval_inner(const char *err_msg_caption);
 
 	/**
 	  * The get_interval method is used to parse an interval
@@ -152,7 +152,7 @@ private:
 	  * line) a fatal error will be issued and the method call will
 	  * not return.
 	  */
-	class interval get_interval(const char *);
+	class interval get_interval(const char *err_msg_caption);
 
 	/**
 	  * The get_address method is used to parse an address from the
@@ -162,7 +162,7 @@ private:
 	  * line) a fatal error will be issued and the method call will
 	  * not return.
 	  */
-	void get_address(const char *, unsigned long &);
+	void get_address(const char *err_msg_caption, unsigned long &addr);
 
 	/**
 	  * The get_address_and_nbytes method is used to parse an address
@@ -172,7 +172,8 @@ private:
 	  * line) a fatal error will be issued and the method call will
 	  * not return.
 	  */
-	void get_address_and_nbytes(const char *, unsigned long &, int &);
+	void get_address_and_nbytes(const char *err_msg_caption,
+		unsigned long &addr, int &nbytes);
 
 	/**
 	  * The get_address_nbytes_width method is used to parse an address
@@ -182,8 +183,8 @@ private:
 	  * line) a fatal error will be issued and the method call will
 	  * not return.
 	  */
-	void get_address_nbytes_width(const char *, unsigned long &, int &,
-		int &);
+	void get_address_nbytes_width(const char *err_msg_caption,
+		unsigned long &addr, int &nbytes, int &width);
 
 	/**
 	  * The stdin_used instance variable is used to remember whether

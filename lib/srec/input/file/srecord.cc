@@ -106,7 +106,7 @@ srec_input_file_srecord::read_inner(srec_record &record)
 	--line_length;
 
 	int naddr = 2;
-	srec_record::type type = srec_record::type_unknown;
+	srec_record::type_t type = srec_record::type_unknown;
 	switch (tag)
 	{
 	case 0:

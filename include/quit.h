@@ -77,7 +77,7 @@ public:
 	  * is in the same style a standard C printf function.	It calls
 	  * the fatal_error_errno_v method.  This method does not return.
 	  */
-	virtual void fatal_error_errno(const char *, ...)
+	virtual void fatal_error_errno(const char *fmt, ...)
 							    FORMAT_PRINTF(2, 3);
 	/**
 	  * The fatal_error_errno_v method is used to report fatal
@@ -92,7 +92,7 @@ public:
 	  * The `fmt' string is in the same style a standard C printf
 	  * function.  It calls the warning_v method.
 	  */
-	virtual void warning(const char *, ...)
+	virtual void warning(const char *fmt, ...)
 							    FORMAT_PRINTF(2, 3);
 	/**
 	  * The warning_v method is used to report likely but non-fatal
@@ -106,7 +106,7 @@ public:
 	  * suitable destination.  The `fmt' string is in the same style
 	  * a standard C printf function.  The message_v method is called.
 	  */
-	virtual void message(const char *, ...)
+	virtual void message(const char *fmt, ...)
 							    FORMAT_PRINTF(2, 3);
 	/**
 	  * The message_v method is used to send an error message to

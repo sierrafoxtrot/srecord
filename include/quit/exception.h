@@ -27,19 +27,44 @@
 
 #include <quit.h>
 
+/**
+  * The quit_exception class is use to represent a quit handler which
+  * throws an exception, rather than call ::exit.
+  */
 class quit_exception:
 	public quit
 {
 public:
+	/**
+	  * The destructor.
+	  */
 	virtual ~quit_exception();
+
+	/**
+	  * The default constructor.
+	  */
 	quit_exception();
+
+	/**
+	  * The copy constructor.
+	  */
 	quit_exception(const quit_exception &);
+
+	/**
+	  * the assignment operator.
+	  */
 	quit_exception &operator=(const quit_exception &);
 
-	class vomit { }; // this is for throwing
+	/**
+	  * the vomit class is used for the throw.
+	  */
+	class vomit { };
 
+	// see base class for documentation
 	virtual void exit(int n);
-	virtual void message_v(const char *, va_list);
+
+	// see base class for documentation
+	virtual void message_v(const char *fmt, va_list);
 };
 
 #endif /* INCLUDE_QUIT_EXCEPTION_H */

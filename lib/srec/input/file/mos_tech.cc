@@ -113,7 +113,7 @@ srec_input_file_mos_tech::read_inner(srec_record &record)
 	if (get_char() != '\n')
 		fatal_error("end-of-line expected");
 
-	srec_record::type type = srec_record::type_data;
+	srec_record::type_t type = srec_record::type_data;
 	record = srec_record(type, address, buffer, length);
 	return 1;
 }

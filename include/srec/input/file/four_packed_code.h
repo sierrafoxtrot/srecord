@@ -52,10 +52,10 @@ public:
 	  */
 	virtual ~srec_input_file_four_packed_code();
 
-	/** See base class for documentation.  */
+	// See base class for documentation.
 	int read(srec_record &);
 
-	/** See bas class for documentation.  */
+	// See base class for documentation.
 	const char *get_file_format_name() const;
 
 private:

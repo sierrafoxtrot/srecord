@@ -26,34 +26,44 @@
 #include <srec/record.h>
 
 
-srec_record::srec_record()
-	: itype(type_unknown), address(0), length(0)
+srec_record::srec_record() :
+	type(type_unknown),
+	address(0),
+	length(0)
 {
 }
 
 
-srec_record::srec_record(const srec_record &arg)
-	: itype(arg.itype), address(arg.address), length(arg.length)
+srec_record::srec_record(const srec_record &arg) :
+	type(arg.type),
+	address(arg.address),
+	length(arg.length)
 {
 	if (arg.length > 0)
 		memcpy(data, arg.data, arg.length);
 }
 
 
-srec_record::srec_record(type arg)
-	: itype(arg), address(0), length(0)
+srec_record::srec_record(type_t arg) :
+	type(arg),
+	address(0),
+	length(0)
 {
 }
 
 
-srec_record::srec_record(type a1, address_t a2)
-	: itype(a1), address(a2), length(0)
+srec_record::srec_record(type_t a1, address_t a2) :
+	type(a1),
+	address(a2),
+	length(0)
 {
 }
 
 
-srec_record::srec_record(type a1, address_t a2, const data_t *a3, int a4)
-	: itype(a1), address(a2), length(a4 > 0 ? a4 : 0)
+srec_record::srec_record(type_t a1, address_t a2, const data_t *a3, int a4) :
+	type(a1),
+	address(a2),
+	length(a4 > 0 ? a4 : 0)
 {
 	if (length > 0)
 		memcpy(data, a3, length);
@@ -63,11 +73,14 @@ srec_record::srec_record(type a1, address_t a2, const data_t *a3, int a4)
 srec_record &
 srec_record::operator=(const srec_record &arg)
 {
-	itype = arg.itype;
-	address = arg.address;
-	length = arg.length;
-	if (arg.length > 0)
-		memcpy(data, arg.data, arg.length);
+	if (this != &arg)
+	{
+		type = arg.type;
+		address = arg.address;
+		length = arg.length;
+		if (arg.length > 0)
+			memcpy(data, arg.data, arg.length);
+	}
 	return *this;
 }
 

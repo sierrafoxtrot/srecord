@@ -52,16 +52,16 @@ public:
 	  */
 	srec_output_file_four_packed_code(const char *);
 
-	/** See base class for documentation.  */
+	// See base class for documentation.
 	void write(const srec_record &);
 
-	/** See base class for documentation.  */
+	// See base class for documentation.
 	void line_length_set(int);
 
-	/** See base class for documentation.  */
+	// See base class for documentation.
 	void address_length_set(int);
 
-	/** See base class for documentation.  */
+	// See base class for documentation.
 	int preferred_block_size_get() const;
 
 private:

@@ -142,7 +142,7 @@ srec_input_file_intel::read_inner(srec_record &record)
 		srec_record::address_t address_field =
 			srec_record::decode_big_endian(buffer + 1, 2);
 	
-		srec_record::type type = srec_record::type_unknown;
+		srec_record::type_t type = srec_record::type_unknown;
 		switch (buffer[3])
 		{
 		case 0:

@@ -128,7 +128,7 @@ srec_input_file_tektronix_extended::read_inner(srec_record &record)
 	if (get_char() != '\n')
 		fatal_error("end-of-line expected");
 
-	srec_record::type type = srec_record::type_unknown;
+	srec_record::type_t type = srec_record::type_unknown;
 	switch (tag)
 	{
 	default:

@@ -28,23 +28,66 @@
 #include <string>
 #include <quit.h>
 
+/**
+  * The quit_prefix class is used to filter the messages issued to include
+  * a line prefix.  The message is then passed ot a deeper quit handler.
+  */
 class quit_prefix:
 	public quit
 {
 public:
+	/**
+	  * The destructor.
+	  */
 	virtual ~quit_prefix();
-	quit_prefix(quit &, const char *);
-	quit_prefix(quit &, const string &);
 
+	/**
+	  * A constructor.  The given handler is used to process the
+	  * messages, once prefixed.  The given string is used as the
+	  * line prefix.
+	  */
+	quit_prefix(quit &deeper, const char *prefix);
+
+	/**
+	  * A constructor.  The given handler is used to process the
+	  * messages, once prefixed.  The given string is used as the
+	  * line prefix.
+	  */
+	quit_prefix(quit &deeper, const string &prefix);
+
+	// See base class for documentation.
 	virtual void exit(int);
+
+	// See base class for documentation.
 	virtual void message_v(const char *, va_list);
 
 private:
+	/**
+	  * The prefix instance variable is used to remember the line
+	  * prefix to use.
+	  */
 	string prefix;
+
+	/**
+	  * The deepr instance variable is used to remember which handler
+	  * is to be used to process the error messages once the refix
+	  * has been added.
+	  */
 	quit &deeper;
 
+	/**
+	  * The default constructor.  Do not use.
+	  */
 	quit_prefix();
+
+	/**
+	  * The copy constructor.  Do not use.
+	  */
 	quit_prefix(const quit_prefix &);
+
+	/**
+	  * The assignment operator.  Do not use.
+	  */
 	quit_prefix &operator=(const quit_prefix &);
 };
 

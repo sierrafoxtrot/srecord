@@ -54,10 +54,10 @@ public:
 	  */
 	virtual ~srec_input_file();
 
-	/** See base class for documentation.  */
+	// See base class for documentation.
 	virtual const string filename() const;
 
-	/** See base class for documentation.  */
+	// See base class for documentation.
 	virtual const string filename_and_line() const;
 
 protected:

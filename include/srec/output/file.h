@@ -55,9 +55,7 @@ public:
 	  */
 	virtual ~srec_output_file();
 
-	/**
-	  * Get the name of the file being written.
-	  */
+	// See base class for documentation.
 	virtual const string filename() const;
 
 	/**
@@ -78,7 +76,7 @@ protected:
 
 	/**
 	  * The put_nibble method is used to send a hexadecimal digit
-	  * (0..9, A..F) to the output.  It Calls put_char to send
+	  * (0..9, A..F) to the output.  It calls put_char to send
 	  * the output.
 	  */
 	void put_nibble(int);
@@ -89,9 +87,9 @@ protected:
 	  * method twice, big-endian (most significant nibble first).
 	  *
 	  * The value of the byte will be added to the running checksum,
-	  * via the checksum_add method.
+	  * via the checksum_add() method.
 	  *
-	  * Usually, this get_byte method implemention is sufficient for
+	  * Usually, this get_byte() method implemention is sufficient for
 	  * most output classes, however derived classes may over-ride
 	  * it if they have a special case.  Over-ride with caution,
 	  * as it affects many other methods.
@@ -100,21 +98,21 @@ protected:
 
 	/**
 	  * The put_word method is used to send a 16-bit value to the
-	  * output.  The put_byte method is called twice, and the two
+	  * output.  The put_byte() method is called twice, and the two
 	  * byte values are sent big-endian (most significant byte first).
 	  */
 	virtual void put_word(int);
 
 	/**
 	  * The put_3bytes method is used to send a 24-bit value to
-	  * the output.  The put_byte method is called three times, and
+	  * the output.  The put_byte() method is called three times, and
 	  * the three byte values are sent big-endian (most significant
 	  * byte first).
 	  */
 	virtual void put_3bytes(unsigned long);
 
 	/**
-	  * The checksum_rest method is used to set the running checksum
+	  * The checksum_reset method is used to set the running checksum
 	  * to zero.
 	  */
 	void checksum_reset();
@@ -131,16 +129,16 @@ protected:
 
 	/**
 	  * The checksum_get method is used to get the current value of
-	  * the running checksum (added to by the checksum_add method,
-	  * usually called by the get_byte method).  Only the lower 8
+	  * the running checksum (added to by the checksum_add() method,
+	  * usually called by the get_byte() method).  Only the lower 8
 	  * bits of the sum are returned.
 	  */
 	int checksum_get();
 
 	/**
 	  * The checksum_get16 method is used to get the current value of
-	  * the running checksum (added to by the checksum_add method,
-	  * usually called by the get_byte method).  Only the lower 16
+	  * the running checksum (added to by the checksum_add() method,
+	  * usually called by the get_byte() method).  Only the lower 16
 	  * bits of the sum are returned.
 	  */
 	int checksum_get16();
@@ -153,14 +151,14 @@ protected:
 
 	/**
 	  * The put_string method is used to send a nul-terminated C
-	  * string to the output.  Multiple calls to put_char are made.
+	  * string to the output.  Multiple calls to put_char() are made.
 	  */
 	void put_string(const char *);
 
 	/**
 	  * The put_stringf method is used to send a formatted string
 	  * to the output.  The format and operation ios similar to the
-	  * standard printf function.  Multiple calls to put_char are made.
+	  * standard printf function.  Multiple calls to put_char() are made.
 	  */
 	void put_stringf(const char *, ...)		    FORMAT_PRINTF(2, 3);
 
@@ -172,8 +170,8 @@ protected:
 	virtual const char *mode() const;
 
 	/**
-	  * The data_only_flag instance variable is set by the data_only
-	  * method, to remember that only data records are to be sebt
+	  * The data_only_flag instance variable is set by the data_only()
+	  * method, to remember that only data records are to be sent
 	  * to the output.  Header records, start address records, etc,
 	  * are all suppressed.
 	  */
@@ -181,8 +179,8 @@ protected:
 
 private:
 	/** 
-	  * The file_name instance variable is used by the filename
-	  * and filename_and_line methods to report the name of the
+	  * The file_name instance variable is used by the filename()
+	  * and filename_and_line() methods to report the name of the
 	  * input file.  This makes for informative error mesages.
 	  */
 	string file_name;
@@ -190,15 +188,15 @@ private:
 	/** 
 	  * The line_number instance variable is used by the get_char
 	  * method to remember the current line number.  It us used by the
-	  * filename_and_line method to report the current file location.
+	  * filename_and_line() method to report the current file location.
 	  */
 	int line_number;
 
 	/**
-	  * The vfp instance variable is used by the get_fp method to
+	  * The vfp instance variable is used by the get_fp() method to
 	  * remember the file pointer.  You need to cast it to FILE* befor
 	  * you use it.  Never access this instance variable directly,
-	  * always go via the get_fp method.  This ensures the file has
+	  * always go via the get_fp() method.  This ensures the file has
 	  * been opened first!
 	  */
 	void *vfp;
@@ -207,9 +205,9 @@ protected:
 	/**
 	  * The checksum instance variable is used record the running
 	  * checksum.  NEVER access this variable directly.  Always use
-	  * the checksum_reset method to set it mack to its initial state.
-	  * Always use the checksum_add method to add a byte to it.
-	  * Always use the checksum)_get or checksum_get16 methods to
+	  * the checksum_reset() method to set it mack to its initial state.
+	  * Always use the checksum_add() method to add a byte to it.
+	  * Always use the checksum_get() or checksum_get16() methods to
 	  * read its value.
 	  */
 	int checksum;
