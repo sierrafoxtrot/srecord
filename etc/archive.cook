@@ -136,7 +136,7 @@ archive/[project_minus].pdf: etc/reference.pdf
 		[prepost "-I" /[arch]/etc [search_list]]
 		[prepost "-I" "/etc" [search_list]]
 		[resolve etc/%.man]
-	| groff -Tascii -t -P-ub -man
+	| groff -Tascii -t -P-bcu -man
 	> [target];
 }
 
@@ -254,7 +254,7 @@ archive/%.html: etc/%.html etc/ssp.awk
 		[prepost "-I" /[arch]/etc [search_list]]
 		[prepost "-I" "/etc" [search_list]]
 		[resolve etc/%.html]
-	| groff -Tascii -t -P-ub -man
+	| groff -Tascii -t -P-bcu -man
 	| [awk] -f [resolve etc/ssp.awk]
 	> [target];
 }
@@ -296,7 +296,7 @@ archive/[project_minus].lsm: etc/[project_short].lsm etc/ssp.awk
 		[prepost "-I" /[arch]/etc [search_list]]
 		[prepost "-I" "/etc" [search_list]]
 		[resolve etc/[project_short].lsm]
-	| groff -Tascii -t -P-ub -man
+	| groff -Tascii -t -P-bcu -man
 	| [awk] -f [resolve etc/ssp.awk]
 	> [target];
 }
