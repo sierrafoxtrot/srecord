@@ -17,39 +17,12 @@
 .\"	along with this program; if not, write to the Free Software
 .\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.14 features
+.\" MANIFEST: description of new 1.15 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" change 19
-The Ascii-Hex implementation is now slightly more complete.
-I still haven't found a definitive description.
-.PP
-.if n *
-.if t \(bu
-.\" change 18
-The Fairchild Fairbug format has been added for reading and writing.
-.PP
-.if n *
-.if t \(bu
-.\" change 17
-The Spectrum format has been added for reading and writing.
-.PP
-.if n *
-.if t \(bu
-.\" change 16
-The Formatted Binary format has been added for reading and writing.
-.PP
-.if n *
-.if t \(bu
-.\" change 12
-The RCA Cosmac Elf format has been added for reading and writing.
-.PP
-.if n *
-.if t \(bu
-.\" change 11
-The Needham EMP programmer format has been added for reading and writing.
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" change NN
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.14
+.SS Version 1.15

@@ -151,7 +151,7 @@ or portions of EPROM load files, for equality.
 The \fIsrec_info\fP program may be used to print summary information
 about EPROM load files.
 .SS The Filters
-The \fISRecord\fP package is made more powerful by the concept of \fInput
+The \fISRecord\fP package is made more powerful by the concept of \fIinput
 filters\fP.  Wherever an input file may be specified, filters may also
 be applied to that input file.  The following filters are available:
 .TP 8n
