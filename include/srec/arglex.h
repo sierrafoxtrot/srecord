@@ -37,6 +37,10 @@ public:
 		token_binary,
 		token_byte_swap,
 		token_c_array,
+		token_crc16_be,
+		token_crc16_le,
+		token_crc32_be,
+		token_crc32_le,
 		token_checksum_be_bitnot,
 		token_checksum_be_negative,
 		token_checksum_be_positive,
@@ -86,6 +90,7 @@ private:
 	srec_arglex &operator=(const srec_arglex &);
 	class interval get_interval_inner(const char *);
 	class interval get_interval(const char *);
+	void get_address(const char *, unsigned long &);
 	void get_address_and_nbytes(const char *, unsigned long &, int &);
 	void get_address_nbytes_width(const char *, unsigned long &, int &, int &);
 	bool stdin_used;

@@ -46,13 +46,18 @@ public:
 	static bool equal(const srec_memory &, const srec_memory &);
 	static bool compare(const srec_memory &, const srec_memory &);
 
+	bool find_next_data(unsigned long &address, void *data,
+		size_t &nbytes) const;
+
 private:
 	mutable int nchunks;
 	mutable int nchunks_max;
 	mutable srec_memory_chunk **chunk;
 	mutable srec_memory_chunk *cache;
+	mutable int find_next_chunk_index;
 
 	srec_memory_chunk *find(unsigned long) const;
+	srec_memory_chunk *find_next_chunk(unsigned long) const;
 	void clear();
 	void copy(const srec_memory &);
 };

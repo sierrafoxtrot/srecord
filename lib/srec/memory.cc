@@ -28,14 +28,22 @@
 #include <srec/record.h>
 
 
-srec_memory::srec_memory()
-	: nchunks(0), nchunks_max(0), chunk(0), cache(0)
+srec_memory::srec_memory() :
+	nchunks(0),
+	nchunks_max(0),
+	chunk(0),
+	cache(0),
+	find_next_chunk_index(0)
 {
 }
 
 
-srec_memory::srec_memory(const srec_memory &arg)
-	: nchunks(0), nchunks_max(0), chunk(0), cache(0)
+srec_memory::srec_memory(const srec_memory &arg) :
+	nchunks(0),
+	nchunks_max(0),
+	chunk(0),
+	cache(0),
+	find_next_chunk_index(0)
 {
 	copy(arg);
 }
@@ -273,4 +281,48 @@ bool
 operator != (const srec_memory &lhs, const srec_memory &rhs)
 {
 	return !srec_memory::equal(lhs, rhs);
+}
+
+
+srec_memory_chunk *
+srec_memory::find_next_chunk(unsigned long address)
+	const
+{
+	//
+	// This method is generally called sequentially, to visit each
+	// and every byte, in cases where walk() is not appropriate.
+	// As such, a binary chop isn't necessary.
+	//
+	if (find_next_chunk_index < nchunks)
+	{
+		srec_memory_chunk *mcp = chunk[find_next_chunk_index];
+		if (mcp->get_address() > address)
+			find_next_chunk_index = 0;
+	}
+	while (find_next_chunk_index < nchunks)
+	{
+		srec_memory_chunk *mcp = chunk[find_next_chunk_index];
+		if (mcp->get_address() >= address)
+			return mcp;
+		find_next_chunk_index++;
+	}
+	return 0;
+}
+
+
+bool
+srec_memory::find_next_data(unsigned long &address, void *data, size_t &nbytes)
+	const
+{
+	unsigned long address_hi = address / srec_memory_chunk::size;
+	for (;;)
+	{
+		srec_memory_chunk *mcp = find_next_chunk(address_hi);
+		if (!mcp)
+			return false;
+		if (mcp->find_next_data(address, data, nbytes))
+			return true;
+		address_hi = mcp->get_address() + 1;
+		address = address_hi * srec_memory_chunk::size;
+	}
 }

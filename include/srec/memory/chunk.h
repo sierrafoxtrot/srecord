@@ -44,6 +44,7 @@ public:
 	unsigned long get_address() const { return address; }
 
 	static bool equal(const srec_memory_chunk &, const srec_memory_chunk &);
+	bool find_next_data(unsigned long &, void *, size_t &) const;
 
 private:
 	unsigned long address;

@@ -22,6 +22,11 @@
 .PP
 .if n *
 .if t \(bu
+.\" change 18
+There is a new CRC16 input filter, both big and little endian.
+.PP
+.if n *
+.if t \(bu
 .\" change 16
 There is a new VHDL output format.
 .PP

@@ -40,6 +40,7 @@
 #include <srec/input/filter/checksum/bitnot.h>
 #include <srec/input/filter/checksum/negative.h>
 #include <srec/input/filter/checksum/positive.h>
+#include <srec/input/filter/crc16.h>
 #include <srec/input/filter/crop.h>
 #include <srec/input/filter/fill.h>
 #include <srec/input/filter/length.h>
@@ -91,6 +92,10 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Byte_Swap",	token_byte_swap,	},
 		{ "-C_Array",	token_c_array,		},
 		{ "-CRop",	token_crop,		},
+		{ "-Big_Endian_Cyclic_Redundancy_Check_16", token_crc16_be, },
+		{ "-Little_Endian_Cyclic_Redundancy_Check_16", token_crc16_le,},
+		{ "-Big_Endian_Cyclic_Redundancy_Check_32", token_crc32_be, },
+		{ "-Little_Endian_Cyclic_Redundancy_Check_32", token_crc32_le,},
 		{ "-Exclude",	token_exclude,		},
 		{ "-Fill",	token_fill,		},
 		{ "-GUess",	token_guess,		},
@@ -229,6 +234,21 @@ srec_arglex::get_interval(const char *name)
 		break;
 	}
 	return range;
+}
+
+
+void
+srec_arglex::get_address(const char *name, unsigned long &address)
+{
+	if (token_next() != token_number)
+	{
+		cerr << "the " << name
+			<< " filter requires an address"
+			<< endl;
+		exit(1);
+	}
+	address = value_number();
+	token_next();
 }
 
 
@@ -415,6 +435,22 @@ srec_arglex::get_input()
 		case token_byte_swap:
 			token_next();
 			ifp = new srec_input_filter_byte_swap(ifp);
+			continue;
+
+		case token_crc16_be:
+			{
+			    unsigned long address;
+			    get_address("-Big_Endian_CRC16", address);
+			    ifp = new srec_input_filter_crc16(ifp, address, 0);
+			}
+			continue;
+
+		case token_crc16_le:
+			{
+			    unsigned long address;
+			    get_address("-Little_Endian_CRC16", address);
+			    ifp = new srec_input_filter_crc16(ifp, address, 1);
+			}
 			continue;
 
 		case token_crop:

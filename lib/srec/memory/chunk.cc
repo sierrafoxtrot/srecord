@@ -92,6 +92,30 @@ srec_memory_chunk::walk(srec_memory_walker *w)
 }
 
 
+bool
+srec_memory_chunk::find_next_data(unsigned long &ret_addr, void *ret_data,
+		size_t &nbytes)
+	const
+{
+	for (unsigned j = ret_addr % size; j < size; ++j)
+	{
+		if (!set_p(j))
+			continue;
+		size_t max = j + nbytes;
+		if (max > size)
+			max = size;
+		unsigned k;
+		for (k = j + 1; k < max && set_p(k); ++k)
+			;
+		nbytes = k - j;
+		memcpy(ret_data, data, nbytes);
+		ret_addr = address * size + j;
+		return true;
+	}
+	return false;
+}
+
+
 int
 srec_memory_chunk::get(unsigned long offset)
 {
