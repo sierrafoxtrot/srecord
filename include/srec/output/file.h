@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2001 Peter Miller;
+ *	Copyright (C) 1998-2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -213,6 +213,27 @@ protected:
 	int checksum;
 
 private:
+	/**
+	  * The position instance variable is used to remember the
+	  * current position within the output file.  Set by the put_char
+	  * method, and the seek_to method.  Used by the seek_to method.
+	  */
+	unsigned long position;
+
+	/**
+	  * The is_regular instance variable is used to remember whther
+	  * or not the file is a regular file.	Thsi is set by the
+	  * set_is_regular method.  It is used by the seek_to method.
+	  */
+	bool is_regular;
+
+	/**
+	  * The set_is_regular method shall be used whenevr vfp is
+	  * assigned, to estanblish whther the output file is a regular
+	  * file or a spoecial file (liek a pipe).
+	  */
+	void set_is_regular(void);
+
 	/**
 	  * The get_fp method is used to get the stdio file pointer
 	  * associated with this input file.  (By avoiding a FILE*

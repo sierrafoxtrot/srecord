@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2001 Peter Miller;
+ *	Copyright (C) 1998-2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -26,6 +26,8 @@
 #include <errno.h>
 #include <iostream>
 using namespace std;
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include <srec/output/file.h>
 
@@ -33,10 +35,16 @@ using namespace std;
 bool srec_output_file::data_only_flag = false;
 
 
-srec_output_file::srec_output_file()
-	: file_name("standard output"), line_number(1), vfp(0), checksum(0)
+srec_output_file::srec_output_file() :
+	file_name("standard output"),
+	line_number(1),
+	vfp(0),
+	checksum(0),
+	position(0),
+	is_regular(true)
 {
 	vfp = stdout;
+	set_is_regular();
 }
 
 
@@ -58,12 +66,15 @@ srec_output_file::srec_output_file(const char *fn) :
 	file_name(fn),
 	line_number(1),
 	vfp(0),
-	checksum(0)
+	checksum(0),
+	position(0),
+	is_regular(true)
 {
 	if (file_name == string("-"))
 	{
 		file_name = "standard output";
 		vfp = stdout;
+		set_is_regular();
 	}
 	else
 	{
@@ -97,6 +108,7 @@ srec_output_file::get_fp()
 		vfp = fopen(file_name.c_str(), mode());
 		if (!vfp)
 			fatal_error_errno("open");
+		set_is_regular();
 	}
 	return vfp;
 }
@@ -131,6 +143,7 @@ srec_output_file::put_char(int c)
 		fatal_error_errno("write");
 	if (c == '\n')
 		++line_number;
+        ++position;
 }
 
 
@@ -197,9 +210,26 @@ srec_output_file::checksum_add(unsigned char n)
 void
 srec_output_file::seek_to(unsigned long address)
 {
+	//
+	// Seeking on non-regular files is problematic.  Avoid doing
+	// this if possible.  (Usually we can, srec_cat emits records
+	// in ascending address order.)
+	//
+	if (!is_regular)
+	{
+	    while (position < address)
+		put_char(0);
+	}
+	if (address == position)
+		return;
+
+	//
+	// We'll have to try a seek.
+	//
 	FILE *fp = (FILE *)get_fp();
 	if (fseek(fp, address, 0) < 0)
 		fatal_error_errno("seek %ld", address);
+	position = address;
 }
 
 
@@ -227,4 +257,13 @@ void
 srec_output_file::data_only()
 {
 	data_only_flag = true;
+}
+
+
+void
+srec_output_file::set_is_regular()
+{
+    FILE *fp = (FILE *)vfp;
+    struct stat st;
+    is_regular = fstat(fileno(fp), &st) == 0 && S_ISREG(st.st_mode);
 }
