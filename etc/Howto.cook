@@ -27,6 +27,42 @@ set time-adjust;
 awk = gawk;
 
 /*
+ * The first item in search list should be the absolute path of the
+ * current directory.  Assume that it is.
+ */
+search_list = .;
+search_tmp = [tail [split ':' [search_path]]];
+
+/*
+ * Try to shorten the search path in command lines, too.
+ *
+ * This takes a little getting used to....
+ * 1. For development builds, the search path is dev dir, then branch bl,
+ *    then ... project bl.  Thus, bl in a dev dir winds up pointing to
+ *    the branch reporitory.
+ * 2. For integration builds, aegis deliberately omits the branch
+ *    baseline from the path, but include's the branch's parents and
+ *    ancestors.  Thus, bl in an int dir winds up pointing to the
+ *    branch's parent's reporitory.
+ * The idea is that integration builds in a branch are like a
+ * development build of the branch's dev dir.
+ */
+search_name = bl;
+loop
+{
+	search_dir = [head [search_tmp]];
+	if [not [search_dir]] then
+		loopstop;
+	search_tmp = [tail [search_tmp]];
+
+	if [not [exists [search_name]]] then
+		ln -s [search_dir] [search_name]
+			set clearstat;
+	search_list = [search_list] [search_name];
+	search_name = [search_name]bl;
+}
+
+/*
  * determine the short version:
  * no change or delta number
  */
@@ -157,7 +193,7 @@ loop
 
 if [match %1C%2 [version]] then
 {
-	search_list = . bl;
+	baseline = bl;
 }
 else
 {
@@ -322,6 +358,9 @@ etc/version.so:
 	echo "'.ds Y) "[copyright_years]"'" >> [target];
 }
 
+#else
+if [defined leaf_file_accept] then
+leaf_file_accept = [leaf_file_accept] etc/version.so;
 #endif
 
 /*

@@ -23,7 +23,9 @@
 #ifndef INCLUDE_SREC_INPUT_FILTER_CROP_H
 #define INCLUDE_SREC_INPUT_FILTER_CROP_H
 
+#include <interval.h>
 #include <srec/input/filter.h>
+#include <srec/record.h>
 
 #pragma interface
 
@@ -31,11 +33,13 @@ class srec_input_filter_crop: public srec_input_filter
 {
 public:
 	virtual ~srec_input_filter_crop();
-	srec_input_filter_crop(srec_input *, unsigned long, unsigned long);
+	srec_input_filter_crop(srec_input *, const interval &);
 	virtual int read(srec_record &);
 
 private:
-	unsigned long lo, hi;
+	interval range;
+	srec_record data;
+	interval data_range;
 	srec_input_filter_crop();
 	srec_input_filter_crop(const srec_input_filter_crop &);
 	srec_input_filter_crop &operator=(const srec_input_filter_crop &);

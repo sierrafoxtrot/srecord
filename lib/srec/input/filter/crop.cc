@@ -22,25 +22,26 @@
 
 #pragma implementation
 
+#include <interval.h>
 #include <srec/input/filter/crop.h>
 #include <srec/record.h>
 
 
 srec_input_filter_crop::srec_input_filter_crop()
-	: srec_input_filter(), lo(0), hi(0)
+	: srec_input_filter(), range(), data(), data_range()
 {
 }
 
 
 srec_input_filter_crop::srec_input_filter_crop(srec_input *a1,
-		unsigned long a2, unsigned long a3)
-	: srec_input_filter(a1), lo(a2), hi(a3)
+		const interval &a2)
+	: srec_input_filter(a1), range(a2), data(), data_range()
 {
 }
 
 
 srec_input_filter_crop::srec_input_filter_crop(const srec_input_filter_crop &arg)
-	: srec_input_filter(arg), lo(arg.lo), hi(arg.hi)
+	: srec_input_filter(arg), range(arg.range), data(), data_range()
 {
 }
 
@@ -49,8 +50,9 @@ srec_input_filter_crop &
 srec_input_filter_crop::operator=(const srec_input_filter_crop &arg)
 {
 	srec_input_filter::operator=(arg);
-	lo = arg.lo;
-	hi = arg.hi;
+	range = arg.range;
+	data = srec_record();
+	data_range = interval();
 	return *this;
 }
 
@@ -65,55 +67,91 @@ srec_input_filter_crop::read(srec_record &record)
 {
 	for (;;)
 	{
-		if (!srec_input_filter::read(record))
-			return 0;
-		switch (record.get_type())
+		/*
+		 * If we are not holding any current data,
+		 * fetch another record from out input.
+		 */
+		if (data_range.empty())
 		{
-		default:
-			break;
-
-		case srec_record::type_data:
+			/*
+			 * If the input is exhausted, we are done.
+			 */
+			if (!srec_input_filter::read(data))
+				return 0;
+			switch (data.get_type())
 			{
-				unsigned long address = record.get_address();
-				int length = record.get_length();
-				const unsigned char *data = record.get_data();
-				if (address >= lo)
-				{
-					if (hi && address >= hi)
-						continue;
-					if (hi && address + length > hi)
-						record.set_length(hi - address);
-					break;
-				}
-				if (address + length <= lo)
-					continue;
-				int offset = lo - address;
-				address += offset;
-				data += offset;
-				length -= offset;
-				if (hi && address + length > hi)
-					length = hi - address;
-				record =
-					srec_record
+			default:
+				/*
+				 * If the input is of a typoe we don't
+				 * care about, pass it through.
+				 */
+				record = data;
+				return 1;
+	
+			case srec_record::type_data:
+				/*
+				 * Data records are remembered, and
+				 * doled out peicmeal, as they mask
+				 * against the clip region.
+				 */
+				data_range =
+					interval
 					(
-						srec_record::type_data,
-						address,
-						data,
-						length
+						data.get_address(),
+						data.get_address() + data.get_length()
 					);
+				break;
+	
+			case srec_record::type_termination:
+				/*
+				 * Discard termination records which do
+				 * not fall into the clip region.
+				 */
+				if (!range.member(data.get_address()))
+					continue;
+				record = data;
+				return 1;
 			}
-			break;
-
-		case srec_record::type_termination:
-			if
-			(
-				record.get_address() < lo
-			||
-				(hi && record.get_address() >= hi)
-			)
-				continue;
-			break;
 		}
+
+		/*
+		 * Intersect the data left unprocessed in this record
+		 * with the clip region.  There could be more than one
+		 * region, but we only want the first one.  We will make
+		 * another pass if there is more than one.
+		 */
+		interval fragment = range * data_range;
+		if (fragment.empty())
+		{
+			data_range = interval();
+			continue;
+		}
+		fragment.first_interval_only();
+
+		/*
+		 * Construct the return record from the data held.
+		 */
+		unsigned long lo = fragment.get_lowest();
+		unsigned long hi = fragment.get_highest();
+		record = 
+			srec_record
+			(
+				srec_record::type_data,
+				lo,
+				data.get_data() + lo - data.get_address(),
+				hi - lo
+			);
+
+		/*
+		 * Subtract this segment from the data held.  If there
+		 * is anything left, another pass will construct another
+		 * data record for it.
+		 */
+		data_range -= fragment;
+
+		/*
+		 * Success
+		 */
 		return 1;
 	}
 }

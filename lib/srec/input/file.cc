@@ -47,7 +47,7 @@ srec_input_file::srec_input_file(const char *file_name)
 	: file_name(file_name), line_number(1), prev_was_newline(false),
 	  checksum(0)
 {
-	if (file_name == "-")
+	if (file_name == string("-"))
 	{
 		file_name = "standard input";
 		fp = stdin;

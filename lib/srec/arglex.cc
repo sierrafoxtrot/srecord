@@ -48,6 +48,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 	{
 		{ "-BINary",	token_binary,	},
 		{ "-Crop",	token_crop,	},
+		{ "-Exclude",	token_exclude,	},
 		{ "-Intel",	token_intel,	},
 		{ "-Motorola",	token_motorola,	},
 		{ "-OFfset",	token_offset,	},
@@ -78,6 +79,40 @@ srec_arglex::operator=(const srec_arglex &)
 srec_arglex::~srec_arglex()
 {
 	/* bug */
+}
+
+
+interval
+srec_arglex::get_interval(const char *name)
+{
+	if (token_next() != token_number)
+	{
+		cerr << "the " << name
+			<< " filter requires two numeric arguments" << endl;
+		exit(1);
+	}
+	interval range;
+	for (;;)
+	{
+		unsigned long n1 = value_number();
+		unsigned long n2 = 0;
+		if (token_next() == token_number)
+		{
+			n2 = value_number();
+			token_next();
+		}
+		if (n2 && n1 >= n2)
+		{
+			cerr << "the -crop range " << n1
+				<< ".." << n2 << " is invalid"
+				<< endl;
+			exit(1);
+		}
+		range += interval(n1, n2);
+		if (token_cur() != token_number)
+			break;
+	}
+	return range;
 }
 
 
@@ -138,36 +173,21 @@ srec_arglex::get_input()
 		switch (token_cur())
 		{
 		case token_crop:
-			{
-				if (token_next() != token_number)
-				{
-					cerr <<
-			       "the -crop filter requires two numeric arguments"
-						<< endl;
-					exit(1);
-				}
-				unsigned long n1 = value_number();
-				unsigned long n2 = 0;
-				if (token_next() == token_number)
-				{
-					n2 = value_number();
-					token_next();
-				}
-				if (n2 && n1 >= n2)
-				{
-					cerr << "the -crop range " << n1
-						<< ".." << n2 << " is invalid"
-						<< endl;
-					exit(1);
-				}
-				ifp = new srec_input_filter_crop(ifp, n1, n2);
-			}
+			ifp = new srec_input_filter_crop(ifp,
+				get_interval("-Crop"));
+			continue;
+
+		case token_exclude:
+			ifp = new srec_input_filter_crop(ifp,
+				-get_interval("-Exclude"));
 			continue;
 
 		case token_offset:
 			if (token_next() != token_number)
 			{
-				cerr << "the -offset filter requires a numeric argument" << endl;
+				cerr <<
+				"the -offset filter requires a numeric argument"
+					<< endl;
 				exit(1);
 			}
 			ifp = new srec_input_filter_offset(ifp, value_number());

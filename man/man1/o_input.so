@@ -52,10 +52,18 @@ This option says to use the Motorola S-Record format to read the file.
 You may specify zero or more \fIfilters\fP to be applied.
 Filters are applied in the order given.
 .TP 8n
-\fB\-Crop\fP \fIminimum\fP [ \fImaximum\fP ]
-This filter may be used to crop out a section of data, and discard
-the rest.  If the maximum is not specified (or is given as zero) the
-range extends to the end of the address space.
+\fB\-Crop\fP \fIminimum\fP \fImaximum\fP
+This filter may be used to isolate a section of data, and discard the
+rest.  The minimum is inclusive, the maximum is exclusive (one more then
+the last address).  If the maximum is given as zero then the range extends
+to the end of the address space.  More than one address pair may be given.
+.TP 8n
+\fB\-Exclude\fP \fIminimum\fP \fImaximum\fP
+This filter may be used to exclude a section of data, and keep the rest.
+The minimum is inclusive, the maximum is exclusive (one more then the
+last address).  If the maximum is given as zero then the range extends
+to the end of the address space.  The is the precise opposite of the
+\fB\-Crop\fP filter.  More than one address pair may be given.
 .TP 8n
 \fB\-OFfset\fP \fInbytes\fP
 This filter may be used to

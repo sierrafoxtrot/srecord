@@ -28,7 +28,7 @@ all = [all]
 man/cat%1/%2.%1: man/man%1/%2.%1
 {
 	roffpp [prepost "-I" "/man/man%1" [search_list]] [prepost "-I"
-		"/aux" [search_list]] [resolve man/man%1/%2.%1] | groff
+		"/etc" [search_list]] [resolve man/man%1/%2.%1] | groff
 		-Tascii -t -man > [target];
 }
 
@@ -37,7 +37,7 @@ man/man%1/%2.%1.d: man/man%1/%2.%1
 	[c_incl] -nc -ns -api
 		--lang\=roff
 		[prepost "-I" "/man/man%1" [search_list]]
-		[prepost "-I" "/aux" [search_list]]
+		[prepost "-I" "/etc" [search_list]]
 		[resolve man/man%1/%2.%1]
 		-prefix "'man/man%1/%2.%1.d man/cat%1/%2.%1: man/man%1/%2.%1'"
 		-suffix "'set nodefault;'"

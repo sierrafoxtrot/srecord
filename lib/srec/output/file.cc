@@ -45,7 +45,7 @@ srec_output_file::srec_output_file(const srec_output_file &)
 srec_output_file::srec_output_file(const char *file_name)
 	: file_name(file_name), line_number(1), checksum(0)
 {
-	if (file_name == "-")
+	if (file_name == string("-"))
 	{
 		file_name = "standard output";
 		fp = stdout;

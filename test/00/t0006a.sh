@@ -138,6 +138,33 @@ diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
 #
+# [===data===]
+#              [===crop===]
+#
+cat > test.ok << 'fubar'
+S00600004844521B
+S5030000FC
+S9030000FC
+fubar
+if test $? -ne 0; then no_result; fi
+
+$bin/srec_cat test.in -bin -crop 10000 -o test.out
+if test $? -ne 0; then fail; fi
+
+diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
+#
+#              [===data===]
+# [===crop===]
+#
+$bin/srec_cat test.in -bin -offset 256 -crop 0 128 -o test.out
+if test $? -ne 0; then fail; fi
+
+diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
+#
 # The things tested here, worked.
 # No other guarantees are made.
 #

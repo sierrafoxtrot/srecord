@@ -29,7 +29,7 @@
  * about command substitutions.
  */
 build_command =
-	"cook -b ${s etc/Howto.cook} project=$p change=$c version=$v arch=$arch -nl -st";
+	"cook -b ${s etc/Howto.cook} project=$p change=$c version=$v arch=$arch -nl -st  search_path=$search_path";
 
 /*
  * The recipes in the User Guide will all remove their targets before
@@ -305,3 +305,4 @@ symlink_exceptions =
 
 maximum_filename_length = 30;
 
+filename_pattern_reject = [ "*.[cC]", "*.[cC]++" ];

@@ -34,6 +34,7 @@ public:
 	{
 		token_binary = arglex::token_MAX,
 		token_crop,
+		token_exclude,
 		token_intel,
 		token_motorola,
 		token_offset,
@@ -51,6 +52,7 @@ private:
 	srec_arglex();
 	srec_arglex(const srec_arglex &);
 	srec_arglex &operator=(const srec_arglex &);
+	class interval get_interval(const char *);
 };
 
 #endif /* INCLUDE_SREC_ARGLEX_H */
