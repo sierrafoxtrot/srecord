@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -75,6 +75,16 @@ private:
       * preferred number of bytes on each line of the output file.
       */
     int pref_block_size;
+
+    /**
+      * The mode instance variable is used to remember what addressing
+      * mode the file is currently in.  If set to "segmented" (via the
+      * address_length_set method) you get 16-bit MCS-86 output (record
+      * type 2, extended segment address record).  The default value of
+      * "linear" gets you 32-bit output (record type 4, extended linear
+      * address record).
+      */
+    enum { linear, segmented } mode;
 
     /**
       * The default constructor.  Do not use.

@@ -127,6 +127,9 @@ An Intel hex format file will be written.
 (See
 .IR srec_intel (5)
 for a description of this file format.)
+The default is to emit 32-bit linear addressing;
+if you want 16-bit extended segment addressing
+use the \fB--address-length=2\fP option.
 .TP 8n
 \fB\-MOS_Technologies\fP
 An Mos Technologies format file will be written.
@@ -139,7 +142,11 @@ A Motorola S-Record file will be written.
 (See
 .IR srec_motorola (5)
 for a description of this file format.)
-This is the default.
+This is the default output format.
+By default, the smallest possible address length is emitted,
+this will be S19 for data in the first 64KB;
+if you wish to force S28 use the \fB--address-length=3\fP option;
+if you wish to force S37 use the \fB--address-length=4\fP option
 .TP 8n
 \fB\-Needham_Hexadecimal\fP
 This option says to use the Needham Electronics ASCII file format to

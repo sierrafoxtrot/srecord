@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -29,7 +29,8 @@
 srec_output_file_intel::srec_output_file_intel(const char *filename) :
     srec_output_file(filename),
     address_base(1),
-    pref_block_size(32)
+    pref_block_size(32),
+    mode(linear)
 {
     // The address base always has the lower 16 bits set to zero.
     // By making it be 1, we force the first data record to emit an
@@ -89,8 +90,25 @@ srec_output_file_intel::write(const srec_record &record)
 	if ((record.get_address() & 0xFFFF0000) != address_base)
 	{
 	    address_base = record.get_address() & 0xFFFF0000;
-	    srec_record::encode_big_endian(tmp, record.get_address() >> 16, 2);
-	    write_inner(4, 0L, tmp, 2);
+	    if (mode == linear)
+	    {
+		srec_record::encode_big_endian(tmp, address_base >> 16, 2);
+		write_inner(4, 0L, tmp, 2);
+	    }
+	    else
+	    {
+		if (address_base >= (1UL << 20))
+		{
+		    fatal_error
+		    (
+			"data address (0x%lX..0x%lX) too large",
+			record.get_address(),
+			record.get_address() + record.get_length() - 1
+		    );
+		}
+		srec_record::encode_big_endian(tmp, address_base >> 4, 2);
+		write_inner(2, 0L, tmp, 2);
+	    }
 	}
 	write_inner
 	(
@@ -109,7 +127,7 @@ srec_output_file_intel::write(const srec_record &record)
 	if (data_only_flag)
 	    break;
 	srec_record::encode_big_endian(tmp, record.get_address(), 4);
-	write_inner(5, 0L, tmp, 4);
+	write_inner((mode == linear ? 5 : 3), 0L, tmp, 4);
 	break;
 
     case srec_record::type_unknown:
@@ -148,9 +166,9 @@ srec_output_file_intel::line_length_set(int n)
 
 
 void
-srec_output_file_intel::address_length_set(int)
+srec_output_file_intel::address_length_set(int x)
 {
-    // ignore
+    mode = (x <= 2 ? segmented : linear);
 }
 
 
