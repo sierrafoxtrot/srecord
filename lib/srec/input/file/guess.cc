@@ -27,6 +27,7 @@
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/mos_tech.h>
+#include <srec/input/file/four_packed_code.h>
 #include <srec/input/file/spasm.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix.h>
@@ -58,6 +59,12 @@ static srec_input *
 create_mos_tech(const char *fn)
 {
 	return new srec_input_file_mos_tech(fn);
+}
+
+static srec_input *
+create_four_packed_code(const char *fn)
+{
+	return new srec_input_file_four_packed_code(fn);
 }
 
 static srec_input *
@@ -105,6 +112,7 @@ static func_p table[] =
 	create_atmel_generic,
 	create_intel,
 	create_mos_tech,
+	create_four_packed_code,
 	create_spasm,
 	create_srecord,
 	create_tektronix,

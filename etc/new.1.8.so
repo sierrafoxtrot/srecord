@@ -22,6 +22,11 @@
 .PP
 .if n *
 .if t \(bu
+.\" change 21
+There is a new Four Packed Code (FPC) format.
+.PP
+.if n *
+.if t \(bu
 .\" change 20
 Wherever possible, header data is now passed through by \fIsrec_cat\fP(1).
 .PP

@@ -114,6 +114,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\" ----------  Include the Manual Pages  -------------------------------------
 .\"
 .so ref-parts.so
+.so new-file-format.so
 .\"
 .\" ----------  Include the Table of Contents  --------------------------------
 .\"

@@ -30,6 +30,7 @@
 #include <srec/output/file/vhdl.h>
 #include <srec/output/file/intel.h>
 #include <srec/output/file/mos_tech.h>
+#include <srec/output/file/four_packed_code.h>
 #include <srec/output/file/spasm.h>
 #include <srec/output/file/srecord.h>
 #include <srec/output/file/tektronix.h>
@@ -109,6 +110,11 @@ srec_arglex::get_output()
 	case token_mos_tech:
 		token_next();
 		ofp = new srec_output_file_mos_tech(fn);
+		break;
+
+	case token_four_packed_code:
+		token_next();
+		ofp = new srec_output_file_four_packed_code(fn);
 		break;
 
 	case token_spasm_be:

@@ -232,12 +232,24 @@ srec_input_file::get_3bytes()
 	unsigned long b1 = get_byte();
 	unsigned long b2 = get_byte();
 	unsigned long b3 = get_byte();
-	return ((((b1  << 8) | b2) << 8) | b3);
+	return ((((b1 << 8) | b2) << 8) | b3);
+}
+
+
+unsigned long
+srec_input_file::get_4bytes()
+{
+	unsigned long b1 = get_byte();
+	unsigned long b2 = get_byte();
+	unsigned long b3 = get_byte();
+	unsigned long b4 = get_byte();
+	return ((((((b1 << 8) | b2) << 8) | b3) << 8) | b4);
 }
 
 
 int
 srec_input_file::checksum_get()
+	const
 {
 	return (checksum & 0xFF);
 }
@@ -245,6 +257,7 @@ srec_input_file::checksum_get()
 
 int
 srec_input_file::checksum_get16()
+	const
 {
 	return (checksum & 0xFFFF);
 }

@@ -31,6 +31,7 @@
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/mos_tech.h>
+#include <srec/input/file/four_packed_code.h>
 #include <srec/input/file/spasm.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix.h>
@@ -107,6 +108,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Output",	token_output,		},
 		{ "-OVer",	token_over,		},
 		{ "-RAw",	token_binary,		},
+		{ "-Four_Packed_Code", token_four_packed_code, },
 		{ "-SPAsm",	token_spasm_be,		}, // is this right?
 		{ "-SPAsm_BigEndian", token_spasm_be,	},
 		{ "-SPAsm_LittleEndian", token_spasm_le, },
@@ -389,6 +391,11 @@ srec_arglex::get_input()
 	case token_mos_tech:
 		token_next();
 		ifp = new srec_input_file_mos_tech(fn);
+		break;
+
+	case token_four_packed_code:
+		token_next();
+		ifp = new srec_input_file_four_packed_code(fn);
 		break;
 
 	case token_spasm_be:

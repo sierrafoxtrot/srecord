@@ -27,7 +27,12 @@
 
 #include <arglex.h>
 
-class srec_arglex: public arglex
+/**
+  * The srec_arglex is used to parse command line with srec-specific
+  * arguments.
+  */
+class srec_arglex:
+	public arglex
 {
 public:
 	enum
@@ -69,6 +74,7 @@ public:
 		token_or,
 		token_output,
 		token_over,
+		token_four_packed_code,
 		token_paren_begin,
 		token_paren_end,
 		token_spasm_be,
@@ -85,24 +91,128 @@ public:
 		token_MAX
 	};
 
+	/**
+	  * The destructor.
+	  */
 	~srec_arglex();
+
+	/**
+	  * The constructor.  Pass the argc and argv as given to main;
+	  * there is not need to change the values at all.
+	  */
 	srec_arglex(int, char **);
 
+	/**
+	  * The get_input method is used to parse an input specification
+	  * (filename, file format, filters, everything) from the
+	  * command line.
+	  *
+	  * If the parse is unsuccessful (is not present on command
+	  * line) a fatal error will be issued and the method call will
+	  * not return.
+	  */
 	class srec_input *get_input();
+
+	/**
+	  * The get_output method is used to parse an output specification
+	  * (filename and file format) from the command line.
+	  *
+	  * If the parse is unsuccessful (is not present on command
+	  * line) a fatal error will be issued and the method call will
+	  * not return.
+	  */
 	class srec_output *get_output();
 
 private:
+	/**
+	  * The get_interval_inner method is used to parse a single
+	  * interval from the command line (usually, a pair of number
+	  * representing the [lower, upper) bounds, but it could be
+	  * -over or -within, too).
+	  *
+	  * This method should only every be called by the get_interval
+	  * method.
+	  *
+	  * If the parse is unsuccessful (is not present on command
+	  * line) a fatal error will be issued and the method call will
+	  * not return.
+	  */
 	class interval get_interval_inner(const char *);
+
+	/**
+	  * The get_interval method is used to parse an interval
+	  * set form the command line.	Iyt consists of as many
+	  * get_interval_inner()s as possible.
+	  *
+	  * Used by the get_input method to parse the address intervals
+	  * used by various filters.
+	  *
+	  * If the parse is unsuccessful (is not present on command
+	  * line) a fatal error will be issued and the method call will
+	  * not return.
+	  */
 	class interval get_interval(const char *);
+
+	/**
+	  * The get_address method is used to parse an address from the
+	  * command line.
+	  *
+	  * If the parse is unsuccessful (is not present on command
+	  * line) a fatal error will be issued and the method call will
+	  * not return.
+	  */
 	void get_address(const char *, unsigned long &);
+
+	/**
+	  * The get_address_and_nbytes method is used to parse an address
+	  * and a byte count from the command line.
+	  *
+	  * If the parse is unsuccessful (is not present on command
+	  * line) a fatal error will be issued and the method call will
+	  * not return.
+	  */
 	void get_address_and_nbytes(const char *, unsigned long &, int &);
-	void get_address_nbytes_width(const char *, unsigned long &, int &, int &);
+
+	/**
+	  * The get_address_nbytes_width method is used to parse an address
+	  * a byte count and a width from the command line.
+	  *
+	  * If the parse is unsuccessful (is not present on command
+	  * line) a fatal error will be issued and the method call will
+	  * not return.
+	  */
+	void get_address_nbytes_width(const char *, unsigned long &, int &,
+		int &);
+
+	/**
+	  * The stdin_used instance variable is used to remember whether
+	  * or not the standard input has been used by a filter, yet.
+	  * Only one use of the standard input may be made; the second
+	  * use will result in a fatal error.
+	  */
 	bool stdin_used;
+
+	/**
+	  * The stdout_used instance variable is used to remember whether
+	  * or not the standard output has been used by a filter, yet.
+	  * Only one use of the standard output may be made; the second
+	  * use will result in a fatal error.
+	  */
 	bool stdout_used;
 
-	// Do not use these...
+	/**
+	  * The default constructor.  Do not use.
+	  */
 	srec_arglex();
+
+	/**
+	  * The copy constructor.  Do not use.
+	  */
 	srec_arglex(const srec_arglex &);
+
+	/**
+	  * The assignment operator.  Do not use.
+	  */
 	srec_arglex &operator=(const srec_arglex &);
 };
 

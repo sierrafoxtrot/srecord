@@ -78,6 +78,9 @@ See
 .IR srec_motorola (5)
 for a description of this file format.
 .TP 8n
+\fB\-Packed_Four_Code\fP
+This option says to use the PFC format to read the file.
+.TP 8n
 \fB\-SPAsm\fP
 This option says to use the SPASM assembler output format (commonly used
 by PIC programmers).
