@@ -1,6 +1,6 @@
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 1998 Peter Miller;
+#	Copyright (C) 1998, 2002 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -18,6 +18,24 @@
 #	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 #
 # MANIFEST: instructions to make, how to build the srecord package
+#
+#       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+#       W   W    A    RRRR   N   N   III  N   N  III  N   N   GGG
+#       W   W   A A   R   R  NN  N    I   NN  N   I   NN  N  G   G
+#       W   W  A   A  RRRR   N N N    I   N N N   I   N N N  G
+#       W W W  AAAAA  R R    N  NN    I   N  NN   I   N  NN  G  GG
+#       W W W  A   A  R  R   N   N    I   N   N   I   N   N  G   G
+#        W W   A   A  R   R  N   N   III  N   N  III  N   N   GGG
+#
+#       DO NOT send patches which fix this file.  IT IS NOT the original
+#       source file.  This file is GENERATED.  If you find a bug in this
+#       file, please send me a patch for the the problem in the source
+#       file, usually etc/Makefile.sh or etc/Makefi.file.sh or both.
+#
+#       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# @configure_input@
 #
 # The configure script generates 2 files:
 #	1. This Makefile
@@ -119,3 +137,6 @@ AR = ar
 # The default target
 #
 default_target: all
+
+%.pdf: %.ps
+	ps2pdf $*.ps $*.pdf

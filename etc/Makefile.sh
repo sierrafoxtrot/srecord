@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 1998 Peter Miller;
+#	Copyright (C) 1998, 2002 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -119,7 +119,8 @@ ${stem}.gen.o"
 
 	etc/*.man)
 		stem=`echo $file | sed 's|.man$||'`
-		clean_files="$clean_files ${stem}.ps ${stem}.dvi ${stem}.txt"
+		clean_files="$clean_files ${stem}.ps ${stem}.pdf ${stem}.dvi" \
+			"${stem}.txt"
 		;;
 
 	*)
