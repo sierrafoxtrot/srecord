@@ -22,6 +22,12 @@
 .PP
 .if n *
 .if t \(bu
+.\" change 19
+There is a new ``unfill'' filter, which may be used to perform the
+reverse effect of the ``fill'' filter.
+.PP
+.if n *
+.if t \(bu
 .\" change 17
 There is a new bit-wise NOT filter, which may be used to invert the data.
 .PP

@@ -73,6 +73,7 @@ public:
 		token_tektronix,
 		token_tektronix_extended,
 		token_ti_tagged,
+		token_unfill,
 		token_unsplit,
 		token_vhdl,
 		token_within,
@@ -87,9 +88,6 @@ public:
 	class srec_output *get_output();
 
 private:
-	srec_arglex();
-	srec_arglex(const srec_arglex &);
-	srec_arglex &operator=(const srec_arglex &);
 	class interval get_interval_inner(const char *);
 	class interval get_interval(const char *);
 	void get_address(const char *, unsigned long &);
@@ -97,6 +95,11 @@ private:
 	void get_address_nbytes_width(const char *, unsigned long &, int &, int &);
 	bool stdin_used;
 	bool stdout_used;
+
+	// Do not use these...
+	srec_arglex();
+	srec_arglex(const srec_arglex &);
+	srec_arglex &operator=(const srec_arglex &);
 };
 
 #endif /* INCLUDE_SREC_ARGLEX_H */

@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 1999, 2000 Peter Miller;
+.\"	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -167,6 +167,12 @@ The is the logical complement of the \fB\-Crop\fP filter.
 \fB\-Fill\fP \fIvalue\fP \fIaddress-range\fP
 This filter may be used to fill any gaps in the data with bytes equal
 to \fIvalue\fP.  The fill will only occur in the address range given.
+.TP 8n
+\fB\-UnFill\fP \fIvalue\fP [ \fImin-run-length\fP ]
+This filter may be used to create gaps in the data with bytes equal
+to \fIvalue\fP.  You can think of it as reversing the effects of the
+\fB\-Fill\fP filter.  The gaps will only be created if the are at least
+\fImin-run-length\fP bytes in a row (defaults to 1).
 .TP 8n
 \fB\-AND\fP \fIvalue\fP
 This filter may be used to bit-wise AND a \fIvalue\fP to every data byte.

@@ -51,6 +51,7 @@
 #include <srec/input/filter/offset.h>
 #include <srec/input/filter/or.h>
 #include <srec/input/filter/split.h>
+#include <srec/input/filter/unfill.h>
 #include <srec/input/filter/unsplit.h>
 #include <srec/input/filter/xor.h>
 #include <srec/input/interval.h>
@@ -65,12 +66,6 @@
 #include <srec/output/file/tektronix_extended.h>
 #include <srec/output/file/ti_tagged.h>
 #include <srec/output/file/wilson.h>
-
-
-srec_arglex::srec_arglex()
-{
-	/* bug */
-}
 
 
 srec_arglex::srec_arglex(int argc, char **argv)
@@ -123,6 +118,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Tektronix",	token_tektronix,	},
 		{ "-Tektronix_Extended", token_tektronix_extended, },
 		{ "-Texas_Instruments_Tagged", token_ti_tagged, },
+		{ "-Un_Fill",	token_unfill,		},
 		{ "-Un_SPlit",	token_unsplit,		},
 		{ "-VHdl",	token_vhdl,		},
 		{ "-WILson",	token_wilson,		},
@@ -135,23 +131,8 @@ srec_arglex::srec_arglex(int argc, char **argv)
 }
 
 
-srec_arglex::srec_arglex(const srec_arglex &)
-{
-	/* bug */
-}
-
-
-srec_arglex &
-srec_arglex::operator=(const srec_arglex &)
-{
-	/* bug */
-	return *this;
-}
-
-
 srec_arglex::~srec_arglex()
 {
-	/* bug */
 }
 
 
@@ -904,6 +885,46 @@ srec_arglex::get_input()
 					split_modulus,
 					split_offset,
 					split_width
+				);
+			}
+			continue;
+
+		case token_unfill:
+			{
+			if (token_next() != token_number)
+			{
+				cerr <<
+			     "the -unfill filter requires two numeric arguments"
+					<< endl;
+				exit(1);
+			}
+			int fill_value = value_number();
+			if (fill_value < 0 || fill_value >= 256)
+			{
+				cerr <<
+				      "the -unfill value must be 0..255"
+					<< endl;
+				exit(1);
+			}
+			int fill_minimum = 1;
+			if (token_next() == token_number)
+			{
+				fill_minimum = value_number();
+				if (fill_minimum < 1 || fill_minimum > 16)
+				{
+					cerr <<
+					  "the -unfill run length must be 1..16"
+						<< endl;
+					exit(1);
+				}
+				token_next();
+			}
+			ifp =
+				new srec_input_filter_unfill
+				(
+					ifp,
+					fill_value,
+					fill_minimum
 				);
 			}
 			continue;

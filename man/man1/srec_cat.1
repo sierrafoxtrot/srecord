@@ -208,6 +208,35 @@ and don't want to fill the entire EPROM, try:
 .RE
 This example demonstrates the fact that wherever an address range may be
 specified, the \fB\-over\fP and \fB\-within\fP options may be used.
+.SS Unfilling the Blanks
+It is common to need to ``unfill'' an eprom image after you read it out of
+a chip.  Usually, it will have had all the holes filled with 0xFF (areas
+of the EPROM you don't program show as 0xFF when you read them back).
+.PP
+To get rid of all the 0xFF bytes in the data, use this filter:
+.RS
+.ft CW
+\*(n) \fIinfile\fP -unfill 0xFF -o \fIoutfile\fP
+.ft R
+.RE
+This will get rid of \fIall\fP the 0xFF bytes, including the ones you
+actually wanted in there.  There are two ways to deal with this.  First,
+you can specify a minimum run length to the un-fill:
+.RS
+.ft CW
+\*(n) \fIinfile\fP -unfill 0xFF 5 -o \fIoutfile\fP
+.ft R
+.RE
+This says that runs of 1 to 4 bytes of 0xFF are OK, and that a hole
+should only be created for runs of 5 or more 0xFF bytes in a row.
+The second method is to re-fill over the intermediate gaps:
+.RS
+.ft CW
+\*(n) \fIoutile\fP -fill 0xFF -over \fIoutfile\fP -o \fIoutfile2\fP
+.ft R
+.RE
+Which method you choose depends on your needs, and the shape of the data
+in your EPROM.  You may need to combine both techniques.
 .SS Splitting an Image
 If you have a 16-bit data bus, but you are using two 8-bit EPROMs to
 hold your firmware, you can generate the even and odd images by using
