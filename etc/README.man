@@ -112,6 +112,9 @@ both forwards and backwards.
 split
 The \fIsplit\fP filter may be used to split EPROM images for wide data
 buses or other memory striping schemes.
+.TP 8n
+unsplit
+The \fIunsplit\fP filter may be reverse the effects of the split filter.
 .PP
 More than one filter may be applied to each input file.
 Different filters may be applied to each input file.

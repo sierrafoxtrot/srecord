@@ -141,6 +141,12 @@ multiple to split over, the \fIoffset\fP is the byte offset into this
 range (defaults to 0), the \fIwidth\fP is the number of bytes to extract
 (defaults to 1) within the multiple.  In order to leave no gaps, the
 output addresses are (\fIwidth\fP / \fImultiple\fP) times the input addresses.
+.TP 8n
+\fB\-Un_SPlit\fP \fImultiple\fP [ \fIoffset\fP [ \fIwidth\fP ] ]
+This filter may be used to reverse the effects of the split filter.
+The arguments are identical.
+Note that the address range is expanded (\fImultiple\fP / \fIwidth\fP) times,
+leaving holes between the stripes.
 .SS Address Ranges
 There are three ways to specify an address range:
 .TP 8n

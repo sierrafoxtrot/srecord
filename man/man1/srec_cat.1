@@ -199,4 +199,20 @@ between 4 EPROMs.  Generating the 4 images would be done as follows:
 .ft R
 .fi
 .RE
+.PP
+The unsplit filter may be used to reverse the effects of the split filter.
+Note that the address range is expanded leaving holes between the stripes.
+By using all the stripes, the complete input is reassembled, without
+any holes.  For example, to reverse our previous 16-bit data bus example,
+use the following command:
+.RS
+.nf
+.ft CW
+.ta 0.5i 1i 1.5i
+\*(n) -o firmware.hex \e
+	firmware.even.hex -unsplit 2 0 \e
+	firmware.odd.hex  -unsplit 2 1
+.ft R
+.fi
+.RE
 .so z_copyright.so

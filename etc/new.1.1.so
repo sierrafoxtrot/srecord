@@ -38,7 +38,7 @@ Extended tektronix hex is not yet suppported).
 .if n *
 .if t \(bu
 There is a new \fIsplit\fP filter, useful for wide data buses and memory
-striping.
+striping, and a complementary \fIunsplit\fP filter to reverse it.
 .\" ------------------------------------------------------------------------
 .\"	Add new entries above this line.
 .SS Version 1.1

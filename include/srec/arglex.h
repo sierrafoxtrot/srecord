@@ -54,6 +54,7 @@ public:
 		token_paren_end,
 		token_split,
 		token_tektronix,
+		token_unsplit,
 		token_within,
 		token_MAX
 	};
