@@ -61,7 +61,7 @@ if test $? -ne 0; then no_result; fi
 # Test writing this format
 #
 cat > test.in << 'fubar'
-Hello, World!
+S111000048656C6C6F2C20576F726C64210A7B
 fubar
 if test $? -ne 0; then no_result; fi
 
@@ -71,8 +71,8 @@ cat > test.ok << 'fubar'
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -bin -off 107 -o test.out -tekext
-if test $? -ne 0; then fail; fi
+$bin/srec_cat test.in -off 107 -o test.out -tekext 2> LOG
+if test $? -ne 0; then cat LOG; fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi

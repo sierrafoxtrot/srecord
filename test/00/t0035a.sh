@@ -61,23 +61,26 @@ if test $? -ne 0; then no_result; fi
 # test writing the format
 #
 cat > test.in << 'fubar'
-Hello, World!
+S00600004844521B
+S111000048656C6C6F2C20576F726C64210A7B
+S5030001FB
+S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok.uue << 'fubar'
-begin 644 test.ok
-M`B`D03`Q,C,L"C0X(#8U(#9#(#9#(#9&(#)#(#(P(#4W(#9&(#<R(#9#(#8T
-)(#(Q(#!!(`,*
-`
-end
+S00600004844521B
+S123000002202441303132332C0A3438203635203643203643203646203243203230203528
+S11900203720364620373220364320363420323120304120030A06
+S5030002FA
+S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-uudecode test.ok.uue
+$bin/srec_cat test.ok.uue -o test.ok -bin
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -bin -offset 0x123 -o test.out -asc-hex
+$bin/srec_cat test.in -offset 0x123 -o test.out -asc-hex
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -88,15 +91,15 @@ if test $? -ne 0; then fail; fi
 # test reading the format
 #
 cat > test.in.uue << 'fubar'
-begin 644 test.in
-M`B`T."`V-2`V0R`V0R`V1B`R0R`R,"`D03`P,3,L(#4W(#9&(#<R(#9#(#8T
-)(#(Q(#!!(`,*
-`
-end
+S00600004844521B
+S123000002203438203635203643203643203646203243203230202441303031332C203514
+S11900203720364620373220364320363420323120304120030A06
+S5030002FA
+S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-uudecode test.in.uue
+$bin/srec_cat test.in.uue -o test.in -bin
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
