@@ -58,6 +58,7 @@ public:
 		token_tektronix,
 		token_unsplit,
 		token_within,
+		token_xor,
 		token_MAX
 	};
 

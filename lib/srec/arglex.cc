@@ -40,6 +40,7 @@
 #include <srec/input/filter/or.h>
 #include <srec/input/filter/split.h>
 #include <srec/input/filter/unsplit.h>
+#include <srec/input/filter/xor.h>
 #include <srec/input/interval.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/c.h>
@@ -70,6 +71,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-CRop",	token_crop,		},
 		{ "-C_Array",	token_c_array,		},
 		{ "-Exclude",	token_exclude,		},
+		{ "-XOR",	token_xor,		},
 		{ "-Fill",	token_fill,		},
 		{ "-Intel",	token_intel,		},
 		{ "-Little_Endian_Checksum", token_checksum_le, },
@@ -357,6 +359,28 @@ srec_arglex::get_input()
 				}
 				token_next();
 				ifp = new srec_input_filter_and(ifp, filler);
+			}
+			continue;
+
+		case token_xor:
+			{
+				if (token_next() != token_number) 
+				{
+					cerr <<
+					 "the -xor filter requires a fill value"
+						<< endl;
+					exit(1);
+				}
+				int filler = value_number();
+				if (filler < 0 || filler >= 256)
+				{
+					cerr << "-xor value " << filler
+						<< " out of range (0..255)"
+						<< endl;
+					exit(1);
+				}
+				token_next();
+				ifp = new srec_input_filter_xor(ifp, filler);
 			}
 			continue;
 

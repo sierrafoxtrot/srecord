@@ -22,8 +22,10 @@
 .PP
 .if n *
 .if t \(bu
-There is a new --OR filter, which may be used to bit-wise OR a value to
-each data byte.
+There are three new data filters.  The --OR filter, which may be used to
+bit-wise OR a value to each data byte; the --AND filter, which may be
+used to bit-wise AND a value to each data byte; and the --eXclusive-OR
+filter, which may be used to bit-wise XOR a value to each data byte.
 .\" ------------------------------------------------------------------------
 .\"	Add new entries above this line.
 .SS Version 1.2
