@@ -24,7 +24,7 @@
 .hy 0
 .ad l
 .SH NAME
-RSecord \- manipulate EPROM load files
+SRecord \- manipulate EPROM load files
 .XX "" "The README file"
 .SH DESCRIPTION
 The \fISRecord\fP package is a collection of powerful tools for
