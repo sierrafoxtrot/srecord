@@ -28,6 +28,7 @@
 #include <srec/input/file/binary.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/srecord.h>
+#include <srec/input/filter/crop.h>
 #include <srec/input/filter/offset.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/intel.h>
@@ -46,6 +47,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 	static table_ty table[] =
 	{
 		{ "-BINary",	token_binary,	},
+		{ "-Crop",	token_crop,	},
 		{ "-Intel",	token_intel,	},
 		{ "-Motorola",	token_motorola,	},
 		{ "-OFfset",	token_offset,	},
@@ -135,10 +137,37 @@ srec_arglex::get_input()
 	{
 		switch (token_cur())
 		{
+		case token_crop:
+			{
+				if (token_next() != token_number)
+				{
+					cerr <<
+			       "the -crop filter requires two numeric arguments"
+						<< endl;
+					exit(1);
+				}
+				unsigned long n1 = value_number();
+				unsigned long n2 = 0;
+				if (token_next() == token_number)
+				{
+					n2 = value_number();
+					token_next();
+				}
+				if (n2 && n1 >= n2)
+				{
+					cerr << "the -crop range " << n1
+						<< ".." << n2 << " is invalid"
+						<< endl;
+					exit(1);
+				}
+				ifp = new srec_input_filter_crop(ifp, n1, n2);
+			}
+			continue;
+
 		case token_offset:
 			if (token_next() != token_number)
 			{
-				cerr << "the -offset option requires a numeric argument" << endl;
+				cerr << "the -offset filter requires a numeric argument" << endl;
 				exit(1);
 			}
 			ifp = new srec_input_filter_offset(ifp, value_number());

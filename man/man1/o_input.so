@@ -52,6 +52,12 @@ This option says to use the Motorola S-Record format to read the file.
 You may specify zero or more \fIfilters\fP to be applied.
 Filters are applied in the order given.
 .TP 8n
+\fB\-Crop\fP \fIminimum\fP [ \fImaximum\fP ]
+This filter may be used to crop out a section of data, and discard
+the rest.  If the maximum is not specified (or is given as zero) the
+range extends to the end of the address space.
+.TP 8n
 \fB\-OFfset\fP \fInbytes\fP
-This filter says to offset the addresses by the given number of bytes.
+This filter may be used to
+offset the addresses by the given number of bytes.
 No data is lost, the addresses will wrap around in 32 bits, if necessary.
