@@ -42,6 +42,7 @@ protected:
 	void put_byte(int);
 	void checksum_reset();
 	int checksum_get();
+	void seek_to(unsigned long);
 
 private:
 	string file_name;

@@ -25,9 +25,11 @@
 #include <iostream.h>
 
 #include <srec/arglex.h>
+#include <srec/input/file/binary.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/filter/offset.h>
+#include <srec/output/file/binary.h>
 #include <srec/output/file/intel.h>
 #include <srec/output/file/srecord.h>
 
@@ -43,10 +45,12 @@ srec_arglex::srec_arglex(int argc, char **argv)
 {
 	static table_ty table[] =
 	{
+		{ "-BINary",	token_binary,	},
 		{ "-Intel",	token_intel,	},
 		{ "-Motorola",	token_motorola,	},
 		{ "-OFfset",	token_offset,	},
 		{ "-Output",	token_output,	},
+		{ "-RAw",	token_binary,	},
 		{ "-S_record",	token_motorola,	},
 		ARGLEX_END_MARKER
 	};
@@ -116,6 +120,11 @@ srec_arglex::get_input()
 	case token_intel:
 		token_next();
 		ifp = new srec_input_file_intel(fn);
+		break;
+
+	case token_binary:
+		token_next();
+		ifp = new srec_input_file_binary(fn);
 		break;
 	}
 
@@ -194,6 +203,11 @@ srec_arglex::get_output()
 	case token_intel:
 		token_next();
 		ofp = new srec_output_file_intel(fn);
+		break;
+
+	case token_binary:
+		token_next();
+		ofp = new srec_output_file_binary(fn);
 		break;
 	}
 

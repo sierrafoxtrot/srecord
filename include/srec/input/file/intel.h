@@ -38,7 +38,6 @@ public:
 private:
 	srec_input_file_intel(const srec_input_file_intel &);
 	srec_input_file_intel &operator=(const srec_input_file_intel &);
-	int data_record_count;
 	int read_inner(srec_record &);
 };
 

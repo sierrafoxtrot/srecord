@@ -27,21 +27,21 @@
 
 
 srec_input_file_intel::srec_input_file_intel()
-	: srec_input_file(), data_record_count(0)
+	: srec_input_file()
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
 
 
 srec_input_file_intel::srec_input_file_intel(const srec_input_file_intel &)
-	: srec_input_file(), data_record_count(0)
+	: srec_input_file()
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
 
 
 srec_input_file_intel::srec_input_file_intel(const char *filename)
-	: srec_input_file(filename), data_record_count(0)
+	: srec_input_file(filename)
 {
 }
 
@@ -125,7 +125,6 @@ srec_input_file_intel::read(srec_record &record)
 			break;
 
 		case srec_record::type_data:
-			++data_record_count;
 			if (record.get_length() == 0)
 			{
 				warning("empty data record ignored");

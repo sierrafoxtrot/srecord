@@ -127,3 +127,12 @@ srec_output_file::checksum_reset()
 {
 	checksum = 0;
 }
+
+
+void
+srec_output_file::seek_to(unsigned long address)
+{
+	FILE *fp = (FILE *)this->fp;
+	if (fseek(fp, address, 0) < 0)
+		fatal_error_errno("seek %ld", address);
+}

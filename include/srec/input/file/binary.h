@@ -17,39 +17,28 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: interface definition for lib/srec/arglex.cc
+ * MANIFEST: interface definition for srec/input/file/binary.cc
  */
 
-#ifndef INCLUDE_SREC_ARGLEX_H
-#define INCLUDE_SREC_ARGLEX_H
+#ifndef INCLUDE_SREC_INPUT_FILE_BINARY_H
+#define INCLUDE_SREC_INPUT_FILE_BINARY_H
 
-#include <arglex.h>
+#include <srec/input/file.h>
 
 #pragma interface
 
-class srec_arglex: public arglex
+class srec_input_file_binary: public srec_input_file
 {
 public:
-	enum
-	{
-		token_binary = arglex::token_MAX,
-		token_intel,
-		token_motorola,
-		token_offset,
-		token_output,
-		token_MAX
-	};
-
-	~srec_arglex();
-	srec_arglex(int, char **);
-
-	class srec_input *get_input();
-	class srec_output *get_output();
+	srec_input_file_binary();
+	srec_input_file_binary(const char *);
+	virtual ~srec_input_file_binary();
+	virtual int read(srec_record &);
 
 private:
-	srec_arglex();
-	srec_arglex(const srec_arglex &);
-	srec_arglex &operator=(const srec_arglex &);
+	unsigned long address;
+	srec_input_file_binary(const srec_input_file_binary &);
+	srec_input_file_binary &operator=(const srec_input_file_binary &);
 };
 
-#endif /* INCLUDE_SREC_ARGLEX_H */
+#endif /* INCLUDE_SREC_INPUT_FILE_BINARY_H */
