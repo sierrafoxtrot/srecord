@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2001 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -41,7 +41,8 @@ public:
 		type_unknown,
 		type_header,
 		type_data,
-		type_data_count,
+		type_data_count16,
+		type_data_count24,
 		type_start_address
 	};
 

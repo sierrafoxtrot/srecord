@@ -135,7 +135,8 @@ fprintf(stderr, "%s: %d: spans block %4.4lX/%4.4lX\n", __FILE__, __LINE__, byte_
 			put_byte(0);
 		break;
 
-	case srec_record::type_data_count:
+	case srec_record::type_data_count16:
+	case srec_record::type_data_count24:
 		// ignore
 		break;
 

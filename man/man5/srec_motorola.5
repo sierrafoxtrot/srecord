@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 2000, 2001 Peter Miller;
+.\"	Copyright (C) 1998, 2000-2002 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -99,8 +99,13 @@ to reside.
 .TP 8n
 S5
 A record containing the number of S1, S2 and S3 records transmitted in
-a particular block.  The count appears in the address field.  There is
-no data field.
+a particular block.  The count appears in the two-byte address field.
+There is no data field.
+.TP 8n
+S6
+A record containing the number of S1, S2 and S3 records transmitted in
+a particular block.  The count appears in the three-byte address field.
+There is no data field.
 .TP 8n
 S7
 A termination record for a block of S3 records.  The address field may

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2001 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -39,7 +39,7 @@ public:
 	virtual int preferred_block_size_get() const;
 
 private:
-	int data_count;
+	unsigned long data_count;
 	int pref_block_size;
 	int address_length;
 	void write_inner(int, unsigned long, int, const void *, int);

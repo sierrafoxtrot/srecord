@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000, 2001 Peter Miller;
+ *	Copyright (C) 2000-2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -203,7 +203,8 @@ srec_input_file_wilson::read(srec_record &record)
 		{
 		case srec_record::type_unknown:
 		case srec_record::type_header:
-		case srec_record::type_data_count:
+		case srec_record::type_data_count16:
+		case srec_record::type_data_count24:
 			fatal_error("record type not recognised");
 			break;
 

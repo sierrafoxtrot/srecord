@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998-2000, 2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -39,7 +39,7 @@ public:
 private:
 	srec_input_file_srecord(const srec_input_file_srecord &);
 	srec_input_file_srecord &operator=(const srec_input_file_srecord &);
-	int data_record_count;
+	unsigned long data_count;
 	int read_inner(srec_record &);
 	bool garbage_warning;
 	bool seen_some_input;

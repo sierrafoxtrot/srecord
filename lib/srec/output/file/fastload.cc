@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2001 Peter Miller;
+ *	Copyright (C) 2001, 2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -174,7 +174,8 @@ srec_output_file_fastload::write(const srec_record &record)
 		address += record.get_length();
 		break;
 
-	case srec_record::type_data_count:
+	case srec_record::type_data_count16:
+	case srec_record::type_data_count24:
 		// ignore
 		break;
 

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2001 Peter Miller;
+ *	Copyright (C) 1998-2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -237,7 +237,8 @@ srec_memory::reader(srec_input *ifp, bool barf)
 			break;
 
 		case srec_record::type_unknown:
-		case srec_record::type_data_count:
+		case srec_record::type_data_count16:
+		case srec_record::type_data_count24:
 			break;
 
 		case srec_record::type_data:

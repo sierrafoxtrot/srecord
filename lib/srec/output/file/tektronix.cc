@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2001 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -126,7 +126,8 @@ srec_output_file_tektronix::write(const srec_record &record)
 		);
 		break;
 
-	case srec_record::type_data_count:
+	case srec_record::type_data_count16:
+	case srec_record::type_data_count24:
 		/* ignore */
 		break;
 

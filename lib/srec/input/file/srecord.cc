@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2001 Peter Miller;
+ *	Copyright (C) 1998-2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -26,28 +26,37 @@
 #include <srec/record.h>
 
 
-srec_input_file_srecord::srec_input_file_srecord()
-	: srec_input_file(), data_record_count(0), garbage_warning(false),
-		seen_some_input(false), header_seen(false),
-		termination_seen(false)
+srec_input_file_srecord::srec_input_file_srecord() :
+	srec_input_file(),
+	data_count(0),
+	garbage_warning(false),
+	seen_some_input(false),
+	header_seen(false),
+	termination_seen(false)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
 
 
-srec_input_file_srecord::srec_input_file_srecord(const srec_input_file_srecord &)
-	: srec_input_file(), data_record_count(0), garbage_warning(false),
-		seen_some_input(false), header_seen(false),
-		termination_seen(false)
+srec_input_file_srecord::srec_input_file_srecord(const srec_input_file_srecord &) :
+	srec_input_file(),
+	data_count(0),
+	garbage_warning(false),
+	seen_some_input(false),
+	header_seen(false),
+	termination_seen(false)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
 
 
-srec_input_file_srecord::srec_input_file_srecord(const char *filename)
-	: srec_input_file(filename), data_record_count(0),
-		garbage_warning(false), seen_some_input(false),
-		header_seen(false), termination_seen(false)
+srec_input_file_srecord::srec_input_file_srecord(const char *filename) :
+	srec_input_file(filename),
+	data_count(0),
+	garbage_warning(false),
+	seen_some_input(false),
+	header_seen(false),
+	termination_seen(false)
 {
 }
 
@@ -138,7 +147,13 @@ srec_input_file_srecord::read_inner(srec_record &record)
 
 	case 5:
 		/* data count */
-		type = srec_record::type_data_count;
+		type = srec_record::type_data_count16;
+		break;
+
+	case 6:
+		/* data count */
+		type = srec_record::type_data_count24;
+		naddr = 3;
 		break;
 
 	case 7:
@@ -194,7 +209,7 @@ srec_input_file_srecord::read(srec_record &record)
 				warning("no header record");
 				header_seen = true;
 			}
-			if (data_record_count <= 0)
+			if (data_count <= 0)
 				warning("file contains no data");
 			if (!termination_seen)
 			{
@@ -242,7 +257,7 @@ srec_input_file_srecord::read(srec_record &record)
 			break;
 
 		case srec_record::type_data:
-			++data_record_count;
+			++data_count;
 			if (record.get_length() == 0)
 			{
 				warning("empty data record ignored");
@@ -250,14 +265,36 @@ srec_input_file_srecord::read(srec_record &record)
 			}
 			break;
 
-		case srec_record::type_data_count:
-			if (record.get_address() != (unsigned long)(data_record_count & 0xFFFF))
+		case srec_record::type_data_count16:
+			if
+			(
+			    record.get_address()
+			!=
+			    (unsigned long)(data_count & 0xFFFF)
+			)
 			{
 				fatal_error
 				(
-			       "data record count mismatch (file %ld, read %d)",
+			      "data record count mismatch (file %ld, read %ld)",
 					record.get_address(),
-					data_record_count
+					data_count & 0xFFFF
+				);
+			}
+			continue;
+
+		case srec_record::type_data_count24:
+			if
+			(
+			    record.get_address()
+			!=
+			    (unsigned long)(data_count & 0xFFFFFF)
+			)
+			{
+				fatal_error
+				(
+			      "data record count mismatch (file %ld, read %ld)",
+					record.get_address(),
+					data_count & 0xFFFFFF
 				);
 			}
 			continue;
