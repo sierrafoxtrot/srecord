@@ -27,15 +27,15 @@ echo '# patch to that file, instead.'
 echo '#'
 
 version=${version-0.0.0}
-echo 'Summary: manipulate EPROM load files'
+echo 'Summary: Manipulate EPROM load files'
 echo 'Name: srecord'
 echo "Version: ${version}"
 echo 'Release: 1'
-echo 'Copyright: GPL'
+echo 'License: GPL'
 echo 'Group: Development/Tools'
-echo "Source: http://srecord.sourceforge.net/srecord-${version}.tar.gz"
+echo "Source: http://srecord.sourceforge.net/%{name}-%{version}.tar.gz"
 echo 'URL: http://srecord.sourceforge.net/'
-echo 'BuildRoot: /tmp/srecord-build-root'
+echo 'BuildRoot: %{_tmppath}/%{name}-%{version}-root'
 
 prefix=/usr
 #
@@ -45,11 +45,9 @@ prefix=/usr
 #
 #echo "Prefix: $prefix"
 
-echo ''
-
 cat << 'fubar'
-%description
 
+%description
 The SRecord package is a collection of powerful tools for manipulating
 EPROM load files.
 
@@ -72,20 +70,31 @@ More than one filter may be applied to each input file.  Different filters
 may be applied to each input file.  All filters may be applied to all
 file formats.
 
-%prep
-fubar
 
-#
-# set the prefix here
-#
-echo '%setup'
-echo "./configure --prefix=$prefix"
-echo ''
-echo '%build'
-echo 'make'
-echo ''
-echo '%install'
-echo 'make RPM_BUILD_ROOT=$RPM_BUILD_ROOT install'
+%prep
+%setup -q
+%configure
+
+
+%build
+make
+
+
+%install
+[ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf "$RPM_BUILD_ROOT"
+%makeinstall
+
+strip $RPM_BUILD_ROOT%{_bindir}/*
+
+
+%clean
+[ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf "$RPM_BUILD_ROOT"
+
+
+%files
+%defattr (-,root,root)
+%doc LICENSE BUILDING README
+fubar
 
 #
 # remember things for the %files section
@@ -97,7 +106,7 @@ remember_prog()
 	if eval "test \"\${prog_${1}-no}\" != yes"
 	then
 		eval "prog_${1}=yes"
-		files="$files $prefix/bin/${1}"
+		files="$files %{_bindir}/${1}"
 	fi
 }
 
@@ -111,7 +120,8 @@ do
 		;;
 
 	man/man[0-9]/*.[0-9])
-		files="$files $prefix/${file}*"
+		ff=`echo $file | sed 's|^man/||'`
+		files="$files %{_mandir}/${ff}*"
 		;;
 
 	*)
@@ -119,8 +129,6 @@ do
 	esac
 done
 
-echo ''
-echo '%files'
 for file in $files
 do
 	echo "$file"

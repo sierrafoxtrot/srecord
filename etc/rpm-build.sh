@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 1998 Peter Miller;
+#	Copyright (C) 1998, 2003 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -35,17 +35,22 @@ tarball=$2
 mkdir -p $tmp/BUILD $tmp/BUILD_ROOT $tmp/RPMS/i386 \
 	$tmp/SOURCES $tmp/SPECS $tmp/SRPMS
 
-here=`pwd`/$tmp
+mac=`rpm --showrc | awk '/^macrofile/{print $3}'`
 cat > $tmp/rpmrc << fubar
-builddir: $here/BUILD
-buildroot: $here/BUILD_ROOT
-rpmdir: $here/RPMS
-sourcedir: $here/SOURCES
-specdir: $here/SPECS
-srcrpmdir: $here/SRPMS
+macrofiles: ${mac}:$tmp/macros
 fubar
 
-rpm -ta --rcfile $tmp/rpmrc --verbose --verbose $2
+here=`pwd`/$tmp
+cat > $tmp/macros << fubar
+%_builddir	$here/BUILD
+%_buildroot	$here/BUILD_ROOT
+%_rpmdir	$here/RPMS
+%_sourcedir	$here/SOURCES
+%_specdir	$here/SPECS
+%_srcrpmdir	$here/SRPMS
+fubar
+
+rpmbuild -ta --target i386-pc-linux --rcfile $tmp/rpmrc -vv $2
 test $? -eq 0 || exit 1
 
 exit 0
