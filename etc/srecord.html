@@ -42,6 +42,8 @@ relatively simple.
 <p>
 SRecord runs on almost any flavor of UNIX.  The source distribution is
 self configuring using a GNU Autoconf generated configure script.
+It also runs on Windows NT, if you build using
+<a href="http://sources.redhat.com/cygwin/">Cygwin</a>, see below.
 .br
 <table><tr><td valign=top>
 <p align=center><b>The File Formats</b></p>
@@ -243,6 +245,20 @@ in the
 directory
 (tools for electronic circuit design).
 .br
+<hr>
+The <a href="http://sources.redhat.com/cygwin/">Cygwin</a> tools are
+ports of the popular GNU development tools and utilities for Windows 95,
+98, and NT. They function by using the Cygwin library which provides
+a UNIX-like API on top of the Win32 API.
+<p>
+This means that you can compile SRecord for Windows 95, 98 and NT.
+SRecord was tested on Windows NT in this way.  Other tools, such as
+<a href="http://www.scl.com/products/mks/datasheets/nutcracker.html">
+Nutcracker</a>, have not been confirmed.
+<p>
+Once you have <a href="http://sources.redhat.com/cygwin/">Cygwin</a>
+installed, simply follow the instructions in the BUILDING file, as if
+it were Unix.
 <hr>
 <a href="README.html">
 <img src="pmiller.gif" align=right>
