@@ -1,6 +1,6 @@
 dnl
 dnl	srecord - manipulate eprom load files
-dnl	Copyright (C) 1998, 1999 Peter Miller;
+dnl	Copyright (C) 1998, 1999, 2002 Peter Miller;
 dnl	All rights reserved.
 dnl
 dnl	This program is free software; you can redistribute it and/or modify
@@ -28,6 +28,7 @@ AC_PROG_YACC
 AC_PROG_RANLIB
 AC_CHECK_PROGS(GROFF, groff roff)
 AC_CHECK_PROGS(SOELIM, roffpp gsoelim soelim)
+AC_CHECK_FUNCS(snprintf vsnprintf)
 
 dnl
 dnl	Test to find a Bourne shell which understands functions
