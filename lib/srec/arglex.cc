@@ -27,6 +27,7 @@
 #include <srec/arglex.h>
 #include <srec/input/file/ascii_hex.h>
 #include <srec/input/file/binary.h>
+#include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/mos_tech.h>
 #include <srec/input/file/srecord.h>
@@ -86,6 +87,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-CRop",	token_crop,		},
 		{ "-Exclude",	token_exclude,		},
 		{ "-Fill",	token_fill,		},
+		{ "-GUess",	token_guess,		},
 		{ "-Intel",	token_intel,		},
 		{ "-Little_Endian_Checksum", token_checksum_le, },
 		{ "-Little_Endian_Length", token_length_le, },
@@ -303,6 +305,11 @@ srec_arglex::get_input()
 	case token_ascii_hex:
 		token_next();
 		ifp = new srec_input_file_ascii_hex(fn);
+		break;
+
+	case token_guess:
+		token_next();
+		ifp = srec_input_file_guess(fn);
 		break;
 
 	case token_intel:

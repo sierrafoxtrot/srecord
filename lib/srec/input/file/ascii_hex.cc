@@ -170,3 +170,11 @@ srec_input_file_ascii_hex::read(srec_record &record)
 	seen_some_input = true;
 	return 1;
 }
+
+
+const char *
+srec_input_file_ascii_hex::get_file_format_name()
+	const
+{
+	return "Ascii Hex";
+}

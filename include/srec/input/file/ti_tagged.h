@@ -34,6 +34,7 @@ public:
 	srec_input_file_ti_tagged(const char *);
 	virtual ~srec_input_file_ti_tagged();
 	int read(srec_record &);
+	const char *get_file_format_name() const;
 
 protected:
 	int get_char();

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -28,14 +28,17 @@
 
 #include <srec/input.h>
 #include <srec/record.h>
+#include <quit/prefix.h>
 
 
 srec_input::srec_input()
+	: quitter(&quit_default)
 {
 }
 
 
 srec_input::srec_input(const srec_input &)
+	: quitter(&quit_default)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
@@ -60,21 +63,9 @@ srec_input::fatal_error(const char *fmt, ...)
 {
 	va_list ap;
 	va_start(ap, fmt);
-	fatal_error_v(fmt, ap);
+	quit_prefix blab(*quitter, filename_and_line());
+	blab.fatal_error_v(fmt, ap);
 	va_end(ap);
-}
-
-
-void
-srec_input::fatal_error_v(const char *fmt, va_list ap)
-	const
-{
-	cout.flush();
-	cerr << filename_and_line() << ": " ;
-	cerr.vform(fmt, ap) ;
-	cerr << endl;
-	cerr.flush();
-	exit(1);
 }
 
 
@@ -84,22 +75,9 @@ srec_input::fatal_error_errno(const char *fmt, ...)
 {
 	va_list ap;
 	va_start(ap, fmt);
-	fatal_error_errno_v(fmt, ap);
+	quit_prefix blab(*quitter, filename_and_line());
+	blab.fatal_error_errno_v(fmt, ap);
 	va_end(ap);
-}
-
-
-void
-srec_input::fatal_error_errno_v(const char *fmt, va_list ap)
-	const
-{
-	int n = errno;
-	cout.flush();
-	cerr << filename() << ": ";
-	cerr.vform(fmt, ap);
-	cerr << ": " << strerror(n) << endl;
-	cerr.flush();
-	exit(1);
 }
 
 
@@ -109,20 +87,9 @@ srec_input::warning(const char *fmt, ...)
 {
 	va_list ap;
 	va_start(ap, fmt);
-	warning_v(fmt, ap);
+	quit_prefix blab(*quitter, filename_and_line());
+	blab.warning_v(fmt, ap);
 	va_end(ap);
-}
-
-
-void
-srec_input::warning_v(const char *fmt, va_list ap)
-	const
-{
-	cout.flush();
-	cerr << filename() << ": warning: ";
-	cerr.vform(fmt, ap);
-	cerr << endl;
-	cerr.flush();
 }
 
 
@@ -131,4 +98,18 @@ srec_input::filename_and_line()
 	const
 {
 	return filename();
+}
+
+
+void
+srec_input::set_quit(quit &arg)
+{
+	quitter = &arg;
+}
+
+
+void
+srec_input::reset_quit()
+{
+	quitter = &quit_default;
 }

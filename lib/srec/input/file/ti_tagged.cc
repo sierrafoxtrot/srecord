@@ -175,3 +175,11 @@ srec_input_file_ti_tagged::read(srec_record &record)
 		}
 	}
 }
+
+
+const char *
+srec_input_file_ti_tagged::get_file_format_name()
+	const
+{
+	return "Texas Instruments Tagged (SDSMAC)";
+}

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -17,32 +17,55 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  *
- * MANIFEST: interface definition for lib/srec/input/filter.cc
+ * MANIFEST: functions to impliment the quit_normal class
  */
 
-#ifndef INCLUDE_SREC_INPUT_FILTER_H
-#define INCLUDE_SREC_INPUT_FILTER_H
+#pragma implementation "quit_normal"
 
-#pragma interface "srec_input_filter"
+#include <iostream.h>
+#include <progname.h>
+#include <quit/normal.h>
 
-#include <srec/input.h>
 
-class srec_input_filter: public srec_input
+quit_normal::quit_normal()
 {
-	srec_input *ifp;
+}
 
-public:
-	virtual ~srec_input_filter();
-	srec_input_filter(srec_input *);
-	virtual int read(class srec_record &);
-	virtual const string filename() const;
-	virtual const string filename_and_line() const;
-	virtual const char *get_file_format_name() const;
 
-protected:
-	srec_input_filter();
-	srec_input_filter(const srec_input_filter &);
-	srec_input_filter &operator=(const srec_input_filter &);
-};
+quit_normal::quit_normal(const quit_normal &arg)
+{
+}
 
-#endif /* INCLUDE_SREC_INPUT_FILTER_H */
+
+quit_normal &
+quit_normal::operator=(const quit_normal &arg)
+{
+	return *this;
+}
+
+
+quit_normal::~quit_normal()
+{
+}
+
+
+void
+quit_normal::exit(int n)
+{
+	::exit(n);
+}
+
+
+void
+quit_normal::message_v(const char *fmt, va_list ap)
+{
+	cout.flush();
+	cerr << progname_get() << ": ";
+	cerr.vform(fmt, ap);
+	cerr << endl;
+	cerr.flush();
+}
+
+
+static quit_normal quit_normal_default;
+quit &quit_default = quit_normal_default;

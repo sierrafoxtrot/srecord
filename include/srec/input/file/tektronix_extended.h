@@ -34,6 +34,7 @@ public:
 	srec_input_file_tektronix_extended(const char *);
 	virtual ~srec_input_file_tektronix_extended();
 	int read(srec_record &);
+	const char *get_file_format_name() const;
 
 private:
 	srec_input_file_tektronix_extended(const srec_input_file_tektronix_extended &);

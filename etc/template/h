@@ -25,13 +25,15 @@
 
 #pragma interface "${id ${trim_dir ${trim_ext $fn}}}"
 
+#include <${trim_dir ${dirname_rel $fn}}.h>
+
 class ${id ${trim_dir ${trim_ext $fn}}}
 {
 public:
+	virtual ~${id ${trim_dir ${trim_ext $fn}}}();
 	${id ${trim_dir ${trim_ext $fn}}}();
 	${id ${trim_dir ${trim_ext $fn}}}(const ${id ${trim_dir ${trim_ext $fn}}} &);
 	${id ${trim_dir ${trim_ext $fn}}} &operator=(const ${id ${trim_dir ${trim_ext $fn}}} &);
-	~${id ${trim_dir ${trim_ext $fn}}}();
 };
 
 #endif /* ${id ${upcase $fn}} */

@@ -230,3 +230,11 @@ srec_input_file_wilson::read(srec_record &record)
 	}
 	return 1;
 }
+
+
+const char *
+srec_input_file_wilson::get_file_format_name()
+	const
+{
+	return "Wilson (anyone know this format's real name?)";
+}

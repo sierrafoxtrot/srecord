@@ -34,6 +34,7 @@ public:
 	srec_input_file_wilson(const char *);
 	virtual ~srec_input_file_wilson();
 	int read(srec_record &);
+	const char *get_file_format_name() const;
 
 protected:
 	virtual int get_byte();

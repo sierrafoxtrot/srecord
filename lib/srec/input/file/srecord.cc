@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -276,4 +276,12 @@ srec_input_file_srecord::read(srec_record &record)
 		break;
 	}
 	return 1;
+}
+
+
+const char *
+srec_input_file_srecord::get_file_format_name()
+	const
+{
+	return "Motorola S-Record";
 }

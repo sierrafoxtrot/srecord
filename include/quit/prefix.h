@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -17,32 +17,35 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  *
- * MANIFEST: interface definition for lib/srec/input/filter.cc
+ * MANIFEST: interface definition for include/quit/prefix.cc
  */
 
-#ifndef INCLUDE_SREC_INPUT_FILTER_H
-#define INCLUDE_SREC_INPUT_FILTER_H
+#ifndef INCLUDE_QUIT_PREFIX_H
+#define INCLUDE_QUIT_PREFIX_H
 
-#pragma interface "srec_input_filter"
+#pragma interface "quit_prefix"
 
-#include <srec/input.h>
+#include <string>
+#include <quit.h>
 
-class srec_input_filter: public srec_input
+class quit_prefix:
+	public quit
 {
-	srec_input *ifp;
-
 public:
-	virtual ~srec_input_filter();
-	srec_input_filter(srec_input *);
-	virtual int read(class srec_record &);
-	virtual const string filename() const;
-	virtual const string filename_and_line() const;
-	virtual const char *get_file_format_name() const;
+	virtual ~quit_prefix();
+	quit_prefix(quit &, const char *);
+	quit_prefix(quit &, const string &);
 
-protected:
-	srec_input_filter();
-	srec_input_filter(const srec_input_filter &);
-	srec_input_filter &operator=(const srec_input_filter &);
+	virtual void exit(int);
+	virtual void message_v(const char *, va_list);
+
+private:
+	string prefix;
+	quit &deeper;
+
+	quit_prefix();
+	quit_prefix(const quit_prefix &);
+	quit_prefix &operator=(const quit_prefix &);
 };
 
-#endif /* INCLUDE_SREC_INPUT_FILTER_H */
+#endif /* INCLUDE_QUIT_PREFIX_H */

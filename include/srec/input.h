@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -28,6 +28,8 @@
 #include <string>
 #include <stdarg.h>
 
+class quit; // forward
+
 class srec_input
 {
 public:
@@ -38,13 +40,17 @@ public:
 
 	virtual int read(class srec_record &) = 0;
 	virtual void fatal_error(const char *, ...) const;
-	virtual void fatal_error_v(const char *, va_list) const;
 	virtual void fatal_error_errno(const char *, ...) const;
-	virtual void fatal_error_errno_v(const char *, va_list) const;
 	virtual void warning(const char *, ...) const;
-	virtual void warning_v(const char *, va_list) const;
 	virtual const string filename() const = 0;
 	virtual const string filename_and_line() const;
+	virtual const char *get_file_format_name() const = 0;
+
+	void set_quit(quit &);
+	void reset_quit();
+
+private:
+	quit *quitter;
 };
 
 #endif /* INCLUDE_SREC_INPUT_H */

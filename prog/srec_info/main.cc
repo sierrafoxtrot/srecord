@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -67,6 +67,7 @@ main(int argc, char **argv)
 			cout << endl;
 			cout << ifp->filename() << ":" << endl;
 		}
+		cout << "Format:\t" << ifp->get_file_format_name() << endl;
 		srec_record record;
 		interval range;
 		while (ifp->read(record))

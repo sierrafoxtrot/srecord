@@ -48,6 +48,11 @@ for a description of this file format.
 This option says the file is a raw binary file, and should be read literally.
 (May also be written \-Raw.)
 .TP 8n
+\fB\-Guess\fP
+This option may be uased to ask \*(n) to guess the input format.
+This is slower than specifying an explicit format,
+as it may open and close the file a number of times.
+.TP 8n
 \fB\-Intel\fP
 This option says to use the Intel hex format to read the file.
 See

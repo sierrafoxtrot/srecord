@@ -22,6 +22,30 @@
 .PP
 .if n *
 .if t \(bu
+.\" Change 20
+There is now a command line option to guess the input file format;
+all of the tools understand this option.
+.PP
+.if n *
+.if t \(bu
+.\" Change 19
+The ``MOS Technologies'' file format is now understood for reading and writing.
+.PP
+.if n *
+.if t \(bu
+.\" Change 18
+The ``Tektronix Extended'' file format is now understood for reading
+and writing.
+.PP
+.if n *
+.if t \(bu
+.\" Change 17
+The ``Texas Instruments Tagged'' file format is now understood for
+reading and writing.
+(Also known as the TI-Tagged or SDSMAC format.)
+.PP
+.if n *
+.if t \(bu
 .\" Change 16
 The ``ascii-hex'' file format is now understood for reading and writing.
 (Also known as the ascii-space-hex format.)

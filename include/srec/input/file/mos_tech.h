@@ -34,6 +34,7 @@ public:
 	srec_input_file_mos_tech(const char *);
 	virtual ~srec_input_file_mos_tech();
 	int read(srec_record &);
+	const char *get_file_format_name() const;
 
 private:
 	srec_input_file_mos_tech(const srec_input_file_mos_tech &);

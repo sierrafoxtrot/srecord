@@ -208,3 +208,11 @@ srec_input_file_tektronix_extended::read(srec_record &record)
 	}
 	return 1;
 }
+
+
+const char *
+srec_input_file_tektronix_extended::get_file_format_name()
+	const
+{
+	return "Tektronix Extended";
+}

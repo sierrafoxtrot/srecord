@@ -43,6 +43,7 @@ public:
 		token_wilson,
 		token_exclude,
 		token_fill,
+		token_guess,
 		token_intel,
 		token_length_be,
 		token_length_le,

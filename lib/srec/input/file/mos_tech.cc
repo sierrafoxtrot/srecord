@@ -93,7 +93,6 @@ srec_input_file_mos_tech::read_inner(srec_record &record)
 	}
 	checksum_reset();
 	int length = get_byte();
-cerr << __FILE__ << ": " << __LINE__ << ": length=" << length << endl;
 	if (length == 0)
 	{
 		if (get_char() != '\n')
@@ -131,4 +130,12 @@ srec_input_file_mos_tech::read(srec_record &record)
 	}
 	seen_some_input = true;
 	return 1;
+}
+
+
+const char *
+srec_input_file_mos_tech::get_file_format_name()
+	const
+{
+	return "MOS Technologies";
 }
