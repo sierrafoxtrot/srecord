@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,7 +27,8 @@
 
 #include <srec/arglex.h>
 
-class srec_cat_arglex3: public srec_arglex
+class srec_cat_arglex3:
+	public srec_arglex
 {
 public:
 	enum
@@ -39,12 +40,30 @@ public:
 		token_MAX
 	};
 
-	~srec_cat_arglex3();
+	/**
+	  * The destructor.
+	  */
+	virtual ~srec_cat_arglex3();
+
+	/**
+	  * The constructor.
+	  */
 	srec_cat_arglex3(int, char **);
 
 private:
+	/**
+	  * The default constructor.  Do not use.
+	  */
 	srec_cat_arglex3();
+
+	/**
+	  * The copy constructor.  Do not use.
+	  */
 	srec_cat_arglex3(const srec_cat_arglex3 &);
+
+	/**
+	  * The assignment operator.  Do not use.
+	  */
 	srec_cat_arglex3 &operator=(const srec_cat_arglex3 &);
 };
 

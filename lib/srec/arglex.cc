@@ -76,7 +76,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
     stdin_used(false),
     stdout_used(false)
 {
-    static table_ty table[] =
+    static const table_ty table[] =
     {
 	{ "(",		token_paren_begin,	},
 	{ ")",		token_paren_end,	},

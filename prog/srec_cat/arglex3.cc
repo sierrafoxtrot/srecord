@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -25,10 +25,10 @@
 #include <arglex3.h>
 
 
-srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv)
-        : srec_arglex(argc, argv)
+srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv) :
+	srec_arglex(argc, argv)
 {
-	static table_ty table[] =
+	static const table_ty table[] =
 	{
 		{ "-Address_Length", token_address_length, },
 		{ "-Data_Only", token_data_only, },
@@ -38,28 +38,6 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv)
 	};
 
 	table_set(table);
-}
-
-
-srec_cat_arglex3::srec_cat_arglex3()
-	: srec_arglex(0, 0)
-{
-	// bug
-}
-
-
-srec_cat_arglex3::srec_cat_arglex3(const srec_cat_arglex3 &)
-	: srec_arglex(0, 0)
-{
-	// bug
-}
-
-
-srec_cat_arglex3 &
-srec_cat_arglex3::operator=(const srec_cat_arglex3 &arg)
-{
-	// bug
-	return *this;
 }
 
 

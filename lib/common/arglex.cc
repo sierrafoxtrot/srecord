@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -36,7 +36,7 @@ using namespace std;
 #include <process.h>
 #endif
 
-static arglex::table_ty default_table[] =
+static const arglex::table_ty default_table[] =
 {
 	{ "-",			arglex::token_stdio,		},
 	{ "-Help",		arglex::token_help,		},
@@ -50,16 +50,23 @@ static arglex::table_ty default_table[] =
 };
 
 
-arglex::arglex()
-	: argc(0), argv(0), tables(), pushback_depth(0), usage_tail_(0)
+arglex::arglex() :
+	argc(0),
+	argv(0),
+	tables(),
+	pushback_depth(0),
+	usage_tail_(0)
 {
 	table_set(default_table);
 }
 
 
-arglex::arglex(int ac, char **av)
-	: argc(ac - 1), argv(av + 1), tables(), pushback_depth(0),
-	  usage_tail_(0)
+arglex::arglex(int ac, char **av) :
+	argc(ac - 1),
+	argv(av + 1),
+	tables(),
+	pushback_depth(0),
+	usage_tail_(0)
 {
 	progname_set(av[0]);
 	table_set(default_table);
@@ -72,7 +79,7 @@ arglex::~arglex()
 
 
 void
-arglex::table_set(table_ty *tp)
+arglex::table_set(const table_ty *tp)
 {
 	tables.push_back(tp);
 }
@@ -83,7 +90,7 @@ arglex::table_set(table_ty *tp)
 //	arglex_compare
 //
 // SYNOPSIS
-//	int arglex_compare(char *formal, char *actual);
+//	int arglex_compare(const char *formal, char *actual);
 //
 // DESCRIPTION
 //	The arglex_compare function is used to compare
@@ -130,7 +137,7 @@ arglex::table_set(table_ty *tp)
 static char *partial;
 
 bool
-arglex_compare(char *formal, char *actual)
+arglex_compare(const char *formal, char *actual)
 {
 	for (;;)
 	{
@@ -359,16 +366,17 @@ is_a_number(const char *s, long &n)
 int
 arglex::token_next()
 {
-	table_ty	*tp;
-	table_ty	*hit[20];
+	const table_ty	*tp;
+	const table_ty	*hit[20];
 	int		nhit;
+	char		*arg;
 
 	if (pushback_depth > 0)
 	{
 		//
 		// the second half of a "-foo=bar" style argument.
 		//
-		value_string_ = pushback[--pushback_depth];
+		arg = pushback[--pushback_depth];
 	}
 	else
 	{
@@ -378,7 +386,7 @@ arglex::token_next()
 			token = token_eoln;
 			return token;
 		}
-		value_string_ = argv[0];
+		arg = argv[0];
 		argc--;
 		argv++;
 
@@ -387,11 +395,11 @@ arglex::token_next()
 		// Split it at the '=' to make it something the
 		// rest of the code understands.
 		//
-		if (value_string_[0] == '-' && value_string_[1] != '=')
+		if (arg[0] == '-' && arg[1] != '=')
 		{
-			char	*eqp;
+			char *eqp;
 
-			eqp = strchr(value_string_, '=');
+			eqp = strchr(arg, '=');
 			if (eqp)
 			{
 				pushback[pushback_depth++] = eqp + 1;
@@ -405,21 +413,22 @@ arglex::token_next()
 		//
 		if
 		(
-			value_string_[0] == '-'
+			arg[0] == '-'
 		&&
-			value_string_[1] == '-'
+			arg[1] == '-'
 		&&
-			value_string_[2]
+			arg[2]
 		&&
-			!is_a_number(value_string_ + 1, value_number_)
+			!is_a_number(arg + 1, value_number_)
 		)
-			++value_string_;
+			++arg;
 	}
+	value_string_ = arg;
 
 	//
 	// see if it is a number
 	//
-	if (is_a_number(value_string_, value_number_))
+	if (is_a_number(arg, value_number_))
 	{
 		token = arglex::token_number;
 		return token;
@@ -439,7 +448,7 @@ arglex::token_next()
 	{
 		for (tp = *it; tp->name; tp++)
 		{
-			if (arglex_compare(tp->name, value_string_))
+			if (arglex_compare(tp->name, arg))
 				hit[nhit++] = tp;
 		}
 	}
@@ -478,8 +487,6 @@ arglex::token_next()
 const char *
 arglex::token_name(int n)
 {
-	table_ty	*tp;
-
 	switch (n)
 	{
 	case token_eoln:
@@ -507,7 +514,7 @@ arglex::token_name(int n)
 		++it
 	)
 	{
-		for (tp = *it; tp->name; tp++)
+		for (const table_ty *tp = *it; tp->name; ++tp)
 		{
 			if (tp->token == n)
 				return tp->name;

@@ -66,7 +66,7 @@ public:
 	/**
 	  * The literal string value of the token.
 	  */
-	char *alv_string;
+	const char *alv_string;
 
 	/**
 	  * The integer vale of the token.  Only meaningful
@@ -85,7 +85,7 @@ public:
 	/**
 	  * The name of the commen line option.
 	  */
-	char *name;
+	const char *name;
 
 	/**
 	  * The corresponding token.
@@ -118,7 +118,7 @@ private:
       * The value_string_ instance variable tracks the value of the
       * current command line argument.
       */
-    char *value_string_;
+    const char *value_string_;
 
     /**
       * The value_number_ instance variable tracks the numeric value
@@ -132,7 +132,7 @@ private:
       * instance variable.  Also used to simplify the code use to
       * manipulate the `tables' instance variable.
      */
-    typedef std::vector<table_ty *> table_ptr_vec_t;
+    typedef std::vector<const table_ty *> table_ptr_vec_t;
 
     /**
       * The tables instance variable tracks the command line token
@@ -161,7 +161,7 @@ protected:
       * token tables to the list of tables to be scanned.  Usually one
       * per derived class.
       */
-    void table_set(table_ty *);
+    void table_set(const table_ty *);
 
 public:
     /**
@@ -306,6 +306,6 @@ private:
   * such as "-\\I*", and the partial global variable will have the path
   * in it on return.
   */
-bool arglex_compare(char *formal, char *actual);
+bool arglex_compare(const char *formal, char *actual);
 
 #endif // INCLUDE_ARGLEX_H

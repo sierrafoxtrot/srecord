@@ -112,7 +112,7 @@ public:
     /**
       * The destructor.
       */
-    ~srec_arglex();
+    virtual ~srec_arglex();
 
     /**
       * The constructor.  Pass the argc and argv as given to main;
