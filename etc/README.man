@@ -217,9 +217,10 @@ may be found in the
 .I BUILDING
 file included in this distribution.
 .LP
-It is also possible to build \fISRecord\fP on Windows using the Cygwin
-(www.cygwin.org) environment.  Instructions are in the \fIBUILDING\fP
-file, including how to get native Windows binaries.
+It is also possible to build \fISRecord\fP on Windows using the
+Cygwin (www.cygwin.com) or DJGPP (www.delorie.com/djgpp) environments.
+Instructions are in the \fIBUILDING\fP file, including how to get native
+Windows binaries.
 .br
 .ne 1i
 .SH COPYRIGHT

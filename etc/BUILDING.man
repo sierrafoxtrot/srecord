@@ -353,18 +353,19 @@ using a newer version of
 .IR autoconf .
 .SS Windows NT
 It is possible to build SRecord on MS Windows platforms, using the Cygwin
-system (see \f[CW]www.cygwin.org\fP, it's free).  This provides the
+(see \f[CW]www.cygwin.com\fP) or DJGPP (see \f[CW]www.delorie.com/djgpp\fP) environments.  This provides the
 \&``porting layer'' necessary to run Unix programs on Windows.  The build
 process is exactly as described above.
 .PP
-If you want to make ``native binaries'' (\fIi.e.\fP ones which
+DJGPP always produces native binaries, however
+if you want to make native binaries with Cygwin (\fIi.e.\fP ones which
 work outside Cygwin) there is one extra step you need after running
 \f[CW]./configure\fP and before you run \f[CW]make\fP.  You need to
 edit the \fIMakefile\fP file, and add \f[CW]-mno-cygwin\fP to the end of
 the \f[CW]CXX=g++\fP line.
 .PP
-Once built, Windows (Cygwin) binaries should test in the same way as
-described in the next section.
+Once built (using either tool set) Windows binaries should test in the
+same way as described in the next section.
 .br
 .ne 1i
 .SH TESTING SRECORD
