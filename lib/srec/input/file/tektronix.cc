@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -65,6 +65,26 @@ srec_input_file_tektronix::~srec_input_file_tektronix()
 
 
 int
+srec_input_file_tektronix::get_nibble()
+{
+	int n = srec_input_file::get_nibble();
+	checksum_add(n);
+	return n;
+}
+
+
+int
+srec_input_file_tektronix::get_byte()
+{
+	// this differs from the srec_input_file method only in that we
+	// don't add to the checksum.
+	int c1 = get_nibble();
+	int c2 = get_nibble();
+	return ((c1 << 4) | c2);
+}
+
+
+int
 srec_input_file_tektronix::read_inner(srec_record &record)
 {
 	for (;;)
@@ -105,11 +125,8 @@ srec_input_file_tektronix::read_inner(srec_record &record)
 	buffer[0] = get_byte();
 	buffer[1] = get_byte();
 	buffer[2] = get_byte();
+	int nibble_checksum = checksum_get();
 	buffer[3] = get_byte();
-	int nibble_checksum =
-		(buffer[0] >> 4) + (buffer[0] & 15) +
-		(buffer[1] >> 4) + (buffer[1] & 15) +
-		(buffer[2] >> 4) + (buffer[2] & 15);
 	if (nibble_checksum != buffer[3])
 	{
 		fatal_error

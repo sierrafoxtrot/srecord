@@ -19,10 +19,16 @@
 .\"
 .\" MANIFEST: description of new 1.8 features
 .\"
-.\" .PP
-.\" .if n *
-.\" .if t \(bu
-.\" .\" change NN
+.PP
+.if n *
+.if t \(bu
+.\" change 15
+A bug has been fixed in the checksum calculations for the Tektronix format.
+.PP
+.if n *
+.if t \(bu
+.\" change 12
+There is a new SPASM format for PIC programmers.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.8

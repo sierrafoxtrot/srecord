@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 2000 Peter Miller;
+.\"	Copyright (C) 1998, 2000, 2001 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -65,7 +65,8 @@ pairs (bytes) is indicated by the length field.
 .TP 8n
 Checksum 2
 The checksum 2 field is a 2 character (1 byte) field.  Its value is
-the least significant byte of the sum of the values of the data field.
+the least significant byte of the sum of the all the 4-bit values of
+the data field.
 .br
 .ne 2i
 .SS Termination Line

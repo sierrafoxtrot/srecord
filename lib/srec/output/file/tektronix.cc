@@ -60,6 +60,24 @@ srec_output_file_tektronix::~srec_output_file_tektronix()
 
 
 void
+srec_output_file_tektronix::put_nibble(int n)
+{
+	srec_output_file::put_nibble(n);
+	checksum_add(n & n);
+}
+
+
+void
+srec_output_file_tektronix::put_byte(int n)
+{
+	// This differs fro srec_output_file::put_byte only in that it
+	// doesn't add o the checksum.
+	put_nibble(n >> 4);
+	put_nibble(n);
+}
+
+
+void
 srec_output_file_tektronix::write_inner(unsigned long address,
 	const void *data, int data_nbytes)
 {
@@ -75,18 +93,14 @@ srec_output_file_tektronix::write_inner(unsigned long address,
 	put_char('/');
 	unsigned char tmp[2];
 	srec_record::encode_big_endian(tmp, address, 2);
+	checksum_reset();
 	put_byte(tmp[0]);
 	put_byte(tmp[1]);
 	put_byte(data_nbytes);
-	put_byte
-	(
-		(tmp[0] >> 4) + (tmp[0] & 15) +
-		(tmp[1] >> 4) + (tmp[1] & 15) +
-		(data_nbytes >> 4) + (data_nbytes & 15)
-	);
-	checksum_reset();
+	put_byte(checksum_get());
 	if (data_nbytes)
 	{
+		checksum_reset();
 		const unsigned char *data_p = (const unsigned char *)data;
 		for (int j = 0; j < data_nbytes; ++j)
 			put_byte(data_p[j]);

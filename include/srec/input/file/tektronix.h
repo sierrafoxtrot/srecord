@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -39,6 +39,8 @@ public:
 private:
 	srec_input_file_tektronix(const srec_input_file_tektronix &);
 	srec_input_file_tektronix &operator=(const srec_input_file_tektronix &);
+	int get_nibble();
+	int get_byte();
 	int read_inner(srec_record &);
 	int data_record_count;
 	bool garbage_warning;
