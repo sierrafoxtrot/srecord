@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2004 Peter Miller;
+//	Copyright (C) 2000-2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -36,6 +36,7 @@ public:
 		token_line_length = srec_arglex::token_MAX,
 		token_address_length,
 		token_data_only,
+		token_crlf,
 		token_header,
 		token_start_address,
 		token_MAX

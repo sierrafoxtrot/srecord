@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2003 Peter Miller;
+//	Copyright (C) 1998-2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -64,6 +64,13 @@ public:
 	  * (or any other records) will be emitted.
 	  */
 	static void data_only();
+
+	/**
+          * The crlf method is used to force CRLF line termination,
+          * event if the current operating system's native text files
+          * use something else.
+	  */
+	static void crlf();
 
 protected:
 	/**
@@ -170,12 +177,19 @@ protected:
 	virtual const char *mode() const;
 
 	/**
-	  * The data_only_flag instance variable is set by the data_only()
+	  * The data_only_flag class variable is set by the data_only()
 	  * method, to remember that only data records are to be sent
 	  * to the output.  Header records, start address records, etc,
 	  * are all suppressed.
 	  */
 	static bool data_only_flag;
+
+	/**
+          * The crlf_flag class variable is used to remember whether or
+          * not to force CRLF line termination, event if the current
+          * operating system's native text files use something else.
+	  */
+	static bool crlf_flag;
 
 private:
 	/**

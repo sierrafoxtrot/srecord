@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001-2004 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001-2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -96,6 +96,10 @@ main(int argc, char **argv)
 
 	case srec_cat_arglex3::token_data_only:
 	    srec_output_file::data_only();
+	    break;
+
+	case srec_cat_arglex3::token_crlf:
+	    srec_output_file::crlf();
 	    break;
 
 	case srec_cat_arglex3::token_multiple:
