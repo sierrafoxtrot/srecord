@@ -80,8 +80,7 @@ etc/cook/change_files.[version]:
 	set shallow nodefault
 {
 	echo "'change_source_files ='" > [target];
-	aegis -l cf -p [project] -c [change] -unf
-		| [awk] "'/^build/{next};$2=="remove"{next};{print $NF}'"
+	aegis -l cf -p [project] -c [change] -terse
 		>> [target];
 	echo "';'" >> [target];
 }
@@ -91,8 +90,7 @@ etc/cook/project_files.[version]:
 	set shallow nodefault
 {
 	echo "'project_source_files ='" > [target];
-	aegis -l pf -p [project] -c [change] -unf
-		| [awk] "'/^build/{next};$2=="remove"{next};{print $NF}'"
+	aegis -l pf -p [project] -c [change] -terse
 		>> [target];
 	echo "';'" >> [target];
 }
