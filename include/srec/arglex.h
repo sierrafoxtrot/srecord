@@ -104,6 +104,7 @@ public:
 	token_unfill,
 	token_unsplit,
 	token_vhdl,
+	token_vmem,
 	token_wilson,
 	token_within,
 	token_xor,

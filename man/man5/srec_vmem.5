@@ -1,0 +1,74 @@
+'\" t
+.\"	srecord - manipulate eprom load files
+.\"	Copyright (C) 2003 Peter Miller;
+.\"	All rights reserved.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"
+.\" MANIFEST: manual entry for the srec_vmem.5 command
+.\"
+.ds n) srec_vmem.5
+.TH \*(n) 5 SRecord "Reference Manual"
+.SH NAME
+srec_vmem \- vmem file format
+.XX "srec_vmem(5)" "VMEM file format"
+.SH DESCRIPTION
+This format is the Verilog VMEM format.
+This is a hex format suitable for loading into Verilog simulations using
+the \f[CW]$readmemh\fP call.
+.LP
+\fIIf you have a more accurate description of this file format,
+or a URL for one, please email me.
+.LP
+Each line is of the form
+.RS
+.nf
+.ft I
+@address data data ... data
+.ft P
+.fi
+.RE
+.LP
+The address is a 4-byte address; the data address is divided by the
+memory-wdith in bytes, to given a memory-width chunk address, rather
+than a byte address.
+.LP
+Each chunk of data is separated from the address and the other chunks
+by a space.  Each chunk contains a number of bytes indicated by the memory
+width (1 byte for 8-bit, 2 bytes for 16-bits and 4 bytes for 32-bits).
+The bytes are loaded least significant first.
+.LP
+There is no checksum in this format, which can generate false positives
+when guessing file formats on inout.
+.SS Size Multiplier
+In general, binary data will expand in sized by approximately 2.9 times
+(32-bit), 3.1 times (16-bit) or 3.6 times (8-bit) when represented with
+this format.
+.\" ------------------------------------------------------------------------
+.br
+.ne 2i
+.SH EXAMPLE
+Here is an example Verilog VMEM file.
+It contains the data ``Hello, World'' to be loaded at address 0x1000.
+.RS
+.nf
+.ft CW
+@00000400 48656C6C 6F2C2057 6F726C64 0AFFFFFF
+.ft P
+.fi
+.RE
+.\" ------------------------------------------------------------------------
+.ds n) srec_cat
+.so ../man1/z_copyright.so

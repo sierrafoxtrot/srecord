@@ -129,10 +129,14 @@ format are both understood for both reading and writing.
 Texas Instruments Tagged
 The Texas Instruments Tagged format is understood for both reading and writing.
 (Also known as the TI-tagged or TI-SDSMAC format.)
-.TP
+.TP 8n
 VHDL
 It is possible to write VHDL file.
 This is only supported for output.
+.TP 8n
+Verilog VMEM
+It is possible to write a Verilog VMEM file suitable for loading with
+\f[CW]$readmemh()\fP.  This format is supported for reading and writing.
 .TP 8n
 Wilson
 The Wilson format is understood for both reading and writing.

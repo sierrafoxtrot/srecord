@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002, 2003 Peter Miller;
+//	Copyright (C) 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -17,33 +17,33 @@
 //	along with this program; if not, write to the Free Software
 //	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: interface definition for include/srec/input/file/ascii_hex.cc
+// MANIFEST: interface definition for include/srec/input/file/vmem.cc
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILE_ASCII_HEX_H
-#define INCLUDE_SREC_INPUT_FILE_ASCII_HEX_H
+#ifndef INCLUDE_SREC_INPUT_FILE_VMEM_H
+#define INCLUDE_SREC_INPUT_FILE_VMEM_H
 
-#pragma interface "srec_input_file_ascii_hex"
+#pragma interface "srec_input_file_vmem"
 
 #include <srec/input/file.h>
 
 /**
-  * The srec_input_file_ascii_hex class is used to repesent the parse
-  * state when reading an Ascii-Hex format input file.
+  * The srec_input_file_vmem class is used to repesent the parse
+  * state when reading a Verilog VMEM format input file.
   */
-class srec_input_file_ascii_hex:
+class srec_input_file_vmem:
     public srec_input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_ascii_hex();
+    virtual ~srec_input_file_vmem();
 
     /**
       * the constructor.
       */
-    srec_input_file_ascii_hex(const char *filename);
+    srec_input_file_vmem(const char *filename);
 
     // See base class for documentation.
     int read(srec_record &);
@@ -52,12 +52,6 @@ public:
     const char *get_file_format_name() const;
 
 private:
-    /**
-      * The read_inner method is used to read a single record from
-      * the file.  The read method calls it.
-      */
-    int read_inner(srec_record &);
-
     /**
       * The garbage_warning instance variable is used to remember whether
       * a warning has already been issued if the file contains garbage.
@@ -77,25 +71,19 @@ private:
     unsigned long address;
 
     /**
-      * The state instance variable is used to remember what state the
-      * input is in at present.
-      */
-    enum { state_initial, state_body, state_ignore } state;
-
-    /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_ascii_hex();
+    srec_input_file_vmem();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_ascii_hex(const srec_input_file_ascii_hex &);
+    srec_input_file_vmem(const srec_input_file_vmem &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_ascii_hex &operator=(const srec_input_file_ascii_hex &);
+    srec_input_file_vmem &operator=(const srec_input_file_vmem &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILE_ASCII_HEX_H
+#endif // INCLUDE_SREC_INPUT_FILE_VMEM_H

@@ -43,6 +43,7 @@
 #include <srec/input/file/tektronix.h>
 #include <srec/input/file/tektronix_extended.h>
 #include <srec/input/file/ti_tagged.h>
+#include <srec/input/file/vmem.h>
 #include <srec/input/file/wilson.h>
 #include <srec/record.h>
 
@@ -170,6 +171,12 @@ create_ti_tagged(const char *fn)
 }
 
 static srec_input *
+create_vmem(const char *fn)
+{
+    return new srec_input_file_vmem(fn);
+}
+
+static srec_input *
 create_wilson(const char *fn)
 {
     return new srec_input_file_wilson(fn);
@@ -200,6 +207,7 @@ static func_p table[] =
     create_tektronix,
     create_tektronix_extended,
     create_ti_tagged,
+    create_vmem,
     create_wilson,
 };
 

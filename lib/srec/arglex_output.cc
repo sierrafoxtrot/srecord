@@ -47,6 +47,7 @@
 #include <srec/output/file/tektronix.h>
 #include <srec/output/file/ti_tagged.h>
 #include <srec/output/file/vhdl.h>
+#include <srec/output/file/vmem.h>
 #include <srec/output/file/wilson.h>
 
 
@@ -104,6 +105,11 @@ srec_arglex::get_output()
 	ofp = new srec_output_file_ascii_hex(fn);
 	break;
 
+    case token_asm_db:
+	token_next();
+	ofp = new srec_output_file_asm(fn);
+	break;
+
     case token_atmel_generic_be:
 	token_next();
 	ofp = new srec_output_file_atmel_generic(fn, true);
@@ -114,9 +120,26 @@ srec_arglex::get_output()
 	ofp = new srec_output_file_atmel_generic(fn, false);
 	break;
 
+    case token_basic_data:
+	token_next();
+	ofp = new srec_output_file_basic(fn);
+	break;
+
     case token_binary:
 	token_next();
 	ofp = new srec_output_file_binary(fn);
+	break;
+
+    case token_c_array:
+	{
+		const char *prefix = "eprom";
+		if (token_next() == token_string)
+		{
+			prefix = value_string();
+			token_next();
+		}
+		ofp = new srec_output_file_c(fn, prefix);
+	}
 	break;
 
     case token_cosmac:
@@ -231,26 +254,16 @@ srec_arglex::get_output()
 	}
 	break;
 
-    case token_c_array:
+    case token_vmem:
 	{
-		const char *prefix = "eprom";
-		if (token_next() == token_string)
-		{
-			prefix = value_string();
-			token_next();
-		}
-		ofp = new srec_output_file_c(fn, prefix);
+	    int mem_width = 32;
+	    if (token_next() == token_number)
+	    {
+		mem_width = value_number();
+		token_next();
+	    }
+	    ofp = new srec_output_file_vmem(fn, mem_width);
 	}
-	break;
-
-    case token_basic_data:
-	token_next();
-	ofp = new srec_output_file_basic(fn);
-	break;
-
-    case token_asm_db:
-	token_next();
-	ofp = new srec_output_file_asm(fn);
 	break;
 
     case token_wilson:

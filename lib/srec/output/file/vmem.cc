@@ -1,0 +1,220 @@
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 2000-2003 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: functions to impliment the srec_output_file_vmem class
+//
+
+#pragma implementation "srec_output_file_vmem"
+
+#include <srec/output/file/vmem.h>
+#include <srec/record.h>
+
+
+static unsigned
+calc_width_shift(int x)
+{
+    //
+    // The user could be giving a number of bytes.
+    //
+    if (x == 1)
+	return 0;
+    if (x == 2)
+	return 1;
+    if (x == 4)
+	return 2;
+
+    //
+    // The documented interface is a number of bits.
+    //
+    if (x <= 8)
+	return 0;
+    if (x <= 16)
+	return 1;
+    return 2;
+}
+
+
+static unsigned
+calc_width_mask(int x)
+{
+    return ((1u << calc_width_shift(x)) - 1u);
+}
+
+
+srec_output_file_vmem::srec_output_file_vmem(const char *filename,
+                                             const int memory_width) :
+    srec_output_file(filename),
+    address(0),
+    column(0),
+    pref_block_size(16),
+    width_shift(calc_width_shift(memory_width)),
+    width_mask(calc_width_mask(memory_width))
+{
+}
+
+
+srec_output_file_vmem::~srec_output_file_vmem()
+{
+    while (address & width_mask)
+	write_byte(0xFF);
+    if (column)
+	put_char('\n');
+}
+
+
+void
+srec_output_file_vmem::write_byte(unsigned value)
+{
+    //
+    // Each line starts with an address.
+    // The addresses are actually divided by the memory width,
+    // rather than being byte adddresses.
+    //
+    // (The presence of the @ character would seem to imply this is optional,
+    // because it is easy to parse that it is not the start of a hex byte.)
+    //
+    if (column == 0)
+	put_stringf("@%08lX", address >> width_shift);
+
+    //
+    // Put a space between each memory-width chunk of bytes.
+    //
+    if ((column & width_mask) == 0)
+	put_char(' ');
+
+    //
+    // Write the byte and crank the address.
+    //
+    put_byte(value);
+    ++address;
+
+    //
+    // Crank the column.
+    // If the line is too long, finish it.
+    //
+    ++column;
+    if (column >= pref_block_size)
+    {
+	put_char('\n');
+	column = 0;
+    }
+}
+
+
+void
+srec_output_file_vmem::write_byte_at(unsigned long new_addr, unsigned value)
+{
+    //
+    // We have to seek to the new address, but there are several cases.
+    //
+    // The easiest (and commonest) case is that the address is already
+    // exactly where we need it.
+    //
+    // The next commonest is that the current address is nicely aligned
+    // on a memory width boundary, and the new address is also nicely
+    // aligned.  No padding is required in this case; the loop simply
+    // sets the new address.
+    //
+    // There are three cases where we need padding
+    //       nn nn nn FF         on the end of a memory width chunk
+    //       FF nn nn nn         on the beginning of a memory width chunk
+    //       nn FF nn nn         in the middle of a memory width chunk
+    // sometimes end AND beginning padding will be required for the one
+    // change of address.  The loop takes care of all these cases,
+    // padding with an 0xFF value.
+    //
+    while (address != new_addr)
+    {
+	if (address & width_mask)
+	    write_byte(0xFF);
+	else
+	{
+	    // Round down, which provokes the beginning padding, when required.
+	    unsigned long zero = new_addr & ~(unsigned long)width_mask;
+	    if (address == zero)
+		write_byte(0xFF);
+	    else
+		address = zero;
+	}
+    }
+
+    //
+    // Now that the address is correct, write out the byte.
+    //
+    write_byte(value);
+}
+
+
+void
+srec_output_file_vmem::write(const srec_record &record)
+{
+    switch (record.get_type())
+    {
+    case srec_record::type_header:
+	// All header data is discarded
+	//
+	// Does this format permit coments?  If it does
+	// the header could be written out as a comment.
+	break;
+
+    case srec_record::type_data:
+	for (int j = 0; j < record.get_length(); ++j)
+	{
+	    write_byte_at(record.get_address() + j, record.get_data(j));
+	}
+	break;
+
+    case srec_record::type_data_count:
+    case srec_record::type_start_address:
+	// ignore
+	break;
+
+    case srec_record::type_unknown:
+	fatal_error("can't write unknown record type");
+    }
+}
+
+
+void
+srec_output_file_vmem::line_length_set(int linlen)
+{
+    int nchunks = (linlen - 9) / ((2 << width_shift) + 1);
+    int max_chunks = srec_record::max_data_length >> width_shift;
+    if (nchunks > max_chunks)
+	nchunks = max_chunks;
+    if (nchunks < 1)
+	nchunks = 1;
+    int nbytes = nchunks << width_shift;
+    pref_block_size = nbytes;
+}
+
+
+void
+srec_output_file_vmem::address_length_set(int n)
+{
+    // ignore
+}
+
+
+int
+srec_output_file_vmem::preferred_block_size_get()
+    const
+{
+    return pref_block_size;
+}
