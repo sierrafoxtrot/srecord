@@ -26,6 +26,7 @@
 #pragma interface "srec_input_file"
 
 #include <string>
+using namespace std;
 #include <srec/input.h>
 
 /**

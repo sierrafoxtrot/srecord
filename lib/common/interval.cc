@@ -23,7 +23,8 @@
 #pragma implementation "interval"
 
 #include <interval.h>
-#include <iostream.h>
+#include <iostream>
+using namespace std;
 
 
 /*

@@ -27,8 +27,9 @@
 #include <srec/output.h>
 #include <srec/output/file.h>
 
-#include <iostream.h>
-#include <stdlib.h>
+#include <iostream>
+using namespace std;
+#include <cstdlib>
 #include <vector>
 
 

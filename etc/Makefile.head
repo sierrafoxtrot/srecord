@@ -52,7 +52,7 @@ CXX = @CXX@
 #
 # The compiler flags to use
 #
-CXXFLAGS = @CXXFLAGS@
+CXXFLAGS = @CXXFLAGS@ -Wall
 
 #
 # The preprocessor flags to use

@@ -24,7 +24,8 @@
 
 #include <cstdio>
 #include <errno.h>
-#include <iostream.h>
+#include <iostream>
+using namespace std;
 
 #include <srec/output/file.h>
 

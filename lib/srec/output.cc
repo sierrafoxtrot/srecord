@@ -23,7 +23,11 @@
 #pragma implementation "srec_output"
 
 #include <errno.h>
-#include <iostream.h>
+#include <iostream>
+using namespace std;
+
+#include <cstdio>
+#include <cstdarg>
 
 #include <srec/output.h>
 #include <srec/record.h>
@@ -70,8 +74,9 @@ srec_output::fatal_error_v(const char *fmt, va_list ap)
 {
 	cout.flush();
 	cerr << filename() << ": ";
-	cerr.vform(fmt, ap);
-	cerr << endl;
+	char buf[1024];
+	vsnprintf(buf, sizeof(buf), fmt, ap);
+	cerr << buf << endl;
 	cerr.flush();
 	exit(1);
 }
@@ -95,7 +100,9 @@ srec_output::fatal_error_errno_v(const char *fmt, va_list ap)
 	int n = errno;
 	cout.flush();
 	cerr << filename() << ": ";
-	cerr.vform(fmt, ap);
+	char buf[1024];
+	vsnprintf(buf, sizeof(buf), fmt, ap);
+	cerr << buf;
 	cerr << ": " << strerror(n) << " [" << n << "]" << endl;
 	cerr.flush();
 	exit(1);
@@ -119,8 +126,9 @@ srec_output::warning_v(const char *fmt, va_list ap)
 {
 	cout.flush();
 	cerr << filename() << ": warning: ";
-	cerr.vform(fmt, ap);
-	cerr << endl;
+	char buf[1024];
+	vsnprintf(buf, sizeof(buf), fmt, ap);
+	cerr << buf << endl;
 	cerr.flush();
 }
 

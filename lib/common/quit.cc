@@ -23,9 +23,10 @@
 #pragma implementation "quit"
 
 #include <errno.h>
-#include <strstream.h>
-#include <string.h>
 #include <quit.h>
+#include <cstdarg>
+#include <cstdio>
+#include <cstring>
 
 
 quit::quit()
@@ -82,10 +83,9 @@ void
 quit::fatal_error_errno_v(const char *fmt, va_list ap)
 {
 	int n = errno;
-	strstream hold;
-	hold.vform(fmt, ap);
-	hold << '\0';
-	fatal_error("%s: %s", hold.str(), strerror(n));
+	char buf[1024];
+	vsnprintf(buf, sizeof(buf), fmt, ap);
+	fatal_error("%s: %s", buf, strerror(n));
 }
 
 
@@ -102,10 +102,9 @@ quit::warning(const char *fmt, ...)
 void
 quit::warning_v(const char *fmt, va_list ap)
 {
-	strstream hold;
-	hold.vform(fmt, ap);
-	hold << '\0';
-	message("warning: %s", hold.str());
+        char buf[1024];
+	vsnprintf(buf, sizeof(buf), fmt, ap);
+	message("warning: %s", buf);
 }
 
 

@@ -24,8 +24,9 @@
 #include <srec/input.h>
 #include <srec/memory.h>
 
-#include <iostream.h>
-#include <stdlib.h>
+#include <iostream>
+using namespace std;
+#include <cstdlib>
 #include <vector>
 
 

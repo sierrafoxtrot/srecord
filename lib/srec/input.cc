@@ -23,7 +23,8 @@
 #pragma implementation "srec_input"
 
 #include <errno.h>
-#include <iostream.h>
+#include <iostream>
+using namespace std;
 #include <cstring>
 
 #include <srec/input.h>

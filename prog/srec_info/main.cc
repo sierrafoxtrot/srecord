@@ -26,9 +26,11 @@
 #include <srec/memory.h>
 #include <srec/record.h>
 
-#include <ctype.h>
-#include <iostream.h>
-#include <stdlib.h>
+#include <cctype>
+#include <iostream>
+using namespace std;
+#include <cstdlib>
+#include <cstdio>
 #include <vector>
 
 
@@ -91,7 +93,11 @@ main(int argc, char **argv)
 					else if (isprint(c))
 						cout << (char)c;
 					else
-						cout.form("\\%03o", c);
+					  {
+					    char buf[16];
+					    snprintf(buf, sizeof(buf), "\\%03o", c);
+					    cout << buf;
+					  }
 				}
 				cout << "\"" << endl;
 				break;
@@ -106,9 +112,12 @@ main(int argc, char **argv)
 				break;
 
 			case srec_record::type_start_address:
-				cout << "Start:\t";
-				cout.form("%08lX", record.get_address());
-				cout << endl;
+ 			  {
+  				cout << "Start:\t";
+ 				char buf[16];
+ 				snprintf(buf, sizeof(buf), "%08lX", record.get_address());
+ 				cout << buf << endl;
+ 			  }
 				break;
 
 			default:
@@ -132,10 +141,11 @@ main(int argc, char **argv)
 			interval tmp = range;
 			tmp.first_interval_only();
 			cout << "\t";
-			cout.form("%0*lX", prec, tmp.get_lowest());
-			cout << " - ";
-			cout.form("%0*lX", prec, tmp.get_highest() - 1);
-			cout << endl;
+			char buf[32];
+			snprintf(buf, sizeof(buf), "%0*lX", prec, tmp.get_lowest());
+			cout << buf << " - ";
+			snprintf(buf, sizeof(buf), "%0*lX", prec, tmp.get_highest() - 1);
+			cout << buf << endl;
 			range -= tmp;
 			if (range.empty())
 				break;

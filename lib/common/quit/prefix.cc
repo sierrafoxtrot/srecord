@@ -22,7 +22,8 @@
 
 #pragma implementation "quit_prefix"
 
-#include <strstream.h>
+#include <cstdio>
+#include <cstdarg>
 #include <quit/prefix.h>
 
 
@@ -73,15 +74,14 @@ quit_prefix::message_v(const char *fmt, va_list ap)
 {
 	if (prefix != string(""))
 	{
-		strstream hold;
-		hold.vform(fmt, ap);
-		hold << '\0';
+		char buf[1024];
+		vsnprintf(buf, sizeof(buf), fmt, ap);
 		deeper.message
 		(
 			"%.*s: %s",
 			prefix.length(),
 			prefix.data(),
-			hold.str()
+			buf
 		);
 	}
 	else

@@ -24,8 +24,9 @@
 
 #include <cstdio>
 #include <errno.h>
-#include <iostream.h>
-#include <string.h>
+#include <iostream>
+using namespace std;
+#include <cstring>
 
 #include <srec/input/file.h>
 

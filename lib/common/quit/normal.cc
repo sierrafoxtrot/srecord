@@ -22,7 +22,11 @@
 
 #pragma implementation "quit_normal"
 
-#include <iostream.h>
+#include <cstdio>
+#include <cstdarg>
+
+#include <iostream>
+using namespace std;
 #include <progname.h>
 #include <quit/normal.h>
 
@@ -61,8 +65,9 @@ quit_normal::message_v(const char *fmt, va_list ap)
 {
 	cout.flush();
 	cerr << progname_get() << ": ";
-	cerr.vform(fmt, ap);
-	cerr << endl;
+	char buf[1024];
+	vsnprintf(buf, sizeof(buf), fmt, ap);
+	cerr << buf << endl;
 	cerr.flush();
 }
 

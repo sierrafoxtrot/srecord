@@ -22,7 +22,8 @@
 
 #pragma implementation "srec_memory_walker_compare"
 
-#include <iostream.h>
+#include <iostream>
+using namespace std;
 #include <srec/memory.h>
 #include <srec/memory/walker/compare.h>
 
@@ -70,8 +71,8 @@ srec_memory_walker_compare::print(const char *caption)
 	ios::fmtflags old =
 	    cout.setf
 	    (
-		ios::showbase + ios::hex,
-		ios::showbase + ios::hex + ios::dec + ios::oct
+		static_cast<ios::fmtflags>(ios::showbase + ios::hex),
+		static_cast<ios::fmtflags>(ios::showbase + ios::hex + ios::dec + ios::oct)
 	    );
 	if (!wrong.empty())
 		cout << "Different:\t" << wrong << endl;

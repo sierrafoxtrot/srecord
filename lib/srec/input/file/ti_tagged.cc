@@ -22,7 +22,7 @@
 
 #pragma implementation "srec_input_file_ti_tagged"
 
-#include <ctype.h>
+#include <cctype>
 #include <srec/input/file/ti_tagged.h>
 #include <srec/record.h>
 

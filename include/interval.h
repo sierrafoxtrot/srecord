@@ -27,6 +27,9 @@
 
 #include <stddef.h>
 
+#include <iostream>
+using namespace std;
+
 class interval
 {
 public:
@@ -54,7 +57,7 @@ public:
 	data_t get_lowest() const;
 	data_t get_highest() const;
 
-	void print(class ostream &) const;
+	void print(ostream &) const;
 
 private:
 	size_t length;
@@ -132,7 +135,7 @@ operator - (const interval &arg)
 	return (interval(0, 0) - arg);
 }
 
-inline class ostream &
+inline ostream &
 operator << (ostream &os, const interval &val)
 {
 	val.print(os);

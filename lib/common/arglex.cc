@@ -20,10 +20,11 @@
 
 #pragma implementation "arglex"
 
-#include <ctype.h>
+#include <cctype>
 #include <cstring>
 #include <errno.h>
-#include <iostream.h>
+#include <iostream>
+using namespace std;
 #include <unistd.h>
 
 #include <arglex.h>

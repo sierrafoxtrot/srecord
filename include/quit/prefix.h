@@ -26,6 +26,7 @@
 #pragma interface "quit_prefix"
 
 #include <string>
+using namespace std;
 #include <quit.h>
 
 /**

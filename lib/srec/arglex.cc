@@ -22,7 +22,8 @@
 
 #pragma implementation "srec_arglex"
 
-#include <iostream.h>
+#include <iostream>
+using namespace std;
 
 #include <srec/arglex.h>
 #include <srec/input/file/ascii_hex.h>

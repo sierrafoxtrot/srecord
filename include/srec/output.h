@@ -27,6 +27,7 @@
 
 #include <stdarg.h>
 #include <string>
+using namespace std;
 #include <format_printf.h>
 
 class srec_record; // forward

@@ -22,7 +22,7 @@
 
 #pragma implementation "srec_input_file_ascii_hex"
 
-#include <ctype.h>
+#include <cctype>
 
 #include <srec/input/file/ascii_hex.h>
 #include <srec/record.h>

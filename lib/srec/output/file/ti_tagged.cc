@@ -25,6 +25,7 @@
 #include <srec/output/file/ti_tagged.h>
 #include <srec/record.h>
 
+#include <cctype>
 
 srec_output_file_ti_tagged::srec_output_file_ti_tagged()
 	: srec_output_file(),
