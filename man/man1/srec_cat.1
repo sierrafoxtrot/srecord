@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998 Peter Miller;
+.\"	Copyright (C) 1998, 2000 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -69,10 +69,16 @@ A raw binary file will be written.
 A C array declaration will be written.
 The \fIidentifier\fP is the name of the variable to be defined.
 .TP 8n
+\fB\-WILson\fP
+A wilson format file will be written.
+(See
+.IR srec_wilson (5)
+for a description of this file format.)
+.TP 8n
 \fB\-Intel\fP
 An Intel hex format file will be written.
 (See
-.IR srec_intl (5)
+.IR srec_intel (5)
 for a description of this file format.)
 .TP 8n
 \fB\-Motorola\fP

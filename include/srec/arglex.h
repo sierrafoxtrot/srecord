@@ -39,6 +39,7 @@ public:
 		token_checksum_be,
 		token_checksum_le,
 		token_crop,
+		token_wilson,
 		token_exclude,
 		token_fill,
 		token_intel,

@@ -56,6 +56,10 @@ C
 It is also possible to write a C array declaration which contains the data.
 This can be useful when you want to embed download data into another program.
 This format cannot be read.
+.TP 8n
+wilson
+The WILson format is understood for both reading and writing.
+This mystery format was added for a mysterious type of EPROM writer.
 .SS The Tools
 The primary tools of the package are \fIsrec_cat\fP and \fIsrec_cmp\fP.
 All of the tools understand all of the file formats, and all of the filters.

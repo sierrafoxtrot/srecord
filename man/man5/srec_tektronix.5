@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998 Peter Miller;
+.\"	Copyright (C) 1998, 2000 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -89,6 +89,9 @@ Checksum
 The checksum 1 field is a 2 character (1 byte) field.  Its value is
 the 8-bit sum of the six 4-bit values which make up the address and
 zero fields.
+.SS Size Multiplier
+In general, binary data will expand in sized by approximately 2.4 times
+when represented with this format.
 .\" ------------------------------------------------------------------------
 .br
 .ne 2i

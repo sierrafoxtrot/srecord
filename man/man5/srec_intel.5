@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998 Peter Miller;
+.\"	Copyright (C) 1998, 2000 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -536,6 +536,9 @@ This field contains the check sum an the Record Length, Load Offset,
 and Record Type fields.  Since all the fields are static, the check
 sum can also be calculated statically, and the value is 0x4646, the
 hexadecimal encoding of the ASCII characters ``FF''.
+.SS Size Multiplier
+In general, binary data will expand in sized by approximately 2.3 times
+when represented with this format.
 .\" ------------------------------------------------------------------------
 .br
 .ne 2i

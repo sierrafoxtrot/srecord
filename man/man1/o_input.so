@@ -42,6 +42,12 @@ The format specified are:
 This option says the file is a raw binary file, and should be read literally.
 (May also be written \-Raw.)
 .TP 8n
+\fB\-WILson\fP
+This option says to use the wilson format to read the file.
+See
+.IR srec_wilson (5)
+for a description of this file format.
+.TP 8n
 \fB\-Intel\fP
 This option says to use the Intel hex format to read the file.
 See

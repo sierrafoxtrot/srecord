@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -41,8 +41,9 @@ protected:
 	int get_char();
 	int peek_char();
 	int get_nibble();
-	int get_byte();
+	virtual int get_byte();
 	int checksum_get();
+	void checksum_add(int n) { checksum += (unsigned char)n; }
 	void checksum_reset();
 	void seek_to_end();
 	virtual const char *mode() const;

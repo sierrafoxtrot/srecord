@@ -26,6 +26,7 @@
 
 #include <srec/arglex.h>
 #include <srec/input/file/binary.h>
+#include <srec/input/file/wilson.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix.h>
@@ -45,6 +46,7 @@
 #include <srec/input/interval.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/c.h>
+#include <srec/output/file/wilson.h>
 #include <srec/output/file/intel.h>
 #include <srec/output/file/srecord.h>
 #include <srec/output/file/tektronix.h>
@@ -90,6 +92,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-S_record",	token_motorola,		},
 		{ "-Tektronix",	token_tektronix,	},
 		{ "-Un_SPlit",	token_unsplit,		},
+		{ "-WILson",	token_wilson,		},
 		{ "-Within",	token_within,		},
 		ARGLEX_END_MARKER
 	};
@@ -297,6 +300,11 @@ srec_arglex::get_input()
 	case token_binary:
 		token_next();
 		ifp = new srec_input_file_binary(fn);
+		break;
+
+	case token_wilson:
+		token_next();
+		ifp = new srec_input_file_wilson(fn);
 		break;
 	}
 
@@ -787,6 +795,11 @@ srec_arglex::get_output()
 			}
 			ofp = new srec_output_file_c(fn, prefix);
 		}
+		break;
+
+	case token_wilson:
+		token_next();
+		ofp = new srec_output_file_wilson(fn);
 		break;
 	}
 

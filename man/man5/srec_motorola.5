@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998 Peter Miller;
+.\"	Copyright (C) 1998, 2000 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -115,6 +115,9 @@ may optionally contain the 2-byte address of the instruction to
 which control is passed.  If not specified, the first entry point
 specification encountered in the object module input will be used.
 There is no data field.
+.SS Size Multiplier
+In general, binary data will expand in sized by approximately 2.4 times
+when represented with this format.
 .\" ------------------------------------------------------------------------
 .br
 .ne 2i

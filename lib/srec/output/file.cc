@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -142,7 +142,7 @@ srec_output_file::put_byte(int n)
 {
 	put_nibble(n >> 4);
 	put_nibble(n);
-	checksum += (unsigned char)n;
+	checksum_add(n);
 }
 
 

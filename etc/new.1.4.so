@@ -28,6 +28,12 @@ even input bytes to be swapped.
 .PP
 .if n *
 .if t \(bu
+.\" Change 14
+The ``wilson'' file format is now understood for reading and writing.
+This mystery format was added for a mysterious type of EPROM writer.
+.PP
+.if n *
+.if t \(bu
 .\" Change 13
 The \fIsrec_cat\fP program now has a \fB-data-only\fP option, which
 supresses all output except for the data records.  This helps when
