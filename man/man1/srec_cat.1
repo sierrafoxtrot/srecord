@@ -239,6 +239,35 @@ just offset the addresses:
 .ft R
 .RE
 This example also demonstrates how the input filters may be chained together.
+.SS Joining Files Together
+The \fI\*(n)\fP command takes its name from the UNIX \fIcat\fP(1) command,
+which is short for `catenate' or `to join'.  Joining files together into
+a single file is simple, just name as many files on the command line as
+you need:
+.RS
+.ft CW
+\*(n) \fIinfile1\fP \fIinfile2\fP -o \fIoutfile\fP
+.ft R
+.RE
+However, this assumes that the files don't overlap in any way (you will
+get an error if they do).  If both files start from address zero, you
+may need to use the offset filter:
+.RS
+.ft CW
+\*(n) \fIinfile1\fP \fIinfile2\fP -offset 0x80000 -o \fIoutfile\fP
+.ft R
+.RE
+Sometimes you want the two files to follow each other exactly,
+but you don't know the offset in advance:
+.RS
+.ft CW
+\*(n) \fIinfile1\fP \fIinfile2\fP -offset -maximum \fIinfile1\fP
+-o \fIoutfile\fP
+.ft R
+.RE
+Notice that where the was a number (0x80000) before, there is now a
+calculation (\-maximum \fIinfile1\fP).  This is possible most places
+a number may be used (also \-minimum and \-range).
 .SS Filling the Blanks
 It is possible to fill the blanks where our data does not lie.
 The simplest example of this fills the entire EPROM:

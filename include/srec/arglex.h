@@ -63,10 +63,13 @@ public:
 	token_four_packed_code,
 	token_guess,
 	token_intel,
+	token_length,
 	token_length_be,
 	token_length_le,
+	token_maximum,
 	token_maximum_be,
 	token_maximum_le,
+	token_minimum,
 	token_minimum_be,
 	token_minimum_le,
 	token_mos_tech,
@@ -80,6 +83,9 @@ public:
 	token_over,
 	token_paren_begin,
 	token_paren_end,
+	token_round_down,
+	token_round_nearest,
+	token_round_up,
 	token_signetics,
 	token_spasm_be,
 	token_spasm_le,
@@ -129,6 +135,18 @@ public:
     class srec_output *get_output();
 
 private:
+    /**
+      * The can_get_number method is used to determine if it is possible
+      * to parse a number from the next token on the command line.
+      */
+    bool can_get_number() const;
+
+    /**
+      * The get_number method is used to parse a numeric value fromthe
+      * command line.
+      */
+    unsigned long get_number(const char *caption);
+
     /**
       * The get_interval_inner method is used to parse a single
       * interval from the command line (usually, a pair of number

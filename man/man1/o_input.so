@@ -295,20 +295,56 @@ There are three ways to specify an address range:
 If you specify two number on the command line (decimal, octal and
 hexadecimal are understood, using the C conventions) this is an explicit
 address range.  The minimum is inclusive, the maximum is exclusive (one
-more then the last address).  If the maximum is given as zero then the
+more than the last address).  If the maximum is given as zero then the
 range extends to the end of the address space.
 .TP 8n
 \fB\-Within\fP \fIinput-specification\fP
-This says to use the specified input file as a mask.  The crop region
+This says to use the specified input file as a mask.  The range
 includes all the places the specified input has data, and holes where
 it has holes.  The input specification need not be just a file name,
 it may be anything any other input specification can be.
 .TP 8n
 \fB\-OVER\fP \fIinput-specification\fP
-This says to use the specified input file as a mask.  The crop region
+This says to use the specified input file as a mask.  The range
 extends from the minimum to the maximum address used by the input, and
-fills any holes.  The input specification need not be just a file name,
+ignores any holes.  The input specification need not be just a file name,
 it may be anything any other input specification can be.
 .PP
 In addition, all of these methods may be used, and used more than once,
 and the results will be added together.
+.SS Calculated Values
+Most of the places above where a number is expected, you may supply one
+of the following:
+.TP 8n
+\fB\-MINimum\fP \fIinput-specification\fP
+This inserts the minimum address of the specified input file. 
+The input specification need not be just a file name,
+it may be anything any other input specification can be.
+.TP 8n
+\fB\-MAXimum\fP \fIinput-specification\fP
+This inserts the maximum address of the specified input file, plus one. 
+The input specification need not be just a file name,
+it may be anything any other input specification can be.
+.TP 8n
+\fB\-Length\fP \fIinput-specification\fP
+This inserts the length of the address range in the specified input file,
+ignoring any holes.  The input specification need not be just a file name,
+it may be anything any other input specification can be.
+.PP
+For example, the \fB-OVER \fIfile\fP option can be though of a short-hand for
+\fB( \-min\fP \fIfile\fP \fB\-max\fP \fIfile\fP \fB)\fPi, except that it is
+much easier to type, and also more efficient.
+.PP
+In addition, calculated values may optionally be rounded in one of three ways:
+.TP 8n
+\fIvalue\fP \fB\-Round_Down\fP \fInumber\fP
+The \fIvalue\fP is rounded down to the the largest integer smaller than
+or equal to a whole multiple of the \fInumber\fP.
+.TP 8n
+\fIvalue\fP \fB\-Round_Nearest\fP \fInumber\fP
+The \fIvalue\fP is rounded to the the nearest whole multiple of
+the \fInumber\fP.
+.TP 8n
+\fIvalue\fP \fB\-Round_Up\fP \fInumber\fP
+The \fIvalue\fP is rounded up to the the smallest integer larger than
+or equal to a whole multiple of the \fInumber\fP.

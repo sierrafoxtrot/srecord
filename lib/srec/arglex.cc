@@ -66,8 +66,10 @@ using namespace std;
 #include <srec/input/interval.h>
 
 
-srec_arglex::srec_arglex(int argc, char **argv)
-    : arglex(argc, argv), stdin_used(false), stdout_used(false)
+srec_arglex::srec_arglex(int argc, char **argv) :
+    arglex(argc, argv),
+    stdin_used(false),
+    stdout_used(false)
 {
     static table_ty table[] =
     {
@@ -109,6 +111,9 @@ srec_arglex::srec_arglex(int argc, char **argv)
 	{ "-Little_Endian_Length", token_length_le, },
 	{ "-Little_Endian_MAximum", token_maximum_le, },
 	{ "-Little_Endian_MInimum", token_minimum_le, },
+	{ "-Length",    token_length, },
+	{ "-MAximum",   token_maximum, },
+	{ "-MInimum",   token_minimum, },
 	{ "-MOS_Technologies", token_mos_tech,	},
 	{ "-Motorola",	token_motorola,		},
 	{ "-MULTiple",	token_multiple,		},
@@ -120,6 +125,11 @@ srec_arglex::srec_arglex(int argc, char **argv)
 	{ "-Output",	token_output,		},
 	{ "-OVer",	token_over,		},
 	{ "-RAw",	token_binary,		},
+	{ "-Round_Up",	token_round_up,		},
+	{ "-Round_Down", token_round_down,	},
+	{ "-Round",	token_round_nearest,	},
+	{ "-Round_Off",	token_round_nearest,	},
+	{ "-Round_Nearest", token_round_nearest, },
 	{ "-SIGnetics",	token_signetics,	},
 	{ "-SPAsm",	token_spasm_be,		}, // is this right?
 	{ "-SPAsm_BigEndian", token_spasm_be,	},
@@ -147,63 +157,150 @@ srec_arglex::~srec_arglex()
 }
 
 
+bool
+srec_arglex::can_get_number()
+    const
+{
+    switch (token_cur())
+    {
+    case token_number:
+    case token_minimum:
+    case token_maximum:
+    case token_length:
+	return true;
+
+    default:
+	return false;
+    }
+}
+
+
+unsigned long
+srec_arglex::get_number(const char *caption)
+{
+    unsigned long value;
+    unsigned long multiple;
+    srec_input *ifp;
+    interval over;
+
+    switch (token_cur())
+    {
+    case token_number:
+	value = value_number();
+	token_next();
+	return value;
+
+    case token_minimum:
+	token_next();
+	ifp = get_input();
+	over = srec_input_interval(ifp);
+	delete ifp;
+	value = over.get_lowest();
+	break;
+
+    case token_maximum:
+	token_next();
+	ifp = get_input();
+	over = srec_input_interval(ifp);
+	delete ifp;
+	value = over.get_highest();
+	break;
+
+    case token_length:
+	token_next();
+	ifp = get_input();
+	over = srec_input_interval(ifp);
+	delete ifp;
+	value = (over.get_highest() - over.get_lowest());
+	break;
+
+    default:
+	cerr << "number expected for " << caption << endl;
+	exit(1);
+	return 0;
+    }
+    switch (token_cur())
+    {
+    case token_round_down:
+	token_next();
+	multiple = get_number("-round-down");
+	value /= multiple;
+	value *= multiple;
+	break;
+
+    case token_round_up:
+	token_next();
+	multiple = get_number("-round-up");
+	value = (value + multiple - 1) / multiple;
+	value *= multiple;
+	break;
+
+    case token_round_nearest:
+	token_next();
+	multiple = get_number("-round-nearest");
+	value = (value + multiple / 2) / multiple;
+	value *= multiple;
+	break;
+    }
+    return value;
+}
+
+
 interval
 srec_arglex::get_interval_inner(const char *name)
 {
     switch (token_cur())
     {
-    default:
-	cerr << "the " << name
-		<< " range requires two numeric arguments" << endl;
-	exit(1);
-
     case token_paren_begin:
 	{
-		token_next();
-		interval retval = get_interval(name);
-		if (token_cur() != token_paren_end)
-		{
-			cerr << "``)'' expected" << endl;
-			exit(1);
-		}
-		token_next();
-		return retval;
+	    token_next();
+	    interval retval = get_interval(name);
+	    if (token_cur() != token_paren_end)
+	    {
+		    cerr << "``)'' expected" << endl;
+		    exit(1);
+	    }
+	    token_next();
+	    return retval;
 	}
 
-    case token_number:
+    default:
 	{
-		unsigned long n1 = value_number();
-		unsigned long n2 = 0;
-		if (token_next() == token_number)
-		{
-			n2 = value_number();
-			token_next();
-		}
-		if (n2 && n1 >= n2)
-		{
-			cerr << "the " << name << " range " << n1
-				<< ".." << n2 << " is invalid" << endl;
-			exit(1);
-		}
-		return interval(n1, n2);
+	    if (!can_get_number())
+	    {
+		cerr << "the " << name
+		    << " range requires two numeric arguments" << endl;
+		exit(1);
+	    }
+	    unsigned long n1 = get_number("address range minimum");
+	    unsigned long n2 = 0;
+	    if (can_get_number())
+		    n2 = get_number("address range maximum");
+	    if (n2 && n1 >= n2)
+	    {
+		    cerr << "the " << name << " range " << n1
+			    << ".." << n2 << " is invalid" << endl;
+		    exit(1);
+	    }
+	    return interval(n1, n2);
 	}
 
     case token_within:
 	{
-		token_next();
-		srec_input *ifp = get_input();
-		interval over = srec_input_interval(ifp);
-		delete ifp;
-		return over;
+	    token_next();
+	    srec_input *ifp = get_input();
+	    interval over = srec_input_interval(ifp);
+	    delete ifp;
+	    return over;
 	}
 
     case token_over:
 	{
-		token_next();
-		srec_input *ifp = get_input();
-		interval over = srec_input_interval(ifp);
-		delete ifp;
-		return interval(over.get_lowest(), over.get_highest());
+	    token_next();
+	    srec_input *ifp = get_input();
+	    interval over = srec_input_interval(ifp);
+	    delete ifp;
+	    return interval(over.get_lowest(), over.get_highest());
 	}
     }
 }
@@ -236,15 +333,12 @@ srec_arglex::get_interval(const char *name)
 void
 srec_arglex::get_address(const char *name, unsigned long &address)
 {
-    if (token_next() != token_number)
+    if (!can_get_number())
     {
-	cerr << "the " << name
-    	    << " filter requires an address"
-    	    << endl;
+	cerr << "the " << name << " filter requires an address" << endl;
 	exit(1);
     }
-    address = value_number();
-    token_next();
+    address = get_number("address");
 }
 
 
@@ -252,19 +346,18 @@ void
 srec_arglex::get_address_and_nbytes(const char *name, unsigned long &address,
     int &nbytes)
 {
-    if (token_next() != token_number)
+    if (!can_get_number())
     {
 	cerr << "the " << name
     	    << " filter requires an address and a byte count"
     	    << endl;
 	exit(1);
     }
-    address = value_number();
+    address = get_number("address");
     nbytes = 4;
-    if (token_next() == token_number)
+    if (can_get_number())
     {
-	nbytes = value_number();
-	token_next();
+	nbytes = get_number("byte count");
 	if (nbytes < 1 || nbytes > 8)
 	{
     	    cerr << "the " << name << " byte count " << nbytes
@@ -287,19 +380,19 @@ void
 srec_arglex::get_address_nbytes_width(const char *name, unsigned long &address,
     int &nbytes, int &width)
 {
-    if (token_next() != token_number)
+    if (!can_get_number())
     {
 	cerr << "the " << name
     	    << " filter requires an address and a byte count"
     	    << endl;
 	exit(1);
     }
-    address = value_number();
+    address = get_number("address");
     nbytes = 4;
     width = 1;
-    if (token_next() == token_number)
+    if (can_get_number())
     {
-	nbytes = value_number();
+	nbytes = get_number("byte count");
 	if (nbytes < 1 || nbytes > 8)
 	{
 	    cerr << "the " << name << " byte count " << nbytes
@@ -307,10 +400,9 @@ srec_arglex::get_address_nbytes_width(const char *name, unsigned long &address,
 	       	<< endl;
 	    exit(1);
 	}
-	if (token_next() == token_number)
+	if (can_get_number())
 	{
-	    width = value_number();
-	    token_next();
+	    width = get_number("width");
 	    if (width < 1 || width > nbytes)
 	    {
 	       	cerr << "the " << name << " sum width "
@@ -476,579 +568,520 @@ srec_arglex::get_input()
     //
     for (;;)
     {
-	    switch (token_cur())
+	switch (token_cur())
+	{
+	case token_byte_swap:
+	    token_next();
+	    ifp = new srec_input_filter_byte_swap(ifp);
+	    continue;
+
+	case token_not:
+	    token_next();
+	    ifp = new srec_input_filter_not(ifp);
+	    continue;
+
+	case token_crc16_be:
 	    {
-	    case token_byte_swap:
-		    token_next();
-		    ifp = new srec_input_filter_byte_swap(ifp);
-		    continue;
-
-	    case token_not:
-		    token_next();
-		    ifp = new srec_input_filter_not(ifp);
-		    continue;
-
-	    case token_crc16_be:
-		    {
-			unsigned long address;
-			get_address("-Big_Endian_CRC16", address);
-			ifp = new srec_input_filter_crc16(ifp, address, 0);
-		    }
-		    continue;
-
-	    case token_crc16_le:
-		    {
-			unsigned long address;
-			get_address("-Little_Endian_CRC16", address);
-			ifp = new srec_input_filter_crc16(ifp, address, 1);
-		    }
-		    continue;
-
-	    case token_crc32_be:
-		    {
-			unsigned long address;
-			get_address("-Big_Endian_CRC32", address);
-			ifp = new srec_input_filter_crc32(ifp, address, 0);
-		    }
-		    continue;
-
-	    case token_crc32_le:
-		    {
-			unsigned long address;
-			get_address("-Little_Endian_CRC32", address);
-			ifp = new srec_input_filter_crc32(ifp, address, 1);
-		    }
-		    continue;
-
-	    case token_crop:
-		    token_next();
-		    ifp = new srec_input_filter_crop(ifp,
-			    get_interval("-Crop"));
-		    continue;
-
-	    case token_exclude:
-		    token_next();
-		    ifp = new srec_input_filter_crop(ifp,
-			    -get_interval("-Exclude"));
-		    continue;
-
-	    case token_fill:
-		    {
-			    if (token_next() != token_number)
-			    {
-				    cerr <<
-				    "the -fill filter requires a fill value"
-					    << endl;
-				    exit(1);
-			    }
-			    int filler = value_number();
-			    if (filler < 0 || filler >= 256)
-			    {
-				    cerr << "fill value " << filler
-					    << " out of range (0..255)"
-					    << endl;
-				    exit(1);
-			    }
-			    token_next();
-			    interval range = get_interval("-Fill");
-			    ifp = new srec_input_filter_fill(ifp, filler, range);
-		    }
-		    continue;
-
-	    case token_and:
-		    {
-			    if (token_next() != token_number)
-			    {
-				    cerr <<
-				     "the -and filter requires a fill value"
-					    << endl;
-				    exit(1);
-			    }
-			    int filler = value_number();
-			    if (filler < 0 || filler >= 256)
-			    {
-				    cerr << "-and value " << filler
-					    << " out of range (0..255)"
-					    << endl;
-				    exit(1);
-			    }
-			    token_next();
-			    ifp = new srec_input_filter_and(ifp, filler);
-		    }
-		    continue;
-
-	    case token_xor:
-		    {
-			    if (token_next() != token_number)
-			    {
-				    cerr <<
-				     "the -xor filter requires a fill value"
-					    << endl;
-				    exit(1);
-			    }
-			    int filler = value_number();
-			    if (filler < 0 || filler >= 256)
-			    {
-				    cerr << "-xor value " << filler
-					    << " out of range (0..255)"
-					    << endl;
-				    exit(1);
-			    }
-			    token_next();
-			    ifp = new srec_input_filter_xor(ifp, filler);
-		    }
-		    continue;
-
-	    case token_or:
-		    {
-			    if (token_next() != token_number)
-			    {
-				    cerr <<
-				      "the -or filter requires a fill value"
-					    << endl;
-				    exit(1);
-			    }
-			    int filler = value_number();
-			    if (filler < 0 || filler >= 256)
-			    {
-				    cerr << "-or value " << filler
-					    << " out of range (0..255)"
-					    << endl;
-				    exit(1);
-			    }
-			    token_next();
-			    ifp = new srec_input_filter_or(ifp, filler);
-		    }
-		    continue;
-
-	    case token_length_be:
-		    {
-			    unsigned long address;
-			    int nbytes;
-			    get_address_and_nbytes
-			    (
-				    "-Big_Endian_Length",
-				    address,
-				    nbytes
-			    );
-			    ifp =
-				    new srec_input_filter_length
-				    (
-					    ifp,
-					    address,
-					    nbytes,
-					    0
-				    );
-		    }
-		    continue;
-
-	    case token_length_le:
-		    {
-			    unsigned long address;
-			    int nbytes;
-			    get_address_and_nbytes
-			    (
-				    "-Little_Endian_Length",
-				    address,
-				    nbytes
-			    );
-			    ifp =
-				    new srec_input_filter_length
-				    (
-					    ifp,
-					    address,
-					    nbytes,
-					    1
-				    );
-		    }
-		    continue;
-
-	    case token_maximum_be:
-		    {
-			    unsigned long address;
-			    int nbytes;
-			    get_address_and_nbytes
-			    (
-				    "-Big_Endian_MAximum",
-				    address,
-				    nbytes
-			    );
-			    ifp =
-				    new srec_input_filter_maximum
-				    (
-					    ifp,
-					    address,
-					    nbytes,
-					    0
-				    );
-		    }
-		    continue;
-
-	    case token_maximum_le:
-		    {
-			    unsigned long address;
-			    int nbytes;
-			    get_address_and_nbytes
-			    (
-				    "-Little_Endian_MAximum",
-				    address,
-				    nbytes
-			    );
-			    ifp =
-				    new srec_input_filter_maximum
-				    (
-					    ifp,
-					    address,
-					    nbytes,
-					    1
-				    );
-		    }
-		    continue;
-
-	    case token_minimum_be:
-		    {
-			    unsigned long address;
-			    int nbytes;
-			    get_address_and_nbytes
-			    (
-				    "-Big_Endian_MInimum",
-				    address,
-				    nbytes
-			    );
-			    ifp =
-				    new srec_input_filter_minimum
-				    (
-					    ifp,
-					    address,
-					    nbytes,
-					    0
-				    );
-		    }
-		    continue;
-
-	    case token_minimum_le:
-		    {
-			    unsigned long address;
-			    int nbytes;
-			    get_address_and_nbytes
-			    (
-				    "-Little_Endian_MInimum",
-				    address,
-				    nbytes
-			    );
-			    ifp =
-				    new srec_input_filter_minimum
-				    (
-					    ifp,
-					    address,
-					    nbytes,
-					    1
-				    );
-		    }
-		    continue;
-
-	    case token_checksum_be_bitnot:
-		    {
-			    unsigned long address;
-			    int nbytes, width;
-			    get_address_nbytes_width
-			    (
-				    "-Big_Endian_Checksum_BitNot",
-				    address,
-				    nbytes,
-				    width
-			    );
-			    ifp =
-				    new srec_input_filter_checksum_bitnot
-				    (
-					    ifp,
-					    address,
-					    nbytes,
-					    0,
-					    width
-				    );
-		    }
-		    continue;
-
-	    case token_checksum_le_bitnot:
-		    {
-			    unsigned long address;
-			    int nbytes,width;
-			    get_address_nbytes_width
-			    (
-				    "-Little_Endian_Checksum_BitNot",
-				    address,
-				    nbytes,
-				    width
-			    );
-			    ifp =
-				    new srec_input_filter_checksum_bitnot
-				    (
-					    ifp,
-					    address,
-					    nbytes,
-					    1,
-					    width
-				    );
-		    }
-		    continue;
-
-	    case token_checksum_be_negative:
-		    {
-			    unsigned long address;
-			    int nbytes, width;
-			    get_address_nbytes_width
-			    (
-				    "-Big_Endian_Checksum_Negative",
-				    address,
-				    nbytes,
-				    width
-			    );
-			    ifp =
-				    new srec_input_filter_checksum_negative
-				    (
-					    ifp,
-					    address,
-					    nbytes,
-					    0,
-					    width
-				    );
-		    }
-		    continue;
-
-	    case token_checksum_le_negative:
-		    {
-			    unsigned long address;
-			    int nbytes, width;
-			    get_address_nbytes_width
-			    (
-				    "-Little_Endian_Checksum_Negative",
-				    address,
-				    nbytes,
-				    width
-			    );
-			    ifp =
-				    new srec_input_filter_checksum_negative
-				    (
-					    ifp,
-					    address,
-					    nbytes,
-					    1,
-					    width
-				    );
-		    }
-		    continue;
-
-	    case token_checksum_be_positive:
-		    {
-			    unsigned long address;
-			    int nbytes, width;
-			    get_address_nbytes_width
-			    (
-				    "-Big_Endian_Checksum_Positive",
-				    address,
-				    nbytes,
-				    width
-			    );
-			    ifp =
-				    new srec_input_filter_checksum_positive
-				    (
-					    ifp,
-					    address,
-					    nbytes,
-					    0,
-					    width
-				    );
-		    }
-		    continue;
-
-	    case token_checksum_le_positive:
-		    {
-			    unsigned long address;
-			    int nbytes, width;
-			    get_address_nbytes_width
-			    (
-				    "-Little_Endian_Checksum_Positive",
-				    address,
-				    nbytes,
-				    width
-			    );
-			    ifp =
-				    new srec_input_filter_checksum_positive
-				    (
-					    ifp,
-					    address,
-					    nbytes,
-					    1,
-					    width
-				    );
-		    }
-		    continue;
-
-	    case token_offset:
-		    if (token_next() != token_number)
-		    {
-			    cerr <<
-			    "the -offset filter requires a numeric argument"
-				    << endl;
-			    exit(1);
-		    }
-		    ifp = new srec_input_filter_offset(ifp, value_number());
-		    token_next();
-		    continue;
-
-	    case token_split:
-		    {
-		    if (token_next() != token_number)
-		    {
-			    cerr <<
-			"the -split filter requires three numeric arguments"
-				    << endl;
-			    exit(1);
-		    }
-		    int split_modulus = value_number();
-		    if (split_modulus < 2)
-		    {
-			    cerr << "the -split modulus must be two or more"
-				    << endl;
-			    exit(1);
-		    }
-		    int split_offset = 0;
-		    if (token_next() == token_number)
-		    {
-			    split_offset = value_number();
-			    if (split_offset < 0 || split_offset >= split_modulus)
-			    {
-				    cerr << "the -split offset must be 0.."
-					    << (split_modulus - 1)
-					    << endl;
-				    exit(1);
-			    }
-			    token_next();
-		    }
-		    int split_width = 1;
-		    if (token_cur() == token_number)
-		    {
-			    split_width = value_number();
-			    if (split_width < 1 || split_width >= split_modulus)
-			    {
-				    cerr << "the -split width must be 1.."
-					    << (split_modulus - 1)
-					    << endl;
-				    exit(1);
-			    }
-			    token_next();
-		    }
-		    ifp =
-			    new srec_input_filter_split
-			    (
-				    ifp,
-				    split_modulus,
-				    split_offset,
-				    split_width
-			    );
-		    }
-		    continue;
-
-	    case token_unfill:
-		    {
-		    if (token_next() != token_number)
-		    {
-			    cerr <<
-			 "the -unfill filter requires two numeric arguments"
-				    << endl;
-			    exit(1);
-		    }
-		    int fill_value = value_number();
-		    if (fill_value < 0 || fill_value >= 256)
-		    {
-			    cerr <<
-				  "the -unfill value must be 0..255"
-				    << endl;
-			    exit(1);
-		    }
-		    int fill_minimum = 1;
-		    if (token_next() == token_number)
-		    {
-			    fill_minimum = value_number();
-			    if (fill_minimum < 1 || fill_minimum > 16)
-			    {
-				    cerr <<
-				      "the -unfill run length must be 1..16"
-					    << endl;
-				    exit(1);
-			    }
-			    token_next();
-		    }
-		    ifp =
-			    new srec_input_filter_unfill
-			    (
-				    ifp,
-				    fill_value,
-				    fill_minimum
-			    );
-		    }
-		    continue;
-
-	    case token_unsplit:
-		    {
-		    if (token_next() != token_number)
-		    {
-			    cerr <<
-		      "the -unsplit filter requires three numeric arguments"
-				    << endl;
-			    exit(1);
-		    }
-		    int split_modulus = value_number();
-		    if (split_modulus < 2)
-		    {
-			    cerr <<
-				  "the -unsplit modulus must be two or more"
-				    << endl;
-			    exit(1);
-		    }
-		    int split_offset = 0;
-		    if (token_next() == token_number)
-		    {
-			    split_offset = value_number();
-			    if (split_offset < 0 || split_offset >= split_modulus)
-			    {
-				    cerr <<
-					   "the -unsplit offset must be 0.."
-					    << (split_modulus - 1)
-					    << endl;
-				    exit(1);
-			    }
-			    token_next();
-		    }
-		    int split_width = 1;
-		    if (token_cur() == token_number)
-		    {
-			    split_width = value_number();
-			    if (split_width < 1 || split_width >= split_modulus)
-			    {
-				    cerr << "the -unsplit width must be 1.."
-					    << (split_modulus - 1)
-					    << endl;
-				    exit(1);
-			    }
-			    token_next();
-		    }
-		    ifp =
-			    new srec_input_filter_unsplit
-			    (
-				    ifp,
-				    split_modulus,
-				    split_offset,
-				    split_width
-			    );
-		    }
-		    continue;
-
-	    default:
-		    break;
+		token_next();
+		unsigned long address;
+		get_address("-Big_Endian_CRC16", address);
+		ifp = new srec_input_filter_crc16(ifp, address, 0);
 	    }
+	    continue;
+
+	case token_crc16_le:
+	    {
+		token_next();
+		unsigned long address;
+		get_address("-Little_Endian_CRC16", address);
+		ifp = new srec_input_filter_crc16(ifp, address, 1);
+	    }
+	    continue;
+
+	case token_crc32_be:
+	    {
+		token_next();
+		unsigned long address;
+		get_address("-Big_Endian_CRC32", address);
+		ifp = new srec_input_filter_crc32(ifp, address, 0);
+	    }
+	    continue;
+
+	case token_crc32_le:
+	    {
+		token_next();
+		unsigned long address;
+		get_address("-Little_Endian_CRC32", address);
+		ifp = new srec_input_filter_crc32(ifp, address, 1);
+	    }
+	    continue;
+
+	case token_crop:
+	    token_next();
+	    ifp = new srec_input_filter_crop(ifp,
+		    get_interval("-Crop"));
+	    continue;
+
+	case token_exclude:
+	    token_next();
+	    ifp = new srec_input_filter_crop(ifp, -get_interval("-Exclude"));
+	    continue;
+
+	case token_fill:
+	    {
+		token_next();
+		if (!can_get_number())
+		{
+		    cerr << "the -fill filter requires a fill value" << endl;
+		    exit(1);
+		}
+		int filler = get_number("fill value");
+		if (filler < 0 || filler >= 256)
+		{
+		    cerr << "fill value " << filler << " out of range (0..255)"
+			<< endl;
+		    exit(1);
+		}
+		interval range = get_interval("-Fill");
+		ifp = new srec_input_filter_fill(ifp, filler, range);
+	    }
+	    continue;
+
+	case token_and:
+	    {
+		token_next();
+		if (!can_get_number())
+		{
+		    cerr << "the -and filter requires a fill value" << endl;
+		    exit(1);
+		}
+		int filler = get_number("and value");
+		if (filler < 0 || filler >= 256)
+		{
+		    cerr << "-and value " << filler << " out of range (0..255)"
+			<< endl;
+		    exit(1);
+		}
+		ifp = new srec_input_filter_and(ifp, filler);
+	    }
+	    continue;
+
+	case token_xor:
+	    {
+		token_next();
+		if (!can_get_number())
+		{
+		    cerr << "the -xor filter requires a fill value" << endl;
+		    exit(1);
+		}
+		int filler = get_number("xor value");
+		if (filler < 0 || filler >= 256)
+		{
+		    cerr << "-xor value " << filler << " out of range (0..255)"
+			<< endl;
+		    exit(1);
+		}
+		ifp = new srec_input_filter_xor(ifp, filler);
+	    }
+	    continue;
+
+	case token_or:
+	    {
+		token_next();
+		if (!can_get_number())
+		{
+		    cerr << "the -or filter requires a fill value" << endl;
+		    exit(1);
+		}
+		int filler = get_number("or value");
+		if (filler < 0 || filler >= 256)
+		{
+		    cerr << "-or value " << filler << " out of range (0..255)"
+			<< endl;
+		    exit(1);
+		}
+		ifp = new srec_input_filter_or(ifp, filler);
+	    }
+	    continue;
+
+	case token_length:
+	    cerr << "Use --big-endian-length or --little-endian-length" << endl;
+	    exit(1);
+
+	case token_length_be:
+	    {
+		token_next();
+		unsigned long address;
+		int nbytes;
+		get_address_and_nbytes("-Big_Endian_Length", address, nbytes);
+		ifp = new srec_input_filter_length(ifp, address, nbytes, 0);
+	    }
+	    continue;
+
+	case token_length_le:
+	    {
+		token_next();
+		unsigned long address;
+		int nbytes;
+		get_address_and_nbytes
+		(
+		    "-Little_Endian_Length",
+		    address,
+		    nbytes
+		);
+		ifp = new srec_input_filter_length(ifp, address, nbytes, 1);
+	    }
+	    continue;
+
+	case token_maximum:
+	    cerr << "Use --big-endian-maximum or --little-endian-maximum"
+		<< endl;
+	    exit(1);
+
+	case token_maximum_be:
+	    {
+		token_next();
+		unsigned long address;
+		int nbytes;
+		get_address_and_nbytes("-Big_Endian_MAximum", address, nbytes);
+		ifp = new srec_input_filter_maximum(ifp, address, nbytes, 0);
+	    }
+	    continue;
+
+	case token_maximum_le:
+	    {
+		token_next();
+		unsigned long address;
+		int nbytes;
+		get_address_and_nbytes
+		(
+		    "-Little_Endian_MAximum",
+		    address,
+		    nbytes
+		);
+		ifp = new srec_input_filter_maximum(ifp, address, nbytes, 1);
+	    }
+	    continue;
+
+	case token_minimum:
+	    cerr << "Use --big-endian-minimum or --little-endian-minimum"
+		<< endl;
+	    exit(1);
+
+	case token_minimum_be:
+	    {
+		token_next();
+		unsigned long address;
+		int nbytes;
+		get_address_and_nbytes("-Big_Endian_MInimum", address, nbytes);
+		ifp = new srec_input_filter_minimum(ifp, address, nbytes, 0);
+	    }
+	    continue;
+
+	case token_minimum_le:
+	    {
+		token_next();
+		unsigned long address;
+		int nbytes;
+		get_address_and_nbytes
+		(
+		    "-Little_Endian_MInimum",
+		    address,
+		    nbytes
+		);
+		ifp = new srec_input_filter_minimum(ifp, address, nbytes, 1);
+	    }
+	    continue;
+
+	case token_checksum_be_bitnot:
+	    {
+		token_next();
+		unsigned long address;
+		int nbytes, width;
+		get_address_nbytes_width
+		(
+		    "-Big_Endian_Checksum_BitNot",
+		    address,
+		    nbytes,
+		    width
+		);
+		ifp =
+		    new srec_input_filter_checksum_bitnot
+		    (
+			ifp,
+			address,
+			nbytes,
+			0,
+			width
+		    );
+	    }
+	    continue;
+
+	case token_checksum_le_bitnot:
+	    {
+		token_next();
+		unsigned long address;
+		int nbytes, width;
+		get_address_nbytes_width
+		(
+		    "-Little_Endian_Checksum_BitNot",
+		    address,
+		    nbytes,
+		    width
+		);
+		ifp =
+		    new srec_input_filter_checksum_bitnot
+		    (
+		       	ifp,
+		       	address,
+		       	nbytes,
+		       	1,
+		       	width
+		    );
+	    }
+	    continue;
+
+	case token_checksum_be_negative:
+	    {
+		token_next();
+		unsigned long address;
+		int nbytes, width;
+		get_address_nbytes_width
+		(
+		    "-Big_Endian_Checksum_Negative",
+		    address,
+		    nbytes,
+		    width
+		);
+		ifp =
+		    new srec_input_filter_checksum_negative
+		    (
+			ifp,
+			address,
+			nbytes,
+			0,
+			width
+		    );
+	    }
+	    continue;
+
+	case token_checksum_le_negative:
+	    {
+		token_next();
+		unsigned long address;
+		int nbytes, width;
+		get_address_nbytes_width
+		(
+		    "-Little_Endian_Checksum_Negative",
+		    address,
+		    nbytes,
+		    width
+		);
+		ifp =
+		    new srec_input_filter_checksum_negative
+		    (
+		       	ifp,
+		       	address,
+		       	nbytes,
+		       	1,
+		       	width
+		    );
+	    }
+	    continue;
+
+	case token_checksum_be_positive:
+	    {
+		token_next();
+		unsigned long address;
+		int nbytes, width;
+		get_address_nbytes_width
+		(
+		    "-Big_Endian_Checksum_Positive",
+		    address,
+		    nbytes,
+		    width
+		);
+		ifp =
+		    new srec_input_filter_checksum_positive
+		    (
+		       	ifp,
+		       	address,
+		       	nbytes,
+		       	0,
+		       	width
+		    );
+	    }
+	    continue;
+
+	case token_checksum_le_positive:
+	    {
+		token_next();
+		unsigned long address;
+		int nbytes, width;
+		get_address_nbytes_width
+		(
+		    "-Little_Endian_Checksum_Positive",
+		    address,
+		    nbytes,
+		    width
+		);
+		ifp =
+		    new srec_input_filter_checksum_positive
+		    (
+		       	ifp,
+		       	address,
+		       	nbytes,
+		       	1,
+		       	width
+		    );
+	    }
+	    continue;
+
+	case token_offset:
+	    {
+		token_next();
+		if (!can_get_number())
+		{
+		    cerr << "the -offset filter requires a numeric argument"
+			<< endl;
+		    exit(1);
+		}
+		unsigned long amount = get_number("address offset");
+		ifp = new srec_input_filter_offset(ifp, amount);
+	    }
+	    continue;
+
+	case token_split:
+	    {
+		token_next();
+		if (!can_get_number())
+		{
+		    cerr << "the -split filter requires three numeric arguments"
+			<< endl;
+		    exit(1);
+		}
+		int split_modulus = get_number("split modulus");
+		if (split_modulus < 2)
+		{
+		    cerr << "the -split modulus must be two or more" << endl;
+		    exit(1);
+		}
+		int split_offset = 0;
+		if (can_get_number())
+		{
+		    split_offset = get_number("split offset");
+		    if (split_offset < 0 || split_offset >= split_modulus)
+		    {
+			cerr << "the -split offset must be 0.."
+			    << (split_modulus - 1) << endl;
+			exit(1);
+		    }
+		}
+		int split_width = 1;
+		if (can_get_number())
+		{
+		    split_width = get_number("split width");
+		    if (split_width < 1 || split_width >= split_modulus)
+		    {
+			cerr << "the -split width must be 1.."
+			    << (split_modulus - 1) << endl;
+			exit(1);
+		    }
+		}
+		ifp =
+		    new srec_input_filter_split
+		    (
+			ifp,
+			split_modulus,
+			split_offset,
+			split_width
+		    );
+	    }
+	    continue;
+
+	case token_unfill:
+	    {
+		token_next();
+		if (!can_get_number())
+		{
+		    cerr << "the -unfill filter requires two numeric arguments"
+			<< endl;
+		    exit(1);
+		}
+		int fill_value = get_number("unfill value");
+		if (fill_value < 0 || fill_value >= 256)
+		{
+		    cerr << "the -unfill value must be 0..255" << endl;
+		    exit(1);
+		}
+		int fill_minimum = 1;
+		if (can_get_number())
+		{
+		    fill_minimum = get_number("unfill minimum");
+		    if (fill_minimum < 1 || fill_minimum > 16)
+		    {
+			cerr << "the -unfill run length must be 1..16" << endl;
+			exit(1);
+		    }
+		}
+		ifp =
+		    new srec_input_filter_unfill(ifp, fill_value, fill_minimum);
+	    }
+	    continue;
+
+	case token_unsplit:
+	    {
+		token_next();
+		if (!can_get_number())
+		{
+		    cerr <<
+			"the -unsplit filter requires three numeric arguments"
+			<< endl;
+		    exit(1);
+		}
+		int split_modulus = get_number("unsplit modulus");
+		if (split_modulus < 2)
+		{
+		    cerr << "the -unsplit modulus must be two or more" << endl;
+		    exit(1);
+		}
+		int split_offset = 0;
+		if (can_get_number())
+		{
+		    split_offset = get_number("unsplit offset");
+		    if (split_offset < 0 || split_offset >= split_modulus)
+		    {
+			cerr << "the -unsplit offset must be 0.."
+			    << (split_modulus - 1) << endl;
+			exit(1);
+		    }
+		}
+		int split_width = 1;
+		if (can_get_number())
+		{
+		    split_width = get_number("unsplit width");
+		    if (split_width < 1 || split_width >= split_modulus)
+		    {
+			cerr << "the -unsplit width must be 1.."
+			    << (split_modulus - 1) << endl;
+			exit(1);
+		    }
+		}
+		ifp =
+		    new srec_input_filter_unsplit
+		    (
+			ifp,
+			split_modulus,
+			split_offset,
+			split_width
+		    );
+	    }
+	    continue;
+
+	default:
 	    break;
+	}
+	break;
     }
 
     //
