@@ -73,9 +73,9 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
-Different:	(1..2, 4..13)
-Left only:	14
-Right only:	0
+Different:	(0x1, 0x2, 0x4 - 0xd)
+Left only:	0xe
+Right only:	0x0
 Start address 1 not equal to 0.
 fubar
 if test $? -ne 0; then no_result; fi

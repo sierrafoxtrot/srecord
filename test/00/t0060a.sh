@@ -76,7 +76,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
-Different:	64..67
+Different:	0x40 - 0x43
 fubar
 if test $? -ne 0; then no_result; fi
 

@@ -67,10 +67,17 @@ srec_memory_walker_compare::observe(unsigned long addr, const void *p,
 void
 srec_memory_walker_compare::print(const char *caption)
 {
+	ios::fmtflags old =
+	    cout.setf
+	    (
+		ios::showbase + ios::hex,
+		ios::showbase + ios::hex + ios::dec + ios::oct
+	    );
 	if (!wrong.empty())
 		cout << "Different:\t" << wrong << endl;
 	if (!unset.empty())
 		cout << caption << " only:\t" << unset << endl;
+	cout.flags(old);
 }
 
 

@@ -97,8 +97,9 @@ main(int argc, char **argv)
 		bool different = srec_memory::compare(*mp1, *mp2);
 		if (ta1 != ta2)
 		{
-			cout << "Start address " << ta1 << " not equal to "
-				<< ta2 << "." << endl;
+			cout << hex << "Start address " << ta1
+				<< " not equal to " << ta2 << "." << dec
+				<< endl;
 			different = true;
 		}
 		if (different)

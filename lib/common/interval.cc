@@ -749,8 +749,10 @@ interval::print(ostream &os)
 		if (j)
 			os << ", ";
 		os << data[j];
-		if (data[j] + 1 != data[j + 1])
-			os << ".." << (data[j + 1] - 1);
+		if (data[j] + 2 == data[j + 1])
+			os << ", " << data[j] + 1;
+		else if (data[j] + 1 != data[j + 1])
+			os << " - " << (data[j + 1] - 1);
 	}
 	if (length != 2)
 		os << ")";
