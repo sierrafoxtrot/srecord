@@ -70,17 +70,21 @@ Also, C array definitions for output only.
 'in +2n
 The SRecord package has a number of tools:
 \fIsrec_cat\fP for copying and and converting files,
+\fIsrec_cmp\fP for comparing files,
 and
-\fIsrec_cmp\fP for comparing files.
+\fIsrec_info\fP for examining files.
 .in -2n
 .sp
 *
 'in +2n
 The SRecord package has a number for filters:
+\fIchecksum\fP to insert checksums,
 \fIcrop\fP to keep address ranges,
 \fIexclude\fP to remove address ranges,
-\fIfill\fP to fill daya hols,
-\fIlength\fP to inset data length,
+\fIfill\fP to fill data holes,
+\fIlength\fP to insert data length,
+\fImaximum\fP to insert data address maximum,
+\fIminimum\fP to insert data address minimum,
 and
 \fIoffset\fP to adjust addresses.
 .in -2n
@@ -93,33 +97,27 @@ SRecord runs on almost any flavor of UNIX.
 Self configuring using a GNU Autoconf generated configure script.
 There are no modifications required to compile it for Linux.
 .SH Keywords:
-eprom, srecord, motorola, intel
+EPROM, srecord, motorola, intel
 .SH Author:
 millerp@canb.auug.org.au (Peter Miller)
-.br
-peterm@jna.com.au (Peter Miller)
-.br
-pmiller@agso.gov.au (Peter Miller)
 .SH Primary-site:
 http://www.canb.auug.org.au/~millerp/
-.br
-srecord-\*(v).README
-.br
-srecord-\*(v).lsm
-.br
-srecord-\*(v).spec
-.br
-srecord-\*(v).tar.gz
+.TS
+lf(CW) l.
+srecord-\*(v).README	Description, from the tar file
+srecord-\*(v).lsm	Description, LSM format
+srecord-\*(v).spec	RedHat package specification
+srecord-\*(v).tar.gz	The complete sources.
+.TE
 .SH Secondary-site:
-sunsite.unc.edu /pub/Linux/devel/misc
-.br
-srecord-\*(v).README
-.br
-srecord-\*(v).lsm
-.br
-srecord-\*(v).spec
-.br
-srecord-\*(v).tar.gz
+sunsite.unc.edu /pub/Linux/utils/file
+.TS
+lf(CW) l.
+srecord-\*(v).README	Description, from the tar file
+srecord-\*(v).lsm	Description, LSM format
+srecord-\*(v).spec	RedHat package specification
+srecord-\*(v).tar.gz	The complete sources.
+.TE
 .SH Copying-policy:
 GPL 2.0
 .SH End

@@ -77,16 +77,22 @@ All of the tools understand all of the file formats, and all of the filters.
 <dl><dt>
 srec_cat
 <dd>
-The <i>srec_catd</i> program may be used to catenate (join) eprom load
-files, or portions of eprom load files, together.  Because it understands
+The <i>srec_catd</i> program may be used to catenate (join) EPROM load
+files, or portions of EPROM load files, together.  Because it understands
 all of the input and output formats, it can also be used to convert
 files from one format to another.
 .br
 <dt>
 srec_cmp
 <dd>
-The <i>srec_cmp</i> program may be use to compare eprom load files,
-or portions of eprom load files, for equality.
+The <i>srec_cmp</i> program may be use to compare EPROM load files,
+or portions of EPROM load files, for equality.
+.br
+<dt>
+srec_info
+<dd>
+The <i>srec_info</i> program may be use to print summary information
+about EPROM load files.
 </dl>
 .br
 <p align=center><b>The Filters</b></p>
@@ -139,24 +145,32 @@ Files for Download
 <th width="60%">Description</th>
 </tr>
 <tr>
-<td><a href="srecord-\*(v).README"><tt>srecord-\*(v).README</tt></a></td>
-<td>The <tt>README</tt> file from the tar distribution.</td>
+<td valign=top>
+<a href="srecord-\*(v).README"><tt>srecord-\*(v).README</tt></a></td>
+<td valign=top>
+The <tt>README</tt> file from the tar distribution.</td>
 </tr>
 <tr>
-<td><a href="srecord-\*(v).lsm"><tt>srecord-\*(v).lsm</tt></a></td>
-<td>Brief description in
+<td valign=top>
+<a href="srecord-\*(v).lsm"><tt>srecord-\*(v).lsm</tt></a></td>
+<td valign=top>
+Brief description in
 .nf
 <a href="ftp://sunsite.unc.edu/pub/Linux/LSM-TEMPLATE">LSM</a>
 .fi
 format.</td>
 </tr>
 <tr>
-<td><a href="srecord-\*(v).spec"><tt>srecord-\*(v).spec</tt></a></td>
-<td>RedHat package manager specification file (<a href="http://www.rpm.org/">RPM</a>)</td>
+<td valign=top>
+<a href="srecord-\*(v).spec"><tt>srecord-\*(v).spec</tt></a></td>
+<td valign=top>
+RedHat package manager specification file (<a href="http://www.rpm.org/">RPM</a>)</td>
 </tr>
 <tr>
-<td><a href="srecord-\*(v).tar.gz"><tt>srecord-\*(v).tar.gz</tt></a></td>
-<td>The complete source.</td>
+<td valign=top>
+<a href="srecord-\*(v).tar.gz"><tt>srecord-\*(v).tar.gz</tt></a></td>
+<td valign=top>
+The complete source.</td>
 </tr>
 </table></center>
 .br
@@ -164,8 +178,8 @@ format.</td>
 SRecord is also available from
 <a href="ftp://sunsite.unc.edu/pub/Linux/">the Linux archives</a>
 in the
-<a href="ftp://sunsite.unc.edu/pub/Linux/devel/misc/">
-<tt>devel/make</tt></a>
+<a href="ftp://sunsite.unc.edu/pub/Linux/utils/file/">
+<tt>utils/file</tt></a>
 directory.
 .br
 <hr>

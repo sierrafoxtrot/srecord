@@ -34,8 +34,8 @@ source_file_order =
 	[sort
 		[stringset
 			[source_files]
-			/* BUILDING */
-			/* MANIFEST */
+			BUILDING
+			MANIFEST
 			LICENSE
 
 			/*
@@ -223,6 +223,17 @@ archive/[project_minus].lsm: etc/[project_short].lsm etc/ssp.awk
 }
 
 LICENSE: man/cat1/srec_license.1
+{
+	cat [resolve [need]] > [target];
+}
+
+%0%,m: %0%: etc/MANIFEST.sh
+{
+	sh [resolve etc/MANIFEST.sh] %0% [resolve %0%] > [target];
+}
+
+MANIFEST: etc/MANIFEST.head
+	[addsuffix ",m" [stringset [source_files] - MANIFEST]]
 {
 	cat [resolve [need]] > [target];
 }

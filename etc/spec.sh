@@ -21,12 +21,12 @@
 # MANIFEST: shell script to generate RedHat spec file
 #
 version=${version-0.0.0}
-echo 'Summary: manipulate eprom load files'
+echo 'Summary: manipulate EPROM load files'
 echo 'Name: srecord'
 echo "Version: ${version}"
 echo 'Release: 1'
 echo 'Copyright: GPL'
-echo 'Group: Development/Building'
+echo 'Group: Development/Tools'
 echo "Source: http://www.canb.auug.org.au/~millerp/srecord-${version}.tar.gz"
 echo 'URL: http://www.canb.auug.org.au/~millerp/srecord.html'
 echo 'BuildRoot: /tmp/srecord-build-root'
@@ -52,11 +52,14 @@ EPROM load files.
   Also C array definitions, for output only.
 
 * The SRecord package has a number of tools: srec_cat for copying and
-  and converting files, andsrec_cmp for comparing files.
+  and converting files, srec_cmp for comparing files and srec_info for
+  printing summaries.
 
-* The SRecord package has a number for filters: crop to keep address
-  ranges, exclude to remove address ranges, fill to plug hol sin the data,
-  length to insert the data length, and offset to adjust addresses.
+* The SRecord package has a number for filters: checksum to add checksums
+  to the data, crop to keep address ranges, exclude to remove address
+  ranges, fill to plug holes in the data, length to insert the data
+  length, maximum to insert the data address maximum, minimum to insert
+  the data address minimum, and offset to adjust addresses.
 
 More than one filter may be applied to each input file.  Different filters
 may be applied to each input file.  All filters may be applied to all

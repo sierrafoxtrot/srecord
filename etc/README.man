@@ -24,7 +24,7 @@
 .hy 0
 .ad l
 .SH NAME
-RSecord \- manipulate eprom load files
+RSecord \- manipulate EPROM load files
 .SH DESCRIPTION
 The \fISRecord\fP package is a collection of powerful tools for
 manipulating EPROM load files.
@@ -57,18 +57,26 @@ The primary tools of the package are \fIsrec_cat\fP and \fIsrec_cmp\fP.
 All of the tools understand all of the file formats, and all of the filters.
 .TP 8n
 .I srec_cat
-The \fIsrec_cat\fP program may be used to catenate (join) eprom load
-files, or portions of eprom load files, together.  Because it understands
+The \fIsrec_cat\fP program may be used to catenate (join) EPROM load
+files, or portions of EPROM load files, together.  Because it understands
 all of the input and output formats, it can also be used to convert
 files from one format to another.
 .TP 8n
 .I srec_cmp
-The \fIsrec_cmp\fP program may be use to compare eprom load files,
-or portions of eprom load files, for equality.
+The \fIsrec_cmp\fP program may be use to compare EPROM load files,
+or portions of EPROM load files, for equality.
+.TP 8n
+.I srec_info
+The \fIsrec_info\fP program may be used to print summary information
+about EPROM load files.
 .SS The Filters
 The \fISRecord\fP package is made more powerful by the concept of \fInput
 filters\fP.  Wherever an input file may be specified, filters may also
 be applied to that input file.  The following filters are available:
+.TP 8n
+checksum
+The \fIchecksum\fP filter may be used to insert the one's complement
+checksum of the data into the data.
 .TP 8n
 crop
 The \fIcrop\fP filter may be used to isolate an input address range,
@@ -84,6 +92,14 @@ with a nominated value.
 .TP 8n
 length
 The \fIlength\fP filter may be used to insert the data length into the data.
+.TP 8n
+maximum
+The \fImaximum\fP filter may be used to insert the maximum data address
+into the data.
+.TP 8n
+minimum
+The \fIminimum\fP filter may be used to insert the minimum data address
+into the data.
 .TP 8n
 offset
 The \fIoffset\fP filter may be used to offset the address of data records,
@@ -105,8 +121,8 @@ l l s
 l l l.
 URL:;http://www.canb.auug.org.au/~millerp/
 File:;srecord.html;# the SRecord page
-File:;srecord-\*(v).README;# the README from the tar file
-File:;srecord-\*(v).lsm;# LSM format description
+File:;srecord-\*(v).README;# Description, from the tar file
+File:;srecord-\*(v).lsm;# Description, LSM format
 File:;srecord-\*(v).spec;# RedHat package specification
 File:;srecord-\*(v).tar.gz;# the complete source
 .TE
@@ -122,9 +138,9 @@ You will be able to find SRecord on any of its mirrors.
 tab(;);
 l l s
 l l l.
-URL:;ftp://sunsite.unc.edu/pub/Linux/devel/make/
-File:;srecord-\*(v).README;# the README from the tar file
-File:;srecord-\*(v).lsm;# LSM format description
+URL:;ftp://sunsite.unc.edu/pub/Linux/utils/file/
+File:;srecord-\*(v).README;# Description, from the tar file
+File:;srecord-\*(v).lsm;# Description, LSM format
 File:;srecord-\*(v).spec;# RedHat package specification
 File:;srecord-\*(v).tar.gz;# the complete source
 .TE
