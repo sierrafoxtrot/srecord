@@ -92,14 +92,10 @@ srec_output_file_srecord::write_inner(int tag, unsigned long address,
 	 */
 	put_char('S');
 	put_nibble(tag);
-	int checksum = 0;
+	checksum_reset();
 	for (int j = 0; j < line_length; ++j)
-	{
-		int n = buffer[j];
-		put_byte(n);
-		checksum += n;
-	}
-	put_byte(~checksum);
+		put_byte(buffer[j]);
+	put_byte(~checksum_get());
 	put_char('\n');
 }
 

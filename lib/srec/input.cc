@@ -84,7 +84,7 @@ srec_input::fatal_error_errno(const char *fmt, ...)
 {
 	va_list ap;
 	va_start(ap, fmt);
-	fatal_error_v(fmt, ap);
+	fatal_error_errno_v(fmt, ap);
 	va_end(ap);
 }
 

@@ -69,8 +69,8 @@ srec_output::fatal_error_v(const char *fmt, va_list ap)
 	const
 {
 	cout.flush();
-	cerr << filename() << ": " ;
-	cerr.vform(fmt, ap) ;
+	cerr << filename() << ": ";
+	cerr.vform(fmt, ap);
 	cerr << endl;
 	cerr.flush();
 	exit(1);
@@ -83,7 +83,7 @@ srec_output::fatal_error_errno(const char *fmt, ...)
 {
 	va_list ap;
 	va_start(ap, fmt);
-	fatal_error_v(fmt, ap);
+	fatal_error_errno_v(fmt, ap);
 	va_end(ap);
 }
 
@@ -96,7 +96,7 @@ srec_output::fatal_error_errno_v(const char *fmt, va_list ap)
 	cout.flush();
 	cerr << filename() << ": ";
 	cerr.vform(fmt, ap);
-	cerr << ": " << strerror(n) << endl;
+	cerr << ": " << strerror(n) << " [" << n << "]" << endl;
 	cerr.flush();
 	exit(1);
 }

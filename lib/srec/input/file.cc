@@ -30,7 +30,8 @@
 
 
 srec_input_file::srec_input_file()
-	: file_name("standard input"), line_number(1), prev_was_newline(false)
+	: file_name("standard input"), line_number(1), prev_was_newline(false),
+	  checksum(0)
 {
 	fp = stdin;
 }
@@ -43,7 +44,8 @@ srec_input_file::srec_input_file(const srec_input_file &)
 
 
 srec_input_file::srec_input_file(const char *file_name)
-	: file_name(file_name), line_number(1), prev_was_newline(false)
+	: file_name(file_name), line_number(1), prev_was_newline(false),
+	  checksum(0)
 {
 	if (file_name == "-")
 	{
@@ -130,5 +132,21 @@ srec_input_file::get_byte()
 {
 	int c1 = get_nibble();
 	int c2 = get_nibble();
-	return ((c1 << 4) | c2);
+	int n = ((c1 << 4) | c2);
+	checksum += n;
+	return n;
+}
+
+
+int
+srec_input_file::checksum_get()
+{
+	return (checksum & 0xFF);
+}
+
+
+void
+srec_input_file::checksum_reset()
+{
+	checksum = 0;
 }

@@ -17,150 +17,98 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: functions to impliment the srec_input_file_srecord class
+ * MANIFEST: functions to impliment the srec_input_file_intel class
  */
 
 #pragma implementation
 
-#include <srec/input/file/srecord.h>
+#include <srec/input/file/intel.h>
 #include <srec/record.h>
 
 
-srec_input_file_srecord::srec_input_file_srecord()
+srec_input_file_intel::srec_input_file_intel()
 	: srec_input_file(), data_record_count(0)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
 
 
-srec_input_file_srecord::srec_input_file_srecord(const srec_input_file_srecord &)
+srec_input_file_intel::srec_input_file_intel(const srec_input_file_intel &)
 	: srec_input_file(), data_record_count(0)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
 
 
-srec_input_file_srecord::srec_input_file_srecord(const char *filename)
+srec_input_file_intel::srec_input_file_intel(const char *filename)
 	: srec_input_file(filename), data_record_count(0)
 {
 }
 
 
-srec_input_file_srecord &
-srec_input_file_srecord::operator=(const srec_input_file_srecord &)
+srec_input_file_intel &
+srec_input_file_intel::operator=(const srec_input_file_intel &)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 	return *this;
 }
 
 
-srec_input_file_srecord::~srec_input_file_srecord()
+srec_input_file_intel::~srec_input_file_intel()
 {
-	/* make sure the count record is done */
 	/* make sure the termination record is done */
 }
 
 
 int
-srec_input_file_srecord::read_inner(srec_record &record)
+srec_input_file_intel::read_inner(srec_record &record)
 {
 	int c = get_char();
 	if (c < 0)
 		return 0;
-	if (c != 'S')
-		fatal_error("``S'' expected");
-	int tag = get_nibble();
+	if (c != ':')
+		fatal_error("``:'' expected");
+	unsigned char buffer[255+5];
 	checksum_reset();
-	int line_length = get_byte();
-	if (line_length < 1)
-		fatal_error("line length invalid");
-	unsigned char buffer[256];
-	for (int j = 0; j < line_length; ++j)
-		buffer[j] = get_byte();
-	if (checksum_get() != 0xFF)
+	buffer[0] = get_byte();
+	buffer[1] = get_byte();
+	buffer[2] = get_byte();
+	buffer[3] = get_byte();
+	for (int j = 0; j <= buffer[0]; ++j)
+		buffer[4 + j] = get_byte();
+	if (checksum_get() != 0x00)
 		fatal_error("checksum mismatch (%02X)", checksum_get());
 	c = get_char();
 	if (c != '\n')
 		fatal_error("end-of-line expected");
-	--line_length;
 
-	int naddr = 2;
 	srec_record::type type = srec_record::type_unknown;
-	switch (tag)
+	switch (buffer[3])
 	{
 	case 0:
-		/* header */
-		type = srec_record::type_header;
-		if (line_length < naddr)
-		{
-			/* Some programs write Very short headers. */
-			naddr = line_length;
-		}
+		/* data */
+		type = srec_record::type_data;
 		break;
 
 	case 1:
-		/* data */
-		type = srec_record::type_data;
-		break;
-
-	case 2:
-		/* data */
-		type = srec_record::type_data;
-		naddr = 3;
-		break;
-
-	case 3:
-		/* data */
-		type = srec_record::type_data;
-		naddr = 4;
-		break;
-
-	case 5:
-		/* data count */
-		type = srec_record::type_data_count;
-		break;
-
-	case 7:
-		/* termination */
-		type = srec_record::type_termination;
-		naddr = 4;
-		break;
-
-	case 8:
-		/* termination */
-		type = srec_record::type_termination;
-		naddr = 3;
-		break;
-
-	case 9:
 		/* termination */
 		type = srec_record::type_termination;
 		break;
-	}
-	if (line_length < naddr)
-	{
-		fatal_error
-		(
-			"data length too short (%d < %d) for data type (%x)",
-			line_length,
-			naddr,
-			tag
-		);
 	}
 	record =
 		srec_record
 		(
 			type,
-			srec_record::decode_big_endian(buffer, naddr),
-			buffer + naddr,
-			line_length - naddr
+			srec_record::decode_big_endian(buffer + 1, 2),
+			buffer + 4,
+			buffer[0]
 		);
 	return 1;
 }
 
 
 int
-srec_input_file_srecord::read(srec_record &record)
+srec_input_file_intel::read(srec_record &record)
 {
 	for (;;)
 	{
@@ -173,11 +121,7 @@ srec_input_file_srecord::read(srec_record &record)
 			break;
 
 		case srec_record::type_header:
-			if (record.get_address())
-			{
-				warning("address in header record ignored");
-				record.set_address(0);
-			}
+			/* impossible */
 			break;
 
 		case srec_record::type_data:
@@ -190,15 +134,7 @@ srec_input_file_srecord::read(srec_record &record)
 			break;
 
 		case srec_record::type_data_count:
-			if (record.get_address() != (unsigned long)(data_record_count & 0xFFFF))
-			{
-				fatal_error
-				(
-			       "data record count mismatch (file %ld, read %d)",
-					record.get_address(),
-					data_record_count
-				);
-			}
+			/* impossible */
 			continue;
 
 		case srec_record::type_termination:

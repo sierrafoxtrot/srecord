@@ -1,0 +1,52 @@
+.\"
+.\"	srecord - manipulate eprom load files
+.\"	Copyright (C) 1998 Peter Miller;
+.\"	All rights reserved.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.\"
+.\" MANIFEST: describe input file specifiers
+.\"
+.SS Input File Specifiers
+Input files may be qualified in a number of ways: you may specify their
+format and you may specify filters to apply to them.
+An input file specification looks like this:
+.RS
+\fIfilename\fP [ \fIformat\fP ][ \fIfilter\fP \&... ]
+.RE
+.PP
+The
+.I filename
+The filename may be specified as a file name,
+or the special name ``-'' which is understood to mean the standard input.
+.PP
+The
+.I format
+is specified by the argument \fIafter\fP the file name.
+The format defaults to Motorola S-Record if not specified.
+The format specified are:
+.TP 8n
+\fB\-Intel\fP
+This option says to use the Intel hex format to read the file.
+.TP 8n
+\fB\-Motorola\fP
+This option says to use the Motorola S-Record format to read the file.
+.PP
+You may specify zero or more \fIfilters\fP to be applied.
+Filters are applied in the order given.
+.TP 8n
+\fB\-OFfset\fP \fInbytes\fP
+This filter says to offset the addresses by the given number of bytes.
+No data is lost, the addresses will wrap around in 32 bits, if necessary.

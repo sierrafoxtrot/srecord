@@ -20,46 +20,22 @@
  * MANIFEST: operating system entry point
  */
 
-#include <arglex.h>
-#include <srec/input/file/srecord.h>
+#include <srec/arglex.h>
+#include <srec/input.h>
 #include <srec/memory.h>
 #include <srec/memory/walker/writer.h>
-#include <srec/output/file/srecord.h>
+#include <srec/output.h>
 
 #include <iostream.h>
 #include <stdlib.h>
 #include <vector>
 
 
-class arglex_here: public arglex
-{
-public:
-	enum
-	{
-		token_output = arglex::token_MAX,
-	};
-
-	arglex_here(int, char **);
-};
-
-arglex_here::arglex_here(int ac, char **av)
-	: arglex(ac, av)
-{
-	static table_ty table[] =
-	{
-		{ "-Output", token_output, },
-		ARGLEX_END_MARKER
-	};
-
-	table_set(table);
-}
-
-
 static void
 usage(const char *progname)
 {
 	cerr << "Usage: " << progname
-		<< " [ <option>...][ <infile> [ <outfile> ]]" << endl;
+		<< " [ <option>...][ <infile>... ]" << endl;
 	exit(1);
 }
 
@@ -67,16 +43,16 @@ usage(const char *progname)
 int
 main(int argc, char **argv)
 {
-	arglex_here cmdline(argc, argv);
+	srec_arglex cmdline(argc, argv);
 	cmdline.token_next();
-	typedef vector<const char *> infile_t;
+	typedef vector<srec_input *> infile_t;
 	infile_t infile;
-	const char *outfile = 0;
+	srec_output *outfile = 0;
 	while (cmdline.token_cur() != arglex::token_eoln)
 	{
 		switch (cmdline.token_cur())
 		{
-		case arglex::token_option:
+		case srec_arglex::token_option:
 			cerr << "Unknown ``" << cmdline.value_string()
 				<< "'' option" << endl;
 			usage(argv[0]);
@@ -86,38 +62,23 @@ main(int argc, char **argv)
 				<< "'' option" << endl;
 			usage(argv[0]);
 
-		case arglex::token_string:
-			infile.push_back(cmdline.value_string());
-			break;
+		case srec_arglex::token_string:
+		case srec_arglex::token_stdio:
+			infile.push_back(cmdline.get_input());
+			continue;
 
-		case arglex::token_stdio:
-			infile.push_back("-");
-			break;
-
-		case arglex_here::token_output:
+		case srec_arglex::token_output:
 			if (outfile)
 				usage(argv[0]);
-			switch (cmdline.token_next())
-			{
-			default:
-				usage(argv[0]);
-
-			case arglex::token_string:
-				outfile = cmdline.value_string();
-				break;
-
-			case arglex::token_stdio:
-				outfile = "-";
-				break;
-			}
-			break;
+			outfile = cmdline.get_output();
+			continue;
 		}
 		cmdline.token_next();
 	}
 	if (infile.size() == 0)
-		infile.push_back("-");
+		infile.push_back(cmdline.get_input());
 	if (!outfile)
-		outfile = "-";
+		outfile = cmdline.get_output();
 
 	/*
 	 * Read the input into memory.	This allows the data to be
@@ -133,7 +94,7 @@ main(int argc, char **argv)
 	unsigned long taddr = 0;
 	for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
 	{
-		srec_input *ifp = new srec_input_file_srecord(*it);
+		srec_input *ifp = *it;
 		unsigned long taddr2 = mp->reader(ifp);
 		if (taddr < taddr2)
 			taddr = taddr2;
@@ -143,12 +104,11 @@ main(int argc, char **argv)
 	/*
 	 * Open the output file and write the remembered data out to it.
 	 */
-	srec_output *ofp = new srec_output_file_srecord(outfile);
-	ofp->write_header();
-	srec_memory_walker *w = new srec_memory_walker_writer(ofp);
+	outfile->write_header();
+	srec_memory_walker *w = new srec_memory_walker_writer(outfile);
 	mp->walk(w);
-	ofp->write_termination(taddr);
-	delete ofp;
+	outfile->write_termination(taddr);
+	delete outfile;
 
 	/*
 	 * Dispose of the memory image of the data.

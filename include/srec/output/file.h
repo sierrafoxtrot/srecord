@@ -40,11 +40,14 @@ protected:
 	void put_char(int);
 	void put_nibble(int);
 	void put_byte(int);
+	void checksum_reset();
+	int checksum_get();
 
 private:
 	string file_name;
 	int line_number;
 	void *fp;
+	int checksum;
 
 	srec_output_file(const srec_output_file &);
 	srec_output_file &operator=(const srec_output_file &);

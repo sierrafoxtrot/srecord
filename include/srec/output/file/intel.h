@@ -17,41 +17,28 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: interface definition for lib/srec/input/file.cc
+ * MANIFEST: interface definition for lib/srec/output/file/intel.cc
  */
 
-#ifndef INCLUDE_SREC_INPUT_FILE_H
-#define INCLUDE_SREC_INPUT_FILE_H
+#ifndef INCLUDE_SREC_OUTPUT_FILE_INTEL_H
+#define INCLUDE_SREC_OUTPUT_FILE_INTEL_H
+
+#include <srec/output/file.h>
 
 #pragma interface
 
-#include <string>
-#include <srec/input.h>
-
-class srec_input_file: public srec_input
+class srec_output_file_intel: public srec_output_file
 {
 public:
-	srec_input_file();
-	srec_input_file(const char *);
-	virtual ~srec_input_file();
-	virtual const string filename() const;
-
-protected:
-	int get_char();
-	int get_nibble();
-	int get_byte();
-	int checksum_get();
-	void checksum_reset();
+	virtual ~srec_output_file_intel();
+	srec_output_file_intel();
+	srec_output_file_intel(const char *);
+	virtual void write(const srec_record &);
 
 private:
-	string file_name;
-	int line_number;
-	bool prev_was_newline;
-	void *fp;
-	int checksum;
-
-	srec_input_file(const srec_input_file &);
-	srec_input_file &operator=(const srec_input_file &);
+	void write_inner(int, unsigned long, const void *, int);
+	srec_output_file_intel(const srec_output_file_intel &);
+	srec_output_file_intel &operator=(const srec_output_file_intel &);
 };
 
-#endif /* INCLUDE_SREC_INPUT_FILE_H */
+#endif /* INCLUDE_SREC_OUTPUT_FILE_INTEL_H */

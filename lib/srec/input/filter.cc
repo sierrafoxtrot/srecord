@@ -17,41 +17,56 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: interface definition for lib/srec/input/file.cc
+ * MANIFEST: functions to impliment the isrec_input_filter class
  */
 
-#ifndef INCLUDE_SREC_INPUT_FILE_H
-#define INCLUDE_SREC_INPUT_FILE_H
+#pragma implementation
 
-#pragma interface
+#include <srec/input/filter.h>
 
-#include <string>
-#include <srec/input.h>
 
-class srec_input_file: public srec_input
+srec_input_filter::srec_input_filter()
+	: ifp(0)
 {
-public:
-	srec_input_file();
-	srec_input_file(const char *);
-	virtual ~srec_input_file();
-	virtual const string filename() const;
+}
 
-protected:
-	int get_char();
-	int get_nibble();
-	int get_byte();
-	int checksum_get();
-	void checksum_reset();
 
-private:
-	string file_name;
-	int line_number;
-	bool prev_was_newline;
-	void *fp;
-	int checksum;
+srec_input_filter::srec_input_filter(srec_input *arg)
+	: ifp(arg)
+{
+}
 
-	srec_input_file(const srec_input_file &);
-	srec_input_file &operator=(const srec_input_file &);
-};
 
-#endif /* INCLUDE_SREC_INPUT_FILE_H */
+srec_input_filter::srec_input_filter(const srec_input_filter &arg)
+	: ifp(arg.ifp)
+{
+}
+
+
+srec_input_filter &
+srec_input_filter::operator=(const srec_input_filter &arg)
+{
+	ifp = arg.ifp;
+	return *this;
+}
+
+
+srec_input_filter::~srec_input_filter()
+{
+	delete ifp;
+}
+
+
+const string
+srec_input_filter::filename()
+	const
+{
+	return ifp->filename();
+}
+
+
+int
+srec_input_filter::read(srec_record &record)
+{
+	return ifp->read(record);
+}

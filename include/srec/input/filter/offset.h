@@ -17,41 +17,28 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: interface definition for lib/srec/input/file.cc
+ * MANIFEST: interface definition for lib/srec/input/filter/offset.cc
  */
 
-#ifndef INCLUDE_SREC_INPUT_FILE_H
-#define INCLUDE_SREC_INPUT_FILE_H
+#ifndef INCLUDE_SREC_INPUT_FILTER_OFFSET_H
+#define INCLUDE_SREC_INPUT_FILTER_OFFSET_H
+
+#include <srec/input/filter.h>
 
 #pragma interface
 
-#include <string>
-#include <srec/input.h>
-
-class srec_input_file: public srec_input
+class srec_input_filter_offset: public srec_input_filter
 {
 public:
-	srec_input_file();
-	srec_input_file(const char *);
-	virtual ~srec_input_file();
-	virtual const string filename() const;
-
-protected:
-	int get_char();
-	int get_nibble();
-	int get_byte();
-	int checksum_get();
-	void checksum_reset();
+	virtual ~srec_input_filter_offset();
+	srec_input_filter_offset(srec_input *, unsigned long);
+	virtual int read(srec_record &);
 
 private:
-	string file_name;
-	int line_number;
-	bool prev_was_newline;
-	void *fp;
-	int checksum;
-
-	srec_input_file(const srec_input_file &);
-	srec_input_file &operator=(const srec_input_file &);
+	unsigned long nbytes;
+	srec_input_filter_offset();
+	srec_input_filter_offset(const srec_input_filter_offset &);
+	srec_input_filter_offset &operator=(const srec_input_filter_offset &);
 };
 
-#endif /* INCLUDE_SREC_INPUT_FILE_H */
+#endif /* INCLUDE_SREC_INPUT_FILTER_OFFSET_H */

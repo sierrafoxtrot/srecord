@@ -17,41 +17,38 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: interface definition for lib/srec/input/file.cc
+ * MANIFEST: interface definition for lib/srec/arglex.cc
  */
 
-#ifndef INCLUDE_SREC_INPUT_FILE_H
-#define INCLUDE_SREC_INPUT_FILE_H
+#ifndef INCLUDE_SREC_ARGLEX_H
+#define INCLUDE_SREC_ARGLEX_H
+
+#include <arglex.h>
 
 #pragma interface
 
-#include <string>
-#include <srec/input.h>
-
-class srec_input_file: public srec_input
+class srec_arglex: public arglex
 {
 public:
-	srec_input_file();
-	srec_input_file(const char *);
-	virtual ~srec_input_file();
-	virtual const string filename() const;
+	enum
+	{
+		token_intel = arglex::token_MAX,
+		token_motorola,
+		token_offset,
+		token_output,
+		token_MAX
+	};
 
-protected:
-	int get_char();
-	int get_nibble();
-	int get_byte();
-	int checksum_get();
-	void checksum_reset();
+	~srec_arglex();
+	srec_arglex(int, char **);
+
+	class srec_input *get_input();
+	class srec_output *get_output();
 
 private:
-	string file_name;
-	int line_number;
-	bool prev_was_newline;
-	void *fp;
-	int checksum;
-
-	srec_input_file(const srec_input_file &);
-	srec_input_file &operator=(const srec_input_file &);
+	srec_arglex();
+	srec_arglex(const srec_arglex &);
+	srec_arglex &operator=(const srec_arglex &);
 };
 
-#endif /* INCLUDE_SREC_INPUT_FILE_H */
+#endif /* INCLUDE_SREC_ARGLEX_H */

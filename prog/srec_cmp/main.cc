@@ -20,40 +20,13 @@
  * MANIFEST: operating system entry point
  */
 
-#include <arglex.h>
-#include <srec/input/file/srecord.h>
+#include <srec/arglex.h>
+#include <srec/input.h>
 #include <srec/memory.h>
-#include <srec/memory/walker/writer.h>
-#include <srec/output/file/srecord.h>
-#include <srec/record.h>
 
 #include <iostream.h>
 #include <stdlib.h>
 #include <vector>
-
-
-class arglex_here: public arglex
-{
-public:
-	enum
-	{
-		token_output = arglex::token_MAX,
-	};
-
-	arglex_here(int, char **);
-};
-
-arglex_here::arglex_here(int ac, char **av)
-	: arglex(ac, av)
-{
-	static table_ty table[] =
-	{
-		{ "-Output", token_output, },
-		ARGLEX_END_MARKER
-	};
-
-	table_set(table);
-}
 
 
 static void
@@ -67,15 +40,15 @@ usage(const char *progname)
 int
 main(int argc, char **argv)
 {
-	arglex_here cmdline(argc, argv);
+	srec_arglex cmdline(argc, argv);
 	cmdline.token_next();
-	const char *fn1 = 0;
-	const char *fn2 = 0;
-	while (cmdline.token_cur() != arglex::token_eoln)
+	srec_input *if1 = 0;
+	srec_input *if2 = 0;
+	while (cmdline.token_cur() != srec_arglex::token_eoln)
 	{
 		switch (cmdline.token_cur())
 		{
-		case arglex::token_option:
+		case srec_arglex::token_option:
 			cerr << "Unknown ``" << cmdline.value_string()
 				<< "'' option" << endl;
 			usage(argv[0]);
@@ -85,57 +58,54 @@ main(int argc, char **argv)
 				<< "'' option" << endl;
 			usage(argv[0]);
 
-		case arglex::token_string:
-			if (!fn1)
-				fn1 = cmdline.value_string();
-			else if (!fn2)
-				fn2 = cmdline.value_string();
+		case srec_arglex::token_string:
+		case srec_arglex::token_stdio:
+			if (!if1)
+				if1 = cmdline.get_input();
+			else if (!if2)
+				if2 = cmdline.get_input();
 			else
+			{
+				cerr << argv[0]
+					<< ": too many input files specified"
+					<< endl;
 				usage(argv[0]);
-			break;
-
-		case arglex::token_stdio:
-			if (!fn1)
-				fn1 = "-";
-			else if (!fn2)
-				fn2 = "-";
-			else
-				usage(argv[0]);
-			break;
+			}
+			continue;
 		}
 		cmdline.token_next();
 	}
-	if (!fn1 || !fn2)
+	if (!if1 || !if2)
 	{
-		cerr << argv[0] << ": two files names required" << endl;
+		cerr << argv[0] << ": two input files required" << endl;
 		usage(argv[0]);
 	}
 
 	/*
 	 * Read the first file into memory.
 	 */
-	srec_input *if1 = new srec_input_file_srecord(fn1);
 	srec_memory *mp1 = new srec_memory();
 	unsigned long ta1 = mp1->reader(if1);
-	delete if1;
 
 	/*
 	 * Read the second file into memory.
 	 */
-	srec_input *if2 = new srec_input_file_srecord(fn2);
 	srec_memory *mp2 = new srec_memory();
 	unsigned long ta2 = mp2->reader(if2);
-	delete if2;
 
 	/*
 	 * Error message and non-zero exit status if the files differ.
 	 */
 	if (*mp1 != *mp2 || ta1 != ta2)
 	{
-		cerr << argv[0] << ": files ``" << fn1 << "'' and ``"
-			<< fn2 << "'' differ" << endl;
+		cerr << argv[0] << ": files ``" << if1->filename()
+			<< "'' and ``" << if2->filename() << "'' differ"
+			<< endl;
 		exit(2);
 	}
+
+	delete if1;
+	delete if2;
 
 	/*
 	 * success

@@ -30,7 +30,7 @@
 
 
 srec_output_file::srec_output_file()
-	: file_name("standard output"), line_number(1)
+	: file_name("standard output"), line_number(1), checksum(0)
 {
 	fp = stdout;
 }
@@ -43,7 +43,7 @@ srec_output_file::srec_output_file(const srec_output_file &)
 
 
 srec_output_file::srec_output_file(const char *file_name)
-	: file_name(file_name), line_number(1)
+	: file_name(file_name), line_number(1), checksum(0)
 {
 	if (file_name == "-")
 	{
@@ -111,4 +111,19 @@ srec_output_file::put_byte(int n)
 {
 	put_nibble(n >> 4);
 	put_nibble(n);
+	checksum += (unsigned char)n;
+}
+
+
+int
+srec_output_file::checksum_get()
+{
+	return (unsigned char)checksum;
+}
+
+
+void
+srec_output_file::checksum_reset()
+{
+	checksum = 0;
 }
