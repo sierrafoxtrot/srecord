@@ -76,7 +76,13 @@ quit_prefix::message_v(const char *fmt, va_list ap)
 		strstream hold;
 		hold.vform(fmt, ap);
 		hold << '\0';
-		deeper.message("%s: %s", prefix.data(), hold.str());
+		deeper.message
+		(
+			"%.*s: %s",
+			prefix.length(),
+			prefix.data(),
+			hold.str()
+		);
 	}
 	else
 		deeper.message_v(fmt, ap);
