@@ -26,30 +26,17 @@
 #include <srec/record.h>
 
 
-srec_output_file_tektronix::srec_output_file_tektronix()
-	: srec_output_file("-"), pref_block_size(32)
+srec_output_file_tektronix::srec_output_file_tektronix() :
+	srec_output_file("-"),
+	pref_block_size(32)
 {
 }
 
 
-srec_output_file_tektronix::srec_output_file_tektronix(const char *filename)
-	: srec_output_file(filename), pref_block_size(32)
+srec_output_file_tektronix::srec_output_file_tektronix(const char *filename) :
+	srec_output_file(filename),
+	pref_block_size(32)
 {
-}
-
-
-srec_output_file_tektronix::srec_output_file_tektronix(const srec_output_file_tektronix &)
-	: srec_output_file("-"), pref_block_size(32)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
-srec_output_file_tektronix &
-srec_output_file_tektronix::operator=(const srec_output_file_tektronix &)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-	return *this;
 }
 
 
@@ -63,7 +50,7 @@ void
 srec_output_file_tektronix::put_nibble(int n)
 {
 	srec_output_file::put_nibble(n);
-	checksum_add(n & n);
+	checksum_add(n & 15);
 }
 
 
