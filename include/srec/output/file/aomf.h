@@ -73,7 +73,7 @@ private:
       * Each has an 8-but type, a 16-bit little-endian length, a payload,
       * and an 8-bit 2s complement checksum.
       */
-    void emit_record(int, const unsigned char *, unsigned int);
+    void emit_record(int, const unsigned char *, size_t);
 
     /**
       * The module_header_record method is used to write an AOMF Module
