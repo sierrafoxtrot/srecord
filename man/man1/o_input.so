@@ -19,7 +19,7 @@
 .\"
 .\" MANIFEST: describe input file specifiers
 .\"
-.SS INPUT FILE SPECIFICATIONS
+.SH INPUT FILE SPECIFICATIONS
 Input files may be qualified in a number of ways: you may specify their
 format and you may specify filters to apply to them.
 An input file specification looks like this:
@@ -91,6 +91,10 @@ The is the logical complement of the \fB\-Crop\fP filter.
 \fB\-Fill\fP \fIvalue\fP \fIaddress-range\fP
 This filter may be used to fill any gaps in the data with bytes equal
 to \fIvalue\fP.  The fill will only occur in the address range given.
+.TP 8n
+\fB\-OR\fP \fIvalue\fP
+This filter may be used to bit-wise OR a \fIvalue\fP to every data byte.
+Only existing data is altered, no holes are filled.
 .TP 8n
 \fB\-Big_Endian_Length\fP \fIaddress\fP [ \fInbytes\fP ]
 This filter may be used to insert the length of the data (high water

@@ -48,6 +48,7 @@ public:
 		token_minimum_le,
 		token_motorola,
 		token_offset,
+		token_or,
 		token_output,
 		token_over,
 		token_paren_begin,

@@ -36,6 +36,7 @@
 #include <srec/input/filter/maximum.h>
 #include <srec/input/filter/minimum.h>
 #include <srec/input/filter/offset.h>
+#include <srec/input/filter/or.h>
 #include <srec/input/filter/split.h>
 #include <srec/input/filter/unsplit.h>
 #include <srec/input/interval.h>
@@ -75,6 +76,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Little_Endian_MInimum", token_minimum_le, },
 		{ "-Motorola",	token_motorola,		},
 		{ "-OFfset",	token_offset,		},
+		{ "-OR",	token_or,		},
 		{ "-Output",	token_output,		},
 		{ "-OVer",	token_over,		},
 		{ "-RAw",	token_binary,		},
@@ -252,7 +254,9 @@ srec_arglex::get_input()
 	default:
 		if (stdin_used)
 		{
-			cerr << "the standard input may only be named once on the command line" << endl;
+			cerr <<
+		 "the standard input may only be named once on the command line"
+				<< endl;
 			exit(1);
 		}
 		stdin_used = true;
@@ -329,6 +333,28 @@ srec_arglex::get_input()
 				token_next();
 				interval range = get_interval("-Fill");
 				ifp = new srec_input_filter_fill(ifp, filler, range);
+			}
+			continue;
+
+		case token_or:
+			{
+				if (token_next() != token_number) 
+				{
+					cerr <<
+					  "the -or filter requires a fill value"
+						<< endl;
+					exit(1);
+				}
+				int filler = value_number();
+				if (filler < 0 || filler >= 256)
+				{
+					cerr << "-or value " << filler
+						<< " out of range (0..255)"
+						<< endl;
+					exit(1);
+				}
+				token_next();
+				ifp = new srec_input_filter_or(ifp, filler);
 			}
 			continue;
 

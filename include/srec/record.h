@@ -55,6 +55,7 @@ public:
 		if (arg < length) length = arg; }
 	const data_t *get_data() const { return data; }
 	int get_data(int n) const { return data[n]; }
+	void set_data(int n, int d) { data[n] = d; }
 	type get_type() const { return itype; }
 	void set_type(type arg) { itype = arg; }
 

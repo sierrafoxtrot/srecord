@@ -19,9 +19,11 @@
 .\"
 .\" MANIFEST: description of new 1.2 features
 .\"
-.\" .PP
-.\" .if n *
-.\" .if t \(bu
+.PP
+.if n *
+.if t \(bu
+There is a new --OR filter, which may be used to bit-wise OR a value to
+each data byte.
 .\" ------------------------------------------------------------------------
 .\"	Add new entries above this line.
 .SS Version 1.2
