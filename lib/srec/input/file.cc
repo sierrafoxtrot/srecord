@@ -233,6 +233,13 @@ srec_input_file::checksum_get()
 }
 
 
+int
+srec_input_file::checksum_get16()
+{
+	return (checksum & 0xFFFF);
+}
+
+
 void
 srec_input_file::checksum_reset()
 {

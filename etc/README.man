@@ -55,6 +55,10 @@ Intel
 The Intel hexadecimal format is understood for both reading and writing.
 (Also known as the Intel MCS-86 Object format.)
 .TP 8n
+MOS Technology
+The MOS Technology hexadecimal format is understood for both reading
+and writing.
+.TP 8n
 Motorola S-Record
 The Motorola hexadecimal S-Record format is understood for both reading
 and writing.

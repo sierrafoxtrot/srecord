@@ -157,7 +157,14 @@ srec_output_file::put_word(int n)
 int
 srec_output_file::checksum_get()
 {
-	return (unsigned char)checksum;
+	return (checksum & 0xFF);
+}
+
+
+int
+srec_output_file::checksum_get16()
+{
+	return (checksum & 0xFFFF);
 }
 
 

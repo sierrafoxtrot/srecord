@@ -54,6 +54,12 @@ See
 .IR srec_intel (5)
 for a description of this file format.
 .TP 8n
+\fB\-MOS_Technologies\fP
+This option says to use the Mos Technologies format to read the file.
+See
+.IR srec_mos_tech (5)
+for a description of this file format.
+.TP 8n
 \fB\-Motorola\fP
 This option says to use the Motorola S-Record format to read the file.
 (May also be written \-S-Record.)

@@ -45,6 +45,7 @@ protected:
 	void checksum_reset();
 	void checksum_add(int n) { checksum += (unsigned char)n; }
 	int checksum_get();
+	int checksum_get16();
 	void seek_to(unsigned long);
 	void put_string(const char *);
 	void put_stringf(const char *, ...);

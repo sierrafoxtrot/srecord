@@ -44,6 +44,7 @@ protected:
 	virtual int get_byte();
 	int get_word();
 	int checksum_get();
+	int checksum_get16();
 	void checksum_add(int n) { checksum += (unsigned char)n; }
 	void checksum_reset();
 	void seek_to_end();

@@ -50,6 +50,7 @@ public:
 		token_maximum_le,
 		token_minimum_be,
 		token_minimum_le,
+		token_mos_tech,
 		token_motorola,
 		token_offset,
 		token_or,

@@ -28,6 +28,7 @@
 #include <srec/input/file/ascii_hex.h>
 #include <srec/input/file/binary.h>
 #include <srec/input/file/intel.h>
+#include <srec/input/file/mos_tech.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix.h>
 #include <srec/input/file/tektronix_extended.h>
@@ -51,6 +52,7 @@
 #include <srec/output/file/binary.h>
 #include <srec/output/file/c.h>
 #include <srec/output/file/intel.h>
+#include <srec/output/file/mos_tech.h>
 #include <srec/output/file/srecord.h>
 #include <srec/output/file/tektronix.h>
 #include <srec/output/file/tektronix_extended.h>
@@ -89,6 +91,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Little_Endian_Length", token_length_le, },
 		{ "-Little_Endian_MAximum", token_maximum_le, },
 		{ "-Little_Endian_MInimum", token_minimum_le, },
+		{ "-MOS_Technologies", token_mos_tech,	},
 		{ "-Motorola",	token_motorola,		},
 		{ "-OFfset",	token_offset,		},
 		{ "-OR",	token_or,		},
@@ -305,6 +308,11 @@ srec_arglex::get_input()
 	case token_intel:
 		token_next();
 		ifp = new srec_input_file_intel(fn);
+		break;
+
+	case token_mos_tech:
+		token_next();
+		ifp = new srec_input_file_mos_tech(fn);
 		break;
 
 	case token_tektronix:
@@ -803,6 +811,11 @@ srec_arglex::get_output()
 	case token_intel:
 		token_next();
 		ofp = new srec_output_file_intel(fn);
+		break;
+
+	case token_mos_tech:
+		token_next();
+		ofp = new srec_output_file_mos_tech(fn);
 		break;
 
 	case token_tektronix:
