@@ -69,7 +69,7 @@ then
 else
   HAVE_GROFF=no
   AC_MSG_RESULT([])
-  AC_MSG_RESULT([	The Aegis documentation set and manual pages will])
+  AC_MSG_RESULT([	The SRecord documentation set and manual pages will])
   AC_MSG_RESULT([	be formatted and installed installed if you first])
   AC_MSG_RESULT([	install GNU Groff and then re-run this ./configure])
   AC_MSG_RESULT([	script.  Remember to use \`\`rm config.cache''])

@@ -208,7 +208,7 @@ END { if (pos) printf "\n"; }'
 
 echo ""
 echo "distclean: clean"
-echo "	rm -f Makefile common/config.h"
+echo "	rm -f Makefile include/config.h"
 echo "	rm -f config.status config.cache config.log"
 
 echo ""

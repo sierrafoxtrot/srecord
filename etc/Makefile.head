@@ -110,6 +110,10 @@ SH = @SH@
 # program used to place index within libraries
 #
 RANLIB = @RANLIB@
+AR = ar
+
+# --------------------------------------------------------------------------
+# You should not need to change anything below this line.
 
 #
 # The default target

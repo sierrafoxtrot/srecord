@@ -385,10 +385,12 @@ include/patchlevel.h:
 	echo "'#define COPYRIGHT_YEARS \""[copyright_years]"\"'" >> [target];
 }
 
-#if [or [not [defined baseline]] [not [exists [resolve etc/version.so]]]]
-
+/*
+ * Build the version include, but not too often.
+ */
 etc/version.so:
-	set shallow
+	set ['if' [or [not [defined baseline] ] [not [exists bl/etc/version.so
+		] ] ] 'then' shallow]
 {
 	copyright_years =
 		[collect
@@ -404,10 +406,6 @@ etc/version.so:
 	echo "'.ds Y) "[copyright_years]"'" >> [target];
 }
 
-#else
-if [defined leaf_file_accept] then
-leaf_file_accept = [leaf_file_accept] etc/version.so;
-#endif
 
 /*
  * Catch 22: If the relationship between a target and a derived ingredient
@@ -415,7 +413,8 @@ leaf_file_accept = [leaf_file_accept] etc/version.so;
  * (solely from primary source files) will fail.  It is recommended that
  * relationships such as this be placed in a primary source cookbook.
  */
+cascade etc/BUILDING.man = etc/version.so;
 cascade etc/README.man = etc/version.so etc/new.so;
-cascade man/man1/srec_cat.1 = etc/version.so;
-cascade man/man1/srec_cmp.1 = etc/version.so;
+cascade etc/srecord.lsm = etc/version.so ;
 cascade lib/common/versn_stamp.cc = include/patchlevel.h ;
+cascade man/man1/z_copyright.so = etc/version.so;

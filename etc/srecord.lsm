@@ -109,6 +109,7 @@ srecord-\*(v).README	Description, from the tar file
 srecord-\*(v).lsm	Description, LSM format
 srecord-\*(v).spec	RedHat package specification
 srecord-\*(v).tar.gz	The complete sources.
+srecord-\*(v).ps.gz	Reference Manual, PostScript format
 .TE
 .SH Secondary-site:
 sunsite.unc.edu /pub/Linux/apps/circuits
@@ -118,6 +119,7 @@ srecord-\*(v).README	Description, from the tar file
 srecord-\*(v).lsm	Description, LSM format
 srecord-\*(v).spec	RedHat package specification
 srecord-\*(v).tar.gz	The complete sources.
+srecord-\*(v).ps.gz	Reference Manual, PostScript format
 .TE
 .SH Copying-policy:
 GPL 2.0

@@ -48,8 +48,8 @@ The SRecord package is a collection of powerful tools for manipulating
 EPROM load files.
 
 * The SRecord package understands a number of file formats: Motorola
-  S-Record, Intel, Binary.  These file formats may be read and written.
-  Also C array definitions, for output only.
+  S-Record, Intel, Tektronix, Binary.  These file formats may be read
+  and written.  Also C array definitions, for output only.
 
 * The SRecord package has a number of tools: srec_cat for copying and
   and converting files, srec_cmp for comparing files and srec_info for
