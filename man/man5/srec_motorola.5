@@ -1,0 +1,135 @@
+'\" t
+.\"	srecord - manipulate eprom load files
+.\"	Copyright (C) 1998 Peter Miller;
+.\"	All rights reserved.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"
+.\" MANIFEST: manual entry for the srec_motorola.5 command
+.\"
+.ds n) srec_motorola
+.TH \*(n) 5 SRecord "Reference Manual"
+.SH NAME
+srec_motorola \- Motorola S-Record hexadecimal file format
+.SH DESCRIPTION
+.\" ------------------------------------------------------------------------
+.\" Derived from http://freeware.mcu.motsps.com/lit/faq/as-80.htm
+Motorola's S-record format allows binary files to be uploaded and
+downloaded between two computer systems.  This type of format is widely
+used when transferring programs and data between a computer system (such
+as a PC, Macintosh, or workstation) and an emulator or evaluation board
+for Motorola microcontrollers and microprocessors.
+.SS The Lines
+Most S-Record file contain only S-Record lines (see the next section),
+which always start with a capital S character.  Some systems generate
+various ``extensions'' which usually manifest as lines which start with
+something else.  These ``extension'' lines may or may not break other
+systems made by other vendors.  Caveat emptor.
+.br
+.ne 2i
+.SS The Fields
+The S-record format consists of 5 fields. These are the type field,
+length field, address field, data field, and the checksum. 
+The lines always start with a capital S character.
+.TS
+allbox,center,tab(;);
+lf(CW) l l l l l.
+S;Type;Record Length;Address;Data;Checksum
+.TE
+.TP 8n
+Type
+The type field is a 1 character field that specifies whether
+the record is an S0, S1, S2, S3, S5, S7, S8 or S9 field.
+.TP 8n
+Record Length
+The record length field is a 2 character (1 byte) field that specifies the
+number of character pairs (bytes) in the record, excluding the type and
+record length fields.
+.TP 8n
+Address
+This is a 2-, 3- or 4-byte address that specifies where the data
+in the S-record is to be loaded into memory.
+.TP 8n
+Data
+The data Field contains the executable code, memory-loadable data
+or descriptive information to be transferred.
+.TP 8n
+Checksum
+The checksum is an 8-bit field that represents the least significant
+byte of the one's complement of the sum of the values represented
+by the pairs of characters making up the record's length, address, and
+data fields.
+.br
+.ne 2i
+.SS Record Types
+.TP 8n
+S0
+This type of record is the header record for each block of S-records.
+The data field may contain any descriptive information identifying the
+following block of S-records.  (It is commonly ``HDR'' on many systems.)
+The address field is normally zero.
+.TP 8n
+S1
+A record containing data and the 2-byte address at which the data is
+to reside.
+.TP 8n
+S2
+A record containing data and the 3-byte address at which the data is
+to reside.
+.TP 8n
+S3
+A record containing data and the 4-byte address at which the data is
+to reside.
+.TP 8n
+S5
+A record containing the number of S1, S2 and S3 records transmitted in
+a particular block.  The count appears in the address field.  There is
+no data field.
+.YP 8n
+S7
+A termination record for a block of S3 records.  The address field may
+contain the 4-byte address of the instruction to which control is passed.
+There is no data field.
+.TP 8n
+S8
+A termination record for a block of S2 records.  The address field may
+optionally contain the 3-byte address of the instruction to which control
+is passed.  There is no data field.
+.TP
+S9
+A termination record for a block of S1 records.  The address field
+may optionally contain the 2-byte address of the instruction to
+which control is passed.  If not specified, the first entry point
+specification encountered in the object module input will be used.
+There is no data field.
+.\" ------------------------------------------------------------------------
+.br
+.ne 2i
+.SH EXAMPLE
+Here is an example S-Record file.
+It contains the data ``Hello, World'' to be loaded at address 0.
+.RS
+.nf
+.ft CW
+S00600004844521B
+S110000048656C6C6F2C20576F726C640A9D
+S5030001FB
+S9030000FC
+.ft P
+.fi
+.RE
+.\" ------------------------------------------------------------------------
+.ds n) srec_cat
+.so ../man1/z_copyright.so

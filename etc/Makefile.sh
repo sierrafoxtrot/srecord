@@ -37,7 +37,7 @@ recursive_mkdir()
 	flavor="${3-datadir}"
 	while :
 	do
-		dirvar=`echo $src_dir | sed 's|[^a-zA-Z]|_|g'`
+		dirvar=`echo $src_dir | sed 's|[^a-zA-Z0-9]|_|g'`
 		dotdot1=`dirname $src_dir`
 		dotdot2=`dirname $dst_dir`
 		if eval "test \${${dirvar}_${flavor}-no} != yes" ; then

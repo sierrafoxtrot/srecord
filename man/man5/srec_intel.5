@@ -1,0 +1,107 @@
+'\" t
+.\"	srecord - manipulate eprom load files
+.\"	Copyright (C) 1998 Peter Miller;
+.\"	All rights reserved.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"
+.\" MANIFEST: manual entry for the srec_intel.5 command
+.\"
+.ds n) srec_intel
+.TH \*(n) 5 SRecord "Reference Manual"
+.SH NAME
+srec_intel \- Intel Hexadecimal file format
+.SH DESCRIPTION
+Intel's hexadecimal format allows binary files to be uploaded and
+downloaded between two computer systems.  This type of format is widely
+used when transferring programs and data between a computer system (such
+as a PC, Macintosh, or workstation) and an emulator or evaluation board
+for Intel microcontrollers and microprocessors.
+.SS The File
+Most Intel hex files contain only correctly formatted lines (see
+the next section), which always start with an ASCII colon character.
+Some systems generate various ``extensions'' which usually manifest as
+lines which start with something else.  These ``extension'' lines may
+or may not break other systems made by other vendors.  Caveat emptor.
+.br
+.ne 2i
+.SS The Lines
+The Intel hex format consists of 5 fields. These are the length field,
+adress field, type field, data field, and the checksum.
+The lines always start with an ASCII colon character.
+.TS
+allbox,center,tab(;);
+lf(CW) l l l l l.
+:;Length;Address;Type;Data;Checksum
+.TE
+.TP 8n
+Length
+The length field contains a one byte (two hexadecimal characters)
+number containing the record length of the data.  It does not include
+the address, type or checksum fields.
+.TP 8n
+Address
+The address field contains a two byte (four character hexadecimal)
+number indcating the staring address of the record.
+.TP 8n
+Type
+The type field contains a one byte (two character hexadecimal) number
+indicating the type of this record.  See below of a list of supported
+values.
+.TP 8n
+Data
+The data field contains
+a variable number of bytes (each a two character hexadecimal number).
+The lenght of the field is indicated by the earlier length field.
+.TP 8n
+Checksum
+The checksum field is a one byte (two character hexadecimal) number
+which contains a two's complement sum of the length, address, type and
+data fields.
+.br
+.ne 2i
+.SS The Types
+The supported types are
+.TP 8n
+0
+Data.
+.TP 8n
+1
+Termination record.
+.br
+.ne 2i
+.SH EXAMPLE
+Here is an example Intel hex file.
+It contains the data ``Hello, World'' to be loaded at address 0.
+.RS
+.nf
+.ft CW
+:0D00000048656C6C6F2C20576F726C640AA1
+:00000001FF
+.ft P
+.fi
+.RE
+.br
+.ne 2i
+.SH REFERENCE
+This information comes (very indirectly) from
+.I "Microprocessors and Programmed Logic,"
+Second Edition,
+Kenneth L. Short,
+1987,
+Prentice-Hall, 
+ISBN 0-13-580606-2.
+.ds n) srec_cat
+.so ../man1/z_copyright.so
