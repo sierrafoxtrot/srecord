@@ -81,7 +81,7 @@ etc/cook/change_files.[version]:
 {
 	echo "'change_source_files ='" > [target];
 	aegis -l cf -p [project] -c [change] -unf
-		| [awk] "'/^build/{next};{print $NF}'"
+		| [awk] "'/^build/{next};$2=="remove"{next};{print $NF}'"
 		>> [target];
 	echo "';'" >> [target];
 }
@@ -92,7 +92,7 @@ etc/cook/project_files.[version]:
 {
 	echo "'project_source_files ='" > [target];
 	aegis -l pf -p [project] -c [change] -unf
-		| [awk] "'/^build/{next};{print $NF}'"
+		| [awk] "'/^build/{next};$2=="remove"{next};{print $NF}'"
 		>> [target];
 	echo "';'" >> [target];
 }
