@@ -37,6 +37,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
     {
 	{ "(",		token_paren_begin,	},
 	{ ")",		token_paren_end,	},
+	{ "-Absolute_Object_Module_Format", token_aomf, },
 	{ "-AND",	token_and,		},
 	{ "-Ascii_Hexadecimal",	token_ascii_hex, },
 	{ "-Ascii_Space_Hexadecimal", token_ascii_hex, },

@@ -24,6 +24,7 @@
 using namespace std;
 
 #include <srec/arglex.h>
+#include <srec/input/file/aomf.h>
 #include <srec/input/file/ascii_hex.h>
 #include <srec/input/file/atmel_generic.h>
 #include <srec/input/file/binary.h>
@@ -115,6 +116,11 @@ srec_arglex::get_input()
 
     default:
 	ifp = new srec_input_file_srecord(fn);
+	break;
+
+    case token_aomf:
+	token_next();
+	ifp = new srec_input_file_aomf(fn);
 	break;
 
     case token_ascii_hex:

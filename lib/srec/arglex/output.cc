@@ -21,6 +21,7 @@
 //
 
 #include <srec/arglex.h>
+#include <srec/output/file/aomf.h>
 #include <srec/output/file/ascii_hex.h>
 #include <srec/output/file/asm.h>
 #include <srec/output/file/atmel_generic.h>
@@ -98,6 +99,11 @@ srec_arglex::get_output()
 
     default:
 	ofp = new srec_output_file_srecord(fn);
+	break;
+
+    case token_aomf:
+	token_next();
+	ofp = new srec_output_file_aomf(fn);
 	break;
 
     case token_ascii_hex:

@@ -38,6 +38,7 @@ public:
     enum
     {
 	token_and = arglex::token_MAX,
+	token_aomf,
 	token_ascii_hex,
 	token_asm_db,
 	token_atmel_generic_be,

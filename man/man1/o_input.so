@@ -38,6 +38,10 @@ is specified by the argument \fIafter\fP the file name.
 The format defaults to Motorola S-Record if not specified.
 The format specified are:
 .TP 8n
+\fB\-Absolute_Object_Module_Format\fP
+This option says to use the Intel Absolute Object Module Format (AOMF) to read
+the file.  (See \fIsrec_aomf\fP(5) for a description of this file format.)
+.TP 8n
 \fB\-Ascii-Hex\fP
 This option says to use the Ascii-Hex format to read the file.
 See

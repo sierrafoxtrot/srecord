@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2003 Peter Miller;
+//	Copyright (C) 2000-2004 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 //
 
 #include <quit/exception.h>
+#include <srec/input/file/aomf.h>
 #include <srec/input/file/ascii_hex.h>
 #include <srec/input/file/atmel_generic.h>
 #include <srec/input/file/binary.h>
@@ -47,6 +48,12 @@
 #include <srec/input/file/wilson.h>
 #include <srec/record.h>
 
+
+static srec_input *
+create_aomf(const char *fn)
+{
+    return new srec_input_file_aomf(fn);
+}
 
 static srec_input *
 create_ascii_hex(const char *fn)
@@ -187,6 +194,7 @@ typedef srec_input *(*func_p)(const char *);
 
 static func_p table[] =
 {
+    create_aomf,
     create_ascii_hex,
     create_atmel_generic,
     create_dec_binary,

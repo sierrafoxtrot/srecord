@@ -92,6 +92,10 @@ Intel
 The Intel hexadecimal format is understood for both reading and writing.
 (Also known as the Intel MCS-86 Object format.)
 .TP 8n
+Intel AOMF
+The Intel Absolute Object Module Format (AOMF) is understood for both
+reading and writing.
+.TP 8n
 Intel 16
 The Intel hexadecimal 16 format is understood for both reading and writing.
 (Also known as the INHX16 file format.)
