@@ -48,6 +48,7 @@ public:
 	~srec_record();
 
 	address_t get_address() const { return address; }
+	address_t get_address_end() const { return (address + length); }
 	void set_address(address_t arg) { address = arg; }
 	int get_length() const { return length; }
 	void set_length(int arg) { if (arg < 0) arg = 0;

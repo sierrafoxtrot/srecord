@@ -17,34 +17,33 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: interface definition for lib/srec/input/filter/length.cc
+ * MANIFEST: interface definition for lib/srec/input/filter/maximum.cc
  */
 
-#ifndef INCLUDE_SREC_INPUT_FILTER_LENGTH_H
-#define INCLUDE_SREC_INPUT_FILTER_LENGTH_H
+#ifndef INCLUDE_SREC_INPUT_FILTER_MAXIMUM_H
+#define INCLUDE_SREC_INPUT_FILTER_MAXIMUM_H
 
 #include <srec/input/filter.h>
 
 #pragma interface
 
-class srec_input_filter_length: public srec_input_filter
+class srec_input_filter_maximum: public srec_input_filter
 {
 public:
-	virtual ~srec_input_filter_length();
-	srec_input_filter_length(srec_input *, int, int, int);
+	virtual ~srec_input_filter_maximum();
+	srec_input_filter_maximum(srec_input *, int, int, int);
 	virtual int read(srec_record &);
 
 private:
-	int length_address;
-	int length_length;
-	int length_order;
-	unsigned long minimum;
+	int maximum_address;
+	int maximum_length;
+	int maximum_order;
 	unsigned long maximum;
-	bool limits_set;
+	bool maximum_set;
 	srec_record *data;
-	srec_input_filter_length();
-	srec_input_filter_length(const srec_input_filter_length &);
-	srec_input_filter_length &operator=(const srec_input_filter_length &);
+	srec_input_filter_maximum();
+	srec_input_filter_maximum(const srec_input_filter_maximum &);
+	srec_input_filter_maximum &operator=(const srec_input_filter_maximum &);
 };
 
-#endif /* INCLUDE_SREC_INPUT_FILTER_LENGTH_H */
+#endif /* INCLUDE_SREC_INPUT_FILTER_MAXIMUM_H */

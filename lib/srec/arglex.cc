@@ -32,6 +32,8 @@
 #include <srec/input/filter/crop.h>
 #include <srec/input/filter/fill.h>
 #include <srec/input/filter/length.h>
+#include <srec/input/filter/maximum.h>
+#include <srec/input/filter/minimum.h>
 #include <srec/input/filter/offset.h>
 #include <srec/input/interval.h>
 #include <srec/output/file/binary.h>
@@ -55,6 +57,8 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ ")",		token_paren_end,	},
 		{ "-Big_Endian_Checksum", token_checksum_be, },
 		{ "-Big_Endian_Length",	token_length_be, },
+		{ "-Big_Endian_MAximum", token_maximum_be, },
+		{ "-Big_Endian_MInimum",token_minimum_be, },
 		{ "-BINary",	token_binary,	},
 		{ "-C_Array",	token_c_array,	},
 		{ "-CRop",	token_crop,	},
@@ -63,6 +67,8 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Intel",	token_intel,	},
 		{ "-Little_Endian_Checksum", token_checksum_le, },
 		{ "-Little_Endian_Length", token_length_le, },
+		{ "-Little_Endian_MAximum", token_maximum_le, },
+		{ "-Little_Endian_MInimum", token_minimum_le, },
 		{ "-Motorola",	token_motorola,	},
 		{ "-OFfset",	token_offset,	},
 		{ "-Output",	token_output,	},
@@ -348,6 +354,90 @@ srec_arglex::get_input()
 				);
 				ifp =
 					new srec_input_filter_length
+					(
+						ifp,
+						address,
+						nbytes,
+						1
+					);
+			}
+			continue;
+
+		case token_maximum_be:
+			{
+				unsigned long address;
+				int nbytes;
+				get_address_and_nbytes
+				(
+					"-Big_Endian_MAximum",
+					address,
+					nbytes
+				);
+				ifp =
+					new srec_input_filter_maximum
+					(
+						ifp,
+						address,
+						nbytes,
+						0
+					);
+			}
+			continue;
+
+		case token_maximum_le:
+			{
+				unsigned long address;
+				int nbytes;
+				get_address_and_nbytes
+				(
+					"-Little_Endian_MAximum",
+					address,
+					nbytes
+				);
+				ifp =
+					new srec_input_filter_maximum
+					(
+						ifp,
+						address,
+						nbytes,
+						1
+					);
+			}
+			continue;
+
+		case token_minimum_be:
+			{
+				unsigned long address;
+				int nbytes;
+				get_address_and_nbytes
+				(
+					"-Big_Endian_MInimum",
+					address,
+					nbytes
+				);
+				ifp =
+					new srec_input_filter_minimum
+					(
+						ifp,
+						address,
+						nbytes,
+						0
+					);
+			}
+			continue;
+
+		case token_minimum_le:
+			{
+				unsigned long address;
+				int nbytes;
+				get_address_and_nbytes
+				(
+					"-Little_Endian_MInimum",
+					address,
+					nbytes
+				);
+				ifp =
+					new srec_input_filter_minimum
 					(
 						ifp,
 						address,

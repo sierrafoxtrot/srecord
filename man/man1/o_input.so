@@ -19,7 +19,7 @@
 .\"
 .\" MANIFEST: describe input file specifiers
 .\"
-.SS Input File Specifiers
+.SH INPUT FILE SPECIFICATIONS
 Input files may be qualified in a number of ways: you may specify their
 format and you may specify filters to apply to them.
 An input file specification looks like this:
@@ -31,7 +31,7 @@ The
 .I filename
 The filename may be specified as a file name,
 or the special name ``-'' which is understood to mean the standard input.
-.PP
+.SS File Formats
 The
 .I format
 is specified by the argument \fIafter\fP the file name.
@@ -48,7 +48,7 @@ This option says to use the Intel hex format to read the file.
 \fB\-Motorola\fP
 This option says to use the Motorola S-Record format to read the file.
 (May also be written \-S-Record.)
-.PP
+.SS Input Filters
 You may specify zero or more \fIfilters\fP to be applied.
 Filters are applied in the order the user specifies.
 .TP 8n
@@ -58,7 +58,7 @@ data into the data.  This \fIdoes not\fP include the checksum itself.
 The data is literaly summed; if there are duplicate bytes, this will
 produce an incorrect result, if there are holes, it will that they were
 filled with zeros.
-If there data already contains bytes at te checksum location,
+If the data already contains bytes at the checksum location,
 you need to use an exclude filter, or this will generate errors.
 You need to apply and crop or fill filters before this filter.
 The value will be written with the most significant byte first.
@@ -76,9 +76,15 @@ rest.
 This filter may be used to exclude a section of data, and keep the rest.
 The is the logical complement of the \fB\-Crop\fP filter.
 .TP 8n
+\fB\-Fill\fP \fIvalue\fP \fIaddress-range\fP
+This filter may be used to fill any gaps in the data with bytes equal
+to \fIvalue\fP.  The fill will only occur in the address range given.
+.TP 8n
 \fB\-Big_Endian_Length\fP \fIaddress\fP [ \fInbytes\fP ]
 This filter may be used to insert the length of the data (high water
 minus low water) into the data.  This includes the length itself.
+If the data already contains bytes at the length location,
+you need to use an exclude filter, or this will generate errors.
 The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
 .TP 8n
@@ -86,9 +92,29 @@ The number of bytes defaults to 4.
 As above, however
 the value will be written with the least significant byte first.
 .TP 8n
-\fB\-Fill\fP \fIvalue\fP \fIaddress-range\fP
-This filter may be used to fill any gaps in the data with bytes equal
-to \fIvalue\fP.  The fill will only occur in the address range given.
+\fB\-Big_Endian_MAXimum\fP \fIaddress\fP [ \fInbytes\fP ]
+This filter may be used to insert the maximum address of the data (high water
+ + 1) into the data.  This includes the maximum itself.
+If the data already contains bytes at the given address,
+you need to use an exclude filter, or this will generate errors.
+The value will be written with the most significant byte first.
+The number of bytes defaults to 4.
+.TP 8n
+\fB\-Little_Endian_MAXimum\fP \fIaddress\fP [ \fInbytes\fP ]
+As above, however
+the value will be written with the least significant byte first.
+.TP 8n
+\fB\-Big_Endian_MINimum\fP \fIaddress\fP [ \fInbytes\fP ]
+This filter may be used to insert the minimum address of the data (low
+water) into the data.  This includes the minimum itself.
+If the data already contains bytes at the given address,
+you need to use an exclude filter, or this will generate errors.
+The value will be written with the most significant byte first.
+The number of bytes defaults to 4.
+.TP 8n
+\fB\-Little_Endian_MINimum\fP \fIaddress\fP [ \fInbytes\fP ]
+As above, however
+the value will be written with the least significant byte first.
 .TP 8n
 \fB\-OFfset\fP \fInbytes\fP
 This filter may be used to
