@@ -1,0 +1,150 @@
+/*
+ *	srecord - manipulate eprom load files
+ *	Copyright (C) 2000 Peter Miller;
+ *	All rights reserved.
+ *
+ *	This program is free software; you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation; either version 2 of the License, or
+ *	(at your option) any later version.
+ *
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
+ *
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program; if not, write to the Free Software
+ *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+ *
+ * MANIFEST: functions to impliment the srec_output_file_ascii_hex class
+ */
+
+#pragma implementation "srec_output_file_ascii_hex"
+
+#include <srec/output/file/ascii_hex.h>
+#include <srec/record.h>
+
+
+srec_output_file_ascii_hex::srec_output_file_ascii_hex()
+	: srec_output_file(),
+	  address(0),
+	  column(0),
+	  pref_block_size(16)
+{
+}
+
+
+srec_output_file_ascii_hex::srec_output_file_ascii_hex(const char *filename)
+	: srec_output_file(filename),
+	  address(0),
+	  column(0),
+	  pref_block_size(16)
+{
+}
+
+
+srec_output_file_ascii_hex::srec_output_file_ascii_hex(const srec_output_file_ascii_hex &)
+	: srec_output_file(),
+	  address(0),
+	  column(0),
+	  pref_block_size(32)
+{
+	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
+}
+
+
+srec_output_file_ascii_hex &
+srec_output_file_ascii_hex::operator=(const srec_output_file_ascii_hex &)
+{
+	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
+	return *this;
+}
+
+
+srec_output_file_ascii_hex::~srec_output_file_ascii_hex()
+{
+	/* check for termination record */
+}
+
+
+void
+srec_output_file_ascii_hex::write(const srec_record &record)
+{
+	switch (record.get_type())
+	{
+	case srec_record::type_header:
+		put_char(2);
+		column = 1;
+		break;
+
+	case srec_record::type_data:
+		if (address != record.get_address())
+		{
+			if (column + 4 > pref_block_size)
+			{
+				put_char('\n');
+				column = 0;
+			}
+			else if (column)
+				put_char(' ');
+			address = record.get_address();
+			if (address < 0x10000)
+				put_stringf("$A%04X,\n", address);
+			else if (address < 0x1000000)
+				put_stringf("$A%06X,\n", address);
+			else
+				put_stringf("$A%08X,\n", address);
+			column = 0;
+		}
+		for (int j = 0; j < record.get_length(); ++j)
+		{
+			if (column)
+				put_char(' ');
+			put_byte(record.get_data(j));
+			++address;
+			++column;
+			if (column >= pref_block_size)
+			{
+				put_char('\n');
+				column = 0;
+			}
+		}
+		break;
+
+	case srec_record::type_data_count:
+		/* ignore */
+		break;
+
+	case srec_record::type_termination:
+		if (column)
+			put_char(' ');
+		put_char(3);
+		put_char('\n');
+		column = 0;
+		break;
+
+	case srec_record::type_unknown:
+		fatal_error("can't write unknown record type");
+	}
+}
+
+
+void
+srec_output_file_ascii_hex::line_length_set(int linlen)
+{
+	int n = (linlen + 1) / 3;
+	if (n < 1)
+		n = 1;
+	if (n > srec_record::max_data_length)
+		n = srec_record::max_data_length;
+	pref_block_size = n;
+}
+
+
+int
+srec_output_file_ascii_hex::preferred_block_size_get()
+	const
+{
+	return pref_block_size;
+}

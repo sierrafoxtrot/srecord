@@ -39,15 +39,9 @@ relatively simple.
 .SS The File Formats
 The SRecord package understands a number of file formats:
 .TP 8n
-Motorola S-Record
-The Motorola hexadecimal S-Record format is understood for both reading
-and writing.
-.TP 8n
-Intel
-The Intel hexadecimal format is understood for both reading and writing.
-.TP 8n
-Tektronix
-The Tektronix hexadecimal format is understood for both reading and writing.
+Ascii-Hex
+The ascii-hex format is understood for both reading and writing.
+(Also known as the ascii-space-hex format.)
 .TP 8n
 Binary
 Binary files can both be read and written.
@@ -57,8 +51,19 @@ It is also possible to write a C array declaration which contains the data.
 This can be useful when you want to embed download data into another program.
 This format cannot be read.
 .TP 8n
-wilson
-The WILson format is understood for both reading and writing.
+Intel
+The Intel hexadecimal format is understood for both reading and writing.
+.TP 8n
+Motorola S-Record
+The Motorola hexadecimal S-Record format is understood for both reading
+and writing.
+(Also known as the Exormacs or Exormax format.)
+.TP 8n
+Tektronix
+The Tektronix hexadecimal format is understood for both reading and writing.
+.TP 8n
+Wilson
+The Wilson format is understood for both reading and writing.
 This mystery format was added for a mysterious type of EPROM writer.
 .SS The Tools
 The primary tools of the package are \fIsrec_cat\fP and \fIsrec_cmp\fP.

@@ -33,6 +33,7 @@ public:
 	enum
 	{
 		token_and = arglex::token_MAX,
+		token_ascii_hex,
 		token_binary,
 		token_byte_swap,
 		token_c_array,

@@ -25,6 +25,7 @@
 #include <iostream.h>
 
 #include <srec/arglex.h>
+#include <srec/input/file/ascii_hex.h>
 #include <srec/input/file/binary.h>
 #include <srec/input/file/wilson.h>
 #include <srec/input/file/intel.h>
@@ -44,6 +45,7 @@
 #include <srec/input/filter/unsplit.h>
 #include <srec/input/filter/xor.h>
 #include <srec/input/interval.h>
+#include <srec/output/file/ascii_hex.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/c.h>
 #include <srec/output/file/wilson.h>
@@ -66,16 +68,16 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "(",		token_paren_begin,	},
 		{ ")",		token_paren_end,	},
 		{ "-AND",	token_and,		},
+		{ "-Ascii_Hexadecimal",	token_ascii_hex, },
 		{ "-Big_Endian_Checksum", token_checksum_be, },
 		{ "-Big_Endian_Length",	token_length_be, },
 		{ "-Big_Endian_MAximum", token_maximum_be, },
 		{ "-Big_Endian_MInimum",token_minimum_be, },
 		{ "-BINary",	token_binary,		},
 		{ "-Byte_Swap",	token_byte_swap,	},
-		{ "-CRop",	token_crop,		},
 		{ "-C_Array",	token_c_array,		},
+		{ "-CRop",	token_crop,		},
 		{ "-Exclude",	token_exclude,		},
-		{ "-XOR",	token_xor,		},
 		{ "-Fill",	token_fill,		},
 		{ "-Intel",	token_intel,		},
 		{ "-Little_Endian_Checksum", token_checksum_le, },
@@ -94,6 +96,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Un_SPlit",	token_unsplit,		},
 		{ "-WILson",	token_wilson,		},
 		{ "-Within",	token_within,		},
+		{ "-XOR",	token_xor,		},
 		ARGLEX_END_MARKER
 	};
 
@@ -285,6 +288,11 @@ srec_arglex::get_input()
 
 	default:
 		ifp = new srec_input_file_srecord(fn);
+		break;
+
+	case token_ascii_hex:
+		token_next();
+		ifp = new srec_input_file_ascii_hex(fn);
 		break;
 
 	case token_intel:
@@ -768,6 +776,11 @@ srec_arglex::get_output()
 
 	default:
 		ofp = new srec_output_file_srecord(fn);
+		break;
+
+	case token_ascii_hex:
+		token_next();
+		ofp = new srec_output_file_ascii_hex(fn);
 		break;
 
 	case token_intel:

@@ -98,8 +98,7 @@ srec_output_file_wilson::put_byte(int n)
 		"\360",	"\361",	"\362",	"\363",	"\364",	"\365",	"\366",	"\367",
 		"\370",	"\371",	"\372",	"\373",	"\374",	"\375",	"\376",	"\377",
 	};
-	for (const char *s = table[n]; *s; ++s)
-		put_char(*s);
+	put_string(table[n]);
 	checksum_add(n);
 }
 

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -185,10 +185,10 @@ history_query_command =
  *	on the standard output.
  */
 
-diff3_command =
+merge_command =
 	"set +e; \
 	merge -p -L baseline -L C$c $mr $orig $in > $out; \
-	test $? -le 1 && mv $in $in.bak && mv $out $in";
+	test $? -le 1";
 
 /*
  * Compare two files using fcomp.  The -w option produces an output of the
