@@ -27,19 +27,19 @@
 
 
 srec_output_file_intel::srec_output_file_intel()
-	: srec_output_file("-")
+	: srec_output_file("-"), address_base(0)
 {
 }
 
 
 srec_output_file_intel::srec_output_file_intel(const char *filename)
-	: srec_output_file(filename)
+	: srec_output_file(filename), address_base(0)
 {
 }
 
 
 srec_output_file_intel::srec_output_file_intel(const srec_output_file_intel &)
-	: srec_output_file("-")
+	: srec_output_file("-"), address_base(0)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
@@ -55,7 +55,7 @@ srec_output_file_intel::operator=(const srec_output_file_intel &)
 
 srec_output_file_intel::~srec_output_file_intel()
 {
-	/* make sure terminator is written */
+	write_inner(1, 0L, 0, 0);
 }
 
 
@@ -91,6 +91,7 @@ srec_output_file_intel::write_inner(int tag, unsigned long address,
 void
 srec_output_file_intel::write(const srec_record &record)
 {
+	unsigned char tmp[4];
 	switch (record.get_type())
 	{
 	case srec_record::type_header:
@@ -98,18 +99,16 @@ srec_output_file_intel::write(const srec_record &record)
 		break;
 
 	case srec_record::type_data:
-		if (record.get_address() >= (1UL << 16))
+		if ((record.get_address() & 0xFFFF0000) != address_base)
 		{
-			fatal_error
-			(
-				"data address (%08lX) too large",
-				record.get_address()
-			);
+			address_base = record.get_address() & 0xFFFF0000;
+			srec_record::encode_big_endian(tmp, record.get_address() >> 16, 2);
+			write_inner(4, 0L, tmp, 2);
 		}
 		write_inner
 		(
 			0,
-			record.get_address(),
+			record.get_address() & 0x0000FFFF,
 			record.get_data(),
 			record.get_length()
 		);
@@ -120,15 +119,8 @@ srec_output_file_intel::write(const srec_record &record)
 		break;
 
 	case srec_record::type_termination:
-		if (record.get_address() >= (1UL << 16))
-		{
-			fatal_error
-			(
-				"termination address (%08lX) too large",
-				record.get_address()
-			);
-		}
-		write_inner(1, record.get_address(), 0, 0);
+		srec_record::encode_big_endian(tmp, record.get_address(), 4);
+		write_inner(5, 0L, tmp, 4);
 		break;
 
 	case srec_record::type_unknown:

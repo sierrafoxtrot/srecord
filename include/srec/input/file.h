@@ -39,10 +39,12 @@ public:
 
 protected:
 	int get_char();
+	int peek_char();
 	int get_nibble();
 	int get_byte();
 	int checksum_get();
 	void checksum_reset();
+	void seek_to_end();
 
 private:
 	string file_name;

@@ -18,7 +18,7 @@
 #	along with this program; if not, write to the Free Software
 #	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
-# MANIFEST: Test the exclude filter functionality
+# MANIFEST: Test the intel 32-bit output functionality
 #
 here=`pwd`
 if test $? -ne 0 ; then exit 2; fi
@@ -36,7 +36,7 @@ fail()
 {
 	cd $here
 	rm -rf $work
-	echo 'FAILED test of the exclude filter functionality'
+	echo 'FAILED test of the intel 32-bit output functionality'
 	exit 1
 }
 
@@ -44,7 +44,7 @@ no_result()
 {
 	cd $here
 	rm -rf $work
-	echo 'NO RESULT for test of the exclude filter functionality'
+	echo 'NO RESULT for test of the intel 32-bit output functionality'
 	exit 2
 }
 
@@ -57,27 +57,31 @@ cd $work
 if test $? -ne 0; then no_result; fi
 
 cat > test.in << 'fubar'
-S00600004844521B
-S1230000436F70797269676874202843292031393938205065746572204D696C6C65723B94
-S11900200A416C6C207269676874732072657365727665642E0A3A
-S5030002FA
-S9030000FC
+Hello, World!
 fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
-:05000000436F707972EE
-:20000A002843292031393938205065746572204D696C6C65723B0A416C6C20726967687406
-:0C002A00732072657365727665642E0A9F
+:020000040001F9
+:0E00000048656C6C6F2C20576F726C64210A7F
 :0400000500000000F7
 :00000001FF
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat - -exclude 5 10 -o - -intel < test.in > test.out
+$bin/srec_cat test.in -bin -offset 0x10000 -o test.out -intel
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
+#
+# make sure we can read out own output
+#
+$bin/srec_cat test.out -intel -o test.out2 -intel
+if test $? -ne 0; then fail; fi
+
+diff test.out test.out2
 if test $? -ne 0; then fail; fi
 
 #

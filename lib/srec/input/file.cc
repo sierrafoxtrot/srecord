@@ -114,6 +114,23 @@ srec_input_file::get_char()
 
 
 int
+srec_input_file::peek_char()
+{
+	FILE *fp = (FILE *)this->fp;
+	int c = getc(fp);
+	if (c == EOF)
+	{
+		if (ferror(fp))
+			fatal_error_errno("read");
+		c = -1;
+	}
+	else
+		ungetc(c, fp);
+	return c;
+}
+
+
+int
 srec_input_file::get_nibble()
 {
 	int c = get_char();
@@ -157,4 +174,12 @@ void
 srec_input_file::checksum_reset()
 {
 	checksum = 0;
+}
+
+
+void
+srec_input_file::seek_to_end()
+{
+	FILE *fp = (FILE *)this->fp;
+	fseek(fp, 0L, SEEK_END);
 }

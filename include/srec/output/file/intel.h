@@ -39,6 +39,7 @@ private:
 	void write_inner(int, unsigned long, const void *, int);
 	srec_output_file_intel(const srec_output_file_intel &);
 	srec_output_file_intel &operator=(const srec_output_file_intel &);
+	unsigned long address_base;
 };
 
 #endif /* INCLUDE_SREC_OUTPUT_FILE_INTEL_H */

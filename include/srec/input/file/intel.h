@@ -43,6 +43,10 @@ private:
 	bool garbage_warning;
 	bool seen_some_input;
 	bool termination_seen;
+	enum { linear, segmented } mode;
+	unsigned long address_base;
+	srec_record *pushback;
+	bool end_seen;
 };
 
 #endif /* INCLUDE_SREC_INPUT_FILE_INTEL_H */

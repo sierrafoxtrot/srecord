@@ -28,7 +28,8 @@
 
 srec_input_file_intel::srec_input_file_intel()
 	: srec_input_file(), data_record_count(0), garbage_warning(false),
-		seen_some_input(false), termination_seen(false)
+		seen_some_input(false), termination_seen(false),
+		mode(linear), address_base(0), pushback(0), end_seen(false)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
@@ -36,7 +37,8 @@ srec_input_file_intel::srec_input_file_intel()
 
 srec_input_file_intel::srec_input_file_intel(const srec_input_file_intel &)
 	: srec_input_file(), data_record_count(0), garbage_warning(false),
-		seen_some_input(false), termination_seen(false)
+		seen_some_input(false), termination_seen(false),
+		mode(linear), address_base(0), pushback(0), end_seen(false)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
@@ -45,7 +47,8 @@ srec_input_file_intel::srec_input_file_intel(const srec_input_file_intel &)
 srec_input_file_intel::srec_input_file_intel(const char *filename)
 	: srec_input_file(filename), data_record_count(0),
 		garbage_warning(false), seen_some_input(false),
-		termination_seen(false)
+		termination_seen(false), mode(linear), address_base(0),
+		pushback(0), end_seen(false)
 {
 }
 
@@ -60,71 +63,229 @@ srec_input_file_intel::operator=(const srec_input_file_intel &)
 
 srec_input_file_intel::~srec_input_file_intel()
 {
-	/* make sure the termination record is done */
+	if (pushback)
+		delete pushback;
 }
 
 
 int
 srec_input_file_intel::read_inner(srec_record &record)
 {
+	if (pushback)
+	{
+		record = *pushback;
+		delete pushback;
+		pushback = 0;
+		return 1;
+	}
+
+	/*
+	 * keep reading lines until somethiong returnable comes along
+	 */
 	for (;;)
 	{
+		/*
+		 * grab the first character of the line
+		 */
 		int c = get_char();
+
+		/*
+		 * end of file means we are done
+		 */
 		if (c < 0)
 			return 0;
-		if (c == ':')
-			break;
+
+		/*
+		 * quietly ignore blank lines
+		 */
 		if (c == '\n')
 			continue;
-		if (!garbage_warning)
-		{
-			warning("ignoring garbage lines");
-			garbage_warning = true;
-		}
-		for (;;)
-		{
-			c = get_char();
-			if (c < 0)
-				return 0;
-			if (c == '\n')
-				break;
-		}
-	}
-	unsigned char buffer[255+5];
-	checksum_reset();
-	buffer[0] = get_byte();
-	buffer[1] = get_byte();
-	buffer[2] = get_byte();
-	buffer[3] = get_byte();
-	for (int j = 0; j <= buffer[0]; ++j)
-		buffer[4 + j] = get_byte();
-	if (checksum_get() != 0x00)
-		fatal_error("checksum mismatch (%02X)", checksum_get());
-	if (get_char() != '\n')
-		fatal_error("end-of-line expected");
 
-	srec_record::type type = srec_record::type_unknown;
-	switch (buffer[3])
-	{
-	case 0:
-		/* data */
-		type = srec_record::type_data;
-		break;
+		/*
+		 * If it doesn't start with a colon, it's a garbage line.
+		 * Warn, and then ignore it.
+		 */
+		if (c != ':')
+		{
+			if (!garbage_warning)
+			{
+				warning("ignoring garbage lines");
+				garbage_warning = true;
+			}
+			for (;;)
+			{
+				c = get_char();
+				if (c < 0)
+					return 0;
+				if (c == '\n')
+					break;
+			}
+			continue;
+		}
 
-	case 1:
-		/* termination */
-		type = srec_record::type_termination;
-		break;
+		/*
+		 * Looks like a real Intel-hex line.
+		 */
+		unsigned char buffer[255+5];
+		checksum_reset();
+		buffer[0] = get_byte();
+		buffer[1] = get_byte();
+		buffer[2] = get_byte();
+		buffer[3] = get_byte();
+		for (int j = 0; j <= buffer[0]; ++j)
+			buffer[4 + j] = get_byte();
+		if (checksum_get() != 0x00)
+			fatal_error("checksum mismatch (%02X)", checksum_get());
+		if (get_char() != '\n')
+			fatal_error("end-of-line expected");
+	
+		srec_record::address_t address_field =
+			srec_record::decode_big_endian(buffer + 1, 2);
+	
+		srec_record::type type = srec_record::type_unknown;
+		switch (buffer[3])
+		{
+		case 0:
+			/* data */
+			if (mode == linear)
+			{
+				if
+				(
+					(long long)address_base + address_field < ((long long)1 << 32)
+				&&
+					(long long)address_base + address_field + buffer[0] > ((long long)1 << 32)
+				)
+				{
+					int split = ((long long)1 << 32) - address_base - address_field;
+					pushback =
+						new srec_record
+						(
+							srec_record::type_data,
+							0L,
+							buffer + 4 + split,
+							buffer[0] - split
+						);
+					buffer[0] = split;
+				}
+			}
+			else
+			{
+				/* segmented */
+				if (address_field + buffer[0] > (1L << 16))
+				{
+					int split = (1L << 16) - address_field;
+					pushback =
+						new srec_record
+						(
+							srec_record::type_data,
+							address_base + ((address_field + split) & 0xFFFF),
+							buffer + 4 + split,
+							buffer[0] - split
+						);
+					buffer[0] = split;
+				}
+			}
+			type = srec_record::type_data;
+			break;
+	
+		case 1:
+			/*
+			 * end-of-file record
+			 */
+			if (buffer[0] != 0)
+				fatal_error("length field must be zero");
+			if (address_field != 0)
+				fatal_error("address field must be zero");
+			end_seen = true;
+			seek_to_end();
+			return 0;
+	
+		case 2:
+			/*
+			 * extended segment address record
+			 *
+			 * Set the base address and addressing mode,
+			 * and then loop for another record, this one
+			 * isn't visable to the caller.
+			 */
+			if (buffer[0] != 2)
+				fatal_error("length field must be 2");
+			if (address_field != 0)
+				fatal_error("address field must be zero");
+			address_field =
+				srec_record::decode_big_endian(buffer + 4, 2);
+			address_base = address_field << 4;
+			mode = segmented;
+			continue;
+	
+		case 3:
+			/* start segment address record */
+			if (buffer[0] != 4)
+				fatal_error("length field must be 4");
+			if (address_field != 0)
+				fatal_error("address field must be zero");
+			address_field =
+				srec_record::decode_big_endian(buffer + 4, 2) * 16 +
+				srec_record::decode_big_endian(buffer + 6, 2);
+			record =
+				srec_record
+				(
+					srec_record::type_termination,
+					address_field,
+					0,
+					0
+				);
+			return 1;
+	
+		case 4:
+			/*
+			 * extended linear address record
+			 *
+			 * Set the base address and addressing mode,
+			 * and then loop for another record, this one
+			 * isn't visable to the caller.
+			 */
+			if (buffer[0] != 2)
+				fatal_error("length field must be 2");
+			if (address_field != 0)
+				fatal_error("address field must be zero");
+			address_field =
+				srec_record::decode_big_endian(buffer + 4, 2);
+			address_base = address_field << 16;
+			mode = linear;
+			continue;
+	
+		case 5:
+			/* start linear address record */
+			if (buffer[0] != 4)
+				fatal_error("length field must be 4");
+			if (address_field != 0)
+				fatal_error("address field must be zero");
+			address_field = srec_record::decode_big_endian(buffer + 4, 4);
+			record =
+				srec_record
+				(
+					srec_record::type_termination,
+					address_field,
+					0,
+					0
+				);
+			return 1;
+		}
+
+		/*
+		 * data record or unknown
+		 */
+		record =
+			srec_record
+			(
+				type,
+				address_base + address_field,
+				buffer + 4,
+				buffer[0]
+			);
+		return 1;
 	}
-	record =
-		srec_record
-		(
-			type,
-			srec_record::decode_big_endian(buffer + 1, 2),
-			buffer + 4,
-			buffer[0]
-		);
-	return 1;
 }
 
 
@@ -141,22 +302,17 @@ srec_input_file_intel::read(srec_record &record)
 				fatal_error("file contains no data");
 			if (!termination_seen)
 			{
-				warning("no termination record");
+				warning("no start address record");
+				termination_seen = true;
+			}
+			if (!end_seen)
+			{
+				warning("no end-of-file record");
 				termination_seen = true;
 			}
 			return 0;
 		}
 		seen_some_input = true;
-		if
-		(
-			record.get_type() != srec_record::type_termination
-		&&
-			termination_seen
-		)
-		{
-			warning("termination record should be last");
-			termination_seen = false;
-		}
 		switch (record.get_type())
 		{
 		case srec_record::type_unknown:
@@ -177,13 +333,8 @@ srec_input_file_intel::read(srec_record &record)
 			break;
 
 		case srec_record::type_termination:
-			if (record.get_length() > 0)
-			{
-				warning("data in termination record ignored");
-				record.set_length(0);
-			}
 			if (termination_seen)
-				warning("redundant termination record");
+				warning("redundant start address record");
 			termination_seen = true;
 			break;
 		}

@@ -91,6 +91,7 @@ if test $? -ne 0; then no_result; fi
 cat > test.ok << 'fubar'
 :20000000DB00E60F5F1600211100197ED300C30000000101030307070F0F1F1F3F3F7F7F4E
 :01002000FFE0
+:0400000500000000F7
 :00000001FF
 fubar
 if test $? -ne 0; then no_result; fi
@@ -112,6 +113,7 @@ if test $? -ne 0; then no_result; fi
 cat > test.in2 << 'fubar'
 :20000000DB00E60F5F1600211100197ED300C30000000101030307070F0F1F1F3F3F7F7F4E
 :01002000FFE0
+:0400000500000000F7
 :00000001FF
 fubar
 if test $? -ne 0; then no_result; fi
