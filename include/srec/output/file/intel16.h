@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
+//	Copyright (C) 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -17,33 +17,33 @@
 //	along with this program; if not, write to the Free Software
 //	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: interface definition for lib/srec/output/file/intel.cc
+// MANIFEST: interface definition for include/srec/output/file/intel16.cc
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_INTEL_H
-#define INCLUDE_SREC_OUTPUT_FILE_INTEL_H
+#ifndef INCLUDE_SREC_OUTPUT_FILE_INTEL16_H
+#define INCLUDE_SREC_OUTPUT_FILE_INTEL16_H
 
-#pragma interface "srec_output_file_intel"
+#pragma interface "srec_output_file_intel16"
 
 #include <srec/output/file.h>
 
 /**
-  * The srec_output_file_intel class is used to write an EPROM load file
-  * in Intel Hex format.
+  * The srec_output_file_intel16 class is used to write an EPROM load file
+  * in INHX16 format.
   */
-class srec_output_file_intel:
+class srec_output_file_intel16:
     public srec_output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_intel();
+    virtual ~srec_output_file_intel16();
 
     /**
       * The constructor.
       */
-    srec_output_file_intel(const char *);
+    srec_output_file_intel16(const char *);
 
     // See base class for documentation.
     virtual void write(const srec_record &);
@@ -79,17 +79,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_intel();
+    srec_output_file_intel16();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_intel(const srec_output_file_intel &);
+    srec_output_file_intel16(const srec_output_file_intel16 &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_intel &operator=(const srec_output_file_intel &);
+    srec_output_file_intel16 &operator=(const srec_output_file_intel16 &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_FILE_INTEL_H
+#endif // INCLUDE_SREC_OUTPUT_FILE_INTEL16_H

@@ -35,6 +35,7 @@
 #include <srec/output/file/formatted_binary.h>
 #include <srec/output/file/four_packed_code.h>
 #include <srec/output/file/intel.h>
+#include <srec/output/file/intel16.h>
 #include <srec/output/file/mos_tech.h>
 #include <srec/output/file/needham.h>
 #include <srec/output/file/os65v.h>
@@ -156,6 +157,11 @@ srec_arglex::get_output()
     case token_intel:
 	token_next();
 	ofp = new srec_output_file_intel(fn);
+	break;
+
+    case token_intel16:
+	token_next();
+	ofp = new srec_output_file_intel16(fn);
 	break;
 
     case token_mos_tech:

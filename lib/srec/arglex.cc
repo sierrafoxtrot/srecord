@@ -38,6 +38,7 @@ using namespace std;
 #include <srec/input/file/four_packed_code.h>
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
+#include <srec/input/file/intel16.h>
 #include <srec/input/file/mos_tech.h>
 #include <srec/input/file/needham.h>
 #include <srec/input/file/os65v.h>
@@ -114,6 +115,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
 	{ "-Four_Packed_Code", token_four_packed_code, },
 	{ "-GUess",	token_guess,		},
 	{ "-Intel",	token_intel,		},
+	{ "-INtel_HeXadecimal_16", token_intel16,		},
 	{ "-Little_Endian_Checksum", token_checksum_le_bitnot, },
 	{ "-Little_Endian_Checksum_BitNot", token_checksum_le_bitnot, },
 	{ "-Little_Endian_Checksum_Negative", token_checksum_le_negative, },
@@ -542,6 +544,11 @@ srec_arglex::get_input()
     case token_intel:
 	token_next();
 	ifp = new srec_input_file_intel(fn);
+	break;
+
+    case token_intel16:
+	token_next();
+	ifp = new srec_input_file_intel16(fn);
 	break;
 
     case token_mos_tech:

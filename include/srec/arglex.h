@@ -68,6 +68,7 @@ public:
 	token_four_packed_code,
 	token_guess,
 	token_intel,
+	token_intel16,
 	token_length,
 	token_length_be,
 	token_length_le,

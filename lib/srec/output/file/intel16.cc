@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
+//	Copyright (C) 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -17,18 +17,18 @@
 //	along with this program; if not, write to the Free Software
 //	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_intel class
+// MANIFEST: functions to impliment the srec_output_file_intel16 class
 //
 
-#pragma implementation "srec_output_file_intel"
+#pragma implementation "srec_output_file_intel16"
 
-#include <srec/output/file/intel.h>
+#include <srec/output/file/intel16.h>
 #include <srec/record.h>
 
 
-srec_output_file_intel::srec_output_file_intel(const char *filename) :
+srec_output_file_intel16::srec_output_file_intel16(const char *filename) :
     srec_output_file(filename),
-    address_base(1),
+    address_base(0),
     pref_block_size(32)
 {
     // The address base always has the lower 16 bits set to zero.
@@ -37,7 +37,7 @@ srec_output_file_intel::srec_output_file_intel(const char *filename) :
 }
 
 
-srec_output_file_intel::~srec_output_file_intel()
+srec_output_file_intel16::~srec_output_file_intel16()
 {
     if (!data_only_flag)
        	write_inner(1, 0L, 0, 0);
@@ -45,13 +45,13 @@ srec_output_file_intel::~srec_output_file_intel()
 
 
 void
-srec_output_file_intel::write_inner(int tag, unsigned long address,
+srec_output_file_intel16::write_inner(int tag, unsigned long address,
     const void *data, int data_nbytes)
 {
     //
     // Make sure the line is not too long.
     //
-    if (data_nbytes >= 256)
+    if (data_nbytes >= 255*2)
 	fatal_error("data length (%d) too long", data_nbytes);
 
     //
@@ -59,22 +59,30 @@ srec_output_file_intel::write_inner(int tag, unsigned long address,
     //
     put_char(':');
     checksum_reset();
-    put_byte(data_nbytes);
+    int even_nbytes = (data_nbytes & 1) ? (data_nbytes + 1) : data_nbytes;
+    put_byte(even_nbytes >> 1);
     unsigned char tmp[2];
     srec_record::encode_big_endian(tmp, address, 2);
     put_byte(tmp[0]);
     put_byte(tmp[1]);
     put_byte(tag);
     const unsigned char *data_p = (const unsigned char *)data;
-    for (int j = 0; j < data_nbytes; ++j)
-	put_byte(data_p[j]);
+    for (int j = 0; j < even_nbytes; ++j)
+    {
+	// Note: bytes are ordered HI,LO so we invert LSB
+	// Watch out for odd record lengths.
+	if ((j ^ 1) >= data_nbytes)
+	    put_byte(0xFF);
+	else
+	    put_byte(data_p[j ^ 1]);
+    }
     put_byte(-checksum_get());
     put_char('\n');
 }
 
 
 void
-srec_output_file_intel::write(const srec_record &record)
+srec_output_file_intel16::write(const srec_record &record)
 {
     unsigned char tmp[4];
     switch (record.get_type())
@@ -86,16 +94,16 @@ srec_output_file_intel::write(const srec_record &record)
 	break;
 
     case srec_record::type_data:
-	if ((record.get_address() & 0xFFFF0000) != address_base)
+	if ((record.get_address() & 0xFFFE0000) != address_base)
 	{
-	    address_base = record.get_address() & 0xFFFF0000;
-	    srec_record::encode_big_endian(tmp, record.get_address() >> 16, 2);
+	    address_base = record.get_address() & 0xFFFE0000;
+	    srec_record::encode_big_endian(tmp, record.get_address() >> 17, 2);
 	    write_inner(4, 0L, tmp, 2);
 	}
 	write_inner
 	(
 	    0,
-	    record.get_address() & 0x0000FFFF,
+	    (record.get_address() >> 1) & 0x0000FFFF,
 	    record.get_data(),
 	    record.get_length()
 	);
@@ -108,7 +116,9 @@ srec_output_file_intel::write(const srec_record &record)
     case srec_record::type_start_address:
 	if (data_only_flag)
 	    break;
-	srec_record::encode_big_endian(tmp, record.get_address(), 4);
+	if (record.get_address() == 0)
+	    break;
+	srec_record::encode_big_endian(tmp, record.get_address() >> 1, 4);
 	write_inner(5, 0L, tmp, 4);
 	break;
 
@@ -120,42 +130,42 @@ srec_output_file_intel::write(const srec_record &record)
 
 
 void
-srec_output_file_intel::line_length_set(int n)
+srec_output_file_intel16::line_length_set(int n)
 {
     //
     // Given the number of characters, figure the maximum number of
     // data baytes.
     //
-    n = (n - 11) / 2;
+    n = ((n - 11) / 2) & ~1;
 
     //
     // Constrain based on the file format.
-    // (255 is the largest that will fit in the data size field)
+    // (255*2 is the largest that will fit in the data size field)
     //
-    if (n < 1)
-	n = 1;
-    else if (n > 255)
-	n = 255;
+    if (n < 2)
+	n = 2;
+    else if (n > 255*2)
+	n = 255*2;
 
     // 
     // An additional constraint is the size of the srec_record
     // data buffer.
     //
     if (n > srec_record::max_data_length)
-	n = srec_record::max_data_length;
+	n = (srec_record::max_data_length & ~1);
     pref_block_size = n;
 }
 
 
 void
-srec_output_file_intel::address_length_set(int)
+srec_output_file_intel16::address_length_set(int)
 {
     // ignore
 }
 
 
 int
-srec_output_file_intel::preferred_block_size_get()
+srec_output_file_intel16::preferred_block_size_get()
 	const
 {
     return pref_block_size;

@@ -32,6 +32,7 @@
 #include <srec/input/file/four_packed_code.h>
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
+#include <srec/input/file/intel16.h>
 #include <srec/input/file/mos_tech.h>
 #include <srec/input/file/needham.h>
 #include <srec/input/file/os65v.h>
@@ -98,6 +99,12 @@ static srec_input *
 create_intel(const char *fn)
 {
     return new srec_input_file_intel(fn);
+}
+
+static srec_input *
+create_intel16(const char *fn)
+{
+    return new srec_input_file_intel16(fn);
 }
 
 static srec_input *
@@ -182,6 +189,7 @@ static func_p table[] =
     create_formatted_binary,
     create_four_packed_code,
     create_intel,
+    create_intel16,
     create_mos_tech,
     create_needham,
     create_ohio_scientific,
