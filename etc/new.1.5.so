@@ -22,8 +22,9 @@
 .PP
 .if n *
 .if t \(bu
-.\" change 18
-There is a new CRC16 input filter, both big and little endian.
+.\" change 18+19
+There is are new CRC input filters, both 16-bit and 32-bit,
+both big and little endian.
 .PP
 .if n *
 .if t \(bu

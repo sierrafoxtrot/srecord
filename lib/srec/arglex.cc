@@ -41,6 +41,7 @@
 #include <srec/input/filter/checksum/negative.h>
 #include <srec/input/filter/checksum/positive.h>
 #include <srec/input/filter/crc16.h>
+#include <srec/input/filter/crc32.h>
 #include <srec/input/filter/crop.h>
 #include <srec/input/filter/fill.h>
 #include <srec/input/filter/length.h>
@@ -450,6 +451,22 @@ srec_arglex::get_input()
 			    unsigned long address;
 			    get_address("-Little_Endian_CRC16", address);
 			    ifp = new srec_input_filter_crc16(ifp, address, 1);
+			}
+			continue;
+
+		case token_crc32_be:
+			{
+			    unsigned long address;
+			    get_address("-Big_Endian_CRC32", address);
+			    ifp = new srec_input_filter_crc32(ifp, address, 0);
+			}
+			continue;
+
+		case token_crc32_le:
+			{
+			    unsigned long address;
+			    get_address("-Little_Endian_CRC32", address);
+			    ifp = new srec_input_filter_crc32(ifp, address, 1);
 			}
 			continue;
 

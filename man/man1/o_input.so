@@ -146,6 +146,16 @@ in the input).
 \fB\-Big_Endian_CRC16\fP \fIaddress\fP
 As above, except little-endian order.
 .TP 8n
+\fB\-Big_Endian_CRC32\fP \fIaddress\fP
+This filter may be used to insert an industry standard 32-bit CRC checksum
+of the data into the data.  Four bytes, big-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\fInot\fP in the order they appear
+in the input).
+.TP 8n
+\fB\-Big_Endian_CRC32\fP \fIaddress\fP
+As above, except little-endian order.
+.TP 8n
 \fB\-Crop\fP \fIaddress-range\fP
 This filter may be used to isolate a section of data, and discard the
 rest.
