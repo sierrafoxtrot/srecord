@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2004 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -49,21 +49,21 @@ using namespace std;
 
 interval::interval()
 {
-	length = 0;
-	size = 0;
-	scan_index = 0;
-	scan_next_datum = 0;
-	data = 0;
-	// assert(valid());
+    length = 0;
+    size = 0;
+    scan_index = 0;
+    scan_next_datum = 0;
+    data = 0;
+    // assert(valid());
 }
 
 
 static inline long long
 promote(interval::data_t datum, size_t pos)
 {
-	if (datum == 0 && (pos & 1))
-		return (1LL << 32);
-	return datum;
+    if (datum == 0 && (pos & 1))
+       	return (1LL << 32);
+    return datum;
 }
 
 
@@ -72,7 +72,8 @@ promote(interval::data_t datum, size_t pos)
 //	interval_create_range - create a single range interval
 //
 // SYNOPSIS
-//	interval_ty *interval_create_range(interval_data_ty first, interval_data_ty last);
+//	interval_ty *interval_create_range(interval_data_ty first,
+//          interval_data_ty last);
 //
 // DESCRIPTION
 //	The interval_create_range function is used to create an interval
@@ -93,63 +94,68 @@ promote(interval::data_t datum, size_t pos)
 
 interval::interval(data_t first, data_t last)
 {
-	length = 2;
-	size = 8;
-	data = new data_t[size + 1];
-	scan_index = 0;
-	scan_next_datum = 0;
-	if (first <= promote(last, 1))
-	{
-		data[0] = first;
-		data[1] = last;
-	}
-	else
-	{
-		data[0] = last;
-		data[1] = first;
-	}
-	data[2] = 2;
-	// assert(valid());
+    length = 2;
+    size = 8;
+    data = new data_t[size + 1];
+    scan_index = 0;
+    scan_next_datum = 0;
+    if (first <= promote(last, 1))
+    {
+	data[0] = first;
+	data[1] = last;
+    }
+    else
+    {
+	data[0] = last;
+	data[1] = first;
+    }
+    data[2] = 2;
+    // assert(valid());
 }
 
 interval::interval(data_t first)
 {
-	length = 2;
-	size = 8;
-	data = new data_t[size + 1];
-	scan_index = 0;
-	scan_next_datum = 0;
-	data[0] = first;
-	data[1] = first + 1;
-	data[2] = 2;
-	// assert(valid());
+    length = 2;
+    size = 8;
+    data = new data_t[size + 1];
+    scan_index = 0;
+    scan_next_datum = 0;
+    data[0] = first;
+    data[1] = first + 1;
+    data[2] = 2;
+    // assert(valid());
 }
 
 
 interval::interval(const interval &arg)
 {
-	// assert(arg.valid());
-	length = arg.length;
-	size = length;
-	scan_index = 0;
-	scan_next_datum = 0;
-	if (size)
-	{
-		data = new data_t[size + 1];
-		for (size_t j = 0; j <= length; ++j)
-			data[j] = arg.data[j];
-	}
-	else
-		data = 0;
-	// assert(valid());
+    // assert(arg.valid());
+    length = arg.length;
+    size = length;
+    scan_index = 0;
+    scan_next_datum = 0;
+    if (size)
+    {
+	data = new data_t[size + 1];
+	for (size_t j = 0; j <= length; ++j)
+    	    data[j] = arg.data[j];
+    }
+    else
+	data = 0;
+    // assert(valid());
 }
 
 
 interval &
 interval::operator=(const interval &arg)
 {
+    if (this != &arg)
+    {
 	if (data)
-		delete data;
+	{
+	    delete [] data;
+	    data = 0;
+	}
 	// assert(arg.valid());
 	length = arg.length;
 	size = length;
@@ -157,14 +163,15 @@ interval::operator=(const interval &arg)
 	scan_next_datum = 0;
 	if (size)
 	{
-		data = new data_t[size + 1];
-		for (size_t j = 0; j <= length; ++j)
-			data[j] = arg.data[j];
+	    data = new data_t[size + 1];
+	    for (size_t j = 0; j <= length; ++j)
+	       	data[j] = arg.data[j];
 	}
 	else
-		data = 0;
+	    data = 0;
 	// assert(valid());
-	return *this;
+    }
+    return *this;
 }
 
 
@@ -185,9 +192,12 @@ interval::operator=(const interval &arg)
 
 interval::~interval()
 {
-	// assert(valid());
-	if (data)
-		delete data;
+    // assert(valid());
+    if (data)
+    {
+       	delete [] data;
+       	data = 0;
+    }
 }
 
 
@@ -216,31 +226,31 @@ interval::~interval()
 
 bool
 interval::valid()
-	const
+    const
 {
-	if (length > size)
-		return false;
-	if (length & 1)
-		return false;
-	if ((size == 0) != (data == 0))
-		return false;
-	if (length == 0)
-		return true;
-	if (data[length] != length)
-		return false;
-
-	//
-	// As a special case, an upper bound of zero means
-	// positive infinity.  It has to be the last one.
-	//
-	size_t max = length;
-	if (data[max - 1] == 0)
-		--max;
-
-	for (size_t j = 1; j < max; ++j)
-		if (data[j - 1] >= data[j])
-			return false;
+    if (length > size)
+	return false;
+    if (length & 1)
+	return false;
+    if ((size == 0) != (data == 0))
+	return false;
+    if (length == 0)
 	return true;
+    if (data[length] != length)
+	return false;
+
+    //
+    // As a special case, an upper bound of zero means
+    // positive infinity.  It has to be the last one.
+    //
+    size_t max = length;
+    if (data[max - 1] == 0)
+	--max;
+
+    for (size_t j = 1; j < max; ++j)
+	if (data[j - 1] >= data[j])
+    	    return false;
+    return true;
 }
 
 
@@ -249,7 +259,7 @@ interval::valid()
 //	append - append datum to interval data
 //
 // SYNOPSIS
-//	void append _((interval_ty **ipp, interval_data_ty datum));
+//	void append(interval_ty **ipp, interval_data_ty datum);
 //
 // DESCRIPTION
 //	The append function is used to append a datum to
@@ -268,43 +278,46 @@ interval::valid()
 void
 interval::append(data_t datum)
 {
-	//
-	// should always be increasing
-	//
-	// assert(length < 1 || promote(datum, length) >=
-	//	promote(data[length - 1], length - 1));
+    //
+    // should always be increasing
+    //
+    // assert(length < 1 || promote(datum, length) >=
+    //	promote(data[length - 1], length - 1));
 
-	//
-	// make it larger if necessary
-	//
-	if (length >= size)
+    //
+    // make it larger if necessary
+    //
+    if (length >= size)
+    {
+	size = size * 2 + 8;
+	data_t *tmp = new data_t[size + 1];
+	if (data)
 	{
-		size = size * 2 + 8;
-		data_t *tmp = new data_t[size + 1];
-		if (data)
-		{
-			for (size_t k = 0; k < length; ++k)
-				tmp[k] = data[k];
-			delete data;
-		}
-		data = tmp;
+    	    for (size_t k = 0; k < length; ++k)
+       		tmp[k] = data[k];
+    	    delete [] data;
 	}
+	data = tmp;
+    }
 
-	//
-	// remeber the datum
-	//
-	data[length++] = datum;
+    //
+    // remeber the datum
+    //
+    data[length++] = datum;
 
-	//
-	// elide empty sequences
-	//
-	if
-	(
-		length >= 2
-	&&
-		data[length - 1] == data[length - 2]
-	)
-		length -= 2;
+    //
+    // elide empty sequences
+    //
+    // See the comment for the "data" instance variable; it is a
+    // series of [lo, hi) pairs.
+    //
+    // There are two cases here
+    //   length is odd:   [a, b) [b, ???)  -->   [a, ???)
+    //   length is even:  [a, a)           -->   {}
+    // Either way, discard the last two elements.
+    //
+    if (length >= 2 && data[length - 1] == data[length - 2])
+	length -= 2;
 }
 
 
@@ -335,56 +348,56 @@ interval::append(data_t datum)
 interval
 interval::union_(const interval &left, const interval &right)
 {
-	// assert(left.valid());
-	// assert(right.valid());
-	interval result;
-	size_t left_pos = 0;
-	size_t right_pos = 0;
-	int count = 0;
-	for (;;)
+    // assert(left.valid());
+    // assert(right.valid());
+    interval result;
+    size_t left_pos = 0;
+    size_t right_pos = 0;
+    int count = 0;
+    for (;;)
+    {
+	int old_count = count;
+	data_t place;
+	if (left_pos < left.length)
 	{
-		int old_count = count;
-		data_t place;
-		if (left_pos < left.length)
+	    if (right_pos < right.length)
+	    {
+		long long left_val = promote(left.data[left_pos], left_pos);
+		long long right_val = promote(right.data[right_pos], right_pos);
+		if (left_val < right_val)
 		{
-			if (right_pos < right.length)
-			{
-				long long left_val = promote(left.data[left_pos], left_pos);
-				long long right_val = promote(right.data[right_pos], right_pos);
-				if (left_val < right_val)
-				{
-					count += (left_pos & 1 ? -1 : 1);
-					place = left.data[left_pos++];
-				}
-				else
-				{
-					count += (right_pos & 1 ? -1 : 1);
-					place = right.data[right_pos++];
-				}
-			}
-			else
-			{
-				count += (left_pos & 1 ? -1 : 1);
-				place = left.data[left_pos++];
-			}
+		    count += (left_pos & 1 ? -1 : 1);
+		    place = left.data[left_pos++];
 		}
 		else
 		{
-			if (right_pos < right.length)
-			{
-				count += (right_pos & 1 ? -1 : 1);
-				place = right.data[right_pos++];
-			}
-			else
-				break;
+		    count += (right_pos & 1 ? -1 : 1);
+		    place = right.data[right_pos++];
 		}
-		if ((count >= 1) != (old_count >= 1))
-			result.append(place);
+	    }
+	    else
+	    {
+		count += (left_pos & 1 ? -1 : 1);
+		place = left.data[left_pos++];
+	    }
 	}
-	if (result.length)
-		result.data[result.length] = result.length;
-	// assert(result.valid());
-	return result;
+	else
+	{
+	    if (right_pos < right.length)
+	    {
+	       	count += (right_pos & 1 ? -1 : 1);
+	       	place = right.data[right_pos++];
+	    }
+	    else
+	       	break;
+	}
+	if ((count >= 1) != (old_count >= 1))
+	    result.append(place);
+    }
+    if (result.length)
+	result.data[result.length] = result.length;
+    // assert(result.valid());
+    return result;
 }
 
 
@@ -393,7 +406,8 @@ interval::union_(const interval &left, const interval &right)
 //	interval_intersection - intersection of two intervals
 //
 // SYNOPSIS
-//	interval_ty *interval_intersection(interval_ty *left, interval_ty *right);
+//	interval_ty *interval_intersection(interval_ty *left,
+//          interval_ty *right);
 //
 // DESCRIPTION
 //	The interval_intersection function is used to form the
@@ -415,56 +429,56 @@ interval::union_(const interval &left, const interval &right)
 interval
 interval::intersection(const interval &left, const interval &right)
 {
-	// assert(left.valid());
-	// assert(right.valid());
-	interval result;
-	size_t left_pos = 0;
-	size_t right_pos = 0;
-	int count = 0;
-	for (;;)
+    // assert(left.valid());
+    // assert(right.valid());
+    interval result;
+    size_t left_pos = 0;
+    size_t right_pos = 0;
+    int count = 0;
+    for (;;)
+    {
+	int old_count = count;
+	data_t place;
+	if (left_pos < left.length)
 	{
-		int old_count = count;
-		data_t place;
-		if (left_pos < left.length)
+	    if (right_pos < right.length)
+	    {
+		long long left_val = promote(left.data[left_pos], left_pos);
+		long long right_val = promote(right.data[right_pos], right_pos);
+		if (left_val < right_val)
 		{
-			if (right_pos < right.length)
-			{
-				long long left_val = promote(left.data[left_pos], left_pos);
-				long long right_val = promote(right.data[right_pos], right_pos);
-				if (left_val < right_val)
-				{
-					count += (left_pos & 1 ? -1 : 1);
-					place = left.data[left_pos++];
-				}
-				else
-				{
-					count += (right_pos & 1 ? -1 : 1);
-					place = right.data[right_pos++];
-				}
-			}
-			else
-			{
-				count += (left_pos & 1 ? -1 : 1);
-				place = left.data[left_pos++];
-			}
+		    count += (left_pos & 1 ? -1 : 1);
+		    place = left.data[left_pos++];
 		}
 		else
 		{
-			if (right_pos < right.length)
-			{
-				count += (right_pos & 1 ? -1 : 1);
-				place = right.data[right_pos++];
-			}
-			else
-				break;
+		    count += (right_pos & 1 ? -1 : 1);
+		    place = right.data[right_pos++];
 		}
-		if ((count >= 2) != (old_count >= 2))
-			result.append(place);
+	    }
+	    else
+	    {
+		count += (left_pos & 1 ? -1 : 1);
+		place = left.data[left_pos++];
+	    }
 	}
-	if (result.length)
-		result.data[result.length] = result.length;
-	// assert(result.valid());
-	return result;
+	else
+	{
+	    if (right_pos < right.length)
+	    {
+	       	count += (right_pos & 1 ? -1 : 1);
+	       	place = right.data[right_pos++];
+	    }
+	    else
+	       	break;
+	}
+	if ((count >= 2) != (old_count >= 2))
+	    result.append(place);
+    }
+    if (result.length)
+	result.data[result.length] = result.length;
+    // assert(result.valid());
+    return result;
 }
 
 
@@ -495,56 +509,56 @@ interval::intersection(const interval &left, const interval &right)
 interval
 interval::difference(const interval &left, const interval &right)
 {
-	// assert(left.valid());
-	// assert(right.valid());
-	interval result;
-	size_t left_pos = 0;
-	size_t right_pos = 0;
-	int count = 0;
-	for (;;)
+    // assert(left.valid());
+    // assert(right.valid());
+    interval result;
+    size_t left_pos = 0;
+    size_t right_pos = 0;
+    int count = 0;
+    for (;;)
+    {
+	int old_count = count;
+	data_t place;
+	if (left_pos < left.length)
 	{
-		int old_count = count;
-		data_t place;
-		if (left_pos < left.length)
+	    if (right_pos < right.length)
+	    {
+		long long left_val = promote(left.data[left_pos], left_pos);
+		long long right_val = promote(right.data[right_pos], right_pos);
+		if (left_val < right_val)
 		{
-			if (right_pos < right.length)
-			{
-				long long left_val = promote(left.data[left_pos], left_pos);
-				long long right_val = promote(right.data[right_pos], right_pos);
-				if (left_val < right_val)
-				{
-					count += (left_pos & 1 ? -1 : 1);
-					place = left.data[left_pos++];
-				}
-				else
-				{
-					count -= (right_pos & 1 ? -1 : 1);
-					place = right.data[right_pos++];
-				}
-			}
-			else
-			{
-				count += (left_pos & 1 ? -1 : 1);
-				place = left.data[left_pos++];
-			}
+		    count += (left_pos & 1 ? -1 : 1);
+		    place = left.data[left_pos++];
 		}
 		else
 		{
-			if (right_pos < right.length)
-			{
-				count -= (right_pos & 1 ? -1 : 1);
-				place = right.data[right_pos++];
-			}
-			else
-				break;
+		    count -= (right_pos & 1 ? -1 : 1);
+		    place = right.data[right_pos++];
 		}
-		if ((count >= 1) != (old_count >= 1))
-			result.append(place);
+	    }
+	    else
+	    {
+		count += (left_pos & 1 ? -1 : 1);
+		place = left.data[left_pos++];
+	    }
 	}
-	if (result.length)
-		result.data[result.length] = result.length;
-	// assert(result.valid());
-	return result;
+	else
+	{
+	    if (right_pos < right.length)
+	    {
+	       	count -= (right_pos & 1 ? -1 : 1);
+	       	place = right.data[right_pos++];
+	    }
+	    else
+	       	break;
+	}
+	if ((count >= 1) != (old_count >= 1))
+	    result.append(place);
+    }
+    if (result.length)
+	result.data[result.length] = result.length;
+    // assert(result.valid());
+    return result;
 }
 
 
@@ -570,26 +584,26 @@ interval::difference(const interval &left, const interval &right)
 
 bool
 interval::member(data_t datum)
-	const
+    const
 {
-	if (length == 0)
-		return false;
-	// assert(valid());
-	long min = 0;
-	long max = length - 2;
-	while (min <= max)
-	{
-		long mid = ((min + max) / 2) & ~1;
-		data_t lo = data[mid];
-		long long hi = promote(data[mid + 1], mid + 1);
-		if (lo <= datum && datum < hi)
-			return true;
-		if (lo < datum)
-			min = mid + 2;
-		else
-			max = mid - 2;
-	}
+    if (length == 0)
 	return false;
+    // assert(valid());
+    long min = 0;
+    long max = length - 2;
+    while (min <= max)
+    {
+	long mid = ((min + max) / 2) & ~1;
+	data_t lo = data[mid];
+	long long hi = promote(data[mid + 1], mid + 1);
+	if (lo <= datum && datum < hi)
+    	    return true;
+	if (lo < datum)
+    	    min = mid + 2;
+	else
+    	    max = mid - 2;
+    }
+    return false;
 }
 
 
@@ -611,13 +625,13 @@ interval::member(data_t datum)
 void
 interval::scan_begin()
 {
-	// assert(valid());
-	// assert(!scan_index);
-	scan_index = 1;
-	if (length)
-		scan_next_datum = data[0];
-	else
-		scan_next_datum = 0;
+    // assert(valid());
+    // assert(!scan_index);
+    scan_index = 1;
+    if (length)
+       	scan_next_datum = data[0];
+    else
+       	scan_next_datum = 0;
 }
 
 
@@ -644,19 +658,19 @@ interval::scan_begin()
 bool
 interval::scan_next(data_t &datum)
 {
-	// assert(valid());
-	// assert(scan_index & 1);
-	if (scan_index >= length)
-		return false;
-	if (scan_next_datum >= promote(data[scan_index], scan_index))
-	{
-		scan_index += 2;
-		if (scan_index >= length)
-			return false;
-		scan_next_datum = data[scan_index - 1];
-	}
-	datum = scan_next_datum++;
-	return true;
+    // assert(valid());
+    // assert(scan_index & 1);
+    if (scan_index >= length)
+       	return false;
+    if (scan_next_datum >= promote(data[scan_index], scan_index))
+    {
+       	scan_index += 2;
+       	if (scan_index >= length)
+	    return false;
+       	scan_next_datum = data[scan_index - 1];
+    }
+    datum = scan_next_datum++;
+    return true;
 }
 
 
@@ -678,79 +692,79 @@ interval::scan_next(data_t &datum)
 void
 interval::scan_end()
 {
-	// assert(valid());
-	// assert(scan_index & 1);
-	scan_index = 0;
-	scan_next_datum = 0;
+    // assert(valid());
+    // assert(scan_index & 1);
+    scan_index = 0;
+    scan_next_datum = 0;
 }
 
 
 void
 interval::first_interval_only()
 {
-	// assert(valid());
-	if (length > 2)
-	{
-		length = 2;
-		data[length] = length;
-	}
+    // assert(valid());
+    if (length > 2)
+    {
+       	length = 2;
+       	data[length] = length;
+    }
 }
 
 
 bool
 interval::empty()
-	const
+    const
 {
-	return (length == 0);
+    return (length == 0);
 }
 
 
 bool
 interval::equal(const interval &lhs, const interval &rhs)
 {
-	if (lhs.length != rhs.length)
-		return false;
-	for (size_t j = 0; j < lhs.length; ++j)
-		if (lhs.data[j] != rhs.data[j])
-			return false;
-	return true;
+    if (lhs.length != rhs.length)
+       	return false;
+    for (size_t j = 0; j < lhs.length; ++j)
+       	if (lhs.data[j] != rhs.data[j])
+	    return false;
+    return true;
 }
 
 
 interval::data_t
 interval::get_lowest()
-	const
+    const
 {
-	// assert(valid());
-	return (length > 0 ? data[0] : 0);
+    // assert(valid());
+    return (length > 0 ? data[0] : 0);
 }
 
 
 interval::data_t
 interval::get_highest()
-	const
+    const
 {
-	// assert(valid());
-	return (length > 0 ? data[length - 1] : 0);
+    // assert(valid());
+    return (length > 0 ? data[length - 1] : 0);
 }
 
 
 void
 interval::print(ostream &os)
-	const
+    const
 {
-	if (length != 2)
-		os << "(";
-	for (size_t j = 0; j < length; j += 2)
-	{
-		if (j)
-			os << ", ";
-		os << data[j];
-		if (data[j] + 2 == data[j + 1])
-			os << ", " << data[j] + 1;
-		else if (data[j] + 1 != data[j + 1])
-			os << " - " << (data[j + 1] - 1);
-	}
-	if (length != 2)
-		os << ")";
+    if (length != 2)
+	os << "(";
+    for (size_t j = 0; j < length; j += 2)
+    {
+	if (j)
+    	    os << ", ";
+	os << data[j];
+	if (data[j] + 2 == data[j + 1])
+    	    os << ", " << data[j] + 1;
+	else if (data[j] + 1 != data[j + 1])
+    	    os << " - " << (data[j + 1] - 1);
+    }
+    if (length != 2)
+	os << ")";
 }

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
+//	Copyright (C) 1998-2000, 2002-2004 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -174,7 +174,8 @@ public:
 private:
     /**
       * The length instance variable is used to remember the length of
-      * the data instance variable.
+      * the data instance variable.  This is almost always even, because
+      * the internal is a series of [lo, hi) sub-intervals.
       */
     size_t length;
 
@@ -212,8 +213,11 @@ private:
     bool valid() const;
 
     /**
-      * The append method is used to append another valoue to the end
-      * of an interval under construction.
+      * The append method is used to append another value to the end
+      * of an interval under construction.  This breaks the "length is
+      * even" assertion which usually applies; for this reason it is
+      * only to be used by the arithmetic operator implementations when
+      * calculating their results.
       */
     void append(data_t);
 };
