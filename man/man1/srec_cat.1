@@ -117,6 +117,13 @@ A TI-Tagged format file will be written.
 (See
 .IR srec_ti_tagged (5)
 for a description of this file format.)
+.TP 8n
+\fB\-VHdl\fP [ \fIbytes-per-word\fP [ \fIname\fP ]]
+A VHDL format file will be written.
+The \fIbytes-per-word\fP defaaults to one,
+the \fIname\fP defaults to \f[CW]eprom\fP.
+The \fIetc/x_defs_pack.vhd\fP file in the source distribution contains an
+example ROM definitions pack for the type-independent output.
 .RE
 .TP 8n
 \fB-Line_Length\fP \fInumber\fP

@@ -22,6 +22,11 @@
 .PP
 .if n *
 .if t \(bu
+.\" change 16
+There is a new VHDL output format.
+.PP
+.if n *
+.if t \(bu
 .\" change 14
 There are new checksum filters: in addition to the existing one's
 complement (bitnot) checksum filter, there are now negative and positive

@@ -68,6 +68,7 @@ public:
 		token_tektronix_extended,
 		token_ti_tagged,
 		token_unsplit,
+		token_vhdl,
 		token_within,
 		token_xor,
 		token_MAX

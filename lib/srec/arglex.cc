@@ -54,6 +54,7 @@
 #include <srec/output/file/ascii_hex.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/c.h>
+#include <srec/output/file/vhdl.h>
 #include <srec/output/file/intel.h>
 #include <srec/output/file/mos_tech.h>
 #include <srec/output/file/srecord.h>
@@ -114,6 +115,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Tektronix_Extended", token_tektronix_extended, },
 		{ "-Texas_Instruments_Tagged", token_ti_tagged, },
 		{ "-Un_SPlit",	token_unsplit,		},
+		{ "-VHdl",	token_vhdl,		},
 		{ "-WILson",	token_wilson,		},
 		{ "-Within",	token_within,		},
 		{ "-XOR",	token_xor,		},
@@ -994,6 +996,23 @@ srec_arglex::get_output()
 	case token_binary:
 		token_next();
 		ofp = new srec_output_file_binary(fn);
+		break;
+
+	case token_vhdl:
+		{
+			const char *prefix = "eprom";
+			int bytes_per_word = 1;
+			if (token_next() == token_number)
+			{
+				bytes_per_word = value_number();
+			}
+			if (token_next() == token_string)
+			{
+				prefix = value_string();
+				token_next();
+			}
+			ofp = new srec_output_file_vhdl(fn, bytes_per_word, prefix);
+		}
 		break;
 
 	case token_c_array:
