@@ -52,6 +52,7 @@ public:
 		token_over,
 		token_paren_begin,
 		token_paren_end,
+		token_tektronix,
 		token_within,
 		token_MAX
 	};

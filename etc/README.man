@@ -46,6 +46,9 @@ and writing.
 Intel
 The Intel hexadecimal format is understood for both reading and writing.
 .TP 8n
+Tektronix
+The Tektronix hexadecimal format is understood for both reading and writing.
+.TP 8n
 Binary
 Binary files can both be read and written.
 .TP 8n

@@ -28,6 +28,7 @@
 #include <srec/input/file/binary.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/srecord.h>
+#include <srec/input/file/tektronix.h>
 #include <srec/input/filter/checksum.h>
 #include <srec/input/filter/crop.h>
 #include <srec/input/filter/fill.h>
@@ -40,6 +41,7 @@
 #include <srec/output/file/c.h>
 #include <srec/output/file/intel.h>
 #include <srec/output/file/srecord.h>
+#include <srec/output/file/tektronix.h>
 
 
 srec_arglex::srec_arglex()
@@ -59,23 +61,24 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Big_Endian_Length",	token_length_be, },
 		{ "-Big_Endian_MAximum", token_maximum_be, },
 		{ "-Big_Endian_MInimum",token_minimum_be, },
-		{ "-BINary",	token_binary,	},
-		{ "-C_Array",	token_c_array,	},
-		{ "-CRop",	token_crop,	},
-		{ "-Exclude",	token_exclude,	},
-		{ "-Fill",	token_fill,	},
-		{ "-Intel",	token_intel,	},
+		{ "-BINary",	token_binary,		},
+		{ "-CRop",	token_crop,		},
+		{ "-C_Array",	token_c_array,		},
+		{ "-Exclude",	token_exclude,		},
+		{ "-Fill",	token_fill,		},
+		{ "-Intel",	token_intel,		},
 		{ "-Little_Endian_Checksum", token_checksum_le, },
 		{ "-Little_Endian_Length", token_length_le, },
 		{ "-Little_Endian_MAximum", token_maximum_le, },
 		{ "-Little_Endian_MInimum", token_minimum_le, },
-		{ "-Motorola",	token_motorola,	},
-		{ "-OFfset",	token_offset,	},
-		{ "-Output",	token_output,	},
-		{ "-OVer",	token_over,	},
-		{ "-RAw",	token_binary,	},
-		{ "-S_record",	token_motorola,	},
-		{ "-Within",	token_within,	},
+		{ "-Motorola",	token_motorola,		},
+		{ "-OFfset",	token_offset,		},
+		{ "-Output",	token_output,		},
+		{ "-OVer",	token_over,		},
+		{ "-RAw",	token_binary,		},
+		{ "-S_record",	token_motorola,		},
+		{ "-Tektronix",	token_tektronix,	},
+		{ "-Within",	token_within,		},
 		ARGLEX_END_MARKER
 	};
 
@@ -270,6 +273,11 @@ srec_arglex::get_input()
 	case token_intel:
 		token_next();
 		ifp = new srec_input_file_intel(fn);
+		break;
+
+	case token_tektronix:
+		token_next();
+		ifp = new srec_input_file_tektronix(fn);
 		break;
 
 	case token_binary:
@@ -564,6 +572,11 @@ srec_arglex::get_output()
 	case token_intel:
 		token_next();
 		ofp = new srec_output_file_intel(fn);
+		break;
+
+	case token_tektronix:
+		token_next();
+		ofp = new srec_output_file_tektronix(fn);
 		break;
 
 	case token_binary:
