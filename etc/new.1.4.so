@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1999 Peter Miller;
+.\"	Copyright (C) 2000 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -19,13 +19,9 @@
 .\"
 .\" MANIFEST: description of new 1.3 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" Change 12
-SRecord can now cope with CRLF sequences in Unix files.  This was
-unfortunately common where the file was generated on a PC, but SRecord
-was being used on Unix.
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
 .\" ------------------------------------------------------------------------
-.\"	Add new entries above this line.
-.SS Version 1.3
+.\" Add new entries above this line.
+.SS Version 1.4
