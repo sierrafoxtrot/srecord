@@ -132,7 +132,7 @@ private:
 	  * instance variable.  Also used to simplify the code use to
 	  * manipulate the `tables' instance variable.
 	 */
-	typedef vector<table_ty *> table_ptr_vec_t;
+	typedef std::vector<table_ty *> table_ptr_vec_t;
 
 	/**
 	  * The tables instance variable tracks the command line token
