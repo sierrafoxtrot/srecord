@@ -76,6 +76,13 @@ protected:
 	virtual int get_char();
 
 	/**
+	  * The get_char_undo method is used to return a character to
+	  * the iinput.  (a later get_char or peak_char method will see
+	  * it again).	Only one character may be pushed back.
+	  */
+	virtual void get_char_undo(int);
+
+	/**
 	  * The peek_char method is used to look at the next character
 	  * of input, without actually consuming it (a later get_char
 	  * or peak_char method will still see it).

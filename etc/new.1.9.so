@@ -19,10 +19,11 @@
 .\"
 .\" MANIFEST: description of new 1.9 features
 .\"
-.\" .PP
-.\" .if n *
-.\" .if t \(bu
-.\" change NN
+.PP
+.if n *
+.if t \(bu
+.\" change 15
+The LSI Logic Fast Load format is now understood for both reading and writing.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.9

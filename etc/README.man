@@ -58,8 +58,11 @@ This format cannot be read.
 DEC Binary
 The DEC Binary (XXDP) format is understood for both reading and writing.
 .TP
-Elektor Monitor(EMON52)
+Elektor Monitor (EMON52)
 The EMON52 format is understood for both reading and writing.
+.TP
+LSI Logic Fast Load
+The LSI Logic Fast Load format is understood for both reading and writing.
 .TP
 Four Packed Code (FPC)
 The FPC format is understood for both reading and writing.

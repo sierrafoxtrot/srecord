@@ -148,6 +148,12 @@ public:
 	int get_data(int n) const { return data[n]; }
 
 	/**
+	  * The is_all_zero method is used to determin if the record
+	  * contains data bytes which are all zero.
+	  */
+	bool is_all_zero() const;
+
+	/**
 	  * The set_data method is used to set values in the data array.
 	  * No range checking is performed.  The record length is not
 	  * consulted or adjusted.

@@ -27,6 +27,7 @@
 #include <srec/output/file/c.h>
 #include <srec/output/file/dec_binary.h>
 #include <srec/output/file/emon52.h>
+#include <srec/output/file/fastload.h>
 #include <srec/output/file/four_packed_code.h>
 #include <srec/output/file/intel.h>
 #include <srec/output/file/mos_tech.h>
@@ -117,6 +118,11 @@ srec_arglex::get_output()
 	case token_emon52:
 		token_next();
 		ofp = new srec_output_file_emon52(fn);
+		break;
+
+	case token_fast_load:
+		token_next();
+		ofp = new srec_output_file_fastload(fn);
 		break;
 
 	case token_four_packed_code:

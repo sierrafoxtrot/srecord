@@ -131,3 +131,14 @@ srec_record::encode_little_endian(data_t *buffer, address_t value, int length)
 		value >>= 8;
 	}
 }
+
+
+bool
+srec_record::is_all_zero()
+	const
+{
+	for (int j = 0; j < length; ++j)
+		if (data[j])
+			return false;
+	return true;
+}

@@ -58,6 +58,7 @@ public:
 		token_dec_binary,
 		token_emon52,
 		token_exclude,
+		token_fast_load,
 		token_fill,
 		token_four_packed_code,
 		token_guess,

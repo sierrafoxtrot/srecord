@@ -168,6 +168,18 @@ srec_input_file::get_char()
 }
 
 
+void
+srec_input_file::get_char_undo(int c)
+{
+	if (c >= 0)
+	{
+		FILE *fp = (FILE *)get_fp();
+		prev_was_newline = 0;
+		ungetc(c, fp);
+	}
+}
+
+
 int
 srec_input_file::peek_char()
 {
