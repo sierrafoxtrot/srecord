@@ -24,9 +24,53 @@ set mkdir;
 set unlink;
 set time-adjust;
 
-project_source_files = [collect aegis -l pf -p [project] -c [change] -terse];
-change_source_files = [collect aegis -l cf -p [project] -c [change] -terse];
+awk = gawk;
+
+/*
+ * determine the short version:
+ * no change or delta number
+ */
+version_short = [fromto %1.C%2 %1 [subst D C [version]]];
+
+version_shorter = [split "." [version_short]] _ _;
+version_shorter = [unsplit "." [word 1 [version_shorter]]
+	[word 2 [version_shorter]]];
+project_short = [fromto %.[version_short] % [project]];
+project_minus = [project_short]-[version_short];
+
+change_source_files = ;
+#include-cooked-nowarn etc/cook/change_files.[version]
+etc/cook/change_files.[version]:
+	set shallow nodefault
+{
+	echo "'change_source_files ='" > [target];
+	aegis -l cf -p [project] -c [change] -unf
+		| [awk] "'/^build/{next};{print $NF}'"
+		>> [target];
+	echo "';'" >> [target];
+}
+project_source_files = ;
+#include-cooked-nowarn etc/cook/project_files.[version]
+etc/cook/project_files.[version]:
+	set shallow nodefault
+{
+	echo "'project_source_files ='" > [target];
+	aegis -l pf -p [project] -c [change] -unf
+		| [awk] "'/^build/{next};{print $NF}'"
+		>> [target];
+	echo "';'" >> [target];
+}
 source_files = [sort [project_source_files] [change_source_files]];
+
+/*
+ * Speed up graph building by stating the leaves explictly.
+ * This also gives more useful error messages.
+ */
+if [count [project_source_files] [change_source_files]] then
+{
+	leaf_file_accept = [project_source_files] [change_source_files];
+	leaf_pattern_accept = /%0%;
+}
 
 debug = /* -g */ ;	/* g++ takes forever if you say -g for complex
 			template usage */
@@ -63,7 +107,7 @@ loop
 		]
 		;
 }
-lib/[project]_obj =
+lib/[project_short]_obj =
 	[fromto %0%.c [arch]/%0%.o
 		[match_mask lib/%0%.c [source_files]]
 	]
@@ -97,7 +141,7 @@ loop
 		]
 		;
 	[program]_libs =
-		[arch]/lib/lib[project].a
+		[arch]/lib/lib[project_short].a
 		;
 	all =
 		[all]
@@ -119,7 +163,7 @@ else
 	 * re-build.
 	 */
 	set time-adjust-back;
-	all = [all] archive/[project].tar.gz;
+	all = [all] archive/[project_minus].tar.gz;
 }
 
 
@@ -129,7 +173,7 @@ cc_include_flags =
 	[prepost "-I" "" [search_list]]
 	[prepost "-I" "/include" [search_list]]
 	;
-cc_flags = -O [debug];
+cc_flags = -O [debug] -Wall -Werror;
 ld_flags = [debug];
 
 
@@ -233,7 +277,7 @@ then
 }
 
 
-archive/[project].tar.gz: [source_files]
+archive/[project_minus].tar.gz: [source_files]
 {
 	tar cf - [resolve [source_files]]
 		| tardy
@@ -246,3 +290,7 @@ archive/[project].tar.gz: [source_files]
 		> [target];
 }
 
+/*
+ * How to build the documentation.
+ */
+#include-cooked etc/documentation.cook

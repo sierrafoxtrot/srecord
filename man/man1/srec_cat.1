@@ -1,0 +1,57 @@
+'\" t
+.\"	srecord - manipulate eprom load files
+.\"	Copyright (C) 1998 Peter Miller;
+.\"	All rights reserved.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"
+.\" MANIFEST: manual entry for the srec_cat command
+.\"
+.ds n) srec_cat
+.TH \*(n) 1 SRecord "Reference Manual"
+.SH NAME
+\*(n) \- manipulate eprom load files
+.SH SYNOPSIS
+.B \*(n)
+[
+.IR option \&...
+]
+.IR filename \&...
+.br
+.B \*(n)
+.B -Help
+.br
+.B \*(n)
+.B -VERSion
+.SH DESCRIPTION
+The
+.I \*(n)
+program is used to assemble the given input files into a single output
+file.  The standard input is used if not input file names are specified.
+The special file name ``-'' is understood to mean the standard input.
+.br
+.ne 1i
+.SH OPTIONS
+The following options are understood:
+.TP 8n
+\fB\-Output\fP \fIfilename\fP
+This option may be used to specify the output file to be used.
+The special file name ``-'' is understood to mean the standard output.
+Output defaults to the standard output if this option is not used.
+.PP
+All other options will produce a diagnostic error.
+.so z_options.so
+.so z_exit.so
+.so z_copyright.so

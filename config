@@ -234,6 +234,17 @@ architecture =
 test_command = "$shell $filename $arch";
 
 
+/*
+ * whenever files are added to or removed from the change,
+ * execute the following command.
+ *
+ * The project files are wiped, too, because a removed file will alter
+ * the project file list.
+ */
+change_file_command = "rm -f etc/cook/change_files.* etc/cook/project_files.*";
+project_file_command = "rm -f etc/cook/project_files.*";
+
+
 file_template =
 [
 	{
@@ -257,6 +268,10 @@ file_template =
 		body = "${read_file ${source etc/template/sh abs}}";
 	},
 	{
+		pattern = [ "*.[1-9]" ];
+		body = "${read_file ${source etc/template/man abs}}";
+	},
+	{
 		/* This one must be last. */
 		pattern = [ "*" ];
 		body = "${read_file ${source etc/template/generic abs}}";
@@ -264,6 +279,20 @@ file_template =
 ];
 
 develop_begin_command = "ln -s $bl bl";
+
+/*
+ * Remove these files before we start integrating, to ensure that they
+ * will be rebuild containing the correct version information.
+ */
+integrate_begin_command =
+	"rm -f \
+.cook.fp \
+etc/cook/change_files* \
+etc/cook/project_files* \
+etc/new.so \
+etc/version.so \
+common/patchlevel.h \
+";
 
 maximum_filename_length = 30;
 
