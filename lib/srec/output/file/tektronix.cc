@@ -55,10 +55,10 @@ srec_output_file_tektronix::put_nibble(int n)
 
 
 void
-srec_output_file_tektronix::put_byte(int n)
+srec_output_file_tektronix::put_byte(unsigned char n)
 {
-	// This differs fro srec_output_file::put_byte only in that it
-	// doesn't add o the checksum.
+	// This differs from srec_output_file::put_byte only in that it
+	// doesn't add to the checksum.
 	put_nibble(n >> 4);
 	put_nibble(n);
 }

@@ -22,6 +22,12 @@
 .PP
 .if n *
 .if t \(bu
+.\" change 27
+The DEC Binary (XXDP) format
+is now understood for both reading and writing.
+.PP
+.if n *
+.if t \(bu
 .\" change 25
 The Elektor Monitor (EMON52) format
 is now understood for both reading and writing.
@@ -40,8 +46,10 @@ is now understood for both reading and writing.
 .PP
 .if n *
 .if t \(bu
-.\" change 20
+.\" change 20, 28
 Wherever possible, header data is now passed through by \fIsrec_cat\fP(1).
+There is also a new \fIsrec_cat \-header\fP option, do that you can set
+the header comment from the command line.
 .PP
 .if n *
 .if t \(bu

@@ -60,9 +60,8 @@ srec_output_file_wilson::~srec_output_file_wilson()
 
 
 void
-srec_output_file_wilson::put_byte(int n)
+srec_output_file_wilson::put_byte(unsigned char n)
 {
-	n = (unsigned char)n;
 	static const char *table[256] =
 	{
 		"@",	"A",	"B",	"C",	"D",	"E",	"F",	"G",

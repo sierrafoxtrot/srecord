@@ -25,6 +25,7 @@
 #include <srec/output/file/atmel_generic.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/c.h>
+#include <srec/output/file/dec_binary.h>
 #include <srec/output/file/emon52.h>
 #include <srec/output/file/four_packed_code.h>
 #include <srec/output/file/intel.h>
@@ -61,7 +62,8 @@ srec_arglex::get_output()
 	default:
 		if (stdout_used)
 		{
-			cerr << "the standard output may only be named once on the command line" << endl;
+			cerr << "the standard output may only be named once on "
+				"the command line" << endl;
 			exit(1);
 		}
 		stdout_used = true;
@@ -107,14 +109,19 @@ srec_arglex::get_output()
 		ofp = new srec_output_file_binary(fn);
 		break;
 
-	case token_four_packed_code:
+	case token_dec_binary:
 		token_next();
-		ofp = new srec_output_file_four_packed_code(fn);
+		ofp = new srec_output_file_dec_binary(fn);
 		break;
 
 	case token_emon52:
 		token_next();
 		ofp = new srec_output_file_emon52(fn);
+		break;
+
+	case token_four_packed_code:
+		token_next();
+		ofp = new srec_output_file_four_packed_code(fn);
 		break;
 
 	case token_intel:

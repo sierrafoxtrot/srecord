@@ -81,10 +81,22 @@ A raw binary file will be written.
 A C array declaration will be written.
 The \fIidentifier\fP is the name of the variable to be defined.
 .TP 8n
-\fB\-WILson\fP
-A wilson format file will be written.
+\fB\-Dec_Binary\fP
+A DEC Binary (XXDP) format file will be written.
 (See
-.IR srec_wilson (5)
+.IR srec_dec_binary (5)
+for a description of this file format.)
+.TP 8n
+\fB\-Four_Packed_Code\fP
+This option says to use the PFC format file when writing the file.
+(See
+.IR srec_fpd (5)
+for a description of this file format.)
+.TP 8n
+\fB\-Elektor_Monitor52\fP
+This option says to use the EMON52 format file when writing the file.
+(See
+.IR srec_emon52 (5)
 for a description of this file format.)
 .TP 8n
 \fB\-Intel\fP
@@ -106,22 +118,24 @@ A Motorola S-Record file will be written.
 for a description of this file format.)
 This is the default.
 .TP 8n
+\fB\-SIGnetics\fP
+This option says to use the Signetics hex format.
+See \fIsrec_signetics\fP(5) for a description of this format.
+.TP 8n
+\fB\-SPAsm\fP
+This option says to use the SPASM assembler output format (commonly used
+by PIC programmers).
+See \fIsrec_spasm\fP(5) for a description of this format.
+.TP 8n
+\fB\-SPAsm_LittleEndian\fP
+This option says to use the SPASM assembler output format (commonly used
+by PIC programmers).  But with the data the other way around.
+.TP 8n
 \fB\-Tektronix\fP
 A Tektronix hex format file will be written.
 (See
 .IR srec_tektronix (5)
 for a description of this file format.)
-.TP 8n
-\fB\-Packed_Four_Code\fP
-This option says to use the PFC format when writing the file.
-.TP 8n
-\fB\-SPAsm\fP
-This option says to use the SPASM assembler output format (commonly used
-by PIC programmers).
-.TP 8n
-\fB\-SPAsm_LittleEndian\fP
-This option says to use the SPASM assembler output format (commonly used
-by PIC programmers).  But with the data the other way around.
 .TP 8n
 \fB\-Tektronix_Extended\fP
 A Tektronix extended hex format file will be written.
@@ -141,6 +155,12 @@ The \fIbytes-per-word\fP defaaults to one,
 the \fIname\fP defaults to \f[CW]eprom\fP.
 The \fIetc/x_defs_pack.vhd\fP file in the source distribution contains an
 example ROM definitions pack for the type-independent output.
+.TP 8n
+\fB\-WILson\fP
+A wilson format file will be written.
+(See
+.IR srec_wilson (5)
+for a description of this file format.)
 .RE
 .TP 8n
 \fB\-Address_Length\fP \fInumber\fP

@@ -54,6 +54,18 @@ for a description of this file format.
 This option says the file is a raw binary file, and should be read literally.
 (May also be written \-Raw.)
 .TP 8n
+\fB\-Dec_Binary\fP
+This option says to use the DEC Binary (XXDP) format to read the file.
+See \fIsrec_dec_binary\fP(5) for a description of this file format.
+.TP 8n
+\fB\-Elektor_Monitor52\fP
+This option says to use the EMON52 format to read the file.
+See \fIsrec_emon52\fP(5) for a description of this file format.
+.TP 8n
+\fB\-Four_Packed_Code\fP
+This option says to use the FPC format to read the file.
+See \fIsrec_fpc\fP(5) for a description of this file format.
+.TP 8n
 \fB\-Guess\fP
 This option may be uased to ask \*(n) to guess the input format.
 This is slower than specifying an explicit format,
@@ -78,12 +90,14 @@ See
 .IR srec_motorola (5)
 for a description of this file format.
 .TP 8n
-\fB\-Packed_Four_Code\fP
-This option says to use the PFC format to read the file.
+\fB\-SIGnetics\fP
+This option says to use the Signetics format.
+See \fIsrec_spasm\fP(5) for a description of this file format.
 .TP 8n
 \fB\-SPAsm\fP
 This option says to use the SPASM assembler output format (commonly used
 by PIC programmers).
+See \fIsrec_spasm\fP(5) for a description of this file format.
 .TP 8n
 \fB\-SPAsm_LittleEndian\fP
 This option says to use the SPASM assembler output format (commonly used

@@ -94,7 +94,7 @@ protected:
 	  * it if they have a special case.  Over-ride with caution,
 	  * as it affects many other methods.
 	  */
-	virtual void put_byte(int);
+	virtual void put_byte(unsigned char);
 
 	/**
 	  * The put_word method is used to send a 16-bit value to the

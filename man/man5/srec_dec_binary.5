@@ -1,0 +1,69 @@
+'\" t
+.\"	srecord - manipulate eprom load files
+.\"	Copyright (C) 2001 Peter Miller;
+.\"	All rights reserved.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"
+.\" MANIFEST: manual entry for srec_dec_binary(5)
+.\"
+.ds n) srec_dec_binary
+.TH \*(n) 5 SRecord "Reference Manual"
+.SH NAME
+\*(n) \- DEC Binary (XXDP) file format
+.XX "srec_dec_binary(5)" "DEC Binary (XXDP) file format"
+.SH DESCRIPTION
+The DEC Binary (XXDP) format was used on the PDP 11 series machines.
+This is a binary format, and is not readable or editable with a text editor.
+The file consists of records of the form
+.TS
+center,allbox,tab(;);
+l l l l l.
+type;length;address;...data...;checksum
+.TE
+The field are defined as follows:
+.TP 8n
+type
+Two byte little-endian value.
+Must always be 1.
+.TP 8n
+length
+Two byte little-endian value.
+This is the number of bytes in the data, plus six.
+.TP 8n
+address
+Two byte little-endian value.
+This is the load address of the data.
+.TP 8n
+data
+The data is simple raw bytes.
+There are (length-6) of them.
+.TP 8n
+checksum
+The checcksum is a single byte. 
+It is the negative of the simple summ of all the header and data bytes.
+.PP
+If the record length is exactly 6 (\fIi.e.\fP no data), this is the
+start address record, indicating the transfer address.
+.PP
+In addition there may be NUL padding characters between records.
+It is common for records to be padded so that they start on even byte
+boundaries.  In the days of paper tape, it was common for the file to
+have many leading NULs, to generate blank leader on the tape.
+.SS Size Multiplier
+In general, raw binary data will expand in sized by approximately 1.03 times
+when represented with this format.
+.SH AUTHOR
+.so ../man1/z_copyright.so

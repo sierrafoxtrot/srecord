@@ -141,7 +141,7 @@ srec_output_file::put_nibble(int n)
 
 
 void
-srec_output_file::put_byte(int n)
+srec_output_file::put_byte(unsigned char n)
 {
 	put_nibble(n >> 4);
 	put_nibble(n);

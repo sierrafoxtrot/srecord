@@ -75,7 +75,7 @@ private:
 
 	/**
 	  * The put_byte_pos instance variable is used by the put_byte
-	  * method to remember where wea re positioned within each
+	  * method to remember where we are positioned within each
 	  * 4-byte chunk.
 	  */
 	unsigned put_byte_pos;

@@ -24,10 +24,13 @@
 #include <srec/input/file/ascii_hex.h>
 #include <srec/input/file/atmel_generic.h>
 #include <srec/input/file/binary.h>
+#include <srec/input/file/dec_binary.h>
+#include <srec/input/file/emon52.h>
+#include <srec/input/file/four_packed_code.h>
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/mos_tech.h>
-#include <srec/input/file/four_packed_code.h>
+#include <srec/input/file/signetics.h>
 #include <srec/input/file/spasm.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix.h>
@@ -50,6 +53,24 @@ create_atmel_generic(const char *fn)
 }
 
 static srec_input *
+create_dec_binary(const char *fn)
+{
+	return new srec_input_file_dec_binary(fn);
+}
+
+static srec_input *
+create_four_packed_code(const char *fn)
+{
+	return new srec_input_file_four_packed_code(fn);
+}
+
+static srec_input *
+create_emon52(const char *fn)
+{
+	return new srec_input_file_emon52(fn);
+}
+
+static srec_input *
 create_intel(const char *fn)
 {
 	return new srec_input_file_intel(fn);
@@ -62,9 +83,9 @@ create_mos_tech(const char *fn)
 }
 
 static srec_input *
-create_four_packed_code(const char *fn)
+create_signetics(const char *fn)
 {
-	return new srec_input_file_four_packed_code(fn);
+	return new srec_input_file_signetics(fn);
 }
 
 static srec_input *
@@ -110,9 +131,12 @@ static func_p table[] =
 {
 	create_ascii_hex,
 	create_atmel_generic,
+	create_dec_binary,
+	create_emon52,
+	create_four_packed_code,
 	create_intel,
 	create_mos_tech,
-	create_four_packed_code,
+	create_signetics,
 	create_spasm,
 	create_srecord,
 	create_tektronix,

@@ -40,7 +40,7 @@ public:
 	const char *mode() const;
 
 protected:
-	virtual void put_byte(int);
+	virtual void put_byte(unsigned char);
 
 private:
 	int pref_block_size;

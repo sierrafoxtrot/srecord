@@ -55,6 +55,7 @@ public:
 		token_crc32_be,
 		token_crc32_le,
 		token_crop,
+		token_dec_binary,
 		token_emon52,
 		token_exclude,
 		token_fill,

@@ -28,16 +28,17 @@
 #include <srec/input/file/ascii_hex.h>
 #include <srec/input/file/atmel_generic.h>
 #include <srec/input/file/binary.h>
-#include <srec/input/file/four_packed_code.h>
+#include <srec/input/file/dec_binary.h>
 #include <srec/input/file/emon52.h>
+#include <srec/input/file/four_packed_code.h>
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/mos_tech.h>
 #include <srec/input/file/signetics.h>
 #include <srec/input/file/spasm.h>
 #include <srec/input/file/srecord.h>
-#include <srec/input/file/tektronix.h>
 #include <srec/input/file/tektronix_extended.h>
+#include <srec/input/file/tektronix.h>
 #include <srec/input/file/ti_tagged.h>
 #include <srec/input/file/wilson.h>
 #include <srec/input/filter/and.h>
@@ -90,6 +91,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Little_Endian_Cyclic_Redundancy_Check_16", token_crc16_le,},
 		{ "-Big_Endian_Cyclic_Redundancy_Check_32", token_crc32_be, },
 		{ "-Little_Endian_Cyclic_Redundancy_Check_32", token_crc32_le,},
+		{ "-Dec_Binary",	token_dec_binary, },
 		{ "-Elektor_Monitor52",	token_emon52,	},
 		{ "-Exclude",	token_exclude,		},
 		{ "-Fill",	token_fill,		},
@@ -387,14 +389,19 @@ srec_arglex::get_input()
 		ifp = new srec_input_file_binary(fn);
 		break;
 
-	case token_four_packed_code:
+	case token_dec_binary:
 		token_next();
-		ifp = new srec_input_file_four_packed_code(fn);
+		ifp = new srec_input_file_dec_binary(fn);
 		break;
 
 	case token_emon52:
 		token_next();
 		ifp = new srec_input_file_emon52(fn);
+		break;
+
+	case token_four_packed_code:
+		token_next();
+		ifp = new srec_input_file_four_packed_code(fn);
 		break;
 
 	case token_guess:

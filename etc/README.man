@@ -54,6 +54,15 @@ C
 It is also possible to write a C array declaration which contains the data.
 This can be useful when you want to embed download data into another program.
 This format cannot be read.
+.TP
+DEC Binary
+The DEC Binary (XXDP) format is understood for both reading and writing.
+.TP
+Elektor Monitor(EMON52)
+The EMON52 format is understood for both reading and writing.
+.TP
+Four Packed Code (FPC)
+The FPC format is understood for both reading and writing.
 .TP 8n
 Intel
 The Intel hexadecimal format is understood for both reading and writing.
@@ -67,12 +76,6 @@ Motorola S-Record
 The Motorola hexadecimal S-Record format is understood for both reading
 and writing.
 (Also known as the Exorciser, Exormacs or Exormax format.)
-.TP
-Elektor Monitor(EMON52)
-The EMON52 format is understood for both reading and writing.
-.TP
-Four Packed Code (FPC)
-The FPC format is understood for both reading and writing.
 .TP 8n
 Signetics
 The Signetics format is understood for both reading and writing.
@@ -88,6 +91,10 @@ format are both understood for both reading and writing.
 Texas Instruments Tagged
 The Tektronix hexadecimal format is understood for both reading and writing.
 (Also known as the TI-tagged or TI-SDSMAC format.)
+.TP
+VHDL
+It is possible to write VHDL file.
+This is only supported for output.
 .TP 8n
 Wilson
 The Wilson format is understood for both reading and writing.
