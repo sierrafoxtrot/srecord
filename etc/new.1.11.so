@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2002 Peter Miller;
+.\"	Copyright (C) 2002, 2003 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -38,4 +38,4 @@ The malformed Motorola S5 records output by the Green Hills tool chain are
 now understood.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.11
+.SS Version 1.11 (21-Oct-2002)

@@ -30,26 +30,31 @@ I still haven't found a definitive description.
 .if t \(bu
 .\" change 18
 The Fairchild Fairbug format has been added for reading and writing.
+See \fIsrec_fairchild\fP(5) for more information.
 .PP
 .if n *
 .if t \(bu
 .\" change 17
 The Spectrum format has been added for reading and writing.
+See \fIsrec_spectrum\fP(5) for more information.
 .PP
 .if n *
 .if t \(bu
 .\" change 16
 The Formatted Binary format has been added for reading and writing.
+See \fIsrec_formatted_binary\fP(5) for more information.
 .PP
 .if n *
 .if t \(bu
 .\" change 12
 The RCA Cosmac Elf format has been added for reading and writing.
+See \fIsrec_cosmac\fP(5) for more information.
 .PP
 .if n *
 .if t \(bu
 .\" change 11
 The Needham EMP programmer format has been added for reading and writing.
+See \fIsrec_needham\fP(5) for more information.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.14
+.SS Version 1.14 (11-Mar-2003)

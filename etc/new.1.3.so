@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1999 Peter Miller;
+.\"	Copyright (C) 1999, 2003 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -28,4 +28,4 @@ unfortunately common where the file was generated on a PC, but SRecord
 was being used on Unix.
 .\" ------------------------------------------------------------------------
 .\"	Add new entries above this line.
-.SS Version 1.3
+.SS Version 1.3 (12-May-1999)

@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2002 Peter Miller;
+.\"	Copyright (C) 2002, 2003 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -25,6 +25,7 @@
 .\" change 16
 The Ohio Scientific OS65V audio tape format has been added for reading
 and writing.
+See \fIsrec_os65v\fP(5) for more information.
 .PP
 .if n *
 .if t \(bu
@@ -32,4 +33,4 @@ and writing.
 Some build problems have been fixed.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.10
+.SS Version 1.10 (14-Jun-2002)

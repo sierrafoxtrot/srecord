@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2000 Peter Miller;
+.\"	Copyright (C) 2000, 2003 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -30,12 +30,14 @@ all of the tools understand this option.
 .if t \(bu
 .\" Change 19
 The ``MOS Technologies'' file format is now understood for reading and writing.
+See \fIsrec_mos_tech\fP(5) for more information.
 .PP
 .if n *
 .if t \(bu
 .\" Change 18
 The ``Tektronix Extended'' file format is now understood for reading
 and writing.
+See \fIsrec_tektronix_extended\fP(5) for more information.
 .PP
 .if n *
 .if t \(bu
@@ -43,24 +45,28 @@ and writing.
 The ``Texas Instruments Tagged'' file format is now understood for
 reading and writing.
 (Also known as the TI-Tagged or SDSMAC format.)
+See \fIsrec_ti_tagged\fP(5) for more information.
 .PP
 .if n *
 .if t \(bu
 .\" Change 16
 The ``ascii-hex'' file format is now understood for reading and writing.
 (Also known as the ascii-space-hex format.)
+See \fIsrec_ascii_hex\fP(5) for more information.
 .PP
 .if n *
 .if t \(bu
 .\" Change 15
 There is a new \fIbyte swap\fP input filter, allowing pairs of odd and
 even input bytes to be swapped.
+See \fIsrec_cat\fP(1) for more information.
 .PP
 .if n *
 .if t \(bu
 .\" Change 14
 The ``wilson'' file format is now understood for reading and writing.
 This mystery format was added for a mysterious type of EPROM writer.
+See \fIsrec_wilson\fP(5) for more information.
 .PP
 .if n *
 .if t \(bu
@@ -68,12 +74,14 @@ This mystery format was added for a mysterious type of EPROM writer.
 The \fIsrec_cat\fP program now has a \fB-data-only\fP option, which
 supresses all output except for the data records.  This helps when
 talking to brain-dead EPROM programmers which barf at anything but data.
+See \fIsrec_cat\fP(1) for more information.
 .PP
 .if n *
 .if t \(bu
 .\" Change 12
 There is a new \fI-Line-Length\fP option for the \fIsrec_cat\fP program,
 allowing you to specify the maximum width of output lines.
+See \fIsrec_cat\fP(1) for more information.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.4
+.SS Version 1.4 (13-Jan-2000)

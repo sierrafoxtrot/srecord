@@ -32,4 +32,4 @@ to specify an empty header with the \f[CW]-header\fP command line option.
 Some more GCC 3.2 build problems have been fixed.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.13
+.SS Version 1.13 (5-Feb-2003)

@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2001, 2002 Peter Miller;
+.\"	Copyright (C) 2001-2003 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -46,6 +46,7 @@ The DEC Binary format now works correctly on Windows machines.
 .if t \(bu
 .\" change 15
 The LSI Logic Fast Load format is now understood for both reading and writing.
+See \fIsrec_fastload\fP(5) for more information.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.9
+.SS Version 1.9 (27-Nov-2001)

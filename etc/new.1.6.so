@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2000, 2001 Peter Miller;
+.\"	Copyright (C) 2000, 2001, 2003 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -54,4 +54,4 @@ A bug has been fixed in the C array output.  It used to generate invalid
 output when the input had holes in the data.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.6
+.SS Version 1.6 (3-Dec-2000)

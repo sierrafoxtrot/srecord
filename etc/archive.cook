@@ -21,6 +21,7 @@
  */
 
 integration-build-targets:
+	archive/change_log.txt
 	archive/[project_minus].README
 	archive/[project_minus].lsm
 	archive/[project_minus].spec
@@ -131,6 +132,16 @@ archive/[project_minus].pdf: etc/reference.pdf
 }
 
 %: etc/%.man
+{
+	roffpp
+		[prepost "-I" /[arch]/etc [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		[resolve etc/%.man]
+	| groff -Tascii -t -P-bcu -man
+	> [target];
+}
+
+archive/%.txt: etc/%.man
 {
 	roffpp
 		[prepost "-I" /[arch]/etc [search_list]]
