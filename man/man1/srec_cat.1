@@ -71,10 +71,22 @@ The \fIidentifier\fP is the name of the variable to be defined.
 .TP 8n
 \fB\-Intel\fP
 An Intel hex format file will be written.
+(See
+.IR srec_intl (5)
+for a description of this file format.)
 .TP 8n
 \fB\-Motorola\fP
 A Motorola S-Record file will be written.
-(This is the default.)
+(See
+.IR srec_motorola (5)
+for a description of this file format.)
+This is the default.
+.TP 8n
+\fB\-Tektronix\fP
+A Tektronix hex format file will be written.
+(See
+.IR srec_tektronix (5)
+for a description of this file format.)
 .RE
 .PP
 All other options will produce a diagnostic error.
@@ -120,7 +132,7 @@ just offset the addresses:
 .ft R
 .RE
 This example also demonstrates how the input filters may be chained together.
-.SH Filling the Blanks
+.SS Filling the Blanks
 It is possible to fill the blanks where our data does not lie.
 The simplest example of this fills the entire EPROM:
 .RS
@@ -141,4 +153,50 @@ and don't want to fill the entire EPROM, try:
 .RE
 This example demonstrates the fact that wherever an address range may be
 specified, the \fB\-over\fP and \fB\-within\fP options may be used.
+.SS Splitting an Image
+If you have a 16-bit data bus, but you are using two 8-bit EPROMs to
+hold your firmware, you can generate the even and odd images by using
+the \-SPlit filter.  Assuming your firmware is in the \fIfirmware.hex\fP
+file, use the following:
+.RS
+.nf
+.ft CW
+\*(n) firmware.hex -split 2 0 -o firmware.even.hex
+\*(n) firmware.hex -split 2 1 -o firmware.odd.hex
+.ft R
+.fi
+.RE
+This will result in the two necessary EPROM images.  Note that the output
+addresses are divided by the split multiple, so if your EPROM images
+are at a particular offset (say 0x10000, in the following example),
+you need to remove the offset, and then replace it...
+.RS
+.nf
+.ft CW
+.ta 0.5i 1i 1.5i
+\*(n) firmware.hex \e
+	-offset -0x10000 -split 2 0 \e
+	-offset 0x10000 -o firmware.even.hex
+\*(n) firmware.hex \e
+	-offset -0x10000 -split 2 1 \e
+	-offset 0x10000 -o firmware.odd.hex
+.ft R
+.fi
+.RE
+Note how the ability to apply multiple filters simplifies what would
+otherwise be a much longer script.
+.PP
+A second use for the \-SPlit filter is memory striping.
+In this example, the hardware requires that 512-byte blocks alternate
+between 4 EPROMs.  Generating the 4 images would be done as follows:
+.RS
+.nf
+.ft CW
+\*(n) firmware.hex -split 0x800 0x000 0x200 -o firmware.0.hex
+\*(n) firmware.hex -split 0x800 0x200 0x200 -o firmware.1.hex
+\*(n) firmware.hex -split 0x800 0x400 0x200 -o firmware.2.hex
+\*(n) firmware.hex -split 0x800 0x600 0x200 -o firmware.3.hex
+.ft R
+.fi
+.RE
 .so z_copyright.so

@@ -108,6 +108,10 @@ into the data.
 offset
 The \fIoffset\fP filter may be used to offset the address of data records,
 both forwards and backwards.
+.TP 8n
+split
+The \fIsplit\fP filter may be used to split EPROM images for wide data
+buses or other memory striping schemes.
 .PP
 More than one filter may be applied to each input file.
 Different filters may be applied to each input file.

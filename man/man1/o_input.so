@@ -19,7 +19,7 @@
 .\"
 .\" MANIFEST: describe input file specifiers
 .\"
-.SH INPUT FILE SPECIFICATIONS
+.SS INPUT FILE SPECIFICATIONS
 Input files may be qualified in a number of ways: you may specify their
 format and you may specify filters to apply to them.
 An input file specification looks like this:
@@ -132,6 +132,15 @@ the value will be written with the least significant byte first.
 This filter may be used to
 offset the addresses by the given number of bytes.
 No data is lost, the addresses will wrap around in 32 bits, if necessary.
+.TP 8n
+\fB\-SPlit\fP \fImultiple\fP [ \fIoffset\fP [ \fIwidth\fP ] ]
+This filter may be used to split the input into a subset of the data,
+and compress the address range so as to leave no gaps.  This useful for
+wide data buses and memory striping.  The \fImultiple\fP is the bytes
+multiple to split over, the \fIoffset\fP is the byte offset into this
+range (defaults to 0), the \fIwidth\fP is the number of bytes to extract
+(defaults to 1) within the multiple.  In order to leave no gaps, the
+output addresses are (\fIwidth\fP / \fImultiple\fP) times the input addresses.
 .SS Address Ranges
 There are three ways to specify an address range:
 .TP 8n

@@ -59,7 +59,8 @@ EPROM load files.
   to the data, crop to keep address ranges, exclude to remove address
   ranges, fill to plug holes in the data, length to insert the data
   length, maximum to insert the data address maximum, minimum to insert
-  the data address minimum, and offset to adjust addresses.
+  the data address minimum, offset to adjust addresses, and split for
+  wide data buses and memory striping.
 
 More than one filter may be applied to each input file.  Different filters
 may be applied to each input file.  All filters may be applied to all

@@ -36,6 +36,7 @@
 #include <srec/input/filter/maximum.h>
 #include <srec/input/filter/minimum.h>
 #include <srec/input/filter/offset.h>
+#include <srec/input/filter/split.h>
 #include <srec/input/interval.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/c.h>
@@ -76,6 +77,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Output",	token_output,		},
 		{ "-OVer",	token_over,		},
 		{ "-RAw",	token_binary,		},
+		{ "-SPlit",	token_split,		},
 		{ "-S_record",	token_motorola,		},
 		{ "-Tektronix",	token_tektronix,	},
 		{ "-Within",	token_within,		},
@@ -506,6 +508,59 @@ srec_arglex::get_input()
 			}
 			ifp = new srec_input_filter_offset(ifp, value_number());
 			token_next();
+			continue;
+
+		case token_split:
+			{
+			if (token_next() != token_number)
+			{
+				cerr <<
+			    "the -split filter requires three numeric arguments"
+					<< endl;
+				exit(1);
+			}
+			int split_modulus = value_number();
+			if (split_modulus < 2)
+			{
+				cerr << "the -split modulus must be two or more"
+					<< endl;
+				exit(1);
+			}
+			int split_offset = 0;
+			if (token_next() == token_number)
+			{
+				split_offset = value_number();
+				if (split_offset < 0 || split_offset >= split_modulus)
+				{
+					cerr << "the -split offset must be 0.."
+						<< (split_modulus - 1)
+						<< endl;
+					exit(1);
+				}
+				token_next();
+			}
+			int split_width = 1;
+			if (token_cur() == token_number)
+			{
+				split_width = value_number();
+				if (split_width < 1 || split_width >= split_modulus)
+				{
+					cerr << "the -split width must be 1.."
+						<< (split_modulus - 1)
+						<< endl;
+					exit(1);
+				}
+				token_next();
+			}
+			ifp =
+				new srec_input_filter_split
+				(
+					ifp,
+					split_modulus,
+					split_offset,
+					split_width
+				);
+			}
 			continue;
 
 		default:
