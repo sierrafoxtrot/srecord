@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2002 Peter Miller;
+//	Copyright (C) 2001-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -22,7 +22,9 @@
 
 #include <srec/arglex.h>
 #include <srec/output/file/ascii_hex.h>
+#include <srec/output/file/asm.h>
 #include <srec/output/file/atmel_generic.h>
+#include <srec/output/file/basic.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/c.h>
 #include <srec/output/file/dec_binary.h>
@@ -203,6 +205,16 @@ srec_arglex::get_output()
 		}
 		ofp = new srec_output_file_c(fn, prefix);
 	}
+	break;
+
+    case token_basic_data:
+	token_next();
+	ofp = new srec_output_file_basic(fn);
+	break;
+
+    case token_asm_db:
+	token_next();
+	ofp = new srec_output_file_asm(fn);
 	break;
 
     case token_wilson:

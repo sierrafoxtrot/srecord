@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 2000-2002 Peter Miller;
+.\"	Copyright (C) 1998, 2000-2003 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -60,10 +60,24 @@ The Ascii-Hex format is understood for both reading and writing.
 (Also known as the Ascii-Space-Hex format.)
 .br
 <dt>
+ASM
+<dd>
+It is possible, for output only, to produce a serices of DB statements
+containing the data.  This can be useful for embedding data into assembler
+programs.
+.br
+<dt>
 Atmel Generic
 <dd>
 This format is produced by the Atmel AVR assembler.
 It is understood for both reading and writing.
+.br
+<dt>
+BASIC
+<dd>
+It is possible, for output only, to produce a serices of DATA statements
+containing the data.  This can be useful for embedding data into BASIC
+programs.
 .br
 <dt>
 Binary

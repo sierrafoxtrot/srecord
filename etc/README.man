@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 2000-2002 Peter Miller;
+.\"	Copyright (C) 1998, 2000-2003 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -42,17 +42,29 @@ The SRecord package understands a number of file formats:
 Ascii-Hex
 The ascii-hex format is understood for both reading and writing.
 (Also known as the ascii-space-hex format.)
+.TP
+ASM
+It is possible, for output only, to produce a serices of DB statements
+containing the data.  This can be useful for embedding data into assembler
+programs.
+This format cannot be read.
 .TP 8n
 Atmel Generic
 This format is produced by the Atmel AVR assembler.
 It is understood for both reading and writing.
+.TP
+BASIC
+It is possible, for output only, to produce a serices of DATA statements
+containing the data.  This can be useful for embedding data into BASIC
+programs.
+This format cannot be read.
 .TP 8n
 Binary
 Binary files can both be read and written.
 .TP 8n
 C
 It is also possible to write a C array declaration which contains the data.
-This can be useful when you want to embed download data into another program.
+This can be useful when you want to embed download data into C programs.
 This format cannot be read.
 .TP
 DEC Binary
@@ -96,7 +108,7 @@ The Tektronix hexadecimal format and the Tektronix Extended hexadecimal
 format are both understood for both reading and writing.
 .TP 8n
 Texas Instruments Tagged
-The Tektronix hexadecimal format is understood for both reading and writing.
+The Texas Instruments Tagged format is understood for both reading and writing.
 (Also known as the TI-tagged or TI-SDSMAC format.)
 .TP
 VHDL

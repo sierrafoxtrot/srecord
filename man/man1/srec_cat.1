@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 2000-2002 Peter Miller;
+.\"	Copyright (C) 1998, 2000-2003 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -68,11 +68,17 @@ An Ascii-Hex file will be written.
 .IR srec_ascii_hex (5)
 for a description of this file format.)
 .TP 8n
+\fB\-ASM\fP
+A series of assembler DB statements will be written.
+.TP 8n
 \fB\-Atmel_Generic\fP
 An Atmel Generic file will be written.
 (See
 .IR srec_atmel_generic (5)
 for a description of this file format.)
+.TP 8n
+\fB\-BASic\fP
+A series of BASIC DATA statements will be written.
 .TP 8n
 \fB\-Binary\fP
 A raw binary file will be written.

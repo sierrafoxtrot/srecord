@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2002 Peter Miller;
+//	Copyright (C) 1998-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -39,8 +39,10 @@ public:
     {
 	token_and = arglex::token_MAX,
 	token_ascii_hex,
+	token_asm_db,
 	token_atmel_generic_be,
 	token_atmel_generic_le,
+	token_basic_data,
 	token_binary,
 	token_byte_swap,
 	token_c_array,

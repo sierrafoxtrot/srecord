@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2002 Peter Miller;
+//	Copyright (C) 1998-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -78,9 +78,11 @@ srec_arglex::srec_arglex(int argc, char **argv) :
 	{ "-AND",	token_and,		},
 	{ "-Ascii_Hexadecimal",	token_ascii_hex, },
 	{ "-Ascii_Space_Hexadecimal", token_ascii_hex, },
+	{ "-ASM",	token_asm_db,		},
 	{ "-Atmel_Generic",	token_atmel_generic_le,	 },
 	{ "-Atmel_Generic_BigEndian", token_atmel_generic_be, },
 	{ "-Atmel_Generic_LittleEndian", token_atmel_generic_le, },
+	{ "-BAsic",	token_basic_data,	},
 	{ "-Big_Endian_Checksum", token_checksum_be_bitnot, },
 	{ "-Big_Endian_Checksum_BitNot", token_checksum_be_bitnot, },
 	{ "-Big_Endian_Checksum_Negative", token_checksum_be_negative, },

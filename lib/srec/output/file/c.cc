@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2002 Peter Miller;
+//	Copyright (C) 1998-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,46 +27,29 @@
 #include <srec/record.h>
 
 
-srec_output_file_c::srec_output_file_c()
-	: srec_output_file("-"),
-	  prefix("no_name_given"),
-	  taddr(0),
-	  header_done(false),
-	  column(0),
-	  current_address(0),
-	  line_length(75),
-	  address_length(4)
+srec_output_file_c::srec_output_file_c() :
+	srec_output_file("-"),
+	prefix("no_name_given"),
+	taddr(0),
+	header_done(false),
+	column(0),
+	current_address(0),
+	line_length(75),
+	address_length(4)
 {
 }
 
 
-srec_output_file_c::srec_output_file_c(const char *filename, const char *a2)
-	: srec_output_file(filename),
-	  prefix(a2),
-	  taddr(0),
-	  header_done(false),
-	  column(0),
-	  current_address(0),
-	  line_length(75),
-	  address_length(4)
+srec_output_file_c::srec_output_file_c(const char *filename, const char *a2) :
+	srec_output_file(filename),
+	prefix(a2),
+	taddr(0),
+	header_done(false),
+	column(0),
+	current_address(0),
+	line_length(75),
+	address_length(4)
 {
-}
-
-
-srec_output_file_c::srec_output_file_c(const srec_output_file_c &)
-	: srec_output_file("-"),
-	  line_length(75),
-	  address_length(4)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
-srec_output_file_c &
-srec_output_file_c::operator=(const srec_output_file_c &)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-	return *this;
 }
 
 

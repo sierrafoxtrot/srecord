@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001-2003 Peter Miller;
+//	Copyright (C) 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -17,34 +17,34 @@
 //	along with this program; if not, write to the Free Software
 //	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: interface definition for lib/srec/output/file/c.cc
+// MANIFEST: interface definition for include/srec/output/file/asm.cc
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_C_H
-#define INCLUDE_SREC_OUTPUT_FILE_C_H
+#ifndef INCLUDE_SREC_OUTPUT_FILE_ASM_H
+#define INCLUDE_SREC_OUTPUT_FILE_ASM_H
 
-#pragma interface "srec_output_file_c"
+#pragma interface "srec_output_file_asm"
 
 #include <srec/output/file.h>
 #include <interval.h>
 
 /**
-  * The srec_output_file_c class is used to represent an output file
+  * The srec_output_file_asm class is used to represent an output file
   * which emits C code.
   */
-class srec_output_file_c:
+class srec_output_file_asm:
 	public srec_output_file
 {
 public:
 	/**
 	  * The destructor.
 	  */
-	virtual ~srec_output_file_c();
+	virtual ~srec_output_file_asm();
 
 	/**
 	  * The constructor.
 	  */
-	srec_output_file_c(const char *, const char *);
+	srec_output_file_asm(const char *);
 
 	// See base class for documentation.
 	virtual void write(const srec_record &);
@@ -60,12 +60,6 @@ public:
 
 private:
 	/**
-	  * The prefix instance variable is used to remember the variable
-	  * name prefix to be used in the output.
-	  */
-	string prefix;
-
-	/**
 	  * The taddr instance variabel is used to remember the
 	  * termination address, to be emitted in the footer.
 	  */
@@ -76,12 +70,6 @@ private:
 	  * of addresses present in the output.
 	  */
 	interval range;
-
-	/**
-	  * The header_done instance variable is used t remember whether
-	  * the emit_header method has been called.
-	  */
-	bool header_done;
 
 	/**
 	  * The column instance variable is used to remember the current
@@ -103,19 +91,6 @@ private:
 	int line_length;
 
 	/**
-	  * The address_length instance variable is used toremember how
-	  * many bytes to emit when emitting addresses.
-	  */
-	int address_length;
-
-	/**
-	  * The emit_header method is used to emit the initial portion
-	  * of the array declaration.  It does nothing if header_done
-	  * is true.
-	  */
-	void emit_header();
-
-	/**
           * The emit_byte method is used to emit a single byte.  It uses
           * column to track the position, so as not to exceed line_length.
 	  */
@@ -124,17 +99,17 @@ private:
 	/**
 	  * The default constructor.  Do not use.
 	  */
-	srec_output_file_c();
+	srec_output_file_asm();
 
 	/**
 	  * The copy constructor.  Do not use.
 	  */
-	srec_output_file_c(const srec_output_file_c &);
+	srec_output_file_asm(const srec_output_file_asm &);
 
 	/**
 	  * The assignment operator.  Do not use.
 	  */
-	srec_output_file_c &operator=(const srec_output_file_c &);
+	srec_output_file_asm &operator=(const srec_output_file_asm &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_FILE_C_H
+#endif // INCLUDE_SREC_OUTPUT_FILE_ASM_H
