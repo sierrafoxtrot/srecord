@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -31,6 +31,7 @@
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/mos_tech.h>
+#include <srec/input/file/needham.h>
 #include <srec/input/file/os65v.h>
 #include <srec/input/file/signetics.h>
 #include <srec/input/file/spasm.h>
@@ -88,6 +89,12 @@ static srec_input *
 create_mos_tech(const char *fn)
 {
     return new srec_input_file_mos_tech(fn);
+}
+
+static srec_input *
+create_needham(const char *fn)
+{
+    return new srec_input_file_needham(fn);
 }
 
 static srec_input *
@@ -151,6 +158,7 @@ static func_p table[] =
     create_four_packed_code,
     create_intel,
     create_mos_tech,
+    create_needham,
     create_ohio_scientific,
     create_signetics,
     create_spasm,

@@ -77,6 +77,7 @@ public:
 	token_mos_tech,
 	token_motorola,
 	token_multiple,
+	token_needham_hex,
 	token_not,
 	token_offset,
 	token_ohio_scientific,

@@ -33,6 +33,7 @@
 #include <srec/output/file/four_packed_code.h>
 #include <srec/output/file/intel.h>
 #include <srec/output/file/mos_tech.h>
+#include <srec/output/file/needham.h>
 #include <srec/output/file/os65v.h>
 #include <srec/output/file/signetics.h>
 #include <srec/output/file/spasm.h>
@@ -141,6 +142,11 @@ srec_arglex::get_output()
     case token_mos_tech:
 	token_next();
 	ofp = new srec_output_file_mos_tech(fn);
+	break;
+
+    case token_needham_hex:
+	token_next();
+	ofp = new srec_output_file_needham(fn);
 	break;
 
     case token_ohio_scientific:

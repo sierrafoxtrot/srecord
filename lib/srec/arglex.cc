@@ -36,6 +36,7 @@ using namespace std;
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/mos_tech.h>
+#include <srec/input/file/needham.h>
 #include <srec/input/file/os65v.h>
 #include <srec/input/file/signetics.h>
 #include <srec/input/file/spasm.h>
@@ -119,6 +120,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
 	{ "-MOS_Technologies", token_mos_tech,	},
 	{ "-Motorola",	token_motorola,		},
 	{ "-MULTiple",	token_multiple,		},
+	{ "-Needham_Hexadecimal", token_needham_hex, },
 	{ "-NOT",	token_not,		},
 	{ "-OFfset",	token_offset,		},
 	{ "-Ohio_Scientific", token_ohio_scientific, },
@@ -527,6 +529,11 @@ srec_arglex::get_input()
     case token_ohio_scientific:
 	token_next();
 	ifp = new srec_input_file_os65v(fn);
+	break;
+
+    case token_needham_hex:
+	token_next();
+	ifp = new srec_input_file_needham(fn);
 	break;
 
     case token_signetics:
