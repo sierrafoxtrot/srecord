@@ -47,7 +47,7 @@ It also runs on Windows NT, if you build using
 <a href="http://www.delorie.com/djgpp/">DJGPP</a>,
 see below.
 .br
-<table><tr><td valign=top>
+<table border=1><tr><td valign=top>
 <p align=center><b>The File Formats</b></p>
 <p>
 The <i>SRecord</i> package understands a number of file formats:
@@ -136,10 +136,9 @@ reading and writing.
 .br
 <dt>
 VHDL
-It is possible to write VHDL files.
-This is supported for output only.
 <dd>
-.br
+It is possible, for output only, to produce a VHDL definition containing
+the data.  This can be useful for some embedded development systems.
 <dt>
 Wilson
 <dd>
@@ -150,12 +149,6 @@ This mystery format was added for a mysterious type of EPROM writer.
 <p>
 If you have a description of other EPROM load file formats that SRecord
 does not yet understand, please let me know, and they can be added.
-.br
-<dt>
-VHDL
-<dd>
-It is possible, for output only, to produce a VHDL definition containing
-the data.  This can be useful for some embedded development systems.
 </dl>
 </td><td valign=top>
 .br
@@ -171,20 +164,25 @@ The <i>srec_cat</i> program may be used to catenate (join) EPROM load
 files, or portions of EPROM load files, together.  Because it understands
 all of the input and output formats, it can also be used to convert
 files from one format to another.
+It also understands <i>filters</i>, see below.
 .br
 <dt>
 srec_cmp
 <dd>
-The <i>srec_cmp</i> program may be use to compare EPROM load files,
+The <i>srec_cmp</i> program may be used to compare EPROM load files,
 or portions of EPROM load files, for equality.
 .br
 <dt>
 srec_info
 <dd>
-The <i>srec_info</i> program may be use to print summary information
+The <i>srec_info</i> program may be used to print summary information
 about EPROM load files.
 </dl>
-</td><td valign=top>
+<p>
+<br>
+<p>
+<br>
+<p>
 .br
 <p align=center><b>The Filters</b></p>
 <p>
