@@ -17,25 +17,12 @@
 .\"	along with this program; if not, write to the Free Software
 .\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.11 features
+.\" MANIFEST: description of new 1.12 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" change 16
-It is now possible to put \fB\-minimum\fP \fIinput.spec\fP (also
-\fB\-maximum\fP and \fB\-length\fP) almost anywhere on the command line
-that you can put a number.  It allows, for example, the \-offset value
-to be calculated from the maximum of the previous file.
-The values calculated by \fB\-Minimum\fP, \fB\-Maximum\fP and
-\fB\-Length\fP may also be rounded to arbitrary boundaries, using
-\fB\-Round_Down\fP, \fB\-Round_Nearest\fP and \fB\-Round_Up\fP.
-.PP
-.if n *
-.if t \(bu
-.\" change 12
-The malformed Motorola S5 records output by the Green Hills tool chain are
-now understood.
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" change NN
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.11
+.SS Version 1.12
