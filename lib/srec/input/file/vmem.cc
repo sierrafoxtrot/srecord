@@ -34,7 +34,6 @@ srec_input_file_vmem::~srec_input_file_vmem()
 
 srec_input_file_vmem::srec_input_file_vmem(const char *filename) :
     srec_input_file(filename),
-    garbage_warning(false),
     seen_some_input(false),
     address(0)
 {
@@ -44,39 +43,17 @@ srec_input_file_vmem::srec_input_file_vmem(const char *filename) :
 int
 srec_input_file_vmem::read(srec_record &record)
 {
-    if (!seen_some_input)
-    {
-	for (;;)
-	{
-	    int c = get_char();
-	    if (c < 0)
-	    {
-		fatal_error("file contains no data");
-		return 0;
-	    }
-	    if (c == '@')
-	    {
-		seen_some_input = true;
-		get_char_undo(c);
-		break;
-	    }
-	    if (!garbage_warning)
-	    {
-		warning("ignoring garbage lines");
-		garbage_warning = true;
-	    }
-	}
-    }
-
     for (;;)
     {
-	int c = peek_char();
+	int c = get_char();
 	if (c < 0)
+	{
+	    if (!seen_some_input)
+		fatal_error("file contains no data");
 	    return 0;
+	}
 	if (c == '@')
 	{
-	    get_char();
-
 	    // collect address
 	    address = 0;
 	    for (;;)
@@ -89,12 +66,54 @@ srec_input_file_vmem::read(srec_record &record)
 	    continue;
 	}
 	if (isspace((unsigned char)c))
-	{
-	    get_char();
 	    continue;
+
+	if (c == '/')
+	{
+	    c = get_char();
+	    if (c == '/')
+	    {
+		for (;;)
+		{
+		    c = get_char();
+		    if (c == '\n' || c < 0)
+			break;
+		}
+		continue;
+	    }
+	    if (c == '*')
+	    {
+		for (;;)
+		{
+		    for (;;)
+		    {
+		       	c = get_char();
+			if (c < 0)
+			{
+			    eof_within_comment:
+			    fatal_error("end-of-file within comment");
+			}
+			if (c == '*')
+			    break;
+		    }
+		    for (;;)
+		    {
+		       	c = get_char();
+			if (c < 0)
+			    goto eof_within_comment;
+			if (c != '*')
+			    break;
+		    }
+		    if (c =='/')
+			break;
+		}
+		continue;
+	    }
+	    fatal_error("malformed comment");
 	}
 
 	// collect value
+	get_char_undo(c);
 	unsigned char value[5];
 	size_t nbytes = 0;
 	while (nbytes < sizeof(value))
@@ -125,6 +144,7 @@ srec_input_file_vmem::read(srec_record &record)
 
 	// This is not a byte address, it's a chunk address.
 	++address;
+	seen_some_input = true;
 	return 1;
     }
 }

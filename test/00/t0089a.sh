@@ -67,6 +67,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
+/* HDR */
 @00000000 48656C6C 6F2C2057 6F726C64 210AFFFF
 fubar
 if test $? -ne 0; then no_result; fi
@@ -80,11 +81,12 @@ if test $? -ne 0; then fail; fi
 # ---------- Test Writing (16-bit) -----------------------------------------
 
 cat > test.ok << 'fubar'
+/* hello */
 @00000000 4865 6C6C 6F2C 2057 6F72 6C64 210A
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -o test.out -vmem 16
+$bin/srec_cat test.in -o test.out -vmem 16 -header hello
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -93,6 +95,7 @@ if test $? -ne 0; then fail; fi
 # ---------- Test Writing (8-bit) ------------------------------------------
 
 cat > test.ok << 'fubar'
+/* HDR */
 @00000000 48 65 6C
 @00000003 6C 6F 2C
 @00000006 20 57 6F
@@ -140,6 +143,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.in << 'fubar'
+// comment
 @0 4865 6C6C 6F2C 2057 6F72
 @0005
 6C64
@@ -161,7 +165,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.in << 'fubar'
-@0 48 65 6C 6C 6F 2C 20 57
+@0 48 65 6C /* comment **/ 6C 6F 2C 20 57
 @8 6F 72 6C 64 21 0A
 fubar
 if test $? -ne 0; then no_result; fi

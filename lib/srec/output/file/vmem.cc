@@ -22,6 +22,7 @@
 
 #pragma implementation "srec_output_file_vmem"
 
+#include <cctype>
 #include <srec/output/file/vmem.h>
 #include <srec/record.h>
 
@@ -167,10 +168,26 @@ srec_output_file_vmem::write(const srec_record &record)
     switch (record.get_type())
     {
     case srec_record::type_header:
-	// All header data is discarded
-	//
-	// Does this format permit coments?  If it does
-	// the header could be written out as a comment.
+	// emit header records as comments in the file
+	{
+	    put_string("/* ");
+	    if (record.get_address() != 0)
+		put_stringf("%08lX: ", record.get_address());
+	    const unsigned char *cp = record.get_data();
+	    const unsigned char *ep = cp + record.get_length();
+	    while (cp < ep)
+	    {
+		int c = *cp++;
+		if (isprint(c) || isspace(c))
+		    put_char(c);
+		else
+		    put_stringf("\\%o", c);
+		// make sure we don't end the comment
+		if (c == '*' && cp < ep && *cp == '/')
+		    put_char(' ');
+	    }
+	    put_string(" */\n");
+	}
 	break;
 
     case srec_record::type_data:

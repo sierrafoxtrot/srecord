@@ -53,12 +53,6 @@ public:
 
 private:
     /**
-      * The garbage_warning instance variable is used to remember whether
-      * a warning has already been issued if the file contains garbage.
-      */
-    bool garbage_warning;
-
-    /**
       * The seen_some_input instance variable is used to remember whether
       * any data has been seen in the input to date.
       */
