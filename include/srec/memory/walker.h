@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) ${date %Y} Peter Miller;
+ *	Copyright (C) 1998 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -17,21 +17,24 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: interface definition for ${basename $fn .h}.cc
+ * MANIFEST: interface definition for lib/srec/memory/walker.cc
  */
 
-#ifndef ${id ${upcase $fn}}
-#define ${id ${upcase $fn}}
+#ifndef INCLUDE_SREC_MEMORY_WALKER_H
+#define INCLUDE_SREC_MEMORY_WALKER_H
 
 #pragma interface
 
-class ${id ${b $fn .h}}
+class srec_memory_walker
 {
 public:
-	${id ${b $fn .h}}();
-	${id ${b $fn .h}}(const ${id ${b $fn .h}} &);
-	${id ${b $fn .h}} &operator=(const ${id ${b $fn .h}} &);
-	~${id ${b $fn .h}}();
+	virtual ~srec_memory_walker();
+	virtual void observe(unsigned long, const void *, int) = 0;
+
+protected:
+	srec_memory_walker();
+	srec_memory_walker(const srec_memory_walker &);
+	srec_memory_walker &operator=(const srec_memory_walker &);
 };
 
-#endif /* ${id ${upcase $fn}} */
+#endif /* INCLUDE_SREC_MEMORY_WALKER_H */

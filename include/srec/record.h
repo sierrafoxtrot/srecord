@@ -53,6 +53,7 @@ public:
 	void set_length(int arg) { if (arg < 0) arg = 0;
 		if (arg < length) length = arg; }
 	const data_t *get_data() const { return data; }
+	int get_data(int n) const { return data[n]; }
 	type get_type() const { return itype; }
 	void set_type(type arg) { itype = arg; }
 

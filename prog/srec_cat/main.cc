@@ -22,6 +22,8 @@
 
 #include <arglex.h>
 #include <srec/input/file/srecord.h>
+#include <srec/memory.h>
+#include <srec/memory/walker/writer.h>
 #include <srec/output/file/srecord.h>
 #include <srec/record.h>
 
@@ -119,10 +121,16 @@ main(int argc, char **argv)
 		outfile = "-";
 
 	/*
-	 * copy the input to the output
+	 * Read the input into memory.	This allows the data to be
+	 * consolidated on output, and warnings to be issued for
+	 * duplicates.
+	 *
+	 * It is assumed the data will all fit into memory.  This is
+	 * usually reasonable, because these utilities are used for
+	 * eproms which are usualloy smaller than the available virtual
+	 * memory of the development system.
 	 */
-	srec_output *ofp = new srec_output_file_srecord(outfile);
-	ofp->write_header();
+	srec_memory *mp = new srec_memory();
 	srec_record::address_t taddr = 0;
 	for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
 	{
@@ -138,7 +146,20 @@ main(int argc, char **argv)
 				break;
 
 			case srec_record::type_data:
-				ofp->write(record);
+				for (int j = 0; j < record.get_length(); ++j)
+				{
+					srec_record::address_t address =
+						record.get_address() + j;
+					if (mp->set_p(address))
+					{
+						ifp->warning
+						(
+							"duplicate %08lX value",
+							(long)address
+						);
+					}
+					mp->set(address, record.get_data(j));
+				}
 				break;
 
 			case srec_record::type_termination:
@@ -149,8 +170,22 @@ main(int argc, char **argv)
 		}
 		delete ifp;
 	}
+
+	/*
+	 * Open the output file and write the remembered data out to it.
+	 */
+	srec_output *ofp = new srec_output_file_srecord(outfile);
+	ofp->write_header();
+	srec_memory_walker *w = new srec_memory_walker_writer(ofp);
+	mp->walk(w);
 	ofp->write_termination(taddr);
 	delete ofp;
+
+	/*
+	 * Dispose of the memory image of the data.
+	 * (Probably not necessary.)
+	 */
+	delete mp;
 
 	/*
 	 * success
