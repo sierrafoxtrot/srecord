@@ -44,6 +44,7 @@ public:
 	virtual void warning(const char *, ...) const;
 	virtual void warning_v(const char *, va_list) const;
 	virtual const string filename() const = 0;
+	virtual const string filename_and_line() const;
 };
 
 #endif /* INCLUDE_INPUT_H */

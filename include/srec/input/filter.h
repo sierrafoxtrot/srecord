@@ -36,6 +36,7 @@ public:
 	srec_input_filter(srec_input *);
 	virtual int read(class srec_record &);
 	virtual const string filename() const;
+	virtual const string filename_and_line() const;
 
 protected:
 	srec_input_filter();

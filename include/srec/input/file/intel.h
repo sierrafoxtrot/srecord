@@ -39,6 +39,10 @@ private:
 	srec_input_file_intel(const srec_input_file_intel &);
 	srec_input_file_intel &operator=(const srec_input_file_intel &);
 	int read_inner(srec_record &);
+	int data_record_count;
+	bool garbage_warning;
+	bool seen_some_input;
+	bool termination_seen;
 };
 
 #endif /* INCLUDE_SREC_INPUT_FILE_INTEL_H */

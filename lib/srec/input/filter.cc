@@ -65,6 +65,14 @@ srec_input_filter::filename()
 }
 
 
+const string
+srec_input_filter::filename_and_line()
+	const
+{
+	return ifp->filename_and_line();
+}
+
+
 int
 srec_input_filter::read(srec_record &record)
 {

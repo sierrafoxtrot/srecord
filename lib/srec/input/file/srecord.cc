@@ -27,21 +27,27 @@
 
 
 srec_input_file_srecord::srec_input_file_srecord()
-	: srec_input_file(), data_record_count(0)
+	: srec_input_file(), data_record_count(0), garbage_warning(false),
+		seen_some_input(false), header_seen(false),
+		termination_seen(false)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
 
 
 srec_input_file_srecord::srec_input_file_srecord(const srec_input_file_srecord &)
-	: srec_input_file(), data_record_count(0)
+	: srec_input_file(), data_record_count(0), garbage_warning(false),
+		seen_some_input(false), header_seen(false),
+		termination_seen(false)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
 
 
 srec_input_file_srecord::srec_input_file_srecord(const char *filename)
-	: srec_input_file(filename), data_record_count(0)
+	: srec_input_file(filename), data_record_count(0),
+		garbage_warning(false), seen_some_input(false),
+		header_seen(false), termination_seen(false)
 {
 }
 
@@ -56,19 +62,35 @@ srec_input_file_srecord::operator=(const srec_input_file_srecord &)
 
 srec_input_file_srecord::~srec_input_file_srecord()
 {
-	/* make sure the count record is done */
-	/* make sure the termination record is done */
 }
 
 
 int
 srec_input_file_srecord::read_inner(srec_record &record)
 {
-	int c = get_char();
-	if (c < 0)
-		return 0;
-	if (c != 'S')
-		fatal_error("``S'' expected");
+	for (;;)
+	{
+		int c = get_char();
+		if (c < 0)
+			return 0;
+		if (c == 'S')
+			break;
+		if (c == '\n')
+			continue;
+		if (!garbage_warning)
+		{
+			warning("ignoring garbage lines");
+			garbage_warning = true;
+		}
+		for (;;)
+		{
+			c = get_char();
+			if (c == 0)
+				return 0;
+			if (c == '\n')
+				break;
+		}
+	}
 	int tag = get_nibble();
 	checksum_reset();
 	int line_length = get_byte();
@@ -79,8 +101,7 @@ srec_input_file_srecord::read_inner(srec_record &record)
 		buffer[j] = get_byte();
 	if (checksum_get() != 0xFF)
 		fatal_error("checksum mismatch (%02X)", checksum_get());
-	c = get_char();
-	if (c != '\n')
+	if (get_char() != '\n')
 		fatal_error("end-of-line expected");
 	--line_length;
 
@@ -165,7 +186,44 @@ srec_input_file_srecord::read(srec_record &record)
 	for (;;)
 	{
 		if (!read_inner(record))
+		{
+			if (!seen_some_input && garbage_warning)
+				fatal_error("file contains no data");
+			if (!header_seen)
+			{
+				warning("no header record");
+				header_seen = true;
+			}
+			if (data_record_count <= 0)
+				warning("file contains no data");
+			if (!termination_seen)
+			{
+				warning("no termination record");
+				termination_seen = true;
+			}
 			return 0;
+		}
+		seen_some_input = true;
+		if
+		(
+			record.get_type() != srec_record::type_header
+		&&
+			!header_seen
+		)
+		{
+			warning("no header record");
+			header_seen = true;
+		}
+		if
+		(
+			record.get_type() != srec_record::type_termination
+		&&
+			termination_seen
+		)
+		{
+			warning("termination record should be last");
+			termination_seen = false;
+		}
 		switch (record.get_type())
 		{
 		case srec_record::type_unknown:
@@ -173,11 +231,14 @@ srec_input_file_srecord::read(srec_record &record)
 			break;
 
 		case srec_record::type_header:
+			if (header_seen)
+				warning("redundant header record");
 			if (record.get_address())
 			{
 				warning("address in header record ignored");
 				record.set_address(0);
 			}
+			header_seen = true;
 			break;
 
 		case srec_record::type_data:
@@ -207,6 +268,9 @@ srec_input_file_srecord::read(srec_record &record)
 				warning("data in termination record ignored");
 				record.set_length(0);
 			}
+			if (termination_seen)
+				warning("redundant termination record");
+			termination_seen = true;
 			break;
 		}
 		break;

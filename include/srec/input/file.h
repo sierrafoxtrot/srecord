@@ -35,6 +35,7 @@ public:
 	srec_input_file(const char *);
 	virtual ~srec_input_file();
 	virtual const string filename() const;
+	virtual const string filename_and_line() const;
 
 protected:
 	int get_char();

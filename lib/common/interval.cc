@@ -22,7 +22,6 @@
 
 #pragma implementation
 
-#include <assert.h>
 #include <interval.h>
 #include <iostream.h>
 
@@ -54,7 +53,7 @@ interval::interval()
 	scan_index = 0;
 	scan_next_datum = 0;
 	data = 0;
-	assert(valid());
+	/* assert(valid()); */
 }
 
 
@@ -109,13 +108,13 @@ interval::interval(data_t first, data_t last)
 		data[1] = first;
 	}
 	data[2] = 2;
-	assert(valid());
+	/* assert(valid()); */
 }
 
 
 interval::interval(const interval &arg)
 {
-	assert(arg.valid());
+	/* assert(arg.valid()); */
 	length = arg.length;
 	size = length;
 	scan_index = 0;
@@ -128,7 +127,7 @@ interval::interval(const interval &arg)
 	}
 	else
 		data = 0;
-	assert(valid());
+	/* assert(valid()); */
 }
 
 
@@ -137,7 +136,7 @@ interval::operator=(const interval &arg)
 {
 	if (data)
 		delete data;
-	assert(arg.valid());
+	/* assert(arg.valid()); */
 	length = arg.length;
 	size = length;
 	scan_index = 0;
@@ -150,7 +149,7 @@ interval::operator=(const interval &arg)
 	}
 	else
 		data = 0;
-	assert(valid());
+	/* assert(valid()); */
 	return *this;
 }
 
@@ -172,7 +171,7 @@ interval::operator=(const interval &arg)
 
 interval::~interval()
 {
-	assert(valid());
+	/* assert(valid()); */
 	if (data)
 		delete data;
 }
@@ -258,12 +257,12 @@ interval::append(data_t datum)
 	/*
 	 * should always be increasing
 	 */
-	assert
+	/* assert
 	(
 		length < 1
 	||
 		promote(datum, length) >= promote(data[length - 1], length - 1)
-	);
+	); */
 
 	/*
 	 * make it larger if necessary
@@ -326,8 +325,8 @@ interval::append(data_t datum)
 interval
 interval::union_(const interval &left, const interval &right)
 {
-	assert(left.valid());
-	assert(right.valid());
+	/* assert(left.valid()); */
+	/* assert(right.valid()); */
 	interval result;
 	size_t left_pos = 0;
 	size_t right_pos = 0;
@@ -374,7 +373,7 @@ interval::union_(const interval &left, const interval &right)
 	}
 	if (result.length)
 		result.data[result.length] = result.length;
-	assert(result.valid());
+	/* assert(result.valid()); */
 	return result;
 }
 
@@ -406,8 +405,8 @@ interval::union_(const interval &left, const interval &right)
 interval
 interval::intersection(const interval &left, const interval &right)
 {
-	assert(left.valid());
-	assert(right.valid());
+	/* assert(left.valid()); */
+	/* assert(right.valid()); */
 	interval result;
 	size_t left_pos = 0;
 	size_t right_pos = 0;
@@ -454,7 +453,7 @@ interval::intersection(const interval &left, const interval &right)
 	}
 	if (result.length)
 		result.data[result.length] = result.length;
-	assert(result.valid());
+	/* assert(result.valid()); */
 	return result;
 }
 
@@ -486,8 +485,8 @@ interval::intersection(const interval &left, const interval &right)
 interval
 interval::difference(const interval &left, const interval &right)
 {
-	assert(left.valid());
-	assert(right.valid());
+	/* assert(left.valid()); */
+	/* assert(right.valid()); */
 	interval result;
 	size_t left_pos = 0;
 	size_t right_pos = 0;
@@ -534,7 +533,7 @@ interval::difference(const interval &left, const interval &right)
 	}
 	if (result.length)
 		result.data[result.length] = result.length;
-	assert(result.valid());
+	/* assert(result.valid()); */
 	return result;
 }
 
@@ -563,7 +562,7 @@ bool
 interval::member(data_t datum)
 	const
 {
-	assert(valid());
+	/* assert(valid()); */
 	size_t min = 0;
 	size_t max = length - 2;
 	while (min <= max)
@@ -600,8 +599,8 @@ interval::member(data_t datum)
 void
 interval::scan_begin()
 {
-	assert(valid());
-	assert(!scan_index);
+	/* assert(valid()); */
+	/* assert(!scan_index); */
 	scan_index = 1;
 	if (length)
 		scan_next_datum = data[0];
@@ -633,8 +632,8 @@ interval::scan_begin()
 bool
 interval::scan_next(data_t &datum)
 {
-	assert(valid());
-	assert(scan_index & 1);
+	/* assert(valid()); */
+	/* assert(scan_index & 1); */
 	if (scan_index >= length)
 		return false;
 	if (scan_next_datum >= promote(data[scan_index], scan_index))
@@ -667,8 +666,8 @@ interval::scan_next(data_t &datum)
 void
 interval::scan_end()
 {
-	assert(valid());
-	assert(scan_index & 1);
+	/* assert(valid()); */
+	/* assert(scan_index & 1); */
 	scan_index = 0;
 	scan_next_datum = 0;
 }
@@ -677,7 +676,7 @@ interval::scan_end()
 void
 interval::first_interval_only()
 {
-	assert(valid());
+	/* assert(valid()); */
 	if (length > 2)
 	{
 		length = 2;
@@ -710,7 +709,7 @@ interval::data_t
 interval::get_lowest()
 	const
 {
-	assert(valid());
+	/* assert(valid()); */
 	return (length > 0 ? data[0] : 0);
 }
 
@@ -719,7 +718,7 @@ interval::data_t
 interval::get_highest()
 	const
 {
-	assert(valid());
+	/* assert(valid()); */
 	return (length > 0 ? data[length - 1] : 0);
 }
 

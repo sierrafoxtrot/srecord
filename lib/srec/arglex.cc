@@ -233,23 +233,22 @@ srec_arglex::get_input()
 	const char *fn = "-";
 	switch (token_cur())
 	{
-	default:
-		assert(0);
-		break;
-
 	case token_string:
 		fn = value_string();
 		token_next();
 		break;
 
 	case token_stdio:
+		token_next();
+		/* fall through... */
+
+	default:
 		if (stdin_used)
 		{
 			cerr << "the standard input may only be named once on the command line" << endl;
 			exit(1);
 		}
 		stdin_used = true;
-		token_next();
 		break;
 	}
 
@@ -529,17 +528,17 @@ srec_arglex::get_output()
 	const char *fn = "-";
 	switch (token_cur())
 	{
-	default:
-		break;
-
 	case token_stdio:
+		token_next();
+		/* fall through... */
+
+	default:
 		if (stdout_used)
 		{
 			cerr << "the standard output may only be named once on the command line" << endl;
 			exit(1);
 		}
 		stdout_used = true;
-		token_next();
 		break;
 
 	case token_string:

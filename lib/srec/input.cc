@@ -70,7 +70,7 @@ srec_input::fatal_error_v(const char *fmt, va_list ap)
 	const
 {
 	cout.flush();
-	cerr << filename() << ": " ;
+	cerr << filename_and_line() << ": " ;
 	cerr.vform(fmt, ap) ;
 	cerr << endl;
 	cerr.flush();
@@ -123,4 +123,12 @@ srec_input::warning_v(const char *fmt, va_list ap)
 	cerr.vform(fmt, ap);
 	cerr << endl;
 	cerr.flush();
+}
+
+
+const string
+srec_input::filename_and_line()
+	const
+{
+	return filename();
 }

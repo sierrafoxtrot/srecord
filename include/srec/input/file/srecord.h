@@ -40,6 +40,10 @@ private:
 	srec_input_file_srecord &operator=(const srec_input_file_srecord &);
 	int data_record_count;
 	int read_inner(srec_record &);
+	bool garbage_warning;
+	bool seen_some_input;
+	bool header_seen;
+	bool termination_seen;
 };
 
 #endif /* INCLUDE_INPUT_FILE_SRECORD_H */

@@ -81,6 +81,14 @@ const string
 srec_input_file::filename()
 	const
 {
+	return file_name;
+}
+
+
+const string
+srec_input_file::filename_and_line()
+	const
+{
 	char buffer[20];
 	sprintf(buffer, ": %d", line_number);
 	return (file_name + buffer);
