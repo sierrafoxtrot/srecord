@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 2001 Peter Miller;
+.\"	Copyright (C) 1998, 2001, 2003 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -356,6 +356,10 @@ It is possible to build SRecord on MS Windows platforms, using the Cygwin
 (see \f[CW]www.cygwin.com\fP) or DJGPP (see \f[CW]www.delorie.com/djgpp\fP) environments.  This provides the
 \&``porting layer'' necessary to run Unix programs on Windows.  The build
 process is exactly as described above.
+.PP
+\fBNote:\fP if you are using GCC 3.\vIx\fP, you may need to edit the
+\fIMakefile\fP to change \f[CW]CXX = g++\fP to read \f[CW]CXX = g++-2\fP
+to fix some weird undefined symbols.
 .PP
 DJGPP always produces native binaries, however
 if you want to make native binaries with Cygwin (\fIi.e.\fP ones which
