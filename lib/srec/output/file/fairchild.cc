@@ -122,6 +122,8 @@ srec_output_file_fairchild::write(const srec_record &record)
     switch (record.get_type())
     {
     case srec_record::type_header:
+    case srec_record::type_unknown:
+    case srec_record::type_data_count:
 	// ignore
 	break;
 

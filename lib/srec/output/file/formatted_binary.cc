@@ -124,6 +124,11 @@ srec_output_file_formatted_binary::write(const srec_record &record)
 	put_char(check_sum >> 8);
 	put_char(check_sum);
 	break;
+
+    case srec_record::type_unknown:
+    case srec_record::type_data_count:
+	// ignore
+	break;
     }
 }
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 2000 Peter Miller;
+#	Copyright (C) 2000, 2003 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -72,7 +72,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-cat > test.ok << 'fubar'
+cat > test.ok1 << 'fubar'
 Different:	(0x1, 0x2, 0x4 - 0xd)
 Left only:	0xe
 Right only:	0x0
@@ -80,11 +80,19 @@ Start address 1 not equal to 0.
 fubar
 if test $? -ne 0; then no_result; fi
 
+cat > test.ok2 << 'fubar'
+Different:	(0x1, 0x2, 0x4 - 0xd)
+Left only:	0xe
+Right only:	0
+Start address 1 not equal to 0.
+fubar
+if test $? -ne 0; then no_result; fi
+
 $bin/srec_cmp -verbose test.one -offset 1 test.two > test.out 2>&1
 if test $? -ne 2; then fail; fi
 
-diff test.ok test.out
-if test $? -ne 0; then fail; fi
+diff test.ok1 test.out > LOG 2>&1 || diff test.ok2 test.out >> LOG 2>&1
+if test $? -ne 0; then cat LOG; fail; fi
 
 #
 # The things tested here, worked.

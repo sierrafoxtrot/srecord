@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 2002 Peter Miller;
+ *	Copyright (C) 1998, 2002, 2003 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -58,17 +58,24 @@ configure: etc/configure.in install-sh
 }
 
 /*
- * Different Linux install methods put the packages in different places.
- * We need to find the autoconf package to get the linstall-sh script.
+ * The install-sh script can come from a huge range of places, depending
+ * on what distribution you have installed (or whether you built it from
+ * the tarball).
  */
-if [exists /usr/share/autoconf/install-sh] then
-	install-sh = /usr/share/autoconf/install-sh;
-else if [exists /usr/lib/autoconf/install-sh] then
-	install-sh = /usr/lib/autoconf/install-sh;
-else if [exists /usr/local/share/autoconf/install-sh] then
-	install-sh = /usr/local/share/autoconf/install-sh;
-else if [exists /usr/local/lib/autoconf/install-sh] then
-	install-sh = /usr/local/lib/autoconf/install-sh;
+loop install-sh-maybe =
+    /usr/share/autoconf/install-sh
+    [glob /usr/share/automake*/install-sh]
+    /usr/local/share/autoconf/install-sh
+    [glob /usr/local/share/automake*/install-sh]
+{
+    if [exists [install-sh-maybe]] then
+    {
+       	install-sh = [install-sh-maybe];
+       	loopstop;
+    }
+}
+if [not [install-sh]] then
+    fail "Can't locate the ``install-sh'' script from GNU automake";
 
 install-sh: [install-sh]
 {

@@ -82,6 +82,11 @@ srec_output_file_spectrum::write(const srec_record &record)
 	if (!data_only_flag)
 	    put_char(3);
 	break;
+
+    case srec_record::type_unknown:
+    case srec_record::type_data_count:
+    	// ignore
+	break;
     }
 }
 
