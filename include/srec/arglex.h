@@ -61,6 +61,7 @@ public:
 	token_dec_binary,
 	token_emon52,
 	token_exclude,
+	token_fairchild,
 	token_fast_load,
 	token_fill,
 	token_formatted_binary,

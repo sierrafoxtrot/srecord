@@ -32,6 +32,7 @@ using namespace std;
 #include <srec/input/file/cosmac.h>
 #include <srec/input/file/dec_binary.h>
 #include <srec/input/file/emon52.h>
+#include <srec/input/file/fairchild.h>
 #include <srec/input/file/fastload.h>
 #include <srec/input/file/formatted_binary.h>
 #include <srec/input/file/four_packed_code.h>
@@ -106,6 +107,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
 	{ "-Dec_Binary",	token_dec_binary, },
 	{ "-Elektor_Monitor52",	token_emon52,	},
 	{ "-Exclude",	token_exclude,		},
+	{ "-FAIrchild",	token_fairchild,	},
 	{ "-Fast_Load",	token_fast_load,	},
 	{ "-Formatted_Binary",	token_formatted_binary,	},
 	{ "-Fill",	token_fill,		},
@@ -510,6 +512,11 @@ srec_arglex::get_input()
     case token_emon52:
 	token_next();
 	ifp = new srec_input_file_emon52(fn);
+	break;
+
+    case token_fairchild:
+	token_next();
+	ifp = new srec_input_file_fairchild(fn);
 	break;
 
     case token_fast_load:

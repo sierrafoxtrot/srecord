@@ -26,6 +26,7 @@
 #include <srec/input/file/binary.h>
 #include <srec/input/file/dec_binary.h>
 #include <srec/input/file/emon52.h>
+#include <srec/input/file/fairchild.h>
 #include <srec/input/file/fastload.h>
 #include <srec/input/file/formatted_binary.h>
 #include <srec/input/file/four_packed_code.h>
@@ -79,6 +80,12 @@ static srec_input *
 create_emon52(const char *fn)
 {
     return new srec_input_file_emon52(fn);
+}
+
+static srec_input *
+create_fairchild(const char *fn)
+{
+    return new srec_input_file_fairchild(fn);
 }
 
 static srec_input *
@@ -170,6 +177,7 @@ static func_p table[] =
     create_atmel_generic,
     create_dec_binary,
     create_emon52,
+    create_fairchild,
     create_fastload,
     create_formatted_binary,
     create_four_packed_code,

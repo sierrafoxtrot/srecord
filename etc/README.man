@@ -76,6 +76,9 @@ The DEC Binary (XXDP) format is understood for both reading and writing.
 Elektor Monitor (EMON52)
 The EMON52 format is understood for both reading and writing.
 .TP
+Fairchild Fairbug
+The Fairchild Fairbug format is understood for both reading and writing.
+.TP
 LSI Logic Fast Load
 The LSI Logic Fast Load format is understood for both reading and writing.
 .TP

@@ -30,6 +30,7 @@
 #include <srec/output/file/cosmac.h>
 #include <srec/output/file/dec_binary.h>
 #include <srec/output/file/emon52.h>
+#include <srec/output/file/fairchild.h>
 #include <srec/output/file/fastload.h>
 #include <srec/output/file/formatted_binary.h>
 #include <srec/output/file/four_packed_code.h>
@@ -130,6 +131,11 @@ srec_arglex::get_output()
     case token_emon52:
 	token_next();
 	ofp = new srec_output_file_emon52(fn);
+	break;
+
+    case token_fairchild:
+	token_next();
+	ofp = new srec_output_file_fairchild(fn);
 	break;
 
     case token_fast_load:
