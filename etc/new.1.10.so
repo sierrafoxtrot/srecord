@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2001, 2002 Peter Miller;
+.\"	Copyright (C) 2002 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -17,35 +17,12 @@
 .\"	along with this program; if not, write to the Free Software
 .\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.9 features
+.\" MANIFEST: description of new 1.10 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" change 19
-The Intel format now emits the redundant extended linear address record
-at the start of the file; some loaders couldn't cope without it.
-.PP
-.if n *
-.if t \(bu
-.\" change 18
-The Binary format now copes with writing to pipes.
-.PP
-.if n *
-.if t \(bu
-.\" change 17
-The Motorola format now understands the S6 (24-bit data record count)
-records for reading and writing.
-.PP
-.if n *
-.if t \(bu
-.\" change 16
-The DEC Binary format now works correctly on Windows machines.
-.PP
-.if n *
-.if t \(bu
-.\" change 15
-The LSI Logic Fast Load format is now understood for both reading and writing.
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" change NN
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.9
+.SS Version 1.10

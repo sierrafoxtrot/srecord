@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2001 Peter Miller;
+.\"	Copyright (C) 2001, 2002 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -48,7 +48,7 @@ is now understood for both reading and writing.
 .if t \(bu
 .\" change 20, 28
 Wherever possible, header data is now passed through by \fIsrec_cat\fP(1).
-There is also a new \fIsrec_cat \-header\fP option, do that you can set
+There is also a new \fIsrec_cat \-header\fP option, so that you can set
 the header comment from the command line.
 .PP
 .if n *
@@ -60,7 +60,7 @@ is now understood for both reading and writing.
 .if n *
 .if t \(bu
 .\" change 18
-The handling or termination records has been improved.
+The handling of termination records has been improved.
 It caused problems for a number of filters, including the \-fill filter.
 .PP
 .if n *
