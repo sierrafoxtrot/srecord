@@ -219,3 +219,11 @@ srec_output_file_wilson::preferred_block_size_get()
 {
 	return pref_block_size;
 }
+
+
+const char *
+srec_output_file_wilson::mode()
+	const
+{
+	return "wb";
+}

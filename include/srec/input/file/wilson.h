@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Peter Miller;
+ *	Copyright (C) 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -35,6 +35,7 @@ public:
 	virtual ~srec_input_file_wilson();
 	int read(srec_record &);
 	const char *get_file_format_name() const;
+	const char *mode() const;
 
 protected:
 	virtual int get_byte();

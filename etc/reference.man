@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 1999 Peter Miller;
+.\"	Copyright (C) 1998, 1999, 2001 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -117,15 +117,34 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
 .\" ----------  Include the Table of Contents  --------------------------------
 .\"
-.pn 3
-.af % i
+.if o .bp \" because .TH is going to throw another one
+.nr % 1000
 .TH "Table of Contents" "SRecord" "SRecord" "Reference Manual"
+.\"
+.\"	-----
+.\" This next section redefines the page footer to use roman numbering
+.\" from ``iii'' onwards.  It is overly GNU Groff specific.
+.\" Fortunately, the page number does not appear in the page header.
+.\"
+.nr an-page-origin \n%-3
+.af an-page-letter i
+.de an-p-footer
+.ev 1
+.nr an-page-letter \\n%-\\n[an-page-origin]
+.ds an-page-string \\n[an-page-letter]
+.ie \\nD \{\
+.       if o .tl '\\*[an-extra2]'\\*[an-extra1]'\\*[an-page-string]'
+.       if e .tl '\\*[an-page-string]'\\*[an-extra1]'\\*[an-extra2]'
+.\}
+.el .tl '\\*[an-extra2]'\\*[an-extra1]'\\*[an-page-string]'
+.ev
+..
+.\"     -----
 .in 0
 .TC
 .\"
 .\" ----------  Include the Permuted Index  -----------------------------------
 .\"
-.TH "Permuted Index" "SRecord" "SRecord" "Reference Manual"
+.bp
 .in 0
 .so ref-index.so
-.if o .bp

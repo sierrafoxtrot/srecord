@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998 Peter Miller;
+.\"	Copyright (C) 1998, 2001 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -109,7 +109,7 @@ srecord-\*(v).README	Description, from the tar file
 srecord-\*(v).lsm	Description, LSM format
 srecord-\*(v).spec	RedHat package specification
 srecord-\*(v).tar.gz	The complete sources.
-srecord-\*(v).ps.gz	Reference Manual, PostScript format
+srecord-\*(v).pdf	Reference Manual, Acrobat format
 .TE
 .SH Secondary-site:
 sunsite.unc.edu /pub/Linux/apps/circuits
@@ -119,7 +119,7 @@ srecord-\*(v).README	Description, from the tar file
 srecord-\*(v).lsm	Description, LSM format
 srecord-\*(v).spec	RedHat package specification
 srecord-\*(v).tar.gz	The complete sources.
-srecord-\*(v).ps.gz	Reference Manual, PostScript format
+srecord-\*(v).pdf	Reference Manual, Acrobat format
 .TE
 .SH Copying-policy:
 GPL 2.0

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -30,7 +30,7 @@ documentation:
 	;
 
 /* Sigh */
-cascade etc/srecord.html = etc/version.so;
+cascade etc/srecord.html = etc/version.so(exists);
 
 man/cat%1/%2.%1: man/man%1/%2.%1
 {
@@ -100,7 +100,7 @@ etc/%.so.d: etc/%.so
 #include-cooked [addsuffix ".d" [match_mask man/man%1/%2.%1 [source_files]]]
 #include-cooked [addsuffix ".d" [match_mask man/%0%.so [source_files]]]
 
-etc/%.pdf: etc/%.man
+etc/%.pdf: etc/%.man etc/page-list.awk
 {
 	roffpp
 		[prepost "-I" /[arch]/etc [search_list]]
@@ -109,10 +109,16 @@ etc/%.pdf: etc/%.man
 		[addprefix "-I" [search_list]] /* refman */
 		[resolve etc/%.man]
 		> %.groff;
-	groff -t -man %.groff > %.ps;
-	rm %.groff set silent;
+	groff -t -man %.groff > %.ps.tmp;
+	rm %.groff
+		set silent;
+	psselect -p`awk -f [resolve etc/page-list.awk] %.ps.tmp`
+		%.ps.tmp > %.ps;
+	rm %.ps.tmp
+		set silent;
 	ps2pdf %.ps [target];
-	rm %.ps set silent;
+	rm %.ps
+		set silent;
 }
 
 cascade etc/reference.man = etc/ref-index.so etc/ref-parts.so;
@@ -136,6 +142,7 @@ etc/ref-parts.so: [match_mask man/man%1/%2.%1 [source_files]]
 	> [target];
 }
 
+#if [count [match_mask etc/new.%.so [source_files]]]
 etc/new.so: : etc/new.sh [match_mask etc/new.%.so [source_files]]
 {
 	sh [resolve etc/new.sh] -r
@@ -145,3 +152,4 @@ etc/new.so: : etc/new.sh [match_mask etc/new.%.so [source_files]]
 	> [target];
 }
 #include-cooked-nowarn etc/new.so.d
+#endif

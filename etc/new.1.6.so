@@ -22,6 +22,12 @@
 .PP
 .if n *
 .if t \(bu
+.\" change 17
+The documentation is now in PDF format.  This was in order to make it
+more accessible to a wider range of people.
+.PP
+.if n *
+.if t \(bu
 .\" change 16
 There is a new \fIsrec_cat --address-length\fP option, so that you can set
 the length of the address fields in the output file.  For example, if you
@@ -44,7 +50,7 @@ A problem has been fixed which stopped SRecord from building under Cygwin.
 .if n *
 .if t \(bu
 .\" change 11
-A buig has been fixed in the C array output.  It used to generate invalid
+A bug has been fixed in the C array output.  It used to generate invalid
 output when the input had holes in the data.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.

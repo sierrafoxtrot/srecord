@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 2000 Peter Miller;
+.\"	Copyright (C) 1998, 2000, 2001 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -161,7 +161,7 @@ File:;srecord-\*(v).README;# Description, from the tar file
 File:;srecord-\*(v).lsm;# Description, LSM format
 File:;srecord-\*(v).spec;# RedHat package specification
 File:;srecord-\*(v).tar.gz;# the complete source
-File:;srecord-\*(v).ps.gz;# Reference Manual
+File:;srecord-\*(v).pdf;# Reference Manual
 .TE
 .RE
 .PP
@@ -180,7 +180,7 @@ File:;srecord-\*(v).README;# Description, from the tar file
 File:;srecord-\*(v).lsm;# Description, LSM format
 File:;srecord-\*(v).spec;# RedHat package specification
 File:;srecord-\*(v).tar.gz;# the complete source
-File:;srecord-\*(v).ps.gz;# Reference Manual
+File:;srecord-\*(v).pdf;# Reference Manual
 .TE
 .RE
 This site is extensively mirrored around the world,
@@ -212,6 +212,10 @@ Full instructions for building
 may be found in the
 .I BUILDING
 file included in this distribution.
+.LP
+It is also possible to build \fISRecord\fP on Windows using the Cygwin
+(www.cygwin.org) environment.  Instructions are in the \fIBUILDING\fP
+file, including how to get native Windows binaries.
 .br
 .ne 1i
 .SH COPYRIGHT

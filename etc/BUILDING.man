@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998 Peter Miller;
+.\"	Copyright (C) 1998, 2001 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -65,7 +65,7 @@ You may also want to consider fetching and installing the GNU C Compiler
 if you have not done so already.  This is not essential.
 SRecord was developed using the GNU C++ compiler, and the GNU C++ libraries.
 .PP
-The GNU FTP archives may be found at \f(CWprep.ai.mit.edu\fP,
+The GNU FTP archives may be found at \f(CWftp.gnu.org\fP,
 and are mirrored around the world.
 .br
 .ne 1i
@@ -365,6 +365,20 @@ You only need to know this if you want to regenerate
 .I configure
 using a newer version of
 .IR autoconf .
+.SS Windows NT
+It is possible to build SRecord on MS Windows platforms, using the Cygwin
+system (see \f[CW]www.cygwin.org\fP, it's free).  This provides the
+\&``porting layer'' necessary to run Unix programs on Windows.  The build
+process is exactly as described above.
+.PP
+If you want to make ``native binaries'' (\fIi.e.\fP ones which
+work outside Cygwin) there is one extra step you need after running
+\f[CW]./configure\fP and before you run \f[CW]make\fP.  You need to
+edit the \fIMakefile\fP file, and add \f[CW]-mno-cygwin\fP to the end of
+the \f[CW]CXX=g++\fP line.
+.PP
+Once built, Windows (Cygwin) binaries should test in the same way as
+described in the next section.
 .br
 .ne 1i
 .SH TESTING SRECORD
