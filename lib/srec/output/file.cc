@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998 Peter Miller;
+ *	Copyright (C) 1998, 1999 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -30,9 +30,9 @@
 
 
 srec_output_file::srec_output_file()
-	: file_name("standard output"), line_number(1), checksum(0)
+	: file_name("standard output"), line_number(1), vfp(0), checksum(0)
 {
-	fp = stdout;
+	vfp = stdout;
 }
 
 
@@ -42,19 +42,29 @@ srec_output_file::srec_output_file(const srec_output_file &)
 }
 
 
-srec_output_file::srec_output_file(const char *file_name)
-	: file_name(file_name), line_number(1), checksum(0)
+const char *
+srec_output_file::mode()
+	const
+{
+	return "w";
+}
+
+
+srec_output_file::srec_output_file(const char *fn)
+	: file_name(fn), line_number(1), vfp(0), checksum(0)
 {
 	if (file_name == string("-"))
 	{
 		file_name = "standard output";
-		fp = stdout;
+		vfp = stdout;
 	}
 	else
 	{
-		fp = fopen(file_name, "w");
-		if (!fp)
-			fatal_error_errno("open");
+		/*
+		 * The call to fopen is deferred until the constructor has
+		 * completed.  This is so that the virtual mode() method
+		 * is available (it isn't in the base class constructor).
+		 */
 	}
 }
 
@@ -67,9 +77,27 @@ srec_output_file::operator=(const srec_output_file &)
 }
 
 
+void *
+srec_output_file::get_fp()
+{
+	if (!vfp)
+	{
+		/*
+		 * The call to fopen is deferred until the constructor has
+		 * completed.  This is so that the virtual mode() method
+		 * is available (it isn't in the base class constructor).
+		 */
+		vfp = fopen(file_name.c_str(), mode());
+		if (!vfp)
+			fatal_error_errno("open");
+	}
+	return vfp;
+}
+
+
 srec_output_file::~srec_output_file()
 {
-	FILE *fp = (FILE *)this->fp;
+	FILE *fp = (FILE *)get_fp();
 	if (fflush(fp))
 		fatal_error_errno("write");
 	if (fp != stdout && fclose(fp))
@@ -90,7 +118,7 @@ srec_output_file::filename()
 void
 srec_output_file::put_char(int c)
 {
-	FILE *fp = (FILE *)this->fp;
+	FILE *fp = (FILE *)get_fp();
 	putc(c, fp);
 	if (ferror(fp))
 		fatal_error_errno("write");
@@ -132,7 +160,7 @@ srec_output_file::checksum_reset()
 void
 srec_output_file::seek_to(unsigned long address)
 {
-	FILE *fp = (FILE *)this->fp;
+	FILE *fp = (FILE *)get_fp();
 	if (fseek(fp, address, 0) < 0)
 		fatal_error_errno("seek %ld", address);
 }

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998 Peter Miller;
+ *	Copyright (C) 1998, 1999 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -79,4 +79,12 @@ srec_input_file_binary::read(srec_record &record)
 	record = srec_record(srec_record::type_data, address, data, length);
 	address += length;
 	return 1;
+}
+
+
+const char *
+srec_input_file_binary::mode()
+	const
+{
+	return "rb";
 }

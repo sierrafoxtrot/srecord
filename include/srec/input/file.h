@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998 Peter Miller;
+ *	Copyright (C) 1998, 1999 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -45,14 +45,16 @@ protected:
 	int checksum_get();
 	void checksum_reset();
 	void seek_to_end();
+	virtual const char *mode() const;
 
 private:
 	string file_name;
 	int line_number;
 	bool prev_was_newline;
-	void *fp;
+	void *vfp;
 	int checksum;
 
+	void *get_fp();
 	srec_input_file(const srec_input_file &);
 	srec_input_file &operator=(const srec_input_file &);
 };

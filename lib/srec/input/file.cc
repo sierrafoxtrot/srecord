@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998 Peter Miller;
+ *	Copyright (C) 1998, 1999 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -33,7 +33,7 @@ srec_input_file::srec_input_file()
 	: file_name("standard input"), line_number(1), prev_was_newline(false),
 	  checksum(0)
 {
-	fp = stdin;
+	vfp = stdin;
 }
 
 
@@ -43,20 +43,30 @@ srec_input_file::srec_input_file(const srec_input_file &)
 }
 
 
+const char *
+srec_input_file::mode()
+	const
+{
+	return "r";
+}
+
+
 srec_input_file::srec_input_file(const char *file_name)
 	: file_name(file_name), line_number(1), prev_was_newline(false),
-	  checksum(0)
+	  vfp(0), checksum(0)
 {
 	if (file_name == string("-"))
 	{
 		file_name = "standard input";
-		fp = stdin;
+		vfp = stdin;
 	}
 	else
 	{
-		fp = fopen(file_name, "r");
-		if (!fp)
-			fatal_error_errno("open");
+		/*
+		 * The call to fopen is deferred until the constructor has
+		 * completed.  This is so that the virtual mode() method
+		 * is available (it isn't in the base class constructor).
+		 */
 	}
 }
 
@@ -69,9 +79,27 @@ srec_input_file::operator=(const srec_input_file &)
 }
 
 
+void *
+srec_input_file::get_fp()
+{
+	if (!vfp)
+	{
+		/*
+		 * The call to fopen is deferred until the constructor has
+		 * completed.  This is so that the virtual mode() method
+		 * is available (it isn't in the base class constructor).
+		 */
+		vfp = fopen(file_name.c_str(), mode());
+		if (!vfp)
+			fatal_error_errno("open");
+	}
+	return vfp;
+}
+
+
 srec_input_file::~srec_input_file()
 {
-	FILE *fp = (FILE *)this->fp;
+	FILE *fp = (FILE *)get_fp();
 	if (fp != stdin && fclose(fp))
 		fatal_error_errno("close");
 }
@@ -98,7 +126,7 @@ srec_input_file::filename_and_line()
 int
 srec_input_file::get_char()
 {
-	FILE *fp = (FILE *)this->fp;
+	FILE *fp = (FILE *)get_fp();
 	if (prev_was_newline)
 		++line_number;
 	int c = getc(fp);
@@ -116,7 +144,7 @@ srec_input_file::get_char()
 int
 srec_input_file::peek_char()
 {
-	FILE *fp = (FILE *)this->fp;
+	FILE *fp = (FILE *)get_fp();
 	int c = getc(fp);
 	if (c == EOF)
 	{
@@ -180,6 +208,6 @@ srec_input_file::checksum_reset()
 void
 srec_input_file::seek_to_end()
 {
-	FILE *fp = (FILE *)this->fp;
+	FILE *fp = (FILE *)get_fp();
 	fseek(fp, 0L, SEEK_END);
 }

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998 Peter Miller;
+ *	Copyright (C) 1998, 1999 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -38,6 +38,7 @@ public:
 private:
 	srec_output_file_binary(const srec_output_file_binary &);
 	srec_output_file_binary &operator=(const srec_output_file_binary &);
+	const char *mode() const;
 };
 
 #endif /* INCLUDE_SREC_OUTPUT_FILE_BINARY_H */
