@@ -17,13 +17,12 @@
 .\"	along with this program; if not, write to the Free Software
 .\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.19 features
+.\" MANIFEST: description of new 1.20 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" change 11
-The AOMF format now accepts (and ignores) more record types.
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" change NN
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.19 (3-Jan-2004)
+.SS Version 1.20 (8-Feb-2004)

@@ -29,7 +29,7 @@ It is now possible to set the start address in the output using the
 .if n *
 .if t \(bu
 .\" change 17
-The Intel Absolute Object Module Format is now supported for reading
+The Intel Absolute Object Module Format (AOMF) is now supported for reading
 and writing.
 .PP
 .if n *
