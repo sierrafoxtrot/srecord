@@ -17,24 +17,12 @@
 .\"	along with this program; if not, write to the Free Software
 .\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.7 features
+.\" MANIFEST: description of new 1.8 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" change 19
-There is a new ``unfill'' filter, which may be used to perform the
-reverse effect of the ``fill'' filter.
-.PP
-.if n *
-.if t \(bu
-.\" change 17
-There is a new bit-wise NOT filter, which may be used to invert the data.
-.PP
-.if n *
-.if t \(bu
-.\" change 16
-A couple of bugs have been fixed in the CRC filters.
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" change NN
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.7
+.SS Version 1.8
