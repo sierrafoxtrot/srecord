@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2004 Peter Miller;
+.\"	Copyright (C) 2004, 2005 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -19,10 +19,41 @@
 .\"
 .\" MANIFEST: description of new 1.20 features
 .\"
-.\" .PP
-.\" .if n *
-.\" .if t \(bu
-.\" .\" change NN
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 20 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" srecord.1.20.D014
+.\" ------------------------------------------------------------------------
+.PP
+.if n *
+.if t \(bu
+.\" Change 26, 25, 23, 22
+More Doxygen comments have been added to the class header files.
+.PP
+.if n *
+.if t \(bu
+.\" Change 21
+There is a new \fIsrec_cat --crlf\fP option, which may be used for force
+CRLF output on operating systems which don't use that style of line
+termination.
+.PP
+.if n *
+.if t \(bu
+.\" Change 18
+A number of problems with GCC, particularly with the early 3.\fIx\fP series.
+.PP
+.if n *
+.if t \(bu
+.\" Change 16
+There is a new "Stewie" format, an undocumented format loosely based on
+the Motorola S-Record format, apparently used in mobile phones.
+More information would be most welcome.
+.PP
+.if n *
+.if t \(bu
+A number of build problems have been fixed.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.20 (8-Feb-2004)
