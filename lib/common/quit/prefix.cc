@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002 Peter Miller;
+//	Copyright (C) 2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -79,7 +79,7 @@ quit_prefix::message_v(const char *fmt, va_list ap)
 		deeper.message
 		(
 			"%.*s: %s",
-			prefix.length(),
+			(int)prefix.length(),
 			prefix.data(),
 			buf
 		);
