@@ -25,6 +25,7 @@ integration-build-targets:
 	archive/[project_minus].lsm
 	archive/[project_minus].spec
 	archive/[project_minus].tar.gz
+	archive/[project_minus].ps.gz
 	archive/[project_short].gif
 	archive/[project_short].html
 	;
@@ -109,6 +110,12 @@ archive/[project_minus].%: %
 	cat [resolve [need]] > [target];
 }
 
+archive/[project_minus].ps.gz: etc/reference.ps.gz
+	set shallow
+{
+	cat [resolve [need]] > [target];
+}
+
 %: etc/%.man
 {
 	roffpp
@@ -120,14 +127,15 @@ archive/[project_minus].%: %
 }
 
 etc/%.man.d: etc/%.man
+	set no-cascade
 {
-	[c_incl] -nc -ns -api
+	[c_incl] -nc -ns -api -nrec
 		--lang\=roff
 		[addprefix "-I" [search_list]]
 		[prepost "-I" "/etc" [search_list]]
 		[resolve etc/%.man]
-		-prefix "'etc/%.man.d %: etc/%.man'"
-		-suffix "'set nodefault;'"
+		-prefix "'cascade etc/%.man ='"
+		-suffix "';'"
 		[addprefix "-rlp=" [search_list]]
 		-o [target];
 }
@@ -180,12 +188,14 @@ archive/%: etc/%.uue
 
 
 etc/[project_short].html.d: etc/[project_short].html
+	set no-cascade
 {
-	c_incl -nc -ns -eia -r
+	c_incl -nc -ns -eia -r -nrec
 		[prepost "-I" /[arch]/etc [search_list]]
 		[prepost "-I" "/etc" [search_list]]
-		-prefix "'"[target]" archive/"[project_short]".html: etc/"[project_short]".html'"
-		-suffix "'set nodefault;'" [resolve etc/[project_short].html]
+		-prefix "'cascade etc/"[project_short]".html ='"
+		-suffix "';'"
+		[resolve etc/[project_short].html]
 		[prepost "-rlp=" "" [search_list]] /* remove leading path */
 		-slp [arch] "'[arch]'" /* substitute leading path */
 		-o [target];
@@ -206,12 +216,14 @@ archive/[project_short].html: etc/[project_short].html etc/ssp.awk
 
 
 etc/[project_short].lsm.d: etc/[project_short].lsm
+	set no-cascade
 {
-	c_incl -nc -ns -eia -r
+	c_incl -nc -ns -eia -r -nrec
 		[prepost "-I" /[arch]/etc [search_list]]
 		[prepost "-I" "/etc" [search_list]]
-		-prefix "'"[target]" archive/"[project_minus]".lsm: etc/"[project_short]".lsm'"
-		-suffix "'set nodefault;'" [resolve etc/[project_short].lsm]
+		-prefix "'cascade etc/"[project_short]".lsm ='"
+		-suffix "';'"
+		[resolve etc/[project_short].lsm]
 		[prepost "-rlp=" "" [search_list]] /* remove leading path */
 		-slp [arch] "'[arch]'" /* substitute leading path */
 		-o [target];

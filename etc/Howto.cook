@@ -254,28 +254,45 @@ if [not [defined ld_flags]] then
 
 c_incl = c_incl;
 
-%1/%2/%0%.d: %1/%2/%0%.c
+%1/%2/%0%.c.d: %1/%2/%0%.c
+	set no-cascade
 {
-	[c_incl] -nc -ns
+	[c_incl] -nc -ns -nrec
 		[cc_include_flags]
 		[prepost -I /%1/%2 [search_list]]
 		[resolve %1/%2/%0%.c]
-		-prefix "'[arch]/%1/%2/%0%.o %1/%2/%0%.d: %1/%2/%0%.c'"
-		-suffix "'set nodefault;'"
+		-prefix "'cascade %1/%2/%0%.c ='"
+		-suffix "';'"
 		-nsri
 		[prepost "-rlp=" "" [search_list]]
 		-slp [arch] "'[arch]'"
 		-o [target];
 }
 
-%1/%2/%0%.d: %1/%2/%0%.cc
+%1/%2/%0%.h.d: %1/%2/%0%.h
+	set no-cascade
 {
-	[c_incl] -nc -ns
+	[c_incl] -nc -ns -nrec
+		[cc_include_flags]
+		[prepost -I /%1/%2 [search_list]]
+		[resolve %1/%2/%0%.h]
+		-prefix "'cascade %1/%2/%0%.h ='"
+		-suffix "';'"
+		-nsri
+		[prepost "-rlp=" "" [search_list]]
+		-slp [arch] "'[arch]'"
+		-o [target];
+}
+
+%1/%2/%0%.cc.d: %1/%2/%0%.cc
+	set no-cascade
+{
+	[c_incl] -nc -ns -nrec
 		[cc_include_flags]
 		[prepost -I /%1/%2 [search_list]]
 		[resolve %1/%2/%0%.cc]
-		-prefix "'[arch]/%1/%2/%0%.o %1/%2/%0%.d: %1/%2/%0%.cc'"
-		-suffix "'set nodefault;'"
+		-prefix "'cascade %1/%2/%0%.cc ='"
+		-suffix "';'"
 		-nsri
 		[prepost "-rlp=" "" [search_list]]
 		-slp [arch] "'[arch]'"
@@ -283,9 +300,10 @@ c_incl = c_incl;
 }
 
 cc_dep_files =
-	[fromto %0%.c %0%.d [match_mask %1/%2/%0%.c [source_files]]]
-	[fromto %0%.cc %0%.d [match_mask %1/%2/%0%.cc [source_files]]]
-	[fromto %0%.y %0%.gen.d [match_mask %1/%2/%0%.y [source_files]]]
+	[fromto %0%.c %0%.c.d [match_mask %1/%2/%0%.c [source_files]]]
+	[fromto %0%.h %0%.h.d [match_mask %1/%2/%0%.h [source_files]]]
+	[fromto %0%.cc %0%.cc.d [match_mask %1/%2/%0%.cc [source_files]]]
+	[fromto %0%.y %0%.gen.c.d [match_mask %1/%2/%0%.y [source_files]]]
 	;
 
 #include-cooked-nowarn [cc_dep_files]
@@ -369,7 +387,7 @@ leaf_file_accept = [leaf_file_accept] etc/version.so;
  * (solely from primary source files) will fail.  It is recommended that
  * relationships such as this be placed in a primary source cookbook.
  */
-lib/common/versn_stamp.d: include/patchlevel.h;
-etc/README.man.d: etc/version.so;
-man/man1/srec_cat.1.d: etc/version.so;
-man/man1/srec_cmp.1.d: etc/version.so;
+cascade etc/README.man = etc/version.so;
+cascade man/man1/srec_cat.1 = etc/version.so;
+cascade man/man1/srec_cmp.1 = etc/version.so;
+cascade lib/common/versn_stamp.cc = include/patchlevel.h ;

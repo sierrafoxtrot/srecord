@@ -20,29 +20,87 @@
  * MANIFEST: instructions to Cook: how to build the documentation
  */
 
-all = [all]
+all = [all] documentation;
+
+documentation:
 	[fromto man/man%1/%2.%1 man/cat%1/%2.%1
 		[match_mask man/man%1/%2.%1 [source_files]]
-	];
+	]
+	etc/reference.ps.gz
+	;
 
 man/cat%1/%2.%1: man/man%1/%2.%1
 {
-	roffpp [prepost "-I" "/man/man%1" [search_list]] [prepost "-I"
-		"/etc" [search_list]] [resolve man/man%1/%2.%1] | groff
-		-Tascii -t -man > [target];
+	roffpp
+		[prepost "-I" "/man/man%1" [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		[resolve man/man%1/%2.%1]
+	| groff -Tascii -t -man
+	> [target];
 }
 
 man/man%1/%2.%1.d: man/man%1/%2.%1
+	set no-cascade
 {
-	[c_incl] -nc -ns -api
+	[c_incl] -nc -ns -api -nrec
 		--lang\=roff
 		[prepost "-I" "/man/man%1" [search_list]]
 		[prepost "-I" "/etc" [search_list]]
 		[resolve man/man%1/%2.%1]
-		-prefix "'man/man%1/%2.%1.d man/cat%1/%2.%1: man/man%1/%2.%1'"
-		-suffix "'set nodefault;'"
+		-prefix "'cascade man/man%1/%2.%1 ='"
+		-suffix "';'"
 		[addprefix "-rlp=" [search_list]]
 		-o [target];
 }
 
+man/man%1/%2.so.d: man/man%1/%2.so
+	set no-cascade
+{
+	[c_incl] -nc -ns -api -nrec
+		--lang\=roff
+		[prepost "-I" "/man/man%1" [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		[resolve man/man%1/%2.so]
+		-prefix "'cascade man/man%1/%2.so ='"
+		-suffix "';'"
+		[addprefix "-rlp=" [search_list]]
+		-o [target];
+}
+
+#include-cooked [addsuffix ".d" [match_mask etc/%.man [source_files]]]
 #include-cooked [addsuffix ".d" [match_mask man/man%1/%2.%1 [source_files]]]
+#include-cooked [addsuffix ".d" [match_mask man/%0%.so [source_files]]]
+
+etc/%.ps.gz: etc/%.man
+{
+	roffpp
+		[prepost "-I" /[arch]/etc [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		[prepost "-I" "/man/man1" [search_list]] /* refman */
+		[addprefix "-I" [search_list]] /* refman */
+		[resolve etc/%.man]
+	| groff -t -p -mpic -mpspic -man
+	| gzip -9
+	> [target];
+}
+
+cascade etc/reference.man = etc/ref-index.so etc/ref-parts.so;
+
+etc/ref-index.so: [match_mask man/man%1/%2.%1 [source_files]]
+	etc/ref-ptx1.awk etc/ref-ptx.ignore etc/ref-ptx2.awk
+{
+	[awk] -f [resolve etc/ref-ptx1.awk]
+		[resolve [match_mask man/man%1/%2.%1 [source_files]]]
+	| ptx -O -r -w1000 -i[resolve etc/ref-ptx.ignore]
+	| sort -t'\'"\'' -f -d +5 -6 +3 -4
+	| [awk] -F'\'"\'' -f [resolve etc/ref-ptx2.awk]
+	> [target];
+}
+
+etc/ref-parts.so: [match_mask man/man%1/%2.%1 [source_files]]
+	etc/ref-ptx.sh
+{
+	sh -f [resolve etc/ref-ptx.sh]
+		[match_mask man/man%1/%2.%1 [source_files]]
+	> [target];
+}

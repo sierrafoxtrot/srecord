@@ -26,6 +26,7 @@
 .if n .nr IN 8n
 .SH NAME
 SRecord \- manipulate EPROM load files
+.XX "" "The BUILDING file"
 .SH SPACE REQUIREMENTS
 You will need about 3MB to unpack and build the
 .I SRecord

@@ -25,6 +25,7 @@
 .ad l
 .SH NAME
 RSecord \- manipulate EPROM load files
+.XX "" "The README file"
 .SH DESCRIPTION
 The \fISRecord\fP package is a collection of powerful tools for
 manipulating EPROM load files.
@@ -125,6 +126,7 @@ File:;srecord-\*(v).README;# Description, from the tar file
 File:;srecord-\*(v).lsm;# Description, LSM format
 File:;srecord-\*(v).spec;# RedHat package specification
 File:;srecord-\*(v).tar.gz;# the complete source
+File:;srecord-\*(v).ps.gz;# Reference Manual
 .TE
 .RE
 .PP
@@ -143,6 +145,7 @@ File:;srecord-\*(v).README;# Description, from the tar file
 File:;srecord-\*(v).lsm;# Description, LSM format
 File:;srecord-\*(v).spec;# RedHat package specification
 File:;srecord-\*(v).tar.gz;# the complete source
+File:;srecord-\*(v).ps.gz;# Reference Manual
 .TE
 .RE
 This site is extensively mirrored around the world,

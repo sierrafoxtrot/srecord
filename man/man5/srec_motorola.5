@@ -23,6 +23,7 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 srec_motorola \- Motorola S-Record hexadecimal file format
+.XX "srec_motorola(5)" "Motorola S-Record hexadecimal file format"
 .SH DESCRIPTION
 .\" ------------------------------------------------------------------------
 .\" Derived from http://freeware.mcu.motsps.com/lit/faq/as-80.htm
@@ -63,7 +64,7 @@ This is a 2-, 3- or 4-byte address that specifies where the data
 in the S-record is to be loaded into memory.
 .TP 8n
 Data
-The data Field contains the executable code, memory-loadable data
+The data field contains the executable code, memory-loadable data
 or descriptive information to be transferred.
 .TP 8n
 Checksum
@@ -97,7 +98,7 @@ S5
 A record containing the number of S1, S2 and S3 records transmitted in
 a particular block.  The count appears in the address field.  There is
 no data field.
-.YP 8n
+.TP 8n
 S7
 A termination record for a block of S3 records.  The address field may
 contain the 4-byte address of the instruction to which control is passed.

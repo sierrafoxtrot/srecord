@@ -44,10 +44,16 @@ This option says the file is a raw binary file, and should be read literally.
 .TP 8n
 \fB\-Intel\fP
 This option says to use the Intel hex format to read the file.
+See
+.IR srec_intel (5)
+for a description of this file format.
 .TP 8n
 \fB\-Motorola\fP
 This option says to use the Motorola S-Record format to read the file.
 (May also be written \-S-Record.)
+See
+.IR srec_motorola (5)
+for a description of this file format.
 .SS Input Filters
 You may specify zero or more \fIfilters\fP to be applied.
 Filters are applied in the order the user specifies.
