@@ -29,6 +29,7 @@
 #include <srec/input/file/intel.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix.h>
+#include <srec/input/filter/and.h>
 #include <srec/input/filter/checksum.h>
 #include <srec/input/filter/crop.h>
 #include <srec/input/filter/fill.h>
@@ -60,6 +61,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 	{
 		{ "(",		token_paren_begin,	},
 		{ ")",		token_paren_end,	},
+		{ "-AND",	token_and,		},
 		{ "-Big_Endian_Checksum", token_checksum_be, },
 		{ "-Big_Endian_Length",	token_length_be, },
 		{ "-Big_Endian_MAximum", token_maximum_be, },
@@ -333,6 +335,28 @@ srec_arglex::get_input()
 				token_next();
 				interval range = get_interval("-Fill");
 				ifp = new srec_input_filter_fill(ifp, filler, range);
+			}
+			continue;
+
+		case token_and:
+			{
+				if (token_next() != token_number) 
+				{
+					cerr <<
+					 "the -and filter requires a fill value"
+						<< endl;
+					exit(1);
+				}
+				int filler = value_number();
+				if (filler < 0 || filler >= 256)
+				{
+					cerr << "-and value " << filler
+						<< " out of range (0..255)"
+						<< endl;
+					exit(1);
+				}
+				token_next();
+				ifp = new srec_input_filter_and(ifp, filler);
 			}
 			continue;
 

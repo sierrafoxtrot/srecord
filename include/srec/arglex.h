@@ -32,7 +32,8 @@ class srec_arglex: public arglex
 public:
 	enum
 	{
-		token_binary = arglex::token_MAX,
+		token_and = arglex::token_MAX,
+		token_binary,
 		token_c_array,
 		token_checksum_be,
 		token_checksum_le,
