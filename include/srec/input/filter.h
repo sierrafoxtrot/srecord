@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2003 Peter Miller;
+//	Copyright (C) 1998-2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,6 +27,13 @@
 
 #include <srec/input.h>
 
+/**
+  * The input filter class is an abstract interface for all of the
+  * various filters that can be applied to an incoming EPROM file.
+  *
+  * Each filter is-a input, but each also has-a deeper input, from which
+  * is obtained the data to be filtered.
+  */
 class srec_input_filter:
     public srec_input
 {

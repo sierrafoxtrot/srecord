@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,24 +27,61 @@
 
 #include <srec/input/filter/checksum.h>
 
+/**
+  * The srec_input_filter_checksum_bitnot class is used to represent the
+  * state of a checksum filter that inserts a bitnot sum into the data.
+  */
 class srec_input_filter_checksum_bitnot:
-	public srec_input_filter_checksum
+    public srec_input_filter_checksum
 {
 public:
-	virtual ~srec_input_filter_checksum_bitnot();
-	srec_input_filter_checksum_bitnot(srec_input *deeper, int address,
-		int length, int order, int width = 1);
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_filter_checksum_bitnot();
+
+    /**
+      * The constructor.
+      *
+      * @param deeper
+      *     The deeper input source being checksummed.
+      * @param address
+      *     The address to place the checksum.
+      * @pram length
+      *     The number of bytes of checksum to be placed into the result.
+      * @pram order
+      *     The byte order: false => bigendian, true => little endian.
+      * @pram width
+      *     The width of the values being summed.  Usually 1 byte, but
+      *     wider combinations are possible.  If you use something
+      *     wider, it is assumed that they are alligned on multiples of
+      *     that width, no provision for an offset is provided.
+      */
+    srec_input_filter_checksum_bitnot(srec_input *deeper, int address,
+	    int length, int order, int width = 1);
 
 protected:
-	sum_t calculate();
+    // See base class for documentation.
+    sum_t calculate();
 
 private:
-	// Do not use these...
-	srec_input_filter_checksum_bitnot();
-	srec_input_filter_checksum_bitnot(
-		const srec_input_filter_checksum_bitnot &);
-	srec_input_filter_checksum_bitnot &operator=(
-		const srec_input_filter_checksum_bitnot &);
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_filter_checksum_bitnot();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_filter_checksum_bitnot(
+	    const srec_input_filter_checksum_bitnot &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_filter_checksum_bitnot &operator=(
+	    const srec_input_filter_checksum_bitnot &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILTER_CHECKSUM_BITNOT_H

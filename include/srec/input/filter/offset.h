@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001, 2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,20 +27,52 @@
 
 #include <srec/input/filter.h>
 
-class srec_input_filter_offset: public srec_input_filter
+/**
+  * The srec_input_filter_offset class is used to represent a filetr
+  * where the addresses of the the deeper input source are offset by a
+  * number of bytes.
+  */
+class srec_input_filter_offset:
+    public srec_input_filter
 {
 public:
-	virtual ~srec_input_filter_offset();
-	srec_input_filter_offset(srec_input *, unsigned long);
-	virtual int read(srec_record &);
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_filter_offset();
+
+    /**
+      * The constructor.
+      *
+      * @param deeper
+      *     The deeper input stream.
+      * @param nbytes
+      *     The number of bytes to offset the addresses by.
+      *     The value may be negative.
+      */
+    srec_input_filter_offset(srec_input *deeper, long nbytes);
+    virtual int read(srec_record &);
 
 private:
-	unsigned long nbytes;
+    /**
+      * The numberof bytes to affset the data by.
+      */
+    long nbytes;
 
-	// Do not use these...
-	srec_input_filter_offset();
-	srec_input_filter_offset(const srec_input_filter_offset &);
-	srec_input_filter_offset &operator=(const srec_input_filter_offset &);
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_filter_offset();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_filter_offset(const srec_input_filter_offset &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_filter_offset &operator=(const srec_input_filter_offset &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILTER_OFFSET_H

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001, 2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,20 +27,54 @@
 
 #include <srec/input/filter.h>
 
-class srec_input_filter_and: public srec_input_filter
+/**
+  * The srec_input_filter_and clas sis used to represent the input state
+  * of a filter which bit-wise ANDs all incoming data bytes with a fixed
+  * value.
+  */
+class srec_input_filter_and:
+    public srec_input_filter
 {
 public:
-	virtual ~srec_input_filter_and();
-	srec_input_filter_and(srec_input *, int);
-	virtual int read(srec_record &);
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_filter_and();
+
+    /**
+      * The constructor.
+      *
+      * @param deeper
+      *     The deeper input to be used as a data source.
+      * @param mask
+      *     The value to be bit-wise ANDed with each incoming data byte.
+      */
+    srec_input_filter_and(srec_input *deeper, int mask);
+
+    // See base class for documentation.
+    virtual int read(srec_record &);
 
 private:
-	int value;
+    /**
+      * The value instance variable is used to remember the value to be
+      * bit-wise ANDed with each incoming data byte.
+      */
+    int value;
 
-	// Do not use these...
-	srec_input_filter_and();
-	srec_input_filter_and(const srec_input_filter_and &);
-	srec_input_filter_and &operator=(const srec_input_filter_and &);
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_filter_and();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_filter_and(const srec_input_filter_and &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_filter_and &operator=(const srec_input_filter_and &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILTER_AND_H

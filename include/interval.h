@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002-2004 Peter Miller;
+//	Copyright (C) 1998-2000, 2002-2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -222,28 +222,40 @@ private:
     void append(data_t);
 };
 
-
+/**
+  * The equality operator is used to determine if two intervals are the
+  * same.
+  */
 inline bool
 operator == (const interval &lhs, const interval &rhs)
 {
     return interval::equal(lhs, rhs);
 }
 
-
+/**
+  * The inequality operator is used to determine if two intervals are
+  * different.
+  */
 inline bool
 operator != (const interval &lhs, const interval &rhs)
 {
     return !interval::equal(lhs, rhs);
 }
 
-
+/**
+  * The binary star operator is used to calculate the intersection of
+  * two intervals.
+  */
 inline interval
 operator * (const interval &lhs, const interval &rhs)
 {
     return interval::intersection(lhs, rhs);
 }
 
-
+/**
+  * The star-and-replace operator is used to calculate the intersection
+  * of two intervals, and assign the result to the left-hand-side.
+  */
 inline interval &
 operator *= (interval &lhs, const interval &rhs)
 {
@@ -251,14 +263,20 @@ operator *= (interval &lhs, const interval &rhs)
     return lhs;
 }
 
-
+/**
+  * The binary plus operator is used to calculate the union of two
+  * intervals.
+  */
 inline interval
 operator + (const interval &lhs, const interval &rhs)
 {
     return interval::union_(lhs, rhs);
 }
 
-
+/**
+  * The plus-and-replace operator is used to calculate the union of two
+  * intervals, and assign the result to the left-hand-side.
+  */
 inline interval &
 operator += (interval &lhs, const interval &rhs)
 {
@@ -266,14 +284,20 @@ operator += (interval &lhs, const interval &rhs)
     return lhs;
 }
 
-
+/**
+  * The binary minus operator is used to calculate the difference of two
+  * intervals.
+  */
 inline interval
 operator - (const interval &lhs, const interval &rhs)
 {
     return interval::difference(lhs, rhs);
 }
 
-
+/**
+  * The minus-and-replace operator is used to calculate the difference
+  * of two intervals, and assign the result to the left-hand-side.
+  */
 inline interval &
 operator -= (interval &lhs, const interval &rhs)
 {
@@ -281,12 +305,20 @@ operator -= (interval &lhs, const interval &rhs)
     return lhs;
 }
 
+/**
+  * The unary minus operator is used to calculate the logical complement
+  * (inverse, negative) of an interval.
+  */
 inline interval
 operator - (const interval &arg)
 {
     return (interval(0, 0) - arg);
 }
 
+/**
+  * The binary left-shift operator is used to print an interval on an
+  * output stream.
+  */
 inline ostream &
 operator << (ostream &os, const interval &val)
 {

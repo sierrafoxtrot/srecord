@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2002 Peter Miller;
+//	Copyright (C) 2001, 2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -28,23 +28,82 @@
 #include <srec/input/filter.h>
 #include <srec/record.h>
 
-class srec_input_filter_unfill: public srec_input_filter
+/**
+  * The srec_input_filter_unfill class is used to represent a filter
+  * which makes holes in the data wherever a specified data byte value
+  * appears.
+  *
+  * This is the inverse of the srec_input_filter_fill class.
+  *
+  * Usually this is used to find the actual limits of data from an
+  * extracted EPROM image; you can specify a minimum run legth of the
+  * same byte, so that you don't simply get a 1/256 reduction in density
+  * in the middle of "real" data.
+  */
+class srec_input_filter_unfill:
+    public srec_input_filter
 {
 public:
-	virtual ~srec_input_filter_unfill();
-	srec_input_filter_unfill(srec_input *, int, int);
-	virtual int read(srec_record &);
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_filter_unfill();
+
+    /**
+      * The constructor.
+      *
+      * @param deeper
+      *     The deeper input source to be filtered.
+      * @param value
+      *     The value of the bytes to be turned into holes.
+      * @param minimum
+      *     The minimum run length to be considered a hole.
+      */
+    srec_input_filter_unfill(srec_input *deeper, int value, int minimum);
+
+    // See base class for documentation.
+    virtual int read(srec_record &);
 
 private:
-	int fill_value;
-	int fill_minimum;
-	srec_record buffer;
-	int buffer_pos;
+    /**
+      * The fill_value instance variable is used to remember the value
+      * of the bytes to be turned into holes.
+      */
+    int fill_value;
 
-	// Do not use these...
-	srec_input_filter_unfill();
-	srec_input_filter_unfill(const srec_input_filter_unfill &);
-	srec_input_filter_unfill &operator=(const srec_input_filter_unfill &);
+    /**
+      * The fill_minimum instance variable is used to remember the
+      * minimum run length to be considered a hole.
+      */
+    int fill_minimum;
+
+    /**
+      * The buffer instance variable is used to remember the data
+      * that has been read from the deeper input source and is being
+      * processed to unfill certain valued bytes.
+      */
+    srec_record buffer;
+
+    /**
+      * The fill_value instance variable is used to remember where we
+      * are up to in the "bufefr" instance variable.
+      */
+    int buffer_pos;
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_filter_unfill();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_filter_unfill(const srec_input_filter_unfill &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_filter_unfill &operator=(const srec_input_filter_unfill &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILTER_UNFILL_H

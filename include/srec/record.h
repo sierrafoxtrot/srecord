@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001-2003 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001-2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -126,8 +126,14 @@ public:
       *
       * Note that you can reduce the length, but you can't increase it.
       */
-    void set_length(int arg) { if (arg < 0) arg = 0;
-	    if (arg < length) length = arg; }
+    void
+    set_length(int arg)
+    {
+	if (arg < 0)
+	    arg = 0;
+	if (arg < length)
+	    length = arg;
+    }
 
     /**
       * The get_data method is used to get a ponter to the baseof

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -28,21 +28,57 @@
 #include <srec/input/filter.h>
 #include <srec/record.h>
 
-class srec_input_filter_byte_swap: public srec_input_filter
+/**
+  * The srec_input_filter_byte_swap class is used to reverse the
+  * even-addressed and odd-addressed bytes in an input source.
+  */
+class srec_input_filter_byte_swap:
+    public srec_input_filter
 {
 public:
-	virtual ~srec_input_filter_byte_swap();
-	srec_input_filter_byte_swap(srec_input *);
-	virtual int read(srec_record &);
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_filter_byte_swap();
+
+    /**
+      * The constructor.
+      *
+      * @param deeper
+      *     The incoming data sourec to be byte-swapped.
+      */
+    srec_input_filter_byte_swap(srec_input *deeper);
+
+    //  See base class for documentation.
+    virtual int read(srec_record &);
 
 private:
-	srec_record buffer;
-	int buffer_pos;
+    /**
+      * The buffer instance variable is used to remember the data
+      * fetched from the deeper data source.
+      */
+    srec_record buffer;
+    
+    /**
+      * The buffer_pos instance variable is used to remeber the byte
+      * position within the buffer instance variable.
+      */
+    int buffer_pos;
 
-	// Do not use these...
-	srec_input_filter_byte_swap();
-	srec_input_filter_byte_swap(const srec_input_filter_byte_swap &);
-	srec_input_filter_byte_swap &operator=(const srec_input_filter_byte_swap &);
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_filter_byte_swap();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_filter_byte_swap(const srec_input_filter_byte_swap &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_filter_byte_swap &operator=(const srec_input_filter_byte_swap &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILTER_BYTE_SWAP_H

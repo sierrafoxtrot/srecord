@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001, 2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -26,10 +26,9 @@
 #include <srec/record.h>
 
 
-srec_input_filter_offset::srec_input_filter_offset(srec_input *a1,
-		unsigned long a2) :
-	srec_input_filter(a1),
-	nbytes(a2)
+srec_input_filter_offset::srec_input_filter_offset(srec_input *a1, long a2) :
+    srec_input_filter(a1),
+    nbytes(a2)
 {
 }
 
@@ -42,8 +41,18 @@ srec_input_filter_offset::~srec_input_filter_offset()
 int
 srec_input_filter_offset::read(srec_record &record)
 {
-	if (!srec_input_filter::read(record))
-		return 0;
-	record.set_address(record.get_address() + nbytes);
-	return 1;
+    if (!srec_input_filter::read(record))
+	return 0;
+    long addr = record.get_address() + nbytes;
+
+    //
+    // Cope with machines with 64-bit longs, since all the code assumes
+    // addresses are in the modulo-2**32 range.
+    //
+    // FIXME: need to cope with data records which span zero.
+    //
+    addr &= 0xFFFFFFFF;
+
+    record.set_address(addr);
+    return 1;
 }

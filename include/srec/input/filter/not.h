@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2002 Peter Miller;
+//	Copyright (C) 2001, 2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,20 +27,45 @@
 
 #include <srec/input/filter.h>
 
-class srec_input_filter_not: public srec_input_filter
+/**
+  * The srec_input_filter_not class is used to represent an input stream
+  * which bit-wise NOTs the data.
+  */
+class srec_input_filter_not:
+    public srec_input_filter
 {
 public:
-	virtual ~srec_input_filter_not();
-	srec_input_filter_not(srec_input *);
-	virtual int read(srec_record &);
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_filter_not();
+
+    /**
+      * The constructor.
+      *
+      * @param deeper
+      *     The input source to be filtered.
+      */
+    srec_input_filter_not(srec_input *);
+
+    // See base class for documentation.
+    virtual int read(srec_record &);
 
 private:
-	int value;
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_filter_not();
 
-	// Do not use these...
-	srec_input_filter_not();
-	srec_input_filter_not(const srec_input_filter_not &);
-	srec_input_filter_not &operator=(const srec_input_filter_not &);
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_filter_not(const srec_input_filter_not &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_filter_not &operator=(const srec_input_filter_not &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILTER_NOT_H

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2003 Peter Miller;
+//	Copyright (C) 2000-2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,6 +27,10 @@
 
 #include <srec/input/filter.h>
 
+/**
+  * The srec_input_filter_crc16 class is used to represent the state of
+  * a checksum filter that inserts a CRC16 into the data.
+  */
 class srec_input_filter_crc16:
     public srec_input_filter
 {

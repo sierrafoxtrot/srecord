@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2003 Peter Miller;
+//	Copyright (C) 2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -57,9 +57,29 @@ public:
     int preferred_block_size_get() const;
 
 private:
+    /**
+      * The address instance variable is used to remember where in the
+      * file the output has reached.  This is used to fill gaps.
+      */
     unsigned long address;
+
+    /**
+      * The column instance variable is used to remember the column of
+      * the output text we have reached.  This is used when calculating
+      * when to throw new lines.
+      */
     int column;
+
+    /**
+      * The pref_block_size instance variable is used to remember The
+      * preferred line length of the output text.
+      */
     int pref_block_size;
+
+    /**
+      * The address_length instance variable is used to remember the
+      * minimum number of bytes to use for addresses in the output text.
+      */
     int address_length;
 
     /**

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002 Peter Miller;
+//	Copyright (C) 2000, 2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -34,56 +34,59 @@ srec_memory_walker_compare::~srec_memory_walker_compare()
 
 
 srec_memory_walker_compare::srec_memory_walker_compare(const srec_memory &a1,
-		bool a2)
-	: other(a1),
-	  check_wrong(a2)
+	bool a2) :
+    other(a1),
+    check_wrong(a2)
 {
 }
 
 
 void
 srec_memory_walker_compare::observe(unsigned long addr, const void *p,
-	int len)
+    int len)
 {
-	interval wrongTemp;
-	interval unsetTemp;
+    interval wrongTemp;
+    interval unsetTemp;
 
-	unsigned char *data = (unsigned char *)p;
-	for (int j = 0; j < len; ++j)
+    unsigned char *data = (unsigned char *)p;
+    for (int j = 0; j < len; ++j)
+    {
+	if (other.set_p(addr + j))
 	{
-		if (other.set_p(addr + j))
-		{
-			if (check_wrong && data[j] != other.get(addr + j))
-				wrongTemp += interval(addr + j);
-		}
-		else
-			unsetTemp += interval(addr + j);
+    	    if (check_wrong && data[j] != other.get(addr + j))
+       		wrongTemp += interval(addr + j);
 	}
+	else
+    	    unsetTemp += interval(addr + j);
+    }
 
-	wrong += wrongTemp;
-	unset += unsetTemp;
+    wrong += wrongTemp;
+    unset += unsetTemp;
 }
 
 
 void
 srec_memory_walker_compare::print(const char *caption)
+    const
 {
-	ios::fmtflags old =
-	    cout.setf
-	    (
-		static_cast<ios::fmtflags>(ios::showbase + ios::hex),
-		static_cast<ios::fmtflags>(ios::showbase + ios::hex + ios::dec + ios::oct)
-	    );
-	if (!wrong.empty())
-		cout << "Different:\t" << wrong << endl;
-	if (!unset.empty())
-		cout << caption << " only:\t" << unset << endl;
-	cout.flags(old);
+    ios::fmtflags old =
+	cout.setf
+	(
+	    static_cast<ios::fmtflags>(ios::showbase + ios::hex),
+	    static_cast<ios::fmtflags>(ios::showbase + ios::hex + ios::dec +
+		ios::oct)
+	);
+    if (!wrong.empty())
+	    cout << "Different:\t" << wrong << endl;
+    if (!unset.empty())
+	    cout << caption << " only:\t" << unset << endl;
+    cout.flags(old);
 }
 
 
 bool
 srec_memory_walker_compare::same()
+    const
 {
     return (wrong.empty() && unset.empty());
 }
