@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998-2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -223,6 +223,16 @@ srec_input_file::get_word()
 	int b1 = get_byte();
 	int b2 = get_byte();
 	return ((b1 << 8) | b2);
+}
+
+
+unsigned long
+srec_input_file::get_3bytes()
+{
+	unsigned long b1 = get_byte();
+	unsigned long b2 = get_byte();
+	unsigned long b3 = get_byte();
+	return ((((b1  << 8) | b2) << 8) | b3);
 }
 
 

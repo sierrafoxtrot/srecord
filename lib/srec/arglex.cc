@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
+ *	Copyright (C) 1998-2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -26,6 +26,7 @@
 
 #include <srec/arglex.h>
 #include <srec/input/file/ascii_hex.h>
+#include <srec/input/file/atmel_generic.h>
 #include <srec/input/file/binary.h>
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
@@ -68,6 +69,9 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-AND",	token_and,		},
 		{ "-Ascii_Hexadecimal",	token_ascii_hex, },
 		{ "-Ascii_Space_Hexadecimal", token_ascii_hex, },
+		{ "-Atmel_Generic",	token_atmel_generic_le,	 },
+		{ "-Atmel_Generic_BigEndian", token_atmel_generic_be, },
+		{ "-Atmel_Generic_LittleEndian", token_atmel_generic_le, },
 		{ "-Big_Endian_Checksum", token_checksum_be_bitnot, },
 		{ "-Big_Endian_Checksum_BitNot", token_checksum_be_bitnot, },
 		{ "-Big_Endian_Checksum_Negative", token_checksum_be_negative, },
@@ -360,6 +364,16 @@ srec_arglex::get_input()
 	case token_ascii_hex:
 		token_next();
 		ifp = new srec_input_file_ascii_hex(fn);
+		break;
+
+	case token_atmel_generic_be:
+		token_next();
+		ifp = new srec_input_file_atmel_generic(fn, true);
+		break;
+
+	case token_atmel_generic_le:
+		token_next();
+		ifp = new srec_input_file_atmel_generic(fn, false);
 		break;
 
 	case token_guess:

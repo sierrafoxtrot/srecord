@@ -17,41 +17,42 @@
 .\"	along with this program; if not, write to the Free Software
 .\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: manual entry for the srec_spasm.5 command
+.\" MANIFEST: manual entry for the srec_atmel_generic.5 command
 .\"
-.ds n) srec_spasm
+.ds n) srec_atmel_generic.5
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
-srec_spasm \- SPASM file format
-.XX "srec_spasm(5)" "SPASM file format"
+srec_atmel_generic \- Atmel Generic file format
+.XX "srec_atmel_generic(5)" "Atmel Generic file format"
 .SH DESCRIPTION
-This format is the output of the Paralax SPASM assembler
-(now defunct, I'm told).
-The file contains two columns of 16-bit hexadecimal coded values.
-The first column is the word address, the second column is the word data.
+This format is the output of the Atmel AVR assembler.
+The file contains two columns of hexadecimal coded values.
+The first column is the 24-bit word address,
+the second column is the 16-bit word data.
+The columns are separated by a colon (`:') character.
 .PP
-By default, SRecord treats this is big-endian data (the most
-significant byte first).  If you want little endian order,
-use the \-spasm-le argument instead.
+By default, SRecord treats this is little-endian data (the least
+significant byte first).  If you want big endian order,
+use the \-atmel-generic-be argument instead.
 .SS Size Multiplier
-In general, binary data will expand in sized by approximately 5.0 times
-when represented with this format (5.5 times in Windows).
+In general, binary data will expand in sized by approximately 6.0 times
+when represented with this format (6.5 times in Windows).
 .\" ------------------------------------------------------------------------
 .br
 .ne 2i
 .SH EXAMPLE
-Here is an example SPASM file.
+Here is an example Atmel Generic file.
 It contains the data ``Hello, World'' to be loaded at bytes address 0x0100
 (but remember, the file contents are word addressed).
 .RS
 .nf
 .ft CW
-0080 6548
-0081 6C6C
-0082 2C6F
-0083 5720
-0084 726F
-0085 646C
+000080:4865
+000081:6C6C
+000082:6F2C
+000083:2057
+000084:6F72
+000085:6C64
 .ft P
 .fi
 .RE

@@ -17,17 +17,17 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  *
- * MANIFEST: functions to impliment the srec_input_file_spasm class
+ * MANIFEST: functions to impliment the srec_input_file_atmel_generic class
  */
 
-#pragma implementation "srec_input_file_spasm"
+#pragma implementation "srec_input_file_atmel_generic"
 
-#include <srec/input/file/spasm.h>
+#include <srec/input/file/atmel_generic.h>
 #include <ctype.h>
 #include <srec/record.h>
 
 
-srec_input_file_spasm::srec_input_file_spasm(const char *filename, bool arg2) :
+srec_input_file_atmel_generic::srec_input_file_atmel_generic(const char *filename, bool arg2) :
 	srec_input_file(filename),
 	seen_some_input(false),
 	bigend(arg2)
@@ -35,20 +35,20 @@ srec_input_file_spasm::srec_input_file_spasm(const char *filename, bool arg2) :
 }
 
 
-srec_input_file_spasm::~srec_input_file_spasm()
+srec_input_file_atmel_generic::~srec_input_file_atmel_generic()
 {
 }
 
 
 int
-srec_input_file_spasm::read_inner(srec_record &record)
+srec_input_file_atmel_generic::read_inner(srec_record &record)
 {
 	if (peek_char() < 0)
 		return 0;
 
-	int address = get_word();
-	if (get_char() != ' ')
-		fatal_error("space expected");
+	int address = get_3bytes();
+	if (get_char() != ':')
+		fatal_error("colon expected");
 	unsigned char data[2];
 	data[bigend] = get_byte();
 	data[!bigend] = get_byte();
@@ -59,7 +59,7 @@ srec_input_file_spasm::read_inner(srec_record &record)
 		srec_record
 		(
 			srec_record::type_data,
-			address * 2,			// is this right??
+			address * 2,
 			data,
 			2
 		);
@@ -68,7 +68,7 @@ srec_input_file_spasm::read_inner(srec_record &record)
 
 
 int
-srec_input_file_spasm::read(srec_record &record)
+srec_input_file_atmel_generic::read(srec_record &record)
 {
 	if (!read_inner(record))
 	{
@@ -82,8 +82,8 @@ srec_input_file_spasm::read(srec_record &record)
 
 
 const char *
-srec_input_file_spasm::get_file_format_name()
+srec_input_file_atmel_generic::get_file_format_name()
 	const
 {
-	return (bigend ? "SPASM (big-endian)" : "SPASM (little-endian)");
+	return (bigend ? "Atmel Generic (big-endian)" : "Atmel Generic (little-endian)");
 }

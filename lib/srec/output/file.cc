@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998-2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -149,6 +149,15 @@ srec_output_file::put_byte(int n)
 void
 srec_output_file::put_word(int n)
 {
+	put_byte(n >> 8);
+	put_byte(n);
+}
+
+
+void
+srec_output_file::put_3bytes(unsigned long n)
+{
+	put_byte(n >> 16);
 	put_byte(n >> 8);
 	put_byte(n);
 }

@@ -17,16 +17,16 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  *
- * MANIFEST: functions to impliment the srec_output_file_spasm class
+ * MANIFEST: functions to impliment the srec_output_file_atmel_generic class
  */
 
-#pragma implementation "srec_output_file_spasm"
+#pragma implementation "srec_output_file_atmel_generic"
 
-#include <srec/output/file/spasm.h>
+#include <srec/output/file/atmel_generic.h>
 #include <srec/record.h>
 
 
-srec_output_file_spasm::srec_output_file_spasm(const char *filename,
+srec_output_file_atmel_generic::srec_output_file_atmel_generic(const char *filename,
 		bool endianness) :
 	srec_output_file(filename),
 	bigend(endianness)
@@ -34,13 +34,13 @@ srec_output_file_spasm::srec_output_file_spasm(const char *filename,
 }
 
 
-srec_output_file_spasm::~srec_output_file_spasm()
+srec_output_file_atmel_generic::~srec_output_file_atmel_generic()
 {
 }
 
 
 void
-srec_output_file_spasm::write(const srec_record &record)
+srec_output_file_atmel_generic::write(const srec_record &record)
 {
 	if (record.get_type() != srec_record::type_data)
 		return;
@@ -49,8 +49,8 @@ srec_output_file_spasm::write(const srec_record &record)
 	int j = 0;
 	if (address & 1)
 	{
-		put_word(address++ / 2);
-		put_char(' ');
+		put_3bytes(address++ / 2);
+		put_char(':');
 		if (bigend)
 		{
 			put_byte(record.get_data(j++));
@@ -66,8 +66,8 @@ srec_output_file_spasm::write(const srec_record &record)
 
 	while (j + 1 < record.get_length())
 	{
-		put_word(address / 2);
-		put_char(' ');
+		put_3bytes(address / 2);
+		put_char(':');
 		if (bigend)
 		{
 			put_byte(record.get_data(j + 1));
@@ -85,8 +85,8 @@ srec_output_file_spasm::write(const srec_record &record)
 
 	if (j < record.get_length())
 	{
-		put_word(address / 2);
-		put_char(' ');
+		put_3bytes(address / 2);
+		put_char(':');
 		if (bigend)
 		{
 			put_byte(0xFF);
@@ -103,7 +103,7 @@ srec_output_file_spasm::write(const srec_record &record)
 
 
 void
-srec_output_file_spasm::line_length_set(int)
+srec_output_file_atmel_generic::line_length_set(int)
 {
 	/*
 	 * Irrelevant.  Ignore.
@@ -112,7 +112,7 @@ srec_output_file_spasm::line_length_set(int)
 
 
 void
-srec_output_file_spasm::address_length_set(int)
+srec_output_file_atmel_generic::address_length_set(int)
 {
 	/*
 	 * Irrelevant.  Ignore.
@@ -121,7 +121,7 @@ srec_output_file_spasm::address_length_set(int)
 
 
 int
-srec_output_file_spasm::preferred_block_size_get()
+srec_output_file_atmel_generic::preferred_block_size_get()
 	const
 {
 	/*

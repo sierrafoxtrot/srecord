@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
+.\"	Copyright (C) 1998-2001 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -42,6 +42,12 @@ The format specified are:
 This option says to use the Ascii-Hex format to read the file.
 See
 .IR srec_ascii_hex (5)
+for a description of this file format.
+.TP 8n
+\fB\-Atmel_Generic\fP
+This option says to use the Atmel Generic format to read the file.
+See
+.IR srec_atmel_genetic (5)
 for a description of this file format.
 .TP 8n
 \fB\-Binary\fP

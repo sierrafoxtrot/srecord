@@ -22,6 +22,7 @@
 
 #include <quit/exception.h>
 #include <srec/input/file/ascii_hex.h>
+#include <srec/input/file/atmel_generic.h>
 #include <srec/input/file/binary.h>
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
@@ -39,6 +40,12 @@ static srec_input *
 create_ascii_hex(const char *fn)
 {
 	return new srec_input_file_ascii_hex(fn);
+}
+
+static srec_input *
+create_atmel_generic(const char *fn)
+{
+	return new srec_input_file_atmel_generic(fn);
 }
 
 static srec_input *
@@ -95,6 +102,7 @@ typedef srec_input *(*func_p)(const char *);
 static func_p table[] =
 {
 	create_ascii_hex,
+	create_atmel_generic,
 	create_intel,
 	create_mos_tech,
 	create_spasm,

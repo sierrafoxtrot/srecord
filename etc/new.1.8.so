@@ -22,6 +22,11 @@
 .PP
 .if n *
 .if t \(bu
+.\" change 19
+There is a new Atmel Generic format for Atmel AVR programmers.
+.PP
+.if n *
+.if t \(bu
 .\" change 15
 A bug has been fixed in the checksum calculations for the Tektronix format.
 .PP

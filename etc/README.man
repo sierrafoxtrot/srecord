@@ -43,6 +43,10 @@ Ascii-Hex
 The ascii-hex format is understood for both reading and writing.
 (Also known as the ascii-space-hex format.)
 .TP 8n
+Atmel Generic
+This format is produced by the Atmel AVR assembler.
+It is understood for both reading and writing.
+.TP 8n
 Binary
 Binary files can both be read and written.
 .TP 8n

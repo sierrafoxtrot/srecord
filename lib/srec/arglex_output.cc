@@ -24,6 +24,7 @@
 
 
 #include <srec/output/file/ascii_hex.h>
+#include <srec/output/file/atmel_generic.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/c.h>
 #include <srec/output/file/vhdl.h>
@@ -88,6 +89,16 @@ srec_arglex::get_output()
 	case token_ascii_hex:
 		token_next();
 		ofp = new srec_output_file_ascii_hex(fn);
+		break;
+
+	case token_atmel_generic_be:
+		token_next();
+		ofp = new srec_output_file_atmel_generic(fn, true);
+		break;
+
+	case token_atmel_generic_le:
+		token_next();
+		ofp = new srec_output_file_atmel_generic(fn, false);
 		break;
 
 	case token_intel:
