@@ -32,6 +32,7 @@
 #include <srec/input/file/intel.h>
 #include <srec/input/file/mos_tech.h>
 #include <srec/input/file/four_packed_code.h>
+#include <srec/input/file/signetics.h>
 #include <srec/input/file/spasm.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix.h>
@@ -109,6 +110,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-OVer",	token_over,		},
 		{ "-RAw",	token_binary,		},
 		{ "-Four_Packed_Code", token_four_packed_code, },
+		{ "-SIGnetics",	token_signetics,	},
 		{ "-SPAsm",	token_spasm_be,		}, // is this right?
 		{ "-SPAsm_BigEndian", token_spasm_be,	},
 		{ "-SPAsm_LittleEndian", token_spasm_le, },
@@ -396,6 +398,11 @@ srec_arglex::get_input()
 	case token_four_packed_code:
 		token_next();
 		ifp = new srec_input_file_four_packed_code(fn);
+		break;
+
+	case token_signetics:
+		token_next();
+		ifp = new srec_input_file_signetics(fn);
 		break;
 
 	case token_spasm_be:

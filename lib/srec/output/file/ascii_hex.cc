@@ -100,7 +100,7 @@ srec_output_file_ascii_hex::write(const srec_record &record)
 				width = 3;
 			if (width < address_length)
 				width = address_length;
-			put_stringf("$A%0*X,\n", width * 2, address);
+			put_stringf("$A%0*lX,\n", width * 2, address);
 			column = 0;
 		}
 		for (int j = 0; j < record.get_length(); ++j)

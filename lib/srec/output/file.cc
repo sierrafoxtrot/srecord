@@ -53,8 +53,11 @@ srec_output_file::mode()
 }
 
 
-srec_output_file::srec_output_file(const char *fn)
-	: file_name(fn), line_number(1), vfp(0), checksum(0)
+srec_output_file::srec_output_file(const char *fn) :
+	file_name(fn),
+	line_number(1),
+	vfp(0),
+	checksum(0)
 {
 	if (file_name == string("-"))
 	{
@@ -181,6 +184,12 @@ void
 srec_output_file::checksum_reset()
 {
 	checksum = 0;
+}
+
+void
+srec_output_file::checksum_add(unsigned char n)
+{
+	checksum += n;
 }
 
 

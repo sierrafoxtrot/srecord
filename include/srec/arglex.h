@@ -77,6 +77,7 @@ public:
 		token_four_packed_code,
 		token_paren_begin,
 		token_paren_end,
+		token_signetics,
 		token_spasm_be,
 		token_spasm_le,
 		token_split,

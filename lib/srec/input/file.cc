@@ -271,6 +271,13 @@ srec_input_file::checksum_reset()
 
 
 void
+srec_input_file::checksum_add(unsigned char n)
+{
+	checksum += n;
+}
+
+
+void
 srec_input_file::seek_to_end()
 {
 	FILE *fp = (FILE *)get_fp();

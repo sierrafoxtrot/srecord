@@ -27,6 +27,7 @@
 
 #include <stdarg.h>
 #include <string>
+#include <format_printf.h>
 
 class srec_record; // forward
 
@@ -43,11 +44,14 @@ public:
 	virtual void address_length_set(int) = 0;
 	virtual int preferred_block_size_get() const = 0;
 
-	virtual void fatal_error(const char *, ...) const;
+	virtual void fatal_error(const char *, ...) const
+							    FORMAT_PRINTF(2, 3);
 	virtual void fatal_error_v(const char *, va_list) const;
-	virtual void fatal_error_errno(const char *, ...) const;
+	virtual void fatal_error_errno(const char *, ...) const
+							    FORMAT_PRINTF(2, 3);
 	virtual void fatal_error_errno_v(const char *, va_list) const;
-	virtual void warning(const char *, ...) const;
+	virtual void warning(const char *, ...) const
+							    FORMAT_PRINTF(2, 3);
 	virtual void warning_v(const char *, va_list) const;
 
 	virtual const string filename() const = 0;

@@ -22,8 +22,15 @@
 .PP
 .if n *
 .if t \(bu
+.\" change 22
+The Signetics format
+is now understood for both reading and writing.
+.PP
+.if n *
+.if t \(bu
 .\" change 21
-There is a new Four Packed Code (FPC) format.
+The Four Packed Code (FPC) format
+is now understood for both reading and writing.
 .PP
 .if n *
 .if t \(bu
@@ -33,7 +40,8 @@ Wherever possible, header data is now passed through by \fIsrec_cat\fP(1).
 .if n *
 .if t \(bu
 .\" change 19
-There is a new Atmel Generic format for Atmel AVR programmers.
+The Atmel Generic format for Atmel AVR programmers
+is now understood for both reading and writing.
 .PP
 .if n *
 .if t \(bu

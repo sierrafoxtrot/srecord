@@ -71,6 +71,9 @@ and writing.
 Four Packed Code (FPC)
 The FPC format is understood for both reading and writing.
 .TP 8n
+Signetics
+The Signetics format is understood for both reading and writing.
+.TP 8n
 SPASM
 The SPASM format is used by a variety of PIC programmers; it is understood
 for both reading and writing.

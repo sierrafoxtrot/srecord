@@ -149,7 +149,7 @@ protected:
 	  * The checksum_add method is used to add another 8-bit value
 	  * to the running checksum.
 	  */
-	void checksum_add(int n) { checksum += (unsigned char)n; }
+	virtual void checksum_add(unsigned char n);
 
 	/**
 	  * The checksum_rest method is used to set the running checksum
@@ -206,6 +206,7 @@ private:
 	  */
 	void *vfp;
 
+protected:
 	/**
 	  * The checksum instance variable is used record the running
 	  * checksum.  NEVER access this variable directly.  Always use
@@ -216,6 +217,7 @@ private:
 	  */
 	int checksum;
 
+private:
 	/**
 	  * The is_text instance variable is used remember if a file mode
 	  * is text (true) or binary (false).  This information is  used

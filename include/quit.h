@@ -26,26 +26,109 @@
 #pragma interface "quit"
 
 #include <stdarg.h>
+#include <format_printf.h>
 
+/**
+  * The quit class is an abstract class for reporting error messages,
+  * both fatal and non-fatal.
+  */
 class quit
 {
 public:
+	/**
+	  * The destructor.
+	  */
 	virtual ~quit();
+
+	/**
+	  * The default constructor.
+	  */
 	quit();
+
+	/**
+	  * The copy constructor.
+	  */
 	quit(const quit &);
+
+	/**
+	  * The assignment operator.
+	  */
 	quit &operator=(const quit &);
 
-	virtual void fatal_error(const char *, ...);
+	/**
+	  * The fatal_error method is used to report fatal errors.
+	  * The `fmt' string is in the same style a standard C printf
+	  * function.  It calls the fatal_error_v method.  This method
+	  * does not return.
+	  */
+	virtual void fatal_error(const char *fmt, ...)
+							    FORMAT_PRINTF(2, 3);
+	/**
+	  * The fatal_error_v method is used to report fatal errors.
+	  * The `fmt' string is in the same style a standard C vprintf
+	  * function.  It calls the message_v and exit methods.
+	  * This method does not return.
+	  */
 	virtual void fatal_error_v(const char *, va_list);
-	virtual void fatal_error_errno(const char *, ...);
+
+	/**
+	  * The fatal_error_errno method is used to report fatal errors,
+	  * and append the string equivalent of errno.	The `fmt' string
+	  * is in the same style a standard C printf function.	It calls
+	  * the fatal_error_errno_v method.  This method does not return.
+	  */
+	virtual void fatal_error_errno(const char *, ...)
+							    FORMAT_PRINTF(2, 3);
+	/**
+	  * The fatal_error_errno_v method is used to report fatal
+	  * errors.  The `fmt' string is in the same style a standard C
+	  * vprintf function.  It calls the message_v and exit methods.
+	  * This method does not return.
+	  */
 	virtual void fatal_error_errno_v(const char *, va_list);
-	virtual void warning(const char *, ...);
+
+	/**
+	  * The warning method is used to likely but non-fatal errors.
+	  * The `fmt' string is in the same style a standard C printf
+	  * function.  It calls the warning_v method.
+	  */
+	virtual void warning(const char *, ...)
+							    FORMAT_PRINTF(2, 3);
+	/**
+	  * The warning_v method is used to report likely but non-fatal
+	  * errors.  The `fmt' string is in the same style a standard
+	  * C vprintf function.  It calls the message_v method.
+	  */
 	virtual void warning_v(const char *, va_list);
-	virtual void message(const char *, ...);
+
+	/**
+	  * The message method is used to send an error message to a
+	  * suitable destination.  The `fmt' string is in the same style
+	  * a standard C printf function.  The message_v method is called.
+	  */
+	virtual void message(const char *, ...)
+							    FORMAT_PRINTF(2, 3);
+	/**
+	  * The message_v method is used to send an error message to
+	  * a suitable destination.  The `fmt' string is in the same
+	  * style a standard C vprintf function.  Derived classes are
+	  * required to supply this method.
+	  */
 	virtual void message_v(const char *, va_list) = 0;
+
+	/**
+	  * The exit method is used to terminate execution.  It could
+	  * call the ::exit function, or it could throw an exception, or
+	  * some other action, but it shall NOT return.  Derived classes
+	  * are required to supply this method.
+	  */
 	virtual void exit(int) = 0;
 };
 
+/**
+  * The quit_default variable is a reference to a quit implementation.
+  * It should be used unless there is a good reason not to.
+  */
 extern quit &quit_default;
 
 #endif /* INCLUDE_QUIT_H */
