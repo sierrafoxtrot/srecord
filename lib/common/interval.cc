@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: functions to impliment the interval class
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 1998-2000, 2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: functions to impliment the interval class
+//
 
 #pragma implementation "interval"
 
@@ -27,25 +27,25 @@
 using namespace std;
 
 
-/*
- * NAME
- *	interval_create_empty - create an empty interval
- *
- * SYNOPSIS
- *	interval_ty *interval_create_empty(void);
- *
- * DESCRIPTION
- *	The interval_create_empty function is used to create
- *	an empty interval.
- *
- * RETURNS
- *	a pointer to the new interval in dynamic memory
- *
- * CAVEAT
- *	It is the responsibility of the caller to release the
- *	interval to dynamic memory when no longer required.
- *	Use the interval_free function for this purpose.
- */
+//
+// NAME
+//	interval_create_empty - create an empty interval
+//
+// SYNOPSIS
+//	interval_ty *interval_create_empty(void);
+//
+// DESCRIPTION
+//	The interval_create_empty function is used to create
+//	an empty interval.
+//
+// RETURNS
+//	a pointer to the new interval in dynamic memory
+//
+// CAVEAT
+//	It is the responsibility of the caller to release the
+//	interval to dynamic memory when no longer required.
+//	Use the interval_free function for this purpose.
+//
 
 interval::interval()
 {
@@ -54,7 +54,7 @@ interval::interval()
 	scan_index = 0;
 	scan_next_datum = 0;
 	data = 0;
-	/* assert(valid()); */
+	// assert(valid());
 }
 
 
@@ -67,29 +67,29 @@ promote(interval::data_t datum, size_t pos)
 }
 
 
-/*
- * NAME
- *	interval_create_range - create a single range interval
- *
- * SYNOPSIS
- *	interval_ty *interval_create_range(interval_data_ty first, interval_data_ty last);
- *
- * DESCRIPTION
- *	The interval_create_range function is used to create an interval
- *	consisting of a single range, from first to last inclusive.
- *
- * ARGUMENTS
- *	first	- the start of the range
- *	last	- the end of the range (inclusive)
- *
- * RETURNS
- *	a pointer to the new interval in dynamic memory
- *
- * CAVEAT
- *	It is the responsibility of the caller to release the
- *	interval to dynamic memory when no longer required.
- *	Use the interval_free function for this purpose.
- */
+//
+// NAME
+//	interval_create_range - create a single range interval
+//
+// SYNOPSIS
+//	interval_ty *interval_create_range(interval_data_ty first, interval_data_ty last);
+//
+// DESCRIPTION
+//	The interval_create_range function is used to create an interval
+//	consisting of a single range, from first to last inclusive.
+//
+// ARGUMENTS
+//	first	- the start of the range
+//	last	- the end of the range (inclusive)
+//
+// RETURNS
+//	a pointer to the new interval in dynamic memory
+//
+// CAVEAT
+//	It is the responsibility of the caller to release the
+//	interval to dynamic memory when no longer required.
+//	Use the interval_free function for this purpose.
+//
 
 interval::interval(data_t first, data_t last)
 {
@@ -109,7 +109,7 @@ interval::interval(data_t first, data_t last)
 		data[1] = first;
 	}
 	data[2] = 2;
-	/* assert(valid()); */
+	// assert(valid());
 }
 
 interval::interval(data_t first)
@@ -122,13 +122,13 @@ interval::interval(data_t first)
 	data[0] = first;
 	data[1] = first + 1;
 	data[2] = 2;
-	/* assert(valid()); */
+	// assert(valid());
 }
 
 
 interval::interval(const interval &arg)
 {
-	/* assert(arg.valid()); */
+	// assert(arg.valid());
 	length = arg.length;
 	size = length;
 	scan_index = 0;
@@ -141,7 +141,7 @@ interval::interval(const interval &arg)
 	}
 	else
 		data = 0;
-	/* assert(valid()); */
+	// assert(valid());
 }
 
 
@@ -150,7 +150,7 @@ interval::operator=(const interval &arg)
 {
 	if (data)
 		delete data;
-	/* assert(arg.valid()); */
+	// assert(arg.valid());
 	length = arg.length;
 	size = length;
 	scan_index = 0;
@@ -163,56 +163,56 @@ interval::operator=(const interval &arg)
 	}
 	else
 		data = 0;
-	/* assert(valid()); */
+	// assert(valid());
 	return *this;
 }
 
 
-/*
- * NAME
- *	interval_free - release interval memory
- *
- * SYNOPSIS
- *	void interval_free(interval_ty *ip);
- *
- * DESCRIPTION
- *	The interval_free function is used to release the dynamic
- *	memory used by an interval back to the dynamic memory pool.
- *
- * ARGUMENTS
- *	ip	- the interval to release
- */
+//
+// NAME
+//	interval_free - release interval memory
+//
+// SYNOPSIS
+//	void interval_free(interval_ty *ip);
+//
+// DESCRIPTION
+//	The interval_free function is used to release the dynamic
+//	memory used by an interval back to the dynamic memory pool.
+//
+// ARGUMENTS
+//	ip	- the interval to release
+//
 
 interval::~interval()
 {
-	/* assert(valid()); */
+	// assert(valid());
 	if (data)
 		delete data;
 }
 
 
-/*
- * NAME
- *	interval_valid - internal consistency check
- *
- * SYNOPSIS
- *	int interval_valid(interval_ty *ip);
- *
- * DESCRIPTION
- *	The interval_valid function is used to check the internal
- *	consistency of an interval.
- *
- * ARGUMENTS
- *	ip	- pointer to interval to check
- *
- * RETURNS
- *	int	1 if interval is valid
- *		0 if interval is not valid
- *
- * CAVEAT
- *	This function is only available if DEBUG is defined,
- *	and is intended for use in assert() statements.
- */
+//
+// NAME
+//	interval_valid - internal consistency check
+//
+// SYNOPSIS
+//	int interval_valid(interval_ty *ip);
+//
+// DESCRIPTION
+//	The interval_valid function is used to check the internal
+//	consistency of an interval.
+//
+// ARGUMENTS
+//	ip	- pointer to interval to check
+//
+// RETURNS
+//	int	1 if interval is valid
+//		0 if interval is not valid
+//
+// CAVEAT
+//	This function is only available if DEBUG is defined,
+//	and is intended for use in assert() statements.
+//
 
 bool
 interval::valid()
@@ -229,10 +229,10 @@ interval::valid()
 	if (data[length] != length)
 		return false;
 
-	/*
-	 * As a special case, an upper bound of zero means
-	 * positive infinity.  It has to be the last one.
-	 */
+	//
+	// As a special case, an upper bound of zero means
+	// positive infinity.  It has to be the last one.
+	//
 	size_t max = length;
 	if (data[max - 1] == 0)
 		--max;
@@ -244,43 +244,39 @@ interval::valid()
 }
 
 
-/*
- * NAME
- *	append - append datum to interval data
- *
- * SYNOPSIS
- *	void append _((interval_ty **ipp, interval_data_ty datum));
- *
- * DESCRIPTION
- *	The append function is used to append a datum to
- *	the end of an interval under construction.
- *	
- * ARGUMENTS
- *	ipp	- pointer to inerval pointer.
- *	datum	- value to append.
- *
- * CAVEAT
- *	The interval may move in dynamic memory, with is why ** is used.
- *	The interval will need to be normalized before you
- *	next use interval_valid.
- */
+//
+// NAME
+//	append - append datum to interval data
+//
+// SYNOPSIS
+//	void append _((interval_ty **ipp, interval_data_ty datum));
+//
+// DESCRIPTION
+//	The append function is used to append a datum to
+//	the end of an interval under construction.
+//
+// ARGUMENTS
+//	ipp	- pointer to inerval pointer.
+//	datum	- value to append.
+//
+// CAVEAT
+//	The interval may move in dynamic memory, with is why ** is used.
+//	The interval will need to be normalized before you
+//	next use interval_valid.
+//
 
 void
 interval::append(data_t datum)
 {
-	/*
-	 * should always be increasing
-	 */
-	/* assert
-	(
-		length < 1
-	||
-		promote(datum, length) >= promote(data[length - 1], length - 1)
-	); */
+	//
+	// should always be increasing
+	//
+	// assert(length < 1 || promote(datum, length) >=
+	//	promote(data[length - 1], length - 1));
 
-	/*
-	 * make it larger if necessary
-	 */
+	//
+	// make it larger if necessary
+	//
 	if (length >= size)
 	{
 		size = size * 2 + 8;
@@ -294,14 +290,14 @@ interval::append(data_t datum)
 		data = tmp;
 	}
 
-	/*
-	 * remeber the datum
-	 */
+	//
+	// remeber the datum
+	//
 	data[length++] = datum;
 
-	/*
-	 * elide empty sequences
-	 */
+	//
+	// elide empty sequences
+	//
 	if
 	(
 		length >= 2
@@ -312,35 +308,35 @@ interval::append(data_t datum)
 }
 
 
-/*
- * NAME
- *	interval_union - union of two intervals
- *
- * SYNOPSIS
- *	interval_ty *interval_union(interval_ty *left, interval_ty *right);
- *
- * DESCRIPTION
- *	The interval_union function is used to form the
- *	union of two intervals.
- *
- * ARGUMENTS
- *	left	- interval to be unioned with
- *	right	- another interval
- *
- * RETURNS
- *	a pointer to the new interval in dynamic memory
- *
- * CAVEAT
- *	It is the responsibility of the caller to release the
- *	interval to dynamic memory when no longer required.
- *	Use the interval_free function for this purpose.
- */
+//
+// NAME
+//	interval_union - union of two intervals
+//
+// SYNOPSIS
+//	interval_ty *interval_union(interval_ty *left, interval_ty *right);
+//
+// DESCRIPTION
+//	The interval_union function is used to form the
+//	union of two intervals.
+//
+// ARGUMENTS
+//	left	- interval to be unioned with
+//	right	- another interval
+//
+// RETURNS
+//	a pointer to the new interval in dynamic memory
+//
+// CAVEAT
+//	It is the responsibility of the caller to release the
+//	interval to dynamic memory when no longer required.
+//	Use the interval_free function for this purpose.
+//
 
 interval
 interval::union_(const interval &left, const interval &right)
 {
-	/* assert(left.valid()); */
-	/* assert(right.valid()); */
+	// assert(left.valid());
+	// assert(right.valid());
 	interval result;
 	size_t left_pos = 0;
 	size_t right_pos = 0;
@@ -387,40 +383,40 @@ interval::union_(const interval &left, const interval &right)
 	}
 	if (result.length)
 		result.data[result.length] = result.length;
-	/* assert(result.valid()); */
+	// assert(result.valid());
 	return result;
 }
 
 
-/*
- * NAME
- *	interval_intersection - intersection of two intervals
- *
- * SYNOPSIS
- *	interval_ty *interval_intersection(interval_ty *left, interval_ty *right);
- *
- * DESCRIPTION
- *	The interval_intersection function is used to form the
- *	intersection of two intervals.
- *
- * ARGUMENTS
- *	left	- interval to be intersected with
- *	right	- another interval
- *
- * RETURNS
- *	a pointer to the new interval in dynamic memory
- *
- * CAVEAT
- *	It is the responsibility of the caller to release the
- *	interval to dynamic memory when no longer required.
- *	Use the interval_free function for this purpose.
- */
+//
+// NAME
+//	interval_intersection - intersection of two intervals
+//
+// SYNOPSIS
+//	interval_ty *interval_intersection(interval_ty *left, interval_ty *right);
+//
+// DESCRIPTION
+//	The interval_intersection function is used to form the
+//	intersection of two intervals.
+//
+// ARGUMENTS
+//	left	- interval to be intersected with
+//	right	- another interval
+//
+// RETURNS
+//	a pointer to the new interval in dynamic memory
+//
+// CAVEAT
+//	It is the responsibility of the caller to release the
+//	interval to dynamic memory when no longer required.
+//	Use the interval_free function for this purpose.
+//
 
 interval
 interval::intersection(const interval &left, const interval &right)
 {
-	/* assert(left.valid()); */
-	/* assert(right.valid()); */
+	// assert(left.valid());
+	// assert(right.valid());
 	interval result;
 	size_t left_pos = 0;
 	size_t right_pos = 0;
@@ -467,40 +463,40 @@ interval::intersection(const interval &left, const interval &right)
 	}
 	if (result.length)
 		result.data[result.length] = result.length;
-	/* assert(result.valid()); */
+	// assert(result.valid());
 	return result;
 }
 
 
-/*
- * NAME
- *	interval_difference - difference of two intervals
- *
- * SYNOPSIS
- *	interval_ty *interval_difference(interval_ty *left, interval_ty *right);
- *
- * DESCRIPTION
- *	The interval_difference function is used to form the
- *	difference of two intervals.
- *
- * ARGUMENTS
- *	left	- interval to take things out of
- *	right	- things to take out of it
- *
- * RETURNS
- *	a pointer to the new interval in dynamic memory
- *
- * CAVEAT
- *	It is the responsibility of the caller to release the
- *	interval to dynamic memory when no longer required.
- *	Use the interval_free function for this purpose.
- */
+//
+// NAME
+//	interval_difference - difference of two intervals
+//
+// SYNOPSIS
+//	interval_ty *interval_difference(interval_ty *left, interval_ty *right);
+//
+// DESCRIPTION
+//	The interval_difference function is used to form the
+//	difference of two intervals.
+//
+// ARGUMENTS
+//	left	- interval to take things out of
+//	right	- things to take out of it
+//
+// RETURNS
+//	a pointer to the new interval in dynamic memory
+//
+// CAVEAT
+//	It is the responsibility of the caller to release the
+//	interval to dynamic memory when no longer required.
+//	Use the interval_free function for this purpose.
+//
 
 interval
 interval::difference(const interval &left, const interval &right)
 {
-	/* assert(left.valid()); */
-	/* assert(right.valid()); */
+	// assert(left.valid());
+	// assert(right.valid());
 	interval result;
 	size_t left_pos = 0;
 	size_t right_pos = 0;
@@ -547,30 +543,30 @@ interval::difference(const interval &left, const interval &right)
 	}
 	if (result.length)
 		result.data[result.length] = result.length;
-	/* assert(result.valid()); */
+	// assert(result.valid());
 	return result;
 }
 
 
-/*
- * NAME
- *	interval_member - test for membership
- *
- * SYNOPSIS
- *	int interval_member(interval_ty *, interval_data_ty datum);
- *
- * DESCRIPTION
- *	The interval_member function is used to test if a particular
- *	datum is included in an interval.
- *
- * ARGUMENTS
- *	ip	- interval to test
- *	datum	- value to test for
- *
- * RETURNS
- *	int	1 if is a member
- *		0 if is not a member
- */
+//
+// NAME
+//	interval_member - test for membership
+//
+// SYNOPSIS
+//	int interval_member(interval_ty *, interval_data_ty datum);
+//
+// DESCRIPTION
+//	The interval_member function is used to test if a particular
+//	datum is included in an interval.
+//
+// ARGUMENTS
+//	ip	- interval to test
+//	datum	- value to test for
+//
+// RETURNS
+//	int	1 if is a member
+//		0 if is not a member
+//
 
 bool
 interval::member(data_t datum)
@@ -578,7 +574,7 @@ interval::member(data_t datum)
 {
 	if (length == 0)
 		return false;
-	/* assert(valid()); */
+	// assert(valid());
 	long min = 0;
 	long max = length - 2;
 	while (min <= max)
@@ -592,31 +588,31 @@ interval::member(data_t datum)
 			min = mid + 2;
 		else
 			max = mid - 2;
-	} 
+	}
 	return false;
 }
 
 
-/*
- * NAME
- *	interval_scan_begin
- *
- * SYNOPSIS
- *	void interval_scan_begin(interval_ty *ip);
- *
- * DESCRIPTION
- *	The interval_scan_begin function is used to
- *	start traversing every datum in the interval.
- *
- * ARGUMENTS
- *	ip	- interval to scan
- */
+//
+// NAME
+//	interval_scan_begin
+//
+// SYNOPSIS
+//	void interval_scan_begin(interval_ty *ip);
+//
+// DESCRIPTION
+//	The interval_scan_begin function is used to
+//	start traversing every datum in the interval.
+//
+// ARGUMENTS
+//	ip	- interval to scan
+//
 
 void
 interval::scan_begin()
 {
-	/* assert(valid()); */
-	/* assert(!scan_index); */
+	// assert(valid());
+	// assert(!scan_index);
 	scan_index = 1;
 	if (length)
 		scan_next_datum = data[0];
@@ -625,31 +621,31 @@ interval::scan_begin()
 }
 
 
-/*
- * NAME
- *	interval_scan_next
- *
- * SYNOPSIS
- *	int interval_scan_next(interval_ty *ip, interval_data_ty *datum);
- *
- * DESCRIPTION
- *	The interval_scan_next function is used to
- *	traverse every datum in the interval.
- *
- * ARGUMENTS
- *	ip	- interval to scan
- *	datum	- pointer to where to place datum
- *
- * RETURNS
- *	int	1 if datum available
- *		0 if reached end of interval
- */
+//
+// NAME
+//	interval_scan_next
+//
+// SYNOPSIS
+//	int interval_scan_next(interval_ty *ip, interval_data_ty *datum);
+//
+// DESCRIPTION
+//	The interval_scan_next function is used to
+//	traverse every datum in the interval.
+//
+// ARGUMENTS
+//	ip	- interval to scan
+//	datum	- pointer to where to place datum
+//
+// RETURNS
+//	int	1 if datum available
+//		0 if reached end of interval
+//
 
 bool
 interval::scan_next(data_t &datum)
 {
-	/* assert(valid()); */
-	/* assert(scan_index & 1); */
+	// assert(valid());
+	// assert(scan_index & 1);
 	if (scan_index >= length)
 		return false;
 	if (scan_next_datum >= promote(data[scan_index], scan_index))
@@ -664,26 +660,26 @@ interval::scan_next(data_t &datum)
 }
 
 
-/*
- * NAME
- *	interval_scan_end
- *
- * SYNOPSIS
- *	void interval_scan_end(interval_ty *ip);
- *
- * DESCRIPTION
- *	The interval_scan_end function is used to
- *	finish traversing every datum in the interval.
- *
- * ARGUMENTS
- *	ip	- interval to scan
- */
+//
+// NAME
+//	interval_scan_end
+//
+// SYNOPSIS
+//	void interval_scan_end(interval_ty *ip);
+//
+// DESCRIPTION
+//	The interval_scan_end function is used to
+//	finish traversing every datum in the interval.
+//
+// ARGUMENTS
+//	ip	- interval to scan
+//
 
 void
 interval::scan_end()
 {
-	/* assert(valid()); */
-	/* assert(scan_index & 1); */
+	// assert(valid());
+	// assert(scan_index & 1);
 	scan_index = 0;
 	scan_next_datum = 0;
 }
@@ -692,7 +688,7 @@ interval::scan_end()
 void
 interval::first_interval_only()
 {
-	/* assert(valid()); */
+	// assert(valid());
 	if (length > 2)
 	{
 		length = 2;
@@ -725,7 +721,7 @@ interval::data_t
 interval::get_lowest()
 	const
 {
-	/* assert(valid()); */
+	// assert(valid());
 	return (length > 0 ? data[0] : 0);
 }
 
@@ -734,7 +730,7 @@ interval::data_t
 interval::get_highest()
 	const
 {
-	/* assert(valid()); */
+	// assert(valid());
 	return (length > 0 ? data[length - 1] : 0);
 }
 

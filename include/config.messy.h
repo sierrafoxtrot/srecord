@@ -23,9 +23,9 @@
 #ifndef INCLUDE_CONFIG_MESSY_H
 #define INCLUDE_CONFIG_MESSY_H
 
-/*
- * Make sure Solaris includes POSIX extensions.
- */
+//
+// Make sure Solaris includes POSIX extensions.
+//
 #if (defined(__sun) || defined(__sun__) || defined(sun)) && \
 	(defined(__svr4__) || defined(svr4))
 
@@ -37,12 +37,12 @@
 #define __EXTENSIONS__ 1
 #endif
 
-/*
- * fix a glitch in Solaris's <sys/time.h>
- * which only show's up when you turn __EXTENSIONS__ on
- */
-#define _timespec timespec      /* fix 2.4 */
-#define _tv_sec tv_sec          /* fix 2.5.1 */
+//
+// fix a glitch in Solaris's <sys/time.h>
+// which only show's up when you turn __EXTENSIONS__ on
+//
+#define _timespec timespec      // fix 2.4
+#define _tv_sec tv_sec          // fix 2.5.1
 
 #endif // sun
 

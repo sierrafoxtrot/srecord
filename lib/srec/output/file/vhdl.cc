@@ -1,23 +1,23 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Hendrik De Vloed - hendrik.devloed@rug.ac.be
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: functions to impliment the srec_output_file_vhdl class
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 2000 Hendrik De Vloed - hendrik.devloed@rug.ac.be
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: functions to impliment the srec_output_file_vhdl class
+//
 
 #pragma implementation "srec_output_file_vhdl"
 
@@ -77,18 +77,18 @@ srec_output_file_vhdl::emit_header()
 			"package %s_pack is\n"
 			" constant %s_rom : %s_rom_array;\n"
 			"end package %s_pack;\n\n",
-			pref, /* package begin */
-			pref, pref, /* constant */
-			pref /* package end */
+			pref, // package begin
+			pref, pref, // constant
+			pref // package end
 		);
 		put_stringf(
 			"package body %s_pack is\n",
-			pref /* package body */
+			pref // package body
 		);
 	}
 	put_stringf(
 		" constant %s_rom : %s_rom_array := %s_rom_array'(\n",
-		pref, pref, pref /* constant */
+		pref, pref, pref // constant
 	);
 	header_done = true;
 }
@@ -199,8 +199,8 @@ int
 srec_output_file_vhdl::preferred_block_size_get()
 	const
 {
-	/*
-	 * Irrelevant.  Use the largest we can get.
-	 */
+	//
+	// Irrelevant.  Use the largest we can get.
+	//
 	return srec_record::max_data_length;
 }

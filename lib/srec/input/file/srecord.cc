@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2002 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: functions to impliment the srec_input_file_srecord class
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 1998-2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: functions to impliment the srec_input_file_srecord class
+//
 
 #pragma implementation "srec_input_file_srecord"
 
@@ -119,34 +119,34 @@ srec_input_file_srecord::read_inner(srec_record &record)
 	switch (tag)
 	{
 	case 0:
-		/* header */
+		// header
 		type = srec_record::type_header;
 		if (line_length < naddr)
 		{
-			/* Some programs write Very short headers. */
+			// Some programs write Very short headers.
 			naddr = line_length;
 		}
 		break;
 
 	case 1:
-		/* data */
+		// data
 		type = srec_record::type_data;
 		break;
 
 	case 2:
-		/* data */
+		// data
 		type = srec_record::type_data;
 		naddr = 3;
 		break;
 
 	case 3:
-		/* data */
+		// data
 		type = srec_record::type_data;
 		naddr = 4;
 		break;
 
 	case 5:
-		/* data count */
+		// data count
 		type = srec_record::type_data_count;
 		//
 		// This is documented as having 2 address bytes and
@@ -159,7 +159,7 @@ srec_input_file_srecord::read_inner(srec_record &record)
 		break;
 
 	case 6:
-		/* data count */
+		// data count
 		type = srec_record::type_data_count;
 		//
 		// Just in case some smarty-pants uses the Green Hills
@@ -171,19 +171,19 @@ srec_input_file_srecord::read_inner(srec_record &record)
 		break;
 
 	case 7:
-		/* termination */
+		// termination
 		type = srec_record::type_start_address;
 		naddr = 4;
 		break;
 
 	case 8:
-		/* termination */
+		// termination
 		type = srec_record::type_start_address;
 		naddr = 3;
 		break;
 
 	case 9:
-		/* termination */
+		// termination
 		type = srec_record::type_start_address;
 		break;
 	}

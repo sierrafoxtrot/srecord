@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 2001, 2002 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: functions to impliment the srec_output_file_four_packed_code class
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 2001, 2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: functions to impliment the srec_output_file_four_packed_code class
+//
 
 #pragma implementation "srec_output_file_four_packed_code"
 
@@ -28,91 +28,91 @@
 
 static unsigned char digit[] =
 {
-	'%',	/*  0 */
-	'&',	/*  1 */
-	'\'',	/*  2 */
-	'(',	/*  3 */
-	')',	/*  4 */
-	'+',	/*  5 */
-	',',	/*  6 */
-	'-',	/*  7 */
-	'.',	/*  8 */
-	'/',	/*  9 */
-	'0',	/* 10 */
-	'1',	/* 11 */
-	'2',	/* 12 */
-	'3',	/* 13 */
-	'4',	/* 14 */
-	'5',	/* 15 */
-	'6',	/* 16 */
-	'7',	/* 17 */
-	'8',	/* 18 */
-	'9',	/* 19 */
-	':',	/* 20 */
-	';',	/* 21 */
-	'<',	/* 22 */
-	'=',	/* 23 */
-	'>',	/* 24 */
-	'?',	/* 25 */
-	'@',	/* 26 */
-	'A',	/* 27 */
-	'B',	/* 28 */
-	'C',	/* 29 */
-	'D',	/* 30 */
-	'E',	/* 31 */
-	'F',	/* 32 */
-	'G',	/* 33 */
-	'H',	/* 34 */
-	'I',	/* 35 */
-	'J',	/* 36 */
-	'K',	/* 37 */
-	'L',	/* 38 */
-	'M',	/* 39 */
-	'N',	/* 40 */
-	'O',	/* 41 */
-	'P',	/* 42 */
-	'Q',	/* 43 */
-	'R',	/* 44 */
-	'S',	/* 45 */
-	'T',	/* 46 */
-	'U',	/* 47 */
-	'V',	/* 48 */
-	'W',	/* 49 */
-	'X',	/* 50 */
-	'Y',	/* 51 */
-	'Z',	/* 52 */
-	'[',	/* 53 */
-	'\\',	/* 54 */
-	']',	/* 55 */
-	'^',	/* 56 */
-	'_',	/* 57 */
-	'`',	/* 58 */
-	'a',	/* 59 */
-	'b',	/* 60 */
-	'c',	/* 61 */
-	'd',	/* 62 */
-	'e',	/* 63 */
-	'f',	/* 64 */
-	'g',	/* 65 */
-	'h',	/* 66 */
-	'i',	/* 67 */
-	'j',	/* 68 */
-	'k',	/* 69 */
-	'l',	/* 70 */
-	'm',	/* 71 */
-	'n',	/* 72 */
-	'o',	/* 73 */
-	'p',	/* 74 */
-	'q',	/* 75 */
-	'r',	/* 76 */
-	's',	/* 77 */
-	't',	/* 78 */
-	'u',	/* 79 */
-	'v',	/* 80 */
-	'w',	/* 81 */
-	'x',	/* 82 */
-	'y',	/* 83 */
-	'z',	/* 84 */
+	'%',	//  0
+	'&',	//  1
+	'\'',	//  2
+	'(',	//  3
+	')',	//  4
+	'+',	//  5
+	',',	//  6
+	'-',	//  7
+	'.',	//  8
+	'/',	//  9
+	'0',	// 10
+	'1',	// 11
+	'2',	// 12
+	'3',	// 13
+	'4',	// 14
+	'5',	// 15
+	'6',	// 16
+	'7',	// 17
+	'8',	// 18
+	'9',	// 19
+	':',	// 20
+	';',	// 21
+	'<',	// 22
+	'=',	// 23
+	'>',	// 24
+	'?',	// 25
+	'@',	// 26
+	'A',	// 27
+	'B',	// 28
+	'C',	// 29
+	'D',	// 30
+	'E',	// 31
+	'F',	// 32
+	'G',	// 33
+	'H',	// 34
+	'I',	// 35
+	'J',	// 36
+	'K',	// 37
+	'L',	// 38
+	'M',	// 39
+	'N',	// 40
+	'O',	// 41
+	'P',	// 42
+	'Q',	// 43
+	'R',	// 44
+	'S',	// 45
+	'T',	// 46
+	'U',	// 47
+	'V',	// 48
+	'W',	// 49
+	'X',	// 50
+	'Y',	// 51
+	'Z',	// 52
+	'[',	// 53
+	'\\',	// 54
+	']',	// 55
+	'^',	// 56
+	'_',	// 57
+	'`',	// 58
+	'a',	// 59
+	'b',	// 60
+	'c',	// 61
+	'd',	// 62
+	'e',	// 63
+	'f',	// 64
+	'g',	// 65
+	'h',	// 66
+	'i',	// 67
+	'j',	// 68
+	'k',	// 69
+	'l',	// 70
+	'm',	// 71
+	'n',	// 72
+	'o',	// 73
+	'p',	// 74
+	'q',	// 75
+	'r',	// 76
+	's',	// 77
+	't',	// 78
+	'u',	// 79
+	'v',	// 80
+	'w',	// 81
+	'x',	// 82
+	'y',	// 83
+	'z',	// 84
 };
 
 
@@ -154,15 +154,15 @@ srec_output_file_four_packed_code::operator=(const srec_output_file_four_packed_
 
 srec_output_file_four_packed_code::~srec_output_file_four_packed_code()
 {
-	/* check for data count record */
-	/* check for termination record */
+	// check for data count record
+	// check for termination record
 }
 
 
 void
 srec_output_file_four_packed_code::put_byte(unsigned char n)
 {
-    put_byte_value |= n << ((3 - put_byte_pos++) * 8); 
+    put_byte_value |= n << ((3 - put_byte_pos++) * 8);
     if (put_byte_pos >= 4)
     {
     	int n5 = put_byte_value % 85; put_byte_value /= 85;
@@ -185,15 +185,15 @@ void
 srec_output_file_four_packed_code::write_inner(unsigned long address,
 	const void *data, int data_nbytes)
 {
-	/*
-	 * Make sure the line is not too long.
-	 */
+	//
+	// Make sure the line is not too long.
+	//
 	if (data_nbytes > 252)
 		fatal_error("data length (%d) too long", data_nbytes);
 
-	/*
-	 * Assemble the data for this line.
-	 */
+	//
+	// Assemble the data for this line.
+	//
 	unsigned char buffer[256];
 	buffer[0] = 0;
 	buffer[1] = 4 + data_nbytes;
@@ -208,17 +208,17 @@ srec_output_file_four_packed_code::write_inner(unsigned long address,
 	}
 	int nbytes = 8 + data_nbytes;
 
-	/*
-	 * Calculate the checksum.
-	 */
+	//
+	// Calculate the checksum.
+	//
 	int checksum = 0;
 	for (int j = 0; j < nbytes; ++j)
 		checksum += buffer[j];
 	buffer[0] = -checksum;
 
-	/*
-	 * Emit the line as base85 text.
-	 */
+	//
+	// Emit the line as base85 text.
+	//
 	put_char('$');
 	for (int j = 0; j < nbytes; ++j)
 		put_byte(buffer[j]);
@@ -275,24 +275,24 @@ srec_output_file_four_packed_code::write(const srec_record &record)
 void
 srec_output_file_four_packed_code::line_length_set(int linlen)
 {
-	/*
-	 * Given the number of characters, figure the maximum number of
-	 * data bytes.
-	 */
+	//
+	// Given the number of characters, figure the maximum number of
+	// data bytes.
+	//
 	int n = (linlen - 11) / 5 * 4;
 
-	/*
-	 * Constrain based on the file format.
-	 */
+	//
+	// Constrain based on the file format.
+	//
 	if (n < 1)
 		n = 1;
 	else if (n > 252)
 		n = 252;
 
-	/*
-	 * An additional constraint is the size of the srec_record
-	 * data buffer.
-	 */
+	//
+	// An additional constraint is the size of the srec_record
+	// data buffer.
+	//
 	if (n > srec_record::max_data_length)
 		n = srec_record::max_data_length;
 	pref_block_size = n;

@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 2001, 2002 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: functions to impliment the srec_arglex_output class
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 2001, 2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: functions to impliment the srec_arglex_output class
+//
 
 #include <srec/arglex.h>
 #include <srec/output/file/ascii_hex.h>
@@ -45,21 +45,21 @@
 srec_output *
 srec_arglex::get_output()
 {
-    /*
-     * skip the -output token
-     */
+    //
+    // skip the -output token
+    //
     if (token_cur() == token_output)
 	token_next();
 
-    /*
-     * determine the file name
-     */
+    //
+    // determine the file name
+    //
     const char *fn = "-";
     switch (token_cur())
     {
     case token_stdio:
 	token_next();
-	/* fall through... */
+	// fall through...
 
     default:
 	if (stdout_used)
@@ -77,15 +77,15 @@ srec_arglex::get_output()
 	break;
     }
 
-    /*
-     * determine the file format
-     */
+    //
+    // determine the file format
+    //
     srec_output *ofp;
     switch (token_cur())
     {
     case token_motorola:
 	token_next();
-	/* fall through... */
+	// fall through...
 
     default:
 	ofp = new srec_output_file_srecord(fn);
@@ -211,8 +211,8 @@ srec_arglex::get_output()
 	break;
     }
 
-    /*
-     * return the stream determined
-     */
+    //
+    // return the stream determined
+    //
     return ofp;
 }

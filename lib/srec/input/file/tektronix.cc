@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2001 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: functions to impliment the srec_input_file_tektronix class
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 1998-2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: functions to impliment the srec_input_file_tektronix class
+//
 
 #pragma implementation "srec_input_file_tektronix"
 
@@ -60,7 +60,7 @@ srec_input_file_tektronix::operator=(const srec_input_file_tektronix &)
 
 srec_input_file_tektronix::~srec_input_file_tektronix()
 {
-	/* make sure the termination record is done */
+	// make sure the termination record is done
 }
 
 
@@ -113,9 +113,9 @@ srec_input_file_tektronix::read_inner(srec_record &record)
 
 	if (peek_char() == '/')
 	{
-		/*
-		 * lines beginning with ``//'' are end-of-file records
-		 */
+		//
+		// lines beginning with ``//'' are end-of-file records
+		//
 		seek_to_end();
 		return 0;
 	}
@@ -206,7 +206,7 @@ srec_input_file_tektronix::read(srec_record &record)
 		switch (record.get_type())
 		{
 		default:
-			/* impossible */
+			// impossible
 			continue;
 
 		case srec_record::type_data:

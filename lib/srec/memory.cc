@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2002 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: functions to impliment the srec_memory class
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 1998-2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: functions to impliment the srec_memory class
+//
 
 #pragma implementation "srec_memory"
 
@@ -98,15 +98,15 @@ srec_memory_chunk *
 srec_memory::find(unsigned long address)
 	const
 {
-	/*
-	 * Speed things up if we've been there recently.
-	 */
+	//
+	// Speed things up if we've been there recently.
+	//
 	if (cache && cache->get_address() == address)
 		return cache;
 
-	/*
-	 * Binary chop to find the appropriate chunk.
-	 */
+	//
+	// Binary chop to find the appropriate chunk.
+	//
 	int min = 0;
 	int max = nchunks - 1;
 	srec_memory_chunk *mcp = 0;
@@ -125,9 +125,9 @@ srec_memory::find(unsigned long address)
 			min = mid + 1;
 	}
 
-	/*
-	 * We need a new row.  Make sure there is enough room.
-	 */
+	//
+	// We need a new row.  Make sure there is enough room.
+	//
 	if (nchunks >= nchunks_max)
 	{
 		nchunks_max = nchunks_max * 2 + 4;
@@ -139,9 +139,9 @@ srec_memory::find(unsigned long address)
 		chunk = tmp;
 	}
 
-	/*
-	 * Insert the new chunk.
-	 */
+	//
+	// Insert the new chunk.
+	//
 	mcp = new srec_memory_chunk(address);
 	for (int up = nchunks; up > min; --up)
 		chunk[up] = chunk[up - 1];

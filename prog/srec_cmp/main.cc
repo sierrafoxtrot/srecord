@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: operating system entry point
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 1998-2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: operating system entry point
+//
 
 #include <srec/arglex.h>
 #include <srec/input.h>
@@ -45,7 +45,7 @@ main(int argc, char **argv)
 		{
 		default:
 			cmdline.bad_argument();
-			/* NOTREACHED */
+			// NOTREACHED
 
 		case srec_arglex::token_string:
 		case srec_arglex::token_stdio:
@@ -78,21 +78,21 @@ main(int argc, char **argv)
 		cmdline.usage();
 	}
 
-	/*
-	 * Read the first file into memory.
-	 */
+	//
+	// Read the first file into memory.
+	//
 	srec_memory *mp1 = new srec_memory();
 	unsigned long ta1 = mp1->reader(if1);
 
-	/*
-	 * Read the second file into memory.
-	 */
+	//
+	// Read the second file into memory.
+	//
 	srec_memory *mp2 = new srec_memory();
 	unsigned long ta2 = mp2->reader(if2);
 
-	/*
-	 * Error message and non-zero exit status if the files differ.
-	 */
+	//
+	// Error message and non-zero exit status if the files differ.
+	//
 	if (verbose)
 	{
 		bool different = srec_memory::compare(*mp1, *mp2);
@@ -124,9 +124,9 @@ main(int argc, char **argv)
 	delete if1;
 	delete if2;
 
-	/*
-	 * success
-	 */
+	//
+	// success
+	//
 	exit(0);
 	return 0;
 }

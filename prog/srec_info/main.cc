@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2001 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: operating system entry point
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 1998-2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: operating system entry point
+//
 
 #include <interval.h>
 #include <srec/arglex.h>
@@ -47,7 +47,7 @@ main(int argc, char **argv)
 		{
 		default:
 			cmdline.bad_argument();
-			/* NOTREACHED */
+			// NOTREACHED
 
 		case srec_arglex::token_string:
 		case srec_arglex::token_stdio:
@@ -63,9 +63,9 @@ main(int argc, char **argv)
 	if (infile.size() == 0)
 		infile.push_back(cmdline.get_input());
 
-	/*
-	 * Read each file and emit informative gumph.
-	 */
+	//
+	// Read each file and emit informative gumph.
+	//
 	for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
 	{
 		srec_input *ifp = *it;
@@ -121,7 +121,7 @@ main(int argc, char **argv)
 				break;
 
 			default:
-				/* ignored */
+				// ignored
 				break;
 			}
 		}
@@ -152,9 +152,9 @@ main(int argc, char **argv)
 		}
 	}
 
-	/*
-	 * success
-	 */
+	//
+	// success
+	//
 	exit(0);
 	return 0;
 }

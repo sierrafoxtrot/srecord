@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2002 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: functions to impliment the srec_arglex class
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 1998-2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: functions to impliment the srec_arglex class
+//
 
 #pragma implementation "srec_arglex"
 
@@ -263,7 +263,7 @@ srec_arglex::get_address_and_nbytes(const char *name, unsigned long &address,
     nbytes = 4;
     if (token_next() == token_number)
     {
-	nbytes = value_number(); 
+	nbytes = value_number();
 	token_next();
 	if (nbytes < 1 || nbytes > 8)
 	{
@@ -299,7 +299,7 @@ srec_arglex::get_address_nbytes_width(const char *name, unsigned long &address,
     width = 1;
     if (token_next() == token_number)
     {
-	nbytes = value_number(); 
+	nbytes = value_number();
 	if (nbytes < 1 || nbytes > 8)
 	{
 	    cerr << "the " << name << " byte count " << nbytes
@@ -309,7 +309,7 @@ srec_arglex::get_address_nbytes_width(const char *name, unsigned long &address,
 	}
 	if (token_next() == token_number)
 	{
-	    width = value_number(); 
+	    width = value_number();
 	    token_next();
 	    if (width < 1 || width > nbytes)
 	    {
@@ -333,9 +333,9 @@ srec_arglex::get_address_nbytes_width(const char *name, unsigned long &address,
 srec_input *
 srec_arglex::get_input()
 {
-    /*
-     * determine the file name
-     */
+    //
+    // determine the file name
+    //
     const char *fn = "-";
     switch (token_cur())
     {
@@ -346,7 +346,7 @@ srec_arglex::get_input()
 
     case token_stdio:
 	token_next();
-	/* fall through... */
+	// fall through...
 
     default:
 	if (stdin_used)
@@ -360,16 +360,16 @@ srec_arglex::get_input()
 	break;
     }
 
-    /*
-     * determine the file format
-     * and open the input file
-     */
+    //
+    // determine the file format
+    // and open the input file
+    //
     srec_input *ifp;
     switch (token_cur())
     {
     case token_motorola:
 	token_next();
-	/* fall through... */
+	// fall through...
 
     default:
 	ifp = new srec_input_file_srecord(fn);
@@ -471,9 +471,9 @@ srec_arglex::get_input()
 	break;
     }
 
-    /*
-     * apply any filters specified
-     */
+    //
+    // apply any filters specified
+    //
     for (;;)
     {
 	    switch (token_cur())
@@ -534,7 +534,7 @@ srec_arglex::get_input()
 
 	    case token_fill:
 		    {
-			    if (token_next() != token_number) 
+			    if (token_next() != token_number)
 			    {
 				    cerr <<
 				    "the -fill filter requires a fill value"
@@ -557,7 +557,7 @@ srec_arglex::get_input()
 
 	    case token_and:
 		    {
-			    if (token_next() != token_number) 
+			    if (token_next() != token_number)
 			    {
 				    cerr <<
 				     "the -and filter requires a fill value"
@@ -579,7 +579,7 @@ srec_arglex::get_input()
 
 	    case token_xor:
 		    {
-			    if (token_next() != token_number) 
+			    if (token_next() != token_number)
 			    {
 				    cerr <<
 				     "the -xor filter requires a fill value"
@@ -601,7 +601,7 @@ srec_arglex::get_input()
 
 	    case token_or:
 		    {
-			    if (token_next() != token_number) 
+			    if (token_next() != token_number)
 			    {
 				    cerr <<
 				      "the -or filter requires a fill value"
@@ -1051,8 +1051,8 @@ srec_arglex::get_input()
 	    break;
     }
 
-    /*
-     * return the input stream determined
-     */
+    //
+    // return the input stream determined
+    //
     return ifp;
 }

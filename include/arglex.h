@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: interface definition for the lib/common/arglex.cc file
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 1998, 1999, 2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: interface definition for the lib/common/arglex.cc file
+//
 
 #ifndef INCLUDE_ARGLEX_H
 #define INCLUDE_ARGLEX_H
@@ -56,7 +56,7 @@ public:
 		token_version,
 		token_MAX
 	};
-	
+
 	/**
 	  * The value_ty struct is used to represent the value of a
 	  * command line argument.
@@ -74,7 +74,7 @@ public:
 		  */
 		long	alv_number;
 	};
-	
+
 	/**
 	  * The table_ty struct is used to repesent a row of a
 	  * commandline option table, used to match option names with
@@ -308,4 +308,4 @@ private:
   */
 bool arglex_compare(char *formal, char *actual);
 
-#endif /* INCLUDE_ARGLEX_H */
+#endif // INCLUDE_ARGLEX_H

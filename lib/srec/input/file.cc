@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2001 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: functions to impliment the srec_input_file class
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 1998-2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: functions to impliment the srec_input_file class
+//
 
 #pragma implementation "srec_input_file"
 
@@ -64,11 +64,11 @@ srec_input_file::srec_input_file(const char *file_name)
 	}
 	else
 	{
-		/*
-		 * The call to fopen is deferred until the constructor has
-		 * completed.  This is so that the virtual mode() method
-		 * is available (it isn't in the base class constructor).
-		 */
+		//
+		// The call to fopen is deferred until the constructor has
+		// completed.  This is so that the virtual mode() method
+		// is available (it isn't in the base class constructor).
+		//
 	}
 }
 
@@ -86,11 +86,11 @@ srec_input_file::get_fp()
 {
 	if (!vfp)
 	{
-		/*
-		 * The call to fopen is deferred until the constructor has
-		 * completed.  This is so that the virtual mode() method
-		 * is available (it isn't in the base class constructor).
-		 */
+		//
+		// The call to fopen is deferred until the constructor has
+		// completed.  This is so that the virtual mode() method
+		// is available (it isn't in the base class constructor).
+		//
 		const char *the_mode = mode();
 		vfp = fopen(file_name.c_str(), the_mode);
 		if (!vfp)
@@ -138,18 +138,18 @@ srec_input_file::get_char()
 	{
 		if (ferror(fp))
 			fatal_error_errno("read");
-		/*
-		 * If this is a text file, but the last character wasn't
-		 * a newline, insert one.
-		 */
+		//
+		// If this is a text file, but the last character wasn't
+		// a newline, insert one.
+		//
 		c = ((is_text && !prev_was_newline) ? '\n' : -1);
 	}
 	else if (c == '\r' && is_text)
 	{
-		/*
-		 * If this is a text file, turn CRLF into LF.
-		 * Leave all other sequences containing CR alone.
-		 */
+		//
+		// If this is a text file, turn CRLF into LF.
+		// Leave all other sequences containing CR alone.
+		//
 		c = getc(fp);
 		if (c == EOF)
 		{
@@ -210,11 +210,11 @@ srec_input_file::get_nibble()
 	case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
 		return (c - 'a' + 10);
 
-	case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': 
+	case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
 		return (c - 'A' + 10);
 	}
 	fatal_error("hexadecimal digit expected");
-	/* NOTREACHED */
+	// NOTREACHED
 	return -1;
 }
 

@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 2001, 2002 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: functions to impliment the srec_output_file_emon52 class
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 2001, 2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: functions to impliment the srec_output_file_emon52 class
+//
 
 #pragma implementation "srec_output_file_emon52"
 
@@ -58,7 +58,7 @@ srec_output_file_emon52::operator=(const srec_output_file_emon52 &)
 
 srec_output_file_emon52::~srec_output_file_emon52()
 {
-	/* check for termination record */
+	// check for termination record
 }
 
 
@@ -116,24 +116,24 @@ srec_output_file_emon52::write(const srec_record &record)
 void
 srec_output_file_emon52::line_length_set(int linlen)
 {
-	/*
-	 * Given the number of characters, figure the maximum number of
-	 * data baytes.
-	 */
+	//
+	// Given the number of characters, figure the maximum number of
+	// data baytes.
+	//
 	int n = (linlen - 11) / 3;
 
-	/*
-	 * Constrain based on the file format.
-	 */
+	//
+	// Constrain based on the file format.
+	//
 	if (n < 1)
 		n = 1;
 	else if (n > 255)
 		n = 255;
 
-	/*
-	 * An additional constraint is the size of the srec_record
-	 * data buffer.
-	 */
+	//
+	// An additional constraint is the size of the srec_record
+	// data buffer.
+	//
 	if (n > srec_record::max_data_length)
 		n = srec_record::max_data_length;
 	pref_block_size = n;

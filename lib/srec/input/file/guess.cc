@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 2000-2002 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: functions to guess the format
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 2000-2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: functions to guess the format
+//
 
 #include <quit/exception.h>
 #include <srec/input/file/ascii_hex.h>
@@ -170,72 +170,71 @@ srec_input_file_guess(const char *fn)
 {
     if (!fn || !*fn || (fn[0] == '-' && fn[1] == 0))
     {
-	    quit_default.fatal_error
-	    (
-	"the file format of the standard input must be specified explicitly"
-	    ); 
+	quit_default.fatal_error
+	(
+	    "the file format of the standard input must be specified explicitly"
+	);
     }
 
-    /*
-     * Try each file format in turn.
-     */
+    //
+    // Try each file format in turn.
+    //
     quit_exception quitter;
     for (func_p *tp = table; tp < ENDOF(table); ++tp)
     {
-	    /*
-	     * Create a new file reader
-	     */
-	    func_p func = *tp;
-	    srec_input *ifp = func(fn);
-	    try
+	//
+	// Create a new file reader
+	//
+	func_p func = *tp;
+	srec_input *ifp = func(fn);
+	try
+	{
+	    //
+	    // Set the exception-throwing quitter
+	    // (it also silences all error and warning messages).
+	    //
+	    ifp->set_quit(quitter);
+	    srec_record record;
+
+	    //
+	    // Try to read something from the file.  If it is
+	    // the wrong format, it will throw an exception.
+	    //
+	    if (ifp->read(record))
 	    {
-		    /*
-		     * Set the exception-throwing quitter
-		     * (it also silences all error and warning messages).
-		     */
-		    ifp->set_quit(quitter);
-		    srec_record record;
+		//
+		// It is necessary to nuke the old file reader.
+		// (a) Because it has the wrong quitter, but more
+		// importantly (b) because it is no longer positioned
+		// at the start of the file, and the user *will*
+		// miss some data.
+		//
+		delete ifp;
 
-		    /*
-		     * Try to read something from the file.  If it is
-		     * the wrong format, it will throw an exception.
-		     */
-		    if (ifp->read(record))
-		    {
-			    /*
-			     * It is necessary to nuke the old file
-			     * reader.  (a) Because it has the wrong
-			     * quitter, but more importantly (b)
-			     * because it is no longer positioned
-			     * at the start of the file, and the
-			     * user *will* miss some data.
-			     */
-			    delete ifp;
-
-			    /*
-			     * Return a brand-new file reader.
-			     */
-			    return func(fn);
-		    }
+		//
+		// Return a brand-new file reader.
+		//
+		return func(fn);
 	    }
-	    catch (quit_exception::vomit)
-	    {
-	    }
+	}
+	catch (quit_exception::vomit)
+	{
+	}
 
-	    /*
-	     * Wrong format.
-	     * Toss this one, and try another.
-	     */
-	    delete ifp;
+	//
+	// Wrong format.
+	// Toss this one, and try another.
+	//
+	delete ifp;
     }
 
-    /*
-     * If nothing else works, assume the file is binary.
-     */
+    //
+    // If nothing else works, assume the file is binary.
+    //
     quit_default.warning
     (
-	    "%s: unable to determine the file format, assuming binary",
-	    fn
-    ); 
+	"%s: unable to determine the file format, assuming binary",
+	fn
+    );
     return new srec_input_file_binary(fn);
 }

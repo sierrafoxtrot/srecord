@@ -1,24 +1,24 @@
-/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2002 Peter Miller;
- *	All rights reserved.
- *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
- *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
- *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- *
- * MANIFEST: interface definition for lib/srec/output/file.cc
- */
+//
+//	srecord - manipulate eprom load files
+//	Copyright (C) 1998-2002 Peter Miller;
+//	All rights reserved.
+//
+//	This program is free software; you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation; either version 2 of the License, or
+//	(at your option) any later version.
+//
+//	This program is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with this program; if not, write to the Free Software
+//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//
+// MANIFEST: interface definition for lib/srec/output/file.cc
+//
 
 #ifndef INCLUDE_SREC_OUTPUT_FILE_H
 #define INCLUDE_SREC_OUTPUT_FILE_H
@@ -178,14 +178,14 @@ protected:
 	static bool data_only_flag;
 
 private:
-	/** 
+	/**
 	  * The file_name instance variable is used by the filename()
 	  * and filename_and_line() methods to report the name of the
 	  * input file.  This makes for informative error mesages.
 	  */
 	string file_name;
 
-	/** 
+	/**
 	  * The line_number instance variable is used by the get_char
 	  * method to remember the current line number.  It us used by the
 	  * filename_and_line() method to report the current file location.
@@ -256,4 +256,4 @@ private:
 	srec_output_file &operator=(const srec_output_file &);
 };
 
-#endif /* INCLUDE_SREC_OUTPUT_FILE_H */
+#endif // INCLUDE_SREC_OUTPUT_FILE_H
