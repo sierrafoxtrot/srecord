@@ -25,8 +25,8 @@
 .if n .ad l
 .if n .nr IN 8n
 .SH NAME
-SRecord \- manipulate EPROM load files
-.XX "" "The BUILDING file"
+How to build SRecord
+.XX "" "How to build SRecord"
 .SH SPACE REQUIREMENTS
 You will need about 3MB to unpack and build the
 .I SRecord
@@ -360,6 +360,7 @@ process is exactly as described above.
 \fBNote:\fP if you are using GCC 3.\fIx\fP, you may need to edit the
 \fIMakefile\fP to change \f[CW]CXX = g++\fP to read \f[CW]CXX = g++-2\fP
 to fix some weird undefined symbols.
+This appears to be a GCC bug.
 .PP
 DJGPP always produces native binaries, however
 if you want to make native binaries with Cygwin (\fIi.e.\fP ones which
@@ -368,8 +369,11 @@ work outside Cygwin) there is one extra step you need after running
 edit the \fIMakefile\fP file, and add \f[CW]-mno-cygwin\fP to the end of
 the \f[CW]CXX=g++\fP line.
 .PP
-Once built (using either tool set) Windows binaries should test in the
-same way as described in the next section.
+Once built (using either tool set) Windows binaries should be testable
+in the same way as described in the next section.
+However, there may be some CRLF issues in the text file comparisons
+which give false negatives, depending on the CRLF setting of your Cygwin
+file system when you unpacked the tarball.
 .br
 .ne 1i
 .SH TESTING SRECORD
