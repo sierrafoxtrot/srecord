@@ -55,7 +55,8 @@ srec_output_file_intel::operator=(const srec_output_file_intel &)
 
 srec_output_file_intel::~srec_output_file_intel()
 {
-	write_inner(1, 0L, 0, 0);
+	if (!data_only_flag)
+		write_inner(1, 0L, 0, 0);
 }
 
 
@@ -119,12 +120,15 @@ srec_output_file_intel::write(const srec_record &record)
 		break;
 
 	case srec_record::type_termination:
+		if (data_only_flag)
+			break;
 		srec_record::encode_big_endian(tmp, record.get_address(), 4);
 		write_inner(5, 0L, tmp, 4);
 		break;
 
 	case srec_record::type_unknown:
 		fatal_error("can't write unknown record type");
+		break;
 	}
 }
 

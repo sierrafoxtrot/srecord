@@ -129,6 +129,8 @@ srec_output_file_tektronix::write(const srec_record &record)
 		break;
 
 	case srec_record::type_termination:
+		if (data_only_flag)
+			break;
 		if (record.get_address() >= (1UL << 16))
 		{
 			fatal_error

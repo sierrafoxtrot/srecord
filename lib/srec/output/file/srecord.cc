@@ -106,6 +106,8 @@ srec_output_file_srecord::write(const srec_record &record)
 	switch (record.get_type())
 	{
 	case srec_record::type_header:
+		if (data_only_flag)
+			break;
 		write_inner(0, 0, 2, "HDR", 3);
 		break;
 
@@ -151,6 +153,8 @@ srec_output_file_srecord::write(const srec_record &record)
 		break;
 
 	case srec_record::type_termination:
+		if (data_only_flag)
+			break;
 		write_inner(5, data_count, 2, 0, 0);
 		if (record.get_address() < (1UL << 16))
 			write_inner(9, record.get_address(), 2, 0, 0);

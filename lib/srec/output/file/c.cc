@@ -91,15 +91,15 @@ srec_output_file_c::~srec_output_file_c()
 		put_char('\n');
 	put_string("};\n");
 
-	put_stringf("unsigned long %s_termination = 0x%08lX;\n",
-		prefix.c_str(), taddr);
-
-	put_stringf("unsigned long %s_start       = 0x%08lX;\n",
-		prefix.c_str(), range.get_lowest());
-
-	put_stringf("unsigned long %s_finish      = 0x%08lX;\n",
-		prefix.c_str(), range.get_highest());
-
+	if (!data_only_flag)
+	{
+		put_stringf("unsigned long %s_termination = 0x%08lX;\n",
+			prefix.c_str(), taddr);
+		put_stringf("unsigned long %s_start       = 0x%08lX;\n",
+			prefix.c_str(), range.get_lowest());
+		put_stringf("unsigned long %s_finish      = 0x%08lX;\n",
+			prefix.c_str(), range.get_highest());
+	}
 	put_stringf("unsigned long %s_length      = 0x%08lX;\n",
 		prefix.c_str(), range.get_highest() - range.get_lowest());
 }

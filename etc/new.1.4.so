@@ -22,6 +22,13 @@
 .PP
 .if n *
 .if t \(bu
+.\" Change 13
+The \fIsrec_cat\fP program now has a \fB-data-only\fP option, which
+supresses all output except for the data records.  This helps when
+talking to brain-dead EPROM programmers which barf at anything but data.
+.PP
+.if n *
+.if t \(bu
 .\" Change 12
 There is a new \fI-Line-Length\fP option for the \fIsrec_cat\fP program,
 allowing you to specify the maximum width of output lines.

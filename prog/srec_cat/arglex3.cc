@@ -31,6 +31,7 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv)
 	static table_ty table[] =
 	{
 		{ "-Line_Length", token_line_length, },
+		{ "-Data_Only", token_data_only, },
 		ARGLEX_END_MARKER
 	};
 

@@ -25,6 +25,7 @@
 #include <srec/memory.h>
 #include <srec/memory/walker/writer.h>
 #include <srec/output.h>
+#include <srec/output/file.h>
 
 #include <iostream.h>
 #include <stdlib.h>
@@ -71,6 +72,10 @@ main(int argc, char **argv)
 					<< " is invalid" << endl;
 				exit(1);
 			}
+			break;
+
+		case srec_cat_arglex3::token_data_only:
+			srec_output_file::data_only();
 			break;
 		}
 		cmdline.token_next();

@@ -29,6 +29,9 @@
 #include <srec/output/file.h>
 
 
+bool srec_output_file::data_only_flag = false;
+
+
 srec_output_file::srec_output_file()
 	: file_name("standard output"), line_number(1), vfp(0), checksum(0)
 {
@@ -183,4 +186,11 @@ srec_output_file::put_stringf(const char *fmt, ...)
 	vsprintf(buffer, fmt, ap);
 	va_end(ap);
 	put_string(buffer);
+}
+
+
+void
+srec_output_file::data_only()
+{
+	data_only_flag = true;
 }

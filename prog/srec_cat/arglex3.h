@@ -33,6 +33,7 @@ public:
 	enum
 	{
 		token_line_length = srec_arglex::token_MAX,
+		token_data_only,
 		token_MAX
 	};
 

@@ -35,6 +35,7 @@ public:
 	srec_output_file(const char *);
 	virtual ~srec_output_file();
 	virtual const string filename() const;
+	static void data_only();
 
 protected:
 	void put_char(int);
@@ -46,6 +47,7 @@ protected:
 	void put_string(const char *);
 	void put_stringf(const char *, ...);
 	virtual const char *mode() const;
+	static bool data_only_flag;
 
 private:
 	string file_name;
