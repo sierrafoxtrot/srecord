@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001-2003 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001-2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -33,108 +33,115 @@
   * which emits C code.
   */
 class srec_output_file_c:
-	public srec_output_file
+    public srec_output_file
 {
 public:
-	/**
-	  * The destructor.
-	  */
-	virtual ~srec_output_file_c();
+    /**
+      * The destructor.
+      */
+    virtual ~srec_output_file_c();
 
-	/**
-	  * The constructor.
-	  */
-	srec_output_file_c(const char *, const char *);
+    /**
+      * The constructor.
+      *
+      * @param filename
+      *     The file name to open to write data to.  The name "-" is
+      *     understood to mean the standard output.
+      * @param prefix
+      *     The prefix to place at the start of variable names in the
+      *     generated output.
+      */
+    srec_output_file_c(const char *filename, const char *prefix);
 
-	// See base class for documentation.
-	virtual void write(const srec_record &);
+    // See base class for documentation.
+    virtual void write(const srec_record &);
 
-	// See base class for documentation.
-	void line_length_set(int);
+    // See base class for documentation.
+    void line_length_set(int);
 
-	// See base class for documentation.
-	void address_length_set(int);
+    // See base class for documentation.
+    void address_length_set(int);
 
-	// See base class for documentation.
-	int preferred_block_size_get() const;
+    // See base class for documentation.
+    int preferred_block_size_get() const;
 
 private:
-	/**
-	  * The prefix instance variable is used to remember the variable
-	  * name prefix to be used in the output.
-	  */
-	string prefix;
+    /**
+      * The prefix instance variable is used to remember the variable
+      * name prefix to be used in the output.
+      */
+    string prefix;
 
-	/**
-	  * The taddr instance variabel is used to remember the
-	  * termination address, to be emitted in the footer.
-	  */
-	unsigned long taddr;
+    /**
+      * The taddr instance variable is used to remember the
+      * termination address, to be emitted in the footer.
+      */
+    unsigned long taddr;
 
-	/**
-	  * The range instance variable is used to remember the range
-	  * of addresses present in the output.
-	  */
-	interval range;
+    /**
+      * The range instance variable is used to remember the range
+      * of addresses present in the output.
+      */
+    interval range;
 
-	/**
-	  * The header_done instance variable is used t remember whether
-	  * the emit_header method has been called.
-	  */
-	bool header_done;
+    /**
+      * The header_done instance variable is used t remember whether
+      * the emit_header method has been called.
+      */
+    bool header_done;
 
-	/**
-	  * The column instance variable is used to remember the current
-	  * printing column on the line.
-	  */
-	int column;
+    /**
+      * The column instance variable is used to remember the current
+      * printing column on the line.
+      */
+    int column;
 
-	/**
-	  * The current_address instance variabel is used to remember
-	  * the current address that the file is positioned at.  This is
-	  * used to know whether we need to add padding.
-	  */
-	unsigned long current_address;
+    /**
+      * The current_address instance variabel is used to remember
+      * the current address that the file is positioned at.  This is
+      * used to know whether we need to add padding.
+      */
+    unsigned long current_address;
 
-	/**
-	  * The line_length instance variable is used to remember the
-	  * maximum line length.  The output usually does not exceed it.
-	  */
-	int line_length;
+    /**
+      * The line_length instance variable is used to remember the
+      * maximum line length.  The output usually does not exceed it.
+      */
+    int line_length;
 
-	/**
-	  * The address_length instance variable is used toremember how
-	  * many bytes to emit when emitting addresses.
-	  */
-	int address_length;
+    /**
+      * The address_length instance variable is used toremember how
+      * many bytes to emit when emitting addresses.
+      */
+    int address_length;
 
-	/**
-	  * The emit_header method is used to emit the initial portion
-	  * of the array declaration.  It does nothing if header_done
-	  * is true.
-	  */
-	void emit_header();
+    /**
+      * The emit_header method is used to emit the initial portion
+      * of the array declaration.  It does nothing if header_done
+      * is true.
+      */
+    void emit_header();
 
-	/**
-          * The emit_byte method is used to emit a single byte.  It uses
-          * column to track the position, so as not to exceed line_length.
-	  */
-	void emit_byte(int);
+    /**
+      * The emit_byte method is used to emit a single byte.  It uses
+      * column to track the position, so as not to exceed line_length.
+      */
+    void emit_byte(int);
 
-	/**
-	  * The default constructor.  Do not use.
-	  */
-	srec_output_file_c();
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_output_file_c();
 
-	/**
-	  * The copy constructor.  Do not use.
-	  */
-	srec_output_file_c(const srec_output_file_c &);
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_output_file_c(const srec_output_file_c &);
 
-	/**
-	  * The assignment operator.  Do not use.
-	  */
-	srec_output_file_c &operator=(const srec_output_file_c &);
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_output_file_c &operator=(const srec_output_file_c &);
 };
 
 #endif // INCLUDE_SREC_OUTPUT_FILE_C_H

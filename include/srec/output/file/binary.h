@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001, 2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,21 +27,58 @@
 
 #include <srec/output/file.h>
 
-class srec_output_file_binary: public srec_output_file
+/**
+  * The srec_output_file_binary class is used to represetn an output
+  * file in raw binary format.
+  */
+class srec_output_file_binary:
+    public srec_output_file
 {
 public:
-	virtual ~srec_output_file_binary();
-	srec_output_file_binary();
-	srec_output_file_binary(const char *);
-	virtual void write(const srec_record &);
-	virtual void line_length_set(int);
-	virtual void address_length_set(int);
-	virtual int preferred_block_size_get() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_output_file_binary();
+
+    /**
+      * The defualrt constructor.
+      * Ouput will be written to the standard output.
+      */
+    srec_output_file_binary();
+
+    /**
+      * The constructor.
+      *
+      * @param filename
+      *     The file name to open and write output to.
+      */
+    srec_output_file_binary(const char *filename);
+
+    // See base class for documentation.
+    virtual void write(const srec_record &);
+
+    // See base class for documentation.
+    virtual void line_length_set(int);
+
+    // See base class for documentation.
+    virtual void address_length_set(int);
+
+    // See base class for documentation.
+    virtual int preferred_block_size_get() const;
 
 private:
-	srec_output_file_binary(const srec_output_file_binary &);
-	srec_output_file_binary &operator=(const srec_output_file_binary &);
-	const char *mode() const;
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_output_file_binary(const srec_output_file_binary &);
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_output_file_binary &operator=(const srec_output_file_binary &);
+
+    // See base class for documentation.
+    const char *mode() const;
 };
 
 #endif // INCLUDE_SREC_OUTPUT_FILE_BINARY_H

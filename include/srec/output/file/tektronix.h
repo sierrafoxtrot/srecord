@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001, 2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,24 +27,82 @@
 
 #include <srec/output/file.h>
 
-class srec_output_file_tektronix: public srec_output_file
+/**
+  * The srec_output_file_tektronix class is used to represent an output
+  * file which is in Tektronix format.
+  */
+class srec_output_file_tektronix:
+    public srec_output_file
 {
 public:
-	virtual ~srec_output_file_tektronix();
-	srec_output_file_tektronix();
-	srec_output_file_tektronix(const char *);
-	virtual void write(const srec_record &);
-	virtual void line_length_set(int);
-	virtual void address_length_set(int);
-	virtual int preferred_block_size_get() const;
-	void put_nibble(int);
-	void put_byte(unsigned char);
+    /**
+      * The destructor.
+      */
+    virtual ~srec_output_file_tektronix();
+
+    /**
+      * The default constructor.
+      * Output will be written to the standard output.
+      */
+    srec_output_file_tektronix();
+
+    /**
+      * The constructor.
+      *
+      * @param filename
+      *     The file name to open to write data to.  The file name "-"
+      *     is understood to mean the standard output.
+      */
+    srec_output_file_tektronix(const char *filename);
+
+    // See base class for documentation.
+    virtual void write(const srec_record &);
+
+    // See base class for documentation.
+    virtual void line_length_set(int);
+
+    // See base class for documentation.
+    virtual void address_length_set(int);
+
+    // See base class for documentation.
+    virtual int preferred_block_size_get() const;
+
+protected:
+    // See base class for documentation.
+    void put_nibble(int);
+
+    // See base class for documentation.
+    void put_byte(unsigned char);
 
 private:
-	int pref_block_size;
-	void write_inner(unsigned long, const void *, int);
-	srec_output_file_tektronix(const srec_output_file_tektronix &);
-	srec_output_file_tektronix &operator=(const srec_output_file_tektronix &);
+    /**
+      * The pref_block_size instance variable is used to remember the
+      * preferred number of data bytes (NOT encoded hex characters) to
+      * be placed in each output line.
+      */
+    int pref_block_size;
+
+    /**
+      * The write_inner method is used to write a line of output.
+      *
+      * @param address
+      *     The address of the first byte of data on the line.
+      * @param data
+      *     The palyload of this line.
+      * @param data_nbytes
+      *     The number of bytes of payload.
+      */
+    void write_inner(unsigned long address, const void *data, int data_nbytes);
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_output_file_tektronix(const srec_output_file_tektronix &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_output_file_tektronix &operator=(const srec_output_file_tektronix &);
 };
 
 #endif // INCLUDE_SREC_OUTPUT_FILE_TEKTRONIX_H

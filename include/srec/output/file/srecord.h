@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001, 2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,24 +27,94 @@
 
 #include <srec/output/file.h>
 
-class srec_output_file_srecord: public srec_output_file
+/**
+  * The srec_output_file_srecord class is used to represent an output
+  * file which emits Motorola S-Record format.
+  */
+class srec_output_file_srecord:
+    public srec_output_file
 {
 public:
-	virtual ~srec_output_file_srecord();
-	srec_output_file_srecord();
-	srec_output_file_srecord(const char *);
-	void write(const srec_record &);
-	virtual void line_length_set(int);
-	virtual void address_length_set(int);
-	virtual int preferred_block_size_get() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_output_file_srecord();
+
+    /**
+      * The default constructor.
+      * The output will be written to the standard output.
+      */
+    srec_output_file_srecord();
+
+    /**
+      * The constructor.
+      *
+      * @param filename
+      *     The file name to open to write data to.  The name "-" is
+      *     understood to mean the standard output.
+      */
+    srec_output_file_srecord(const char *filename);
+
+    // See base class for documentation.
+    void write(const srec_record &);
+
+    // See base class for documentation.
+    virtual void line_length_set(int);
+
+    // See base class for documentation.
+    virtual void address_length_set(int);
+
+    // See base class for documentation.
+    virtual int preferred_block_size_get() const;
 
 private:
-	unsigned long data_count;
-	int pref_block_size;
-	int address_length;
-	void write_inner(int, unsigned long, int, const void *, int);
-	srec_output_file_srecord(const srec_output_file_srecord &);
-	srec_output_file_srecord &operator=(const srec_output_file_srecord &);
+    /**
+      * The data_count instance variable is used to remember the total
+      * number of ouput data lines have occurred to date.  Ths is used
+      * at the end of the file to emit an S5 record.
+      */
+    unsigned long data_count;
+
+    /**
+      * The pref_block_size instance variable is used to remember the
+      * preferred number of data bytes (NOT encoded hex characters) to
+      * be placed in each output line.
+      */
+    int pref_block_size;
+
+    /**
+      * The address_length instance variable is used to remember the
+      * minimum number of address bytes to be emitted into output lines.
+      */
+    int address_length;
+
+    /**
+      * The write_inner method is used to write a line of output.
+      *
+      * @param tag
+      *     The tag value at the start of the line.  For example, and S1
+      *     line would have a tag of 1.
+      * @param address
+      *     The address of the first byte of data on the line.
+      * @param address_nbytes
+      *     The number of bytes of address to emit.
+      * @param data
+      *     The palyload of this line.
+      * @param data_nbytes
+      *     The number of bytes of payload.
+      */
+    void write_inner(int tag, unsigned long address, int address_nbytes,
+        const void *data, int data_nbytes);
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_output_file_srecord(const srec_output_file_srecord &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_output_file_srecord &operator=(const srec_output_file_srecord &);
 };
 
 #endif // INCLUDE_SREC_OUTPUT_FILE_SRECORD_H

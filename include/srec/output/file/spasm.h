@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2002 Peter Miller;
+//	Copyright (C) 2001, 2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,22 +27,65 @@
 
 #include <srec/output/file.h>
 
-class srec_output_file_spasm: public srec_output_file
+/**
+  * The srec_output_file_spasm class is used to represent an output
+  * files in SPASM format.
+  */
+class srec_output_file_spasm:
+    public srec_output_file
 {
 public:
-	virtual ~srec_output_file_spasm();
-	srec_output_file_spasm();
-	srec_output_file_spasm(const char *, bool bigendian = true);
-	virtual void write(const srec_record &);
-	virtual void line_length_set(int);
-	virtual void address_length_set(int);
-	virtual int preferred_block_size_get() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_output_file_spasm();
+
+    /**
+      * The default constructor.
+      * Output will be written to the standard output.
+      */
+    srec_output_file_spasm();
+
+    /**
+      * The constructor.
+      *
+      * @param filename
+      *     The name of the file to write the output to.  The string "-"
+      *     is understood to mean the standrad output.
+      * @param bigendian
+      *     Whether to output big endian data (true) or little endian
+      *     data (false).
+      */
+    srec_output_file_spasm(const char *filename, bool bigendian = true);
+
+    // See base class for documentation.
+    virtual void write(const srec_record &);
+
+    // See base class for documentation.
+    virtual void line_length_set(int);
+
+    // See base class for documentation.
+    virtual void address_length_set(int);
+
+    // See base class for documentation.
+    virtual int preferred_block_size_get() const;
 
 private:
-	bool bigend;
-	void write_inner(int, unsigned long, const void *, int);
-	srec_output_file_spasm(const srec_output_file_spasm &);
-	srec_output_file_spasm &operator=(const srec_output_file_spasm &);
+    /**
+      * The bigend instance variable is used to remember whether to
+      * output big endian data (true) or little endian data (false).
+      */
+    bool bigend;
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_output_file_spasm(const srec_output_file_spasm &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_output_file_spasm &operator=(const srec_output_file_spasm &);
 };
 
 #endif // INCLUDE_SREC_OUTPUT_FILE_SPASM_H

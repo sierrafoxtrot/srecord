@@ -30,7 +30,8 @@
   * The srec_output_file_vhdl class is used to represent the state out
   * an output file in VHDL format.
   */
-class srec_output_file_vhdl: public srec_output_file
+class srec_output_file_vhdl:
+    public srec_output_file
 {
 public:
     /**
