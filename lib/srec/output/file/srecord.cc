@@ -27,19 +27,19 @@
 
 
 srec_output_file_srecord::srec_output_file_srecord()
-	: srec_output_file(), data_count(0)
+	: srec_output_file(), data_count(0), pref_block_size(32)
 {
 }
 
 
 srec_output_file_srecord::srec_output_file_srecord(const char *filename)
-	: srec_output_file(filename), data_count(0)
+	: srec_output_file(filename), data_count(0), pref_block_size(32)
 {
 }
 
 
 srec_output_file_srecord::srec_output_file_srecord(const srec_output_file_srecord &)
-	: srec_output_file(), data_count(0)
+	: srec_output_file(), data_count(0), pref_block_size(32)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
@@ -163,4 +163,47 @@ srec_output_file_srecord::write(const srec_record &record)
 	case srec_record::type_unknown:
 		fatal_error("can't write unknown record type");
 	}
+}
+
+
+void
+srec_output_file_srecord::line_length_set(int linlen)
+{
+	/*
+	 * Given the number of characters, figure the maximum number of
+	 * data baytes.
+	 * 'S' <tag> <size1:2> <addr1:8> ...data... <cs1:2>
+	 * 1 +  1 +  2 +       8 +       2*n +      2       <= linlen
+	 */
+	int n = (linlen - 14) / 2;
+
+	/*
+	 * Constrain based on the file format.
+	 *
+	 * The size field (max 255) includes the size of the data,
+	 * the size of the address (up to 4 bytes) and the size of the
+	 * size (1 byte), thus 250 (255 - 4 - 1) bytes of data is
+	 * the safest maximum.	We could make it based on the address,
+	 * but that's probably overkill.
+	 */
+	if (n < 1)
+		n = 1;
+	else if (n > 250)
+		n = 250;
+
+	/*
+	 * An additional constraint is the size of the srec_record
+	 * data buffer.
+	 */
+	if (n > srec_record::max_data_length)
+		n = srec_record::max_data_length;
+	pref_block_size = n;
+}
+
+
+int
+srec_output_file_srecord::preferred_block_size_get()
+	const
+{
+	return pref_block_size;
 }

@@ -28,19 +28,19 @@
 
 
 srec_output_file_c::srec_output_file_c()
-	: srec_output_file("-"), prefix("no_name_given")
+	: srec_output_file("-"), prefix("no_name_given"), line_length(75)
 {
 }
 
 
 srec_output_file_c::srec_output_file_c(const char *filename, const char *a2)
-	: srec_output_file(filename), prefix(a2)
+	: srec_output_file(filename), prefix(a2), line_length(75)
 {
 }
 
 
 srec_output_file_c::srec_output_file_c(const srec_output_file_c &)
-	: srec_output_file("-")
+	: srec_output_file("-"), line_length(75)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
@@ -67,7 +67,7 @@ srec_output_file_c::emit_header()
 void
 srec_output_file_c::emit_byte(int n)
 {
-	if (column >= 75)
+	if (column >= line_length)
 	{
 		put_char('\n');
 		column = 0;
@@ -142,4 +142,26 @@ srec_output_file_c::write(const srec_record &record)
 		taddr = record.get_address();
 		break;
 	}
+}
+
+
+void
+srec_output_file_c::line_length_set(int n)
+{
+	n = (n + 1) / 6;
+	if (n < 1)
+		n = 1;
+	n = n * 6 - 1;
+	line_length = n;
+}
+
+
+int
+srec_output_file_c::preferred_block_size_get()
+	const
+{
+	/*
+	 * Irrelevant.  Use the largest we can get.
+	 */
+	return srec_record::max_data_length;
 }

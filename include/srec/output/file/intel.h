@@ -34,12 +34,15 @@ public:
 	srec_output_file_intel();
 	srec_output_file_intel(const char *);
 	virtual void write(const srec_record &);
+	virtual void line_length_set(int);
+	virtual int preferred_block_size_get() const;
 
 private:
 	void write_inner(int, unsigned long, const void *, int);
 	srec_output_file_intel(const srec_output_file_intel &);
 	srec_output_file_intel &operator=(const srec_output_file_intel &);
 	unsigned long address_base;
+	int pref_block_size;
 };
 
 #endif /* INCLUDE_SREC_OUTPUT_FILE_INTEL_H */

@@ -138,9 +138,10 @@ void
 srec_output::write_data(unsigned long address, const void *data, size_t length)
 {
 	const srec_record::data_t *data_p = (const srec_record::data_t *)data;
+	size_t block_size = preferred_block_size_get();
 	while (length > 0)
 	{
-		int nbytes = (length > 32 ? 32 : length);
+		int nbytes = (length > block_size ? block_size : length);
 		srec_record record(srec_record::type_data, address, data_p,
 			nbytes);
 		write(record);

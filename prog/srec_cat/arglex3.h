@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -17,30 +17,32 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  *
- * MANIFEST: interface definition for lib/srec/output/file/binary.cc
+ * MANIFEST: interface definition for prog/srec_cat/arglex3.cc
  */
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_BINARY_H
-#define INCLUDE_SREC_OUTPUT_FILE_BINARY_H
+#ifndef PROG_SREC_CAT_ARGLEX3_H
+#define PROG_SREC_CAT_ARGLEX3_H
 
-#pragma interface "srec_output_file_binary"
+#pragma interface "srec_cat_arglex3"
 
-#include <srec/output/file.h>
+#include <srec/arglex.h>
 
-class srec_output_file_binary: public srec_output_file
+class srec_cat_arglex3: public srec_arglex
 {
 public:
-	virtual ~srec_output_file_binary();
-	srec_output_file_binary();
-	srec_output_file_binary(const char *);
-	virtual void write(const srec_record &);
-	virtual void line_length_set(int);
-	virtual int preferred_block_size_get() const;
+	enum
+	{
+		token_line_length = srec_arglex::token_MAX,
+		token_MAX
+	};
+
+	~srec_cat_arglex3();
+	srec_cat_arglex3(int, char **);
 
 private:
-	srec_output_file_binary(const srec_output_file_binary &);
-	srec_output_file_binary &operator=(const srec_output_file_binary &);
-	const char *mode() const;
+	srec_cat_arglex3();
+	srec_cat_arglex3(const srec_cat_arglex3 &);
+	srec_cat_arglex3 &operator=(const srec_cat_arglex3 &);
 };
 
-#endif /* INCLUDE_SREC_OUTPUT_FILE_BINARY_H */
+#endif /* PROG_SREC_CAT_ARGLEX3_H */

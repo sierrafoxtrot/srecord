@@ -25,6 +25,7 @@
 
 #pragma interface "arglex"
 
+#include <vector.h>
 
 #define ARGLEX_END_MARKER {0,0}
 
@@ -66,7 +67,14 @@ private:
 	int		token;
 	char		*value_string_;
 	long		value_number_;
-	table_ty	*table;
+
+	/*
+	 * Arguments tables, one per derived class.
+	 * Append using table_set()
+	 */
+	typedef vector<table_ty *> table_ptr_vec_t;
+	table_ptr_vec_t	tables;
+
 	char		*pushback[4];
 	int		pushback_depth;
 

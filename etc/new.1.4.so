@@ -19,9 +19,12 @@
 .\"
 .\" MANIFEST: description of new 1.3 features
 .\"
-.\" .PP
-.\" .if n *
-.\" .if t \(bu
+.PP
+.if n *
+.if t \(bu
+.\" Change 12
+There is a new \fI-Line-Length\fP option for the \fIsrec_cat\fP program,
+allowing you to specify the maximum width of output lines.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.4

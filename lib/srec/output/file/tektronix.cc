@@ -27,19 +27,19 @@
 
 
 srec_output_file_tektronix::srec_output_file_tektronix()
-	: srec_output_file("-")
+	: srec_output_file("-"), pref_block_size(32)
 {
 }
 
 
 srec_output_file_tektronix::srec_output_file_tektronix(const char *filename)
-	: srec_output_file(filename)
+	: srec_output_file(filename), pref_block_size(32)
 {
 }
 
 
 srec_output_file_tektronix::srec_output_file_tektronix(const srec_output_file_tektronix &)
-	: srec_output_file("-")
+	: srec_output_file("-"), pref_block_size(32)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
@@ -143,4 +143,40 @@ srec_output_file_tektronix::write(const srec_record &record)
 	case srec_record::type_unknown:
 		fatal_error("can't write unknown record type");
 	}
+}
+
+
+void
+srec_output_file_tektronix::line_length_set(int n)
+{
+	/*
+	 * Given the number of characters, figure the maximum number of
+	 * data baytes.
+	 */
+	n = (n - 11) / 2;
+
+	/*
+	 * Constrain based on the file format.
+	 * (255 is the largest that will fit in the data length field)
+	 */
+	if (n < 1)
+		n = 1;
+	else if (n > 255)
+		n = 255;
+
+	/*
+	 * An additional constraint is the size of the srec_record
+	 * data buffer.
+	 */
+	if (n > srec_record::max_data_length)
+		n = srec_record::max_data_length;
+	pref_block_size = n;
+}
+
+
+int
+srec_output_file_tektronix::preferred_block_size_get()
+	const
+{
+	return pref_block_size;
 }

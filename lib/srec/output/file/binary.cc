@@ -77,3 +77,23 @@ srec_output_file_binary::mode()
 {
 	return "wb";
 }
+
+
+void
+srec_output_file_binary::line_length_set(int)
+{
+	/*
+	 * Irrelevant.  Ignore.
+	 */
+}
+
+
+int
+srec_output_file_binary::preferred_block_size_get()
+	const
+{
+	/*
+	 * Irrelevant.  Use the largest we can get.
+	 */
+	return srec_record::max_data_length;
+}

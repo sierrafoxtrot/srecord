@@ -37,6 +37,9 @@ public:
 	virtual void write_data(unsigned long, const void *, size_t);
 	virtual void write_termination(unsigned long = 0);
 
+	virtual void line_length_set(int) = 0;
+	virtual int preferred_block_size_get() const = 0;
+
 	virtual void fatal_error(const char *, ...) const;
 	virtual void fatal_error_v(const char *, va_list) const;
 	virtual void fatal_error_errno(const char *, ...) const;

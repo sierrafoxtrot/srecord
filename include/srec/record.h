@@ -64,11 +64,13 @@ public:
 	static void encode_big_endian(data_t *, address_t, int);
 	static void encode_little_endian(data_t *, address_t, int);
 
+	enum { max_data_length = 255 };
+
 private:
 	type		itype;
 	address_t	address;
 	int		length;
-	data_t		data[255];
+	data_t		data[max_data_length];
 };
 
 #endif /* INCLUDE_SREC_RECORD_H */

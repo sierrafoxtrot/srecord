@@ -30,7 +30,7 @@
 #include <progname.h>
 #include <versn_stamp.h>
 
-static arglex::table_ty table[] =
+static arglex::table_ty default_table[] =
 {
 	{ "-",			arglex::token_stdio,		},
 	{ "-Help",		arglex::token_help,		},
@@ -45,16 +45,18 @@ static arglex::table_ty table[] =
 
 
 arglex::arglex()
-	: argc(0), argv(0), table(0), pushback_depth(0), usage_tail_(0)
+	: argc(0), argv(0), tables(), pushback_depth(0), usage_tail_(0)
 {
+	table_set(default_table);
 }
 
 
 arglex::arglex(int ac, char **av)
-	: argc(ac - 1), argv(av + 1), table(0), pushback_depth(0),
+	: argc(ac - 1), argv(av + 1), tables(), pushback_depth(0),
 	  usage_tail_(0)
 {
 	progname_set(av[0]);
+	table_set(default_table);
 }
 
 
@@ -66,7 +68,7 @@ arglex::~arglex()
 void
 arglex::table_set(table_ty *tp)
 {
-	table = tp;
+	tables.push_back(tp);
 }
 
 
@@ -422,14 +424,14 @@ arglex::token_next()
 	 */
 	nhit = 0;
 	partial = 0;
-	for (tp = ::table; tp->name; tp++)
+	for
+	(
+		table_ptr_vec_t::iterator it = tables.begin();
+		it != tables.end();
+		++it
+	)
 	{
-		if (arglex_compare(tp->name, value_string_))
-			hit[nhit++] = tp;
-	}
-	if (table)
-	{
-		for (tp = table; tp->name; tp++)
+		for (tp = *it; tp->name; tp++)
 		{
 			if (arglex_compare(tp->name, value_string_))
 				hit[nhit++] = tp;
@@ -492,14 +494,14 @@ arglex::token_name(int n)
 	default:
 		break;
 	}
-	for (tp = ::table; tp->name; tp++)
+	for
+	(
+		table_ptr_vec_t::iterator it = tables.begin();
+		it != tables.end();
+		++it
+	)
 	{
-		if (tp->token == n)
-			return tp->name;
-	}
-	if (table)
-	{
-		for (tp = table; tp->name; tp++)
+		for (tp = *it; tp->name; tp++)
 		{
 			if (tp->token == n)
 				return tp->name;

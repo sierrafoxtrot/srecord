@@ -20,7 +20,7 @@
  * MANIFEST: operating system entry point
  */
 
-#include <srec/arglex.h>
+#include <arglex3.h>
 #include <srec/input.h>
 #include <srec/memory.h>
 #include <srec/memory/walker/writer.h>
@@ -34,11 +34,12 @@
 int
 main(int argc, char **argv)
 {
-	srec_arglex cmdline(argc, argv);
+	srec_cat_arglex3 cmdline(argc, argv);
 	cmdline.token_first();
 	typedef vector<srec_input *> infile_t;
 	infile_t infile;
 	srec_output *outfile = 0;
+	int line_length = 0;
 	while (cmdline.token_cur() != arglex::token_eoln)
 	{
 		switch (cmdline.token_cur())
@@ -57,6 +58,20 @@ main(int argc, char **argv)
 				cmdline.usage();
 			outfile = cmdline.get_output();
 			continue;
+
+		case srec_cat_arglex3::token_line_length:
+			if (line_length > 0)
+				cmdline.usage();
+			if (cmdline.token_next() != arglex::token_number)
+				cmdline.usage();
+			line_length = cmdline.value_number();
+			if (line_length <= 0)
+			{
+				cerr << "the line length " << line_length
+					<< " is invalid" << endl;
+				exit(1);
+			}
+			break;
 		}
 		cmdline.token_next();
 	}
@@ -64,6 +79,8 @@ main(int argc, char **argv)
 		infile.push_back(cmdline.get_input());
 	if (!outfile)
 		outfile = cmdline.get_output();
+	if (line_length > 0)
+		outfile->line_length_set(line_length);
 
 	/*
 	 * Read the input into memory.	This allows the data to be
@@ -72,7 +89,7 @@ main(int argc, char **argv)
 	 *
 	 * It is assumed the data will all fit into memory.  This is
 	 * usually reasonable, because these utilities are used for
-	 * eproms which are usualloy smaller than the available virtual
+	 * eproms which are usually smaller than the available virtual
 	 * memory of the development system.
 	 */
 	srec_memory *mp = new srec_memory();

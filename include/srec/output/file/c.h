@@ -34,6 +34,8 @@ public:
 	srec_output_file_c();
 	srec_output_file_c(const char *, const char *);
 	virtual void write(const srec_record &);
+	void line_length_set(int);
+	int preferred_block_size_get() const;
 
 private:
 	string prefix;
@@ -42,6 +44,7 @@ private:
 	bool header_done;
 	int column;
 	unsigned long current_address;
+	int line_length;
 	void emit_header();
 	void emit_byte(int);
 	srec_output_file_c(const srec_output_file_c &);

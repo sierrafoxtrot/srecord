@@ -34,8 +34,11 @@ public:
 	srec_output_file_tektronix();
 	srec_output_file_tektronix(const char *);
 	virtual void write(const srec_record &);
+	virtual void line_length_set(int);
+	virtual int preferred_block_size_get() const;
 
 private:
+	int pref_block_size;
 	void write_inner(unsigned long, const void *, int);
 	srec_output_file_tektronix(const srec_output_file_tektronix &);
 	srec_output_file_tektronix &operator=(const srec_output_file_tektronix &);
