@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Peter Miller;
+ *	Copyright (C) 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -30,7 +30,8 @@ srec_output_file_ascii_hex::srec_output_file_ascii_hex()
 	: srec_output_file(),
 	  address(0),
 	  column(0),
-	  pref_block_size(16)
+	  pref_block_size(16),
+	  address_length(2)
 {
 }
 
@@ -39,7 +40,8 @@ srec_output_file_ascii_hex::srec_output_file_ascii_hex(const char *filename)
 	: srec_output_file(filename),
 	  address(0),
 	  column(0),
-	  pref_block_size(16)
+	  pref_block_size(16),
+	  address_length(2)
 {
 }
 
@@ -48,7 +50,8 @@ srec_output_file_ascii_hex::srec_output_file_ascii_hex(const srec_output_file_as
 	: srec_output_file(),
 	  address(0),
 	  column(0),
-	  pref_block_size(32)
+	  pref_block_size(32),
+	  address_length(2)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
@@ -89,12 +92,14 @@ srec_output_file_ascii_hex::write(const srec_record &record)
 			else if (column)
 				put_char(' ');
 			address = record.get_address();
-			if (address < 0x10000)
-				put_stringf("$A%04X,\n", address);
-			else if (address < 0x1000000)
-				put_stringf("$A%06X,\n", address);
-			else
-				put_stringf("$A%08X,\n", address);
+			int width = 2;
+			if (address >= 0x1000000)
+				width = 4;
+			if (address >= 0x10000)
+				width = 3;
+			if (width < address_length)
+				width = address_length;
+			put_stringf("$A%0*X,\n", width * 2, address);
 			column = 0;
 		}
 		for (int j = 0; j < record.get_length(); ++j)
@@ -139,6 +144,17 @@ srec_output_file_ascii_hex::line_length_set(int linlen)
 	if (n > srec_record::max_data_length)
 		n = srec_record::max_data_length;
 	pref_block_size = n;
+}
+
+
+void
+srec_output_file_ascii_hex::address_length_set(int n)
+{
+	if (n < 2)
+		n = 2;
+	if (n > 4)
+		n = 4;
+	address_length = n;
 }
 
 

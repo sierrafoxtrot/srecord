@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -35,6 +35,7 @@ public:
 	srec_output_file_c(const char *, const char *);
 	virtual void write(const srec_record &);
 	void line_length_set(int);
+	void address_length_set(int);
 	int preferred_block_size_get() const;
 
 private:
@@ -45,6 +46,7 @@ private:
 	int column;
 	unsigned long current_address;
 	int line_length;
+	int address_length;
 	void emit_header();
 	void emit_byte(int);
 	srec_output_file_c(const srec_output_file_c &);

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Peter Miller;
+ *	Copyright (C) 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -30,8 +30,9 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv)
 {
 	static table_ty table[] =
 	{
-		{ "-Line_Length", token_line_length, },
+		{ "-Address_Length", token_address_length, },
 		{ "-Data_Only", token_data_only, },
+		{ "-Line_Length", token_line_length, },
 		ARGLEX_END_MARKER
 	};
 

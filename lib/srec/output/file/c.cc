@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -34,7 +34,8 @@ srec_output_file_c::srec_output_file_c()
 	  header_done(false),
 	  column(0),
 	  current_address(0),
-	  line_length(75)
+	  line_length(75),
+	  address_length(4)
 {
 }
 
@@ -46,13 +47,16 @@ srec_output_file_c::srec_output_file_c(const char *filename, const char *a2)
 	  header_done(false),
 	  column(0),
 	  current_address(0),
-	  line_length(75)
+	  line_length(75),
+	  address_length(4)
 {
 }
 
 
 srec_output_file_c::srec_output_file_c(const srec_output_file_c &)
-	: srec_output_file("-"), line_length(75)
+	: srec_output_file("-"),
+	  line_length(75),
+	  address_length(4)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
@@ -103,17 +107,20 @@ srec_output_file_c::~srec_output_file_c()
 		put_char('\n');
 	put_string("};\n");
 
+	int width = 2 * address_length;
 	if (!data_only_flag)
 	{
-		put_stringf("unsigned long %s_termination = 0x%08lX;\n",
-			prefix.c_str(), taddr);
-		put_stringf("unsigned long %s_start       = 0x%08lX;\n",
-			prefix.c_str(), range.get_lowest());
-		put_stringf("unsigned long %s_finish      = 0x%08lX;\n",
-			prefix.c_str(), range.get_highest());
+		put_stringf("unsigned long %s_termination = 0x%0*lX;\n",
+			prefix.c_str(), width, taddr);
+		put_stringf("unsigned long %s_start       = 0x%0*lX;\n",
+			prefix.c_str(), width, range.get_lowest());
+		put_stringf("unsigned long %s_finish      = 0x%0*lX;\n",
+			prefix.c_str(), width, range.get_highest());
 	}
-	put_stringf("unsigned long %s_length      = 0x%08lX;\n",
-		prefix.c_str(), range.get_highest() - range.get_lowest());
+	put_stringf("unsigned long %s_length      = 0x%0*lX;\n",
+		prefix.c_str(),
+		width,
+		range.get_highest() - range.get_lowest());
 }
 
 
@@ -165,6 +172,25 @@ srec_output_file_c::line_length_set(int n)
 		n = 1;
 	n = n * 6 - 1;
 	line_length = n;
+}
+
+
+void
+srec_output_file_c::address_length_set(int n)
+{
+	switch (n)
+	{
+	default:
+		address_length = 4;
+		break;
+	
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		address_length = n;
+		break;
+	}
 }
 
 

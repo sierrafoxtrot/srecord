@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Peter Miller;
+ *	Copyright (C) 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -124,6 +124,13 @@ srec_output_file_mos_tech::line_length_set(int linlen)
 	if (n > srec_record::max_data_length)
 		n = srec_record::max_data_length;
 	pref_block_size = n;
+}
+
+
+void
+srec_output_file_mos_tech::address_length_set(int)
+{
+	// ignore (this is only a 16-bit format)
 }
 
 

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -26,20 +26,29 @@
 #include <srec/record.h>
 
 
-srec_output_file_srecord::srec_output_file_srecord()
-	: srec_output_file(), data_count(0), pref_block_size(32)
+srec_output_file_srecord::srec_output_file_srecord() :
+	srec_output_file(),
+	data_count(0),
+	pref_block_size(32),
+	address_length(2)
 {
 }
 
 
-srec_output_file_srecord::srec_output_file_srecord(const char *filename)
-	: srec_output_file(filename), data_count(0), pref_block_size(32)
+srec_output_file_srecord::srec_output_file_srecord(const char *filename) :
+	srec_output_file(filename),
+	data_count(0),
+	pref_block_size(32),
+	address_length(2)
 {
 }
 
 
-srec_output_file_srecord::srec_output_file_srecord(const srec_output_file_srecord &)
-	: srec_output_file(), data_count(0), pref_block_size(32)
+srec_output_file_srecord::srec_output_file_srecord(const srec_output_file_srecord &) :
+	srec_output_file(),
+	data_count(0),
+	pref_block_size(32),
+	address_length(2)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
@@ -112,7 +121,12 @@ srec_output_file_srecord::write(const srec_record &record)
 		break;
 
 	case srec_record::type_data:
-		if (record.get_address() < (1UL << 16))
+		if
+		(
+			record.get_address() < (1UL << 16)
+		&&
+			address_length <= 2
+		)
 		{
 			write_inner
 			(
@@ -123,7 +137,12 @@ srec_output_file_srecord::write(const srec_record &record)
 				record.get_length()
 			);
 		}
-		else if (record.get_address() < (1UL << 24))
+		else if
+		(
+			record.get_address() < (1UL << 24)
+		&&
+			address_length <= 3
+		)
 		{
 			write_inner
 			(
@@ -156,9 +175,19 @@ srec_output_file_srecord::write(const srec_record &record)
 		if (data_only_flag)
 			break;
 		write_inner(5, data_count, 2, 0, 0);
-		if (record.get_address() < (1UL << 16))
+		if
+		(
+			record.get_address() < (1UL << 16)
+		&&
+			address_length <= 2
+		)
 			write_inner(9, record.get_address(), 2, 0, 0);
-		else if (record.get_address() < (1UL << 24))
+		else if
+		(
+			record.get_address() < (1UL << 24)
+		&&
+			address_length <= 3
+		)
 			write_inner(8, record.get_address(), 3, 0, 0);
 		else
 			write_inner(7, record.get_address(), 4, 0, 0);
@@ -202,6 +231,17 @@ srec_output_file_srecord::line_length_set(int linlen)
 	if (n > srec_record::max_data_length)
 		n = srec_record::max_data_length;
 	pref_block_size = n;
+}
+
+
+void
+srec_output_file_srecord::address_length_set(int n)
+{
+	if (n < 2)
+		n = 2;
+	else if (n > 4)
+		n = 4;
+	address_length = n;
 }
 
 

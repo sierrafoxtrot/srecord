@@ -78,7 +78,7 @@ srec_output_file_vhdl::emit_header()
 			" constant %s_rom : %s_rom_array;\n"
 			"end package %s_pack;\n\n",
 			pref, /* package begin */
-			pref,pref, /* constant */
+			pref, pref, /* constant */
 			pref /* package end */
 		);
 		put_stringf(
@@ -88,14 +88,14 @@ srec_output_file_vhdl::emit_header()
 	}
 	put_stringf(
 		" constant %s_rom : %s_rom_array := %s_rom_array'(\n",
-		pref,pref,pref /* constant */
+		pref, pref, pref /* constant */
 	);
 	header_done = true;
 }
 
 
 void
-srec_output_file_vhdl::emit_word(int address,unsigned long n)
+srec_output_file_vhdl::emit_word(int address, unsigned long n)
 {
 	const int last_byte = abs(bytes_per_word);
 	static int current_byte = 0;
@@ -110,7 +110,7 @@ srec_output_file_vhdl::emit_word(int address,unsigned long n)
 		word |= ( (n & 0xFF) << (current_byte*8));
 	}
 	if(++current_byte == last_byte){
-		put_stringf("  %d => %s_entry(%ld),\n",address/last_byte,prefix.c_str(),word);
+		put_stringf("  %d => %s_entry(%ld),\n", address/last_byte, prefix.c_str(), word);
 		current_byte=word=0;
 	}
 	prev_address = address;
@@ -164,7 +164,7 @@ srec_output_file_vhdl::write(const srec_record &record)
 		{
 			if (record.get_address() + j < current_address)
 				continue;
-			emit_word(current_address,record.get_data(j));
+			emit_word(current_address, record.get_data(j));
 			current_address++;
 		}
 		break;
@@ -184,6 +184,13 @@ srec_output_file_vhdl::line_length_set(int n)
 		n = 1;
 	n = n * 6 - 1;
 	line_length = n;
+}
+
+
+void
+srec_output_file_vhdl::address_length_set(int)
+{
+	// ignore
 }
 
 

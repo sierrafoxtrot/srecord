@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -81,6 +81,15 @@ srec_output_file_binary::mode()
 
 void
 srec_output_file_binary::line_length_set(int)
+{
+	/*
+	 * Irrelevant.  Ignore.
+	 */
+}
+
+
+void
+srec_output_file_binary::address_length_set(int)
 {
 	/*
 	 * Irrelevant.  Ignore.

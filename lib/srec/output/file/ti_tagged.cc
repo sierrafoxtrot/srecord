@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Peter Miller;
+ *	Copyright (C) 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -161,6 +161,13 @@ srec_output_file_ti_tagged::line_length_set(int linlen)
 	// make sure the line is long enoght to do anything useful
 	if (line_length < 5)
 		line_length = 5;
+}
+
+
+void
+srec_output_file_ti_tagged::address_length_set(int)
+{
+	// ignore (this is a 16-bit format)
 }
 
 

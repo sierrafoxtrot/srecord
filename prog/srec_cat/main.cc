@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -41,6 +41,7 @@ main(int argc, char **argv)
 	infile_t infile;
 	srec_output *outfile = 0;
 	int line_length = 0;
+	int address_length = 0;
 	while (cmdline.token_cur() != arglex::token_eoln)
 	{
 		switch (cmdline.token_cur())
@@ -74,6 +75,25 @@ main(int argc, char **argv)
 			}
 			break;
 
+		case srec_cat_arglex3::token_address_length:
+			if (address_length > 0)
+				cmdline.usage();
+			if (cmdline.token_next() != arglex::token_number)
+				cmdline.usage();
+			address_length = cmdline.value_number();
+			if
+			(
+				address_length <= 0
+			||
+				address_length > (int)sizeof(long)
+			)
+			{
+				cerr << "the address length " << address_length
+					<< " is invalid" << endl;
+				exit(1);
+			}
+			break;
+
 		case srec_cat_arglex3::token_data_only:
 			srec_output_file::data_only();
 			break;
@@ -84,6 +104,8 @@ main(int argc, char **argv)
 		infile.push_back(cmdline.get_input());
 	if (!outfile)
 		outfile = cmdline.get_output();
+	if (address_length > 0)
+		outfile->address_length_set(address_length);
 	if (line_length > 0)
 		outfile->line_length_set(line_length);
 

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Peter Miller;
+ *	Copyright (C) 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -26,20 +26,26 @@
 #include <srec/record.h>
 
 
-srec_output_file_tektronix_extended::srec_output_file_tektronix_extended()
-	: srec_output_file(), pref_block_size(32)
+srec_output_file_tektronix_extended::srec_output_file_tektronix_extended() :
+	srec_output_file(),
+	pref_block_size(32),
+	address_length(4)
 {
 }
 
 
-srec_output_file_tektronix_extended::srec_output_file_tektronix_extended(const char *filename)
-	: srec_output_file(filename), pref_block_size(32)
+srec_output_file_tektronix_extended::srec_output_file_tektronix_extended(const char *filename) :
+	srec_output_file(filename),
+	pref_block_size(32),
+	address_length(4)
 {
 }
 
 
-srec_output_file_tektronix_extended::srec_output_file_tektronix_extended(const srec_output_file_tektronix_extended &)
-	: srec_output_file(), pref_block_size(32)
+srec_output_file_tektronix_extended::srec_output_file_tektronix_extended(const srec_output_file_tektronix_extended &) :
+	srec_output_file(),
+	pref_block_size(32),
+	address_length(4)
 {
 	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
 }
@@ -63,6 +69,8 @@ void
 srec_output_file_tektronix_extended::write_inner(int tag, unsigned long addr,
 	int addr_nbytes, const void *data_p, int data_nbytes)
 {
+	if (addr_nbytes < address_length)
+		addr_nbytes = address_length;
 	unsigned char buf[260];
 	int record_length = (addr_nbytes + data_nbytes) * 2 + 1;
 	if (record_length >= 256)
@@ -97,6 +105,17 @@ srec_output_file_tektronix_extended::write_inner(int tag, unsigned long addr,
 }
 
 
+static int
+addr_width(unsigned long n)
+{
+	if (n < (1uL << 16))
+		return 2;
+	if (n < (1uL << 24))
+		return 3;
+	return 4;
+}
+
+
 void
 srec_output_file_tektronix_extended::write(const srec_record &record)
 {
@@ -111,7 +130,7 @@ srec_output_file_tektronix_extended::write(const srec_record &record)
 		(
 			6,
 			record.get_address(),
-			4,
+			addr_width(record.get_address()),
 			record.get_data(),
 			record.get_length()
 		);
@@ -124,7 +143,14 @@ srec_output_file_tektronix_extended::write(const srec_record &record)
 	case srec_record::type_termination:
 		if (data_only_flag)
 			break;
-		write_inner(8, record.get_address(), 4, 0, 0);
+		write_inner
+		(
+			8,
+			record.get_address(),
+			addr_width(record.get_address()),
+			0,
+			0
+		);
 		break;
 
 	case srec_record::type_unknown:
@@ -162,6 +188,17 @@ srec_output_file_tektronix_extended::line_length_set(int linlen)
 	if (n > srec_record::max_data_length)
 		n = srec_record::max_data_length;
 	pref_block_size = n;
+}
+
+
+void
+srec_output_file_tektronix_extended::address_length_set(int n)
+{
+	if (n < 2)
+		n = 2;
+	if (n > 4)
+		n = 4;
+	address_length = n;
 }
 
 

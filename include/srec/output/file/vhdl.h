@@ -34,6 +34,7 @@ public:
 	srec_output_file_vhdl(const char *, const int, const char *);
 	virtual void write(const srec_record &);
 	void line_length_set(int);
+	void address_length_set(int);
 	int preferred_block_size_get() const;
 
 private:

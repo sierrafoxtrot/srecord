@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -38,6 +38,7 @@ public:
 	virtual void write_termination(unsigned long = 0);
 
 	virtual void line_length_set(int) = 0;
+	virtual void address_length_set(int) = 0;
 	virtual int preferred_block_size_get() const = 0;
 
 	virtual void fatal_error(const char *, ...) const;
