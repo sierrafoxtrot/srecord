@@ -42,7 +42,9 @@ if test "z$SH" = "z"; then
     fi
 fi
 AC_SUBST(SH)
-AC_DEFINE_UNQUOTED(CONF_SHELL, ["$SH"])
+AC_DEFINE_UNQUOTED(CONF_SHELL, ["$SH"],
+[Set this to be the absolute path of a Bourne shell
+which understands functions.])
 AC_MSG_RESULT($SH)
 
 dnl
@@ -67,7 +69,7 @@ fi
 if test -n "$GROFF"
 then
   HAVE_GROFF=yes
-else
+ else
   HAVE_GROFF=no
   AC_MSG_RESULT([])
   AC_MSG_RESULT([	The SRecord documentation set and manual pages will])
@@ -77,5 +79,42 @@ else
   AC_MSG_RESULT([])
 fi
 AC_SUBST(HAVE_GROFF)
+
+AH_TOP([/*
+ *	srecord - manipulate eprom load files
+ *	Copyright (C) 1998-2002 Peter Miller;
+ *	All rights reserved.
+ *
+ *	This program is free software; you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation; either version 2 of the License, or
+ *	(at your option) any later version.
+ *
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
+ *
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program; if not, write to the Free Software
+ *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+ *
+ * MANIFEST: template include/config.h file
+ */
+
+#ifndef INCLUDE_CONFIG_H
+#define INCLUDE_CONFIG_H
+])
+
+AH_BOTTOM([
+/*
+ * There is more to do, but we need to insulate it from config.status,
+ * because it screws up the #undef lines.  They are all implications of
+ * the above information, so there is no need for you to edit the file,
+ * if you are configuring Aegis manually.
+ */
+#include <config.messy.h>
+
+#endif /* INCLUDE_CONFIG_H */])
 
 AC_OUTPUT(Makefile)

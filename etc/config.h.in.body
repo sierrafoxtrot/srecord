@@ -1,6 +1,0 @@
-
-/*
- * Set this to be the absolute path of a Bourne shell
- * which understands functions.
- */
-#define CONF_SHELL "/bin/sh"

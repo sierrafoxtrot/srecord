@@ -94,21 +94,9 @@ install-sh: [install-sh]
 		mv config.log [arch]/config.log;
 }
 
-include/config.h.in: etc/configure.in etc/config.h.in.body
-	etc/config.h.in.head etc/config.h.in.tail
-	single-thread acconfig.h
+include/config.h.in: etc/configure.in
 {
-	if [exists acconfig.h] then
-		rm acconfig.h
-			set clearstat;
-	if [not [exists etc]] then
-		mkdir etc
-			set clearstat;
-	cat [resolve etc/config.h.in.head] > [target];
-	cp [resolve etc/config.h.in.body] acconfig.h;
-	autoheader [resolve etc/configure.in] >> [target];
-	rm acconfig.h;
-	cat [resolve etc/config.h.in.tail] >> [target];
+	autoheader [resolve etc/configure.in] > [target];
 }
 
 
