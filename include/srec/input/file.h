@@ -53,6 +53,7 @@ private:
 	bool prev_was_newline;
 	void *vfp;
 	int checksum;
+	int is_text;
 
 	void *get_fp();
 	srec_input_file(const srec_input_file &);

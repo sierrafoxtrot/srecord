@@ -95,7 +95,7 @@ srec_memory::find(unsigned long address)
 	 */
 	int min = 0;
 	int max = nchunks - 1;
-	srec_memory_chunk *mcp;
+	srec_memory_chunk *mcp = 0;
 	while (min <= max)
 	{
 		int mid = (min + max) / 2;

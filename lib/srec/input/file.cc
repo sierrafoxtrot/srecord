@@ -25,13 +25,14 @@
 #include <cstdio>
 #include <errno.h>
 #include <iostream.h>
+#include <string.h>
 
 #include <srec/input/file.h>
 
 
 srec_input_file::srec_input_file()
 	: file_name("standard input"), line_number(1), prev_was_newline(false),
-	  checksum(0)
+	  checksum(0), is_text(0)
 {
 	vfp = stdin;
 }
@@ -89,9 +90,11 @@ srec_input_file::get_fp()
 		 * completed.  This is so that the virtual mode() method
 		 * is available (it isn't in the base class constructor).
 		 */
-		vfp = fopen(file_name.c_str(), mode());
+		const char *the_mode = mode();
+		vfp = fopen(file_name.c_str(), the_mode);
 		if (!vfp)
 			fatal_error_errno("open");
+		is_text = !strchr(the_mode, 'b');
 	}
 	return vfp;
 }
@@ -134,7 +137,30 @@ srec_input_file::get_char()
 	{
 		if (ferror(fp))
 			fatal_error_errno("read");
-		c = -1;
+		/*
+		 * If this is a text file, but the last character wasn't
+		 * a newline, insert one.
+		 */
+		c = ((is_text && !prev_was_newline) ? '\n' : -1);
+	}
+	else if (c == '\r' && is_text)
+	{
+		/*
+		 * If this is a text file, turn CRLF into LF.
+		 * Leave all other sequences containing CR alone.
+		 */
+		c = getc(fp);
+		if (c == EOF)
+		{
+			if (ferror(fp))
+				fatal_error_errno("read");
+			c = '\r';
+		}
+		else if (c != '\n')
+		{
+			ungetc(c, fp);
+			c = '\r';
+		}
 	}
 	prev_was_newline = (c == '\n');
 	return c;
