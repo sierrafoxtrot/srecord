@@ -29,34 +29,21 @@
 #include <vector>
 
 
-static void
-usage(const char *progname)
-{
-	cerr << "Usage: " << progname << " <file1> <file2>" << endl;
-	exit(1);
-}
-
-
 int
 main(int argc, char **argv)
 {
 	srec_arglex cmdline(argc, argv);
-	cmdline.token_next();
+	cmdline.usage_tail_set("<file1> <file2>");
+	cmdline.token_first();
 	srec_input *if1 = 0;
 	srec_input *if2 = 0;
 	while (cmdline.token_cur() != srec_arglex::token_eoln)
 	{
 		switch (cmdline.token_cur())
 		{
-		case srec_arglex::token_option:
-			cerr << "Unknown ``" << cmdline.value_string()
-				<< "'' option" << endl;
-			usage(argv[0]);
-
 		default:
-			cerr << "Misplaced ``" << cmdline.value_string()
-				<< "'' option" << endl;
-			usage(argv[0]);
+			cmdline.bad_argument();
+			/* NOTREACHED */
 
 		case srec_arglex::token_string:
 		case srec_arglex::token_stdio:
@@ -69,7 +56,7 @@ main(int argc, char **argv)
 				cerr << argv[0]
 					<< ": too many input files specified"
 					<< endl;
-				usage(argv[0]);
+				cmdline.usage();
 			}
 			continue;
 		}
@@ -78,7 +65,7 @@ main(int argc, char **argv)
 	if (!if1 || !if2)
 	{
 		cerr << argv[0] << ": two input files required" << endl;
-		usage(argv[0]);
+		cmdline.usage();
 	}
 
 	/*

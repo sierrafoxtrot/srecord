@@ -36,6 +36,7 @@ source_file_order =
 			[source_files]
 			/* BUILDING */
 			/* MANIFEST */
+			LICENSE
 
 			/*
 			 * These two are for time stamping the distribution.
@@ -219,4 +220,9 @@ archive/[project_minus].lsm: etc/[project_short].lsm etc/ssp.awk
 	| groff -Tascii -t -P-hub -man
 	| [awk] -f [resolve etc/ssp.awk]
 	> [target];
+}
+
+LICENSE: man/cat1/srec_license.1
+{
+	cat [resolve [need]] > [target];
 }

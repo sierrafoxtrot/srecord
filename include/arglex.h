@@ -33,6 +33,7 @@ public:
 	{
 		token_eoln,
 		token_help,
+		token_license,
 		token_number,
 		token_option,
 		token_page_width,
@@ -78,9 +79,20 @@ public:
 
 	int token_cur() const { return token; }
 	int token_next();
+	int token_first();
 	const char *value_string() const { return value_string_; }
 	long value_number() const { return value_number_; }
 	const char *token_name(int);
+	void usage() const;
+	void help(const char * = 0) const;
+	void version() const;
+	void license() const;
+	void bad_argument() const;
+	void usage_tail_set(const char *);
+
+private:
+	mutable const char *usage_tail_;
+	const char *usage_tail_get() const;
 };
 
 int arglex_compare(char *formal, char *actual);

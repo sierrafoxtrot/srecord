@@ -30,6 +30,7 @@ Copyright
 .if n (C)
 .if t \(co
 \*(Y) Peter Miller;
+.br
 All rights reserved.
 .PP
 The

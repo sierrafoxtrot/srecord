@@ -31,20 +31,11 @@
 #include <vector>
 
 
-static void
-usage(const char *progname)
-{
-	cerr << "Usage: " << progname
-		<< " [ <option>...][ <infile>... ]" << endl;
-	exit(1);
-}
-
-
 int
 main(int argc, char **argv)
 {
 	srec_arglex cmdline(argc, argv);
-	cmdline.token_next();
+	cmdline.token_first();
 	typedef vector<srec_input *> infile_t;
 	infile_t infile;
 	srec_output *outfile = 0;
@@ -52,15 +43,9 @@ main(int argc, char **argv)
 	{
 		switch (cmdline.token_cur())
 		{
-		case srec_arglex::token_option:
-			cerr << "Unknown ``" << cmdline.value_string()
-				<< "'' option" << endl;
-			usage(argv[0]);
-
 		default:
-			cerr << "Misplaced ``" << cmdline.value_string()
-				<< "'' option" << endl;
-			usage(argv[0]);
+			cmdline.bad_argument();
+			/* NOTREACHED */
 
 		case srec_arglex::token_string:
 		case srec_arglex::token_stdio:
@@ -69,7 +54,7 @@ main(int argc, char **argv)
 
 		case srec_arglex::token_output:
 			if (outfile)
-				usage(argv[0]);
+				cmdline.usage();
 			outfile = cmdline.get_output();
 			continue;
 		}

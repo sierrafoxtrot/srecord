@@ -20,16 +20,21 @@
 
 #include <ctype.h>
 #include <cstring>
+#include <errno.h>
 #include <iostream.h>
+#include <unistd.h>
 
 #include <arglex.h>
+#include <progname.h>
+#include <versn_stamp.h>
 
 static arglex::table_ty table[] =
 {
 	{ "-",			arglex::token_stdio,		},
 	{ "-Help",		arglex::token_help,		},
-	{ "-Page_Width",	arglex::token_page_width,	},
+	{ "-LICense",		arglex::token_license,		},
 	{ "-Page_Length",	arglex::token_page_length,	},
+	{ "-Page_Width",	arglex::token_page_width,	},
 	{ "-TRACIng",		arglex::token_tracing,		},
 	{ "-Verbose",		arglex::token_verbose,		},
 	{ "-VERSion",		arglex::token_version,		},
@@ -38,14 +43,16 @@ static arglex::table_ty table[] =
 
 
 arglex::arglex()
-	: argc(0), argv(0), table(0), pushback_depth(0)
+	: argc(0), argv(0), table(0), pushback_depth(0), usage_tail_(0)
 {
 }
 
 
 arglex::arglex(int ac, char **av)
-	: argc(ac - 1), argv(av + 1), table(0), pushback_depth(0)
+	: argc(ac - 1), argv(av + 1), table(0), pushback_depth(0),
+	  usage_tail_(0)
 {
+	progname_set(av[0]);
 }
 
 
@@ -497,4 +504,140 @@ arglex::token_name(int n)
 		}
 	}
 	return "unknown command line token";
+}
+
+
+void
+arglex::help(const char *name)
+	const
+{
+	if (!name)
+		name = progname_get();
+	const char *cmd[3] = { "man", name, 0 };
+	execvp(cmd[0], (char *const *)cmd);
+	cerr << cmd[0] << ": " << strerror(errno) << endl;
+	exit(1);
+}
+
+
+void
+arglex::version()
+	const
+{
+	cout << progname_get() << " version " << version_stamp() << endl;
+	cout << "Copyright (C) " << copyright_years() << " Peter Miller;"
+		<< endl;
+	cout << "All rights reserved." << endl;
+	cout << endl;
+	cout << "The " << progname_get()
+		<< " program comes with ABSOLUTELY NO WARRANTY;" << endl;
+	cout << "for details use the '" << progname_get()
+		<< " -LICense' command." << endl;
+	cout << "The " << progname_get()
+		<< " program is free software, and you are welcome" << endl;
+	cout << "to redistribute it under certain conditions; for" << endl;
+	cout << "details use the '" << progname_get() << " -LICense' command."
+		<< endl;
+	exit(0);
+}
+
+
+void
+arglex::license()
+	const
+{
+	help("srec_license");
+}
+
+
+void
+arglex::bad_argument()
+	const
+{
+	switch (token_cur())
+	{
+	case token_string:
+		cerr << "misplaced file name (``" << value_string()
+			<< "'') on command line" << endl;
+		break;
+
+	case token_number:
+		cerr << "misplaced number (" << value_string()
+			<< ") on command line" << endl;
+		break;
+
+	case token_option:
+		cerr << "unknown ``" << value_string() << "'' option" << endl;
+		break;
+
+	case token_eoln:
+		cerr << "command line too short" << endl;
+		break;
+
+	default:
+		cerr << "misplaced ``" << value_string() << "'' option" << endl;
+		break;
+	}
+	usage();
+	exit(1);
+}
+
+
+int
+arglex::token_first()
+{
+	switch (token_next())
+	{
+	default:
+		return token_cur();
+
+	case token_help:
+		if (token_next() != token_eoln)
+			bad_argument();
+		help();
+		break;
+
+	case token_version:
+		if (token_next() != token_eoln)
+			bad_argument();
+		version();
+		break;
+
+	case token_license:
+		if (token_next() != token_eoln)
+			bad_argument();
+		license();
+		break;
+	}
+	exit(0);
+}
+
+
+void
+arglex::usage_tail_set(const char *s)
+{
+	usage_tail_ = s;
+}
+
+
+const char *
+arglex::usage_tail_get()
+	const
+{
+	if (!usage_tail_)
+		usage_tail_ = "<filename>...";
+	return usage_tail_;
+}
+
+
+void
+arglex::usage()
+	const
+{
+	cerr << "Usage: " << progname_get() << " [ <option>... ] "
+		<< usage_tail_get() << endl;
+	cerr << "       " << progname_get() << " -Help" << endl;
+	cerr << "       " << progname_get() << " -VERSion" << endl;
+	cerr << "       " << progname_get() << " -LICense" << endl;
+	exit(1);
 }
