@@ -34,8 +34,7 @@ srec_input_filter_maximum::srec_input_filter_maximum(srec_input *a1, int a2,
 	maximum_length(a3),
 	maximum_order(a4),
 	maximum(0),
-	maximum_set(false),
-	data(0)
+	maximum_set(false)
 {
 	if (maximum_length < 0)
 		maximum_length = 0;
@@ -52,56 +51,42 @@ srec_input_filter_maximum::~srec_input_filter_maximum()
 
 
 int
+srec_input_filter_maximum::generate(srec_record &record)
+{
+	if (maximum_length <= 0)
+		return 0;
+	if (maximum_length > 8)
+		maximum_length = 8;
+	unsigned char chunk[8];
+	if (maximum_order)
+		srec_record::encode_little_endian(chunk, maximum, maximum_length);
+	else
+		srec_record::encode_big_endian(chunk, maximum, maximum_length);
+	record =
+		srec_record
+		(
+			srec_record::type_data,
+			maximum_address,
+			chunk,
+			maximum_length
+		);
+	maximum_length = 0;
+	return 1;
+}
+
+
+int
 srec_input_filter_maximum::read(srec_record &record)
 {
-	if (data)
+	if (!srec_input_filter::read(record))
+		return generate(record);
+	if (record.get_type() == srec_record::type_data)
 	{
-		record = *data;
-		delete data;
-		data = 0;
-	}
-	else if (!srec_input_filter::read(record))
-	{
-		if (maximum_length > 0)
-			goto generate;
-		return 0;
-	}
-	switch (record.get_type())
-	{
-	default:
-		break;
-
-	case srec_record::type_data:
 		if (!maximum_set || maximum < record.get_address_end())
 		{
 			maximum = record.get_address_end();
 			maximum_set = true;
 		}
-		break;
-
-	case srec_record::type_termination:
-		if (maximum_length <= 0)
-			break;
-		data = new srec_record(record);
-		generate:
-		if (maximum_length > 8)
-			maximum_length = 8;
-		unsigned char chunk[8];
-		if (maximum_order)
-			srec_record::encode_little_endian(chunk, maximum, maximum_length);
-		else
-			srec_record::encode_big_endian(chunk, maximum, maximum_length);
-		record =
-			srec_record
-			(
-				srec_record::type_data,
-				maximum_address,
-				chunk,
-				maximum_length
-			);
-		maximum_length = 0;
-		break;
 	}
 	return 1;
 }
-

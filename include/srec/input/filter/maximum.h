@@ -40,7 +40,7 @@ private:
 	int maximum_order;
 	unsigned long maximum;
 	bool maximum_set;
-	srec_record *data;
+	int generate(srec_record &);
 
 	// Do not use these...
 	srec_input_filter_maximum();

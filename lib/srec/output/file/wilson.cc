@@ -158,7 +158,7 @@ srec_output_file_wilson::write(const srec_record &record)
 		/* ignore */
 		break;
 
-	case srec_record::type_termination:
+	case srec_record::type_start_address:
 		if (data_only_flag)
 			break;
 		write_inner('\'', record.get_address(), 0, 0);

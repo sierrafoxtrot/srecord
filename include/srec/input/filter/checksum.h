@@ -42,10 +42,10 @@ protected:
 	int checksum_address;
 	int length;
 	int checksum_order;
-	srec_record data;
 	sum_t sum;
 	int width;
 	virtual sum_t calculate() = 0;
+	int generate(srec_record &);
 
 private:
 	// Do not use these...

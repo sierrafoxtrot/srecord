@@ -35,8 +35,7 @@ srec_input_filter_length::srec_input_filter_length(srec_input *a1, int a2,
 	length_order(a4),
 	minimum(0),
 	maximum(0),
-	limits_set(false),
-	data(0)
+	limits_set(false)
 {
 	if (length_length < 0)
 		length_length = 0;
@@ -54,26 +53,38 @@ srec_input_filter_length::~srec_input_filter_length()
 
 
 int
+srec_input_filter_length::generate(srec_record &record)
+{
+	if (length_length <= 0)
+		    return 0;
+	if (length_length > 8)
+		length_length = 8;
+	unsigned char chunk[8];
+	int length = maximum - minimum;
+	if (length_order)
+		srec_record::encode_little_endian(chunk, length, length_length);
+	else
+		srec_record::encode_big_endian(chunk, length, length_length);
+	record =
+		srec_record
+		(
+			srec_record::type_data,
+			length_address,
+			chunk,
+			length_length
+		);
+	length_length = 0;
+	return 1;
+}
+
+
+int
 srec_input_filter_length::read(srec_record &record)
 {
-	if (data)
+	if (!srec_input_filter::read(record))
+		return generate(record);
+	if (record.get_type() == srec_record::type_data)
 	{
-		record = *data;
-		delete data;
-		data = 0;
-	}
-	else if (!srec_input_filter::read(record))
-	{
-		if (length_length > 0)
-			goto generate;
-		return 0;
-	}
-	switch (record.get_type())
-	{
-	default:
-		break;
-
-	case srec_record::type_data:
 		if (!limits_set)
 		{
 			minimum = record.get_address();
@@ -87,31 +98,6 @@ srec_input_filter_length::read(srec_record &record)
 			if (maximum < record.get_address_end())
 				maximum = record.get_address_end();
 		}
-		break;
-
-	case srec_record::type_termination:
-		if (length_length <= 0)
-			break;
-		data = new srec_record(record);
-		generate:
-		if (length_length > 8)
-			length_length = 8;
-		unsigned char chunk[8];
-		int length = maximum - minimum;
-		if (length_order)
-			srec_record::encode_little_endian(chunk, length, length_length);
-		else
-			srec_record::encode_big_endian(chunk, length, length_length);
-		record =
-			srec_record
-			(
-				srec_record::type_data,
-				length_address,
-				chunk,
-				length_length
-			);
-		length_length = 0;
-		break;
 	}
 	return 1;
 }

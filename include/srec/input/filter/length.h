@@ -41,7 +41,7 @@ private:
 	unsigned long minimum;
 	unsigned long maximum;
 	bool limits_set;
-	srec_record *data;
+	int generate(srec_record &);
 
 	// Do not use these...
 	srec_input_filter_length();

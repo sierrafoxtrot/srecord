@@ -32,8 +32,7 @@ srec_input_filter_fill::srec_input_filter_fill(srec_input *a1, int a2,
 	srec_input_filter(a1),
 	filler_value(a2),
 	filler_block(0),
-	range(a3),
-	data()
+	range(a3)
 {
 }
 
@@ -46,55 +45,44 @@ srec_input_filter_fill::~srec_input_filter_fill()
 
 
 int
+srec_input_filter_fill::generate(srec_record &record)
+{
+	if (range.empty())
+		return 0;
+	interval chunk(range.get_lowest(), range.get_lowest() + 256);
+	chunk *= range;
+	chunk.first_interval_only();
+	if (!filler_block)
+	{
+		filler_block = new unsigned char [256];
+		memset(filler_block, filler_value, 256);
+	}
+	record =
+		srec_record
+		(
+			srec_record::type_data,
+			chunk.get_lowest(),
+			filler_block,
+			chunk.get_highest() - chunk.get_lowest()
+		);
+	range -= chunk;
+	return 1;
+}
+
+
+int
 srec_input_filter_fill::read(srec_record &record)
 {
-	if (data.get_type() == srec_record::type_unknown)
+	if (!srec_input_filter::read(record))
+		return generate(record);
+	if (record.get_type() == srec_record::type_data)
 	{
-		if (!srec_input_filter::read(data))
-		{
-			if (!range.empty())
-				goto generate;
-			return 0;
-		}
-	}
-	switch (data.get_type())
-	{
-	default:
-		break;
-
-	case srec_record::type_data:
 		range -=
 			interval
 			(
-				data.get_address(),
-				data.get_address() + data.get_length()
+				record.get_address(),
+				record.get_address() + record.get_length()
 			);
-		break;
-
-	case srec_record::type_termination:
-		if (range.empty())
-			break;
-		generate:
-		interval chunk(range.get_lowest(), range.get_lowest() + 256);
-		chunk *= range;
-		chunk.first_interval_only();
-		if (!filler_block)
-		{
-			filler_block = new unsigned char [256];
-			memset(filler_block, filler_value, 256);
-		}
-		record =
-			srec_record
-			(
-				srec_record::type_data,
-				chunk.get_lowest(),
-				filler_block,
-				chunk.get_highest() - chunk.get_lowest()
-			);
-		range -= chunk;
-		return 1;
 	}
-	record = data;
-	data = srec_record();
 	return 1;
 }

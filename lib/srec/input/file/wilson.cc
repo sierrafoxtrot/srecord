@@ -147,7 +147,7 @@ srec_input_file_wilson::read_inner(srec_record &record)
 
 	case '\'':
 		/* termination */
-		type = srec_record::type_termination;
+		type = srec_record::type_start_address;
 		break;
 	}
 	if (line_length < naddr)
@@ -191,7 +191,7 @@ srec_input_file_wilson::read(srec_record &record)
 		seen_some_input = true;
 		if
 		(
-			record.get_type() != srec_record::type_termination
+			record.get_type() != srec_record::type_start_address
 		&&
 			termination_seen
 		)
@@ -215,7 +215,7 @@ srec_input_file_wilson::read(srec_record &record)
 			}
 			break;
 
-		case srec_record::type_termination:
+		case srec_record::type_start_address:
 			if (record.get_length() > 0)
 			{
 				warning("data in termination record ignored");

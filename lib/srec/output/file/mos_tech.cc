@@ -86,7 +86,7 @@ srec_output_file_mos_tech::write(const srec_record &record)
 		// ignore
 		break;
 
-	case srec_record::type_termination:
+	case srec_record::type_start_address:
 		if (data_only_flag)
 			break;
 		put_string(";00\n");

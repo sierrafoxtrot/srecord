@@ -33,7 +33,6 @@ srec_input_filter_checksum::srec_input_filter_checksum(srec_input *a1, int a2,
 	checksum_address(a2),
 	length(a3),
 	checksum_order(!!a4),
-	data(),
 	sum(0),
 	width(a5)
 {
@@ -54,73 +53,62 @@ srec_input_filter_checksum::~srec_input_filter_checksum()
 
 
 int
+srec_input_filter_checksum::generate(srec_record &record)
+{
+	if (length <= 0)
+		return 0;
+	unsigned char chunk[sizeof(sum_t)];
+	sum_t value = calculate();
+	if (checksum_order)
+		srec_record::encode_little_endian(chunk, value, length);
+	else
+		srec_record::encode_big_endian(chunk, value, length);
+	record =
+		srec_record
+		(
+			srec_record::type_data,
+			checksum_address,
+			chunk,
+			length
+		);
+	length = 0;
+	return 1;
+}
+
+
+int
 srec_input_filter_checksum::read(srec_record &record)
 {
-	if (data.get_type() == srec_record::type_unknown)
+	if (!srec_input_filter::read(record))
+		return generate(record);
+	if (record.get_type() == srec_record::type_data)
 	{
-		if (!srec_input_filter::read(data))
-		{
-			if (length > 0)
-				goto generate;
-			return 0;
-		}
-	}
-	switch (data.get_type())
-	{
-	default:
-		break;
-
-	case srec_record::type_data:
 		if (width <= 1)
 		{
-			for (int j = 0; j < data.get_length(); ++j)
+			for (int j = 0; j < record.get_length(); ++j)
 			{
-				sum += data.get_data(j);
+				sum += record.get_data(j);
 			}
 		}
 		else if (checksum_order)
 		{
 			// Little endian
-			for (int j = 0; j < data.get_length(); ++j)
+			for (int j = 0; j < record.get_length(); ++j)
 			{
-				sum += (sum_t)data.get_data(j) << (8 *
-					((data.get_address() + j) % width));
+				sum += (sum_t)record.get_data(j) << (8 *
+					((record.get_address() + j) % width));
 			}
 		}
 		else
 		{
 			// Big endian
-			for (int j = 0; j < data.get_length(); ++j)
+			for (int j = 0; j < record.get_length(); ++j)
 			{
-				sum += (sum_t)data.get_data(j) << (8 *
-					(width - 1 - ((data.get_address() + j)
+				sum += (sum_t)record.get_data(j) << (8 *
+					(width - 1 - ((record.get_address() + j)
 					% width)));
 			}
 		}
-		break;
-
-	case srec_record::type_termination:
-		if (length <= 0)
-			break;
-		generate:
-		unsigned char chunk[sizeof(sum_t)];
-		sum_t value = calculate();
-		if (checksum_order)
-			srec_record::encode_little_endian(chunk, value, length);
-		else
-			srec_record::encode_big_endian(chunk, value, length);
-		record =
-			srec_record
-			(
-				srec_record::type_data,
-				checksum_address,
-				chunk,
-				length
-			);
-		length = 0;
-		return 1;
 	}
-	record = data;
-	data = srec_record();
 	return 1;
 }

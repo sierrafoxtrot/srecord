@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
+ *	Copyright (C) 1998-2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -162,7 +162,7 @@ srec_input_file_tektronix::read_inner(srec_record &record)
 			(
 				buffer[2] == 0
 			?
-				srec_record::type_termination
+				srec_record::type_start_address
 			:
 				srec_record::type_data
 			),
@@ -195,7 +195,7 @@ srec_input_file_tektronix::read(srec_record &record)
 		seen_some_input = true;
 		if
 		(
-			record.get_type() != srec_record::type_termination
+			record.get_type() != srec_record::type_start_address
 		&&
 			termination_seen
 		)
@@ -213,7 +213,7 @@ srec_input_file_tektronix::read(srec_record &record)
 			++data_record_count;
 			break;
 
-		case srec_record::type_termination:
+		case srec_record::type_start_address:
 			if (termination_seen)
 				warning("redundant termination record");
 			termination_seen = true;

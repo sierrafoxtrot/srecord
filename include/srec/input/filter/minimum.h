@@ -40,7 +40,7 @@ private:
 	int minimum_order;
 	unsigned long minimum;
 	bool minimum_set;
-	srec_record *data;
+	int generate(srec_record &);
 
 	// Do not use these...
 	srec_input_filter_minimum();

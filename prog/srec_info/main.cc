@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
+ *	Copyright (C) 1998-2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -105,7 +105,7 @@ main(int argc, char **argv)
 					);
 				break;
 
-			case srec_record::type_termination:
+			case srec_record::type_start_address:
 				cout << "Start:\t";
 				cout.form("%08lX", record.get_address());
 				cout << endl;

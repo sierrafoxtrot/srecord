@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
+ *	Copyright (C) 1998-2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -157,7 +157,7 @@ srec_output_file_c::write(const srec_record &record)
 		}
 		break;
 
-	case srec_record::type_termination:
+	case srec_record::type_start_address:
 		taddr = record.get_address();
 		break;
 	}

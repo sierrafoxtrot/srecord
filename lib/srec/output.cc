@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -155,6 +155,6 @@ srec_output::write_data(unsigned long address, const void *data, size_t length)
 void
 srec_output::write_termination(unsigned long address)
 {
-	srec_record record(srec_record::type_termination, address);
+	srec_record record(srec_record::type_start_address, address);
 	write(record);
 }

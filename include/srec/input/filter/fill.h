@@ -40,7 +40,8 @@ private:
 	int filler_value;
 	unsigned char *filler_block;
 	interval range;
-	srec_record data;
+
+	int generate(srec_record &);
 
 	// Do not use these...
 	srec_input_filter_fill();

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998-2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -230,7 +230,7 @@ srec_input_file_intel::read_inner(srec_record &record)
 			record =
 				srec_record
 				(
-					srec_record::type_termination,
+					srec_record::type_start_address,
 					address_field,
 					0,
 					0
@@ -265,7 +265,7 @@ srec_input_file_intel::read_inner(srec_record &record)
 			record =
 				srec_record
 				(
-					srec_record::type_termination,
+					srec_record::type_start_address,
 					address_field,
 					0,
 					0
@@ -332,7 +332,7 @@ srec_input_file_intel::read(srec_record &record)
 			}
 			break;
 
-		case srec_record::type_termination:
+		case srec_record::type_start_address:
 			if (termination_seen)
 				warning("redundant start address record");
 			termination_seen = true;

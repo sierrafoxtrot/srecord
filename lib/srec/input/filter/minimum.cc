@@ -33,8 +33,7 @@ srec_input_filter_minimum::srec_input_filter_minimum(srec_input *a1, int a2,
 	minimum_length(a3),
 	minimum_order(a4),
 	minimum(0),
-	minimum_set(false),
-	data(0)
+	minimum_set(false)
 {
 	if (minimum_length < 0)
 		minimum_length = 0;
@@ -51,55 +50,42 @@ srec_input_filter_minimum::~srec_input_filter_minimum()
 
 
 int
+srec_input_filter_minimum::generate(srec_record &record)
+{
+	if (minimum_length <= 0)
+		return 0;
+	if (minimum_length > 8)
+		minimum_length = 8;
+	unsigned char chunk[8];
+	if (minimum_order)
+		srec_record::encode_little_endian(chunk, minimum, minimum_length);
+	else
+		srec_record::encode_big_endian(chunk, minimum, minimum_length);
+	record =
+		srec_record
+		(
+			srec_record::type_data,
+			minimum_address,
+			chunk,
+			minimum_length
+		);
+	minimum_length = 0;
+	return 1;
+}
+
+
+int
 srec_input_filter_minimum::read(srec_record &record)
 {
-	if (data)
+	if (!srec_input_filter::read(record))
+		return generate(record);
+	if (record.get_type() == srec_record::type_data)
 	{
-		record = *data;
-		delete data;
-		data = 0;
-	}
-	else if (!srec_input_filter::read(record))
-	{
-		if (minimum_length > 0)
-			goto generate;
-		return 0;
-	}
-	switch (record.get_type())
-	{
-	default:
-		break;
-
-	case srec_record::type_data:
 		if (!minimum_set || record.get_address() < minimum)
 		{
 			minimum = record.get_address();
 			minimum_set = true;
 		}
-		break;
-
-	case srec_record::type_termination:
-		if (minimum_length <= 0)
-			break;
-		data = new srec_record(record);
-		generate:
-		if (minimum_length > 8)
-			minimum_length = 8;
-		unsigned char chunk[8];
-		if (minimum_order)
-			srec_record::encode_little_endian(chunk, minimum, minimum_length);
-		else
-			srec_record::encode_big_endian(chunk, minimum, minimum_length);
-		record =
-			srec_record
-			(
-				srec_record::type_data,
-				minimum_address,
-				chunk,
-				minimum_length
-			);
-		minimum_length = 0;
-		break;
 	}
 	return 1;
 }

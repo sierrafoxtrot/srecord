@@ -121,7 +121,7 @@ srec_output_file_ascii_hex::write(const srec_record &record)
 		/* ignore */
 		break;
 
-	case srec_record::type_termination:
+	case srec_record::type_start_address:
 		if (column)
 			put_char(' ');
 		put_char(3);

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -34,7 +34,7 @@ public:
 		type_header,
 		type_data,
 		type_data_count,
-		type_termination
+		type_start_address
 	};
 	typedef enum type type;
 	typedef unsigned long address_t;

@@ -169,7 +169,7 @@ srec_output_file_vhdl::write(const srec_record &record)
 		}
 		break;
 
-	case srec_record::type_termination:
+	case srec_record::type_start_address:
 		taddr = record.get_address();
 		break;
 	}

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998-2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -143,19 +143,19 @@ srec_input_file_srecord::read_inner(srec_record &record)
 
 	case 7:
 		/* termination */
-		type = srec_record::type_termination;
+		type = srec_record::type_start_address;
 		naddr = 4;
 		break;
 
 	case 8:
 		/* termination */
-		type = srec_record::type_termination;
+		type = srec_record::type_start_address;
 		naddr = 3;
 		break;
 
 	case 9:
 		/* termination */
-		type = srec_record::type_termination;
+		type = srec_record::type_start_address;
 		break;
 	}
 	if (line_length < naddr)
@@ -216,7 +216,7 @@ srec_input_file_srecord::read(srec_record &record)
 		}
 		if
 		(
-			record.get_type() != srec_record::type_termination
+			record.get_type() != srec_record::type_start_address
 		&&
 			termination_seen
 		)
@@ -262,7 +262,7 @@ srec_input_file_srecord::read(srec_record &record)
 			}
 			continue;
 
-		case srec_record::type_termination:
+		case srec_record::type_start_address:
 			if (record.get_length() > 0)
 			{
 				warning("data in termination record ignored");
