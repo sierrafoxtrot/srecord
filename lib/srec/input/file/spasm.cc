@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2002 Peter Miller;
+//	Copyright (C) 2001-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -28,9 +28,9 @@
 
 
 srec_input_file_spasm::srec_input_file_spasm(const char *filename, bool arg2) :
-	srec_input_file(filename),
-	seen_some_input(false),
-	bigend(arg2)
+    srec_input_file(filename),
+    seen_some_input(false),
+    bigend(arg2)
 {
 }
 
@@ -43,47 +43,47 @@ srec_input_file_spasm::~srec_input_file_spasm()
 int
 srec_input_file_spasm::read_inner(srec_record &record)
 {
-	if (peek_char() < 0)
-		return 0;
+    if (peek_char() < 0)
+	return 0;
 
-	int address = get_word();
-	if (get_char() != ' ')
-		fatal_error("space expected");
-	unsigned char data[2];
-	data[bigend] = get_byte();
-	data[!bigend] = get_byte();
-	if (get_char() != '\n')
-		fatal_error("end of line expected");
+    int address = get_word();
+    if (get_char() != ' ')
+	fatal_error("space expected");
+    unsigned char data[2];
+    data[bigend] = get_byte();
+    data[!bigend] = get_byte();
+    if (get_char() != '\n')
+	fatal_error("end of line expected");
 
-	record =
-		srec_record
-		(
-			srec_record::type_data,
-			address * 2,			// is this right??
-			data,
-			2
-		);
-	return 1;
+    record =
+	srec_record
+	(
+    	    srec_record::type_data,
+    	    address * 2,			// is this right??
+    	    data,
+    	    2
+	);
+    return 1;
 }
 
 
 int
 srec_input_file_spasm::read(srec_record &record)
 {
-	if (!read_inner(record))
-	{
-		if (!seen_some_input)
-			fatal_error("file contains no data");
-		return 0;
-	}
-	seen_some_input = true;
-	return 1;
+    if (!read_inner(record))
+    {
+	if (!seen_some_input)
+    	    fatal_error("file contains no data");
+	return 0;
+    }
+    seen_some_input = true;
+    return 1;
 }
 
 
 const char *
 srec_input_file_spasm::get_file_format_name()
-	const
+    const
 {
-	return (bigend ? "SPASM (big-endian)" : "SPASM (little-endian)");
+    return (bigend ? "SPASM (big-endian)" : "SPASM (little-endian)");
 }

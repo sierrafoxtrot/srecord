@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,24 +27,81 @@
 
 #include <srec/input/file.h>
 
-class srec_input_file_srecord: public srec_input_file
+/**
+  * The srec_input_file_srecord class is used to represent the parse
+  * state of a Motorola S-Record formatted input file.
+  */
+class srec_input_file_srecord:
+    public srec_input_file
 {
 public:
-	srec_input_file_srecord();
-	srec_input_file_srecord(const char *);
-	virtual ~srec_input_file_srecord();
-	int read(srec_record &);
-	const char *get_file_format_name() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_file_srecord();
+
+    /**
+      * The constructor.
+      */
+    srec_input_file_srecord(const char *filename);
+
+    // See base class for documentation.
+    int read(srec_record &);
+
+    // See base class for documentation.
+    const char *get_file_format_name() const;
 
 private:
-	srec_input_file_srecord(const srec_input_file_srecord &);
-	srec_input_file_srecord &operator=(const srec_input_file_srecord &);
-	unsigned long data_count;
-	int read_inner(srec_record &);
-	bool garbage_warning;
-	bool seen_some_input;
-	bool header_seen;
-	bool termination_seen;
+    /**
+      * The data_count instance variable is used to remember the number
+      * of data lines has occurred fo far in the input file.
+      */
+    unsigned long data_count;
+
+    /**
+      * The read_inner method is used to read a record of input.
+      * The read method is a wrapper around this method.
+      */
+    int read_inner(srec_record &);
+
+    /**
+      * The garbage_warning instance variable is used to remember whether
+      * or not a warning about garbage input lines has been issued yet.
+      */
+    bool garbage_warning;
+
+    /**
+      * The seen_some_input instance variable is used to remember where
+      * any data has been seen in this file yet.
+      */
+    bool seen_some_input;
+
+    /**
+      * The header_seen instance variable is used to remember whether
+      * or not the header record has been seen yet.
+      */
+    bool header_seen;
+
+    /**
+      * The termination_seen instance variable is used to remember
+      * whether or not the termination record has been seen yet.
+      */
+    bool termination_seen;
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_file_srecord();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_file_srecord(const srec_input_file_srecord &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_file_srecord &operator=(const srec_input_file_srecord &);
 };
 
 #endif // INCLUDE_INPUT_FILE_SRECORD_H

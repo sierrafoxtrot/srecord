@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -33,120 +33,127 @@ using namespace std;
 
 class quit; // forward
 
+/**
+  * The srec_input class is used to repesent an abstract EPROM load
+  * file source.  It could be one of many file formats, or a chain of
+  * filters applied to an input file.
+  */
 class srec_input
 {
 public:
-	/**
-	  * The default constructor.
-	  */
-	srec_input();
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input();
 
-	/**
-	  * The copy constructor.
-	  */
-	srec_input(const srec_input &);
+    /**
+      * The read method is used to read one record from the input.
+      * It returns 0 at the end of the input, and 1 if a record is
+      * read successfully.
+      *
+      * See the srec_record documentation (header file) for details
+      * of the various record types.
+      *
+      * Note: there is no guarantee that a header record will appear
+      * first, or that a start address record will appear last.
+      */
+    virtual int read(class srec_record &) = 0;
 
-	/**
-	  * The assignment operator.
-	  */
-	srec_input &operator=(const srec_input &);
+    /**
+      * The fatal_error method is used to report problems parsing
+      * the file.  Do not put a newline at athe end of the message.
+      * Usually called from within derived class methods.  This method
+      * does not return.
+      *
+      * The file name and line number are automatically included
+      * in the message.  The filename_and_line method is called to
+      * determine them.
+      */
+    virtual void fatal_error(const char *, ...) const
+							FORMAT_PRINTF(2, 3);
+    /**
+      * The fatal_error_errno method is used to report problems
+      * reading the input file.  Do not put a newline at athe end
+      * of the message.  The string equivalent of errno is appended
+      * to the error message.  This method does not return.
+      *
+      * The file name and line number are automatically included
+      * in the message.  The filename_and_line method is called to
+      * determine them.
+      */
+    virtual void fatal_error_errno(const char *, ...) const
+							FORMAT_PRINTF(2, 3);
+    /**
+      * The warning method is used to report potential (but non-fatal)
+      * problems parsing the file.	Do not put a newline at the
+      * end of the message.  Usually called from within derived
+      * class methods.
+      *
+      * The file name and line number are automatically included
+      * in the message.  The filename_and_line method is called to
+      * determine them.
+      */
+    virtual void warning(const char *, ...) const
+							FORMAT_PRINTF(2, 3);
+    /**
+      * The filename method is used to get the name of the input file
+      * being processed.  Derived classes must supply this method.
+      */
+    virtual const string filename() const = 0;
 
-	/**
-	  * The destructor.
-	  */
-	virtual ~srec_input();
+    /**
+      * The filename_and_line method is used to get the name
+      * and current line number within the file.  The default
+      * implementation simply calls the filename method and returns
+      * that.  Text formats should be cleverer.
+      */
+    virtual const string filename_and_line() const;
 
-	/**
-	  * The read method is used to read one record from the input.
-	  * It returns 0 at the end of the input, and 1 if a record is
-	  * read successfully.
-	  *
-	  * See the srec_record documentation (header file) for details
-	  * of the various record types.
-	  *
-	  * Note: there is no guarantee that a header record will appear
-	  * first, or that a start address record will appear last.
-	  */
-	virtual int read(class srec_record &) = 0;
+    /**
+      * The get_file_format_name method is used to find out the name
+      * of thew file format being read.  Derived classes must supply
+      * this method.
+      */
+    virtual const char *get_file_format_name() const = 0;
 
-	/**
-	  * The fatal_error method is used to report problems parsing
-	  * the file.  Do not put a newline at athe end of the message.
-	  * Usually called from within derived class methods.  This method
-	  * does not return.
-	  *
-	  * The file name and line number are automatically included
-	  * in the message.  The filename_and_line method is called to
-	  * determine them.
-	  */
-	virtual void fatal_error(const char *, ...) const
-							    FORMAT_PRINTF(2, 3);
-	/**
-	  * The fatal_error_errno method is used to report problems
-	  * reading the input file.  Do not put a newline at athe end
-	  * of the message.  The string equivalent of errno is appended
-	  * to the error message.  This method does not return.
-	  *
-	  * The file name and line number are automatically included
-	  * in the message.  The filename_and_line method is called to
-	  * determine them.
-	  */
-	virtual void fatal_error_errno(const char *, ...) const
-							    FORMAT_PRINTF(2, 3);
-	/**
-	  * The warning method is used to report potential (but non-fatal)
-	  * problems parsing the file.	Do not put a newline at the
-	  * end of the message.  Usually called from within derived
-	  * class methods.
-	  *
-	  * The file name and line number are automatically included
-	  * in the message.  The filename_and_line method is called to
-	  * determine them.
-	  */
-	virtual void warning(const char *, ...) const
-							    FORMAT_PRINTF(2, 3);
-	/**
-	  * The filename method is used to get the name of the input file
-	  * being processed.  Derived classes must supply this method.
-	  */
-	virtual const string filename() const = 0;
+    /**
+      * The set_quit method is used to set the disposition of the
+      * error messages, and the "exit" implemnation.  The default
+      * is to write error messages on the standard error, and to
+      * exit using the standard C exit function.
+      */
+    void set_quit(quit &);
 
-	/**
-	  * The filename_and_line method is used to get the name
-	  * and current line number within the file.  The default
-	  * implementation simply calls the filename method and returns
-	  * that.  Text formats should be cleverer.
-	  */
-	virtual const string filename_and_line() const;
-
-	/**
-	  * The get_file_format_name method is used to find out the name
-	  * of thew file format being read.  Derived classes must supply
-	  * this method.
-	  */
-	virtual const char *get_file_format_name() const = 0;
-
-	/**
-	  * The set_quit method is used to set the disposition of the
-	  * error messages, and the "exit" implemnation.  The default
-	  * is to write error messages on the standard error, and to
-	  * exit using the standard C exit function.
-	  */
-	void set_quit(quit &);
-
-	/**
-	  * The reset_quit method is used to cause the disposition of
-	  * the error messages, and the "exit" back to the default.
-	  */
-	void reset_quit();
+    /**
+      * The reset_quit method is used to cause the disposition of
+      * the error messages, and the "exit" back to the default.
+      */
+    void reset_quit();
 
 private:
-	/**
-	  * The quitter instance variable is used to remember how to quit.
-	  * It is set by the set_quit and reset_quit.  It is used by
-	  * the fatal_error, fatal_error_with_errno and warning methods.
-	  */
-	quit *quitter;
+    /**
+      * The quitter instance variable is used to remember how to quit.
+      * It is set by the set_quit and reset_quit.  It is used by
+      * the fatal_error, fatal_error_with_errno and warning methods.
+      */
+    quit *quitter;
+
+protected:
+    /**
+      * The default constructor.  Only derived classes may call.
+      */
+    srec_input();
+
+private:
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input(const srec_input &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input &operator=(const srec_input &);
 };
 
 #endif // INCLUDE_SREC_INPUT_H

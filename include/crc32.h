@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,18 +27,55 @@
 
 #include <stddef.h>
 
+/**
+  * The crc32 class is used to represent the running value of a 32-bit
+  * cyclic redundancy check of series of bytes.
+  */
 class crc32
 {
 public:
-	virtual ~crc32();
-	crc32();
-	crc32(const crc32 &);
-	crc32 &operator=(const crc32 &);
-	unsigned long get() const;
-	void next(unsigned char);
-	void nextbuf(const void *, size_t);
+    /**
+      * The destructor.
+      */
+    virtual ~crc32();
+
+    /**
+      * The default constructor.
+      */
+    crc32();
+
+    /**
+      * The copy constructor.
+      */
+    crc32(const crc32 &);
+
+    /**
+      * The assignment operator.
+      */
+    crc32 &operator=(const crc32 &);
+
+    /**
+      * The get method is used to obtain the running value of the cyclic
+      * redundancy check.
+      */
+    unsigned long get() const;
+
+    /**
+      * The next method is used to advance the state by one byte.
+      */
+    void next(unsigned char);
+
+    /**
+      * The nextbuf method is used to advance the state by a series of bytes.
+      */
+    void nextbuf(const void *, size_t);
+
 private:
-	unsigned long state;
+    /**
+      * The state instance variable is used to remember the running
+      * value of the 32-bit cyclic redundancy check.
+      */
+    unsigned long state;
 };
 
 #endif // INCLUDE_CRC32_H

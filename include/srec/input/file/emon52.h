@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001 Peter Miller;
+//	Copyright (C) 2001, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -32,49 +32,48 @@
   * Monitor, dunno what the 52 is for).
   */
 class srec_input_file_emon52:
-	public srec_input_file
+    public srec_input_file
 {
 public:
-	/**
-	  * The default constructor.  The input is read from the
-	  * standard input.
-	  */
-	srec_input_file_emon52();
+    /**
+      * A constructor.  The input is read from the named file (or
+      * the standard input if the file anme is "-").
+      */
+    srec_input_file_emon52(const char *filename);
 
-	/**
-	  * A constructor.  The input is read from the named file (or
-	  * the standard input if the file anme is "-").
-	  */
-	srec_input_file_emon52(const char *filename);
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_file_emon52();
 
-	/**
-	  * The destructor.
-	  */
-	virtual ~srec_input_file_emon52();
+    // See base class for documentation.
+    int read(srec_record &);
 
-	// See base class for documentation.
-	int read(srec_record &);
-
-	// See base class for documentation.
-	const char *get_file_format_name() const;
+    // See base class for documentation.
+    const char *get_file_format_name() const;
 
 private:
-	/**
-	  * The skip_white_space method is used to skip space characters.
-	  * The format requires spaces in some locations, this method
-	  * skips the space of present.
-	  */
-	void skip_white_space();
+    /**
+      * The skip_white_space method is used to skip space characters.
+      * The format requires spaces in some locations, this method
+      * skips the space of present.
+      */
+    void skip_white_space();
 
-	/**
-	  * The copy constructor.  Do not use.
-	  */
-	srec_input_file_emon52(const srec_input_file_emon52 &);
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_file_emon52();
 
-	/**
-	  * The assignment operator.  Do not use.
-	  */
-	srec_input_file_emon52 &operator=(const srec_input_file_emon52 &);
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_file_emon52(const srec_input_file_emon52 &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_file_emon52 &operator=(const srec_input_file_emon52 &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILE_EMON52_H

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2002 Peter Miller;
+//	Copyright (C) 2001-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,21 +27,63 @@
 
 #include <srec/input/file.h>
 
-class srec_input_file_spasm: public srec_input_file
+/**
+  * The srec_input_file_spasm class is used to represent the parse state
+  * of a SPASM formatted input file.
+  */
+class srec_input_file_spasm:
+    public srec_input_file
 {
 public:
-	srec_input_file_spasm();
-	srec_input_file_spasm(const char *, bool bigendian = true);
-	virtual ~srec_input_file_spasm();
-	int read(srec_record &);
-	const char *get_file_format_name() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_file_spasm();
+
+    /**
+      * The constructor.
+      */
+    srec_input_file_spasm(const char *filename, bool bigendian = true);
+
+    // See base class for documentation.
+    int read(srec_record &);
+
+    // See base class for documentation.
+    const char *get_file_format_name() const;
 
 private:
-	srec_input_file_spasm(const srec_input_file_spasm &);
-	srec_input_file_spasm &operator=(const srec_input_file_spasm &);
-	int read_inner(srec_record &);
-	bool seen_some_input;
-	bool bigend;
+    /**
+      * The read_inner method is used to read a record from the file.
+      * The read method is a wrapper around it.
+      */
+    int read_inner(srec_record &);
+
+    /**
+      * The seen_some_input instance variable is used to remember whether
+      * or not any data has been seen from this file to date.
+      */
+    bool seen_some_input;
+
+    /**
+      * The bigend instance variable is used to remember whether the
+      * file is big-endian (true) or little-endian (false).
+      */
+    bool bigend;
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_file_spasm();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_file_spasm(const srec_input_file_spasm &);
+
+    /**
+      * The assigmne toperator.  Do not use.
+      */
+    srec_input_file_spasm &operator=(const srec_input_file_spasm &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILE_SPASM_H

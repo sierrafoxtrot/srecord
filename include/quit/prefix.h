@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002 Peter Miller;
+//	Copyright (C) 2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -34,62 +34,62 @@ using namespace std;
   * a line prefix.  The message is then passed ot a deeper quit handler.
   */
 class quit_prefix:
-	public quit
+    public quit
 {
 public:
-	/**
-	  * The destructor.
-	  */
-	virtual ~quit_prefix();
+    /**
+      * The destructor.
+      */
+    virtual ~quit_prefix();
 
-	/**
-	  * A constructor.  The given handler is used to process the
-	  * messages, once prefixed.  The given string is used as the
-	  * line prefix.
-	  */
-	quit_prefix(quit &deeper, const char *prefix);
+    /**
+      * A constructor.  The given handler is used to process the
+      * messages, once prefixed.  The given string is used as the
+      * line prefix.
+      */
+    quit_prefix(quit &deeper, const char *prefix);
 
-	/**
-	  * A constructor.  The given handler is used to process the
-	  * messages, once prefixed.  The given string is used as the
-	  * line prefix.
-	  */
-	quit_prefix(quit &deeper, const string &prefix);
+    /**
+      * A constructor.  The given handler is used to process the
+      * messages, once prefixed.  The given string is used as the
+      * line prefix.
+      */
+    quit_prefix(quit &deeper, const string &prefix);
 
-	// See base class for documentation.
-	virtual void exit(int);
+    // See base class for documentation.
+    virtual void exit(int);
 
-	// See base class for documentation.
-	virtual void message_v(const char *, va_list);
+    // See base class for documentation.
+    virtual void message_v(const char *, va_list);
 
 private:
-	/**
-	  * The prefix instance variable is used to remember the line
-	  * prefix to use.
-	  */
-	string prefix;
+    /**
+      * The prefix instance variable is used to remember the line
+      * prefix to use.
+      */
+    string prefix;
 
-	/**
-	  * The deepr instance variable is used to remember which handler
-	  * is to be used to process the error messages once the refix
-	  * has been added.
-	  */
-	quit &deeper;
+    /**
+      * The deepr instance variable is used to remember which handler
+      * is to be used to process the error messages once the refix
+      * has been added.
+      */
+    quit &deeper;
 
-	/**
-	  * The default constructor.  Do not use.
-	  */
-	quit_prefix();
+    /**
+      * The default constructor.  Do not use.
+      */
+    quit_prefix();
 
-	/**
-	  * The copy constructor.  Do not use.
-	  */
-	quit_prefix(const quit_prefix &);
+    /**
+      * The copy constructor.  Do not use.
+      */
+    quit_prefix(const quit_prefix &);
 
-	/**
-	  * The assignment operator.  Do not use.
-	  */
-	quit_prefix &operator=(const quit_prefix &);
+    /**
+      * The assignment operator.  Do not use.
+      */
+    quit_prefix &operator=(const quit_prefix &);
 };
 
 #endif // INCLUDE_QUIT_PREFIX_H

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2002 Peter Miller;
+//	Copyright (C) 1998-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -26,36 +26,6 @@
 #include <srec/record.h>
 
 
-srec_input_file_intel::srec_input_file_intel() :
-    srec_input_file(),
-    data_record_count(0),
-    garbage_warning(false),
-    seen_some_input(false),
-    termination_seen(false),
-    mode(linear),
-    address_base(0),
-    pushback(0),
-    end_seen(false)
-{
-    fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
-srec_input_file_intel::srec_input_file_intel(const srec_input_file_intel &) :
-    srec_input_file(),
-    data_record_count(0),
-    garbage_warning(false),
-    seen_some_input(false),
-    termination_seen(false),
-    mode(linear),
-    address_base(0),
-    pushback(0),
-    end_seen(false)
-{
-    fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
 srec_input_file_intel::srec_input_file_intel(const char *filename) :
     srec_input_file(filename),
     data_record_count(0),
@@ -67,14 +37,6 @@ srec_input_file_intel::srec_input_file_intel(const char *filename) :
     pushback(0),
     end_seen(false)
 {
-}
-
-
-srec_input_file_intel &
-srec_input_file_intel::operator=(const srec_input_file_intel &)
-{
-    fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-    return *this;
 }
 
 

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,26 +27,82 @@
 
 #include <srec/input/file.h>
 
-class srec_input_file_wilson: public srec_input_file
+/**
+  * The srec_input_file_wilson clas sis used to represent the parse state
+  * of an input file in Wilson format.  (Named after the person who wasked
+  * for it; I still don't have an official definition of this format,
+  * but it is very much like a binary(ish) form of the Motorola format.)
+  */
+class srec_input_file_wilson:
+    public srec_input_file
 {
 public:
-	srec_input_file_wilson();
-	srec_input_file_wilson(const char *);
-	virtual ~srec_input_file_wilson();
-	int read(srec_record &);
-	const char *get_file_format_name() const;
-	const char *mode() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_file_wilson();
+
+    /**
+      * The constructor.
+      */
+    srec_input_file_wilson(const char *filename);
+
+    // See base class for documentation.
+    int read(srec_record &);
+
+    // See base class for documentation.
+    const char *get_file_format_name() const;
+
+    // See base class for documentation.
+    const char *mode() const;
 
 protected:
-	virtual int get_byte();
+    /**
+      * The get_byte method is used to get a byte of input.  We override
+      * because the byte encoding is one character of input sometimes,
+      * and two characters of input at other times.
+      */
+    virtual int get_byte();
 
 private:
-	srec_input_file_wilson(const srec_input_file_wilson &);
-	srec_input_file_wilson &operator=(const srec_input_file_wilson &);
-	int read_inner(srec_record &);
-	bool garbage_warning;
-	bool seen_some_input;
-	bool termination_seen;
+    /**
+      * The read_inner method is used to read a record from the input.
+      * The raead() method is a wrapper around this method.
+      */
+    int read_inner(srec_record &);
+
+    /**
+      * The garbage_warning instance variable is used to remember whether
+      * a warning about garbage input has been issued yet.
+      */
+    bool garbage_warning;
+
+    /**
+      * The seen_some_input instance variable is used to remember whether
+      * this file contains any data so far.
+      */
+    bool seen_some_input;
+
+    /**
+      * The termination_seen instance variable is used to remember
+      * whether the termination record has been seen yet.
+      */
+    bool termination_seen;
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_file_wilson();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_file_wilson(const srec_input_file_wilson &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_file_wilson &operator=(const srec_input_file_wilson &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILE_WILSON_H

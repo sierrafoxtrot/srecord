@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -26,31 +26,10 @@
 #include <srec/record.h>
 
 
-srec_input_file_binary::srec_input_file_binary()
-	: srec_input_file(), address(0)
+srec_input_file_binary::srec_input_file_binary(const char *filename) :
+    srec_input_file(filename),
+    address(0)
 {
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
-srec_input_file_binary::srec_input_file_binary(const srec_input_file_binary &)
-	: srec_input_file(), address(0)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
-srec_input_file_binary::srec_input_file_binary(const char *filename)
-	: srec_input_file(filename), address(0)
-{
-}
-
-
-srec_input_file_binary &
-srec_input_file_binary::operator=(const srec_input_file_binary &)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-	return *this;
 }
 
 
@@ -62,37 +41,37 @@ srec_input_file_binary::~srec_input_file_binary()
 int
 srec_input_file_binary::read(srec_record &record)
 {
-	int c = get_char();
+    int c = get_char();
+    if (c < 0)
+	return 0;
+    int length = 0;
+    unsigned char data[256];
+    for (;;)
+    {
+	data[length++] = c;
+	if (length >= (int)sizeof(data))
+    	    break;
+	c = get_char();
 	if (c < 0)
-		return 0;
-	int length = 0;
-	unsigned char data[256];
-	for (;;)
-	{
-		data[length++] = c;
-		if (length >= (int)sizeof(data))
-			break;
-		c = get_char();
-		if (c < 0)
-			break;
-	}
-	record = srec_record(srec_record::type_data, address, data, length);
-	address += length;
-	return 1;
+    	    break;
+    }
+    record = srec_record(srec_record::type_data, address, data, length);
+    address += length;
+    return 1;
 }
 
 
 const char *
 srec_input_file_binary::mode()
-	const
+    const
 {
-	return "rb";
+    return "rb";
 }
 
 
 const char *
 srec_input_file_binary::get_file_format_name()
-	const
+    const
 {
-	return "Binary";
+    return "Binary";
 }

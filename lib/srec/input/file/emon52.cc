@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2002 Peter Miller;
+//	Copyright (C) 2001-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -26,31 +26,9 @@
 #include <srec/record.h>
 
 
-srec_input_file_emon52::srec_input_file_emon52() :
-	srec_input_file()
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
-srec_input_file_emon52::srec_input_file_emon52(const srec_input_file_emon52 &) :
-	srec_input_file()
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
 srec_input_file_emon52::srec_input_file_emon52(const char *filename) :
-	srec_input_file(filename)
+    srec_input_file(filename)
 {
-}
-
-
-srec_input_file_emon52 &
-srec_input_file_emon52::operator=(const srec_input_file_emon52 &)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-	return *this;
 }
 
 
@@ -62,64 +40,64 @@ srec_input_file_emon52::~srec_input_file_emon52()
 void
 srec_input_file_emon52::skip_white_space()
 {
-	for (;;)
-	{
-		int c = peek_char();
-		if (c != ' ')
-			return;
-		get_char();
-	}
+    for (;;)
+    {
+	int c = peek_char();
+	if (c != ' ')
+    	    return;
+	get_char();
+    }
 }
 
 
 int
 srec_input_file_emon52::read(srec_record &record)
 {
-	//
-	// This format has no termination record type, and no magic start
-	// character.  So look ahead to see if there is anything more.
-	//
-	if (peek_char() < 0)
-		return 0;
+    //
+    // This format has no termination record type, and no magic start
+    // character.  So look ahead to see if there is anything more.
+    //
+    if (peek_char() < 0)
+	return 0;
 
-	//
-	// Looks like there should be a record.  Read it all in.
-	//
-	int length = get_byte();
+    //
+    // Looks like there should be a record.  Read it all in.
+    //
+    int length = get_byte();
+    skip_white_space();
+    unsigned long address = get_word();
+    if (get_char() != ':')
+	fatal_error("colon expected");
+    checksum_reset();
+    unsigned char buffer[256];
+    for (int j = 0; j < length; ++j)
+    {
 	skip_white_space();
-	unsigned long address = get_word();
-	if (get_char() != ':')
-		fatal_error("colon expected");
-	checksum_reset();
-	unsigned char buffer[256];
-	for (int j = 0; j < length; ++j)
-	{
-		skip_white_space();
-		buffer[j] = get_byte();
-	}
-	skip_white_space();
-	int csumX = checksum_get16();
-	int csum = get_word();
-	if (csumX != csum)
-		fatal_error("checksum mismatch (%04X)", csumX);
-	if (get_char() != '\n')
-		fatal_error("end-of-line expected");
+	buffer[j] = get_byte();
+    }
+    skip_white_space();
+    int csumX = checksum_get16();
+    int csum = get_word();
+    if (csumX != csum)
+	fatal_error("checksum mismatch (%04X)", csumX);
+    if (get_char() != '\n')
+	fatal_error("end-of-line expected");
 
-	srec_record::type_t type = srec_record::type_data;
-	if (length == 0)
-	{
-		// Actually, this format does not have a termination
-		// record, but a length of zero is otherwise meaningless.
-		type = type = srec_record::type_start_address;
-	}
-	record = srec_record(type, address, buffer, length);
-	return 1;
+    srec_record::type_t type = srec_record::type_data;
+    if (length == 0)
+    {
+	// Actually, this format does not have a termination
+	// record, but a length of zero is otherwise meaningless.
+	type = type = srec_record::type_start_address;
+    }
+    record = srec_record(type, address, buffer, length);
+    return 1;
 }
 
 
 const char *
 srec_input_file_emon52::get_file_format_name()
-	const
+    const
 {
-	return "Elektor Monitor (EMON52)";
+    return "Elektor Monitor (EMON52)";
 }

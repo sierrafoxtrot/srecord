@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -23,6 +23,11 @@
 #ifndef INCLUDE_SREC_INPUT_INTERVAL_H
 #define INCLUDE_SREC_INPUT_INTERVAL_H
 
+/**
+  * The srec_input_interval function is used to read an input stream and
+  * build an interval based on the addresses which contain data within
+  * the input.
+  */
 class interval srec_input_interval(class srec_input *);
 
 #endif // INCLUDE_SREC_INPUT_INTERVAL_H

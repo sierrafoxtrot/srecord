@@ -33,138 +33,139 @@ using namespace std;
 class srec_record; // forward
 
 /**
-  * The srec_output class is used to represent an output vector.  It could
-  * be a file, it could be a filter first, before it reaches a file.
+  * The srec_output class is used to represent an abstract output vector.
+  * It could be a file, it could be a filter first, before it reaches
+  * a file.
   */
 class srec_output
 {
 public:
-	/**
-	  * The destructor.
-	  */
-	virtual ~srec_output();
+    /**
+      * The destructor.
+      */
+    virtual ~srec_output();
 
-	/**
-	  * The write method is used to write a recordonto an output.
-	  * Derived classes must implement this method.
-	  */
-	virtual void write(const srec_record &) = 0;
+    /**
+      * The write method is used to write a recordonto an output.
+      * Derived classes must implement this method.
+      */
+    virtual void write(const srec_record &) = 0;
 
-	/**
-	  * The write_header method is used to write a header record
-	  * to the output.  If no record is specified, a default
-	  * record will be supplied.  The write method will be called.
-	  */
-	virtual void write_header(const srec_record * = 0);
+    /**
+      * The write_header method is used to write a header record
+      * to the output.  If no record is specified, a default
+      * record will be supplied.  The write method will be called.
+      */
+    virtual void write_header(const srec_record * = 0);
 
-	/**
-	  * The write_data method is used to write data to the output.
-	  * A suitable data record wil be produced.  The write method
-	  * will be called.
-	  */
-	virtual void write_data(unsigned long, const void *, size_t);
+    /**
+      * The write_data method is used to write data to the output.
+      * A suitable data record wil be produced.  The write method
+      * will be called.
+      */
+    virtual void write_data(unsigned long, const void *, size_t);
 
-	/**
-	  * The write_start_address method is used to write a start
-	  * address record to the output.  If no record is specified,
-	  * a default record will be supplied.	The write method will
-	  * be called.
-	  */
-	virtual void write_start_address(const srec_record * = 0);
+    /**
+      * The write_start_address method is used to write a start
+      * address record to the output.  If no record is specified,
+      * a default record will be supplied.	The write method will
+      * be called.
+      */
+    virtual void write_start_address(const srec_record * = 0);
 
-	/**
-	  * The set_line_length method is used to set the maximum
-	  * length of an output line, for those formats for which
-	  * this is a meaningful concept, and the line length is at
-	  * all controllable.  Derived classes must implement this method.
-	  */
-	virtual void line_length_set(int) = 0;
+    /**
+      * The set_line_length method is used to set the maximum
+      * length of an output line, for those formats for which
+      * this is a meaningful concept, and the line length is at
+      * all controllable.  Derived classes must implement this method.
+      */
+    virtual void line_length_set(int) = 0;
 
-	/**
-	  * The address_length_set method is used to set the minimum
-	  * number of bytes to be written for addresses in the output,
-	  * for those formats for which this is a meaningful concept, and
-	  * the address length is at all controllable.	Derived classes
-	  * must implement this method.
-	  */
-	virtual void address_length_set(int) = 0;
+    /**
+      * The address_length_set method is used to set the minimum
+      * number of bytes to be written for addresses in the output,
+      * for those formats for which this is a meaningful concept, and
+      * the address length is at all controllable.	Derived classes
+      * must implement this method.
+      */
+    virtual void address_length_set(int) = 0;
 
-	/**
-	  * The preferred_block_size_get method is used to get the
-	  * proferred block size of the output fformat.  Often, but not
-	  * always, influenced by the line_lebgth_set method.  Derived
-	  * classes must implement this method.
-	  */
-	virtual int preferred_block_size_get() const = 0;
+    /**
+      * The preferred_block_size_get method is used to get the
+      * proferred block size of the output fformat.  Often, but not
+      * always, influenced by the line_lebgth_set method.  Derived
+      * classes must implement this method.
+      */
+    virtual int preferred_block_size_get() const = 0;
 
-	/**
-	  * The fatal_error method is used to report fatal errors.
-	  * The `fmt' string is in the same style a standard C printf
-	  * function.  It calls the fatal_error_v method.  This method
-	  * does not return.
-	  */
-	virtual void fatal_error(const char *fmt, ...) const
-							    FORMAT_PRINTF(2, 3);
-	/**
-	  * The fatal_error_v method is used to report fatal errors.
-	  * The `fmt' string is in the same style a standard C vprintf
-	  * function.  It calls ::exit.  This method does not return.
-	  */
-	virtual void fatal_error_v(const char *fmt, va_list ap) const;
+    /**
+      * The fatal_error method is used to report fatal errors.
+      * The `fmt' string is in the same style a standard C printf
+      * function.  It calls the fatal_error_v method.  This method
+      * does not return.
+      */
+    virtual void fatal_error(const char *fmt, ...) const
+							FORMAT_PRINTF(2, 3);
+    /**
+      * The fatal_error_v method is used to report fatal errors.
+      * The `fmt' string is in the same style a standard C vprintf
+      * function.  It calls ::exit.  This method does not return.
+      */
+    virtual void fatal_error_v(const char *fmt, va_list ap) const;
 
-	/**
-	  * The fatal_error_errno method is used to report fatal errors,
-	  * and append the string equivalent of errno.  The `fmt' string
-	  * is in the same style a standard C printf function.  It calls
-	  * ::exit().  This method does not return.
-	  */
-	virtual void fatal_error_errno(const char *fmt, ...) const
-							    FORMAT_PRINTF(2, 3);
-	/**
-	  * The fatal_error_errno_v method is used to report fatal
-	  * errors.  The `fmt' string is in the same style a standard C
-	  * vprintf function.  It calls the ::exit function.
-	  * This method does not return.
-	  */
-	virtual void fatal_error_errno_v(const char *fmt, va_list ap) const;
+    /**
+      * The fatal_error_errno method is used to report fatal errors,
+      * and append the string equivalent of errno.  The `fmt' string
+      * is in the same style a standard C printf function.  It calls
+      * ::exit().  This method does not return.
+      */
+    virtual void fatal_error_errno(const char *fmt, ...) const
+							FORMAT_PRINTF(2, 3);
+    /**
+      * The fatal_error_errno_v method is used to report fatal
+      * errors.  The `fmt' string is in the same style a standard C
+      * vprintf function.  It calls the ::exit function.
+      * This method does not return.
+      */
+    virtual void fatal_error_errno_v(const char *fmt, va_list ap) const;
 
-	/**
-	  * The warning method is used to likely but non-fatal errors.
-	  * The `fmt' string is in the same style a standard C printf
-	  * function.  It calls the warning_v method.
-	  */
-	virtual void warning(const char *fmt, ...) const
-							    FORMAT_PRINTF(2, 3);
-	/**
-	  * The warning_v method is used to report likely but non-fatal
-	  * errors.  The `fmt' string is in the same style a standard
-	  * C vprintf function.
-	  */
-	virtual void warning_v(const char *fmt, va_list ap) const;
+    /**
+      * The warning method is used to likely but non-fatal errors.
+      * The `fmt' string is in the same style a standard C printf
+      * function.  It calls the warning_v method.
+      */
+    virtual void warning(const char *fmt, ...) const
+							FORMAT_PRINTF(2, 3);
+    /**
+      * The warning_v method is used to report likely but non-fatal
+      * errors.  The `fmt' string is in the same style a standard
+      * C vprintf function.
+      */
+    virtual void warning_v(const char *fmt, va_list ap) const;
 
-	/**
-	  * The filename method is used to determine the name of the
-	  * output file.  It is used for the various error messages.
-	  * Derived classes must implement this method.
-	  */
-	virtual const string filename() const = 0;
+    /**
+      * The filename method is used to determine the name of the
+      * output file.  It is used for the various error messages.
+      * Derived classes must implement this method.
+      */
+    virtual const string filename() const = 0;
 
 protected:
-	/**
-	  * The default constructor.  Do not use.
-	  */
-	srec_output();
+    /**
+      * The default constructor.  Only dervived classes may use.
+      */
+    srec_output();
 
 private:
-	/**
-	  * The copy constructor.  Do not use.
-	  */
-	srec_output(const srec_output &);
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_output(const srec_output &);
 
-	/**
-	  * The assignment operator.  Do not use.
-	  */
-	srec_output &operator=(const srec_output &);
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_output &operator=(const srec_output &);
 };
 
 #endif // INCLUDE_SREC_OUTPUT_H

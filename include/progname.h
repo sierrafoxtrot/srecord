@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,16 @@
 #ifndef INCLUDE_PROGNAME_H
 #define INCLUDE_PROGNAME_H
 
+/**
+  * The progname_set function is used by main() to set the name of the
+  * currently executing programme.
+  */
 void progname_set(char *);
+
+/**
+  * The progname_get function is used to retrieve the name of the
+  * currently executing programme.  Used by error messages.
+  */
 const char *progname_get();
 
 #endif // INCLUDE_PROGNAME_H

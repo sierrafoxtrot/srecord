@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,27 +27,100 @@
 
 #include <srec/input/file.h>
 
-class srec_input_file_intel: public srec_input_file
+/**
+  * The srec_input_file_intel class is used to represent the parse state
+  * of an Intel Hex formatted file.
+  */
+class srec_input_file_intel:
+    public srec_input_file
 {
 public:
-	srec_input_file_intel();
-	srec_input_file_intel(const char *);
-	virtual ~srec_input_file_intel();
-	int read(srec_record &);
-	const char *get_file_format_name() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_file_intel();
+
+    /**
+      * The constructor.
+      */
+    srec_input_file_intel(const char *filename);
+
+    // See base class for documentation.
+    int read(srec_record &);
+
+    // See base class for documentation.
+    const char *get_file_format_name() const;
 
 private:
-	srec_input_file_intel(const srec_input_file_intel &);
-	srec_input_file_intel &operator=(const srec_input_file_intel &);
-	int read_inner(srec_record &);
-	int data_record_count;
-	bool garbage_warning;
-	bool seen_some_input;
-	bool termination_seen;
-	enum { linear, segmented } mode;
-	unsigned long address_base;
-	srec_record *pushback;
-	bool end_seen;
+    /**
+      * Read one record from the file.  The read method is a wrapper
+      * around this method.
+      */
+    int read_inner(srec_record &);
+
+    /**
+      * The data_record_count instance variable is used to remember the
+      * number of data records seen to date.
+      */
+    int data_record_count;
+
+    /**
+      * The garbage_warning instance variable is used to remember wherther
+      * or not a warning has already been issued about garbage lines
+      * of input.
+      */
+    bool garbage_warning;
+
+    /**
+      * The seen_some_input instance variable is used to remember whether
+      * or not the file contains any data.
+      */
+    bool seen_some_input;
+
+    /**
+      * The termination_seen instance variable is used to remember
+      * whether or not a termination record has been seen yet.
+      */
+    bool termination_seen;
+
+    /**
+      * The mode instance variable is used to remember what addressing
+      * mode the file is currently in.
+      */
+    enum { linear, segmented } mode;
+
+    /**
+      * The address_base instance variable is used to remember the
+      * segment base address when in segmented addressing mode.
+      */
+    unsigned long address_base;
+
+    /**
+      * The pushback instance variable is used to remember the previous
+      * record in the file.  This is needed in some instances, but not always.
+      */
+    srec_record *pushback;
+
+    /**
+      * The end_seen instance variable is used to remember whether or
+      * not the end of file has been seen yet.
+      */
+    bool end_seen;
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_file_intel();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_file_intel(const srec_input_file_intel &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_file_intel &operator=(const srec_input_file_intel &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILE_INTEL_H

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002 Peter Miller;
+//	Copyright (C) 2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,24 +27,74 @@
 
 #include <srec/input/file.h>
 
+/**
+  * The srec_input_file_ascii_hex class is used to repesent the parse
+  * state when readin an Ascii-Hex format input file.
+  */
 class srec_input_file_ascii_hex: public srec_input_file
 {
 public:
-	srec_input_file_ascii_hex();
-	srec_input_file_ascii_hex(const char *);
-	virtual ~srec_input_file_ascii_hex();
-	int read(srec_record &);
-	const char *get_file_format_name() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_file_ascii_hex();
+
+    /**
+      * the constructor.
+      */
+    srec_input_file_ascii_hex(const char *filename);
+
+    // See base class for documentation.
+    int read(srec_record &);
+
+    // See base class for documentation.
+    const char *get_file_format_name() const;
 
 private:
-	srec_input_file_ascii_hex(const srec_input_file_ascii_hex &);
-	srec_input_file_ascii_hex &operator=(const srec_input_file_ascii_hex &);
-	int read_inner(srec_record &);
-	bool garbage_warning;
-	bool seen_some_input;
-	unsigned long address;
+    /**
+      * The read_inner method is used to read a single record from
+      * the file.  The read method calls it.
+      */
+    int read_inner(srec_record &);
 
-	enum { state_initial, state_body, state_ignore } state;
+    /**
+      * The garbage_warning instance variable is used to remember whether
+      * a warning has already been issued if the file contains garbage.
+      */
+    bool garbage_warning;
+
+    /**
+      * The seen_some_input instance variable is used to remember whether
+      * any data has been seen in the input to date.
+      */
+    bool seen_some_input;
+
+    /**
+      * The address instance variable is used to remember where we are
+      * up to in the input file, so it may be associated with data bytes.
+      */
+    unsigned long address;
+
+    /**
+      * The state instance variable is used to remember what state the
+      * input is in at present.
+      */
+    enum { state_initial, state_body, state_ignore } state;
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_file_ascii_hex();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_file_ascii_hex(const srec_input_file_ascii_hex &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_file_ascii_hex &operator=(const srec_input_file_ascii_hex &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILE_ASCII_HEX_H

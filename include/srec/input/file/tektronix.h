@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2002 Peter Miller;
+//	Copyright (C) 1998-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,25 +27,89 @@
 
 #include <srec/input/file.h>
 
-class srec_input_file_tektronix: public srec_input_file
+/**
+  * The srec_input_file_tektronix clas sis used to represent the parse
+  * state of an input file in Tektronix (non-extended) format.
+  */
+class srec_input_file_tektronix:
+    public srec_input_file
 {
 public:
-	srec_input_file_tektronix();
-	srec_input_file_tektronix(const char *);
-	virtual ~srec_input_file_tektronix();
-	int read(srec_record &);
-	const char *get_file_format_name() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_file_tektronix();
+
+    /**
+      * The constructor.
+      */
+    srec_input_file_tektronix(const char *filename);
+
+    // See base class for documentation.
+    int read(srec_record &);
+
+    // See base class for documentation.
+    const char *get_file_format_name() const;
 
 private:
-	srec_input_file_tektronix(const srec_input_file_tektronix &);
-	srec_input_file_tektronix &operator=(const srec_input_file_tektronix &);
-	int get_nibble();
-	int get_byte();
-	int read_inner(srec_record &);
-	int data_record_count;
-	bool garbage_warning;
-	bool seen_some_input;
-	bool termination_seen;
+    /**
+      * The get_nibble method gets a single hex-digit from input.
+      * We override the one in the base class because the checksum is
+      * nibble-based, not byte-based.
+      */
+    int get_nibble();
+
+    /**
+      * The get_byte method gets a two hex-digit from input and assembles
+      * them (big-endian) into a byte.  We override the one in the base
+      * class because the checksum is nibble-based, not byte-based.
+      */
+    int get_byte();
+
+    /**
+      * The read_inner methos is used to read a single record from
+      * the input.  The read method is a wrapper around this method.
+      */
+    int read_inner(srec_record &);
+
+    /**
+      * The data_record_count instance variable is used to remember the
+      * number of data records seen so far.
+      */
+    int data_record_count;
+
+    /**
+      * The garbage_warning instance variable is used to remember whether
+      * a warning about input line containing garbage has been issued yet.
+      */
+    bool garbage_warning;
+
+    /**
+      * The seen_some_input instance variable is used to remember wheter
+      * the file contains any data so far.
+      */
+    bool seen_some_input;
+
+    /**
+      * The termination_seen instance variable is used to remember
+      * whether the termination record has been seen yet.
+      */
+    bool termination_seen;
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_file_tektronix();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_file_tektronix(const srec_input_file_tektronix &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_file_tektronix &operator=(const srec_input_file_tektronix &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILE_TEKTRONIX_H

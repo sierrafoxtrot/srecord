@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -25,64 +25,44 @@
 #include <srec/input/filter.h>
 
 
-srec_input_filter::srec_input_filter()
-	: ifp(0)
+srec_input_filter::srec_input_filter(srec_input *arg) :
+    ifp(arg)
 {
-}
-
-
-srec_input_filter::srec_input_filter(srec_input *arg)
-	: ifp(arg)
-{
-}
-
-
-srec_input_filter::srec_input_filter(const srec_input_filter &arg)
-	: ifp(arg.ifp)
-{
-}
-
-
-srec_input_filter &
-srec_input_filter::operator=(const srec_input_filter &arg)
-{
-	ifp = arg.ifp;
-	return *this;
 }
 
 
 srec_input_filter::~srec_input_filter()
 {
-	delete ifp;
+    delete ifp;
 }
 
 
 const string
 srec_input_filter::filename()
-	const
+    const
 {
-	return ifp->filename();
+    return ifp->filename();
 }
 
 
 const string
 srec_input_filter::filename_and_line()
-	const
+    const
 {
-	return ifp->filename_and_line();
+    return ifp->filename_and_line();
 }
 
 
 int
 srec_input_filter::read(srec_record &record)
 {
-	return ifp->read(record);
+    return ifp->read(record);
 }
 
 
 const char *
 srec_input_filter::get_file_format_name()
-	const
+    const
 {
-	return ifp->get_file_format_name();
+    return ifp->get_file_format_name();
 }

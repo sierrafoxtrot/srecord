@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002 Peter Miller;
+//	Copyright (C) 2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -32,39 +32,39 @@
   * throws an exception, rather than call ::exit.
   */
 class quit_exception:
-	public quit
+    public quit
 {
 public:
-	/**
-	  * The destructor.
-	  */
-	virtual ~quit_exception();
+    /**
+      * The destructor.
+      */
+    virtual ~quit_exception();
 
-	/**
-	  * The default constructor.
-	  */
-	quit_exception();
+    /**
+      * The default constructor.
+      */
+    quit_exception();
 
-	/**
-	  * The copy constructor.
-	  */
-	quit_exception(const quit_exception &);
+    /**
+      * The copy constructor.
+      */
+    quit_exception(const quit_exception &);
 
-	/**
-	  * the assignment operator.
-	  */
-	quit_exception &operator=(const quit_exception &);
+    /**
+      * the assignment operator.
+      */
+    quit_exception &operator=(const quit_exception &);
 
-	/**
-	  * the vomit class is used for the throw.
-	  */
-	class vomit { };
+    /**
+      * the vomit class is used for the throw.
+      */
+    class vomit { };
 
-	// see base class for documentation
-	virtual void exit(int n);
+    // see base class for documentation
+    virtual void exit(int n);
 
-	// see base class for documentation
-	virtual void message_v(const char *fmt, va_list);
+    // see base class for documentation
+    virtual void message_v(const char *fmt, va_list);
 };
 
 #endif // INCLUDE_QUIT_EXCEPTION_H

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2002 Peter Miller;
+//	Copyright (C) 2001-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -32,68 +32,67 @@
   * Signetics format file.
   */
 class srec_input_file_signetics:
-	public srec_input_file
+    public srec_input_file
 {
 public:
-	/**
-	  * The default constructor.  The input will be read from the
-	  * standard input.
-	  */
-	srec_input_file_signetics();
+    /**
+      * The constructor.  The input will be read from the named file
+      * (or the standatd input if the filename is "-").
+      */
+    srec_input_file_signetics(const char *);
 
-	/**
-	  * The constructor.  The input will be read from the named file
-	  * (or the standatd input if the filename is "-").
-	  */
-	srec_input_file_signetics(const char *);
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_file_signetics();
 
-	/**
-	  * The destructor.
-	  */
-	virtual ~srec_input_file_signetics();
+    // See base class for documentation.
+    int read(srec_record &);
 
-	// See base class for documentation.
-	int read(srec_record &);
-
-	// See base class for documentation.
-	const char *get_file_format_name() const;
+    // See base class for documentation.
+    const char *get_file_format_name() const;
 
 protected:
-	/**
-	  * See base class for documentation.  We over-ride this method
-	  * because signetics uses its own XOR-ROL checksum algorithm.
-	  */
-	void checksum_add(unsigned char);
+    /**
+      * See base class for documentation.  We over-ride this method
+      * because signetics uses its own XOR-ROL checksum algorithm.
+      */
+    void checksum_add(unsigned char);
 
 private:
-	/**
-	  * The copy constructor.  Do not use.
-	  */
-	srec_input_file_signetics(const srec_input_file_signetics &);
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_file_signetics();
 
-	/**
-	  * The assignment operator.  Do not use.
-	  */
-	srec_input_file_signetics &operator=(const srec_input_file_signetics &);
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_file_signetics(const srec_input_file_signetics &);
 
-	/**
-	  * The read_inner method is used to read one line/record from
-	  * the input.  Used by the `read' method.
-	  */
-	int read_inner(srec_record &);
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_file_signetics &operator=(const srec_input_file_signetics &);
 
-	/**
-	  * The garbage_warning instance variable is used to remember
-	  * whther or not a warning has been issued about non-format
-	  * lines in the file.  Only one warning per file is issued.
-	  */
-	bool garbage_warning;
+    /**
+      * The read_inner method is used to read one line/record from
+      * the input.  Used by the `read' method.
+      */
+    int read_inner(srec_record &);
 
-	/**
-	  * The seen_some_input instance variable is used to
-	  * remember whether any input has been seen.
-	  */
-	bool seen_some_input;
+    /**
+      * The garbage_warning instance variable is used to remember
+      * whther or not a warning has been issued about non-format
+      * lines in the file.  Only one warning per file is issued.
+      */
+    bool garbage_warning;
+
+    /**
+      * The seen_some_input instance variable is used to
+      * remember whether any input has been seen.
+      */
+    bool seen_some_input;
 };
 
 #endif // INCLUDE_SREC_INPUT_FILE_SIGNETICS_H

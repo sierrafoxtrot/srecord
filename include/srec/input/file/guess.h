@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002 Peter Miller;
+//	Copyright (C) 2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -25,6 +25,11 @@
 
 #include <srec/input.h>
 
+/**
+  * The srec_input_file_guess function is used to open a file of an
+  * unknown type.  It attempts all of the know formats one after the
+  * other.
+  */
 srec_input *srec_input_file_guess(const char *);
 
 #endif // INCLUDE_SREC_INPUT_FILE_GUESS_H

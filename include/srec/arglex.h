@@ -210,7 +210,7 @@ private:
       * not return.
       */
     void get_address_nbytes_width(const char *err_msg_caption,
-	    unsigned long &addr, int &nbytes, int &width);
+	unsigned long &addr, int &nbytes, int &width);
 
     /**
       * The stdin_used instance variable is used to remember whether

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,18 +27,55 @@
 
 #include <stddef.h>
 
+/**
+  * The crc16 class is used to represent the running value of a 16-bit
+  * cyclic redundancy check of series of bytes.
+  */
 class crc16
 {
 public:
-	virtual ~crc16();
-	crc16();
-	crc16(const crc16 &);
-	crc16 &operator=(const crc16 &);
-	unsigned short get() const;
-	void next(unsigned char);
-	void nextbuf(const void *, size_t);
+    /**
+      * The destructor.
+      */
+    virtual ~crc16();
+
+    /**
+      * The default constructor.
+      */
+    crc16();
+
+    /**
+      * The copy constructor.
+      */
+    crc16(const crc16 &);
+
+    /**
+      * The assignment operator.
+      */
+    crc16 &operator=(const crc16 &);
+
+    /**
+      * The get method is used to obtain the running value of the cyclic
+      * redundancy check.
+      */
+    unsigned short get() const;
+
+    /**
+      * The next method is used to advance the state by one byte.
+      */
+    void next(unsigned char);
+
+    /**
+      * The nextbuf method is used to advance the state by a series of bytes.
+      */
+    void nextbuf(const void *, size_t);
+
 private:
-	unsigned short state;
+    /**
+      * The state instance variable is used to remember the running
+      * value of the 16-bit cyclic redundancy check.
+      */
+    unsigned short state;
 };
 
 #endif // INCLUDE_CRC16_H

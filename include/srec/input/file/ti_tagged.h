@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002 Peter Miller;
+//	Copyright (C) 2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,25 +27,73 @@
 
 #include <srec/input/file.h>
 
-class srec_input_file_ti_tagged: public srec_input_file
+/**
+  * The srec_input_file_ti_tagged class is used to represent the parse
+  * state of an input file in TI Tagged format.
+  */
+class srec_input_file_ti_tagged:
+    public srec_input_file
 {
 public:
-	srec_input_file_ti_tagged();
-	srec_input_file_ti_tagged(const char *);
-	virtual ~srec_input_file_ti_tagged();
-	int read(srec_record &);
-	const char *get_file_format_name() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_file_ti_tagged();
+
+    /**
+      * The constructor.
+      */
+    srec_input_file_ti_tagged(const char *filename);
+
+    // See base class for documentation.
+    int read(srec_record &);
+
+    // See base class for documentation.
+    const char *get_file_format_name() const;
 
 protected:
-	int get_char();
+    /**
+      * The get_char method is used to get a character from the input.
+      * We override bacsie the checksum is character based, not byte
+      * based.
+      */
+    int get_char();
 
 private:
-	typedef srec_input_file inherited;
-	srec_input_file_ti_tagged(const srec_input_file_ti_tagged &);
-	srec_input_file_ti_tagged &operator=(const srec_input_file_ti_tagged &);
-	int read_inner(srec_record &);
-	unsigned long address;
-	int csum;
+    typedef srec_input_file inherited;
+
+    /**
+      * The read_inner method is used to read a single line of input.
+      * the raed method is a wrapper around this method.
+      */
+    int read_inner(srec_record &);
+
+    /**
+      * The address instance variable is used to remember where we are
+      * up to in the input file.
+      */
+    unsigned long address;
+
+    /**
+      * The csum instance variable is used to remember the running
+      * checksum.
+      */
+    int csum;
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_file_ti_tagged();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_file_ti_tagged(const srec_input_file_ti_tagged &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_file_ti_tagged &operator=(const srec_input_file_ti_tagged &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILE_TI_TAGGED_H

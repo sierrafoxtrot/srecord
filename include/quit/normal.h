@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002 Peter Miller;
+//	Copyright (C) 2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -33,34 +33,34 @@
   * error, and exit via the gloibal ::exit function.
   */
 class quit_normal:
-	public quit
+    public quit
 {
 public:
-	/**
-	  * The destructor.
-	  */
-	virtual ~quit_normal();
+    /**
+      * The destructor.
+      */
+    virtual ~quit_normal();
 
-	/**
-	  * The default constructor.
-	  */
-	quit_normal();
+    /**
+      * The default constructor.
+      */
+    quit_normal();
 
-	/**
-	  * The copy constructor.
-	  */
-	quit_normal(const quit_normal &);
+    /**
+      * The copy constructor.
+      */
+    quit_normal(const quit_normal &);
 
-	/**
-	  * The assignment operator.
-	  */
-	quit_normal &operator=(const quit_normal &);
+    /**
+      * The assignment operator.
+      */
+    quit_normal &operator=(const quit_normal &);
 
-	// see base class for documentation
-	virtual void exit(int);
+    // see base class for documentation
+    virtual void exit(int);
 
-	// see base class for documentation
-	virtual void message_v(const char *, va_list);
+    // see base class for documentation
+    virtual void message_v(const char *, va_list);
 };
 
 #endif // INCLUDE_QUIT_NORMAL_H

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -32,24 +32,9 @@ using namespace std;
 #include <quit/prefix.h>
 
 
-srec_input::srec_input()
-	: quitter(&quit_default)
+srec_input::srec_input() :
+    quitter(&quit_default)
 {
-}
-
-
-srec_input::srec_input(const srec_input &)
-	: quitter(&quit_default)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
-srec_input &
-srec_input::operator=(const srec_input &)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-	return *this;
 }
 
 
@@ -60,57 +45,57 @@ srec_input::~srec_input()
 
 void
 srec_input::fatal_error(const char *fmt, ...)
-	const
+    const
 {
-	va_list ap;
-	va_start(ap, fmt);
-	quit_prefix blab(*quitter, filename_and_line());
-	blab.fatal_error_v(fmt, ap);
-	va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    quit_prefix blab(*quitter, filename_and_line());
+    blab.fatal_error_v(fmt, ap);
+    va_end(ap);
 }
 
 
 void
 srec_input::fatal_error_errno(const char *fmt, ...)
-	const
+    const
 {
-	va_list ap;
-	va_start(ap, fmt);
-	quit_prefix blab(*quitter, filename_and_line());
-	blab.fatal_error_errno_v(fmt, ap);
-	va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    quit_prefix blab(*quitter, filename_and_line());
+    blab.fatal_error_errno_v(fmt, ap);
+    va_end(ap);
 }
 
 
 void
 srec_input::warning(const char *fmt, ...)
-	const
+    const
 {
-	va_list ap;
-	va_start(ap, fmt);
-	quit_prefix blab(*quitter, filename_and_line());
-	blab.warning_v(fmt, ap);
-	va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    quit_prefix blab(*quitter, filename_and_line());
+    blab.warning_v(fmt, ap);
+    va_end(ap);
 }
 
 
 const string
 srec_input::filename_and_line()
-	const
+    const
 {
-	return filename();
+    return filename();
 }
 
 
 void
 srec_input::set_quit(quit &arg)
 {
-	quitter = &arg;
+    quitter = &arg;
 }
 
 
 void
 srec_input::reset_quit()
 {
-	quitter = &quit_default;
+    quitter = &quit_default;
 }

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,20 +27,54 @@
 
 #include <srec/input/file.h>
 
-class srec_input_file_binary: public srec_input_file
+/**
+  * The srec_input_file_binary class is used to represent the parse
+  * state of a binary input stream.
+  */
+class srec_input_file_binary:
+    public srec_input_file
 {
 public:
-	srec_input_file_binary();
-	srec_input_file_binary(const char *);
-	virtual ~srec_input_file_binary();
-	virtual int read(srec_record &);
-	const char *get_file_format_name() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_input_file_binary();
+
+    /**
+      * The constructor.
+      */
+    srec_input_file_binary(const char *filename);
+
+    // See nase class for documentation.
+    int read(srec_record &);
+
+    // See base class for documentation.
+    const char *get_file_format_name() const;
 
 private:
-	unsigned long address;
-	srec_input_file_binary(const srec_input_file_binary &);
-	srec_input_file_binary &operator=(const srec_input_file_binary &);
-	const char *mode() const;
+    /**
+      * The address instance variable is used to remember where we are
+      * up to in the file.
+      */
+    unsigned long address;
+
+    // See base class for documentation.
+    const char *mode() const;
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_input_file_binary();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_input_file_binary(const srec_input_file_binary &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_input_file_binary &operator=(const srec_input_file_binary &);
 };
 
 #endif // INCLUDE_SREC_INPUT_FILE_BINARY_H
