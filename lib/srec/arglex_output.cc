@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001-2003 Peter Miller;
+//	Copyright (C) 2001-2004 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -256,7 +256,14 @@ srec_arglex::get_output()
 
     case token_vmem:
 	{
+	    //
+	    // The default number of bits is 32.
+	    // If you change this, you must also change the following files:
+	    //     lib/srec/output/file/vmem.cc
+	    //     man/man1/srec_cat.1
+	    //
 	    int mem_width = 32;
+
 	    if (token_next() == token_number)
 	    {
 		mem_width = value_number();

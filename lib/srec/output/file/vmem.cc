@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2003 Peter Miller;
+//	Copyright (C) 2000-2004 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,11 +27,25 @@
 #include <srec/record.h>
 
 
+//
+// Calculate log2(bytes_per_value)
+//
+// For example...
+// Return  Num    Num
+// Value   Bytes  Bits
+//   0      1       8
+//   1      2      16
+//   2      4      32
+//   3      8      64
+//   4     16     128
+//
 static unsigned
 calc_width_shift(int x)
 {
     //
     // The user could be giving a number of bytes.
+    // (But the range is limited to those values not easily confused
+    // with a number of bits.)
     //
     if (x == 1)
 	return 0;
@@ -43,10 +57,20 @@ calc_width_shift(int x)
     //
     // The documented interface is a number of bits.
     //
-    if (x <= 8)
-	return 0;
-    if (x <= 16)
-	return 1;
+    for (int j = 0; j < 28; ++j)
+    {
+	int nbits = 8 << j;
+	if (x <= nbits)
+	    return j;
+    }
+
+    //
+    //
+    // The default number of bits is 32.
+    // If you change this, you must also change the following files:
+    //     man/man1/srec_cat.1
+    //     lib/srec/arglex_output.cc
+    //
     return 2;
 }
 
