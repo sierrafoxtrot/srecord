@@ -98,8 +98,8 @@ filters\fP.  Wherever an input file may be specified, filters may also
 be applied to that input file.  The following filters are available:
 .TP 8n
 checksum
-The \fIchecksum\fP filter may be used to insert the one's complement
-checksum of the data into the data.
+The \fIchecksum\fP filter may be used to insert the checksum of the data
+(bitnot, negative or positive) into the data.
 .TP 8n
 byte swap
 The \fIbyte swap\fP filter may be used to swap pairs of add and even bytes.

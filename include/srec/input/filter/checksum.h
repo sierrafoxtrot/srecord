@@ -33,15 +33,22 @@ class srec_input_filter_checksum: public srec_input_filter
 {
 public:
 	virtual ~srec_input_filter_checksum();
-	srec_input_filter_checksum(srec_input *, int, int, int);
 	virtual int read(srec_record &);
 
-private:
+protected:
+	srec_input_filter_checksum(srec_input *deeper, int address, int length,
+		int order, int width = 1);
+	typedef unsigned long sum_t;
 	int checksum_address;
 	int length;
 	int checksum_order;
 	srec_record data;
-	unsigned long sum;
+	sum_t sum;
+	int width;
+	virtual sum_t calculate() = 0;
+
+	// These would be private, but we need then protected so that
+	// we can write the derived class default constructors.
 	srec_input_filter_checksum();
 	srec_input_filter_checksum(const srec_input_filter_checksum &);
 	srec_input_filter_checksum &operator=(const srec_input_filter_checksum &);

@@ -37,7 +37,9 @@
 #include <srec/input/file/wilson.h>
 #include <srec/input/filter/and.h>
 #include <srec/input/filter/byte_swap.h>
-#include <srec/input/filter/checksum.h>
+#include <srec/input/filter/checksum/bitnot.h>
+#include <srec/input/filter/checksum/negative.h>
+#include <srec/input/filter/checksum/positive.h>
 #include <srec/input/filter/crop.h>
 #include <srec/input/filter/fill.h>
 #include <srec/input/filter/length.h>
@@ -77,7 +79,10 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-AND",	token_and,		},
 		{ "-Ascii_Hexadecimal",	token_ascii_hex, },
 		{ "-Ascii_Space_Hexadecimal", token_ascii_hex, },
-		{ "-Big_Endian_Checksum", token_checksum_be, },
+		{ "-Big_Endian_Checksum", token_checksum_be_bitnot, },
+		{ "-Big_Endian_Checksum_BitNot", token_checksum_be_bitnot, },
+		{ "-Big_Endian_Checksum_Negative", token_checksum_be_negative, },
+		{ "-Big_Endian_Checksum_Positive", token_checksum_be_positive, },
 		{ "-Big_Endian_Length",	token_length_be, },
 		{ "-Big_Endian_MAximum", token_maximum_be, },
 		{ "-Big_Endian_MInimum",token_minimum_be, },
@@ -89,7 +94,10 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Fill",	token_fill,		},
 		{ "-GUess",	token_guess,		},
 		{ "-Intel",	token_intel,		},
-		{ "-Little_Endian_Checksum", token_checksum_le, },
+		{ "-Little_Endian_Checksum", token_checksum_le_bitnot, },
+		{ "-Little_Endian_Checksum_BitNot", token_checksum_le_bitnot, },
+		{ "-Little_Endian_Checksum_Negative", token_checksum_le_negative, },
+		{ "-Little_Endian_Checksum_Positive", token_checksum_le_positive, },
 		{ "-Little_Endian_Length", token_length_le, },
 		{ "-Little_Endian_MAximum", token_maximum_le, },
 		{ "-Little_Endian_MInimum", token_minimum_le, },
@@ -245,6 +253,53 @@ srec_arglex::get_address_and_nbytes(const char *name, unsigned long &address,
 				<< " is out of range (1..8)"
 				<< endl;
 			exit(1);
+		}
+	}
+	if ((long long)address + nbytes > (1LL << 32))
+	{
+		cerr << "the " << name << " address (" << address
+			<< ") and byte count (" << nbytes
+			<< ") may not span the top of memory" << endl;
+		exit(1);
+	}
+}
+
+
+void
+srec_arglex::get_address_nbytes_width(const char *name, unsigned long &address,
+	int &nbytes, int &width)
+{
+	if (token_next() != token_number)
+	{
+		cerr << "the " << name
+			<< " filter requires an address and a byte count"
+			<< endl;
+		exit(1);
+	}
+	address = value_number();
+	nbytes = 4;
+	width = 1;
+	if (token_next() == token_number)
+	{
+		nbytes = value_number(); 
+		if (nbytes < 1 || nbytes > 8)
+		{
+			cerr << "the " << name << " byte count " << nbytes
+				<< " is out of range (1..8)"
+				<< endl;
+			exit(1);
+		}
+		if (token_next() == token_number)
+		{
+			width = value_number(); 
+			token_next();
+			if (width < 1 || width > nbytes)
+			{
+				cerr << "the " << name << " sum width "
+					<< width << " is out of range (1.."
+					<< nbytes << ")" << endl;
+				exit(1);
+			}
 		}
 	}
 	if ((long long)address + nbytes > (1LL << 32))
@@ -587,44 +642,140 @@ srec_arglex::get_input()
 			}
 			continue;
 
-		case token_checksum_be:
+		case token_checksum_be_bitnot:
 			{
 				unsigned long address;
-				int nbytes;
-				get_address_and_nbytes
+				int nbytes, width;
+				get_address_nbytes_width
 				(
-					"-Big_Endian_Checksum",
+					"-Big_Endian_Checksum_BitNot",
 					address,
-					nbytes
+					nbytes,
+					width
 				);
 				ifp =
-					new srec_input_filter_checksum
+					new srec_input_filter_checksum_bitnot
 					(
 						ifp,
 						address,
 						nbytes,
-						0
+						0,
+						width
 					);
 			}
 			continue;
 
-		case token_checksum_le:
+		case token_checksum_le_bitnot:
 			{
 				unsigned long address;
-				int nbytes;
-				get_address_and_nbytes
+				int nbytes,width;
+				get_address_nbytes_width
 				(
-					"-Little_Endian_Checksum",
+					"-Little_Endian_Checksum_BitNot",
 					address,
-					nbytes
+					nbytes,
+					width
 				);
 				ifp =
-					new srec_input_filter_checksum
+					new srec_input_filter_checksum_bitnot
 					(
 						ifp,
 						address,
 						nbytes,
-						1
+						1,
+						width
+					);
+			}
+			continue;
+
+		case token_checksum_be_negative:
+			{
+				unsigned long address;
+				int nbytes, width;
+				get_address_nbytes_width
+				(
+					"-Big_Endian_Checksum_Negative",
+					address,
+					nbytes,
+					width
+				);
+				ifp =
+					new srec_input_filter_checksum_negative
+					(
+						ifp,
+						address,
+						nbytes,
+						0,
+						width
+					);
+			}
+			continue;
+
+		case token_checksum_le_negative:
+			{
+				unsigned long address;
+				int nbytes, width;
+				get_address_nbytes_width
+				(
+					"-Little_Endian_Checksum_Negative",
+					address,
+					nbytes,
+					width
+				);
+				ifp =
+					new srec_input_filter_checksum_negative
+					(
+						ifp,
+						address,
+						nbytes,
+						1,
+						width
+					);
+			}
+			continue;
+
+		case token_checksum_be_positive:
+			{
+				unsigned long address;
+				int nbytes, width;
+				get_address_nbytes_width
+				(
+					"-Big_Endian_Checksum_Positive",
+					address,
+					nbytes,
+					width
+				);
+				ifp =
+					new srec_input_filter_checksum_positive
+					(
+						ifp,
+						address,
+						nbytes,
+						0,
+						width
+					);
+			}
+			continue;
+
+		case token_checksum_le_positive:
+			{
+				unsigned long address;
+				int nbytes, width;
+				get_address_nbytes_width
+				(
+					"-Little_Endian_Checksum_Positive",
+					address,
+					nbytes,
+					width
+				);
+				ifp =
+					new srec_input_filter_checksum_positive
+					(
+						ifp,
+						address,
+						nbytes,
+						1,
+						width
 					);
 			}
 			continue;

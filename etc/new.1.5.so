@@ -19,9 +19,25 @@
 .\"
 .\" MANIFEST: description of new 1.5 features
 .\"
-.\" .PP
-.\" .if n *
-.\" .if t \(bu
+.PP
+.if n *
+.if t \(bu
+.\" change 14
+There are new checksum filters: in addition to the existing one's
+complement (bitnot) checksum filter, there are now negative and positive
+checksum filters.
+.PP
+.if n *
+.if t \(bu
+.\" change 14
+The checksum filters are now able to sum over 16-bit and 32-bit values,
+in addition to the existing byte sums.
+.PP
+.if n *
+.if t \(bu
+.\" change 13
+The \fIsrec_cmp\fP program now has a \fB--verbose\fP option,
+which gives more information about how the two inputs differ.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.5

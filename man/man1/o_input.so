@@ -99,21 +99,39 @@ for a description of this file format.
 You may specify zero or more \fIfilters\fP to be applied.
 Filters are applied in the order the user specifies.
 .TP 8n
-\fB\-Big_Endian_Checksum\fP \fIaddress\fP [ \fInbytes\fP ]
+\fB\-Big_Endian_Checksum_BitNot\fP \fIaddress\fP [ \fInbytes\fP [ \fIwidth\fP ]]
 This filter may be used to insert the one's complement checksum of the
-data into the data.  This \fIdoes not\fP include the checksum itself.
+data into the data, most significant byte first.
 The data is literaly summed; if there are duplicate bytes, this will
-produce an incorrect result, if there are holes, it will that they were
+produce an incorrect result, if there are holes, it will be as if they were
 filled with zeros.
 If the data already contains bytes at the checksum location,
 you need to use an exclude filter, or this will generate errors.
 You need to apply and crop or fill filters before this filter.
 The value will be written with the most significant byte first.
-The number of bytes defaults to 4.
+The number of bytes of resulting checksum defaults to 4.
+The width (the width in bytes of the values being summed) defaults to 1.
 .TP 8n
-\fB\-Little_Endian_Checksum\fP \fIaddress\fP [ \fInbytes\fP ]
-As above, however
-the value will be written with the least significant byte first.
+\fB\-Big_Endian_Checksum_Negative\fP \fIaddress\fP [ \fInbytes\fP [ \fIwidth\fP ]]
+This filter may be used to insert the two's complement (negative)
+checksum of the data into the data.  Otherwise similar to the above.
+.TP 8n
+\fB\-Big_Endian_Checksum_Positive\fP \fIaddress\fP [ \fInbytes\fP [ \fIwidth\fP ]]
+This filter may be used to insert the simple checksum of the data into
+the data.  Otherwise similar to the above.
+.TP 8n
+\fB\-Little_Endian_Checksum_BitNot\fP \fIaddress\fP [ \fInbytes\fP [ \fIwidth\fP ]]
+This filter may be used to insert the one's complement (bitnot)
+checksum of the data into the data, least significant byte first.
+Otherwise similar to the above.
+.TP 8n
+\fB\-Little_Endian_Checksum_Negative\fP \fIaddress\fP [ \fInbytes\fP [ \fIwidth\fP ]]
+This filter may be used to insert the two's complement (negative)
+checksum of the data into the data.  Otherwise similar to the above.
+.TP 8n
+\fB\-Little_Endian_Checksum_Negative\fP \fIaddress\fP [ \fInbytes\fP [ \fIwidth\fP ]]
+This filter may be used to insert the simple checksum of the data into
+the data.  Otherwise similar to the above.
 .TP 8n
 \fB\-Byte_Swap\fP
 This filter may be used to swap pairs of odd and even bytes.

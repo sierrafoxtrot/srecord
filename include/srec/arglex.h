@@ -37,8 +37,12 @@ public:
 		token_binary,
 		token_byte_swap,
 		token_c_array,
-		token_checksum_be,
-		token_checksum_le,
+		token_checksum_be_bitnot,
+		token_checksum_be_negative,
+		token_checksum_be_positive,
+		token_checksum_le_bitnot,
+		token_checksum_le_negative,
+		token_checksum_le_positive,
 		token_crop,
 		token_wilson,
 		token_exclude,
@@ -82,6 +86,7 @@ private:
 	class interval get_interval_inner(const char *);
 	class interval get_interval(const char *);
 	void get_address_and_nbytes(const char *, unsigned long &, int &);
+	void get_address_nbytes_width(const char *, unsigned long &, int &, int &);
 	bool stdin_used;
 	bool stdout_used;
 };

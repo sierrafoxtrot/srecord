@@ -29,20 +29,24 @@
 
 srec_input_filter_checksum::srec_input_filter_checksum()
 	: srec_input_filter(), checksum_address(0), length(0),
-		checksum_order(0), data(), sum(0)
+		checksum_order(0), data(), sum(0), width(1)
 {
 }
 
 
 srec_input_filter_checksum::srec_input_filter_checksum(srec_input *a1, int a2,
-		int a3, int a4)
+		int a3, int a4, int a5)
 	: srec_input_filter(a1), checksum_address(a2), length(a3),
-		checksum_order(a4), data(), sum(0)
+		checksum_order(!!a4), data(), sum(0), width(a5)
 {
 	if (length < 0)
 		length = 0;
-	else if (length > 8)
-		length = 8;
+	else if (length > (int)sizeof(sum_t))
+		length = sizeof(sum_t);
+	if (width < 1)
+		width = 1;
+	else if (width > length)
+	    	width = length;
 }
 
 
@@ -50,28 +54,40 @@ srec_input_filter_checksum::srec_input_filter_checksum(
 		const srec_input_filter_checksum &arg)
 	: srec_input_filter(arg), checksum_address(arg.checksum_address),
 		length(arg.length), checksum_order(arg.checksum_order), data(),
-		sum(0)
+		sum(0), width(arg.width)
 {
 	if (length < 0)
 		length = 0;
-	else if (length > 8)
-		length = 8;
+	else if (length > (int)sizeof(sum_t))
+		length = sizeof(sum_t);
+	if (width < 1)
+		width = 1;
+	else if (width > length)
+	    	width = length;
 }
 
 
 srec_input_filter_checksum &
 srec_input_filter_checksum::operator=(const srec_input_filter_checksum &arg)
 {
-	srec_input_filter::operator=(arg);
-	checksum_address = arg.checksum_address;
-	length = arg.length;
-	checksum_order = arg.checksum_order;
-	sum = 0;
+	if (this != &arg)
+	{
+		srec_input_filter::operator=(arg);
+		checksum_address = arg.checksum_address;
+		length = arg.length;
+		checksum_order = arg.checksum_order;
+		sum = 0;
+		width = arg.width;
 
-	if (length < 0)
-		length = 0;
-	else if (length > 8)
-		length = 8;
+		if (length < 0)
+			length = 0;
+		else if (length > (int)sizeof(sum_t))
+			length = sizeof(sum_t);
+		if (width < 1)
+			width = 1;
+		else if (width > length)
+	    		width = length;
+	}
 	return *this;
 }
 
@@ -99,19 +115,44 @@ srec_input_filter_checksum::read(srec_record &record)
 		break;
 
 	case srec_record::type_data:
-		for (int j = 0; j < data.get_length(); ++j)
-			sum += data.get_data(j);
+		if (width <= 1)
+		{
+			for (int j = 0; j < data.get_length(); ++j)
+			{
+				sum += data.get_data(j);
+			}
+		}
+		else if (checksum_order)
+		{
+			// Little endian
+			for (int j = 0; j < data.get_length(); ++j)
+			{
+				sum += (sum_t)data.get_data(j) << (8 *
+					((data.get_address() + j) % width));
+			}
+		}
+		else
+		{
+			// Big endian
+			for (int j = 0; j < data.get_length(); ++j)
+			{
+				sum += (sum_t)data.get_data(j) << (8 *
+					(width - 1 - ((data.get_address() + j)
+					% width)));
+			}
+		}
 		break;
 
 	case srec_record::type_termination:
 		if (length <= 0)
 			break;
 		generate:
-		unsigned char chunk[8];
+		unsigned char chunk[sizeof(sum_t)];
+		sum_t value = calculate();
 		if (checksum_order)
-			srec_record::encode_little_endian(chunk, ~sum, length);
+			srec_record::encode_little_endian(chunk, value, length);
 		else
-			srec_record::encode_big_endian(chunk, ~sum, length);
+			srec_record::encode_big_endian(chunk, value, length);
 		record =
 			srec_record
 			(
