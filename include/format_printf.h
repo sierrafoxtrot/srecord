@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2002 Peter Miller;
+//	Copyright (C) 2001, 2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -25,8 +25,12 @@
 
 #ifdef __GNUC__
 #define FORMAT_PRINTF(x, y) __attribute__((__format__(printf, x, y)))
+#define NORETURN __attribute__((__noreturn__))
+#define DEPRECATED __attribute__((__deprecated__))
 #else
 #define FORMAT_PRINTF(x, y)
+#define DEPRECATED
+#define NORETURN
 #endif
 
 #endif // INCLUDE_FORMAT_PRINTF_H
