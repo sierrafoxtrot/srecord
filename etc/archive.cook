@@ -22,8 +22,11 @@
 
 integration-build-targets:
 	archive/[project_minus].README
+	archive/[project_minus].lsm
 	archive/[project_minus].spec
 	archive/[project_minus].tar.gz
+	archive/[project_short].gif
+	archive/[project_short].html
 	;
 
 source_file_order =
@@ -105,8 +108,8 @@ archive/[project_minus].%: %
 
 %: etc/%.man
 {
-	roffpp -Ietc etc/%.man
-		| groff -Tascii -t -man
+	roffpp [prepost "-I" "/etc" [search_list]] etc/%.man
+		| groff -Tascii -t -P-hub -man
 		> [target];
 }
 
@@ -159,4 +162,61 @@ archive/[project_minus]-1.i386.rpm archive/[project_minus]-1.src.rpm:
 archive/[project_minus].spec: [project_minus].spec
 {
 	cat [need] > [target];
+}
+
+archive/%: etc/%.uue
+{
+	uudecode -o [target] [resolve [need]];
+}
+
+
+etc/[project_short].html.d: etc/[project_short].html
+{
+	c_incl -nc -ns -eia -r
+		[prepost "-I" /[arch]/etc [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		-prefix "'"[target]" archive/"[project_short]".html: etc/"[project_short]".html'"
+		-suffix "'set nodefault;'" [resolve etc/[project_short].html]
+		[prepost "-rlp=" "" [search_list]] /* remove leading path */
+		-slp [arch] "'[arch]'" /* substitute leading path */
+		-o [target];
+}
+#include-cooked-nowarn etc/[project_short].html.d
+
+archive/[project_short].html: etc/[project_short].html etc/ssp.awk
+	set shallow
+{
+	roffpp
+		[prepost "-I" /[arch]/etc [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		[resolve etc/[project_short].html]
+	| groff -Tascii -t -P-hub -man
+	| [awk] -f [resolve etc/ssp.awk]
+	> [target];
+}
+
+
+etc/[project_short].lsm.d: etc/[project_short].lsm
+{
+	c_incl -nc -ns -eia -r
+		[prepost "-I" /[arch]/etc [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		-prefix "'"[target]" archive/"[project_minus]".lsm: etc/"[project_short]".lsm'"
+		-suffix "'set nodefault;'" [resolve etc/[project_short].lsm]
+		[prepost "-rlp=" "" [search_list]] /* remove leading path */
+		-slp [arch] "'[arch]'" /* substitute leading path */
+		-o [target];
+}
+#include-cooked-nowarn etc/[project_short].lsm.d
+
+archive/[project_minus].lsm: etc/[project_short].lsm etc/ssp.awk
+	set shallow
+{
+	roffpp
+		[prepost "-I" /[arch]/etc [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		[resolve etc/[project_short].lsm]
+	| groff -Tascii -t -P-hub -man
+	| [awk] -f [resolve etc/ssp.awk]
+	> [target];
 }

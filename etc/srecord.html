@@ -1,0 +1,189 @@
+.\"
+.\"	srecord - manipulate eprom load files
+.\"	Copyright (C) 1998 Peter Miller;
+.\"	All rights reserved.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"
+.\" MANIFEST: input for archive/srecord.html
+.\"
+.ad l
+.hy 0
+.so version.so
+<html>
+<head><title>SRecord \*(v)</title></head>
+<body><h1>
+<img src="srecord.gif" align=left>
+<img src="srecord.gif" align=right>
+<center>SRecord \*(v)</center></h1>
+The \fISRecord\fP package is a collection of powerful tools for
+manipulating EPROM load files.
+.br
+<p>
+I wrote SRecord because when I was looking for programs to manipulate
+EPROM load files, I could not find very many.  The ones that I could
+find only did a few of the things I needed.  SRecord is written in C++
+and polymorphism is used to provide the file format flexibility and
+arbitrary filter chaining.  Adding more file formats and filters is
+relatively simple.
+.br
+<p>
+SRecord runs on almost any flavor of UNIX.  The source distribution is
+self configuring using a GNU Autoconf generated configure script.
+.br
+<p align=center><b>The File Formats</b></p>
+<p>
+The SRecord package understands a number of file formats:
+.br
+<dl><dt>
+Motorola S-Record
+<dd>
+The Motorola hexadecimal S-Record format is understood for both reading
+and writing.
+.br
+<dt>
+Intel
+<dd>
+The Intel hexadecimal format is understood for both reading and writing.
+.br
+<dt>
+Binary
+<dd>
+Binary files can both be read and written.
+</dl>
+<p align=center><b>The Tools</b></p>
+<p>
+A number of tools are include in the SRecord package.
+All of the tools understand all of the file formats, and all of the filters.
+.br
+<dl><dt>
+srec_cat
+<dd>
+The <i>srec_catd</i> program may be used to catenate (join) eprom load
+files, or portions of eprom load files, together.  Because it understands
+all of the input and output formats, it can also be used to convert
+files from one format to another.
+.br
+<dt>
+srec_cmp
+<dd>
+The <i>srec_cmp</i> program may be use to compare eprom load files,
+or portions of eprom load files, for equality.
+</dl>
+.br
+<p align=center><b>The Filters</b></p>
+<p>
+The <i>SRecord</i> package is made more powerful by the concept of <i>input
+filters</i>.  Wherever an input file may be specified, filters may also
+be applied to that input file.  The following filters are available:
+<dl><dt>
+crop
+<dd>
+The <i>crop</i> filter may be used to isolate an input address range,
+or ranges, and discard the rest.
+.br
+<dt>
+exclude
+<dd>
+The <i>exclude</i> filter may be used to exclude an input address range,
+or ranges, and keep the rest.
+.br
+<dt>
+offset
+<dd>
+The <i>offset</i> filter may be used to offset the address of data records,
+both forwards and backwards.
+</dl>
+.br
+<p>
+More than one filter may be applied to each input file.
+Different filters may be applied to each input file.
+All filters may be applied to all file formats.
+.br
+<hr><h2><center>
+Files for Download
+</center></h2>
+<center><table>
+<tr>
+<th>File Name</th>
+<th width="60%">Description</th>
+</tr>
+<tr>
+<td><a href="srecord-\*(v).README"><tt>srecord-\*(v).README</tt></a></td>
+<td>The <tt>README</tt> file from the tar distribution.</td>
+</tr>
+<tr>
+<td><a href="srecord-\*(v).lsm"><tt>srecord-\*(v).lsm</tt></a></td>
+<td>Brief description in
+.nf
+<a href="ftp://sunsite.unc.edu/pub/Linux/LSM-TEMPLATE">LSM</a>
+.fi
+format.</td>
+</tr>
+<tr>
+<td><a href="srecord-\*(v).spec"><tt>srecord-\*(v).spec</tt></a></td>
+<td>RedHat package manager specification file (<a href="http://www.rpm.org/">RPM</a>)</td>
+</tr>
+<tr>
+<td><a href="srecord-\*(v).tar.gz"><tt>srecord-\*(v).tar.gz</tt></a></td>
+<td>The complete source.</td>
+</tr>
+</table></center>
+.br
+<p>
+SRecord is also available from
+<a href="ftp://sunsite.unc.edu/pub/Linux/">the Linux archives</a>
+in the
+<a href="ftp://sunsite.unc.edu/pub/Linux/devel/misc/">
+<tt>devel/make</tt></a>
+directory.
+.br
+<hr>
+<a href="README.html">
+<img src="pmiller.gif" align=right>
+</a>
+SRecord is written and owned by 
+<a href="mailto:millerp@canb.auug.org.au">
+Peter Miller <millerp@canb.auug.org.au>
+</a>
+and is freely distributable under the terms and conditions of the
+<a href="ftp://prep.ai.mit.edu/pub/gnu/GPL">GNU GPL</a>.
+<p>
+SRecord is developed using <a href="aegis.html">Aegis</a>, a transaction
+based software configuration management package.
+<p>
+There is more <a href="README.html">Software by Peter Miller</a>
+at his home page.
+.br
+<hr>
+This page has been accessed approximately
+.nf
+<img src="http://www.canb.auug.org.au/cgi-bin/Count.cgi?df=millerp_srecord_\*(v)&ft=0&tr=Y&trgb=black&pad=0">
+.fi
+times since
+.ds MO1 Jan
+.ds MO2 Feb
+.ds MO3 Mar
+.ds MO4 Apr
+.ds MO5 May
+.ds MO6 Jun
+.ds MO7 Jul
+.ds MO8 Aug
+.ds MO9 Sep
+.ds MO10 Oct
+.ds MO11 Nov
+.ds MO12 Dec
+\n[dy]-\*[MO\n[mo]]-\n[yr].
+</body></html>

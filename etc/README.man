@@ -24,26 +24,67 @@
 .hy 0
 .ad l
 .SH NAME
-srecord \- manipulate eprom load files
+RSecord \- manipulate eprom load files
 .SH DESCRIPTION
-The
-.I SRecord
-package is a collection of powerful tools for manipulating EPROM load files.
+The \fISRecord\fP package is a collection of powerful tools for
+manipulating EPROM load files.
 .PP
-The package understands a number of file formats:
+I wrote SRecord because when I was looking for programs to manipulate
+EPROM load files, I could not find very many.  The ones that I could
+find only did a few of the things I needed.  SRecord is written in C++
+and polymorphism is used to provide the file format flexibility and
+arbitrary filter chaining.  Adding more file formats and filters is
+relatively simple.
+.SS The File Formats
+The SRecord package understands a number of file formats:
 .TP 8n
 Motorola S-Record
+The Motorola hexadecimal S-Record format is understood for both reading
+and writing.
 .TP 8n
 Intel
+The Intel hexadecimal format is understood for both reading and writing.
 .TP 8n
 Binary
+Binary files can both be read and written.
+.SS The Tools
+The primary tools of the package are \fIsrec_cat\fP and \fIsrec_cmp\fP.
+All of the tools understand all of the file formats, and all of the filters.
 .TP 8n
-C
+.I srec_cat
+The \fIsrec_cat\fP program may be used to catenate (join) eprom load
+files, or portions of eprom load files, together.  Because it understands
+all of the input and output formats, it can also be used to convert
+files from one format to another.
+.TP 8n
+.I srec_cmp
+The \fIsrec_cmp\fP program may be use to compare eprom load files,
+or portions of eprom load files, for equality.
+.SS The Filters
+The \fISRecord\fP package is made more powerful by the concept of \fInput
+filters\fP.  Wherever an input file may be specified, filters may also
+be applied to that input file.  The following filters are available:
+.TP 8n
+crop
+The \fIcrop\fP filter may be used to isolate an input address range,
+or ranges, and discard the rest.
+.TP 8n
+exclude
+The \fIexclude\fP filter may be used to exclude an input address range,
+or ranges, and keep the rest.
+.TP 8n
+offset
+The \fIoffset\fP filter may be used to offset the address of data records,
+both forwards and backwards.
+.PP
+More than one filter may be applied to each input file.
+Different filters may be applied to each input file.
+All filters may be applied to all file formats.
 .br
 .ne 1i
 .SH ARCHIVE SITE
 The latest version of
-.I srecord
+.I SRecord
 is available on the Web from:
 .RS 4m
 .TS
@@ -51,6 +92,7 @@ tab(;);
 l l s
 l l l.
 URL:;http://www.canb.auug.org.au/~millerp/
+File:;srecord.html;# the SRecord page
 File:;srecord-\*(v).README;# the README from the tar file
 File:;srecord-\*(v).lsm;# LSM format description
 File:;srecord-\*(v).spec;# RedHat package specification
@@ -62,7 +104,7 @@ This Web page also contains a few other pieces of software written by me.
 Please have a look if you are interested.
 .PP
 SRecord is also carried by \f(CWsunsite.unc.edu\fP in its Linux archives.
-You will be able to find srecord on any of its mirrors.
+You will be able to find SRecord on any of its mirrors.
 .RS 4m
 .TS
 tab(;);
@@ -98,7 +140,7 @@ by sending email with a subject of "help"
 and a message body containing just the word "help".
 .br
 .ne 1i
-.SH BUILDING srecord
+.SH BUILDING SRECORD
 Full instructions for building
 .I SRecord
 may be found in the

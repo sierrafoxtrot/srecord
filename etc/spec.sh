@@ -43,34 +43,22 @@ echo ''
 
 cat << 'fubar'
 %description
-SRecord is a tool for constructing files. It is given a set of files to
-create, and recipes of how to create them. In any non-trivial program
-there will be prerequisites to performing the actions necessary to
-creating any file, such as include files.  The srecord program provides a
-mechanism to define these.
 
-When a program is being developed or maintained, the programmer will
-typically change one file of several which comprise the program.  SRecord
-examines the last-modified times of the files to see when the
-prerequisites of a file have changed, implying that the file needs to be
-recreated as it is logically out of date.
+The SRecord package is a collection of powerful tools for manipulating
+EPROM load files.
 
-SRecord also provides a facility for implicit recipes, allowing users to
-specify how to form a file with a given suffix from a file with a
-different suffix.  For example, to create filename.o from filename.c
+* The SRecord package understands a number of file formats: Motorola
+  S-Record, Intel, Binary.  These file formats may be read and written.
 
-* SRecord has a simple but powerful string-based description language with
-  many built-in functions.  This allows sophisticated filename
-  specification and manipulation without loss of readability or
-  performance.
+* The SRecord package has a number of tools: srec_cat for copying and
+  and converting files, andsrec_cmp for comparing files.
 
-* SRecord is able to use fingerprints to supplement file modification
-  times.  This allows build optimization without contorted rules.
+* The SRecord package has a number for filters:crop to keep address
+  ranges, exclude to remove address ranges, and offset toadjust addresses.
 
-* SRecord is able to build your project with multiple parallel threads,
-  with support for rules which must be single threaded.  It is possible
-  to distribute parallel builds over your LAN, allowing you to turn your
-  network into a virtual parallel build engine.
+More than one filter may be applied to each input file.  Different filters
+may be applied to each input file.  All filters may be applied to all
+file formats.
 
 %prep
 fubar
