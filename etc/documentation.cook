@@ -26,7 +26,7 @@ documentation:
 	[fromto man/man%1/%2.%1 man/cat%1/%2.%1
 		[match_mask man/man%1/%2.%1 [source_files]]
 	]
-	etc/reference.ps.gz
+	etc/reference.pdf
 	;
 
 /* Sigh */
@@ -100,7 +100,7 @@ etc/%.so.d: etc/%.so
 #include-cooked [addsuffix ".d" [match_mask man/man%1/%2.%1 [source_files]]]
 #include-cooked [addsuffix ".d" [match_mask man/%0%.so [source_files]]]
 
-etc/%.ps.gz: etc/%.man
+etc/%.pdf: etc/%.man
 {
 	roffpp
 		[prepost "-I" /[arch]/etc [search_list]]
@@ -108,9 +108,11 @@ etc/%.ps.gz: etc/%.man
 		[prepost "-I" "/man/man1" [search_list]] /* refman */
 		[addprefix "-I" [search_list]] /* refman */
 		[resolve etc/%.man]
-	| groff -t -man
-	| gzip -9
-	> [target];
+		> %.groff;
+	groff -t -man %.groff > %.ps;
+	rm %.groff set silent;
+	ps2pdf %.ps [target];
+	rm %.ps set silent;
 }
 
 cascade etc/reference.man = etc/ref-index.so etc/ref-parts.so;
