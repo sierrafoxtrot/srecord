@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2002 Peter Miller;
+//	Copyright (C) 1998-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -230,7 +230,7 @@ private:
 	/**
 	  * The set_is_regular method shall be used whenevr vfp is
 	  * assigned, to estanblish whther the output file is a regular
-	  * file or a spoecial file (liek a pipe).
+	  * file or a special file (like a pipe).
 	  */
 	void set_is_regular(void);
 

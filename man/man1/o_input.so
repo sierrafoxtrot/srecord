@@ -70,6 +70,10 @@ See \fIsrec_emon52\fP(5) for a description of this file format.
 This option says to use the LSI Logic Fast Load format to read the file.
 See \fIsrec_fastload\fP(5) for a description of this file format.
 .TP 8n
+\fB\-Formatted_Binary\fP
+This option says to use the Formatted Binary format to read the file.
+See \fIsrec_formatted_binary\fP(5) for a description of this file format.
+.TP 8n
 \fB\-Four_Packed_Code\fP
 This option says to use the FPC format to read the file.
 See \fIsrec_fpc\fP(5) for a description of this file format.

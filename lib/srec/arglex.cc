@@ -42,6 +42,7 @@ using namespace std;
 #include <srec/input/file/os65v.h>
 #include <srec/input/file/signetics.h>
 #include <srec/input/file/spasm.h>
+#include <srec/input/file/spectrum.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix_extended.h>
 #include <srec/input/file/tektronix.h>
@@ -142,6 +143,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
 	{ "-SPAsm",	token_spasm_be,		}, // is this right?
 	{ "-SPAsm_BigEndian", token_spasm_be,	},
 	{ "-SPAsm_LittleEndian", token_spasm_le, },
+	{ "-SPEctrum",  token_spectrum,		},
 	{ "-SPlit",	token_split,		},
 	{ "-S_record",	token_motorola,		},
 	{ "-Tektronix",	token_tektronix,	},
@@ -563,6 +565,11 @@ srec_arglex::get_input()
     case token_spasm_le:
 	token_next();
 	ifp = new srec_input_file_spasm(fn, false);
+	break;
+
+    case token_spectrum:
+	token_next();
+	ifp = new srec_input_file_spectrum(fn);
 	break;
 
     case token_tektronix:

@@ -84,6 +84,9 @@ srec_input_file_ascii_hex::read_inner(srec_record &record)
 	{
 	    unsigned char c = get_byte();
 	    record = srec_record(srec_record::type_data, address, &c, 1);
+	    int sep = get_char();
+	    if (sep >= 0 && !isspace((unsigned char)sep))
+		fatal_error("not execution character");
 	    ++address;
 	    return 1;
 	}

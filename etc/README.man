@@ -79,6 +79,9 @@ The EMON52 format is understood for both reading and writing.
 LSI Logic Fast Load
 The LSI Logic Fast Load format is understood for both reading and writing.
 .TP
+Formatted Binary
+The Formatted Binary format is understood for both reading and writing.
+.TP
 Four Packed Code (FPC)
 The FPC format is understood for both reading and writing.
 .TP 8n
@@ -108,6 +111,9 @@ The Signetics format is understood for both reading and writing.
 SPASM
 The SPASM format is used by a variety of PIC programmers; it is understood
 for both reading and writing.
+.TP 8n
+Spectrum
+The Spectrum format is understood for both reading and writing.
 .TP 8n
 Tektronix (Extended)
 The Tektronix hexadecimal format and the Tektronix Extended hexadecimal

@@ -39,6 +39,7 @@
 #include <srec/output/file/os65v.h>
 #include <srec/output/file/signetics.h>
 #include <srec/output/file/spasm.h>
+#include <srec/output/file/spectrum.h>
 #include <srec/output/file/srecord.h>
 #include <srec/output/file/tektronix_extended.h>
 #include <srec/output/file/tektronix.h>
@@ -179,6 +180,11 @@ srec_arglex::get_output()
     case token_spasm_le:
 	token_next();
 	ofp = new srec_output_file_spasm(fn, false);
+	break;
+
+    case token_spectrum:
+	token_next();
+	ofp = new srec_output_file_spectrum(fn);
 	break;
 
     case token_tektronix:

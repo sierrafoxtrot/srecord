@@ -94,6 +94,7 @@ public:
 	token_signetics,
 	token_spasm_be,
 	token_spasm_le,
+	token_spectrum,
 	token_split,
 	token_tektronix,
 	token_tektronix_extended,

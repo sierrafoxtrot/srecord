@@ -27,6 +27,7 @@
 #include <srec/input/file/dec_binary.h>
 #include <srec/input/file/emon52.h>
 #include <srec/input/file/fastload.h>
+#include <srec/input/file/formatted_binary.h>
 #include <srec/input/file/four_packed_code.h>
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
@@ -35,6 +36,7 @@
 #include <srec/input/file/os65v.h>
 #include <srec/input/file/signetics.h>
 #include <srec/input/file/spasm.h>
+#include <srec/input/file/spectrum.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix.h>
 #include <srec/input/file/tektronix_extended.h>
@@ -59,6 +61,12 @@ static srec_input *
 create_dec_binary(const char *fn)
 {
     return new srec_input_file_dec_binary(fn);
+}
+
+static srec_input *
+create_formatted_binary(const char *fn)
+{
+    return new srec_input_file_formatted_binary(fn);
 }
 
 static srec_input *
@@ -112,7 +120,15 @@ create_signetics(const char *fn)
 static srec_input *
 create_spasm(const char *fn)
 {
+    // don't we need to test the big-endian and little-endian forms?
+    // but they are indistinguishable.
     return new srec_input_file_spasm(fn);
+}
+
+static srec_input *
+create_spectrum(const char *fn)
+{
+    return new srec_input_file_spectrum(fn);
 }
 
 static srec_input *
@@ -155,6 +171,7 @@ static func_p table[] =
     create_dec_binary,
     create_emon52,
     create_fastload,
+    create_formatted_binary,
     create_four_packed_code,
     create_intel,
     create_mos_tech,
@@ -162,6 +179,7 @@ static func_p table[] =
     create_ohio_scientific,
     create_signetics,
     create_spasm,
+    create_spectrum,
     create_srecord,
     create_tektronix,
     create_tektronix_extended,

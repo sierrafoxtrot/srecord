@@ -25,7 +25,9 @@
 srec_formatted_binary \- Formatted Binary file format
 .XX "srec_formatted_binary(5)" "Formatted Binary file format"
 .SH DESCRIPTION
-This is an old paper tape format.
+.\" ftp://ftp.dataio.com/main/Manuals/UniFam/Translation%20Formats.pdf
+This is the PDP-11 paper tape format, described in the
+DEC-11-GGPC-D PDP-11 "Paper Tape Software Programming Handbook" 1972.
 .PP
 The file startes with a charcter sequence which appears as an arrow when
 punched on 8-hole paper tape.
@@ -58,9 +60,15 @@ when represented with this format.
 .br
 .ne 2i
 .SH EXAMPLE
+Here is a hex dump of a formatted binary file containing the
+data "Hello, World!".
 .RS
 .nf
 .ft CW
+0000: 08 1C 2A 49 08 00 00 00  ..*I....
+0008: 00 0E FF 48 65 6C 6C 6F  ...Hello
+0010: 2C 20 57 6F 72 6C 64 21  , World!
+0018: 0A 00 00 04 73           ....s
 .ft P
 .fi
 .RE
