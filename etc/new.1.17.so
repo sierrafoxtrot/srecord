@@ -17,28 +17,12 @@
 .\"	along with this program; if not, write to the Free Software
 .\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.16 features
+.\" MANIFEST: description of new 1.17 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" change 18
-There is now support for Intel Extended Segment aasddressing output,
-via the --address-length=2 option.
-.PP
-.if n *
-.if t \(bu
-.\" change 17, 15
-There is now support for output of Verilog VMEM format.
-See \fIsrec_vmem\fP(5) for more information.
-.PP
-.if n *
-.if t \(bu
-.\" change 12
-There is now support for reading and writing the INHX16 format, used
-in various PIC programmers.  It looks just like the Indtel Hex format,
-except that the bytes counts and the addresses refer to words (hi,lo)
-rather than bytes.  See \fIsrec_intel16\fP(5) for more information.
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" change NN
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.16
+.SS Version 1.17
