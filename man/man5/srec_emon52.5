@@ -34,39 +34,35 @@ development tools dramatically.
 .SS Records
 All data lines are called records, and each record contains the following
 four fields:
-.RS
-.nf
-.ft CW
-cc aaaa:dd ... dd ssss
-.ft P
-.fi
-.RE
 .TS
-tab(;);
-l lw(4i).
-cc;T{
+allbox,center,tab(;);
+l l l l l.
+cc;aaaa;:;dd ... dd;ssss
+.TE
+The field are defined as follows:
+.TP 8n
+cc
 The byte count.
 A two digit hex value (1 byte), counting the actual data bytes in the record.
-The byte count cc is seperated from the next field by a space.
-T}
-aaaa;T{
+The byte count is seperated from the next field by a space.
+.TP 8n
+aaaa
 The address field.
 A four hex digit (2 byte) number representing the first address to be
 used by this record.
-T}
-\fB:\fP;T{
+.TP 8n
+\fB:\fP
 The address field and the data field are seperated by a colon.
-T}
-dd;T{
+.TP 8n
+dd
 The actual data of this record.
 There can be 1 to 255 data bytes per record (see cc)
-All bytes in the record are seperated from each other by a space.
-T}
-ssss;T{
+All bytes in the record are seperated from each other (and the checksum)
+by a space.
+.TP 8n
+ssss
 Data Checksum, adding all bytes of the dataline together, forming a 16
 bit checksum.  Covers only all the data bytes of this record.
-T}
-.TE
 .PP
 Please note that there is no End Of File record defined.
 .SS Byte Count

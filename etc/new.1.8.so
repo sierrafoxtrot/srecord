@@ -59,6 +59,12 @@ is now understood for both reading and writing.
 .PP
 .if n *
 .if t \(bu
+.\" change 18
+The handling or termination records has been improved.
+It caused problems for a number of filters, including the \-fill filter.
+.PP
+.if n *
+.if t \(bu
 .\" change 15
 A bug has been fixed in the checksum calculations for the Tektronix format.
 .PP

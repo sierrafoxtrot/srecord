@@ -30,40 +30,35 @@ modern applications is that the addressing range is limited to only 64kb.
 .SS Records
 All data lines are called records, and each record contains the following
 5 fields:
-.RS
-.nf
-.ft CW
-:aaaaccasddss
-.ft P
-.fi
-.RE
 .TS
-tab(;);
-l lw(4i).
-:;T{
+center,allbox,tab(;);
+l l l l l l.
+:;aaaa;cc;as;dd;ss
+.TE
+The field are defined as follows:
+.TP 8n
+\fB:\fP
 Every record starts with this identifier.
-T}
-aaaa;T{
+.TP 8n
+aaaa
 The address field.  A four digit (2 byte) number representing the first
 address to be used by this record.
-T}
-cc;T{
+.TP 8n
+cc
 The byte-count.
 A two digit value (1 byte), counting the actual data bytes in the record.
-T}
-as;T{
+.TP 8n
+as
 Address checksum.
 Covers 2 address bytes and the byte count.
-T}
-dd;T{
+.TP 8n
+dd
 The actual data of this record.
 There can be 1 to 255 data bytes per record (see cc)
-T}
-ss;T{
+.TP 8n
+ss
 Data Checksum.
 Covers only all the data bytes of this record.
-T}
-.TE
 .SS Record Begin
 Every record begins with a colon ``:'' character.  Records contain only
 ASCII characters.  No spaces or tabs are allowed in a record.  In fact,

@@ -76,39 +76,34 @@ Only after formatting the FPC record at byte level we convert 4 bytes
 at a time to a 5 digit base 85 number.  If we don't have enough bytes
 in the record to fill the last group of 5 digits we will add bytes with
 the value of 0 behind the record.
-.RS
-.nf
-.ft CW
-$ssccffffaaaaaaaadddddddd
-.ft P
-.fi
-.RE
 .TS
-tab(;);
-l lw(4i).
-$;T{
+center,allbox,tab(;);
+l l l l l l.
+$;ss;cc;ffff;aaaaaaaa;dddddddd
+.TE
+The field are defined as:
+.TP 8n
+\fB$\fP
 Every line starts with the character $, all other characters are digits
 of base 85.
-T}
-ss;T{
+.TP 8n
+ss
 The checksum.
 A one byte 2's-complement checksum of all bytes of the record.
-T}
-cc;T{
+.TP 8n
+cc
 The byte-count.
 A one byte value, counting all the bytes in the record minus 4.
-T}
-ffff;T{
+.TP 8n
+ffff
 Format code, a two byte value, defining the record type.
-T}
-aaaaaaaa;T{
+.TP 8n
+aaaaaaaa
 The address field.
 A 4 byte number representing the first address of this record.
-T}
-dddddddd;T{
+.TP 8n
+dddddddd
 The actual data of this record.
-T}
-.TE
 .SS Record Begin
 Every record begins with the ASCII character "\fB$\fP".  No spaces or
 tabs are allowed in a record.  All other characters in the record are
