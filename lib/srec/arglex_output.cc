@@ -27,6 +27,7 @@
 #include <srec/output/file/basic.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/c.h>
+#include <srec/output/file/cosmac.h>
 #include <srec/output/file/dec_binary.h>
 #include <srec/output/file/emon52.h>
 #include <srec/output/file/fastload.h>
@@ -112,6 +113,11 @@ srec_arglex::get_output()
     case token_binary:
 	token_next();
 	ofp = new srec_output_file_binary(fn);
+	break;
+
+    case token_cosmac:
+	token_next();
+	ofp = new srec_output_file_cosmac(fn);
 	break;
 
     case token_dec_binary:

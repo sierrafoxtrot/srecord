@@ -29,6 +29,7 @@ using namespace std;
 #include <srec/input/file/ascii_hex.h>
 #include <srec/input/file/atmel_generic.h>
 #include <srec/input/file/binary.h>
+#include <srec/input/file/cosmac.h>
 #include <srec/input/file/dec_binary.h>
 #include <srec/input/file/emon52.h>
 #include <srec/input/file/fastload.h>
@@ -94,6 +95,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
 	{ "-BINary",	token_binary,		},
 	{ "-Byte_Swap",	token_byte_swap,	},
 	{ "-C_Array",	token_c_array,		},
+	{ "-COsmac",	token_cosmac,		},
 	{ "-CRop",	token_crop,		},
 	{ "-Big_Endian_Cyclic_Redundancy_Check_16", token_crc16_be, },
 	{ "-Little_Endian_Cyclic_Redundancy_Check_16", token_crc16_le,},
@@ -489,6 +491,11 @@ srec_arglex::get_input()
     case token_binary:
 	token_next();
 	ifp = new srec_input_file_binary(fn);
+	break;
+
+    case token_cosmac:
+	token_next();
+	ifp = new srec_input_file_cosmac(fn);
 	break;
 
     case token_dec_binary:

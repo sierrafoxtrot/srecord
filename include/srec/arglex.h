@@ -52,6 +52,7 @@ public:
 	token_checksum_le_bitnot,
 	token_checksum_le_negative,
 	token_checksum_le_positive,
+	token_cosmac,
 	token_crc16_be,
 	token_crc16_le,
 	token_crc32_be,

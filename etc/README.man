@@ -66,6 +66,9 @@ C
 It is also possible to write a C array declaration which contains the data.
 This can be useful when you want to embed download data into C programs.
 This format cannot be read.
+.TP 8n
+Cosmac
+The RCA Cosmac Elf format is understood for both reading and writing.
 .TP
 DEC Binary
 The DEC Binary (XXDP) format is understood for both reading and writing.

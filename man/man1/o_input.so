@@ -54,6 +54,10 @@ for a description of this file format.
 This option says the file is a raw binary file, and should be read literally.
 (May also be written \-Raw.)
 .TP 8n
+\fB\-COsmac\fP
+This option says to use the RCA Cosmac Elf format to read the file.
+See \fIsrec_cosmac\fP(5) for a description of this file format.
+.TP 8n
 \fB\-Dec_Binary\fP
 This option says to use the DEC Binary (XXDP) format to read the file.
 See \fIsrec_dec_binary\fP(5) for a description of this file format.
