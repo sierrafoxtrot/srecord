@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2003, 2004 Peter Miller;
+.\"	Copyright (C) 2004 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -17,24 +17,12 @@
 .\"	along with this program; if not, write to the Free Software
 .\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.17 features
+.\" MANIFEST: description of new 1.18 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" change 16
-The VMEM format is now able to output data for 64 and 128 bits wide memories.
-.PP
-.if n *
-.if t \(bu
-.\" change 15
-A bug in the SRecord reference manuals has been fixed; the CRCxx had
-a copy-and-paste glitch and always said big-endian where little endian
-was intended half the time.
 .\" .PP
 .\" .if n *
 .\" .if t \(bu
 .\" .\" change NN
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.17 (12-Oct-2003)
+.SS Version 1.18 (1-Jan-2004)
