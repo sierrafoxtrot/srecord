@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 2000 Peter Miller;
+#	Copyright (C) 2000, 2003 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -65,6 +65,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
+-- HDR
 --
 -- Generated automatically by srec_cat -VHDL - do not edit
 --

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,29 +27,88 @@
 
 #include <srec/output/file.h>
 
+/**
+  * The srec_output_file_ti_tagged class is used to represent the output
+  * state of a file in Texas Instruments Tagged format.
+  */
 class srec_output_file_ti_tagged: public srec_output_file
 {
 public:
-	virtual ~srec_output_file_ti_tagged();
-	srec_output_file_ti_tagged();
-	srec_output_file_ti_tagged(const char *);
-	void write(const srec_record &);
-	virtual void line_length_set(int);
-	virtual void address_length_set(int);
-	virtual int preferred_block_size_get() const;
+    /**
+      * The destructor.
+      */
+    virtual ~srec_output_file_ti_tagged();
+
+    /**
+      * The constructor.
+      */
+    srec_output_file_ti_tagged(const char *);
+
+    // See base class for documentation.
+    void write(const srec_record &);
+
+    // See base class for documentation.
+    void line_length_set(int);
+
+    // See base class for documentation.
+    void address_length_set(int);
+
+    // See base class for documentation.
+    int preferred_block_size_get() const;
 
 protected:
-	virtual void put_char(int);
+    // See base class for documentation.
+    void put_char(int);
 
 private:
-	typedef srec_output_file inherited;
-	unsigned long address;
-	int column;
-	int line_length;
-	int csum;
-	void put_eoln();
-	srec_output_file_ti_tagged(const srec_output_file_ti_tagged &);
-	srec_output_file_ti_tagged &operator=(const srec_output_file_ti_tagged &);
+    typedef srec_output_file inherited;
+
+    /**
+      * The address instance variable is used to remember the current
+      * address within the output file.
+      */
+    unsigned long address;
+
+    /**
+      * The column instance variable is used to remember the current
+      * text column within the output file.  This is so that we can
+      * decide when to throw a new line.
+      */
+    int column;
+
+    /**
+      * The line_length instance variable is used to remember the maximum
+      * permitted text line length.  This is so that we can decide when
+      * to throw a new line.
+      */
+    int line_length;
+
+    /**
+      * The csum instance variable is used to remember the 16-bit running
+      * total of the bytes emitted so far.  It gets reset by put_eoln.
+      */
+    int csum;
+
+    /**
+      * The put_eoln method is used to output the line termination,
+      * which includes a checksum.
+      */
+    void put_eoln();
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_output_file_ti_tagged();
+
+    /**
+      * The copy constructor.  Do not use.
+      */
+    srec_output_file_ti_tagged(const srec_output_file_ti_tagged &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    srec_output_file_ti_tagged &operator=(const srec_output_file_ti_tagged &);
 };
 
 #endif // INCLUDE_SREC_OUTPUT_FILE_TI_TAGGED_H

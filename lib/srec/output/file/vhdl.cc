@@ -27,180 +27,229 @@
 #include <progname.h>
 
 
-srec_output_file_vhdl::srec_output_file_vhdl()
-	: srec_output_file("-"), prefix("no_name_given"), line_length(75)
+srec_output_file_vhdl::srec_output_file_vhdl(const char *filename,
+	unsigned a1, const char *a2) :
+    srec_output_file(filename),
+    bytes_per_word(a1 > 0 ? (a1 <= sizeof(unsigned long) ? a1 :
+	sizeof(unsigned long)) : 4),
+    prefix(a2),
+    header_done(false),
+    current_address(0),
+    current_byte(0),
+    current_word(0)
 {
-}
-
-
-srec_output_file_vhdl::srec_output_file_vhdl(const char *filename, const int bytesperword, const char *a2)
-	: srec_output_file(filename), bytes_per_word(bytesperword), prefix(a2), line_length(75)
-{
-}
-
-
-srec_output_file_vhdl::srec_output_file_vhdl(const srec_output_file_vhdl &)
-	: srec_output_file("-"), line_length(75)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
-srec_output_file_vhdl &
-srec_output_file_vhdl::operator=(const srec_output_file_vhdl &)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-	return *this;
 }
 
 
 void
 srec_output_file_vhdl::emit_header()
 {
-	if (header_done)
-		return;
-	const char *pref = prefix.c_str();
-	put_stringf(
-		"--\n"
-		"-- Generated automatically by %s -VHDL - do not edit\n"
-		"--\n",
-		progname_get()
+    if (header_done)
+	return;
+    put_stringf
+    (
+	"--\n"
+	"-- Generated automatically by %s -VHDL - do not edit\n"
+	"--\n",
+	progname_get()
+    );
+    if (!data_only_flag)
+    {
+	put_stringf
+	(
+	    "library IEEE;\n"
+	    "use IEEE.numeric_std.all;\n"
+	    "use work.%s_defs_pack.all;\n\n",
+	    prefix.c_str()
 	);
-	if(!data_only_flag){
-		put_stringf(
-			"library IEEE;\n"
-			"use IEEE.numeric_std.all;\n"
-			"use work.%s_defs_pack.all;\n\n",
-			pref
-		);
-		put_stringf(
-			"package %s_pack is\n"
-			" constant %s_rom : %s_rom_array;\n"
-			"end package %s_pack;\n\n",
-			pref, // package begin
-			pref, pref, // constant
-			pref // package end
-		);
-		put_stringf(
-			"package body %s_pack is\n",
-			pref // package body
-		);
-	}
-	put_stringf(
-		" constant %s_rom : %s_rom_array := %s_rom_array'(\n",
-		pref, pref, pref // constant
+	put_stringf("package %s_pack is\n", prefix.c_str());
+	put_stringf
+	(
+	    " constant %s_rom : %s_rom_array;\n",
+	    prefix.c_str(),
+	    prefix.c_str()
 	);
-	header_done = true;
+	put_stringf("end package %s_pack;\n\n", prefix.c_str());
+	put_stringf("package body %s_pack is\n", prefix.c_str());
+    }
+    put_stringf
+    (
+	" constant %s_rom : %s_rom_array := %s_rom_array'(\n",
+	prefix.c_str(),
+	prefix.c_str(),
+	prefix.c_str()
+    );
+    header_done = true;
 }
 
 
 void
-srec_output_file_vhdl::emit_word(int address, unsigned long n)
+srec_output_file_vhdl::emit_word(unsigned long address, unsigned n)
 {
-	const int last_byte = abs(bytes_per_word);
-	static int current_byte = 0;
-	static int prev_address = -2;
-	static unsigned long word = 0;
-	if(prev_address+1 != address){
-		current_byte=word=0;
+    //
+    // If there is a gap in the address sequence, fill the gap with 0xFF.
+    // Be careful of gaps within a single word.
+    //
+    while (address != current_address && current_byte)
+    {
+	current_word = (current_word << 8) | 0xFF;
+	++current_address;
+	++current_byte;
+	if (current_byte >= bytes_per_word)
+	{
+	    put_stringf
+	    (
+		"  %lu => %s_entry(%lu),\n",
+		(current_address / bytes_per_word) - 1,
+		prefix.c_str(),
+		current_word
+	    );
+	    current_byte = 0;
+	    current_word = 0;
 	}
-	if(bytes_per_word > 0){
-		word<<=8; word |= n & 0xFF;
-	}else{
-		word |= ( (n & 0xFF) << (current_byte*8));
+    }
+
+    //
+    // If the is the first byte to be set within this current_word, we may need
+    // to fill the beginning with 0xFF bytes.
+    //
+    if (!current_byte)
+    {
+	for (int partial = address % bytes_per_word; partial > 0; --partial)
+	{
+	    current_word = (current_word << 8) | 0xFF;
+	    ++current_byte;
 	}
-	if(++current_byte == last_byte){
-		put_stringf("  %d => %s_entry(%ld),\n", address/last_byte, prefix.c_str(), word);
-		current_byte=word=0;
-	}
-	prev_address = address;
+
+	//
+	// Leap over gaps if necessary.
+	//
+	current_address = address;
+    }
+
+    //
+    // Insert the bytes into the current_word.
+    // Emit the current_word if we fill it.
+    //
+    current_word = (current_word << 8) | (n & 0xFF);
+    ++current_address;
+    ++current_byte;
+    if (current_byte >= bytes_per_word)
+    {
+	put_stringf
+	(
+	    "  %lu => %s_entry(%lu),\n",
+	    (current_address / bytes_per_word) - 1,
+	    prefix.c_str(),
+	    current_word
+	);
+	current_byte = 0;
+	current_word = 0;
+    }
 }
 
 
 srec_output_file_vhdl::~srec_output_file_vhdl()
 {
-	emit_header();
-	if (range.empty()){}
-	if (column)
-		put_char('\n');
-	put_stringf(
-		"  others => %s_dont_care\n"
-		" );\n",
-		prefix.c_str()
-	);
-	if(!data_only_flag){
-		put_stringf(
-			"end package body %s_pack;\n",
-			prefix.c_str()
-		);
+    emit_header();
+
+    //
+    // Make sure ther there isn't any pending output.
+    //
+    while (current_byte)
+    {
+	current_word = (current_word << 8) | 0xFF;
+	++current_address;
+	++current_byte;
+	if (current_byte >= bytes_per_word)
+	{
+	    put_stringf
+	    (
+		"  %lu => %s_entry(%lu),\n",
+		(current_address / bytes_per_word) - 1,
+		prefix.c_str(),
+		current_word
+	    );
+	    current_byte = 0;
+	    current_word = 0;
 	}
+    }
+
+    put_stringf("  others => %s_dont_care\n" " );\n", prefix.c_str());
+    if (!data_only_flag)
+    {
+	put_stringf("end package body %s_pack;\n", prefix.c_str());
+    }
 }
 
 
 void
 srec_output_file_vhdl::write(const srec_record &record)
 {
-	switch (record.get_type())
+    switch (record.get_type())
+    {
+    case srec_record::type_unknown:
+	// Ignore.
+	break;
+
+    case srec_record::type_header:
 	{
-	default:
-		// This format can't do header records. (Actually,
-		// we could probably output a comment, like the C format.)
-		break;
-
-	case srec_record::type_data:
-		if (range.empty())
-			current_address = record.get_address();
-		range +=
-			interval
-			(
-				record.get_address(),
-				record.get_address() + record.get_length()
-			);
-		emit_header();
-		while (current_address < record.get_address())
-		{
-			++current_address;
-		}
-		for (int j = 0; j < record.get_length(); ++j)
-		{
-			if (record.get_address() + j < current_address)
-				continue;
-			emit_word(current_address, record.get_data(j));
-			current_address++;
-		}
-		break;
-
-	case srec_record::type_start_address:
-		taddr = record.get_address();
-		break;
+	    //
+	    // Output the header record as a comment.
+	    //
+	    put_string("-- ");
+	    const unsigned char *cp = record.get_data();
+	    const unsigned char *ep = cp + record.get_length();
+	    while (cp < ep)
+	    {
+		unsigned char c = *cp++;
+		if (!isprint(c))
+		    c = ' ';
+		put_char(c);
+	    }
+	    put_char('\n');
 	}
+	break;
+
+    case srec_record::type_data:
+	emit_header();
+	for (int j = 0; j < record.get_length(); ++j)
+	{
+	    emit_word(record.get_address() + j, record.get_data(j));
+	}
+	break;
+
+    case srec_record::type_data_count:
+	// Ignore.
+	break;
+
+    case srec_record::type_start_address:
+	// Ignore.
+	break;
+    }
 }
 
 
 void
 srec_output_file_vhdl::line_length_set(int n)
 {
-	n = (n + 1) / 6;
-	if (n < 1)
-		n = 1;
-	n = n * 6 - 1;
-	line_length = n;
+    // ignore
 }
 
 
 void
 srec_output_file_vhdl::address_length_set(int)
 {
-	// ignore
+    // ignore
 }
 
 
 int
 srec_output_file_vhdl::preferred_block_size_get()
-	const
+    const
 {
-	//
-	// Irrelevant.  Use the largest we can get.
-	//
-	return srec_record::max_data_length;
+    //
+    // Irrelevant.  Use the largest we can get.
+    //
+    return srec_record::max_data_length;
 }
