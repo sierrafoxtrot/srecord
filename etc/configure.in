@@ -1,6 +1,6 @@
 dnl
 dnl	srecord - manipulate eprom load files
-dnl	Copyright (C) 1998 Peter Miller;
+dnl	Copyright (C) 1998, 1999 Peter Miller;
 dnl	All rights reserved.
 dnl
 dnl	This program is free software; you can redistribute it and/or modify
@@ -70,10 +70,9 @@ else
   HAVE_GROFF=no
   AC_MSG_RESULT([])
   AC_MSG_RESULT([	The SRecord documentation set and manual pages will])
-  AC_MSG_RESULT([	be formatted and installed installed if you first])
-  AC_MSG_RESULT([	install GNU Groff and then re-run this ./configure])
-  AC_MSG_RESULT([	script.  Remember to use \`\`rm config.cache''])
-  AC_MSG_RESULT([	before you do.])
+  AC_MSG_RESULT([	be formatted and installed if you first install])
+  AC_MSG_RESULT([	GNU Groff and then re-run this ./configure script.])
+  AC_MSG_RESULT([	Remember to use \`\`rm config.cache'' before you do.])
   AC_MSG_RESULT([])
 fi
 AC_SUBST(HAVE_GROFF)

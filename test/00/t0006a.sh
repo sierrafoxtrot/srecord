@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 1998 Peter Miller;
+#	Copyright (C) 1998, 1999 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -57,8 +57,12 @@ cd $work
 if test $? -ne 0; then no_result; fi
 
 cat > test.in << 'fubar'
-This is a test of the crop filter.
-We need a large enough block to exersize all of the cases.
+S00600004844521B
+S12300005468697320697320612074657374206F66207468652063726F702066696C746589
+S1230020722E0A5765206E6565642061206C6172676520656E6F75676820626C6F636B20FD
+S1210040746F206578657273697A6520616C6C206F66207468652063617365732E0A16
+S5030003F9
+S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
@@ -75,7 +79,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -bin -crop 50 10000 -o test.out
+$bin/srec_cat test.in -crop 50 10000 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -89,11 +93,11 @@ cat > test.ok << 'fubar'
 S00600004844521B
 S11900805468697320697320612074657374206F662074686520FB
 S5030001FB
-S9030000FC
+S90300807C
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -bin -offset 128 -crop 50 150 -o test.out
+$bin/srec_cat test.in -offset 128 -crop 50 150 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -111,7 +115,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -bin -crop 50 70 -o test.out
+$bin/srec_cat test.in -crop 50 70 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -127,11 +131,11 @@ S12300805468697320697320612074657374206F66207468652063726F702066696C746509
 S12300A0722E0A5765206E6565642061206C6172676520656E6F75676820626C6F636B207D
 S12100C0746F206578657273697A6520616C6C206F66207468652063617365732E0A96
 S5030003F9
-S9030000FC
+S90300807C
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -bin -offset 128 -crop 50 10000 -o test.out
+$bin/srec_cat test.in -offset 128 -crop 50 10000 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -148,7 +152,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -bin -crop 10000 -o test.out
+$bin/srec_cat test.in -crop 10000 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -158,7 +162,7 @@ if test $? -ne 0; then fail; fi
 #              [===data===]
 # [===crop===]
 #
-$bin/srec_cat test.in -bin -offset 256 -crop 0 128 -o test.out
+$bin/srec_cat test.in -offset 256 -crop 0 128 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

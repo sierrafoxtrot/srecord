@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998 Peter Miller;
+ *	Copyright (C) 1998, 1999 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -562,12 +562,14 @@ bool
 interval::member(data_t datum)
 	const
 {
+	if (length == 0)
+		return false;
 	/* assert(valid()); */
-	size_t min = 0;
-	size_t max = length - 2;
+	long min = 0;
+	long max = length - 2;
 	while (min <= max)
 	{
-		size_t mid = ((min + max) / 2) & ~1;
+		long mid = ((min + max) / 2) & ~1;
 		data_t lo = data[mid];
 		long long hi = promote(data[mid + 1], mid + 1);
 		if (lo <= datum && datum < hi)
