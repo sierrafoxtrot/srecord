@@ -23,9 +23,9 @@
 #ifndef INCLUDE_SREC_MEMORY_H
 #define INCLUDE_SREC_MEMORY_H
 
-#include <srec/memory/chunk.h>
+#pragma interface "srec_memory"
 
-#pragma interface
+#include <srec/memory/chunk.h>
 
 class srec_memory
 {

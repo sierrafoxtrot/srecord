@@ -23,7 +23,7 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_H
 #define INCLUDE_SREC_OUTPUT_FILE_H
 
-#pragma interface
+#pragma interface "srec_output_file"
 
 #include <string>
 #include <srec/output.h>

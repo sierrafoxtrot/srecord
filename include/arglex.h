@@ -16,12 +16,14 @@
  *	You should have received a copy of the GNU General Public License
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * MANIFEST: interface definition for the lib/common/arglex.cc file
  */
 
 #ifndef INCLUDE_ARGLEX_H
 #define INCLUDE_ARGLEX_H
 
-#pragma interface
+#pragma interface "arglex"
 
 
 #define ARGLEX_END_MARKER {0,0}

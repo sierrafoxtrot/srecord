@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_input_filter_maximum class
  */
 
-#pragma implementation
+#pragma implementation "srec_input_filter_maximum"
 
 #include <interval.h>
 #include <srec/input/filter/maximum.h>

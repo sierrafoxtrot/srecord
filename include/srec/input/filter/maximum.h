@@ -23,9 +23,9 @@
 #ifndef INCLUDE_SREC_INPUT_FILTER_MAXIMUM_H
 #define INCLUDE_SREC_INPUT_FILTER_MAXIMUM_H
 
-#include <srec/input/filter.h>
+#pragma interface "srec_input_filter_maximum"
 
-#pragma interface
+#include <srec/input/filter.h>
 
 class srec_input_filter_maximum: public srec_input_filter
 {

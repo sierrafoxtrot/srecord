@@ -23,9 +23,9 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_TEKTRONIX_H
 #define INCLUDE_SREC_OUTPUT_FILE_TEKTRONIX_H
 
-#include <srec/output/file.h>
+#pragma interface "srec_output_file_tektronix"
 
-#pragma interface
+#include <srec/output/file.h>
 
 class srec_output_file_tektronix: public srec_output_file
 {

@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_input_filter_split class
  */
 
-#pragma implementation
+#pragma implementation "srec_input_filter_split"
 
 #include <srec/input/filter/split.h>
 #include <srec/record.h>

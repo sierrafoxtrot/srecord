@@ -23,10 +23,10 @@
 #ifndef INCLUDE_SREC_OUTPUT_H
 #define INCLUDE_SREC_OUTPUT_H
 
+#pragma interface "srec_output"
+
 #include <stdarg.h>
 #include <string>
-
-#pragma interface
 
 class srec_output
 {

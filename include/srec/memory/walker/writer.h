@@ -23,9 +23,9 @@
 #ifndef INCLUDE_SREC_MEMORY_WALKER_WRITER_H
 #define INCLUDE_SREC_MEMORY_WALKER_WRITER_H
 
-#include <srec/memory/walker.h>
+#pragma interface "srec_memory_walker_writer"
 
-#pragma interface
+#include <srec/memory/walker.h>
 
 class srec_memory_walker_writer: public srec_memory_walker
 {

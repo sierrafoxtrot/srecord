@@ -23,7 +23,7 @@
 #ifndef INCLUDE_SREC_RECORD_H
 #define INCLUDE_SREC_RECORD_H
 
-#pragma interface
+#pragma interface "srec_record"
 
 class srec_record
 {

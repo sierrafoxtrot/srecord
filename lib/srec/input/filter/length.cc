@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_input_filter_length class
  */
 
-#pragma implementation
+#pragma implementation "srec_input_filter_length"
 
 #include <interval.h>
 #include <srec/input/filter/length.h>

@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_output class
  */
 
-#pragma implementation
+#pragma implementation "srec_output"
 
 #include <errno.h>
 #include <iostream.h>

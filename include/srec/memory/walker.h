@@ -23,7 +23,7 @@
 #ifndef INCLUDE_SREC_MEMORY_WALKER_H
 #define INCLUDE_SREC_MEMORY_WALKER_H
 
-#pragma interface
+#pragma interface "srec_memory_walker"
 
 class srec_memory_walker
 {

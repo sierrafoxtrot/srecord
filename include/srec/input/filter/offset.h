@@ -23,9 +23,9 @@
 #ifndef INCLUDE_SREC_INPUT_FILTER_OFFSET_H
 #define INCLUDE_SREC_INPUT_FILTER_OFFSET_H
 
-#include <srec/input/filter.h>
+#pragma interface "srec_input_filter_offset"
 
-#pragma interface
+#include <srec/input/filter.h>
 
 class srec_input_filter_offset: public srec_input_filter
 {

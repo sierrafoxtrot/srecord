@@ -23,9 +23,9 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_BINARY_H
 #define INCLUDE_SREC_OUTPUT_FILE_BINARY_H
 
-#include <srec/output/file.h>
+#pragma interface "srec_output_file_binary"
 
-#pragma interface
+#include <srec/output/file.h>
 
 class srec_output_file_binary: public srec_output_file
 {

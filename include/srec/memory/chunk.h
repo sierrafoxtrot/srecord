@@ -23,7 +23,7 @@
 #ifndef INCLUDE_SREC_MEMORY_CHUNK_H
 #define INCLUDE_SREC_MEMORY_CHUNK_H
 
-#pragma interface
+#pragma interface "srec_memory_chunk"
 
 class srec_memory_chunk
 {

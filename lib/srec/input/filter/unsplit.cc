@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_input_filter_unsplit class
  */
 
-#pragma implementation
+#pragma implementation "srec_input_filter_unsplit"
 
 #include <srec/input/filter/unsplit.h>
 #include <srec/record.h>

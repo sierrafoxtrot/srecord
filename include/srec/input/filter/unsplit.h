@@ -23,10 +23,10 @@
 #ifndef INCLUDE_SREC_INPUT_FILTER_UNSPLIT_H
 #define INCLUDE_SREC_INPUT_FILTER_UNSPLIT_H
 
+#pragma interface "srec_input_filter_unsplit"
+
 #include <srec/input/filter.h>
 #include <srec/record.h>
-
-#pragma interface
 
 class srec_input_filter_unsplit: public srec_input_filter
 {

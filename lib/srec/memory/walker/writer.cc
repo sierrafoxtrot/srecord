@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_memory_walker_writer class
  */
 
-#pragma implementation
+#pragma implementation "srec_memory_walker_writer"
 
 #include <srec/memory/walker/writer.h>
 #include <srec/output.h>

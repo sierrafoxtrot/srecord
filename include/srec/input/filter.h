@@ -23,9 +23,9 @@
 #ifndef INCLUDE_SREC_INPUT_FILTER_H
 #define INCLUDE_SREC_INPUT_FILTER_H
 
-#include <srec/input.h>
+#pragma interface "srec_input_filter"
 
-#pragma interface
+#include <srec/input.h>
 
 class srec_input_filter: public srec_input
 {

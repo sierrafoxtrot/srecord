@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_input class
  */
 
-#pragma implementation
+#pragma implementation "srec_input"
 
 #include <errno.h>
 #include <iostream.h>

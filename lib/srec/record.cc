@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_record class
  */
 
-#pragma implementation
+#pragma implementation "srec_record"
 
 #include <srec/record.h>
 

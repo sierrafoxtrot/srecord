@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_input_filter_minimum class
  */
 
-#pragma implementation
+#pragma implementation "srec_input_filter_minimum"
 
 #include <srec/input/filter/minimum.h>
 #include <srec/record.h>

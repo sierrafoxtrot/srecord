@@ -23,9 +23,9 @@
 #ifndef INCLUDE_SREC_ARGLEX_H
 #define INCLUDE_SREC_ARGLEX_H
 
-#include <arglex.h>
+#pragma interface "srec_arglex"
 
-#pragma interface
+#include <arglex.h>
 
 class srec_arglex: public arglex
 {

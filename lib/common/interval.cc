@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the interval class
  */
 
-#pragma implementation
+#pragma implementation "interval"
 
 #include <interval.h>
 #include <iostream.h>

@@ -23,9 +23,9 @@
 #ifndef INCLUDE_SREC_INPUT_FILE_BINARY_H
 #define INCLUDE_SREC_INPUT_FILE_BINARY_H
 
-#include <srec/input/file.h>
+#pragma interface "srec_input_file_binary"
 
-#pragma interface
+#include <srec/input/file.h>
 
 class srec_input_file_binary: public srec_input_file
 {

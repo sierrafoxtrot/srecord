@@ -23,9 +23,9 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_C_H
 #define INCLUDE_SREC_OUTPUT_FILE_C_H
 
-#include <srec/output/file.h>
+#pragma interface "srec_output_file_c"
 
-#pragma interface
+#include <srec/output/file.h>
 
 class srec_output_file_c: public srec_output_file
 {

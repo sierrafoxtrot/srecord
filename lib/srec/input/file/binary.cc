@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_input_file_binary class
  */
 
-#pragma implementation
+#pragma implementation "srec_input_file_binary"
 
 #include <srec/input/file/binary.h>
 #include <srec/record.h>

@@ -23,9 +23,9 @@
 #ifndef INCLUDE_SREC_INPUT_FILE_INTEL_H
 #define INCLUDE_SREC_INPUT_FILE_INTEL_H
 
-#include <srec/input/file.h>
+#pragma interface "srec_input_file_intel"
 
-#pragma interface
+#include <srec/input/file.h>
 
 class srec_input_file_intel: public srec_input_file
 {

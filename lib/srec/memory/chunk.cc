@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_memory_chunk class
  */
 
-#pragma implementation
+#pragma implementation "srec_memory_chunk"
 
 #include <cstring>
 #include <srec/memory/chunk.h>

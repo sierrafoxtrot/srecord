@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_arglex class
  */
 
-#pragma implementation
+#pragma implementation "srec_arglex"
 
 #include <iostream.h>
 

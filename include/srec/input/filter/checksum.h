@@ -23,11 +23,11 @@
 #ifndef INCLUDE_SREC_INPUT_FILTER_CHECKSUM_H
 #define INCLUDE_SREC_INPUT_FILTER_CHECKSUM_H
 
+#pragma interface "srec_input_filter_checksum"
+
 #include <interval.h>
 #include <srec/input/filter.h>
 #include <srec/record.h>
-
-#pragma interface
 
 class srec_input_filter_checksum: public srec_input_filter
 {

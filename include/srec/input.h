@@ -17,13 +17,13 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: interface definition for lib/input.cc
+ * MANIFEST: interface definition for lib/srec/input.cc
  */
 
-#ifndef INCLUDE_INPUT_H
-#define INCLUDE_INPUT_H
+#ifndef INCLUDE_SREC_INPUT_H
+#define INCLUDE_SREC_INPUT_H
 
-#pragma interface
+#pragma interface "srec_input"
 
 #include <string>
 #include <stdarg.h>
@@ -47,4 +47,4 @@ public:
 	virtual const string filename_and_line() const;
 };
 
-#endif /* INCLUDE_INPUT_H */
+#endif /* INCLUDE_SREC_INPUT_H */

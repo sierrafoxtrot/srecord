@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_input_file_tektronix class
  */
 
-#pragma implementation
+#pragma implementation "srec_input_file_tektronix"
 
 #include <srec/input/file/tektronix.h>
 #include <srec/record.h>

@@ -23,9 +23,9 @@
 #ifndef INCLUDE_INTERVAL_H
 #define INCLUDE_INTERVAL_H
 
-#include <stddef.h>
+#pragma interface "interval"
 
-#pragma interface
+#include <stddef.h>
 
 class interval
 {

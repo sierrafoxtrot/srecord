@@ -17,31 +17,31 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: functions to impliment the ${basename $fn .cc} class
+ * MANIFEST: functions to impliment the ${id ${trim_dir ${trim_ext $fn}}} class
  */
 
-#pragma implementation
+#pragma implementation "${id ${trim_dir ${trim_ext $fn}}}"
 
-#include <${b $fn .cc}.h>
+#include <${trim_dir ${trim_ext $fn}}.h>
 
 
-${b $fn .cc}::${b $fn .cc}()
+${id ${trim_dir ${trim_ext $fn}}}::${id ${trim_dir ${trim_ext $fn}}}()
 {
 }
 
 
-${b $fn .cc}::${b $fn .cc}(const ${b $fn .cc} &arg)
+${id ${trim_dir ${trim_ext $fn}}}::${id ${trim_dir ${trim_ext $fn}}}(const ${id ${trim_dir ${trim_ext $fn}}} &arg)
 {
 }
 
 
-${b $fn .cc} &
-${b $fn .cc}::operator=(const ${b $fn .cc} &arg)
+${id ${trim_dir ${trim_ext $fn}}} &
+${id ${trim_dir ${trim_ext $fn}}}::operator=(const ${id ${trim_dir ${trim_ext $fn}}} &arg)
 {
 	return *this;
 }
 
 
-${b $fn .cc}::~${b $fn .cc}()
+${id ${trim_dir ${trim_ext $fn}}}::~${id ${trim_dir ${trim_ext $fn}}}()
 {
 }

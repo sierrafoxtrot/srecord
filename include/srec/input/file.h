@@ -23,7 +23,7 @@
 #ifndef INCLUDE_SREC_INPUT_FILE_H
 #define INCLUDE_SREC_INPUT_FILE_H
 
-#pragma interface
+#pragma interface "srec_input_file"
 
 #include <string>
 #include <srec/input.h>

@@ -17,21 +17,21 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: interface definition for ${basename $fn .h}.cc
+ * MANIFEST: interface definition for ${trim_extension $fn}.cc
  */
 
 #ifndef ${id ${upcase $fn}}
 #define ${id ${upcase $fn}}
 
-#pragma interface
+#pragma interface "${id ${trim_dir ${trim_ext $fn}}}"
 
-class ${id ${b $fn .h}}
+class ${id ${trim_dir ${trim_ext $fn}}}
 {
 public:
-	${id ${b $fn .h}}();
-	${id ${b $fn .h}}(const ${id ${b $fn .h}} &);
-	${id ${b $fn .h}} &operator=(const ${id ${b $fn .h}} &);
-	~${id ${b $fn .h}}();
+	${id ${trim_dir ${trim_ext $fn}}}();
+	${id ${trim_dir ${trim_ext $fn}}}(const ${id ${trim_dir ${trim_ext $fn}}} &);
+	${id ${trim_dir ${trim_ext $fn}}} &operator=(const ${id ${trim_dir ${trim_ext $fn}}} &);
+	~${id ${trim_dir ${trim_ext $fn}}}();
 };
 
 #endif /* ${id ${upcase $fn}} */

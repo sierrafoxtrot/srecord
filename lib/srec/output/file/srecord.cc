@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_output_file_srecord class
  */
 
-#pragma implementation
+#pragma implementation "srec_output_file_srecord"
 
 #include <srec/output/file/srecord.h>
 #include <srec/record.h>

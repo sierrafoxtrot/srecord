@@ -17,10 +17,10 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * MANIFEST: functions to impliment the isrec_input_filter class
+ * MANIFEST: functions to impliment the srec_input_filter class
  */
 
-#pragma implementation
+#pragma implementation "srec_input_filter"
 
 #include <srec/input/filter.h>
 

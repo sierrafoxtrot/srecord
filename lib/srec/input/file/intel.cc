@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_input_file_intel class
  */
 
-#pragma implementation
+#pragma implementation "srec_input_file_intel"
 
 #include <srec/input/file/intel.h>
 #include <srec/record.h>

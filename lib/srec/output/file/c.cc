@@ -20,7 +20,7 @@
  * MANIFEST: functions to impliment the srec_output_file_c class
  */
 
-#pragma implementation
+#pragma implementation "srec_output_file_c"
 
 #include <interval.h>
 #include <srec/output/file/c.h>
