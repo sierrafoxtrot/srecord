@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2001 Peter Miller;
+ *	Copyright (C) 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -17,41 +17,32 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  *
- * MANIFEST: interface definition for lib/srec/output/file/c.cc
+ * MANIFEST: interface definition for include/srec/output/file/spasm.cc
  */
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_C_H
-#define INCLUDE_SREC_OUTPUT_FILE_C_H
+#ifndef INCLUDE_SREC_OUTPUT_FILE_SPASM_H
+#define INCLUDE_SREC_OUTPUT_FILE_SPASM_H
 
-#pragma interface "srec_output_file_c"
+#pragma interface "srec_output_file_spasm"
 
 #include <srec/output/file.h>
-#include <interval.h>
 
-class srec_output_file_c: public srec_output_file
+class srec_output_file_spasm: public srec_output_file
 {
 public:
-	virtual ~srec_output_file_c();
-	srec_output_file_c();
-	srec_output_file_c(const char *, const char *);
+	virtual ~srec_output_file_spasm();
+	srec_output_file_spasm();
+	srec_output_file_spasm(const char *, bool bigendian = true);
 	virtual void write(const srec_record &);
-	void line_length_set(int);
-	void address_length_set(int);
-	int preferred_block_size_get() const;
+	virtual void line_length_set(int);
+	virtual void address_length_set(int);
+	virtual int preferred_block_size_get() const;
 
 private:
-	string prefix;
-	unsigned long taddr;
-	interval range;
-	bool header_done;
-	int column;
-	unsigned long current_address;
-	int line_length;
-	int address_length;
-	void emit_header();
-	void emit_byte(int);
-	srec_output_file_c(const srec_output_file_c &);
-	srec_output_file_c &operator=(const srec_output_file_c &);
+	bool bigend;
+	void write_inner(int, unsigned long, const void *, int);
+	srec_output_file_spasm(const srec_output_file_spasm &);
+	srec_output_file_spasm &operator=(const srec_output_file_spasm &);
 };
 
-#endif /* INCLUDE_SREC_OUTPUT_FILE_C_H */
+#endif /* INCLUDE_SREC_OUTPUT_FILE_SPASM_H */

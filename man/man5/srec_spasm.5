@@ -1,0 +1,60 @@
+'\" t
+.\"	srecord - manipulate eprom load files
+.\"	Copyright (C) 2001 Peter Miller;
+.\"	All rights reserved.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"
+.\" MANIFEST: manual entry for the srec_spasm.5 command
+.\"
+.ds n) srec_spasm
+.TH \*(n) 5 SRecord "Reference Manual"
+.SH NAME
+srec_spasm \- SPASM file format
+.XX "srec_spasm(5)" "SPASM file format"
+.SH DESCRIPTION
+This format is the output of the Paralax SPASM assembler
+(now defunct, I'm told).
+The fiole contrains two columns of 160-bit hexadecimal coded values.
+The fist column is the word address, the second column is the word data.
+.PP
+By default, SRecord treats this is big-endian data (the most
+significant byte first).  If you want little endian order,
+use the \-spasm-le argument instead.
+.SS Size Multiplier
+In general, binary data will expand in sized by approximately 5.0 times
+when represented with this format (5.5 times in Windows).
+.\" ------------------------------------------------------------------------
+.br
+.ne 2i
+.SH EXAMPLE
+Here is an example SPASM file.
+It contains the data ``Hello, World'' to be loaded at bytes address 0x0100
+(but remember, the file contents are word addressed).
+.RS
+.nf
+.ft CW
+0080 6548
+0081 6C6C
+0082 2C6F
+0083 5720
+0084 726F
+0085 646C
+.ft P
+.fi
+.RE
+.\" ------------------------------------------------------------------------
+.ds n) srec_cat
+.so ../man1/z_copyright.so

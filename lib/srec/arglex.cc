@@ -30,6 +30,7 @@
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/mos_tech.h>
+#include <srec/input/file/spasm.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix.h>
 #include <srec/input/file/tektronix_extended.h>
@@ -55,17 +56,6 @@
 #include <srec/input/filter/unsplit.h>
 #include <srec/input/filter/xor.h>
 #include <srec/input/interval.h>
-#include <srec/output/file/ascii_hex.h>
-#include <srec/output/file/binary.h>
-#include <srec/output/file/c.h>
-#include <srec/output/file/vhdl.h>
-#include <srec/output/file/intel.h>
-#include <srec/output/file/mos_tech.h>
-#include <srec/output/file/srecord.h>
-#include <srec/output/file/tektronix.h>
-#include <srec/output/file/tektronix_extended.h>
-#include <srec/output/file/ti_tagged.h>
-#include <srec/output/file/wilson.h>
 
 
 srec_arglex::srec_arglex(int argc, char **argv)
@@ -113,6 +103,9 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Output",	token_output,		},
 		{ "-OVer",	token_over,		},
 		{ "-RAw",	token_binary,		},
+		{ "-SPAsm",	token_spasm_be,		}, // is this right?
+		{ "-SPAsm_BigEndian", token_spasm_be,	},
+		{ "-SPAsm_LittleEndian", token_spasm_le, },
 		{ "-SPlit",	token_split,		},
 		{ "-S_record",	token_motorola,		},
 		{ "-Tektronix",	token_tektronix,	},
@@ -382,6 +375,16 @@ srec_arglex::get_input()
 	case token_mos_tech:
 		token_next();
 		ifp = new srec_input_file_mos_tech(fn);
+		break;
+
+	case token_spasm_be:
+		token_next();
+		ifp = new srec_input_file_spasm(fn, true);
+		break;
+
+	case token_spasm_le:
+		token_next();
+		ifp = new srec_input_file_spasm(fn, false);
 		break;
 
 	case token_tektronix:
@@ -994,129 +997,4 @@ srec_arglex::get_input()
 	 * return the input stream determined
 	 */
 	return ifp;
-}
-
-
-srec_output *
-srec_arglex::get_output()
-{
-	/*
-	 * skip the -output token
-	 */
-	if (token_cur() == token_output)
-		token_next();
-
-	/*
-	 * determine the file name
-	 */
-	const char *fn = "-";
-	switch (token_cur())
-	{
-	case token_stdio:
-		token_next();
-		/* fall through... */
-
-	default:
-		if (stdout_used)
-		{
-			cerr << "the standard output may only be named once on the command line" << endl;
-			exit(1);
-		}
-		stdout_used = true;
-		break;
-
-	case token_string:
-		fn = value_string();
-		token_next();
-		break;
-	}
-
-	/*
-	 * determine the file format
-	 */
-	srec_output *ofp;
-	switch (token_cur())
-	{
-	case token_motorola:
-		token_next();
-		/* fall through... */
-
-	default:
-		ofp = new srec_output_file_srecord(fn);
-		break;
-
-	case token_ascii_hex:
-		token_next();
-		ofp = new srec_output_file_ascii_hex(fn);
-		break;
-
-	case token_intel:
-		token_next();
-		ofp = new srec_output_file_intel(fn);
-		break;
-
-	case token_mos_tech:
-		token_next();
-		ofp = new srec_output_file_mos_tech(fn);
-		break;
-
-	case token_tektronix:
-		token_next();
-		ofp = new srec_output_file_tektronix(fn);
-		break;
-
-	case token_tektronix_extended:
-		token_next();
-		ofp = new srec_output_file_tektronix_extended(fn);
-		break;
-
-	case token_ti_tagged:
-		token_next();
-		ofp = new srec_output_file_ti_tagged(fn);
-		break;
-
-	case token_binary:
-		token_next();
-		ofp = new srec_output_file_binary(fn);
-		break;
-
-	case token_vhdl:
-		{
-			const char *prefix = "eprom";
-			int bytes_per_word = 1;
-			if (token_next() == token_number)
-			{
-				bytes_per_word = value_number();
-			}
-			if (token_next() == token_string)
-			{
-				prefix = value_string();
-				token_next();
-			}
-			ofp = new srec_output_file_vhdl(fn, bytes_per_word, prefix);
-		}
-		break;
-
-	case token_c_array:
-		{
-			const char *prefix = "eprom";
-			if (token_next() == token_string)
-			{
-				prefix = value_string();
-				token_next();
-			}
-			ofp = new srec_output_file_c(fn, prefix);
-		}
-		break;
-
-	case token_wilson:
-		token_next();
-		ofp = new srec_output_file_wilson(fn);
-		break;
-	}
-
-	/*
-	 * return the stream determined
-	 */
-	return ofp;
 }

@@ -69,6 +69,8 @@ public:
 		token_over,
 		token_paren_begin,
 		token_paren_end,
+		token_spasm_be,
+		token_spasm_le,
 		token_split,
 		token_tektronix,
 		token_tektronix_extended,

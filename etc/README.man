@@ -64,6 +64,10 @@ The Motorola hexadecimal S-Record format is understood for both reading
 and writing.
 (Also known as the Exorciser, Exormacs or Exormax format.)
 .TP 8n
+SPASM
+The SPASM format is used by a variety of PIC programmers; it is understood
+for both reading and writing.
+.TP 8n
 Tektronix (Extended)
 The Tektronix hexadecimal format and the Tektronix Extended hexadecimal
 format are both understood for both reading and writing.

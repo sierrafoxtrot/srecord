@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Peter Miller;
+ *	Copyright (C) 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -26,6 +26,7 @@
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/mos_tech.h>
+#include <srec/input/file/spasm.h>
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix.h>
 #include <srec/input/file/tektronix_extended.h>
@@ -50,6 +51,12 @@ static srec_input *
 create_mos_tech(const char *fn)
 {
 	return new srec_input_file_mos_tech(fn);
+}
+
+static srec_input *
+create_spasm(const char *fn)
+{
+	return new srec_input_file_spasm(fn);
 }
 
 static srec_input *
@@ -90,6 +97,7 @@ static func_p table[] =
 	create_ascii_hex,
 	create_intel,
 	create_mos_tech,
+	create_spasm,
 	create_srecord,
 	create_tektronix,
 	create_tektronix_extended,

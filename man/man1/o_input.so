@@ -72,6 +72,14 @@ See
 .IR srec_motorola (5)
 for a description of this file format.
 .TP 8n
+\fB\-SPAsm\fP
+This option says to use the SPASM assembler output format (commonly used
+by PIC programmers).
+.TP 8n
+\fB\-SPAsm_LittleEndian\fP
+This option says to use the SPASM assembler output format (commonly used
+by PIC programmers).  But with the data the other way around.
+.TP 8n
 \fB\-Tektronix\fP
 This option says to use the Tektronix hex format to read the file.
 See
