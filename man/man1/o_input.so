@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 1999 Peter Miller;
+.\"	Copyright (C) 1998, 1999, 2000 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -79,6 +79,9 @@ The number of bytes defaults to 4.
 \fB\-Little_Endian_Checksum\fP \fIaddress\fP [ \fInbytes\fP ]
 As above, however
 the value will be written with the least significant byte first.
+.TP 8n
+\fB\-Byte_Swap\fP
+This filter may be used to swap pairs of odd and even bytes.
 .TP 8n
 \fB\-Crop\fP \fIaddress-range\fP
 This filter may be used to isolate a section of data, and discard the

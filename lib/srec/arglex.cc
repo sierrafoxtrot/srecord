@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -30,6 +30,7 @@
 #include <srec/input/file/srecord.h>
 #include <srec/input/file/tektronix.h>
 #include <srec/input/filter/and.h>
+#include <srec/input/filter/byte_swap.h>
 #include <srec/input/filter/checksum.h>
 #include <srec/input/filter/crop.h>
 #include <srec/input/filter/fill.h>
@@ -68,6 +69,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Big_Endian_MAximum", token_maximum_be, },
 		{ "-Big_Endian_MInimum",token_minimum_be, },
 		{ "-BINary",	token_binary,		},
+		{ "-Byte_Swap",	token_byte_swap,	},
 		{ "-CRop",	token_crop,		},
 		{ "-C_Array",	token_c_array,		},
 		{ "-Exclude",	token_exclude,		},
@@ -305,6 +307,11 @@ srec_arglex::get_input()
 	{
 		switch (token_cur())
 		{
+		case token_byte_swap:
+			token_next();
+			ifp = new srec_input_filter_byte_swap(ifp);
+			continue;
+
 		case token_crop:
 			token_next();
 			ifp = new srec_input_filter_crop(ifp,

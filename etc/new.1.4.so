@@ -22,6 +22,12 @@
 .PP
 .if n *
 .if t \(bu
+.\" Change 15
+There is a new \fIbyte swap\fP input filter, allowing pairs of odd and
+even input bytes to be swapped.
+.PP
+.if n *
+.if t \(bu
 .\" Change 13
 The \fIsrec_cat\fP program now has a \fB-data-only\fP option, which
 supresses all output except for the data records.  This helps when
