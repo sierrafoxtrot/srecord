@@ -35,6 +35,7 @@ public:
 		token_line_length = srec_arglex::token_MAX,
 		token_address_length,
 		token_data_only,
+		token_header,
 		token_MAX
 	};
 

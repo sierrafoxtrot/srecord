@@ -362,3 +362,21 @@ srec_memory::get_header()
 {
     return hdr;
 }
+
+
+void
+srec_memory::set_header(const char *s)
+{
+    delete hdr;
+    size_t len = strlen(s);
+    if (len > srec_record::max_data_length)
+    	len = srec_record::max_data_length;
+    hdr =
+    	new srec_record
+	(
+	    srec_record::type_header,
+	    0,
+	    (srec_record::data_t *)s,
+	    len
+	);
+}

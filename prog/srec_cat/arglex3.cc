@@ -33,6 +33,7 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv)
 		{ "-Address_Length", token_address_length, },
 		{ "-Data_Only", token_data_only, },
 		{ "-Line_Length", token_line_length, },
+		{ "-HEAder", token_header, },
 		ARGLEX_END_MARKER
 	};
 

@@ -42,6 +42,7 @@ main(int argc, char **argv)
 	srec_output *outfile = 0;
 	int line_length = 0;
 	int address_length = 0;
+	const char *header = 0;
 	while (cmdline.token_cur() != arglex::token_eoln)
 	{
 		switch (cmdline.token_cur())
@@ -101,6 +102,16 @@ main(int argc, char **argv)
 		case srec_cat_arglex3::token_multiple:
 			srec_memory::allow_overwriting();
 			break;
+
+		case srec_cat_arglex3::token_header:
+			if (cmdline.token_next() != arglex::token_string)
+			{
+				cerr << "the header option requires a "
+					"string agyument" << endl;
+				exit(1);
+			}
+			header = cmdline.value_string();
+			break;
 		}
 		cmdline.token_next();
 	}
@@ -124,6 +135,8 @@ main(int argc, char **argv)
 	 * memory of the development system.
 	 */
 	srec_memory *mp = new srec_memory();
+	if (header)
+		mp->set_header(header);
 	unsigned long taddr = 0;
 	for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
 	{
