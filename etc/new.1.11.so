@@ -17,19 +17,12 @@
 .\"	along with this program; if not, write to the Free Software
 .\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.10 features
+.\" MANIFEST: description of new 1.11 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" change 16
-The Ohio Scientific OS65V audio tape format has been added for reading
-and writing.
-.PP
-.if n *
-.if t \(bu
-.\" change 11, 15, 17
-Some build problems have been fixed.
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" change NN
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.10
+.SS Version 1.11
