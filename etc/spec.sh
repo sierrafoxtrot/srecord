@@ -20,6 +20,12 @@
 #
 # MANIFEST: shell script to generate RedHat spec file
 #
+echo '#'
+echo '# This file is generated.  Please do not send the maintainer'
+echo '# patches to this file.  Please update etc/spec.sh and send a'
+echo '# patch to that file, instead.'
+echo '#'
+
 version=${version-0.0.0}
 echo 'Summary: manipulate EPROM load files'
 echo 'Name: srecord'
@@ -105,7 +111,7 @@ do
 		;;
 
 	man/man[0-9]/*.[0-9])
-		files="$files $prefix/$file"
+		files="$files $prefix/${file}*"
 		;;
 
 	*)
