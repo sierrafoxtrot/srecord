@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -49,7 +49,10 @@ public:
 	bool find_next_data(unsigned long &address, void *data,
 		size_t &nbytes) const;
 
+	static void allow_overwriting();
+
 private:
+	static bool overwrite;
 	mutable int nchunks;
 	mutable int nchunks_max;
 	mutable srec_memory_chunk **chunk;

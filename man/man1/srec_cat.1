@@ -126,11 +126,6 @@ The \fIetc/x_defs_pack.vhd\fP file in the source distribution contains an
 example ROM definitions pack for the type-independent output.
 .RE
 .TP 8n
-\fB-Line_Length\fP \fInumber\fP
-This option may be used to limit the length of the output lines to at
-most \fInumber\P characters.  (Not meaningful for binary file format.)
-Defaults to something less than 80 characters, depending on the format.
-.TP 8n
 \fB\-Address_Length\fP \fInumber\fP
 This option many be used to specify the minimum number of bytes to be
 used in the output to represent an address (padding with leading zeros
@@ -142,6 +137,12 @@ fully implement the format specification.
 This option may be used to suppress all output except data fields.
 This helps when talking to brain-dead EPROM programmers which do not
 fully implement the format specification.
+.TP 8n
+\fB-Line_Length\fP \fInumber\fP
+This option may be used to limit the length of the output lines to at
+most \fInumber\P characters.  (Not meaningful for binary file format.)
+Defaults to something less than 80 characters, depending on the format.
+.so o_multiple.so
 .PP
 All other options will produce a diagnostic error.
 .so z_options.so

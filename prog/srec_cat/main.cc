@@ -97,6 +97,10 @@ main(int argc, char **argv)
 		case srec_cat_arglex3::token_data_only:
 			srec_output_file::data_only();
 			break;
+
+		case srec_cat_arglex3::token_multiple:
+			srec_memory::allow_overwriting();
+			break;
 		}
 		cmdline.token_next();
 	}

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 #include <interval.h>
 #include <srec/arglex.h>
 #include <srec/input.h>
+#include <srec/memory.h>
 #include <srec/record.h>
 
 #include <ctype.h>
@@ -50,6 +51,10 @@ main(int argc, char **argv)
 		case srec_arglex::token_stdio:
 			infile.push_back(cmdline.get_input());
 			continue;
+
+		case srec_arglex::token_multiple:
+			srec_memory::allow_overwriting();
+			break;
 		}
 		cmdline.token_next();
 	}

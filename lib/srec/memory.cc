@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -26,6 +26,9 @@
 #include <srec/memory.h>
 #include <srec/memory/walker/compare.h>
 #include <srec/record.h>
+
+
+bool srec_memory::overwrite = false;
 
 
 srec_memory::srec_memory() :
@@ -246,6 +249,16 @@ srec_memory::reader(srec_input *ifp, bool barf)
 							(long)address
 						);
 					}
+					else if (overwrite)
+					{
+						ifp->warning
+						(
+		     "multiple %08lX values (previous = %02X, this one = %02X)",
+							(long)address,
+							old,
+							n
+						);
+					}
 					else
 					{
 						ifp->fatal_error
@@ -325,4 +338,11 @@ srec_memory::find_next_data(unsigned long &address, void *data, size_t &nbytes)
 		address_hi = mcp->get_address() + 1;
 		address = address_hi * srec_memory_chunk::size;
 	}
+}
+
+
+void
+srec_memory::allow_overwriting()
+{
+    overwrite = true;
 }

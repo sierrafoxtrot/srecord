@@ -31,6 +31,13 @@ fully implement the format specification.
 .PP
 .if n *
 .if t \(bu
+.\" change 15
+There is a new \fI--multiple\fP option to the commands, which permits
+an input file to contain multiple (contradictory) values for some memory
+locations.  The last value in the file will be used.
+.PP
+.if n *
+.if t \(bu
 .\" change 12
 A problem has been fixed which stopped SRecord from building under Cygwin.
 .PP

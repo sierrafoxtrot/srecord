@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -110,6 +110,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Little_Endian_MInimum", token_minimum_le, },
 		{ "-MOS_Technologies", token_mos_tech,	},
 		{ "-Motorola",	token_motorola,		},
+		{ "-MULTiple",	token_multiple,		},
 		{ "-OFfset",	token_offset,		},
 		{ "-OR",	token_or,		},
 		{ "-Output",	token_output,		},

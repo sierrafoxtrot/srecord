@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -61,6 +61,7 @@ public:
 		token_minimum_le,
 		token_mos_tech,
 		token_motorola,
+		token_multiple,
 		token_offset,
 		token_or,
 		token_output,
