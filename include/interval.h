@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -33,6 +33,7 @@ public:
 	typedef unsigned long data_t;
 
 	interval();
+	interval(data_t);
 	interval(data_t, data_t);
 	interval(const interval &);
 	interval &operator=(const interval &);

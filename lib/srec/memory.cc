@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 
 #include <srec/input.h>
 #include <srec/memory.h>
-#include <srec/memory/walker.h>
+#include <srec/memory/walker/compare.h>
 #include <srec/record.h>
 
 
@@ -83,6 +83,7 @@ srec_memory::copy(const srec_memory &arg)
 
 srec_memory_chunk *
 srec_memory::find(unsigned long address)
+	const
 {
 	/*
 	 * Speed things up if we've been there recently.
@@ -151,6 +152,7 @@ srec_memory::set(unsigned long address, int datum)
 
 int
 srec_memory::get(unsigned long address)
+	const
 {
 	unsigned long address_hi = address / srec_memory_chunk::size;
 	unsigned long address_lo = address % srec_memory_chunk::size;
@@ -161,6 +163,7 @@ srec_memory::get(unsigned long address)
 
 bool
 srec_memory::set_p(unsigned long address)
+	const
 {
 	unsigned long address_hi = address / srec_memory_chunk::size;
 	unsigned long address_lo = address % srec_memory_chunk::size;
@@ -178,6 +181,20 @@ srec_memory::equal(const srec_memory &lhs, const srec_memory &rhs)
 		if (lhs.chunk[j][0] != rhs.chunk[j][0])
 			return false;
 	return true;
+}
+
+
+
+bool
+srec_memory::compare(const srec_memory &lhs, const srec_memory &rhs)
+{
+	srec_memory_walker_compare wlhs(rhs, true);
+	lhs.walk(&wlhs);
+	wlhs.print("Left");
+	srec_memory_walker_compare wrhs(lhs, false);
+	rhs.walk(&wrhs);
+	wrhs.print("Right");
+	return (!wlhs.same() || !wrhs.same());
 }
 
 

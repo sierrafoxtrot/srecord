@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -37,6 +37,7 @@ main(int argc, char **argv)
 	cmdline.token_first();
 	srec_input *if1 = 0;
 	srec_input *if2 = 0;
+	bool verbose = false;
 	while (cmdline.token_cur() != srec_arglex::token_eoln)
 	{
 		switch (cmdline.token_cur())
@@ -59,6 +60,10 @@ main(int argc, char **argv)
 				cmdline.usage();
 			}
 			continue;
+
+		case arglex::token_verbose:
+		    verbose = true;
+		    break;
 		}
 		cmdline.token_next();
 	}
@@ -83,13 +88,32 @@ main(int argc, char **argv)
 	/*
 	 * Error message and non-zero exit status if the files differ.
 	 */
-	if (*mp1 != *mp2 || ta1 != ta2)
+	if (verbose)
 	{
+		bool different = srec_memory::compare(*mp1, *mp2);
+		if (ta1 != ta2)
+		{
+			cout << "Start address " << ta1 << " not equal to "
+				<< ta2 << "." << endl;
+			different = true;
+		}
+		if (different)
+			exit(2);
 		cerr << argv[0] << ": files ``" << if1->filename()
-			<< "'' and ``" << if2->filename() << "'' differ"
+			<< "'' and ``" << if2->filename() << "'' are the same."
 			<< endl;
-		exit(2);
 	}
+	else
+	{
+		if (*mp1 != *mp2 || ta1 != ta2)
+		{
+			cerr << argv[0] << ": files ``" << if1->filename()
+				<< "'' and ``" << if2->filename() << "'' differ"
+				<< endl;
+			exit(2);
+		}
+	}
+
 
 	delete if1;
 	delete if2;

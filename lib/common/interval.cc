@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -107,6 +107,19 @@ interval::interval(data_t first, data_t last)
 		data[0] = last;
 		data[1] = first;
 	}
+	data[2] = 2;
+	/* assert(valid()); */
+}
+
+interval::interval(data_t first)
+{
+	length = 2;
+	size = 8;
+	data = new data_t[size + 1];
+	scan_index = 0;
+	scan_next_datum = 0;
+	data[0] = first;
+	data[1] = first + 1;
 	data[2] = 2;
 	/* assert(valid()); */
 }
@@ -735,7 +748,9 @@ interval::print(ostream &os)
 	{
 		if (j)
 			os << ", ";
-		os << "(" << data[j] << ", " << (data[j + 1] - 1) << ")";
+		os << data[j];
+		if (data[j] + 1 != data[j + 1])
+			os << ".." << (data[j + 1] - 1);
 	}
 	if (length != 2)
 		os << ")";

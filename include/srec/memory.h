@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -36,22 +36,23 @@ public:
 	~srec_memory();
 
 	void set(unsigned long, int);
-	int get(unsigned long);
-	bool set_p(unsigned long);
+	int get(unsigned long) const;
+	bool set_p(unsigned long) const;
 
 	void walk(class srec_memory_walker *) const;
 
 	unsigned long reader(class srec_input *, bool = false);
 
 	static bool equal(const srec_memory &, const srec_memory &);
+	static bool compare(const srec_memory &, const srec_memory &);
 
 private:
-	int nchunks;
-	int nchunks_max;
-	srec_memory_chunk **chunk;
-	srec_memory_chunk *cache;
+	mutable int nchunks;
+	mutable int nchunks_max;
+	mutable srec_memory_chunk **chunk;
+	mutable srec_memory_chunk *cache;
 
-	srec_memory_chunk *find(unsigned long);
+	srec_memory_chunk *find(unsigned long) const;
 	void clear();
 	void copy(const srec_memory &);
 };

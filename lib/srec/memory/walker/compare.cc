@@ -1,0 +1,75 @@
+/*
+ *	srecord - manipulate eprom load files
+ *	Copyright (C) 2000 Peter Miller;
+ *	All rights reserved.
+ *
+ *	This program is free software; you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation; either version 2 of the License, or
+ *	(at your option) any later version.
+ *
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
+ *
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program; if not, write to the Free Software
+ *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+ *
+ * MANIFEST: functions to impliment the srec_memory_walker_compare class
+ */
+
+#pragma implementation "srec_memory_walker_compare"
+
+#include <iostream.h>
+#include <srec/memory.h>
+#include <srec/memory/walker/compare.h>
+
+
+srec_memory_walker_compare::~srec_memory_walker_compare()
+{
+}
+
+
+srec_memory_walker_compare::srec_memory_walker_compare(const srec_memory &a1,
+		bool a2)
+	: other(a1),
+	  check_wrong(a2)
+{
+}
+
+
+void
+srec_memory_walker_compare::observe(unsigned long addr, const void *p,
+	int len)
+{
+	unsigned char *data = (unsigned char *)p;
+	for (int j = 0; j < len; ++j)
+	{
+		if (other.set_p(addr + j))
+		{
+			if (check_wrong && data[j] != other.get(addr + j))
+				wrong += interval(addr + j);
+		}
+		else
+			unset += interval(addr + j);
+	}
+}
+
+
+void
+srec_memory_walker_compare::print(const char *caption)
+{
+	if (!wrong.empty())
+		cout << "Different:\t" << wrong << endl;
+	if (!unset.empty())
+		cout << caption << " only:\t" << unset << endl;
+}
+
+
+bool
+srec_memory_walker_compare::same()
+{
+    return (wrong.empty() && unset.empty());
+}
