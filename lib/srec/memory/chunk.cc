@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -108,7 +108,7 @@ srec_memory_chunk::find_next_data(unsigned long &ret_addr, void *ret_data,
 		for (k = j + 1; k < max && set_p(k); ++k)
 			;
 		nbytes = k - j;
-		memcpy(ret_data, data, nbytes);
+		memcpy(ret_data, data + j, nbytes);
 		ret_addr = address * size + j;
 		return true;
 	}
