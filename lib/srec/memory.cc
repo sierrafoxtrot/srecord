@@ -96,7 +96,7 @@ srec_memory::copy(const srec_memory &arg)
     nchunks = arg.nchunks;
     while (nchunks_max < nchunks)
 	nchunks_max = nchunks_max * 2 + 4;
-    chunk = new (srec_memory_chunk *)[nchunks_max];
+    chunk = new srec_memory_chunk * [nchunks_max];
     for (int j = 0; j < nchunks; ++j)
     {
 	// use copy-new to make the copies 
@@ -143,7 +143,7 @@ srec_memory::find(unsigned long address)
     {
 	nchunks_max = nchunks_max * 2 + 4;
 	srec_memory_chunk **tmp =
-    	    new (srec_memory_chunk *)[nchunks_max];
+    	    new srec_memory_chunk * [nchunks_max];
 	for (int j = 0; j < nchunks; ++j)
     	    tmp[j] = chunk[j];
 	delete [] chunk;

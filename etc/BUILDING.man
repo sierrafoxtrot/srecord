@@ -78,7 +78,7 @@ that you can run in the future to recreate the current configuration.
 Normally,
 you just
 .I cd
-to the directory containing 
+to the directory containing
 .IR SRecord "'s"
 source code and then type
 .RS
@@ -357,10 +357,11 @@ It is possible to build SRecord on MS Windows platforms, using the Cygwin
 \&``porting layer'' necessary to run Unix programs on Windows.  The build
 process is exactly as described above.
 .PP
-\fBNote:\fP if you are using GCC 3.\fIx\fP, you may need to edit the
+\fBNote:\fP if you are using GCC 3.\fIx\fP where x < 4, you may need to edit the
 \fIMakefile\fP to change \f[CW]CXX = g++\fP to read \f[CW]CXX = g++-2\fP
 to fix some weird undefined symbols.
-This appears to be a GCC bug.
+This appears to be a bug in these versions of GCC. The bug has
+apparently been fixed in GCC 3.4 and above.
 .PP
 DJGPP always produces native binaries, however
 if you want to make native binaries with Cygwin (\fIi.e.\fP ones which
