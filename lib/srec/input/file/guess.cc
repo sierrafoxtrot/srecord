@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000, 2001 Peter Miller;
+ *	Copyright (C) 2000-2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -31,6 +31,7 @@
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/mos_tech.h>
+#include <srec/input/file/os65v.h>
 #include <srec/input/file/signetics.h>
 #include <srec/input/file/spasm.h>
 #include <srec/input/file/srecord.h>
@@ -44,91 +45,97 @@
 static srec_input *
 create_ascii_hex(const char *fn)
 {
-	return new srec_input_file_ascii_hex(fn);
+    return new srec_input_file_ascii_hex(fn);
 }
 
 static srec_input *
 create_atmel_generic(const char *fn)
 {
-	return new srec_input_file_atmel_generic(fn);
+    return new srec_input_file_atmel_generic(fn);
 }
 
 static srec_input *
 create_dec_binary(const char *fn)
 {
-	return new srec_input_file_dec_binary(fn);
+    return new srec_input_file_dec_binary(fn);
 }
 
 static srec_input *
 create_four_packed_code(const char *fn)
 {
-	return new srec_input_file_four_packed_code(fn);
+    return new srec_input_file_four_packed_code(fn);
 }
 
 static srec_input *
 create_emon52(const char *fn)
 {
-	return new srec_input_file_emon52(fn);
+    return new srec_input_file_emon52(fn);
 }
 
 static srec_input *
 create_fastload(const char *fn)
 {
-	return new srec_input_file_fastload(fn);
+    return new srec_input_file_fastload(fn);
 }
 
 static srec_input *
 create_intel(const char *fn)
 {
-	return new srec_input_file_intel(fn);
+    return new srec_input_file_intel(fn);
 }
 
 static srec_input *
 create_mos_tech(const char *fn)
 {
-	return new srec_input_file_mos_tech(fn);
+    return new srec_input_file_mos_tech(fn);
+}
+
+static srec_input *
+create_ohio_scientific(const char *fn)
+{
+    return new srec_input_file_os65v(fn);
 }
 
 static srec_input *
 create_signetics(const char *fn)
 {
-	return new srec_input_file_signetics(fn);
+    return new srec_input_file_signetics(fn);
 }
 
 static srec_input *
 create_spasm(const char *fn)
 {
-	return new srec_input_file_spasm(fn);
+    return new srec_input_file_spasm(fn);
 }
 
 static srec_input *
 create_srecord(const char *fn)
 {
-	return new srec_input_file_srecord(fn);
+    return new srec_input_file_srecord(fn);
 }
 
 static srec_input *
 create_tektronix(const char *fn)
 {
-	return new srec_input_file_tektronix(fn);
+    return new srec_input_file_tektronix(fn);
 }
 
 static srec_input *
 create_tektronix_extended(const char *fn)
 {
-	return new srec_input_file_tektronix_extended(fn);
+    return new srec_input_file_tektronix_extended(fn);
 }
 
 static srec_input *
 create_ti_tagged(const char *fn)
 {
-	return new srec_input_file_ti_tagged(fn);
+    return new srec_input_file_ti_tagged(fn);
 }
 
 static srec_input *
 create_wilson(const char *fn)
 {
-	return new srec_input_file_wilson(fn);
+    return new srec_input_file_wilson(fn);
 }
 
 
@@ -136,21 +143,22 @@ typedef srec_input *(*func_p)(const char *);
 
 static func_p table[] =
 {
-	create_ascii_hex,
-	create_atmel_generic,
-	create_dec_binary,
-	create_emon52,
-	create_fastload,
-	create_four_packed_code,
-	create_intel,
-	create_mos_tech,
-	create_signetics,
-	create_spasm,
-	create_srecord,
-	create_tektronix,
-	create_tektronix_extended,
-	create_ti_tagged,
-	create_wilson,
+    create_ascii_hex,
+    create_atmel_generic,
+    create_dec_binary,
+    create_emon52,
+    create_fastload,
+    create_four_packed_code,
+    create_intel,
+    create_mos_tech,
+    create_ohio_scientific,
+    create_signetics,
+    create_spasm,
+    create_srecord,
+    create_tektronix,
+    create_tektronix_extended,
+    create_ti_tagged,
+    create_wilson,
 };
 
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
@@ -160,74 +168,74 @@ static func_p table[] =
 srec_input *
 srec_input_file_guess(const char *fn)
 {
-	if (!fn || !*fn || (fn[0] == '-' && fn[1] == 0))
-	{
-		quit_default.fatal_error
-		(
-	    "the file format of the standard input must be specified explicitly"
-		); 
-	}
+    if (!fn || !*fn || (fn[0] == '-' && fn[1] == 0))
+    {
+	    quit_default.fatal_error
+	    (
+	"the file format of the standard input must be specified explicitly"
+	    ); 
+    }
 
-	/*
-	 * Try each file format in turn.
-	 */
-	quit_exception quitter;
-	for (func_p *tp = table; tp < ENDOF(table); ++tp)
-	{
-		/*
-		 * Create a new file reader
-		 */
-		func_p func = *tp;
-		srec_input *ifp = func(fn);
-		try
-		{
-			/*
-			 * Set the exception-throwing quitter
-			 * (it also silences all error and warning messages).
-			 */
-			ifp->set_quit(quitter);
-			srec_record record;
+    /*
+     * Try each file format in turn.
+     */
+    quit_exception quitter;
+    for (func_p *tp = table; tp < ENDOF(table); ++tp)
+    {
+	    /*
+	     * Create a new file reader
+	     */
+	    func_p func = *tp;
+	    srec_input *ifp = func(fn);
+	    try
+	    {
+		    /*
+		     * Set the exception-throwing quitter
+		     * (it also silences all error and warning messages).
+		     */
+		    ifp->set_quit(quitter);
+		    srec_record record;
 
-			/*
-			 * Try to read something from the file.  If it is
-			 * the wrong format, it will throw an exception.
-			 */
-			if (ifp->read(record))
-			{
-				/*
-				 * It is necessary to nuke the old file
-				 * reader.  (a) Because it has the wrong
-				 * quitter, but more importantly (b)
-				 * because it is no longer positioned
-				 * at the start of the file, and the
-				 * user *will* miss some data.
-				 */
-				delete ifp;
+		    /*
+		     * Try to read something from the file.  If it is
+		     * the wrong format, it will throw an exception.
+		     */
+		    if (ifp->read(record))
+		    {
+			    /*
+			     * It is necessary to nuke the old file
+			     * reader.  (a) Because it has the wrong
+			     * quitter, but more importantly (b)
+			     * because it is no longer positioned
+			     * at the start of the file, and the
+			     * user *will* miss some data.
+			     */
+			    delete ifp;
 
-				/*
-				 * Return a brand-new file reader.
-				 */
-				return func(fn);
-			}
-		}
-		catch (quit_exception::vomit)
-		{
-		}
+			    /*
+			     * Return a brand-new file reader.
+			     */
+			    return func(fn);
+		    }
+	    }
+	    catch (quit_exception::vomit)
+	    {
+	    }
 
-		/*
-		 * Wrong format.
-		 * Toss this one, and try another.
-		 */
-		delete ifp;
-	}
+	    /*
+	     * Wrong format.
+	     * Toss this one, and try another.
+	     */
+	    delete ifp;
+    }
 
-	/*
-	 * If nothing else works, assume the file is binary.
-	 */
-	quit_default.warning
-	(
-		"%s: unable to determine the file format, assuming binary",
-		fn
-	); 
-	return new srec_input_file_binary(fn);
+    /*
+     * If nothing else works, assume the file is binary.
+     */
+    quit_default.warning
+    (
+	    "%s: unable to determine the file format, assuming binary",
+	    fn
+    ); 
+    return new srec_input_file_binary(fn);
 }

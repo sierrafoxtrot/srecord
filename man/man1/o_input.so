@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998-2001 Peter Miller;
+.\"	Copyright (C) 1998-2002 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -93,6 +93,10 @@ This option says to use the Motorola S-Record format to read the file.
 See
 .IR srec_motorola (5)
 for a description of this file format.
+.TP 8n
+\fB\-Ohio_Scientific\fP
+This option says to use the Ohio Scientific format.
+See \fIsrec_os65v\fP(5) for a description of this file format.
 .TP 8n
 \fB\-SIGnetics\fP
 This option says to use the Signetics format.

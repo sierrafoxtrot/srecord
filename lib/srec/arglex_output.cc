@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2001 Peter Miller;
+ *	Copyright (C) 2001, 2002 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -31,6 +31,7 @@
 #include <srec/output/file/four_packed_code.h>
 #include <srec/output/file/intel.h>
 #include <srec/output/file/mos_tech.h>
+#include <srec/output/file/os65v.h>
 #include <srec/output/file/signetics.h>
 #include <srec/output/file/spasm.h>
 #include <srec/output/file/srecord.h>
@@ -44,169 +45,174 @@
 srec_output *
 srec_arglex::get_output()
 {
-	/*
-	 * skip the -output token
-	 */
-	if (token_cur() == token_output)
-		token_next();
+    /*
+     * skip the -output token
+     */
+    if (token_cur() == token_output)
+	token_next();
 
-	/*
-	 * determine the file name
-	 */
-	const char *fn = "-";
-	switch (token_cur())
+    /*
+     * determine the file name
+     */
+    const char *fn = "-";
+    switch (token_cur())
+    {
+    case token_stdio:
+	token_next();
+	/* fall through... */
+
+    default:
+	if (stdout_used)
 	{
-	case token_stdio:
-		token_next();
-		/* fall through... */
-
-	default:
-		if (stdout_used)
-		{
-			cerr << "the standard output may only be named once on "
-				"the command line" << endl;
-			exit(1);
-		}
-		stdout_used = true;
-		break;
-
-	case token_string:
-		fn = value_string();
-		token_next();
-		break;
+	    cerr << "the standard output may only be named once on the command "
+		"line" << endl;
+	    exit(1);
 	}
+	stdout_used = true;
+	break;
 
-	/*
-	 * determine the file format
-	 */
-	srec_output *ofp;
-	switch (token_cur())
+    case token_string:
+	fn = value_string();
+	token_next();
+	break;
+    }
+
+    /*
+     * determine the file format
+     */
+    srec_output *ofp;
+    switch (token_cur())
+    {
+    case token_motorola:
+	token_next();
+	/* fall through... */
+
+    default:
+	ofp = new srec_output_file_srecord(fn);
+	break;
+
+    case token_ascii_hex:
+	token_next();
+	ofp = new srec_output_file_ascii_hex(fn);
+	break;
+
+    case token_atmel_generic_be:
+	token_next();
+	ofp = new srec_output_file_atmel_generic(fn, true);
+	break;
+
+    case token_atmel_generic_le:
+	token_next();
+	ofp = new srec_output_file_atmel_generic(fn, false);
+	break;
+
+    case token_binary:
+	token_next();
+	ofp = new srec_output_file_binary(fn);
+	break;
+
+    case token_dec_binary:
+	token_next();
+	ofp = new srec_output_file_dec_binary(fn);
+	break;
+
+    case token_emon52:
+	token_next();
+	ofp = new srec_output_file_emon52(fn);
+	break;
+
+    case token_fast_load:
+	token_next();
+	ofp = new srec_output_file_fastload(fn);
+	break;
+
+    case token_four_packed_code:
+	token_next();
+	ofp = new srec_output_file_four_packed_code(fn);
+	break;
+
+    case token_intel:
+	token_next();
+	ofp = new srec_output_file_intel(fn);
+	break;
+
+    case token_mos_tech:
+	token_next();
+	ofp = new srec_output_file_mos_tech(fn);
+	break;
+
+    case token_ohio_scientific:
+	token_next();
+	ofp = new srec_output_file_os65v(fn);
+	break;
+
+    case token_signetics:
+	token_next();
+	ofp = new srec_output_file_signetics(fn);
+	break;
+
+    case token_spasm_be:
+	token_next();
+	ofp = new srec_output_file_spasm(fn, true);
+	break;
+
+    case token_spasm_le:
+	token_next();
+	ofp = new srec_output_file_spasm(fn, false);
+	break;
+
+    case token_tektronix:
+	token_next();
+	ofp = new srec_output_file_tektronix(fn);
+	break;
+
+    case token_tektronix_extended:
+	token_next();
+	ofp = new srec_output_file_tektronix_extended(fn);
+	break;
+
+    case token_ti_tagged:
+	token_next();
+	ofp = new srec_output_file_ti_tagged(fn);
+	break;
+
+    case token_vhdl:
 	{
-	case token_motorola:
-		token_next();
-		/* fall through... */
-
-	default:
-		ofp = new srec_output_file_srecord(fn);
-		break;
-
-	case token_ascii_hex:
-		token_next();
-		ofp = new srec_output_file_ascii_hex(fn);
-		break;
-
-	case token_atmel_generic_be:
-		token_next();
-		ofp = new srec_output_file_atmel_generic(fn, true);
-		break;
-
-	case token_atmel_generic_le:
-		token_next();
-		ofp = new srec_output_file_atmel_generic(fn, false);
-		break;
-
-	case token_binary:
-		token_next();
-		ofp = new srec_output_file_binary(fn);
-		break;
-
-	case token_dec_binary:
-		token_next();
-		ofp = new srec_output_file_dec_binary(fn);
-		break;
-
-	case token_emon52:
-		token_next();
-		ofp = new srec_output_file_emon52(fn);
-		break;
-
-	case token_fast_load:
-		token_next();
-		ofp = new srec_output_file_fastload(fn);
-		break;
-
-	case token_four_packed_code:
-		token_next();
-		ofp = new srec_output_file_four_packed_code(fn);
-		break;
-
-	case token_intel:
-		token_next();
-		ofp = new srec_output_file_intel(fn);
-		break;
-
-	case token_mos_tech:
-		token_next();
-		ofp = new srec_output_file_mos_tech(fn);
-		break;
-
-	case token_signetics:
-		token_next();
-		ofp = new srec_output_file_signetics(fn);
-		break;
-
-	case token_spasm_be:
-		token_next();
-		ofp = new srec_output_file_spasm(fn, true);
-		break;
-
-	case token_spasm_le:
-		token_next();
-		ofp = new srec_output_file_spasm(fn, false);
-		break;
-
-	case token_tektronix:
-		token_next();
-		ofp = new srec_output_file_tektronix(fn);
-		break;
-
-	case token_tektronix_extended:
-		token_next();
-		ofp = new srec_output_file_tektronix_extended(fn);
-		break;
-
-	case token_ti_tagged:
-		token_next();
-		ofp = new srec_output_file_ti_tagged(fn);
-		break;
-
-	case token_vhdl:
+		const char *prefix = "eprom";
+		int bytes_per_word = 1;
+		if (token_next() == token_number)
 		{
-			const char *prefix = "eprom";
-			int bytes_per_word = 1;
-			if (token_next() == token_number)
-			{
-				bytes_per_word = value_number();
-			}
-			if (token_next() == token_string)
-			{
-				prefix = value_string();
-				token_next();
-			}
-			ofp = new srec_output_file_vhdl(fn, bytes_per_word, prefix);
+			bytes_per_word = value_number();
 		}
-		break;
-
-	case token_c_array:
+		if (token_next() == token_string)
 		{
-			const char *prefix = "eprom";
-			if (token_next() == token_string)
-			{
-				prefix = value_string();
-				token_next();
-			}
-			ofp = new srec_output_file_c(fn, prefix);
+			prefix = value_string();
+			token_next();
 		}
-		break;
-
-	case token_wilson:
-		token_next();
-		ofp = new srec_output_file_wilson(fn);
-		break;
+		ofp = new srec_output_file_vhdl(fn, bytes_per_word, prefix);
 	}
+	break;
 
-	/*
-	 * return the stream determined
-	 */
-	return ofp;
+    case token_c_array:
+	{
+		const char *prefix = "eprom";
+		if (token_next() == token_string)
+		{
+			prefix = value_string();
+			token_next();
+		}
+		ofp = new srec_output_file_c(fn, prefix);
+	}
+	break;
+
+    case token_wilson:
+	token_next();
+	ofp = new srec_output_file_wilson(fn);
+	break;
+    }
+
+    /*
+     * return the stream determined
+     */
+    return ofp;
 }

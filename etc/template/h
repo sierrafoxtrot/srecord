@@ -31,28 +31,30 @@
   * The ${id ${trim_dir ${trim_ext $fn}}} class is used to represent
   */
 class ${id ${trim_dir ${trim_ext $fn}}}:
-	public ${id ${trim_dir ${dirname_rel $fn}}}
+    public ${id ${trim_dir ${dirname_rel $fn}}}
 {
 public:
-	/**
-	  * The destructor.
-	  */
-	virtual ~${id ${trim_dir ${trim_ext $fn}}}();
+    /**
+      * The destructor.
+      */
+    virtual ~${id ${trim_dir ${trim_ext $fn}}}();
 
-	/**
-	  * The default constructor.
-	  */
-	${id ${trim_dir ${trim_ext $fn}}}();
+    /**
+      * The default constructor.
+      */
+    ${id ${trim_dir ${trim_ext $fn}}}();
 
-	/**
-	  * The copy constructor.
-	  */
-	${id ${trim_dir ${trim_ext $fn}}}(const ${id ${trim_dir ${trim_ext $fn}}} &);
+    /**
+      * The copy constructor.
+      */
+    ${id ${trim_dir ${trim_ext $fn}}}(const ${id ${trim_dir ${trim_ext
+	$fn}}} &);
 
-	/**
-	  * The assignment operator.
-	  */
-	${id ${trim_dir ${trim_ext $fn}}} &operator=(const ${id ${trim_dir ${trim_ext $fn}}} &);
+    /**
+      * The assignment operator.
+      */
+    ${id ${trim_dir ${trim_ext $fn}}} &operator=(const ${id ${trim_dir
+	${trim_ext $fn}}} &);
 };
 
 #endif // ${id ${upcase $fn}}

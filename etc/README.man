@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 2000, 2001 Peter Miller;
+.\"	Copyright (C) 1998, 2000-2002 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -79,6 +79,10 @@ Motorola S-Record
 The Motorola hexadecimal S-Record format is understood for both reading
 and writing.
 (Also known as the Exorciser, Exormacs or Exormax format.)
+.TP 8n
+OS65V
+The Ohio Scientific hexadecimal format is understood for both reading
+and writing.
 .TP 8n
 Signetics
 The Signetics format is understood for both reading and writing.
