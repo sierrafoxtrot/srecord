@@ -28,13 +28,25 @@
 
 
 srec_output_file_c::srec_output_file_c()
-	: srec_output_file("-"), prefix("no_name_given"), line_length(75)
+	: srec_output_file("-"),
+	  prefix("no_name_given"),
+	  taddr(0),
+	  header_done(false),
+	  column(0),
+	  current_address(0),
+	  line_length(75)
 {
 }
 
 
 srec_output_file_c::srec_output_file_c(const char *filename, const char *a2)
-	: srec_output_file(filename), prefix(a2), line_length(75)
+	: srec_output_file(filename),
+	  prefix(a2),
+	  taddr(0),
+	  header_done(false),
+	  column(0),
+	  current_address(0),
+	  line_length(75)
 {
 }
 
@@ -86,7 +98,7 @@ srec_output_file_c::~srec_output_file_c()
 {
 	emit_header();
 	if (range.empty())
-		emit_byte(0);
+		emit_byte(0xFF);
 	if (column)
 		put_char('\n');
 	put_string("};\n");
