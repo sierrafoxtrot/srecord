@@ -1,0 +1,248 @@
+/*
+ *	srecord - manipulate eprom load files
+ *	Copyright (C) 1998 Peter Miller;
+ *	All rights reserved.
+ *
+ *	This program is free software; you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation; either version 2 of the License, or
+ *	(at your option) any later version.
+ *
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
+ *
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program; if not, write to the Free Software
+ *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * MANIFEST: instructions to Cook: how to build the project
+ */
+
+set mkdir;
+set unlink;
+set time-adjust;
+
+project_source_files = [collect aegis -l pf -p [project] -c [change] -terse];
+change_source_files = [collect aegis -l cf -p [project] -c [change] -terse];
+source_files = [sort [project_source_files] [change_source_files]];
+
+debug = /* -g */ ;	/* g++ takes forever if you say -g for complex
+			template usage */
+
+all = ;
+
+/* the right hand side is deferred until triggered */
+all: [all];
+
+
+/*
+ * Generate lists of object files for libraries just in case they ar
+ * In general, it is probably easier to use the global library.
+ */
+library_list_master =
+	[stringset
+		[fromto lib/%1/%0% %1 [match_mask lib/%0%.c [source_files]]]
+		[fromto lib/%1/%0% %1 [match_mask lib/%0%.cc [source_files]]]
+	];
+library_list = [library_list_master];
+loop
+{
+	library = [head [library_list]];
+	if [not [library]] then
+		loopstop;
+	library_list = [tail [library_list]];
+
+	lib/[library]/[library]_obj =
+		[fromto %0%.c [arch]/%0%.o
+			[match_mask lib/[library]/%0%.c [source_files]]
+		]
+		[fromto %0%.cc [arch]/%0%.o
+			[match_mask lib/[library]/%0%.cc [source_files]]
+		]
+		;
+}
+lib/[project]_obj =
+	[fromto %0%.c [arch]/%0%.o
+		[match_mask lib/%0%.c [source_files]]
+	]
+	[fromto %0%.cc [arch]/%0%.o
+		[match_mask lib/%0%.cc [source_files]]
+	]
+	;
+
+/*
+ * Generate lists of object files for programs
+ */
+program_list_master =
+	[stringset
+		[fromto prog/%1/%0% %1 [match_mask prog/%0%.c [source_files]]]
+		[fromto prog/%1/%0% %1 [match_mask prog/%0%.cc [source_files]]]
+	];
+program_list = [program_list_master];
+loop
+{
+	program = [head [program_list]];
+	if [not [program]] then
+		loopstop;
+	program_list = [tail [program_list]];
+
+	[program]_obj =
+		[fromto %0%.c [arch]/%0%.o
+			[match_mask prog/[program]/%0%.c [source_files]]
+		]
+		[fromto %0%.cc [arch]/%0%.o
+			[match_mask prog/[program]/%0%.cc [source_files]]
+		]
+		;
+	[program]_libs =
+		[arch]/lib/lib[project].a
+		;
+	all =
+		[all]
+		[arch]/bin/[program]
+		;
+}
+
+if [match %1C%2 [version]] then
+{
+	search_list = . bl;
+}
+else
+{
+	/*
+	 * this is essential so that aeipass does the right thing
+	 *
+	 * It also means that generated files (e.g. from objen) have consistent
+	 * mod-times after integration, sop everythign does not immediately
+	 * re-build.
+	 */
+	set time-adjust-back;
+	all = [all] archive/[project].tar.gz;
+}
+
+
+cc = gcc;
+c++ = g++;
+cc_include_flags =
+	[prepost "-I" "" [search_list]]
+	[prepost "-I" "/include" [search_list]]
+	;
+cc_flags = -O [debug];
+ld_flags = [debug];
+
+
+[arch]/%1/%2/%0%.o: %1/%2/%0%.c
+{
+	[cc]
+		[stringset
+			[cc_include_flags]
+			[prepost -I /%1/%2 [search_list]]
+			[prepost -I /%1/%2/include [search_list]]
+			[prepost -I /[dirname %1/%2/%0%.c] [search_list]]
+		]
+		[cc_flags] -c [resolve %1/%2/%0%.c] -o [target];
+}
+
+
+[arch]/%1/%2/%0%.o: %1/%2/%0%.cc
+{
+	[c++]
+		[stringset
+			[cc_include_flags]
+			[prepost -I /%1/%2 [search_list]]
+			[prepost -I /%1/%2/include [search_list]]
+			[prepost -I /[dirname %1/%2/%0%.cc] [search_list]]
+		]
+		[cc_flags] -c [resolve %1/%2/%0%.cc] -o [target]
+	set meter;
+}
+
+
+c_incl = c_incl;
+
+%1/%2/%0%.d: %1/%2/%0%.c
+{
+	[c_incl] -nc -ns
+		[cc_include_flags]
+		[prepost -I /%1/%2 [search_list]]
+		[resolve %1/%2/%0%.c]
+		-prefix "'[arch]/%1/%2/%0%.o %1/%2/%0%.d: %1/%2/%0%.c'"
+		-suffix "'set nodefault;'"
+		-nsri
+		[prepost "-rlp=" "" [search_list]]
+		-slp [arch] "'[arch]'"
+		-o [target];
+}
+
+%1/%2/%0%.d: %1/%2/%0%.cc
+{
+	[c_incl] -nc -ns
+		[cc_include_flags]
+		[prepost -I /%1/%2 [search_list]]
+		[resolve %1/%2/%0%.cc]
+		-prefix "'[arch]/%1/%2/%0%.o %1/%2/%0%.d: %1/%2/%0%.cc'"
+		-suffix "'set nodefault;'"
+		-nsri
+		[prepost "-rlp=" "" [search_list]]
+		-slp [arch] "'[arch]'"
+		-o [target];
+}
+
+cc_dep_files =
+	[fromto %0%.c %0%.d [match_mask %1/%2/%0%.c [source_files]]]
+	[fromto %0%.cc %0%.d [match_mask %1/%2/%0%.cc [source_files]]]
+	;
+
+#include-cooked-nowarn [cc_dep_files]
+
+/*
+ * specific include files for the various modules
+ */
+#include-cooked-nowarn [resolve [match_mask %0module.cook [source_files]]]
+
+[arch]/bin/%: [%_obj] [%_libs]
+{
+	[c++] [ld_flags] -o [target] [resolve [%_obj] [%_libs]] -lm;
+}
+then
+{
+	/*
+	 * If the target is not exactly where we think it is, then it
+	 * is up-to-date further down the search_list.	Make a symbolic
+	 * link, so the developers don't need to go hunting for it.
+	 */
+	if [in [target] [all]] then
+	if [not [exists [target]]] then
+	if [exists [resolve [target]]] then
+	{
+		if [not [exists [dirname [target]]]] then
+			mkdir -p [dirname [target]]
+				set clearstat;
+		ln -s [pathname [resolve [target]]] [target]
+			set clearstat;
+	}
+}
+
+[arch]/%0lib%.a: [%0%_obj]
+{
+	ar cq [target] [resolve [%0%_obj]];
+	if [find_command ranlib] then
+		ranlib [target];
+}
+
+
+archive/[project].tar.gz: [source_files]
+{
+	tar cf - [resolve [source_files]]
+		| tardy
+			-una Peter -gna Miller
+			-unu 0 -gnu 0
+			-ms 0644 -mc 07022
+			-now
+			[prepost "-rp=" "" [search_list]]
+		| gzip -9
+		> [target];
+}
+
