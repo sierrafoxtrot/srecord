@@ -90,6 +90,16 @@ srec_input_file_tektronix::read_inner(srec_record &record)
 				break;
 		}
 	}
+
+	if (peek_char() == '/')
+	{
+		/*
+		 * lines beginning with ``//'' are end-of-file records
+		 */
+		seek_to_end();
+		return 0;
+	}
+
 	unsigned char buffer[255+5];
 	checksum_reset();
 	buffer[0] = get_byte();
