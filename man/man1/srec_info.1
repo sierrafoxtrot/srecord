@@ -1,0 +1,66 @@
+'\" t
+.\"	srecord - manipulate eprom load files
+.\"	Copyright (C) 1998 Peter Miller;
+.\"	All rights reserved.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"
+.\" MANIFEST: manual entry for the srec_info command
+.\"
+.ds n) srec_info
+.TH \*(n) 1 SRecord "Reference Manual"
+.SH NAME
+\*(n) \- information about eprom load files
+.SH SYNOPSIS
+.B \*(n)
+[
+.IR option \&...
+]
+.IR filename \&...
+.br
+.B \*(n)
+.B -Help
+.br
+.B \*(n)
+.B -VERSion
+.SH DESCRIPTION
+The
+.I \*(n)
+program is used to
+obtain input about eprom load files.
+It reads the files specified, and then presents statistics about them.
+These statistics include: the file header if any, the start address if any, and the address ranges covered by the data if any.
+.so o_input.so
+.br
+.ne 1i
+.SH OPTIONS
+The following options are understood:
+.TP 8n
+.B -Help
+.br
+Provide some help with using the
+.I \*(n)
+program.
+.TP 8n
+.B -VERSion
+.br
+Print the version of the
+.I \*(n)
+program being executed.
+.PP
+All other options will produce a diagnostic error.
+.so z_options.so
+.so z_exit.so
+.so z_copyright.so
