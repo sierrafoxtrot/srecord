@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001-2003 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001-2004 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -45,6 +45,8 @@ main(int argc, char **argv)
     int address_length = 0;
     const char *header = 0;
     bool header_set = false;
+    unsigned long start_address = 0;
+    bool start_address_set = false;
     while (cmdline.token_cur() != arglex::token_eoln)
     {
 	switch (cmdline.token_cur())
@@ -109,6 +111,12 @@ main(int argc, char **argv)
 	    header = cmdline.value_string();
 	    header_set = true;
 	    break;
+
+	case srec_cat_arglex3::token_start_address:
+	    cmdline.token_next();
+	    start_address = cmdline.get_number("-Start_Address");
+	    start_address_set = true;
+	    continue;
 	}
 	cmdline.token_next();
     }
@@ -140,6 +148,8 @@ main(int argc, char **argv)
 	mp->reader(ifp, true);
 	delete ifp;
     }
+    if (start_address_set)
+	mp->set_start_address(start_address);
 
     //
     // Open the output file and write the remembered data out to it.

@@ -145,18 +145,18 @@ public:
       */
     class srec_output *get_output();
 
+    /**
+      * The get_number method is used to parse a numeric value fromthe
+      * command line.
+      */
+    unsigned long get_number(const char *caption);
+
 private:
     /**
       * The can_get_number method is used to determine if it is possible
       * to parse a number from the next token on the command line.
       */
     bool can_get_number() const;
-
-    /**
-      * The get_number method is used to parse a numeric value fromthe
-      * command line.
-      */
-    unsigned long get_number(const char *caption);
 
     /**
       * The get_interval_inner method is used to parse a single
