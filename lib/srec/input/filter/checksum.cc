@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -27,17 +27,15 @@
 #include <srec/record.h>
 
 
-srec_input_filter_checksum::srec_input_filter_checksum()
-	: srec_input_filter(), checksum_address(0), length(0),
-		checksum_order(0), data(), sum(0), width(1)
-{
-}
-
-
 srec_input_filter_checksum::srec_input_filter_checksum(srec_input *a1, int a2,
-		int a3, int a4, int a5)
-	: srec_input_filter(a1), checksum_address(a2), length(a3),
-		checksum_order(!!a4), data(), sum(0), width(a5)
+		int a3, int a4, int a5) :
+	srec_input_filter(a1),
+	checksum_address(a2),
+	length(a3),
+	checksum_order(!!a4),
+	data(),
+	sum(0),
+	width(a5)
 {
 	if (length < 0)
 		length = 0;
@@ -47,48 +45,6 @@ srec_input_filter_checksum::srec_input_filter_checksum(srec_input *a1, int a2,
 		width = 1;
 	else if (width > length)
 	    	width = length;
-}
-
-
-srec_input_filter_checksum::srec_input_filter_checksum(
-		const srec_input_filter_checksum &arg)
-	: srec_input_filter(arg), checksum_address(arg.checksum_address),
-		length(arg.length), checksum_order(arg.checksum_order), data(),
-		sum(0), width(arg.width)
-{
-	if (length < 0)
-		length = 0;
-	else if (length > (int)sizeof(sum_t))
-		length = sizeof(sum_t);
-	if (width < 1)
-		width = 1;
-	else if (width > length)
-	    	width = length;
-}
-
-
-srec_input_filter_checksum &
-srec_input_filter_checksum::operator=(const srec_input_filter_checksum &arg)
-{
-	if (this != &arg)
-	{
-		srec_input_filter::operator=(arg);
-		checksum_address = arg.checksum_address;
-		length = arg.length;
-		checksum_order = arg.checksum_order;
-		sum = 0;
-		width = arg.width;
-
-		if (length < 0)
-			length = 0;
-		else if (length > (int)sizeof(sum_t))
-			length = sizeof(sum_t);
-		if (width < 1)
-			width = 1;
-		else if (width > length)
-	    		width = length;
-	}
-	return *this;
 }
 
 

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Peter Miller;
+ *	Copyright (C) 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -37,7 +37,6 @@ public:
 	virtual int read(srec_record &);
 
 private:
-	srec_input *deeper;
 	unsigned long address;
 	int order;
 	class srec_memory *buffer;

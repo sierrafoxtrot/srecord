@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Peter Miller;
+ *	Copyright (C) 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -25,32 +25,10 @@
 #include <srec/input/filter/checksum/positive.h>
 
 
-srec_input_filter_checksum_positive::srec_input_filter_checksum_positive()
-{
-}
-
-
 srec_input_filter_checksum_positive::srec_input_filter_checksum_positive(
-		srec_input *a1, int a2, int a3, int a4, int a5)
-	: srec_input_filter_checksum(a1, a2, a3, a4, a5)
+		srec_input *a1, int a2, int a3, int a4, int a5) :
+	srec_input_filter_checksum(a1, a2, a3, a4, a5)
 {
-}
-
-
-srec_input_filter_checksum_positive::srec_input_filter_checksum_positive(const srec_input_filter_checksum_positive &arg)
-	: srec_input_filter_checksum(arg)
-{
-}
-
-
-srec_input_filter_checksum_positive &
-srec_input_filter_checksum_positive::operator=(const srec_input_filter_checksum_positive &arg)
-{
-	if (this != &arg)
-	{
-		srec_input_filter_checksum::operator=(arg);
-	}
-	return *this;
 }
 
 

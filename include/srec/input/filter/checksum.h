@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -47,8 +47,8 @@ protected:
 	int width;
 	virtual sum_t calculate() = 0;
 
-	// These would be private, but we need then protected so that
-	// we can write the derived class default constructors.
+private:
+	// Do not use these...
 	srec_input_filter_checksum();
 	srec_input_filter_checksum(const srec_input_filter_checksum &);
 	srec_input_filter_checksum &operator=(const srec_input_filter_checksum &);

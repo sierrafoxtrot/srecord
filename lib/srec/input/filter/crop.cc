@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -27,33 +27,13 @@
 #include <srec/record.h>
 
 
-srec_input_filter_crop::srec_input_filter_crop()
-	: srec_input_filter(), range(), data(), data_range()
-{
-}
-
-
 srec_input_filter_crop::srec_input_filter_crop(srec_input *a1,
-		const interval &a2)
-	: srec_input_filter(a1), range(a2), data(), data_range()
+		const interval &a2) :
+	srec_input_filter(a1),
+	range(a2),
+	data(),
+	data_range()
 {
-}
-
-
-srec_input_filter_crop::srec_input_filter_crop(const srec_input_filter_crop &arg)
-	: srec_input_filter(arg), range(arg.range), data(), data_range()
-{
-}
-
-
-srec_input_filter_crop &
-srec_input_filter_crop::operator=(const srec_input_filter_crop &arg)
-{
-	srec_input_filter::operator=(arg);
-	range = arg.range;
-	data = srec_record();
-	data_range = interval();
-	return *this;
 }
 
 

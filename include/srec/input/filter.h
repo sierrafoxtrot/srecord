@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2000 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -29,6 +29,12 @@
 
 class srec_input_filter: public srec_input
 {
+protected:
+	//
+	// I'd like this to be private, but srec_input_filter_crc16 and
+	// srec_input_filter_crc32 need to access it directly, rather than
+	// going through the srec_input_filter::read method.
+	//
 	srec_input *ifp;
 
 public:
@@ -39,7 +45,8 @@ public:
 	virtual const string filename_and_line() const;
 	virtual const char *get_file_format_name() const;
 
-protected:
+private:
+	// do not use these methods...
 	srec_input_filter();
 	srec_input_filter(const srec_input_filter &);
 	srec_input_filter &operator=(const srec_input_filter &);

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -42,6 +42,8 @@ private:
 	unsigned long maximum;
 	bool limits_set;
 	srec_record *data;
+
+	// Do not use these...
 	srec_input_filter_length();
 	srec_input_filter_length(const srec_input_filter_length &);
 	srec_input_filter_length &operator=(const srec_input_filter_length &);

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -26,37 +26,15 @@
 #include <srec/record.h>
 
 
-srec_input_filter_unsplit::srec_input_filter_unsplit()
-	: modulus(2), offset(0), width(1), buffer(), buffer_pos(0)
+srec_input_filter_unsplit::srec_input_filter_unsplit(srec_input *a1, int a2,
+		int a3, int a4) :
+	srec_input_filter(a1),
+	modulus(a2),
+	offset(a3),
+	width(a4),
+	buffer(),
+	buffer_pos(0)
 {
-}
-
-
-srec_input_filter_unsplit::srec_input_filter_unsplit(srec_input *a1, int a2, int a3,
-		int a4)
-	: srec_input_filter(a1), modulus(a2), offset(a3), width(a4),
-	  buffer(), buffer_pos(0)
-{
-}
-
-
-srec_input_filter_unsplit::srec_input_filter_unsplit(const srec_input_filter_unsplit &arg)
-	: srec_input_filter(arg), modulus(arg.modulus), offset(arg.offset),
-	  width(arg.width), buffer(arg.buffer), buffer_pos(arg.buffer_pos)
-{
-}
-
-
-srec_input_filter_unsplit &
-srec_input_filter_unsplit::operator=(const srec_input_filter_unsplit &arg)
-{
-	srec_input_filter::operator=(arg);
-	modulus = arg.modulus;
-	offset = arg.offset;
-	width = arg.width;
-	buffer = arg.buffer;
-	buffer_pos = arg.buffer_pos;
-	return *this;
 }
 
 

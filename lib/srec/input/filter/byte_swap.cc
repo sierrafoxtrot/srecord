@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 2000 Peter Miller;
+ *	Copyright (C) 2000, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -26,39 +26,11 @@
 #include <srec/record.h>
 
 
-srec_input_filter_byte_swap::srec_input_filter_byte_swap()
-	: buffer(),
-	  buffer_pos(0)
+srec_input_filter_byte_swap::srec_input_filter_byte_swap(srec_input *arg) :
+	srec_input_filter(arg),
+	buffer(),
+	buffer_pos(0)
 {
-}
-
-
-srec_input_filter_byte_swap::srec_input_filter_byte_swap(srec_input *arg)
-	: srec_input_filter(arg),
-	  buffer(),
-	  buffer_pos(0)
-{
-}
-
-
-srec_input_filter_byte_swap::srec_input_filter_byte_swap(const srec_input_filter_byte_swap &arg)
-	: srec_input_filter(arg),
-	  buffer(arg.buffer),
-	  buffer_pos(arg.buffer_pos)
-{
-}
-
-
-srec_input_filter_byte_swap &
-srec_input_filter_byte_swap::operator=(const srec_input_filter_byte_swap &arg)
-{
-	if (this != &arg)
-	{
-		srec_input_filter::operator=(arg);
-		buffer = arg.buffer;
-		buffer_pos = arg.buffer_pos;
-	}
-	return *this;
 }
 
 

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -26,17 +26,15 @@
 #include <srec/record.h>
 
 
-srec_input_filter_minimum::srec_input_filter_minimum()
-	: srec_input_filter(), minimum_address(0), minimum_length(0),
-		minimum_order(0), minimum(0), minimum_set(false), data(0)
-{
-}
-
-
 srec_input_filter_minimum::srec_input_filter_minimum(srec_input *a1, int a2,
-		int a3, int a4)
-	: srec_input_filter(a1), minimum_address(a2), minimum_length(a3),
-		minimum_order(a4), minimum(0), minimum_set(false), data(0)
+		int a3, int a4) :
+	srec_input_filter(a1),
+	minimum_address(a2),
+	minimum_length(a3),
+	minimum_order(a4),
+	minimum(0),
+	minimum_set(false),
+	data(0)
 {
 	if (minimum_length < 0)
 		minimum_length = 0;
@@ -44,40 +42,6 @@ srec_input_filter_minimum::srec_input_filter_minimum(srec_input *a1, int a2,
 		minimum_length = 8;
 	minimum = minimum_address;
 	minimum_set = true;
-}
-
-
-srec_input_filter_minimum::srec_input_filter_minimum(
-		const srec_input_filter_minimum &arg)
-	: srec_input_filter(arg), minimum_address(arg.minimum_address),
-		minimum_length(arg.minimum_length),
-		minimum_order(arg.minimum_order), minimum(0),
-		minimum_set(false), data(0)
-{
-	if (minimum_length < 0)
-		minimum_length = 0;
-	else if (minimum_length > 8)
-		minimum_length = 8;
-	minimum = minimum_address;
-	minimum_set = true;
-}
-
-
-srec_input_filter_minimum &
-srec_input_filter_minimum::operator=(const srec_input_filter_minimum &arg)
-{
-	srec_input_filter::operator=(arg);
-	minimum_address = arg.minimum_address;
-	minimum_length = arg.minimum_length;
-	minimum_order = arg.minimum_order;
-
-	if (minimum_length < 0)
-		minimum_length = 0;
-	else if (minimum_length > 8)
-		minimum_length = 8;
-	minimum = minimum_address;
-	minimum_set = true;
-	return *this;
 }
 
 

@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -26,30 +26,10 @@
 #include <srec/record.h>
 
 
-srec_input_filter_and::srec_input_filter_and()
-	: srec_input_filter(), value(0)
+srec_input_filter_and::srec_input_filter_and(srec_input *a1, int a2) :
+	srec_input_filter(a1),
+	value(a2)
 {
-}
-
-
-srec_input_filter_and::srec_input_filter_and(srec_input *a1, int a2)
-	: srec_input_filter(a1), value(a2)
-{
-}
-
-
-srec_input_filter_and::srec_input_filter_and(const srec_input_filter_and &arg)
-	: srec_input_filter(arg), value(arg.value)
-{
-}
-
-
-srec_input_filter_and &
-srec_input_filter_and::operator=(const srec_input_filter_and &arg)
-{
-	srec_input_filter::operator=(arg);
-	value = arg.value;
-	return *this;
 }
 
 

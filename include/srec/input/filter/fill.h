@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2001 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -41,6 +41,8 @@ private:
 	unsigned char *filler_block;
 	interval range;
 	srec_record data;
+
+	// Do not use these...
 	srec_input_filter_fill();
 	srec_input_filter_fill(const srec_input_filter_fill &);
 	srec_input_filter_fill &operator=(const srec_input_filter_fill &);
