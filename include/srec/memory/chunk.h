@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999 Peter Miller;
+ *	Copyright (C) 1998, 1999, 2000 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -24,6 +24,8 @@
 #define INCLUDE_SREC_MEMORY_CHUNK_H
 
 #pragma interface "srec_memory_chunk"
+
+#include <stddef.h>
 
 class srec_memory_chunk
 {
