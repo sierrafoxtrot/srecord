@@ -34,6 +34,8 @@ public:
 	{
 		token_binary = arglex::token_MAX,
 		token_c_array,
+		token_checksum_be,
+		token_checksum_le,
 		token_crop,
 		token_exclude,
 		token_fill,

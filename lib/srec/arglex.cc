@@ -28,6 +28,7 @@
 #include <srec/input/file/binary.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/srecord.h>
+#include <srec/input/filter/checksum.h>
 #include <srec/input/filter/crop.h>
 #include <srec/input/filter/fill.h>
 #include <srec/input/filter/length.h>
@@ -52,6 +53,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 	{
 		{ "(",		token_paren_begin,	},
 		{ ")",		token_paren_end,	},
+		{ "-Big_Endian_Checksum", token_checksum_be, },
 		{ "-Big_Endian_Length",	token_length_be, },
 		{ "-BINary",	token_binary,	},
 		{ "-C_Array",	token_c_array,	},
@@ -59,6 +61,7 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Exclude",	token_exclude,	},
 		{ "-Fill",	token_fill,	},
 		{ "-Intel",	token_intel,	},
+		{ "-Little_Endian_Checksum", token_checksum_le, },
 		{ "-Little_Endian_Length", token_length_le, },
 		{ "-Motorola",	token_motorola,	},
 		{ "-OFfset",	token_offset,	},
@@ -345,6 +348,48 @@ srec_arglex::get_input()
 				);
 				ifp =
 					new srec_input_filter_length
+					(
+						ifp,
+						address,
+						nbytes,
+						1
+					);
+			}
+			continue;
+
+		case token_checksum_be:
+			{
+				unsigned long address;
+				int nbytes;
+				get_address_and_nbytes
+				(
+					"-Big_Endian_Checksum",
+					address,
+					nbytes
+				);
+				ifp =
+					new srec_input_filter_checksum
+					(
+						ifp,
+						address,
+						nbytes,
+						0
+					);
+			}
+			continue;
+
+		case token_checksum_le:
+			{
+				unsigned long address;
+				int nbytes;
+				get_address_and_nbytes
+				(
+					"-Little_Endian_Checksum",
+					address,
+					nbytes
+				);
+				ifp =
+					new srec_input_filter_checksum
 					(
 						ifp,
 						address,
