@@ -247,26 +247,9 @@ cc_dep_files =
 #include-cooked-nowarn [resolve [match_mask %0module.cook [source_files]]]
 
 [arch]/bin/%: [%_obj] [%_libs]
+	set shallow
 {
 	[c++] [ld_flags] -o [target] [resolve [%_obj] [%_libs]] -lm;
-}
-then
-{
-	/*
-	 * If the target is not exactly where we think it is, then it
-	 * is up-to-date further down the search_list.	Make a symbolic
-	 * link, so the developers don't need to go hunting for it.
-	 */
-	if [in [target] [all]] then
-	if [not [exists [target]]] then
-	if [exists [resolve [target]]] then
-	{
-		if [not [exists [dirname [target]]]] then
-			mkdir -p [dirname [target]]
-				set clearstat;
-		ln -s [pathname [resolve [target]]] [target]
-			set clearstat;
-	}
 }
 
 [arch]/%0lib%.a: [%0%_obj]
