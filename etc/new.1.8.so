@@ -22,6 +22,12 @@
 .PP
 .if n *
 .if t \(bu
+.\" change 25
+The Elektor Monitor (EMON52) format
+is now understood for both reading and writing.
+.PP
+.if n *
+.if t \(bu
 .\" change 22
 The Signetics format
 is now understood for both reading and writing.

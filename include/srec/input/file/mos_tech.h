@@ -27,24 +27,64 @@
 
 #include <srec/input/file.h>
 
+/**
+  * The mos_tech class is used to parse a Mos Technologies format file.
+  */
 class srec_input_file_mos_tech: public srec_input_file
 {
 public:
+	/**
+	  * The default constructor.  The input is read from the
+	  * standard input.
+	  */
 	srec_input_file_mos_tech();
-	srec_input_file_mos_tech(const char *);
+
+	/**
+	  * A constructor.  The input is read from the named file (or
+	  * the standard input if the file anme is "-").
+	  */
+	srec_input_file_mos_tech(const char *filename);
+
+	/**
+	  * The destructor.
+	  */
 	virtual ~srec_input_file_mos_tech();
+
+	// See base class for documentation.
 	int read(srec_record &);
+
+	// See base class for documentation.
 	const char *get_file_format_name() const;
 
 private:
-	srec_input_file_mos_tech(const srec_input_file_mos_tech &);
-	srec_input_file_mos_tech &operator=(const srec_input_file_mos_tech &);
-	int data_record_count;
+	/**
+	  * Read one line (record) of input.  Called by the read() method.
+	  * Returns false at end of file.
+	  */
 	int read_inner(srec_record &);
+
+	/**
+	  * The garbage_warning instance variable is used to remember
+	  * whther or not a warning has been issued about non-format
+	  * lines in the file.  Only one warning per file is issued.
+	  */
 	bool garbage_warning;
+
+	/**
+	  * The seen_some_input instance variable is used to
+	  * remember whether any input has been seen.
+	  */
 	bool seen_some_input;
-	bool header_seen;
-	bool termination_seen;
+
+	/**
+	  * The copy constructor.  Do not use.
+	  */
+	srec_input_file_mos_tech(const srec_input_file_mos_tech &);
+
+	/**
+	  * The assignment operator.  Do not use.
+	  */
+	srec_input_file_mos_tech &operator=(const srec_input_file_mos_tech &);
 };
 
 #endif /* INCLUDE_SREC_INPUT_FILE_MOS_TECH_H */

@@ -28,10 +28,11 @@
 #include <srec/input/file/ascii_hex.h>
 #include <srec/input/file/atmel_generic.h>
 #include <srec/input/file/binary.h>
+#include <srec/input/file/four_packed_code.h>
+#include <srec/input/file/emon52.h>
 #include <srec/input/file/guess.h>
 #include <srec/input/file/intel.h>
 #include <srec/input/file/mos_tech.h>
-#include <srec/input/file/four_packed_code.h>
 #include <srec/input/file/signetics.h>
 #include <srec/input/file/spasm.h>
 #include <srec/input/file/srecord.h>
@@ -89,8 +90,10 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Little_Endian_Cyclic_Redundancy_Check_16", token_crc16_le,},
 		{ "-Big_Endian_Cyclic_Redundancy_Check_32", token_crc32_be, },
 		{ "-Little_Endian_Cyclic_Redundancy_Check_32", token_crc32_le,},
+		{ "-Elektor_Monitor52",	token_emon52,	},
 		{ "-Exclude",	token_exclude,		},
 		{ "-Fill",	token_fill,		},
+		{ "-Four_Packed_Code", token_four_packed_code, },
 		{ "-GUess",	token_guess,		},
 		{ "-Intel",	token_intel,		},
 		{ "-Little_Endian_Checksum", token_checksum_le_bitnot, },
@@ -109,7 +112,6 @@ srec_arglex::srec_arglex(int argc, char **argv)
 		{ "-Output",	token_output,		},
 		{ "-OVer",	token_over,		},
 		{ "-RAw",	token_binary,		},
-		{ "-Four_Packed_Code", token_four_packed_code, },
 		{ "-SIGnetics",	token_signetics,	},
 		{ "-SPAsm",	token_spasm_be,		}, // is this right?
 		{ "-SPAsm_BigEndian", token_spasm_be,	},
@@ -380,6 +382,21 @@ srec_arglex::get_input()
 		ifp = new srec_input_file_atmel_generic(fn, false);
 		break;
 
+	case token_binary:
+		token_next();
+		ifp = new srec_input_file_binary(fn);
+		break;
+
+	case token_four_packed_code:
+		token_next();
+		ifp = new srec_input_file_four_packed_code(fn);
+		break;
+
+	case token_emon52:
+		token_next();
+		ifp = new srec_input_file_emon52(fn);
+		break;
+
 	case token_guess:
 		token_next();
 		ifp = srec_input_file_guess(fn);
@@ -393,11 +410,6 @@ srec_arglex::get_input()
 	case token_mos_tech:
 		token_next();
 		ifp = new srec_input_file_mos_tech(fn);
-		break;
-
-	case token_four_packed_code:
-		token_next();
-		ifp = new srec_input_file_four_packed_code(fn);
 		break;
 
 	case token_signetics:
@@ -428,11 +440,6 @@ srec_arglex::get_input()
 	case token_ti_tagged:
 		token_next();
 		ifp = new srec_input_file_ti_tagged(fn);
-		break;
-
-	case token_binary:
-		token_next();
-		ifp = new srec_input_file_binary(fn);
 		break;
 
 	case token_wilson:

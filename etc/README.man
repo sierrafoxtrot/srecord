@@ -68,6 +68,9 @@ The Motorola hexadecimal S-Record format is understood for both reading
 and writing.
 (Also known as the Exorciser, Exormacs or Exormax format.)
 .TP
+Elektor Monitor(EMON52)
+The EMON52 format is understood for both reading and writing.
+.TP
 Four Packed Code (FPC)
 The FPC format is understood for both reading and writing.
 .TP 8n

@@ -21,22 +21,21 @@
  */
 
 #include <srec/arglex.h>
-
-
 #include <srec/output/file/ascii_hex.h>
 #include <srec/output/file/atmel_generic.h>
 #include <srec/output/file/binary.h>
 #include <srec/output/file/c.h>
-#include <srec/output/file/vhdl.h>
+#include <srec/output/file/emon52.h>
+#include <srec/output/file/four_packed_code.h>
 #include <srec/output/file/intel.h>
 #include <srec/output/file/mos_tech.h>
-#include <srec/output/file/four_packed_code.h>
 #include <srec/output/file/signetics.h>
 #include <srec/output/file/spasm.h>
 #include <srec/output/file/srecord.h>
-#include <srec/output/file/tektronix.h>
 #include <srec/output/file/tektronix_extended.h>
+#include <srec/output/file/tektronix.h>
 #include <srec/output/file/ti_tagged.h>
+#include <srec/output/file/vhdl.h>
 #include <srec/output/file/wilson.h>
 
 
@@ -103,6 +102,21 @@ srec_arglex::get_output()
 		ofp = new srec_output_file_atmel_generic(fn, false);
 		break;
 
+	case token_binary:
+		token_next();
+		ofp = new srec_output_file_binary(fn);
+		break;
+
+	case token_four_packed_code:
+		token_next();
+		ofp = new srec_output_file_four_packed_code(fn);
+		break;
+
+	case token_emon52:
+		token_next();
+		ofp = new srec_output_file_emon52(fn);
+		break;
+
 	case token_intel:
 		token_next();
 		ofp = new srec_output_file_intel(fn);
@@ -111,11 +125,6 @@ srec_arglex::get_output()
 	case token_mos_tech:
 		token_next();
 		ofp = new srec_output_file_mos_tech(fn);
-		break;
-
-	case token_four_packed_code:
-		token_next();
-		ofp = new srec_output_file_four_packed_code(fn);
 		break;
 
 	case token_signetics:
@@ -146,11 +155,6 @@ srec_arglex::get_output()
 	case token_ti_tagged:
 		token_next();
 		ofp = new srec_output_file_ti_tagged(fn);
-		break;
-
-	case token_binary:
-		token_next();
-		ofp = new srec_output_file_binary(fn);
 		break;
 
 	case token_vhdl:
