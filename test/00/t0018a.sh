@@ -18,7 +18,7 @@
 #	along with this program; if not, write to the Free Software
 #	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
-# MANIFEST: Test the ??? functionality
+# MANIFEST: Test the default input functionality
 #
 here=`pwd`
 if test $? -ne 0 ; then exit 2; fi
@@ -36,7 +36,7 @@ fail()
 {
 	cd $here
 	rm -rf $work
-	echo 'FAILED test of the ??? functionality'
+	echo 'FAILED test of the default input functionality'
 	exit 1
 }
 
@@ -44,7 +44,7 @@ no_result()
 {
 	cd $here
 	rm -rf $work
-	echo 'NO RESULT for test of the ??? functionality'
+	echo 'NO RESULT for test of the default input functionality'
 	exit 2
 }
 

@@ -89,6 +89,7 @@ Makefile.in: etc/Makefile.head etc/Makefile.sh etc/Makefile.awk
 }
 
 archive/[project_minus].tar.gz: [source_file_order]
+	set shallow
 {
 	tar cf - [resolve [source_file_order]]
 		| tardy
@@ -103,15 +104,19 @@ archive/[project_minus].tar.gz: [source_file_order]
 }
 
 archive/[project_minus].%: %
+	set shallow
 {
-	cat [need] > [target];
+	cat [resolve [need]] > [target];
 }
 
 %: etc/%.man
 {
-	roffpp [prepost "-I" "/etc" [search_list]] etc/%.man
-		| groff -Tascii -t -P-hub -man
-		> [target];
+	roffpp
+		[prepost "-I" /[arch]/etc [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		[resolve etc/%.man]
+	| groff -Tascii -t -P-hub -man
+	> [target];
 }
 
 etc/%.man.d: etc/%.man
@@ -138,7 +143,8 @@ etc/%.man.d: etc/%.man
 RPM: archive/[project_minus]-1.i386.rpm;
 
 archive/[project_minus]-1.i386.rpm archive/[project_minus]-1.src.rpm:
-	archive/[project_minus].tar.gz etc/rpm-build.sh
+		archive/[project_minus].tar.gz etc/rpm-build.sh
+	set shallow
 {
 	sh [resolve etc/rpm-build.sh]
 		RPM-temporary
@@ -161,11 +167,13 @@ archive/[project_minus]-1.i386.rpm archive/[project_minus]-1.src.rpm:
 }
 
 archive/[project_minus].spec: [project_minus].spec
+	set shallow
 {
-	cat [need] > [target];
+	cat [resolve [need]] > [target];
 }
 
 archive/%: etc/%.uue
+	set shallow
 {
 	uudecode -o [target] [resolve [need]];
 }
