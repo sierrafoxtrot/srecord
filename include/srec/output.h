@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -52,7 +52,7 @@ public:
 
 	/**
 	  * The write_header method is used to write a header record
-	  * to the output.  If no record is specified, a default "HDR"
+	  * to the output.  If no record is specified, a default
 	  * record will be supplied.  The write method will be called.
 	  */
 	virtual void write_header(const srec_record * = 0);
@@ -65,11 +65,12 @@ public:
 	virtual void write_data(unsigned long, const void *, size_t);
 
 	/**
-	  * The write_termination method may be used to write a start
-	  * address record the the outrput.  A suitable record will
-	  * be produced.  The write method will be called.
+	  * The write_start_address method is used to write a start
+	  * address record to the output.  If no record is specified,
+	  * a default record will be supplied.	The write method will
+	  * be called.
 	  */
-	virtual void write_termination(unsigned long = 0);
+	virtual void write_start_address(const srec_record * = 0);
 
 	/**
 	  * The set_line_length method is used to set the maximum

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -145,8 +145,13 @@ srec_output::write_header(const srec_record *rp)
     }
     else
     {
+	//
+	// This is the default header record.
+	// If you want to change it, this is the place.
+	//
+	static char hdr[] = "http://srecord.sourceforge.net/";
 	srec_record record(srec_record::type_header, (srec_record::address_t)0,
-	    (const srec_record::data_t *)"HDR", 3);
+	    (const srec_record::data_t *)hdr, strlen(hdr));
 	write(record);
     }
 }
@@ -171,8 +176,22 @@ srec_output::write_data(unsigned long address, const void *data, size_t length)
 
 
 void
-srec_output::write_termination(unsigned long address)
+srec_output::write_start_address(const srec_record *rp)
 {
-	srec_record record(srec_record::type_start_address, address);
+    if (rp)
+    {
+	// Make sure we are writing a start address record
+	srec_record record(*rp);
+	record.set_type(srec_record::type_start_address);
 	write(record);
+    }
+    else
+    {
+	//
+	// This is the default start address record.
+	// If you want to change it, this is the place.
+	//
+	srec_record record(srec_record::type_start_address, 0, 0, 0);
+	write(record);
+    }
 }

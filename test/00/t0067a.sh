@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 2001 Peter Miller;
+#	Copyright (C) 2001, 2003 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -109,7 +109,7 @@ if test $? -ne 0; then no_result; fi
 $bin/srec_cat test.in -intel \
 	-exclude 0x1D00000 0x1D00004 \
 	-fill 0xff 0x1D00004 0x1D00400 \
-	-o test.out
+	-o test.out -header HDR
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

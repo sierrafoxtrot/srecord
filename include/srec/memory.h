@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2002 Peter Miller;
+//	Copyright (C) 1998-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -112,7 +112,7 @@ public:
 	  * warning, instead.  If `barf' is false, no checking of any
 	  * kind is performed.
 	  */
-	unsigned long reader(class srec_input *input, bool barf = false);
+	void reader(class srec_input *input, bool barf = false);
 
 	/**
 	  * The equal method may be used to determine if two srec_memory
@@ -152,7 +152,7 @@ public:
 	/**
 	  * The get_header method is used to determine the value of the
 	  * header record set by either the reader() or set_header()
-	  * methods.  If neitehr has set a header, NULL is returned.
+	  * methods.  If neither has set a header, NULL is returned.
 	  */
 	srec_record *get_header() const;
 
@@ -161,6 +161,20 @@ public:
 	  * The `value' is a NUL terminated C string.
 	  */
 	void set_header(const char *value);
+
+	/**
+	  * The get_start_address method is used to determine the value
+	  * of the start address record set by either the reader()
+	  * or set_start_address() methods.  If neither has set a
+	  * start_address, NULL is returned.
+	  */
+	srec_record *get_start_address() const;
+
+	/**
+	  * The set_start_address method may be used to set the start
+	  * address record.
+	  */
+	void set_start_address(unsigned long value);
 
 private:
 	/**
@@ -221,11 +235,18 @@ private:
 	mutable int find_next_chunk_index;
 
 	/**
-	  * The hdr instance variable is used to track the file header.
+	  * The header instance variable is used to track the file header.
 	  * It is set by the reader() and set_header() methods.  It is
 	  * read by the get_header() method.
 	  */
-	srec_record *hdr;
+	srec_record *header;
+
+	/**
+	  * The start_address instance variable is used to track the start
+	  * address.  It is set by the reader() and set_start_address()
+	  * methods.  It is read by the get_start_address() method.
+	  */
+	srec_record *start_address;
 
 	/**
 	  * The clear method is used to discard all data, as if when

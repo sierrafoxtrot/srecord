@@ -203,6 +203,11 @@ srec_output_file_vhdl::write(const srec_record &record)
 	    while (cp < ep)
 	    {
 		unsigned char c = *cp++;
+		if (c == '\n')
+		{
+		    put_string("\n-- ");
+		    continue;
+		}
 		if (!isprint(c))
 		    c = ' ';
 		put_char(c);

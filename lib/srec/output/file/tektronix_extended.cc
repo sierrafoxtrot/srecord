@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2003 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -122,7 +122,7 @@ srec_output_file_tektronix_extended::write(const srec_record &record)
 	switch (record.get_type())
 	{
 	case srec_record::type_header:
-		// Thios format can't do header records
+		// This format can't do header records
 		break;
 
 	case srec_record::type_data:
