@@ -44,17 +44,23 @@ void
 srec_memory_walker_compare::observe(unsigned long addr, const void *p,
 	int len)
 {
+	interval wrongTemp;
+	interval unsetTemp;
+
 	unsigned char *data = (unsigned char *)p;
 	for (int j = 0; j < len; ++j)
 	{
 		if (other.set_p(addr + j))
 		{
 			if (check_wrong && data[j] != other.get(addr + j))
-				wrong += interval(addr + j);
+				wrongTemp += interval(addr + j);
 		}
 		else
-			unset += interval(addr + j);
+			unsetTemp += interval(addr + j);
 	}
+
+	wrong += wrongTemp;
+	unset += unsetTemp;
 }
 
 
