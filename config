@@ -291,8 +291,17 @@ etc/cook/change_files* \
 etc/cook/project_files* \
 etc/new.so \
 etc/version.so \
-common/patchlevel.h \
+include/patchlevel.h \
 ";
+
+symlink_exceptions =
+[
+	".cook.fp",
+	"etc/new.so",
+	"etc/version.so",
+	"include/patchlevel.h",
+	"install-sh",
+];
 
 maximum_filename_length = 30;
 

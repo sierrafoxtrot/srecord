@@ -1,0 +1,148 @@
+'\" t
+.\"	srecord - manipulate eprom load files
+.\"	Copyright (C) 1998 Peter Miller;
+.\"	All rights reserved.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"
+.\" MANIFEST: source of the README file
+.\"
+.TH "Read Me" SRecord SRecord "Reference Manual"
+.so version.so
+.hy 0
+.ad l
+.SH NAME
+srecord \- manipulate eprom load files
+.SH DESCRIPTION
+The
+.I SRecord
+package is a collection of powerful tools for manipulating EPROM load files.
+.PP
+The package understands a number of file formats:
+.TP 8n
+Motorola S-Record
+.TP 8n
+Intel
+.TP 8n
+Binary
+.TP 8n
+C
+.br
+.ne 1i
+.SH ARCHIVE SITE
+The latest version of
+.I srecord
+is available on the Web from:
+.RS 4m
+.TS
+tab(;);
+l l s
+l l l.
+URL:;http://www.canb.auug.org.au/~millerp/
+File:;srecord-\*(v).README;# the README from the tar file
+File:;srecord-\*(v).lsm;# LSM format description
+File:;srecord-\*(v).spec;# RedHat package specification
+File:;srecord-\*(v).tar.gz;# the complete source
+.TE
+.RE
+.PP
+This Web page also contains a few other pieces of software written by me.
+Please have a look if you are interested.
+.PP
+SRecord is also carried by \f(CWsunsite.unc.edu\fP in its Linux archives.
+You will be able to find srecord on any of its mirrors.
+.RS 4m
+.TS
+tab(;);
+l l s
+l l l.
+URL:;ftp://sunsite.unc.edu/pub/Linux/devel/make/
+File:;srecord-\*(v).README;# the README from the tar file
+File:;srecord-\*(v).lsm;# LSM format description
+File:;srecord-\*(v).spec;# RedHat package specification
+File:;srecord-\*(v).tar.gz;# the complete source
+.TE
+.RE
+This site is extensively mirrored around the world,
+so look for a copy near you (you will get much better response).
+.SS FTP by EMail
+For those of you without Web or FTP access,
+I recommend the use of an ftp-by-email server.
+Here is a list of a few (there may be more):
+.TS
+center,tab(;);
+l l.
+ftpmail@cs.uow.edu.au;Australia
+ftpmail@ftp.uni-stuttgart.de;Germany
+ftpmail@grasp.insa-lyon.fr;France
+ftpmail@doc.ic.ac.uk;Great Britain
+ftpmail@ieunet.ie;Ireland
+ftpmail@sunsite.unc.edu;USA
+ftpmail@ftp.uu.net;USA
+.TE
+.PP
+In general, you can get a help message about how to use each system
+by sending email with a subject of "help"
+and a message body containing just the word "help".
+.br
+.ne 1i
+.SH BUILDING srecord
+Full instructions for building
+.I SRecord
+may be found in the
+.I BUILDING
+file included in this distribution.
+.br
+.ne 1i
+.SH COPYRIGHT
+.I srecord
+version \*(v)
+.br
+Copyright
+.if t \(co
+.if n (C)
+\*(Y) Peter Miller;
+All rights reserved.
+.PP
+This program is free software;
+you can redistribute it
+and/or modify it under the terms of the GNU General Public
+License as published by the Free Software Foundation;
+either version 2 of the License,
+or (at your option) any later version.
+.PP
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY;
+without even the implied
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE.
+See the GNU General Public License for more details.
+.PP
+You should have received a copy of the GNU General Public
+License along with this program; if not, write to the Free
+Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.PP
+It should be in the
+.I LICENSE
+file included with this distribution.
+.br
+.ne 1i
+.SH AUTHOR
+.TS
+tab(;);
+l l l.
+Peter Miller;E-Mail:;millerp@canb.auug.org.au
+\f(CW/\e/\e*\fP;WWW:;http://www.canb.auug.org.au/~millerp/
+.TE

@@ -81,6 +81,11 @@ all = ;
 /* the right hand side is deferred until triggered */
 all: [all];
 
+/*
+ * Howto use GNU Autoconf.
+ */
+#include-cooked etc/autoconf.cook
+
 
 /*
  * Generate lists of object files for libraries just in case they ar
@@ -164,18 +169,24 @@ else
 	 * re-build.
 	 */
 	set time-adjust-back;
-	all = [all] archive/[project_minus].tar.gz;
+	all = [all] integration-build-targets;
 }
 
 
-cc = gcc;
-c++ = g++;
+/*
+ * Note: this must come *after* the etc/autoconf.cook include.
+ */
+if [not [defined c++]] then
+	c++ = g++;
 cc_include_flags =
 	[prepost "-I" "" [search_list]]
 	[prepost "-I" "/include" [search_list]]
 	;
-cc_flags = -O [debug] -Wall -Werror;
-ld_flags = [debug];
+if [not [defined c++_flags]] then
+	c++_flags = -O [debug];
+c++_flags = [c++_flags] -Wall -Werror;
+if [not [defined ld_flags]] then
+	ld_flags = [debug];
 
 
 [arch]/%1/%2/%0%.o: %1/%2/%0%.c
@@ -200,7 +211,7 @@ ld_flags = [debug];
 			[prepost -I /%1/%2/include [search_list]]
 			[prepost -I /[dirname %1/%2/%0%.cc] [search_list]]
 		]
-		[cc_flags] -c [resolve %1/%2/%0%.cc] -o [target]
+		[c++_flags] -c [resolve %1/%2/%0%.cc] -o [target]
 	set meter;
 }
 
@@ -238,17 +249,12 @@ c_incl = c_incl;
 cc_dep_files =
 	[fromto %0%.c %0%.d [match_mask %1/%2/%0%.c [source_files]]]
 	[fromto %0%.cc %0%.d [match_mask %1/%2/%0%.cc [source_files]]]
+	[fromto %0%.y %0%.gen.d [match_mask %1/%2/%0%.y [source_files]]]
 	;
 
 #include-cooked-nowarn [cc_dep_files]
 
-/*
- * specific include files for the various modules
- */
-#include-cooked-nowarn [resolve [match_mask %0module.cook [source_files]]]
-
 [arch]/bin/%: [%_obj] [%_libs]
-	set shallow
 {
 	[c++] [ld_flags] -o [target] [resolve [%_obj] [%_libs]] -lm;
 }
@@ -260,21 +266,71 @@ cc_dep_files =
 		ranlib [target];
 }
 
-
-archive/[project_minus].tar.gz: [source_files]
-{
-	tar cf - [resolve [source_files]]
-		| tardy
-			-una Peter -gna Miller
-			-unu 0 -gnu 0
-			-ms 0644 -mc 07022
-			-now
-			[prepost "-rp=" "" [search_list]]
-		| gzip -9
-		> [target];
-}
+/*
+ * How to build the release sets.
+ */
+#include-cooked etc/archive.cook
 
 /*
  * How to build the documentation.
  */
 #include-cooked etc/documentation.cook
+
+/*
+ * Explicit include dependencies.
+ */
+#if [count [cc_dep_files]]
+[cc_dep_files]: [arch]/include/config.h;
+#endif
+
+
+/*
+ * The version stamp is to be updated for every 
+ * integration and development build.
+ * (The integrate_begin_command in the config file
+ * deletes them for integration builds.)
+ */
+
+include/patchlevel.h:
+	set shallow
+{
+	copyright_years =
+		[collect
+			aegis -list version -p [project] -c [change]
+			| [awk] "-F'[[\\\\]]'" "'/^copyright_years/{print $2}'"
+		];
+	echo "'#define PATCHLEVEL \""[version]"\"'" > [target];
+	echo "'#define COPYRIGHT_YEARS \""[copyright_years]"\"'" >> [target];
+}
+
+#if [or [not [defined baseline]] [not [exists [resolve etc/version.so]]]]
+
+etc/version.so:
+	set shallow
+{
+	copyright_years =
+		[collect
+			aegis -list version -p [project] -c [change]
+			| [awk] "-F'[[\\\\]]'" "'/^copyright_years/{print $2}'"
+		];
+	echo "'.ds V) "[version]"'" > [target];
+	echo "'.ds v) "[version_short]"'" >> [target];
+	aegis -list version -p [project] -c [change]
+		| [awk] -F'\'"\'' "'/previous/{print $2}'"
+		| [awk] -F. "'{print \".ds w) \"$1\".\"$2}'"
+		>> [target];
+	echo "'.ds Y) "[copyright_years]"'" >> [target];
+}
+
+#endif
+
+/*
+ * Catch 22: If the relationship between a target and a derived ingredient
+ * appears only in a derived cookbook, it is likely that a clean build
+ * (solely from primary source files) will fail.  It is recommended that
+ * relationships such as this be placed in a primary source cookbook.
+ */
+lib/common/versn_stamp.d: include/patchlevel.h;
+etc/README.man.d: etc/version.so;
+man/man1/srec_cat.1.d: etc/version.so;
+man/man1/srec_cmp.1.d: etc/version.so;

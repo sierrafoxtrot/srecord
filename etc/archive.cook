@@ -1,0 +1,162 @@
+/*
+ *	srecord - manipulate eprom load files
+ *	Copyright (C) 1998 Peter Miller;
+ *	All rights reserved.
+ *
+ *	This program is free software; you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation; either version 2 of the License, or
+ *	(at your option) any later version.
+ *
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
+ *
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program; if not, write to the Free Software
+ *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * MANIFEST: How to build the release sets
+ */
+
+integration-build-targets:
+	archive/[project_minus].README
+	archive/[project_minus].spec
+	archive/[project_minus].tar.gz
+	;
+
+source_file_order =
+	README
+	[sort
+		[stringset
+			[source_files]
+			/* BUILDING */
+			/* MANIFEST */
+
+			/*
+			 * These two are for time stamping the distribution.
+			 */
+			etc/version.so
+			include/patchlevel.h
+
+			/*
+			 * These four are for building the distribution.
+			 */
+			Makefile.in
+			include/config.h.in
+			install-sh
+			configure
+
+			/*
+			 * This is for building the RPM package
+			 */
+			[project_minus].spec
+		-
+			README
+		]
+	]
+	;
+
+
+/*
+ * These recipes build a Makefile for a user.  They do not build a
+ * Makefile useful for a development build, because no arch
+ * information is included in the Makefile.
+ */
+
+makefile-per-file = [prepost "" ",M" [source_files]];
+
+Makefile.in: etc/Makefile.head etc/Makefile.sh etc/Makefile.awk
+	/* [vs_file] */
+	[makefile-per-file]
+{
+	cat [resolve etc/Makefile.head [makefile-per-file]] > [target];
+	sh [resolve etc/Makefile.sh] [source_files]
+		| [awk] -f [resolve etc/Makefile.awk]
+		>> [target];
+}
+
+%0%,M: etc/Makefile.file.sh etc/Makefile.awk
+{
+	sh [resolve etc/Makefile.file.sh] %0% [resolve %0%]
+		| [awk] -f [resolve etc/Makefile.awk]
+		> [target];
+}
+
+archive/[project_minus].tar.gz: [source_file_order]
+{
+	tar cf - [resolve [source_file_order]]
+		| tardy
+			-una Peter -gna Miller
+			-unu 0 -gnu 0
+			-ms 0644 -mc 07022
+			-now
+			-prefix\=[project_minus]
+			[prepost "-rp=" "" [search_list]]
+		| gzip -9
+		> [target];
+}
+
+archive/[project_minus].%: %
+{
+	cat [need] > [target];
+}
+
+%: etc/%.man
+{
+	roffpp -Ietc etc/%.man
+		| groff -Tascii -t -man
+		> [target];
+}
+
+etc/%.man.d: etc/%.man
+{
+	[c_incl] -nc -ns -api
+		--lang\=roff
+		[addprefix "-I" [search_list]]
+		[prepost "-I" "/etc" [search_list]]
+		[resolve etc/%.man]
+		-prefix "'etc/%.man.d %: etc/%.man'"
+		-suffix "'set nodefault;'"
+		[addprefix "-rlp=" [search_list]]
+		-o [target];
+}
+
+#include-cooked [addsuffix ".d" [match_mask etc/%.man [source_files]]]
+
+
+/*
+ * This is not in the integration-build-targets because it takes far
+ * too long to do.
+ */
+
+RPM: archive/[project_minus]-1.i386.rpm;
+
+archive/[project_minus]-1.i386.rpm archive/[project_minus]-1.src.rpm:
+	archive/[project_minus].tar.gz etc/rpm-build.sh
+{
+	sh [resolve etc/rpm-build.sh]
+		RPM-temporary
+		[resolve archive/[project_minus].tar.gz]
+		;
+	mv RPM-temporary/RPMS/i386/[project_minus]-1.i386.rpm
+		archive/[project_minus]-1.i386.rpm
+		;
+	mv RPM-temporary/SRPMS/[project_minus]-1.src.rpm
+		archive/[project_minus]-1.src.rpm
+		;
+	rm -r RPM-temporary;
+}
+
+[project_minus].spec: etc/spec.sh [source_files]
+{
+	version\=[version_short]
+	sh [resolve etc/spec.sh] [source_files]
+		> [target];
+}
+
+archive/[project_minus].spec: [project_minus].spec
+{
+	cat [need] > [target];
+}
