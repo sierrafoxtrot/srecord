@@ -147,13 +147,27 @@ srec_input_file_srecord::read_inner(srec_record &record)
 
 	case 5:
 		/* data count */
-		type = srec_record::type_data_count16;
+		type = srec_record::type_data_count;
+		//
+		// This is documented as having 2 address bytes and
+		// no data bytes.  The Green Hills toolchain happily
+		// generates records with 4 address bytes.  We cope
+		// with this silently.
+		//
+		if (line_length >= 2 && line_length <= 4)
+		    naddr = line_length;
 		break;
 
 	case 6:
 		/* data count */
-		type = srec_record::type_data_count24;
+		type = srec_record::type_data_count;
+		//
+		// Just in case some smarty-pants uses the Green Hills
+		// trick, we cope with address size crap the same as S5.
+		//
 		naddr = 3;
+		if (line_length == 4)
+		    naddr = line_length;
 		break;
 
 	case 7:
@@ -265,37 +279,22 @@ srec_input_file_srecord::read(srec_record &record)
 			}
 			break;
 
-		case srec_record::type_data_count16:
-			if
-			(
-			    record.get_address()
-			!=
-			    (unsigned long)(data_count & 0xFFFF)
-			)
+		case srec_record::type_data_count:
 			{
+			    srec_record::address_t addr = record.get_address();
+			    srec_record::address_t mask = 0xFFFF;
+			    while (addr > mask)
+				mask = ~(~mask << 8);
+			    mask &= data_count;
+			    if (addr != mask)
+			    {
 				fatal_error
 				(
 			      "data record count mismatch (file %ld, read %ld)",
-					record.get_address(),
-					data_count & 0xFFFF
+				    addr,
+				    mask
 				);
-			}
-			continue;
-
-		case srec_record::type_data_count24:
-			if
-			(
-			    record.get_address()
-			!=
-			    (unsigned long)(data_count & 0xFFFFFF)
-			)
-			{
-				fatal_error
-				(
-			      "data record count mismatch (file %ld, read %ld)",
-					record.get_address(),
-					data_count & 0xFFFFFF
-				);
+			    }
 			}
 			continue;
 

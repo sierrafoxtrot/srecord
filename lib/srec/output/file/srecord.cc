@@ -181,8 +181,7 @@ srec_output_file_srecord::write(const srec_record &record)
 		++data_count;
 		break;
 
-	case srec_record::type_data_count16:
-	case srec_record::type_data_count24:
+	case srec_record::type_data_count:
 		/* ignore */
 		break;
 

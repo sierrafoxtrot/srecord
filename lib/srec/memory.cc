@@ -237,8 +237,7 @@ srec_memory::reader(srec_input *ifp, bool barf)
 			break;
 
 		case srec_record::type_unknown:
-		case srec_record::type_data_count16:
-		case srec_record::type_data_count24:
+		case srec_record::type_data_count:
 			break;
 
 		case srec_record::type_data:

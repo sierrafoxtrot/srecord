@@ -101,8 +101,7 @@ srec_output_file_signetics::write(const srec_record &record)
 		put_char('\n');
 		break;
 
-	case srec_record::type_data_count16:
-	case srec_record::type_data_count24:
+	case srec_record::type_data_count:
 		// ignore
 		break;
 

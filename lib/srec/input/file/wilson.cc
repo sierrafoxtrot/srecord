@@ -203,8 +203,7 @@ srec_input_file_wilson::read(srec_record &record)
 		{
 		case srec_record::type_unknown:
 		case srec_record::type_header:
-		case srec_record::type_data_count16:
-		case srec_record::type_data_count24:
+		case srec_record::type_data_count:
 			fatal_error("record type not recognised");
 			break;
 

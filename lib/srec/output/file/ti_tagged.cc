@@ -152,8 +152,7 @@ srec_output_file_ti_tagged::write(const srec_record &record)
 		}
 		break;
 
-	case srec_record::type_data_count16:
-	case srec_record::type_data_count24:
+	case srec_record::type_data_count:
 		/* ignore */
 		break;
 

@@ -41,8 +41,7 @@ public:
 		type_unknown,
 		type_header,
 		type_data,
-		type_data_count16,
-		type_data_count24,
+		type_data_count,
 		type_start_address
 	};
 

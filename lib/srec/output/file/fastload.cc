@@ -174,8 +174,7 @@ srec_output_file_fastload::write(const srec_record &record)
 		address += record.get_length();
 		break;
 
-	case srec_record::type_data_count16:
-	case srec_record::type_data_count24:
+	case srec_record::type_data_count:
 		// ignore
 		break;
 
