@@ -42,6 +42,7 @@ srec_output_file_atmel_generic::~srec_output_file_atmel_generic()
 void
 srec_output_file_atmel_generic::write(const srec_record &record)
 {
+	// This format can't do header records or termination records
 	if (record.get_type() != srec_record::type_data)
 		return;
 

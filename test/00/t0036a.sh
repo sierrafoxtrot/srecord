@@ -70,7 +70,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
-K0005B4865B6C6CB6F2C*2090123B576FB726CB6421*0A7F5B6F
+K0008HDRB4865B6C6CB6F2C*2090123B576FB726CB6421*0A7F4D5F
 :
 fubar
 if test $? -ne 0; then no_result; fi
@@ -87,7 +87,7 @@ if test $? -ne 0; then fail; fi
 # Test reading the format
 #
 cat > test.ok << 'fubar'
-S00600004844521B
+S00A00006F756768696E6704
 S10A000048656C6C6F2C20B5
 S10A0123576F726C64210A9E
 S5030002FA

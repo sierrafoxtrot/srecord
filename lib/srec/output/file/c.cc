@@ -133,6 +133,29 @@ srec_output_file_c::write(const srec_record &record)
 		/* ignore */
 		break;
 
+	case srec_record::type_header:
+		// emit header records as comments in the file
+		{
+		    put_string("/* ");
+		    if (record.get_address() != 0)
+			put_stringf("%08lX: ", record.get_address());
+		    const unsigned char *cp = record.get_data();
+		    const unsigned char *ep = cp + record.get_length();
+		    while (cp < ep)
+		    {
+			int c = *cp++;
+			if (isprint(c) || isspace(c))
+			    put_char(c);
+			else
+			    put_stringf("\\%o", c);
+			// make sure we don't end the comment
+			if (c == '*' && cp < ep && *cp == '/')
+			    put_char(' ');
+		    }
+		    put_string(" */\n");
+		}
+		break;
+
 	case srec_record::type_data:
 		if (range.empty())
 			current_address = record.get_address();

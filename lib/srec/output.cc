@@ -126,11 +126,21 @@ srec_output::warning_v(const char *fmt, va_list ap)
 
 
 void
-srec_output::write_header()
+srec_output::write_header(const srec_record *rp)
 {
-	srec_record record(srec_record::type_header, (srec_record::address_t)0,
-		(const srec_record::data_t *)"HDR", 3);
+    if (rp)
+    {
+	// Make sure we are writing a header record
+	srec_record record(*rp);
+	record.set_type(srec_record::type_header);
 	write(record);
+    }
+    else
+    {
+	srec_record record(srec_record::type_header, (srec_record::address_t)0,
+	    (const srec_record::data_t *)"HDR", 3);
+	write(record);
+    }
 }
 
 

@@ -27,6 +27,8 @@
 
 #include <srec/memory/chunk.h>
 
+class srec_record; // forward
+
 class srec_memory
 {
 public:
@@ -50,6 +52,7 @@ public:
 		size_t &nbytes) const;
 
 	static void allow_overwriting();
+	srec_record *get_header() const;
 
 private:
 	static bool overwrite;
@@ -58,6 +61,7 @@ private:
 	mutable srec_memory_chunk **chunk;
 	mutable srec_memory_chunk *cache;
 	mutable int find_next_chunk_index;
+	srec_record *hdr;
 
 	srec_memory_chunk *find(unsigned long) const;
 	srec_memory_chunk *find_next_chunk(unsigned long) const;

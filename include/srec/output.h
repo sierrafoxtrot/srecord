@@ -28,12 +28,14 @@
 #include <stdarg.h>
 #include <string>
 
+class srec_record; // forward
+
 class srec_output
 {
 public:
 	virtual ~srec_output();
-	virtual void write(const class srec_record &) = 0;
-	virtual void write_header();
+	virtual void write(const srec_record &) = 0;
+	virtual void write_header(const srec_record * = 0);
 	virtual void write_data(unsigned long, const void *, size_t);
 	virtual void write_termination(unsigned long = 0);
 

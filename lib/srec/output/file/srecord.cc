@@ -117,7 +117,21 @@ srec_output_file_srecord::write(const srec_record &record)
 	case srec_record::type_header:
 		if (data_only_flag)
 			break;
-		write_inner(0, 0, 2, "HDR", 3);
+		if (record.get_length() == 0)
+		{
+			write_inner(0, 0, 2, "HDR", 3);
+		}
+		else
+		{
+			write_inner
+			(
+				0,
+				0,
+				2,
+				record.get_data(),
+				record.get_length()
+			);
+		}
 		break;
 
 	case srec_record::type_data:

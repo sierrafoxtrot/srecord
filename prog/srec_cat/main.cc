@@ -137,7 +137,7 @@ main(int argc, char **argv)
 	/*
 	 * Open the output file and write the remembered data out to it.
 	 */
-	outfile->write_header();
+	outfile->write_header(mp->get_header());
 	srec_memory_walker *w = new srec_memory_walker_writer(outfile);
 	mp->walk(w);
 	outfile->write_termination(taddr);

@@ -36,7 +36,8 @@ srec_memory::srec_memory() :
 	nchunks_max(0),
 	chunk(0),
 	cache(0),
-	find_next_chunk_index(0)
+	find_next_chunk_index(0),
+	hdr(0)
 {
 }
 
@@ -63,6 +64,7 @@ srec_memory::operator=(const srec_memory &arg)
 
 srec_memory::~srec_memory()
 {
+	delete hdr;
 	clear();
 }
 
@@ -227,8 +229,14 @@ srec_memory::reader(srec_input *ifp, bool barf)
 	{
 		switch (record.get_type())
 		{
-		case srec_record::type_unknown:
 		case srec_record::type_header:
+			if (!hdr)
+			{
+				hdr = new srec_record(record);
+			}
+			break;
+
+		case srec_record::type_unknown:
 		case srec_record::type_data_count:
 			break;
 
@@ -345,4 +353,12 @@ void
 srec_memory::allow_overwriting()
 {
     overwrite = true;
+}
+
+
+srec_record *
+srec_memory::get_header()
+    const
+{
+    return hdr;
 }

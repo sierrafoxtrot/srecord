@@ -103,7 +103,7 @@ srec_output_file_tektronix::write(const srec_record &record)
 	switch (record.get_type())
 	{
 	case srec_record::type_header:
-		/* ignore */
+		// This format can't do header reocrds
 		break;
 
 	case srec_record::type_data:

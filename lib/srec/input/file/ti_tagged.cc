@@ -157,21 +157,37 @@ srec_input_file_ti_tagged::read(srec_record &record)
 			break;
 
 		case 'K':
-			n = get_word();
-			if (n < 5)
 			{
+			    n = get_word();
+			    if (n < 5)
+			    {
 				bad_desc:
 				fatal_error("broken description");
-			}
-			n -= 5;
-			while (n > 0)
-			{
-				--n;
+			    }
+			    n -= 5;
+			    int max = 250;
+			    unsigned char *buffer = new unsigned char [max];
+			    for (int j = 0; j < n; ++j)
+			    {
 				c = get_char();
 				if (c < 0 || c == '\n')
 					goto bad_desc;
+				if (j < max)
+					buffer[j] = c;
+			    }
+			    if (n > max)
+				n = max;
+			    record =
+				srec_record
+				(
+				    srec_record::type_header,
+				    0,
+				    buffer,
+				    n
+				);
+			    delete buffer;
 			}
-			break;
+			return 1;
 		}
 	}
 }

@@ -61,6 +61,7 @@ srec_output_file_binary::~srec_output_file_binary()
 void
 srec_output_file_binary::write(const srec_record &record)
 {
+	// This format can't do header records or termination records
 	if (record.get_type() != srec_record::type_data)
 		return;
 	seek_to(record.get_address());

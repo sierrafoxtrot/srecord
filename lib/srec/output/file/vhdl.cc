@@ -143,7 +143,8 @@ srec_output_file_vhdl::write(const srec_record &record)
 	switch (record.get_type())
 	{
 	default:
-		/* ignore */
+		// This format can't do header records. (Actually,
+		// we could probably output a comment, like the C format.)
 		break;
 
 	case srec_record::type_data:

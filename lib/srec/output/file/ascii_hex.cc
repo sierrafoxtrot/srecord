@@ -77,6 +77,7 @@ srec_output_file_ascii_hex::write(const srec_record &record)
 	switch (record.get_type())
 	{
 	case srec_record::type_header:
+		// All header data is discarded
 		put_char(2);
 		column = 1;
 		break;

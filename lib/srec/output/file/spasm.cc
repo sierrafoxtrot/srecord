@@ -42,6 +42,7 @@ srec_output_file_spasm::~srec_output_file_spasm()
 void
 srec_output_file_spasm::write(const srec_record &record)
 {
+	// This format can't do header records or termination records
 	if (record.get_type() != srec_record::type_data)
 		return;
 

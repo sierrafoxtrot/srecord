@@ -98,9 +98,19 @@ srec_output_file_ti_tagged::write(const srec_record &record)
 	switch (record.get_type())
 	{
 	case srec_record::type_header:
-		if (data_only_flag)
-			break;
-		put_string("K0005");
+		if (!data_only_flag)
+		{
+		    put_stringf("K%4.4d", 5 + record.get_length());
+		    const unsigned char *cp = record.get_data();
+		    const unsigned char *ep = cp + record.get_length();
+		    while (cp < ep)
+		    {
+			int c = *cp++;
+			if (!isprint(c))
+			    c = ' ';
+			put_char(c);
+		    }
+		}
 		break;
 
 	case srec_record::type_data:

@@ -141,7 +141,7 @@ srec_output_file_wilson::write(const srec_record &record)
 	switch (record.get_type())
 	{
 	case srec_record::type_header:
-		/* ignore */
+		// This format doesn't appear to have header records
 		break;
 
 	case srec_record::type_data:
