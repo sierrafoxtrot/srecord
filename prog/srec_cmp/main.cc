@@ -25,6 +25,7 @@
 #include <srec/memory.h>
 #include <srec/memory/walker/writer.h>
 #include <srec/output/file/srecord.h>
+#include <srec/record.h>
 
 #include <iostream.h>
 #include <stdlib.h>
@@ -58,8 +59,7 @@ arglex_here::arglex_here(int ac, char **av)
 static void
 usage(const char *progname)
 {
-	cerr << "Usage: " << progname
-		<< " [ <option>...][ <infile> [ <outfile> ]]" << endl;
+	cerr << "Usage: " << progname << " <file1> <file2>" << endl;
 	exit(1);
 }
 
@@ -69,9 +69,8 @@ main(int argc, char **argv)
 {
 	arglex_here cmdline(argc, argv);
 	cmdline.token_next();
-	typedef vector<const char *> infile_t;
-	infile_t infile;
-	const char *outfile = 0;
+	const char *fn1 = 0;
+	const char *fn2 = 0;
 	while (cmdline.token_cur() != arglex::token_eoln)
 	{
 		switch (cmdline.token_cur())
@@ -87,74 +86,56 @@ main(int argc, char **argv)
 			usage(argv[0]);
 
 		case arglex::token_string:
-			infile.push_back(cmdline.value_string());
+			if (!fn1)
+				fn1 = cmdline.value_string();
+			else if (!fn2)
+				fn2 = cmdline.value_string();
+			else
+				usage(argv[0]);
 			break;
 
 		case arglex::token_stdio:
-			infile.push_back("-");
-			break;
-
-		case arglex_here::token_output:
-			if (outfile)
+			if (!fn1)
+				fn1 = "-";
+			else if (!fn2)
+				fn2 = "-";
+			else
 				usage(argv[0]);
-			switch (cmdline.token_next())
-			{
-			default:
-				usage(argv[0]);
-
-			case arglex::token_string:
-				outfile = cmdline.value_string();
-				break;
-
-			case arglex::token_stdio:
-				outfile = "-";
-				break;
-			}
 			break;
 		}
 		cmdline.token_next();
 	}
-	if (infile.size() == 0)
-		infile.push_back("-");
-	if (!outfile)
-		outfile = "-";
-
-	/*
-	 * Read the input into memory.	This allows the data to be
-	 * consolidated on output, and warnings to be issued for
-	 * duplicates.
-	 *
-	 * It is assumed the data will all fit into memory.  This is
-	 * usually reasonable, because these utilities are used for
-	 * eproms which are usualloy smaller than the available virtual
-	 * memory of the development system.
-	 */
-	srec_memory *mp = new srec_memory();
-	unsigned long taddr = 0;
-	for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
+	if (!fn1 || !fn2)
 	{
-		srec_input *ifp = new srec_input_file_srecord(*it);
-		unsigned long taddr2 = mp->reader(ifp);
-		if (taddr < taddr2)
-			taddr = taddr2;
-		delete ifp;
+		cerr << argv[0] << ": two files names required" << endl;
+		usage(argv[0]);
 	}
 
 	/*
-	 * Open the output file and write the remembered data out to it.
+	 * Read the first file into memory.
 	 */
-	srec_output *ofp = new srec_output_file_srecord(outfile);
-	ofp->write_header();
-	srec_memory_walker *w = new srec_memory_walker_writer(ofp);
-	mp->walk(w);
-	ofp->write_termination(taddr);
-	delete ofp;
+	srec_input *if1 = new srec_input_file_srecord(fn1);
+	srec_memory *mp1 = new srec_memory();
+	unsigned long ta1 = mp1->reader(if1);
+	delete if1;
 
 	/*
-	 * Dispose of the memory image of the data.
-	 * (Probably not necessary.)
+	 * Read the second file into memory.
 	 */
-	delete mp;
+	srec_input *if2 = new srec_input_file_srecord(fn2);
+	srec_memory *mp2 = new srec_memory();
+	unsigned long ta2 = mp2->reader(if2);
+	delete if2;
+
+	/*
+	 * Error message and non-zero exit status if the files differ.
+	 */
+	if (*mp1 != *mp2 || ta1 != ta2)
+	{
+		cerr << argv[0] << ": files ``" << fn1 << "'' and ``"
+			<< fn2 << "'' differ" << endl;
+		exit(2);
+	}
 
 	/*
 	 * success

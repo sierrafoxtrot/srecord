@@ -41,6 +41,8 @@ public:
 
 	void walk(class srec_memory_walker *) const;
 
+	unsigned long reader(class srec_input *);
+
 	static bool equal(const srec_memory &, const srec_memory &);
 
 private:

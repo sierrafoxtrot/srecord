@@ -22,8 +22,10 @@
 
 #pragma implementation
 
+#include <srec/input.h>
 #include <srec/memory.h>
 #include <srec/memory/walker.h>
+#include <srec/record.h>
 
 
 srec_memory::srec_memory()
@@ -185,6 +187,46 @@ srec_memory::walk(srec_memory_walker *w)
 {
 	for (int j = 0; j < nchunks; ++j)
 		chunk[j]->walk(w);
+}
+
+
+unsigned long
+srec_memory::reader(srec_input *ifp)
+{
+	unsigned long result = 0;
+	srec_record record;
+	while (ifp->read(record))
+	{
+		switch (record.get_type())
+		{
+		case srec_record::type_unknown:
+		case srec_record::type_header:
+		case srec_record::type_data_count:
+			break;
+
+		case srec_record::type_data:
+			for (int j = 0; j < record.get_length(); ++j)
+			{
+				srec_record::address_t address =
+					record.get_address() + j;
+				if (set_p(address))
+				{
+					ifp->warning
+					(
+						"duplicate %08lX value",
+						(long)address
+					);
+				}
+				set(address, record.get_data(j));
+			}
+			break;
+
+		case srec_record::type_termination:
+			result = record.get_address();
+			break;
+		}
+	}
+	return result;
 }
 
 
