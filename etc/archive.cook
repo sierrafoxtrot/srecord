@@ -27,7 +27,9 @@ integration-build-targets:
 	archive/[project_minus].tar.gz
 	archive/[project_minus].pdf
 	archive/[project_short].gif
-	archive/[project_short].html
+	[fromto etc/%.html archive/%.html
+	    [match_mask etc/%.html [source_files]]
+	]
 	;
 
 source_file_order =
@@ -216,42 +218,42 @@ archive/%: etc/%.uue
 }
 
 
-etc/[project_short].html.d: etc/[project_short].html
+etc/%.html.d: etc/%.html
 	set no-cascade
 {
 	c_incl -nc -ns -eia -r -nrec
 		[prepost "-I" /[arch]/etc [search_list]]
 		[prepost "-I" "/etc" [search_list]]
-		-prefix "'cascade etc/"[project_short]".html ='"
+		-prefix "'cascade etc/"%".html ='"
 		-suffix "';'"
-		[resolve etc/[project_short].html]
+		[resolve etc/%.html]
 		[prepost "-rlp=" "" [search_list]] /* remove leading path */
 		-slp [arch] "'[arch]'" /* substitute leading path */
 		-o [target];
 }
 
-etc/[project_short].html,M:: etc/[project_short].html,Md;
+etc/%.html,M:: etc/%.html,Md;
 
-etc/[project_short].html,Md: etc/[project_short].html
+etc/%.html,Md: etc/%.html
 {
 	c_incl -nc -ns -eia -r
 		[prepost "-I" /[arch]/etc [search_list]]
 		[prepost "-I" "/etc" [search_list]]
-		[resolve etc/[project_short].html]
+		[resolve etc/%.html]
 		[prepost "-rlp=" "" [search_list]] /* remove leading path */
 		-slp [arch] "'[arch]'" /* substitute leading path */
 		-o [target];
 }
 
-#include-cooked-nowarn etc/[project_short].html.d
+#include-cooked [addsuffix ".d" [match_mask etc/%.html [source_files]]]
 
-archive/[project_short].html: etc/[project_short].html etc/ssp.awk
+archive/%.html: etc/%.html etc/ssp.awk
 	set shallow
 {
 	roffpp
 		[prepost "-I" /[arch]/etc [search_list]]
 		[prepost "-I" "/etc" [search_list]]
-		[resolve etc/[project_short].html]
+		[resolve etc/%.html]
 	| groff -Tascii -t -P-ub -man
 	| [awk] -f [resolve etc/ssp.awk]
 	> [target];
