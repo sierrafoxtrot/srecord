@@ -26,6 +26,96 @@
 #include <srec/record.h>
 
 
+#define O96_Mod_Hdr                             0x02
+#define O96_Mod_End                             0x04
+#define O96_Content                             0x06
+#define O96_Lin_Num                             0x08
+#define O96_Block_Def                           0x0a
+#define O96_Block_End                           0x0c
+#define O96_Eof                                 0x0e
+#define O96_Mod_Anc                             0x10
+#define O96_Loc_Sym                             0x12
+#define O96_Type_Def                            0x14
+#define O96_Pub_Def                             0x16
+#define O96_Ext_Def                             0x18
+#define O96_Res_Type_1A                         0x1a
+#define O96_Res_Type_1C                         0x1c
+#define O96_Res_Type_1E                         0x1e
+#define O96_Seg_Def                             0x20
+#define O96_Fixup                               0x22
+#define O96_Res_Type_24                         0x24
+#define O96_Lib_Mod_Loc                         0x26
+#define O96_Lib_Mod_Nam                         0x28
+#define O96_Lib_Dic                             0x2a
+#define O96_Res_Type_2C                         0x2c
+#define O96_Lib_Hdr                             0x2e
+#define O96_Res_Type_30                         0x30
+#define O96_Res_Type_32                         0x32
+#define O96_Max_Rec_Type                        0x32
+
+static const char *
+o96name(int x)
+{
+    switch (x)
+    {
+    case O96_Mod_Hdr:
+	return "Mod_Hdr";
+
+    case O96_Mod_End:
+	return "Mod_End";
+
+    case O96_Content:
+	return "Content";
+
+    case O96_Lin_Num:
+	return "Lin_Num";
+
+    case O96_Block_Def:
+	return "Block_Def";
+
+    case O96_Block_End:
+	return "Block_End";
+
+    case O96_Eof:
+	return "Eof";
+
+    case O96_Mod_Anc:
+	return "Mod_Anc";
+
+    case O96_Loc_Sym:
+	return "Loc_Sym";
+
+    case O96_Type_Def:
+	return "Type_Def";
+
+    case O96_Pub_Def:
+	return "Pub_Def";
+
+    case O96_Ext_Def:
+	return "Ext_Def";
+
+    case O96_Seg_Def:
+	return "Seg_Def";
+
+    case O96_Fixup:
+	return "Fixup";
+
+    case O96_Lib_Mod_Loc:
+	return "Lib_Mod_Loc";
+
+    case O96_Lib_Mod_Nam:
+	return "Lib_Mod_Nam";
+
+    case O96_Lib_Dic:
+	return "Lib_Dic";
+
+    case O96_Lib_Hdr:
+	return "Lib_Hdr";
+    }
+    return "unknown";
+}
+
+
 srec_input_file_aomf::~srec_input_file_aomf()
 {
     if (current_buffer)
@@ -103,10 +193,11 @@ srec_input_file_aomf::read(srec_record &record)
 {
     for (;;)
     {
+	unsigned char c;
 	switch (state)
 	{
 	case expecting_header:
-	    if (slurp() != 0x02)
+	    if (slurp() != O96_Mod_Hdr)
 		fatal_error("Module Header Record expected");
 	    state = expecting_data;
 	    if (current_length > 0)
@@ -152,17 +243,18 @@ srec_input_file_aomf::read(srec_record &record)
 		current_address += nbytes;
 		return 1;
 	    }
-	    switch (slurp())
+	    c = slurp();
+	    switch (c)
 	    {
-	    case 0x02:
+	    case O96_Mod_Hdr:
 		fatal_error("too many Module Header Records");
 
-	    case 0x04:
+	    case O96_Mod_End:
 		state = expecting_eof;
 		record = srec_record(srec_record::type_start_address, 0, 0, 0);
 		return 1;
 
-	    case 0x06:
+	    case O96_Content:
 		if (current_length < 3)
 		    fatal_error("malformed Content Record");
 		current_address = 
@@ -180,17 +272,20 @@ srec_input_file_aomf::read(srec_record &record)
 
 	    case 0x01:
 	    case 0x0E:
-	    case 0x12:
-	    case 0x16:
-	    case 0x18:
-		// Ignore these
+	    case O96_Loc_Sym:
+	    case O96_Pub_Def:
+	    case O96_Ext_Def:
+	    case O96_Mod_Anc:
+		// Ignore these silently
 		current_length = 0;
 		break;
 
 	    default:
 		// Nothing else should be in an AOMF file,
-		// even hough it may be valid in an OMF file.
-		fatal_error("unexpected record type");
+		// even though it may be valid in an OMF file.
+		warning("ignoring %s record (type 0x%02X)", o96name(c), c);
+		current_length = 0;
+		break;
 	    }
 	    break;
 	}
