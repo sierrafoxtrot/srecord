@@ -110,7 +110,7 @@ srecord-\*(v).spec	RedHat package specification
 srecord-\*(v).tar.gz	The complete sources.
 .TE
 .SH Secondary-site:
-sunsite.unc.edu /pub/Linux/utils/file
+sunsite.unc.edu /pub/Linux/apps/circuits
 .TS
 lf(CW) l.
 srecord-\*(v).README	Description, from the tar file

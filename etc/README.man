@@ -138,7 +138,7 @@ You will be able to find SRecord on any of its mirrors.
 tab(;);
 l l s
 l l l.
-URL:;ftp://sunsite.unc.edu/pub/Linux/utils/file/
+URL:;ftp://sunsite.unc.edu/pub/Linux/apps/circuits/
 File:;srecord-\*(v).README;# Description, from the tar file
 File:;srecord-\*(v).lsm;# Description, LSM format
 File:;srecord-\*(v).spec;# RedHat package specification
