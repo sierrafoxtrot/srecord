@@ -1,6 +1,6 @@
 /*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2000, 2003 Peter Miller;
+ *	Copyright (C) 1998-2000, 2003, 2004 Peter Miller;
  *	All rights reserved.
  *
  *	This program is free software; you can redistribute it and/or modify
@@ -142,6 +142,7 @@ archive/[project_minus].pdf: etc/reference.pdf
 }
 
 archive/%.txt: etc/%.man
+    set shallow
 {
 	roffpp
 		[prepost "-I" /[arch]/etc [search_list]]
