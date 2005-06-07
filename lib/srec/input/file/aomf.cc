@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2004 Peter Miller;
+//	Copyright (C) 2004, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -182,7 +182,7 @@ srec_input_file_aomf::slurp()
     for (size_t j = 0; j < length; ++j)
 	current_buffer[j] = get_byte();
     get_byte();
-    if (checksum_get() != 0)
+    if (use_checksums() && checksum_get() != 0)
 	fatal_error("checksum mismatch");
     return type;
 }

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -34,7 +34,7 @@ using namespace std;
 class quit; // forward
 
 /**
-  * The srec_input class is used to repesent an abstract EPROM load
+  * The srec_input class is used to represent an abstract EPROM load
   * file source.  It could be one of many file formats, or a chain of
   * filters applied to an input file.
   */
@@ -61,7 +61,7 @@ public:
 
     /**
       * The fatal_error method is used to report problems parsing
-      * the file.  Do not put a newline at athe end of the message.
+      * the file.  Do not put a newline at the end of the message.
       * Usually called from within derived class methods.  This method
       * does not return.
       *
@@ -73,7 +73,7 @@ public:
 							FORMAT_PRINTF(2, 3);
     /**
       * The fatal_error_errno method is used to report problems
-      * reading the input file.  Do not put a newline at athe end
+      * reading the input file.  Do not put a newline at the end
       * of the message.  The string equivalent of errno is appended
       * to the error message.  This method does not return.
       *
@@ -111,14 +111,14 @@ public:
 
     /**
       * The get_file_format_name method is used to find out the name
-      * of thew file format being read.  Derived classes must supply
+      * of the file format being read.  Derived classes must supply
       * this method.
       */
     virtual const char *get_file_format_name() const = 0;
 
     /**
       * The set_quit method is used to set the disposition of the
-      * error messages, and the "exit" implemnation.  The default
+      * error messages, and the "exit" implementation.  The default
       * is to write error messages on the standard error, and to
       * exit using the standard C exit function.
       */
@@ -129,6 +129,12 @@ public:
       * the error messages, and the "exit" back to the default.
       */
     void reset_quit();
+
+    /**
+      * The disable_checksum_validation method is used to have this
+      * input stream ignore checksum errors.
+      */
+    virtual void disable_checksum_validation() = 0;
 
 private:
     /**

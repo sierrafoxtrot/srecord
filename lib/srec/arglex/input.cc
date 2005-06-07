@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2004 Peter Miller;
+//	Copyright (C) 1998-2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -258,6 +258,15 @@ srec_arglex::get_input()
 	token_next();
 	ifp = new srec_input_file_wilson(fn);
 	break;
+    }
+
+    //
+    // Ignore checksums if asked to.
+    //
+    if (token_cur() == token_ignore_checksums)
+    {
+	ifp->disable_checksum_validation();
+	token_next();
     }
 
     //

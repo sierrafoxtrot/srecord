@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -65,4 +65,11 @@ srec_input_filter::get_file_format_name()
     const
 {
     return ifp->get_file_format_name();
+}
+
+
+void
+srec_input_filter::disable_checksum_validation()
+{
+    ifp->disable_checksum_validation();
 }

@@ -21,7 +21,7 @@
 //
 
 #include <arglex3.h>
-#include <srec/input.h>
+#include <srec/input/file.h>
 #include <srec/memory.h>
 #include <srec/memory/walker/writer.h>
 #include <srec/output.h>
@@ -121,6 +121,10 @@ main(int argc, char **argv)
 	    start_address = cmdline.get_number("-Start_Address");
 	    start_address_set = true;
 	    continue;
+
+	case srec_arglex::token_ignore_checksums:
+	    srec_input_file::ignore_all_checksums();
+	    break;
 	}
 	cmdline.token_next();
     }

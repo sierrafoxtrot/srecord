@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2004 Peter Miller;
+//	Copyright (C) 1998-2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -68,6 +68,7 @@ public:
 	token_formatted_binary,
 	token_four_packed_code,
 	token_guess,
+	token_ignore_checksums,
 	token_intel,
 	token_intel16,
 	token_length,

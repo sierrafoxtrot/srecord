@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2002 Peter Miller;
+//	Copyright (C) 1998-2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 
 #include <interval.h>
 #include <srec/arglex.h>
-#include <srec/input.h>
+#include <srec/input/file.h>
 #include <srec/memory.h>
 #include <srec/record.h>
 
@@ -37,124 +37,128 @@ using namespace std;
 int
 main(int argc, char **argv)
 {
-	srec_arglex cmdline(argc, argv);
-	cmdline.token_first();
-	typedef vector<srec_input *> infile_t;
-	infile_t infile;
-	while (cmdline.token_cur() != arglex::token_eoln)
+    srec_arglex cmdline(argc, argv);
+    cmdline.token_first();
+    typedef vector<srec_input *> infile_t;
+    infile_t infile;
+    while (cmdline.token_cur() != arglex::token_eoln)
+    {
+	switch (cmdline.token_cur())
 	{
-		switch (cmdline.token_cur())
-		{
-		default:
-			cmdline.bad_argument();
-			// NOTREACHED
+	default:
+	    cmdline.bad_argument();
+	    // NOTREACHED
 
-		case srec_arglex::token_string:
-		case srec_arglex::token_stdio:
-			infile.push_back(cmdline.get_input());
-			continue;
+	case srec_arglex::token_string:
+	case srec_arglex::token_stdio:
+	    infile.push_back(cmdline.get_input());
+	    continue;
 
-		case srec_arglex::token_multiple:
-			srec_memory::allow_overwriting();
-			break;
-		}
-		cmdline.token_next();
+	case srec_arglex::token_multiple:
+	    srec_memory::allow_overwriting();
+	    break;
+
+	case srec_arglex::token_ignore_checksums:
+	    srec_input_file::ignore_all_checksums();
+	    break;
 	}
-	if (infile.size() == 0)
-		infile.push_back(cmdline.get_input());
+	cmdline.token_next();
+    }
+    if (infile.size() == 0)
+	    infile.push_back(cmdline.get_input());
 
-	//
-	// Read each file and emit informative gumph.
-	//
-	for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
+    //
+    // Read each file and emit informative gumph.
+    //
+    for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
+    {
+	srec_input *ifp = *it;
+	if (infile.size() > 1)
 	{
-		srec_input *ifp = *it;
-		if (infile.size() > 1)
-		{
-			cout << endl;
-			cout << ifp->filename() << ":" << endl;
-		}
-		cout << "Format:\t" << ifp->get_file_format_name() << endl;
-		srec_record record;
-		interval range;
-		while (ifp->read(record))
-		{
-			switch (record.get_type())
-			{
-			case srec_record::type_header:
-				if (record.get_length() < 1)
-					break;
-				cout << "Header:\t\"";
-				for (int j = 0; j < record.get_length(); ++j)
-				{
-					int c = record.get_data(j) & 127;
-					if (c == '\\' || c == '"')
-						cout << '\\' << (char)c;
-					else if (isprint(c))
-						cout << (char)c;
-					else
-					  {
-					    char buf[16];
-					    snprintf(buf, sizeof(buf), "\\%03o", c);
-					    cout << buf;
-					  }
-				}
-				cout << "\"" << endl;
-				break;
-
-			case srec_record::type_data:
-				range +=
-					interval
-					(
-						record.get_address(),
-						record.get_address() + record.get_length()
-					);
-				break;
-
-			case srec_record::type_start_address:
- 			  {
-  				cout << "Start:\t";
- 				char buf[16];
- 				snprintf(buf, sizeof(buf), "%08lX", record.get_address());
- 				cout << buf << endl;
- 			  }
-				break;
-
-			default:
-				// ignored
-				break;
-			}
-		}
-		if (range.empty())
-		{
-			cout << "Data:\tnone" << endl;
-			continue;
-		}
-		cout << "Data:";
-		int prec = 4;
-		if (range.get_highest() > (1L << 24))
-			prec = 8;
-		else if (range.get_highest() > (1L << 16))
-			prec = 6;
-		for (;;)
-		{
-			interval tmp = range;
-			tmp.first_interval_only();
-			cout << "\t";
-			char buf[32];
-			snprintf(buf, sizeof(buf), "%0*lX", prec, tmp.get_lowest());
-			cout << buf << " - ";
-			snprintf(buf, sizeof(buf), "%0*lX", prec, tmp.get_highest() - 1);
-			cout << buf << endl;
-			range -= tmp;
-			if (range.empty())
-				break;
-		}
+	    cout << endl;
+	    cout << ifp->filename() << ":" << endl;
 	}
+	cout << "Format:\t" << ifp->get_file_format_name() << endl;
+	srec_record record;
+	interval range;
+	while (ifp->read(record))
+	{
+	    switch (record.get_type())
+	    {
+	    case srec_record::type_header:
+		if (record.get_length() < 1)
+		    break;
+		cout << "Header:\t\"";
+		for (int j = 0; j < record.get_length(); ++j)
+		{
+		    int c = record.get_data(j) & 127;
+		    if (c == '\\' || c == '"')
+		       	cout << '\\' << (char)c;
+		    else if (isprint(c))
+		       	cout << (char)c;
+		    else
+	    	    {
+			char buf[16];
+			snprintf(buf, sizeof(buf), "\\%03o", c);
+			cout << buf;
+	    	    }
+		}
+		cout << "\"" << endl;
+		break;
 
-	//
-	// success
-	//
-	exit(0);
-	return 0;
+	    case srec_record::type_data:
+		range +=
+	    	    interval
+	    	    (
+	       		record.get_address(),
+	       		record.get_address() + record.get_length()
+	    	    );
+		break;
+
+	    case srec_record::type_start_address:
+		{
+		    cout << "Start:\t";
+		    char buf[16];
+		    snprintf(buf, sizeof(buf), "%08lX", record.get_address());
+		    cout << buf << endl;
+		}
+		break;
+
+	    default:
+		// ignored
+		break;
+	    }
+	}
+	if (range.empty())
+	{
+	    cout << "Data:\tnone" << endl;
+	    continue;
+	}
+	cout << "Data:";
+	int prec = 4;
+	if (range.get_highest() > (1L << 24))
+	    prec = 8;
+	else if (range.get_highest() > (1L << 16))
+	    prec = 6;
+	for (;;)
+	{
+	    interval tmp = range;
+	    tmp.first_interval_only();
+	    cout << "\t";
+	    char buf[32];
+	    snprintf(buf, sizeof(buf), "%0*lX", prec, tmp.get_lowest());
+	    cout << buf << " - ";
+	    snprintf(buf, sizeof(buf), "%0*lX", prec, tmp.get_highest() - 1);
+	    cout << buf << endl;
+	    range -= tmp;
+	    if (range.empty())
+		break;
+	}
+    }
+
+    //
+    // success
+    //
+    exit(0);
+    return 0;
 }

@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998-2004 Peter Miller;
+.\"	Copyright (C) 1998-2005 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@ Input files may be qualified in a number of ways: you may specify their
 format and you may specify filters to apply to them.
 An input file specification looks like this:
 .RS
-\fIfilename\fP [ \fIformat\fP ][ \fIfilter\fP \&... ]
+\fIfilename\fP [ \fIformat\fP ][ \-ignore-checksums ][ \fIfilter\fP \&... ]
 .RE
 .PP
 The
@@ -171,6 +171,8 @@ This option says to use the wilson format to read the file.
 See
 .IR srec_wilson (5)
 for a description of this file format.
+.SS Ignore Checksums
+.so o_ignore_checksums.so
 .SS Input Filters
 You may specify zero or more \fIfilters\fP to be applied.
 Filters are applied in the order the user specifies.

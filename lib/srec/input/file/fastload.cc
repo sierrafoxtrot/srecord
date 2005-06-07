@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001-2003 Peter Miller;
+//	Copyright (C) 2001-2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -213,10 +213,14 @@ srec_input_file_fastload::read_inner(srec_record &record)
 
 	    case 'C':
 		n = get_number(1, 6);
-		if ((int)n != checksum_get16())
+		if (use_checksums())
 		{
-		    fatal_error("checksum mismatch (%04X != %04X)",
-			(int)n, checksum_get16());
+		    int csum = checksum_get16();
+		    if ((int)n != csum)
+		    {
+			fatal_error("checksum mismatch (%04X != %04X)",
+			    (int)n, csum);
+		    }
 		}
 		expect_white_space();
 		break;

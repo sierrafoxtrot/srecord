@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001-2003 Peter Miller;
+//	Copyright (C) 2001-2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -91,10 +91,9 @@ srec_input_file_dec_binary::read(srec_record &record)
 	{
 	    // Verify the checksum at end of the record.
 	    get_byte();
-	    if (checksum_get())
+	    if (use_checksums() && checksum_get())
 	    {
-	       	fatal_error("checksum mismatch (%02X)",
-		    checksum_get());
+	       	fatal_error("checksum mismatch (%02X)", checksum_get());
 	    }
 	}
 	current_pos = 0;
@@ -121,10 +120,9 @@ srec_input_file_dec_binary::read(srec_record &record)
 	if (length == 0)
 	{
 	    get_byte();
-	    if (checksum_get())
+	    if (use_checksums() && checksum_get())
 	    {
-		fatal_error("checksum mismatch (%02X)",
-		    checksum_get());
+		fatal_error("checksum mismatch (%02X)", checksum_get());
 	    }
 	    srec_record::type_t type = srec_record::type_start_address;
 	    record = srec_record(type, current_address, 0, 0);

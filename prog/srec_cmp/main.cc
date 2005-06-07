@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2003 Peter Miller;
+//	Copyright (C) 1998-2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 //
 
 #include <srec/arglex.h>
-#include <srec/input.h>
+#include <srec/input/file.h>
 #include <srec/memory.h>
 #include <srec/record.h>
 
@@ -74,6 +74,10 @@ main(int argc, char **argv)
 
 	case srec_arglex::token_multiple:
 	    srec_memory::allow_overwriting();
+	    break;
+
+	case srec_arglex::token_ignore_checksums:
+	    srec_input_file::ignore_all_checksums();
 	    break;
 	}
 	cmdline.token_next();

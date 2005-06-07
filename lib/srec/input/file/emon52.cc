@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001-2003 Peter Miller;
+//	Copyright (C) 2001-2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -78,8 +78,8 @@ srec_input_file_emon52::read(srec_record &record)
     skip_white_space();
     int csumX = checksum_get16();
     int csum = get_word();
-    if (csumX != csum)
-	fatal_error("checksum mismatch (%04X)", csumX);
+    if (use_checksums() && csumX != csum)
+	fatal_error("checksum mismatch (%04X != %04X)", csumX, csum);
     if (get_char() != '\n')
 	fatal_error("end-of-line expected");
 

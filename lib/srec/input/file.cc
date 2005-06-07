@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2004 Peter Miller;
+//	Copyright (C) 1998-2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -30,15 +30,18 @@ using namespace std;
 
 #include <srec/input/file.h>
 
+bool srec_input_file::ignore_checksums_default = false;
+
 
 srec_input_file::srec_input_file() :
     file_name("standard input"),
     line_number(1),
     prev_was_newline(false),
+    vfp(stdin),
     checksum(0),
-    is_text(0)
+    is_text(0),
+    ignore_checksums(ignore_checksums_default)
 {
-    vfp = stdin;
 }
 
 
@@ -55,7 +58,9 @@ srec_input_file::srec_input_file(const char *file_name) :
     line_number(1),
     prev_was_newline(false),
     vfp(0),
-    checksum(0)
+    checksum(0),
+    is_text(0),
+    ignore_checksums(ignore_checksums_default)
 {
     if (file_name == string("-"))
     {
@@ -299,4 +304,11 @@ srec_input_file::seek_to_end()
 {
     FILE *fp = (FILE *)get_fp();
     fseek(fp, 0L, SEEK_END);
+}
+
+
+void
+srec_input_file::disable_checksum_validation()
+{
+    ignore_checksums = true;
 }

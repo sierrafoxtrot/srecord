@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2003 Peter Miller;
+//	Copyright (C) 2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -117,7 +117,7 @@ srec_input_file_fairchild::read(srec_record &record)
 		//
 		int sum1 = checksum_get() & 0xF;
 		int sum2 = get_nibble();
-		if (sum1 != sum2)
+		if (use_checksums() && sum1 != sum2)
 		    fatal_error("checksum error (%d != %d)", sum1, sum2);
 	    }
 	    return 1;

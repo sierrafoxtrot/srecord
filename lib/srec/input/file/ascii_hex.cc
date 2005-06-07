@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002, 2003 Peter Miller;
+//	Copyright (C) 2000, 2002, 2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -139,16 +139,19 @@ srec_input_file_ascii_hex::read_inner(srec_record &record)
 		break;
 
 	    case 'S':
-		unsigned short chk1 = checksum_get16();
-		unsigned short chk2 = value & 0xFFFF;
-		if (chk1 != chk2)
+		if (use_checksums())
 		{
-		    fatal_error
-		    (
-			"checksum mismatch (%4.4X != %4.4X)",
-			chk1,
-			chk2
-		    );
+		    unsigned short chk1 = checksum_get16();
+		    unsigned short chk2 = value & 0xFFFF;
+		    if (chk1 != chk2)
+		    {
+			fatal_error
+			(
+			    "checksum mismatch (%4.4X != %4.4X)",
+			    chk1,
+			    chk2
+			);
+		    }
 		}
 		break;
 	    }

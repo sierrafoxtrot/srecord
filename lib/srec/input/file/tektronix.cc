@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2003 Peter Miller;
+//	Copyright (C) 1998-2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -105,7 +105,7 @@ srec_input_file_tektronix::read_inner(srec_record &record)
     buffer[2] = get_byte();
     int nibble_checksum = checksum_get();
     buffer[3] = get_byte();
-    if (nibble_checksum != buffer[3])
+    if (use_checksums() && nibble_checksum != buffer[3])
     {
 	fatal_error
 	(
@@ -121,7 +121,7 @@ srec_input_file_tektronix::read_inner(srec_record &record)
 	    buffer[4 + j] = get_byte();
 	int data_checksum_calc = checksum_get();
 	int data_checksum_file = get_byte();
-	if (data_checksum_calc != data_checksum_file)
+	if (use_checksums() && data_checksum_calc != data_checksum_file)
 	{
 	    fatal_error
 	    (

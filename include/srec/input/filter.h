@@ -55,6 +55,9 @@ public:
     // See base class for documentation.
     virtual const char *get_file_format_name() const;
 
+    // See base class for documentation.
+    void disable_checksum_validation();
+
 protected:
     /**
       * The constructor.  Only derived classes may call.

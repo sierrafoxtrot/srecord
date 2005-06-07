@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2003 Peter Miller;
+//	Copyright (C) 1998-2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -76,8 +76,12 @@ srec_input_file_srecord::read_inner(srec_record &record)
     unsigned char buffer[256];
     for (int j = 0; j < line_length; ++j)
 	buffer[j] = get_byte();
-    if (checksum_get() != 0xFF)
-	fatal_error("checksum mismatch (%02X)", checksum_get());
+    if (use_checksums())
+    {
+	int n = checksum_get();
+	if (n != 0xFF)
+	    fatal_error("checksum mismatch (%02X != FF)", n);
+    }
     if (get_char() != '\n')
 	fatal_error("end-of-line expected");
     --line_length;
