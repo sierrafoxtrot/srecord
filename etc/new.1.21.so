@@ -25,10 +25,23 @@
 .\" command, and then editing it to be more appropriate.
 .\"
 .\" ------------------------------------------------------------------------
-.\" .PP
-.\" .if n *
-.\" .if t \(bu
-.\" .\" Change NNN
+.PP
+.if n *
+.if t \(bu
+.\" Change 15
+A fix for the "undefined symbols" problem when using g++ 3.x on Cygwin
+and MacOsX has been added to the ./configure script.
+.PP
+.if n *
+.if t \(bu
+.\" Change 12
+.\" pmiller, Tue Jun  7 23:54:56 2005, ignore-checksum option
+There is a new \-ignore-checksum command line option.
+The \-ignore-checksums option may be used to disable checksum
+validation of input files, for those formats which have
+checksums at all.  Note that trhe checksum values are still read
+in and parsed (so it is still an error if they are missing) but
+their values are not checked.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.21 (7-Feb-2005)
