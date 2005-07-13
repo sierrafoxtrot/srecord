@@ -248,22 +248,8 @@ srec_arglex::get_output()
 	break;
 
     case token_vmem:
-	{
-	    //
-	    // The default number of bits is 32.
-	    // If you change this, you must also change the following files:
-	    //     lib/srec/output/file/vmem.cc
-	    //     man/man1/srec_cat.1
-	    //
-	    int mem_width = 32;
-
-	    if (token_next() == token_number)
-	    {
-		mem_width = value_number();
-		token_next();
-	    }
-	    ofp = new srec_output_file_vmem(fn, mem_width);
-	}
+	token_next();
+	ofp = new srec_output_file_vmem(fn);
 	break;
 
     case token_wilson:

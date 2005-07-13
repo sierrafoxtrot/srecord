@@ -43,7 +43,7 @@ public:
     /**
       * The constructor.
       */
-    srec_output_file_vmem(const char *filename, const int mem_width);
+    srec_output_file_vmem(const char *filename);
 
     // See base class for documentation.
     void write(const srec_record &);
@@ -56,6 +56,9 @@ public:
 
     // See base class for documentation.
     int preferred_block_size_get() const;
+
+    // See base class for documentation.
+    void command_line(srec_arglex *cmdln);
 
 private:
     /**
