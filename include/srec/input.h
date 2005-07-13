@@ -32,6 +32,7 @@ using namespace std;
 
 
 class quit; // forward
+class srec_arglex; // forward
 
 /**
   * The srec_input class is used to represent an abstract EPROM load
@@ -135,6 +136,18 @@ public:
       * input stream ignore checksum errors.
       */
     virtual void disable_checksum_validation() = 0;
+
+    /**
+      * The command_line method is used by arglex_srec::get_input when
+      * parsing the command line, to give the format an opportunity
+      * to grab extra arguments off the command line.  The default
+      * implementation does nothing.
+      *
+      * @param cmdln
+      *     Where to obtain information about the curreent parse stat of
+      *     the command line.
+      */
+    virtual void command_line(srec_arglex *cmdln);
 
 private:
     /**

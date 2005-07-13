@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2004 Peter Miller;
+//	Copyright (C) 2000-2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -269,11 +269,12 @@ srec_input_file_guess(const char *fn)
 	    if (ifp->read(record))
 	    {
 		//
-		// It is necessary to nuke the old file reader.
-		// (a) Because it has the wrong quitter, but more
-		// importantly (b) because it is no longer positioned
-		// at the start of the file, and the user *will*
-		// miss some data.
+                // It is necessary to nuke the old file reader.
+                // (a) Because it has the wrong quitter, but more
+                // importantly (b) because it is no longer positioned
+                // at the start of the file, and the user *will* miss
+                // some data, also (c) we need a chance to use the
+                // input::command_line() method.
 		//
 		delete ifp;
 
