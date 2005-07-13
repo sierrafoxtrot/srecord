@@ -147,7 +147,8 @@ An Mos Technologies format file will be written.
 .IR srec_mos_tech (5)
 for a description of this file format.)
 .TP 8n
-\fB\-Motorola\fP
+\fB\-Motorola\fP [ \fIwidth\fP ]
+.RS
 A Motorola S-Record file will be written.
 (See
 .IR srec_motorola (5)
@@ -157,6 +158,13 @@ By default, the smallest possible address length is emitted,
 this will be S19 for data in the first 64KB;
 if you wish to force S28 use the \fB--address-length=3\fP option;
 if you wish to force S37 use the \fB--address-length=4\fP option
+.PP
+The optional \fIwidth\fP argument describes the number of bytes which
+form each address multiple.  For normal uses the default of one (1) byte
+is appropriate.  Some systems with 16-bit or 32-bit targets mutilate the
+addresses in the file; this option will imitate that ehaviour.
+Unlike most other parameters, this one cannot be guessed.
+.RE
 .TP 8n
 \fB\-Needham_Hexadecimal\fP
 This option says to use the Needham Electronics ASCII file format to

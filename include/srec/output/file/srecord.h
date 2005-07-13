@@ -67,6 +67,9 @@ public:
     // See base class for documentation.
     virtual int preferred_block_size_get() const;
 
+    // See base class for documentation.
+    void command_line(srec_arglex *cmdln);
+
 private:
     /**
       * The data_count instance variable is used to remember the total
@@ -87,6 +90,18 @@ private:
       * minimum number of address bytes to be emitted into output lines.
       */
     int address_length;
+
+    /**
+      * The address_shift method is used to remember how far to the left
+      * addresses need to be shifted to become byte addresses.
+      * The default is zero (0).
+      *
+      * This is because of some poorly though out "extentions" to this
+      * file format, for 16-bit and 32-bit data busses.  I say "poory
+      * thought out" because the no way (zero, zip, nada) of discovering
+      * this just by looking at the data.
+      */
+    int address_shift;
 
     /**
       * The write_inner method is used to write a line of output.

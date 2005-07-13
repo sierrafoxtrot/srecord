@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -51,6 +51,9 @@ public:
     // See base class for documentation.
     const char *get_file_format_name() const;
 
+    // See base class for documentation.
+    void command_line(srec_arglex *cmdln);
+
 private:
     /**
       * The data_count instance variable is used to remember the number
@@ -87,6 +90,20 @@ private:
       * whether or not the termination record has been seen yet.
       */
     bool termination_seen;
+
+    /**
+      * The address_shift method is used to remember how far to the left
+      * addresses need to be shifted to become byte addresses.
+      * The default is zero (0).
+      *
+      * This is because of some poorly though out "extentions" to the
+      * file format, for 16-bit and 32-bit data busses.  I say "poory
+      * thought out" because the no way (zero, zip, nada) of discovering
+      * this just by looking at the first data line in the file (and if
+      * the lines are jumbled just right, the first few lines are no
+      * more enlightening).
+      */
+    unsigned address_shift;
 
     /**
       * The default constructor.  Do not use.

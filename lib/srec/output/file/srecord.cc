@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001-2003 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001-2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -22,242 +22,263 @@
 
 #pragma implementation "srec_output_file_srecord"
 
+#include <srec/arglex.h>
 #include <srec/output/file/srecord.h>
 #include <srec/record.h>
 
 
 srec_output_file_srecord::srec_output_file_srecord() :
-	srec_output_file(),
-	data_count(0),
-	pref_block_size(32),
-	address_length(2)
+    srec_output_file(),
+    data_count(0),
+    pref_block_size(32),
+    address_length(2),
+    address_shift(0)
 {
 }
 
 
 srec_output_file_srecord::srec_output_file_srecord(const char *filename) :
-	srec_output_file(filename),
-	data_count(0),
-	pref_block_size(32),
-	address_length(2)
+    srec_output_file(filename),
+    data_count(0),
+    pref_block_size(32),
+    address_length(2),
+    address_shift(0)
 {
 }
 
 
-srec_output_file_srecord::srec_output_file_srecord(const srec_output_file_srecord &) :
-	srec_output_file(),
-	data_count(0),
-	pref_block_size(32),
-	address_length(2)
+void
+srec_output_file_srecord::command_line(srec_arglex *cmdln)
 {
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
+    if (cmdln->token_cur() == arglex::token_number)
+    {
+	int n = cmdln->value_number();
+	cmdln->token_next();
 
+	//
+	// Shift Bytes Bits
+	//   0     1     8
+	//   1     2    16
+	//   2     4    32
+	//   3     8    64
+	//
+	switch (n)
+	{
+	case 1:
+	case 8:
+	    address_shift = 0;
+	    break;
 
-srec_output_file_srecord &
-srec_output_file_srecord::operator=(const srec_output_file_srecord &)
-{
-	fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-	return *this;
+	case 2:
+	case 16:
+	    address_shift = 1;
+	    break;
+
+	case 4:
+	case 32:
+	    address_shift = 2;
+	    break;
+
+	case 64:
+	    address_shift = 3;
+	    break;
+
+	default:
+	    fatal_error("address multiple %d not understood", n);
+	    // NOTREACHED
+	}
+    }
 }
 
 
 srec_output_file_srecord::~srec_output_file_srecord()
 {
-	// check for data count record
-	// check for termination record
+    // check for data count record
+    // check for termination record
 }
 
 
 void
 srec_output_file_srecord::write_inner(int tag, unsigned long address,
-	int address_nbytes, const void *data, int data_nbytes)
+    int address_nbytes, const void *data, int data_nbytes)
 {
-	//
-	// Make sure the line is not too long.
-	//
-	if (address_nbytes + data_nbytes > 254)
-	{
-		fatal_error
-		(
-			"data length (%d+%d) too long",
-			address_nbytes,
-			data_nbytes
-		);
-	}
+    //
+    // Make sure the line is not too long.
+    //
+    if (address_nbytes + data_nbytes > 254)
+    {
+	fatal_error
+	(
+    	    "data length (%d+%d) too long",
+    	    address_nbytes,
+    	    data_nbytes
+	);
+    }
 
-	//
-	// Assemble the data for this line.
-	//
-	unsigned char buffer[256];
-	int line_length = address_nbytes + data_nbytes + 1;
-	buffer[0] = line_length;
-	srec_record::encode_big_endian(buffer + 1, address, address_nbytes);
-	if (data_nbytes)
-		memcpy(buffer + 1 + address_nbytes, data, data_nbytes);
+    //
+    // Assemble the data for this line.
+    //
+    unsigned char buffer[256];
+    int line_length = address_nbytes + data_nbytes + 1;
+    buffer[0] = line_length;
+    srec_record::encode_big_endian(buffer + 1, address, address_nbytes);
+    if (data_nbytes)
+	memcpy(buffer + 1 + address_nbytes, data, data_nbytes);
 
-	//
-	// Emit the line as hexadecimal text.
-	//
-	put_char('S');
-	put_nibble(tag);
-	checksum_reset();
-	for (int j = 0; j < line_length; ++j)
-		put_byte(buffer[j]);
-	put_byte(~checksum_get());
-	put_char('\n');
+    //
+    // Emit the line as hexadecimal text.
+    //
+    put_char('S');
+    put_nibble(tag);
+    checksum_reset();
+    for (int j = 0; j < line_length; ++j)
+	put_byte(buffer[j]);
+    put_byte(~checksum_get());
+    put_char('\n');
 }
 
 
 void
 srec_output_file_srecord::write(const srec_record &record)
 {
-	switch (record.get_type())
+    //
+    // Make sure the address is nicely aligned.
+    // FIXME: cope with this more elegantly.
+    //
+    unsigned long shifted_address = record.get_address();
+    if (address_shift)
+    {
+	if (shifted_address & ((1 << address_shift) - 1))
 	{
-	case srec_record::type_header:
-		if (data_only_flag)
-			break;
-		write_inner
-		(
-			0,
-			0,
-			2,
-			record.get_data(),
-			record.get_length()
-		);
-		break;
-
-	case srec_record::type_data:
-		if
-		(
-			record.get_address() < (1UL << 16)
-		&&
-			address_length <= 2
-		)
-		{
-			write_inner
-			(
-				1,
-				record.get_address(),
-				2,
-				record.get_data(),
-				record.get_length()
-			);
-		}
-		else if
-		(
-			record.get_address() < (1UL << 24)
-		&&
-			address_length <= 3
-		)
-		{
-			write_inner
-			(
-				2,
-				record.get_address(),
-				3,
-				record.get_data(),
-				record.get_length()
-			);
-		}
-		else
-		{
-			write_inner
-			(
-				3,
-				record.get_address(),
-				4,
-				record.get_data(),
-				record.get_length()
-			);
-		}
-		++data_count;
-		break;
-
-	case srec_record::type_data_count:
-		// ignore
-		break;
-
-	case srec_record::type_start_address:
-		if (data_only_flag)
-			break;
-		if (data_count < (1L << 16))
-			write_inner(5, data_count, 2, 0, 0);
-		else
-			write_inner(6, data_count, 3, 0, 0);
-		if
-		(
-			record.get_address() < (1UL << 16)
-		&&
-			address_length <= 2
-		)
-			write_inner(9, record.get_address(), 2, 0, 0);
-		else if
-		(
-			record.get_address() < (1UL << 24)
-		&&
-			address_length <= 3
-		)
-			write_inner(8, record.get_address(), 3, 0, 0);
-		else
-			write_inner(7, record.get_address(), 4, 0, 0);
-		break;
-
-	case srec_record::type_unknown:
-		fatal_error("can't write unknown record type");
+	    fatal_error
+	    (
+		"address 0x%04lX not aligned on %d byte boundary",
+		shifted_address,
+		(1 << address_shift)
+	    );
 	}
+	shifted_address >>= address_shift;
+    }
+
+    switch (record.get_type())
+    {
+    case srec_record::type_header:
+	if (data_only_flag)
+	    break;
+	write_inner(0, 0, 2, record.get_data(), record.get_length());
+	break;
+
+    case srec_record::type_data:
+	if (shifted_address < (1UL << 16) && address_length <= 2)
+	{
+	    write_inner
+	    (
+		1,
+		shifted_address,
+		2,
+		record.get_data(),
+		record.get_length()
+	    );
+	}
+	else if (shifted_address < (1UL << 24) && address_length <= 3)
+	{
+	    write_inner
+	    (
+		2,
+		shifted_address,
+		3,
+		record.get_data(),
+		record.get_length()
+	    );
+	}
+	else
+	{
+	    write_inner
+	    (
+	       	3,
+	       	shifted_address,
+	       	4,
+	       	record.get_data(),
+	       	record.get_length()
+	    );
+	}
+	++data_count;
+	break;
+
+    case srec_record::type_data_count:
+	// ignore
+	break;
+
+    case srec_record::type_start_address:
+	if (data_only_flag)
+	    break;
+	if (data_count < (1L << 16))
+	    write_inner(5, data_count, 2, 0, 0);
+	else
+	    write_inner(6, data_count, 3, 0, 0);
+	if (shifted_address < (1UL << 16) && address_length <= 2)
+	    write_inner(9, shifted_address, 2, 0, 0);
+	else if (shifted_address < (1UL << 24) && address_length <= 3)
+	    write_inner(8, shifted_address, 3, 0, 0);
+	else
+	    write_inner(7, shifted_address, 4, 0, 0);
+	break;
+
+    case srec_record::type_unknown:
+	fatal_error("can't write unknown record type");
+    }
 }
 
 
 void
 srec_output_file_srecord::line_length_set(int linlen)
 {
-	//
-	// Given the number of characters, figure the maximum number of
-	// data baytes.
-	// 'S' <tag> <size1:2> <addr1:8> ...data... <cs1:2>
-	// 1 +  1 +  2 +       8 +       2*n +      2       <= linlen
-	//
-	int n = (linlen - 14) / 2;
+    //
+    // Given the number of characters, figure the maximum number of
+    // data baytes.
+    // 'S' <tag> <size1:2> <addr1:8> ...data... <cs1:2>
+    // 1 +  1 +  2 +       8 +       2*n +      2       <= linlen
+    //
+    int n = (linlen - 14) / 2;
 
-	//
-	// Constrain based on the file format.
-	//
-	// The size field (max 255) includes the size of the data,
-	// the size of the address (up to 4 bytes) and the size of the
-	// size (1 byte), thus 250 (255 - 4 - 1) bytes of data is
-	// the safest maximum.	We could make it based on the address,
-	// but that's probably overkill.
-	//
-	if (n < 1)
-		n = 1;
-	else if (n > 250)
-		n = 250;
+    //
+    // Constrain based on the file format.
+    //
+    // The size field (max 255) includes the size of the data,
+    // the size of the address (up to 4 bytes) and the size of the
+    // size (1 byte), thus 250 (255 - 4 - 1) bytes of data is
+    // the safest maximum.	We could make it based on the address,
+    // but that's probably overkill.
+    //
+    if (n < 1)
+	n = 1;
+    else if (n > 250)
+	n = 250;
 
-	//
-	// An additional constraint is the size of the srec_record
-	// data buffer.
-	//
-	if (n > srec_record::max_data_length)
-		n = srec_record::max_data_length;
-	pref_block_size = n;
+    //
+    // An additional constraint is the size of the srec_record
+    // data buffer.
+    //
+    if (n > srec_record::max_data_length)
+	n = srec_record::max_data_length;
+    pref_block_size = n;
 }
 
 
 void
 srec_output_file_srecord::address_length_set(int n)
 {
-	if (n < 2)
-		n = 2;
-	else if (n > 4)
-		n = 4;
-	address_length = n;
+    if (n < 2)
+	n = 2;
+    else if (n > 4)
+	n = 4;
+    address_length = n;
 }
 
 
 int
 srec_output_file_srecord::preferred_block_size_get()
-	const
+    const
 {
-	return pref_block_size;
+    return pref_block_size;
 }

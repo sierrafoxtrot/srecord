@@ -28,11 +28,18 @@
 .PP
 .if n *
 .if t \(bu
+.\" Change 20
+The Motorola file format can now have an "address width" specified, for
+compatibility with the dubious extension of dividing the address by 2 or
+4 to represent 16-bit and 64-bit data widths.
+.PP
+.if n *
+.if t \(bu
 .\" Change 16
-The \-C-Array output format now uses the \f[CW]const\fP keyword by default,
-you can turn it off with the \-no-const option.
-The \-C-Array output format can now generate an include filke if you use
-the \-INClude option.
+The \-C-Array output format now uses the \f[CW]const\fP keyword by
+default, you can turn it off with the \-no-const option.  The \-C-Array
+output format can now generate an additional include file if you use the
+\-INClude option.
 .PP
 .if n *
 .if t \(bu

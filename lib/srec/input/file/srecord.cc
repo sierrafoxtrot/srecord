@@ -22,6 +22,7 @@
 
 #pragma implementation "srec_input_file_srecord"
 
+#include <srec/arglex.h>
 #include <srec/input/file/srecord.h>
 #include <srec/record.h>
 
@@ -32,8 +33,53 @@ srec_input_file_srecord::srec_input_file_srecord(const char *filename) :
     garbage_warning(false),
     seen_some_input(false),
     header_seen(false),
-    termination_seen(false)
+    termination_seen(false),
+    address_shift(0)
 {
+}
+
+
+void
+srec_input_file_srecord::command_line(srec_arglex *cmdln)
+{
+    if (cmdln->token_cur() == arglex::token_number)
+    {
+	int n = cmdln->value_number();
+	cmdln->token_next();
+
+	//
+	// Shift Bytes Bits
+	//   0     1     8
+	//   1     2    16
+	//   2     4    32
+	//   3     8    64
+	//
+	switch (n)
+	{
+	case 1:
+	case 8:
+	    address_shift = 0;
+	    break;
+
+	case 2:
+	case 16:
+	    address_shift = 1;
+	    break;
+
+	case 4:
+	case 32:
+	    address_shift = 2;
+	    break;
+
+	case 64:
+	    address_shift = 3;
+	    break;
+
+	default:
+	    fatal_error("address multiple %d not understood", n);
+	    // NOTREACHED
+	}
+    }
 }
 
 
@@ -169,14 +215,10 @@ srec_input_file_srecord::read_inner(srec_record &record)
     	    tag
 	);
     }
-    record =
-	srec_record
-	(
-    	    type,
-    	    srec_record::decode_big_endian(buffer, naddr),
-	    buffer + naddr,
-    	    line_length - naddr
-	);
+    long tmp_addr = srec_record::decode_big_endian(buffer, naddr);
+    if (address_shift && type != srec_record::type_data_count)
+	tmp_addr <<= address_shift;
+    record = srec_record(type, tmp_addr, buffer + naddr, line_length - naddr);
     return 1;
 }
 
