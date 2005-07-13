@@ -47,11 +47,8 @@ public:
       * @param filename
       *     The file name to open to write data to.  The name "-" is
       *     understood to mean the standard output.
-      * @param prefix
-      *     The prefix to place at the start of variable names in the
-      *     generated output.
       */
-    srec_output_file_c(const char *filename, const char *prefix);
+    srec_output_file_c(const char *filename);
 
     // See base class for documentation.
     virtual void write(const srec_record &);
@@ -64,6 +61,9 @@ public:
 
     // See base class for documentation.
     int preferred_block_size_get() const;
+
+    // See base class for documentation.
+    void command_line(srec_arglex *cmdln);
 
 private:
     /**
@@ -114,6 +114,24 @@ private:
       * many bytes to emit when emitting addresses.
       */
     int address_length;
+
+    /**
+      * The constant instance variable is used to remember whether or
+      * not to use the "const" keyword.
+      */
+    bool constant;
+
+    /**
+      * The include instance variable is used to remember whether or not
+      * to generate an include file.
+      */
+    bool include;
+
+    /**
+      * The include_file_name instance variable is used to remember the
+      * name of the include file to be generated.
+      */
+    string include_file_name;
 
     /**
       * The emit_header method is used to emit the initial portion

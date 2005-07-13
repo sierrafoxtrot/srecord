@@ -28,6 +28,14 @@
 .PP
 .if n *
 .if t \(bu
+.\" Change 16
+The \-C-Array output format now uses the \f[CW]const\fP keyword by default,
+you can turn it off with the \-no-const option.
+The \-C-Array output format can now generate an include filke if you use
+the \-INClude option.
+.PP
+.if n *
+.if t \(bu
 .\" Change 15
 A fix for the "undefined symbols" problem when using g++ 3.x on Cygwin
 and MacOsX has been added to the ./configure script.

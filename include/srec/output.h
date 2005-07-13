@@ -30,6 +30,7 @@
 using namespace std;
 #include <format_printf.h>
 
+class srec_arglex; // forward
 class srec_record; // forward
 
 /**
@@ -157,6 +158,18 @@ public:
       * are written.
       */
     virtual void notify_upper_bound(unsigned long addr);
+
+    /**
+      * The command_line method is used by arglex_srec::get_output when
+      * parsing the command line, to give the format an opportunity
+      * to grab extra arguments off the command line.  The default
+      * implementation does nothing.
+      *
+      * @param cmdln
+      *     Where to obtain information about the curreent parse stat of
+      *     the command line.
+      */
+    virtual void command_line(srec_arglex *cmdln);
 
 protected:
     /**

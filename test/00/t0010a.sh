@@ -66,15 +66,20 @@ if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
 /* HDR */
-unsigned char bogus[] =
+const unsigned char bogus[] =
 {
 0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x2C, 0x20, 0x57, 0x6F, 0x72, 0x6C, 0x64, 0x21,
 0x0A,
 };
-unsigned long bogus_termination = 0x00000000;
-unsigned long bogus_start       = 0x00000000;
-unsigned long bogus_finish      = 0x0000000E;
-unsigned long bogus_length      = 0x0000000E;
+const unsigned long bogus_termination = 0x00000000;
+const unsigned long bogus_start       = 0x00000000;
+const unsigned long bogus_finish      = 0x0000000E;
+const unsigned long bogus_length      = 0x0000000E;
+
+#define BOGUS_TERMINATION 0x00000000
+#define BOGUS_START       0x00000000
+#define BOGUS_FINISH      0x0000000E
+#define BOGUS_LENGTH      0x0000000E
 fubar
 if test $? -ne 0; then no_result; fi
 

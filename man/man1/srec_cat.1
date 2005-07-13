@@ -89,9 +89,13 @@ A series of BASIC DATA statements will be written.
 \fB\-Binary\fP
 A raw binary file will be written.
 .TP 8n
-\fB\-C-Array\fP \fIidentifier\fP
+\fB\-C-Array\fP [ \fIidentifier\fP ][ \-INClude ][ \-No-CONST ]
 A C array declaration will be written.
 The \fIidentifier\fP is the name of the variable to be defined.
+The \-INClude options asks for an include file to be generated as well.
+The \-No-CONST options asks for the variables to not use the const
+keyword (they are declared contant be default, so that they are placed
+into the read-only segment in embedded systems).
 .TP 8n
 \fB\-COsmac\fP
 An RCA Cosmac Elf format file will be written.

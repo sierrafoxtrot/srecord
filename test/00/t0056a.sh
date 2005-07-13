@@ -51,7 +51,7 @@ no_result()
 trap "no_result" 1 2 3 15
 
 bin=$here/${1-.}/bin
-mkdir $work
+mkdir $work $work/foo
 if test $? -ne 0; then no_result; fi
 cd $work
 if test $? -ne 0; then no_result; fi
@@ -67,23 +67,45 @@ if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
 /* HDR */
-unsigned char eprom[] =
+const unsigned char eprom[] =
 {
 0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x2C, 0x2D, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 0xFF, 0xFF, 0xFF, 0x57, 0x6F, 0x72, 0x6C, 0x64, 0x21, 0x0A,
 };
-unsigned long eprom_termination = 0x00000000;
-unsigned long eprom_start       = 0x00000000;
-unsigned long eprom_finish      = 0x00000017;
-unsigned long eprom_length      = 0x00000017;
+const unsigned long eprom_termination = 0x00000000;
+const unsigned long eprom_start       = 0x00000000;
+const unsigned long eprom_finish      = 0x00000017;
+const unsigned long eprom_length      = 0x00000017;
+
+#define EPROM_TERMINATION 0x00000000
+#define EPROM_START       0x00000000
+#define EPROM_FINISH      0x00000017
+#define EPROM_LENGTH      0x00000017
 fubar
-if test $? -ne 0; then no_result; fi
+test $? -eq 0 || no_result
 
-$bin/srec_cat test.in -o test.out -ca
-if test $? -ne 0; then fail; fi
+$bin/srec_cat test.in -o foo/test.out -ca -incl
+test $? -eq 0 || fail
 
-diff test.ok test.out
-if test $? -ne 0; then fail; fi
+diff test.ok foo/test.out
+test $? -eq 0 || fail
+
+cat > test.h.ok << 'fubar'
+#ifndef FOO_TEST_H
+#define FOO_TEST_H
+
+const extern unsigned long eprom_termination;
+const extern unsigned long eprom_start;
+const extern unsigned long eprom_finish;
+const extern unsigned long eprom_length;
+const extern unsigned char eprom[];
+
+#endif /* FOO_TEST_H */
+fubar
+test $? -eq 0 || no_result
+
+diff test.h.ok foo/test.h
+test $? -eq 0 || fail
 
 #
 # The things tested here, worked.
