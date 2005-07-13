@@ -21,23 +21,46 @@
 
 #pragma implementation "srec_output_file_vhdl"
 
+#include <srec/arglex.h>
 #include <interval.h>
 #include <srec/output/file/vhdl.h>
 #include <srec/record.h>
 #include <progname.h>
 
 
-srec_output_file_vhdl::srec_output_file_vhdl(const char *filename,
-	unsigned a1, const char *a2) :
+srec_output_file_vhdl::srec_output_file_vhdl(const char *filename) :
     srec_output_file(filename),
-    bytes_per_word(a1 > 0 ? (a1 <= sizeof(unsigned long) ? a1 :
-	sizeof(unsigned long)) : 4),
-    prefix(a2),
+    bytes_per_word(1),
+    prefix("eprom"),
     header_done(false),
     current_address(0),
     current_byte(0),
     current_word(0)
 {
+}
+
+
+void
+srec_output_file_vhdl::command_line(srec_arglex *cmdln)
+{
+    if (cmdln->token_cur() == arglex::token_number)
+    {
+	int a1 = cmdln->value_number();
+	cmdln->token_next();
+
+	if (a1 > 0)
+	{
+	    unsigned a2 = (unsigned)a1;
+	    if (a2 > sizeof(unsigned long))
+		a2 = sizeof(unsigned long);
+	    bytes_per_word = a2;
+	}
+    }
+    if (cmdln->token_cur() == arglex::token_string)
+    {
+	prefix = cmdln->value_string();
+	cmdln->token_next();
+    }
 }
 
 

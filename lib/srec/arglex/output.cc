@@ -243,20 +243,8 @@ srec_arglex::get_output()
 	break;
 
     case token_vhdl:
-	{
-	    const char *prefix = "eprom";
-	    int bytes_per_word = 1;
-	    if (token_next() == token_number)
-	    {
-		bytes_per_word = value_number();
-	    }
-	    if (token_next() == token_string)
-	    {
-		prefix = value_string();
-		token_next();
-	    }
-	    ofp = new srec_output_file_vhdl(fn, bytes_per_word, prefix);
-	}
+	token_next();
+	ofp = new srec_output_file_vhdl(fn);
 	break;
 
     case token_vmem:

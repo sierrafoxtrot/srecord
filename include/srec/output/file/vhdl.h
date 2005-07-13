@@ -44,13 +44,8 @@ public:
       *
       * \param filename
       *     The name of the file to be written.
-      * \param bytes_per_word
-      *     The number of bytes per word.
-      * \param prefix
-      *     The prefix for symbol names.
       */
-    srec_output_file_vhdl(const char *filename, unsigned bytes_per_word,
-	const char *prefix);
+    srec_output_file_vhdl(const char *filename);
 
     // See base class for documentation
     void write(const srec_record &);
@@ -63,6 +58,9 @@ public:
 
     // See base class for documentation
     int preferred_block_size_get() const;
+
+    // See base class for documentation
+    void command_line(srec_arglex *cmdln);
 
 private:
     /**
