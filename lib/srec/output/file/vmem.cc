@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2004 Peter Miller;
+//	Copyright (C) 2000-2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -192,6 +192,11 @@ srec_output_file_vmem::write_byte_at(unsigned long new_addr, unsigned value)
 	    write_byte(0xFF);
 	else
 	{
+	    if (column)
+	    {
+		put_char('\n');
+		column = 0;
+	    }
 	    // Round down, which provokes the beginning padding, when required.
 	    unsigned long zero = new_addr & ~(unsigned long)width_mask;
 	    if (address == zero)
