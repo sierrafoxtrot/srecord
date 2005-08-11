@@ -218,6 +218,7 @@ The \fIbytes-per-word\fP defaaults to one,
 the \fIname\fP defaults to \f[CW]eprom\fP.
 The \fIetc/x_defs_pack.vhd\fP file in the source distribution contains an
 example ROM definitions pack for the type-independent output.
+You may need to use the \-byte-swap filter to get the byte order you want.
 .TP 8n
 \fB\-VMem\fP [ \fImemory-width\fP ]
 A Verilog VMEM format file will be written.
@@ -230,6 +231,7 @@ The \fImemory-width\fP may be 8, 16, 32, 64 or 128 bits;
 .\"
 defaults to 32 if unspecified.
 (See \fIsrec_vmem\fP(5) for a description of this file format.)
+You may need to use the \-byte-swap filter to get the byte order you want.
 .TP 8n
 \fB\-WILson\fP
 A wilson format file will be written.

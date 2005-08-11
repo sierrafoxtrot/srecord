@@ -49,8 +49,11 @@ public:
       */
     srec_input_filter_byte_swap(srec_input *deeper);
 
-    //  See base class for documentation.
-    virtual int read(srec_record &);
+    // See base class for documentation.
+    int read(srec_record &);
+
+    // See base class for documentation.
+    void command_line(srec_arglex *cmdln);
 
 private:
     /**
@@ -64,6 +67,13 @@ private:
       * position within the buffer instance variable.
       */
     int buffer_pos;
+
+    /**
+      * The mask instance variable is used to remember the bit mask to
+      * be xor-ed with the address to form the byte-swapped address.
+      * It defualt to 1, but can be altered by command line option.
+      */
+    unsigned mask;
 
     /**
       * The default constructor.  Do not use.

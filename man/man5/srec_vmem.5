@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2003 Peter Miller;
+.\"	Copyright (C) 2003, 2005 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -74,6 +74,9 @@ in the numbers, but this is only a guess.
 SRecord will also assume that the numbers are to be loaded big-endian;
 that is, most significant byte (first byte seen) into the lowest address
 covered by the word.
+.LP
+You can use the \fB\-byte-swap\fP filter to change the byte order;
+it takes an optional width of bytes to swap within.
 .SS Size Multiplier
 In general, binary data will expand in sized by approximately 2.9 times
 (32-bit), 3.1 times (16-bit) or 3.6 times (8-bit) when represented with

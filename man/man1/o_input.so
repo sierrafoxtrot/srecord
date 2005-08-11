@@ -219,8 +219,13 @@ checksum of the data into the data.  Otherwise similar to the above.
 This filter may be used to insert the simple checksum of the data into
 the data.  Otherwise similar to the above.
 .TP 8n
-\fB\-Byte_Swap\fP
+\fB\-Byte_Swap\fP [ \fIwidth\fP ]
 This filter may be used to swap pairs of odd and even bytes.
+By specifying a width (in bytes) it is possible to reverse the order
+of 4 and 8 bytes, the default is 2 bytes.  (Widths in excess of 8 are
+assumed to be number of bits.)
+It is not possuble to swap non-power-of-two addresses.
+To change the alignment, use the offset filter before and after.
 .TP 8n
 \fB\-Big_Endian_CRC16\fP \fIaddress\fP
 This filter may be used to insert an industry standard 16-bit CRC checksum

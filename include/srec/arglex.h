@@ -157,13 +157,13 @@ public:
       */
     unsigned long get_number(const char *caption);
 
-private:
     /**
       * The can_get_number method is used to determine if it is possible
       * to parse a number from the next token on the command line.
       */
     bool can_get_number() const;
 
+private:
     /**
       * The get_interval_inner method is used to parse a single
       * interval from the command line (usually, a pair of number
