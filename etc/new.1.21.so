@@ -34,10 +34,21 @@ to specify the address width to swap.  The default is two bytes.
 .PP
 .if n *
 .if t \(bu
+.\" srecord.1.21.D010
 .\" Change 20
-The Motorola file format can now have an "address width" specified, for
-compatibility with the dubious extension of dividing the address by 2 or
-4 to represent 16-bit and 64-bit data widths.
+.\" pmiller, Thu Jul 14 00:11:27 2005, motorola address multiplier
+The motorola file format now accepts an additional 'width'
+command line argument, so you can have 16-bit and 32-bit address
+multiples.
+.PP
+.if n *
+.if t \(bu
+.\" srecord.1.21.D008
+.\" Change 19
+.\" pmiller, Wed Jul 13 22:34:43 2005, vmem address bug (SF 1119786)
+A bug has been fixed in the VMEM output format. It was failing
+to correctly set the next address in some cases.
+This fixes SourceForge bug 1119786.
 .PP
 .if n *
 .if t \(bu
@@ -46,6 +57,7 @@ The \-C-Array output format now uses the \f[CW]const\fP keyword by
 default, you can turn it off with the \-no-const option.  The \-C-Array
 output format can now generate an additional include file if you use the
 \-INClude option.
+This answers SourceForge feature request 942132.
 .PP
 .if n *
 .if t \(bu
@@ -56,7 +68,6 @@ and MacOsX has been added to the ./configure script.
 .if n *
 .if t \(bu
 .\" Change 12
-.\" pmiller, Tue Jun  7 23:54:56 2005, ignore-checksum option
 There is a new \-ignore-checksum command line option.
 The \-ignore-checksums option may be used to disable checksum
 validation of input files, for those formats which have

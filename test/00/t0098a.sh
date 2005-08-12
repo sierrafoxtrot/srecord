@@ -74,8 +74,12 @@ cat > test.ok << 'fubar'
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -intel -byteswap -o test.out -vmem 16
-if test $? -ne 0; then fail; fi
+$bin/srec_cat test.in -intel -byteswap -o test.out -vmem 16 > LOG 2>&1
+if test $? -ne 0
+then
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
