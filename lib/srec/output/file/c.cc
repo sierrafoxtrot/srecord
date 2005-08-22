@@ -22,6 +22,7 @@
 
 #pragma implementation "srec_output_file_c"
 
+#include <cstdio>
 #include <cstring>
 
 #include <interval.h>
