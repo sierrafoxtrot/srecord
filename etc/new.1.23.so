@@ -17,22 +17,18 @@
 .\"	along with this program; if not, write to the Free Software
 .\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.22 features
+.\" MANIFEST: description of new 1.23 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" srecord.1.22.D003
-.\" Change 12
-A segfault has been fixed on x86_64 when running the
-regression test suite.
-.PP
-.if n *
-.if t \(bu
-.\" srecord.1.22.D002
-.\" Change 11
-A compile problem with the
-lib/srec/output/file/c.cc file has been fixed.
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 23 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.22 (12-Aug-2005)
+.SS Version 1.23 (23-Sep-2005)
