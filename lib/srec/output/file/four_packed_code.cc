@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2002 Peter Miller;
+//	Copyright (C) 2001, 2002, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -162,7 +162,8 @@ srec_output_file_four_packed_code::~srec_output_file_four_packed_code()
 void
 srec_output_file_four_packed_code::put_byte(unsigned char n)
 {
-    put_byte_value |= n << ((3 - put_byte_pos++) * 8);
+    put_byte_value |= (unsigned long)n << ((3 - put_byte_pos) << 3);
+    ++put_byte_pos;
     if (put_byte_pos >= 4)
     {
     	int n5 = put_byte_value % 85; put_byte_value /= 85;

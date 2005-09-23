@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002, 2004 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2004, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -58,11 +58,11 @@ interval::interval()
 }
 
 
-static inline long long
+static inline interval::data64_t
 promote(interval::data_t datum, size_t pos)
 {
     if (datum == 0 && (pos & 1))
-       	return (1LL << 32);
+       	return ((interval::data64_t)1 << 32);
     return datum;
 }
 
@@ -362,8 +362,8 @@ interval::union_(const interval &left, const interval &right)
 	{
 	    if (right_pos < right.length)
 	    {
-		long long left_val = promote(left.data[left_pos], left_pos);
-		long long right_val = promote(right.data[right_pos], right_pos);
+		data64_t left_val = promote(left.data[left_pos], left_pos);
+		data64_t right_val = promote(right.data[right_pos], right_pos);
 		if (left_val < right_val)
 		{
 		    count += (left_pos & 1 ? -1 : 1);
@@ -443,8 +443,8 @@ interval::intersection(const interval &left, const interval &right)
 	{
 	    if (right_pos < right.length)
 	    {
-		long long left_val = promote(left.data[left_pos], left_pos);
-		long long right_val = promote(right.data[right_pos], right_pos);
+		data64_t left_val = promote(left.data[left_pos], left_pos);
+		data64_t right_val = promote(right.data[right_pos], right_pos);
 		if (left_val < right_val)
 		{
 		    count += (left_pos & 1 ? -1 : 1);
@@ -523,8 +523,8 @@ interval::difference(const interval &left, const interval &right)
 	{
 	    if (right_pos < right.length)
 	    {
-		long long left_val = promote(left.data[left_pos], left_pos);
-		long long right_val = promote(right.data[right_pos], right_pos);
+		data64_t left_val = promote(left.data[left_pos], left_pos);
+		data64_t right_val = promote(right.data[right_pos], right_pos);
 		if (left_val < right_val)
 		{
 		    count += (left_pos & 1 ? -1 : 1);
@@ -595,7 +595,7 @@ interval::member(data_t datum)
     {
 	long mid = ((min + max) / 2) & ~1;
 	data_t lo = data[mid];
-	long long hi = promote(data[mid + 1], mid + 1);
+	data64_t hi = promote(data[mid + 1], mid + 1);
 	if (lo <= datum && datum < hi)
     	    return true;
 	if (lo < datum)

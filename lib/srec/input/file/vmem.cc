@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2003 Peter Miller;
+//	Copyright (C) 2003, 2005 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -126,7 +126,7 @@ srec_input_file_vmem::read(srec_record &record)
 	switch (nbytes)
 	{
 	default:
-	    fatal_error("value has too many bytes (%d)", nbytes);
+	    fatal_error("value has too many bytes (%d)", (int)nbytes);
 
 	case 1:
 	case 2:

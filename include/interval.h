@@ -48,6 +48,7 @@ public:
       * the interval.
       */
     typedef unsigned long data_t;
+    typedef unsigned long long data64_t;
 
     /**
       * The default constructor.  The interval is empty.
