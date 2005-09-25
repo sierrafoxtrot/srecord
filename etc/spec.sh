@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 1998, 2001, 2003 Peter Miller;
+#	Copyright (C) 1998, 2001, 2003, 2005 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -35,7 +35,9 @@ echo 'License: GPL'
 echo 'Group: Development/Tools'
 echo "Source: http://srecord.sourceforge.net/%{name}-%{version}.tar.gz"
 echo 'URL: http://srecord.sourceforge.net/'
-echo 'BuildRoot: %{_tmppath}/%{name}-%{version}-root'
+echo 'BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)'
+echo
+echo 'BuildRequires:  diffutils, sharutils, groff'
 
 prefix=/usr
 #
@@ -73,26 +75,28 @@ file formats.
 
 %prep
 %setup -q
-%configure
 
 
 %build
+%configure
 make
 
 
 %install
-[ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf "$RPM_BUILD_ROOT"
-%makeinstall
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
 
-strip $RPM_BUILD_ROOT%{_bindir}/*
+
+%check || :
+make sure
 
 
 %clean
-[ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf "$RPM_BUILD_ROOT"
+rm -rf $RPM_BUILD_ROOT
 
 
 %files
-%defattr (-,root,root)
+%defattr (-,root,root,-)
 %doc LICENSE BUILDING README
 fubar
 
