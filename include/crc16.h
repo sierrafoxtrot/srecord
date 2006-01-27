@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2003 Peter Miller;
+//	Copyright (C) 2000-2003, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -41,8 +41,12 @@ public:
 
     /**
       * The default constructor.
+      *
+      * @param ccitt
+      *     This is true for a CCITT calculation, or false for the
+      *     XModem calculation.
       */
-    crc16();
+    crc16(bool ccitt = true);
 
     /**
       * The copy constructor.
@@ -76,6 +80,12 @@ private:
       * value of the 16-bit cyclic redundancy check.
       */
     unsigned short state;
+
+    /**
+      * The seed instance variable is used to remember the seed
+      * of the 16-bit cyclic redundancy check.
+      */
+    unsigned short seed;
 };
 
 #endif // INCLUDE_CRC16_H

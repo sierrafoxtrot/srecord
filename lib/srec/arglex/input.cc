@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2005 Peter Miller;
+//	Copyright (C) 1998-2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -296,7 +296,13 @@ srec_arglex::get_input()
 		token_next();
 		unsigned long address;
 		get_address("-Big_Endian_CRC16", address);
-		ifp = new srec_input_filter_crc16(ifp, address, 0);
+		bool ccitt_seed = true;
+		if (token_cur() == token_crc16_xmodem)
+		{
+		    token_next();
+		    ccitt_seed = false;
+		}
+		ifp = new srec_input_filter_crc16(ifp, address, 0, ccitt_seed);
 	    }
 	    break;
 
@@ -305,7 +311,13 @@ srec_arglex::get_input()
 		token_next();
 		unsigned long address;
 		get_address("-Little_Endian_CRC16", address);
-		ifp = new srec_input_filter_crc16(ifp, address, 1);
+		bool ccitt_seed = true;
+		if (token_cur() == token_crc16_xmodem)
+		{
+		    token_next();
+		    ccitt_seed = false;
+		}
+		ifp = new srec_input_filter_crc16(ifp, address, 1, ccitt_seed);
 	    }
 	    break;
 

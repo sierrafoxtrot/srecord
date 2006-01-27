@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2002, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -26,13 +26,15 @@
 #include <srec/output.h>
 
 
-srec_memory_walker_crc16::srec_memory_walker_crc16()
+srec_memory_walker_crc16::srec_memory_walker_crc16(bool ccitt_seed)
 {
+    checksum = new crc16(ccitt_seed);
 }
 
 
 srec_memory_walker_crc16::~srec_memory_walker_crc16()
 {
+    delete checksum;
 }
 
 
@@ -40,7 +42,7 @@ void
 srec_memory_walker_crc16::observe(unsigned long address, const void *data,
     int length)
 {
-    checksum.nextbuf(data, length);
+    checksum->nextbuf(data, length);
 }
 
 
@@ -48,5 +50,5 @@ unsigned
 srec_memory_walker_crc16::get()
     const
 {
-    return checksum.get();
+    return checksum->get();
 }

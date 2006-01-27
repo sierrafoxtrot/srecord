@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2003, 2005 Peter Miller;
+//	Copyright (C) 2000-2003, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -44,7 +44,7 @@ public:
       * The constructor.
       */
     srec_input_filter_crc16(srec_input *deeper, unsigned long address,
-	    int order);
+	    int order, bool ccitt_seed);
 
     // See base class for documentation.
     virtual int read(srec_record &);
@@ -61,6 +61,12 @@ private:
       * order is big-endian (0) or little-endian (1).
       */
     int order;
+    
+    /**
+      * The ccitt_seed instance variable is used to remember whether to
+      * use the CCITT seed for CRC16 calculation.
+      */
+    bool ccitt_seed;
 
     /**
       * The buffer instance variable is used to remember the contents

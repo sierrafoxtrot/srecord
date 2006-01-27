@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2003 Peter Miller;
+//	Copyright (C) 2000-2003, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -27,7 +27,6 @@
 #include <srec/memory/walker/crc16.h>
 #include <srec/record.h>
 
-
 srec_input_filter_crc16::~srec_input_filter_crc16()
 {
 	delete buffer;
@@ -36,10 +35,11 @@ srec_input_filter_crc16::~srec_input_filter_crc16()
 
 
 srec_input_filter_crc16::srec_input_filter_crc16(srec_input *deeper_arg,
-		unsigned long address_arg, int order_arg) :
+		unsigned long address_arg, int order_arg, bool seed_arg) :
 	srec_input_filter(deeper_arg),
 	address(address_arg),
 	order(order_arg),
+	ccitt_seed(seed_arg),
 	buffer(0),
 	buffer_pos(0),
 	have_forwarded_header(false),
@@ -84,7 +84,7 @@ srec_input_filter_crc16::read(srec_record &record)
 	// Now CRC16 the bytes in order from lowest address to
 	// highest.  (Holes are ignored, not filled.)
 	//
-	srec_memory_walker_crc16 walker;
+	srec_memory_walker_crc16 walker(ccitt_seed);
 	buffer->walk(&walker);
 	unsigned crc = walker.get();
 

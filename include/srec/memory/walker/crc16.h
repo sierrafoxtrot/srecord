@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002 Peter Miller;
+//	Copyright (C) 2000, 2002, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -44,7 +44,7 @@ public:
     /**
       * The default constructor.
       */
-    srec_memory_walker_crc16();
+    srec_memory_walker_crc16(bool ccitt_seed);
 
     // See base class for documentation.
     void observe(unsigned long, const void *, int);
@@ -60,7 +60,7 @@ private:
       * The checksum instance variable is used to remember the running
       * state of the CRC16 checksum calculation.
       */
-    crc16 checksum;
+    crc16 *checksum;
 
     /**
       * The copy constructor.  No not use.

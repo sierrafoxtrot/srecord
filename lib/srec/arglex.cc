@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2005 Peter Miller;
+//	Copyright (C) 1998-2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -62,6 +62,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
 	{ "-CRop",	token_crop,		},
 	{ "-Big_Endian_Cyclic_Redundancy_Check_16", token_crc16_be, },
 	{ "-Little_Endian_Cyclic_Redundancy_Check_16", token_crc16_le,},
+	{ "-Cyclic_Redundancy_Check_16_XMODEM", token_crc16_xmodem,},
 	{ "-Big_Endian_Cyclic_Redundancy_Check_32", token_crc32_be, },
 	{ "-Little_Endian_Cyclic_Redundancy_Check_32", token_crc32_le,},
 	{ "-Dec_Binary",	token_dec_binary, },

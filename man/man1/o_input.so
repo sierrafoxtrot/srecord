@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998-2005 Peter Miller;
+.\"	Copyright (C) 1998-2006 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -227,12 +227,18 @@ assumed to be number of bits.)
 It is not possuble to swap non-power-of-two addresses.
 To change the alignment, use the offset filter before and after.
 .TP 8n
-\fB\-Big_Endian_CRC16\fP \fIaddress\fP
+\fB\-Big_Endian_CRC16\fP \fIaddress\fP [ -Cyclic_Redundancy_Check_16_XMODEM ]
+.RS
 This filter may be used to insert an industry standard 16-bit CRC checksum
 of the data into the data.  Two bytes, big-endian order, are inserted
 at the address given.  Holes in the input data are ignored.  Bytes are
 processed in ascending address order (\fInot\fP in the order they appear
 in the input).
+.PP
+By default a CCITT calculation is performed.  If the optional
+\fB\-Cyclic_Redundancy_Check_16_XMODEM\fP argument is present, the
+alternate XMODEM calculation is performed.
+.RE
 .TP 8n
 \fB\-Little_Endian_CRC16\fP \fIaddress\fP
 As above, except little-endian order.
