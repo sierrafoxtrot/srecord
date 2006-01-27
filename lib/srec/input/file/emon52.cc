@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001-2003, 2005 Peter Miller;
+//	Copyright (C) 2001-2003, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -88,7 +88,7 @@ srec_input_file_emon52::read(srec_record &record)
     {
 	// Actually, this format does not have a termination
 	// record, but a length of zero is otherwise meaningless.
-	type = type = srec_record::type_start_address;
+	type = srec_record::type_start_address;
     }
     record = srec_record(type, address, buffer, length);
     return 1;
