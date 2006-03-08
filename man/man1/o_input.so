@@ -335,6 +335,8 @@ the value will be written with the least significant byte first.
 This filter may be used to
 offset the addresses by the given number of bytes.
 No data is lost, the addresses will wrap around in 32 bits, if necessary.
+You may use negative numbers for the offset,
+if you wish to move data lower in memory.
 .TP 8n
 \fB\-SPlit\fP \fImultiple\fP [ \fIoffset\fP [ \fIwidth\fP ] ]
 This filter may be used to split the input into a subset of the data,

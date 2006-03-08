@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2002, 2005 Peter Miller;
+//	Copyright (C) 1998-2002, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -233,8 +233,25 @@ srec_output_file::seek_to(unsigned long address)
     // We'll have to try a seek.
     //
     FILE *fp = (FILE *)get_fp();
+    errno = 0;
     if (fseek(fp, address, 0) < 0)
-	fatal_error_errno("seek %ld", address);
+    {
+	if (errno == EINVAL && address >= 0x80000000uL)
+	{
+	    warning
+	    (
+                "It appears that the implementation of fseek on your "
+                "system is unable to cope with addresses which have "
+                "the most significant bit set (this is POSIX and ANSI "
+                "C conforming behaviour).  You probably did not intend "
+                "to create a %3.1fGB file.  See the manual for a "
+                "description of the --offset filter, remembering that "
+		"you can give negative offsets.",
+		((double)address / (double)(1uL << 30))
+	    );
+	}
+	fatal_error_errno("seek 0x%lX", address);
+    }
     position = address;
 }
 
