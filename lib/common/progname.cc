@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -31,26 +31,45 @@ static char *progname;
 void
 progname_set(char *s)
 {
-	for (;;)
+    for (;;)
+    {
+	char            *cp1;
+	char            *cp2;
+	
+	cp1 = strrchr(s, '/');
+	if (!cp1)
+	    cp1 = s;
+	else
 	{
-		char *cp = strrchr(s, '/');
-		if (!cp)
-		{
-			progname = s;
-			break;
-		}
-		if (cp[1])
-		{
-			progname = cp + 1;
-			break;
-		}
-		*cp = 0;
+	    if (!cp1[1])
+	    {
+		*cp1 = 0;
+		continue;
+	    }
+	    ++cp1;
 	}
+
+	cp2 = strrchr(s, '\\');
+	if (!cp2)
+	    cp2 = s;
+	else
+	{
+	    if (!cp2[1])
+	    {
+		*cp2 = 0;
+		continue;
+	    }
+	    ++cp2;
+	}
+
+	progname = (cp1 > cp2 ? cp1 : cp2);
+	return;
+    }
 }
 
 
 const char *
 progname_get()
 {
-	return (progname ? progname : "???");
+    return (progname ? progname : "???");
 }
