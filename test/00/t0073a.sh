@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 2001 Peter Miller;
+#	Copyright (C) 2001, 2006 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -65,12 +65,11 @@ cat > test.ok << 'fubar'
 S01100005468697320697320612074657374F9
 S111000048656C6C6F2C20576F726C64210A7B
 S5030001FB
-S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -bin -o test.out -header "This is a test"
-if test $? -ne 0; then fail; fi
+$bin/srec_cat test.in -bin -o test.out -header "This is a test" > LOG 2>&1
+if test $? -ne 0; then cat LOG; fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
@@ -78,15 +77,14 @@ if test $? -ne 0; then fail; fi
 cat > test.ok << 'fubar'
 Format:	Motorola S-Record
 Header:	"This is a test"
-Start:	00000000
 Data:	0000 - 000D
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_info test.out 2>&1 > LOG
+$bin/srec_info test.out > test.out2 2> LOG
 if test $? -ne 0; then cat LOG; fail; fi
 
-diff test.ok LOG
+diff test.ok test.out2
 if test $? -ne 0; then fail; fi
 
 #

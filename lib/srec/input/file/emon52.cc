@@ -54,7 +54,7 @@ int
 srec_input_file_emon52::read(srec_record &record)
 {
     //
-    // This format has no termination record type, and no magic start
+    // This format has no start address record type, and no magic start
     // character.  So look ahead to see if there is anything more.
     //
     if (peek_char() < 0)
@@ -64,6 +64,8 @@ srec_input_file_emon52::read(srec_record &record)
     // Looks like there should be a record.  Read it all in.
     //
     int length = get_byte();
+    if (length == 0)
+	fatal_error("data length of zero is not valid");
     skip_white_space();
     unsigned long address = get_word();
     if (get_char() != ':')
@@ -84,12 +86,6 @@ srec_input_file_emon52::read(srec_record &record)
 	fatal_error("end-of-line expected");
 
     srec_record::type_t type = srec_record::type_data;
-    if (length == 0)
-    {
-	// Actually, this format does not have a termination
-	// record, but a length of zero is otherwise meaningless.
-	type = srec_record::type_start_address;
-    }
     record = srec_record(type, address, buffer, length);
     return 1;
 }

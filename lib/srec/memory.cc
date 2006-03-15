@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2003 Peter Miller;
+//	Copyright (C) 1998-2003, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -38,7 +38,7 @@ srec_memory::srec_memory() :
     cache(0),
     find_next_chunk_index(0),
     header(0),
-    start_address()
+    start_address(0)
 {
 }
 
@@ -70,8 +70,6 @@ srec_memory::operator=(const srec_memory &arg)
 
 srec_memory::~srec_memory()
 {
-    delete header;
-    delete start_address;
     clear();
 }
 
@@ -79,6 +77,10 @@ srec_memory::~srec_memory()
 void
 srec_memory::clear()
 {
+    delete header;
+    header = 0;
+    delete start_address;
+    start_address = 0;
     for (int j = 0; j < nchunks; ++j)
 	delete chunk[j];
     if (chunk)
@@ -93,6 +95,16 @@ srec_memory::clear()
 void
 srec_memory::copy(const srec_memory &arg)
 {
+    delete header;
+    header = 0;
+    if (arg.header)
+	header = new srec_record(*arg.header);
+
+    delete start_address;
+    start_address = 0;
+    if (arg.start_address)
+	start_address = new srec_record(*arg.start_address);
+
     nchunks = arg.nchunks;
     while (nchunks_max < nchunks)
 	nchunks_max = nchunks_max * 2 + 4;
@@ -240,7 +252,10 @@ srec_memory::walk(srec_memory_walker *w)
     w->observe_header(get_header());
     for (int j = 0; j < nchunks; ++j)
        	chunk[j]->walk(w);
-    w->observe_start_address(get_start_address());
+ 
+    // Only write a start address record if we were given one.
+    if (start_address)
+	w->observe_start_address(get_start_address());
 }
 
 

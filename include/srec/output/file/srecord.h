@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002, 2005 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001, 2002, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -102,6 +102,21 @@ private:
       * this just by looking at the data.
       */
     int address_shift;
+
+    /**
+      * The data_count_written instance variable is used to remember
+      * whether or not we have written out the data count record.
+      * Usually this is done with the start arrdess record, but there
+      * are circumstances where it will be needed when the file is
+      * closed.
+      */
+    bool data_count_written;
+
+    /**
+      * The write_data_count method is used to write out a data count
+      * record, if one is required.
+      */
+    void write_data_count();
 
     /**
       * The write_inner method is used to write a line of output.

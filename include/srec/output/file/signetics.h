@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2002, 2005 Peter Miller;
+//	Copyright (C) 2001, 2002, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -79,6 +79,13 @@ private:
       * preferred_block_size_get() method.
       */
     int pref_block_size;
+
+    /**
+      * The last_address instance variable is used to remember the
+      * address immediatly beyond the last adress of data in the file.
+      * This is used to write the file termination record.
+      */
+    unsigned long last_address;
 
     /**
       * The write_inner method is used to write one line/record to the

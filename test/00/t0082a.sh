@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 2003 Peter Miller;
+#	Copyright (C) 2003, 2006 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -80,7 +80,6 @@ cat > test.ok2 << 'fubar'
 S0220000687474703A2F2F737265636F72642E736F75726365666F7267652E6E65742F1D
 S111000048656C6C6F2C20576F726C64210A7B
 S5030001FB
-S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 

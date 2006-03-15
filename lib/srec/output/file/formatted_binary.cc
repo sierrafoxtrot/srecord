@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2003 Peter Miller;
+//	Copyright (C) 2003, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -28,6 +28,14 @@
 
 srec_output_file_formatted_binary::~srec_output_file_formatted_binary()
 {
+    // assert(address == upper_bound);
+    if (address != upper_bound)
+	fatal_error("upper bound stuffed");
+
+    put_char(0);
+    put_char(0);
+    put_char(check_sum >> 8);
+    put_char(check_sum);
 }
 
 
@@ -115,14 +123,7 @@ srec_output_file_formatted_binary::write(const srec_record &record)
 	break;
 
     case srec_record::type_start_address:
-	// assert(address == upper_bound);
-	if (address != upper_bound)
-	    fatal_error("upper bound stuffed");
-
-	put_char(0);
-	put_char(0);
-	put_char(check_sum >> 8);
-	put_char(check_sum);
+	// This format can't do start address records
 	break;
 
     case srec_record::type_unknown:

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001-2003, 2005 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001-2003, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -32,7 +32,8 @@ srec_output_file_srecord::srec_output_file_srecord() :
     data_count(0),
     pref_block_size(32),
     address_length(2),
-    address_shift(0)
+    address_shift(0),
+    data_count_written(false)
 {
 }
 
@@ -42,7 +43,8 @@ srec_output_file_srecord::srec_output_file_srecord(const char *filename) :
     data_count(0),
     pref_block_size(32),
     address_length(2),
-    address_shift(0)
+    address_shift(0),
+    data_count_written(false)
 {
 }
 
@@ -93,7 +95,7 @@ srec_output_file_srecord::command_line(srec_arglex *cmdln)
 
 srec_output_file_srecord::~srec_output_file_srecord()
 {
-    // check for data count record
+    write_data_count();
     // check for termination record
 }
 
@@ -135,6 +137,30 @@ srec_output_file_srecord::write_inner(int tag, unsigned long address,
 	put_byte(buffer[j]);
     put_byte(~checksum_get());
     put_char('\n');
+}
+
+
+void
+srec_output_file_srecord::write_data_count()
+{
+    if (data_count_written)
+	return;
+
+    if (!data_only_flag)
+    {
+	if (data_count < (1L << 16))
+	    write_inner(5, data_count, 2, 0, 0);
+	else
+	    write_inner(6, data_count, 3, 0, 0);
+    }
+    data_count_written = true;
+
+    //
+    // It is not clear in the spec whether the data count should be
+    // reset at this point.  It will not happen for srec_cat, so it
+    // probably isn't a problem.
+    //
+    data_count = 0;
 }
 
 
@@ -203,6 +229,7 @@ srec_output_file_srecord::write(const srec_record &record)
 	    );
 	}
 	++data_count;
+	data_count_written = false;
 	break;
 
     case srec_record::type_data_count:
@@ -212,10 +239,8 @@ srec_output_file_srecord::write(const srec_record &record)
     case srec_record::type_start_address:
 	if (data_only_flag)
 	    break;
-	if (data_count < (1L << 16))
-	    write_inner(5, data_count, 2, 0, 0);
-	else
-	    write_inner(6, data_count, 3, 0, 0);
+	write_data_count();
+
 	if (shifted_address < (1UL << 16) && address_length <= 2)
 	    write_inner(9, shifted_address, 2, 0, 0);
 	else if (shifted_address < (1UL << 24) && address_length <= 3)

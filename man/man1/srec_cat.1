@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 2000-2005 Peter Miller;
+.\"	Copyright (C) 1998, 2000-2006 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -291,7 +291,7 @@ S-Record format:
 \*(n) \fIintel-file\fP -intel -o \fIsrec-file\fP
 .ft R
 .RE
-Converting the other was is just as simple:
+Converting the other way is just as simple:
 .RS
 .ft CW
 \*(n) \fIsrec-file\fP -o \fIintel-file\fP -intel
@@ -350,7 +350,7 @@ Notice that where the was a number (0x80000) before, there is now a
 calculation (\-maximum \fIinfile1\fP).  This is possible most places
 a number may be used (also \-minimum and \-range).
 .SS Filling the Blanks
-It is possible to fill the blanks where our data does not lie.
+It is possible to fill the blanks where your data does not lie.
 The simplest example of this fills the entire EPROM:
 .RS
 .ft CW
@@ -358,7 +358,7 @@ The simplest example of this fills the entire EPROM:
 .ft R
 .RE
 This example fills the holes, if any, with zeros.
-You must specify a range - with a 32-bit address space,
+You must specify a range \- with a 32-bit address space,
 filling everything generates \fIhuge\fP load files.
 .PP
 If you only want to fill the gaps in your data,

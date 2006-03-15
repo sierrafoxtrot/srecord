@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2005 Peter Miller;
+//	Copyright (C) 1998-2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -182,7 +182,7 @@ srec_input_file_stewie::read(srec_record &record)
 		warning("file contains no data");
 	    if (!termination_seen)
 	    {
-		warning("no termination record");
+		warning("no start_address record");
 		termination_seen = true;
 	    }
 	    return 0;

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2003, 2005 Peter Miller;
+//	Copyright (C) 1998-2003, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -165,7 +165,7 @@ srec_input_file_tektronix::read(srec_record &record)
 		fatal_error("file contains no data");
 	    if (!termination_seen)
 	    {
-		warning("no termination record");
+		warning("no start address record");
 		termination_seen = true;
 	    }
 	    return 0;
