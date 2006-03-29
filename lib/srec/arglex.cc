@@ -41,7 +41,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
 	{ "-AND",	token_and,		},
 	{ "-Ascii_Hexadecimal",	token_ascii_hex, },
 	{ "-Ascii_Space_Hexadecimal", token_ascii_hex, },
-	{ "-ASM",	token_asm_db,		},
+	{ "-ASseMbler",	token_assembler,		},
 	{ "-Atmel_Generic",	token_atmel_generic_le,	 },
 	{ "-Atmel_Generic_BigEndian", token_atmel_generic_be, },
 	{ "-Atmel_Generic_LittleEndian", token_atmel_generic_le, },

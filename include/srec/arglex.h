@@ -40,7 +40,7 @@ public:
 	token_and = arglex::token_MAX,
 	token_aomf,
 	token_ascii_hex,
-	token_asm_db,
+	token_assembler,
 	token_atmel_generic_be,
 	token_atmel_generic_le,
 	token_basic_data,

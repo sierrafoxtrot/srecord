@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 2003, 2006 Peter Miller;
+#	Copyright (C) 2006 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 #	along with this program; if not, write to the Free Software
 #	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 #
-# MANIFEST: Test the ASM functionality
+# MANIFEST: Test the srec_output_file_asm functionality
 #
 here=`pwd`
 if test $? -ne 0 ; then exit 2; fi
@@ -36,7 +36,7 @@ fail()
 {
 	cd $here
 	rm -rf $work
-	echo 'FAILED test of the ASM functionality'
+	echo 'FAILED test of the srec_output_file_asm functionality'
 	exit 1
 }
 
@@ -44,7 +44,7 @@ no_result()
 {
 	cd $here
 	rm -rf $work
-	echo 'NO RESULT for test of the ASM functionality'
+	echo 'NO RESULT for test of the srec_output_file_asm functionality'
 	exit 2
 }
 
@@ -58,30 +58,28 @@ if test $? -ne 0; then no_result; fi
 
 cat > test.in << 'fubar'
 S00600004844521B
-S12300004E6F77206973207468652074696D6520666F7220616C6C20676F6F64206D656E93
-S123002020746F20636F6D6520746F2074686520616964206F6620746865697220706172AF
-S107004074792E0A93
-S5030003F9
-S9030000FC
+S111000048656C6C6F2C20576F726C64210A7B
+S5030001FB
 fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
 ; HDR
-	DB	78,111,119,32,105,115,32,116,104,101,32,116,105,109,101,32
-	DB	102,111,114,32,97,108,108,32,103,111,111,100,32,109,101,110
-	DB	32,116,111,32,99,111,109,101,32,116,111,32,116,104,101,32
-	DB	97,105,100,32,111,102,32,116,104,101,105,114,32,112,97,114
-	DB	116,121,46,10
-; start addr =  0x0000
-; upper bound = 0x0044
-; lower bound = 0x0000
-; length =      0x0044
+; To avoid this next ORG directive, use the --offset -0x64 filter.
+	ORG	100
+	DB	72,101,108,108,111,44,32,87,111,114,108,100,33,10
+; To avoid this next ORG directive, use the --fill filter.
+	ORG	150
+	DB	72,101,108,108,111,44,32,87,111,114,108,100,33,10
+; upper bound = 0x00A4
+; lower bound = 0x0064
+; length =      0x0040
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -o test.out -asm
-if test $? -ne 0; then fail; fi
+$bin/srec_cat test.in -offset 100 test.in -offset 150 \
+	-o test.out -asm > log 2>&1
+if test $? -ne 0; then cat log; fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
