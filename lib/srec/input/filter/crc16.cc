@@ -29,22 +29,22 @@
 
 srec_input_filter_crc16::~srec_input_filter_crc16()
 {
-	delete buffer;
-	buffer = 0;
+    delete buffer;
+    buffer = 0;
 }
 
 
 srec_input_filter_crc16::srec_input_filter_crc16(srec_input *deeper_arg,
-		unsigned long address_arg, int order_arg, bool seed_arg) :
-	srec_input_filter(deeper_arg),
-	address(address_arg),
-	order(order_arg),
-	ccitt_seed(seed_arg),
-	buffer(0),
-	buffer_pos(0),
-	have_forwarded_header(false),
-	have_given_crc(false),
-	have_forwarded_start_address(false)
+       	unsigned long address_arg, int order_arg, bool seed_arg) :
+    srec_input_filter(deeper_arg),
+    address(address_arg),
+    order(order_arg),
+    ccitt_seed(seed_arg),
+    buffer(0),
+    buffer_pos(0),
+    have_forwarded_header(false),
+    have_given_crc(false),
+    have_forwarded_start_address(false)
 {
 }
 
@@ -60,6 +60,21 @@ srec_input_filter_crc16::read(srec_record &record)
     {
 	buffer = new srec_memory();
 	buffer->reader(ifp, true);
+
+	if (buffer->has_holes())
+	{
+	    warning
+	    (
+                "The data presented for CRC calculation has at least "
+                "one hole in it.  This is bad.  It means that the "
+                "in-memory calculation performed by your embedded "
+                "system will be different than the calculation "
+                "performed here.  You are strongly advised to use the "
+                "--fill 0xFF filter *before* this CRC filter to ensure "
+                "both calculations are using the same byte values.  "
+                "See srec_info(1) for how to see the holes."
+	    );
+	}
     }
 
     //

@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 2001 Peter Miller;
+#	Copyright (C) 2001, 2006 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -83,8 +83,9 @@ if test $? -ne 0; then no_result; fi
 uudecode test.in.uue
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -bin -exclude 0x40 0x44 -becrc32 0x40 -o test.out -bin
-if test $? -ne 0; then fail; fi
+$bin/srec_cat test.in -bin -exclude 0x40 0x44 -becrc32 0x40 -o test.out -bin \
+    > LOG 2>&1
+if test $? -ne 0; then cat LOG; fail; fi
 
 $bin/srec_cmp -v test.in -bin test.out -bin > log
 if test $? -ne 2; then fail; fi

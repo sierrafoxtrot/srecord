@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2003 Peter Miller;
+//	Copyright (C) 2000-2003, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -60,6 +60,21 @@ srec_input_filter_crc32::read(srec_record &record)
     {
 	buffer = new srec_memory();
 	buffer->reader(ifp, true);
+
+	if (buffer->has_holes())
+	{
+	    warning
+	    (
+                "The data presented for CRC calculation has at least "
+                "one hole in it.  This is bad.  It means that the "
+                "in-memory calculation performed by your embedded "
+                "system will be different than the calculation "
+                "performed here.  You are strongly advised to use the "
+                "--fill 0xFF filter *before* this CRC filter to ensure "
+                "both calculations are using the same byte values.  "
+                "See srec_info(1) for how to see the holes."
+	    );
+	}
     }
 
     //

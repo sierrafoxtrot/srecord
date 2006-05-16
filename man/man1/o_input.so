@@ -238,6 +238,17 @@ in the input).
 By default a CCITT calculation is performed.  If the optional
 \fB\-Cyclic_Redundancy_Check_16_XMODEM\fP argument is present, the
 alternate XMODEM calculation is performed.
+.PP
+\fBNote:\fP If you have holes in your data, you will get a different CRC
+than if there were no holes.  This is important because the in-memory
+EEPROM image will not have holes.  You almost always want to use the
+\fB\-fill\fP filter before any of the CRC filters.
+You will receive a warning if the data presented for CRC has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EEPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EEPROM address range.
 .RE
 .TP 8n
 \fB\-Little_Endian_CRC16\fP \fIaddress\fP
@@ -249,6 +260,8 @@ of the data into the data.  Four bytes, big-endian order, are inserted
 at the address given.  Holes in the input data are ignored.  Bytes are
 processed in ascending address order (\fInot\fP in the order they appear
 in the input).
+.PP
+See also the note about holes, above.
 .TP 8n
 \fB\-Little_Endian_CRC32\fP \fIaddress\fP
 As above, except little-endian order.

@@ -25,6 +25,7 @@
 #include <srec/input.h>
 #include <srec/memory.h>
 #include <srec/memory/walker/compare.h>
+#include <srec/memory/walker/continuity.h>
 #include <srec/record.h>
 
 
@@ -433,4 +434,14 @@ srec_memory::set_start_address(unsigned long addr)
     delete start_address;
     start_address =
     	new srec_record(srec_record::type_start_address, addr, 0, 0);
+}
+
+
+bool
+srec_memory::has_holes()
+    const
+{
+    srec_memory_walker_continuity sniffer;
+    walk(&sniffer);
+    return (!sniffer.is_continuous());
 }

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2003 Peter Miller;
+//	Copyright (C) 1998-2003, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -175,6 +175,17 @@ public:
       * address record.
       */
     void set_start_address(unsigned long value);
+
+    /**
+      * The has_holes method may be used to determine whether or not the
+      * memory data has "holes" in it.
+      *
+      * @returns
+      *     true if the memory data is not continuous (has at least
+      *     one hole), false if the memory data is continuous (has no
+      *     holes).
+      */
+    bool has_holes() const;
 
 private:
     /**
