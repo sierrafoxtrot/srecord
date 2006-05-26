@@ -425,7 +425,8 @@ specification.)
 .PP
 For example, the \fB-OVER\fP \fIfile\fP option can be thought of a
 short-hand for
-\fB( \-min\fP \fIfile\fP \fB\-max\fP \fIfile\fP \fB)\fPi, except that it is
+\fB'(' \-min\fP \fIfile\fP \fB\-max\fP \fIfile\fP \fB')'\fP,
+except that it is
 much easier to type, and also more efficient.
 .PP
 In addition, calculated values may optionally be rounded in one of three ways:
@@ -441,3 +442,9 @@ the \fInumber\fP.
 \fIvalue\fP \fB\-Round_Up\fP \fInumber\fP
 The \fIvalue\fP is rounded up to the the smallest integer larger than
 or equal to a whole multiple of the \fInumber\fP.
+.PP
+When using parentheses,
+they must each be a separate command line argument,
+they can't be within the text of the preceeding or following option,
+and you will need to quote them to get them past the shell,
+as \f[CW]'('\fP and \f[CW]')'\fP.

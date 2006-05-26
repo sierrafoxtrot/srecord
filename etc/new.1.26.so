@@ -1,3 +1,4 @@
+
 .\"
 .\"	srecord - manipulate eprom load files
 .\"	Copyright (C) 2006 Peter Miller;
@@ -17,30 +18,18 @@
 .\"	along with this program; if not, write to the Free Software
 .\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.25 features
+.\" MANIFEST: description of new 1.26 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" srecord.1.25.D002
-.\" Change 11
-.\" pmiller, Fri May 26 14:46:33 2006, --maximum parse bug
-It is now possible to place parenteses on the command line in
-more places to clariy your intent.
-
-My thanks to Craig McQueen <craig_mcqueen@aapl.com.au> for
-reporting this problem.
-.PP
-.if n *
-.if t \(bu
-.\" srecord.1.25.D001
-.\" Change 10
-.\" pmiller, Thu May 18 20:01:22 2006, prepare for release
-This change prepares SRecord for the next public release.
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 26 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
 .\" .PP
 .\" .if n *
 .\" .if t \(bu
 .\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.25 (18-May-2006)
+.SS Version 1.26 (26-May-2006)
