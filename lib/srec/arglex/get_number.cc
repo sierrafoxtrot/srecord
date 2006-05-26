@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2004 Peter Miller;
+//	Copyright (C) 2004, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -36,6 +36,18 @@ srec_arglex::get_number(const char *caption)
 
     switch (token_cur())
     {
+    case token_paren_begin:
+	token_next();
+	value = get_number(caption);
+	if (token_cur() != token_paren_end)
+	{
+	    cerr << "closing parenthesis expected before"
+		<< token_name(token_cur()) << endl;
+    	    exit(1);
+	}
+	token_next();
+	return value;
+
     case token_number:
 	value = value_number();
 	token_next();
@@ -66,7 +78,8 @@ srec_arglex::get_number(const char *caption)
 	break;
 
     default:
-	cerr << "number expected for " << caption << endl;
+	cerr << "number expected for " << caption << " before "
+	    << token_name(token_cur()) << endl;
 	exit(1);
 	return 0;
     }

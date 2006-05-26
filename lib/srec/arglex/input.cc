@@ -83,6 +83,20 @@ srec_arglex::get_input()
     const char *fn = "-";
     switch (token_cur())
     {
+    case token_paren_begin:
+	{
+	    token_next();
+	    srec_input *ifp = get_input();
+	    if (token_cur() != token_paren_end)
+	    {
+		cerr << "closing parenthesis expected before "
+		    << token_name(token_cur()) << endl;
+		exit(1);
+	    }
+	    token_next();
+	    return ifp;
+	}
+
     case token_string:
 	fn = value_string();
 	token_next();
@@ -820,5 +834,4 @@ srec_arglex::get_input()
 	//
 	ifp->command_line(this);
     }
-
 }

@@ -380,12 +380,18 @@ This says to use the specified input file as a mask.  The range
 includes all the places the specified input has data, and holes where
 it has holes.  The input specification need not be just a file name,
 it may be anything any other input specification can be.
+(You may need to enclose \fIinput-specification\fP in parentheses
+to make sure it can't misinterpret which arguments go with input
+specification.)
 .TP 8n
 \fB\-OVER\fP \fIinput-specification\fP
 This says to use the specified input file as a mask.  The range
 extends from the minimum to the maximum address used by the input, and
 ignores any holes.  The input specification need not be just a file name,
 it may be anything any other input specification can be.
+(You may need to enclose \fIinput-specification\fP in parentheses
+to make sure it can't misinterpret which arguments go with input
+specification.)
 .PP
 In addition, all of these methods may be used, and used more than once,
 and the results will be added together.
@@ -397,16 +403,25 @@ of the following:
 This inserts the minimum address of the specified input file. 
 The input specification need not be just a file name,
 it may be anything any other input specification can be.
+(You may need to enclose \fIinput-specification\fP in parentheses
+to make sure it can't misinterpret which arguments go with input
+specification.)
 .TP 8n
 \fB\-MAXimum\fP \fIinput-specification\fP
 This inserts the maximum address of the specified input file, plus one. 
 The input specification need not be just a file name,
 it may be anything any other input specification can be.
+(You may need to enclose \fIinput-specification\fP in parentheses
+to make sure it can't misinterpret which arguments go with input
+specification.)
 .TP 8n
 \fB\-Length\fP \fIinput-specification\fP
 This inserts the length of the address range in the specified input file,
 ignoring any holes.  The input specification need not be just a file name,
 it may be anything any other input specification can be.
+(You may need to enclose \fIinput-specification\fP in parentheses
+to make sure it can't misinterpret which arguments go with input
+specification.)
 .PP
 For example, the \fB-OVER\fP \fIfile\fP option can be thought of a
 short-hand for

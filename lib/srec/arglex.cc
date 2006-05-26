@@ -205,13 +205,6 @@ void
 srec_arglex::get_address_nbytes_width(const char *name, unsigned long &address,
     int &nbytes, int &width)
 {
-    if (!can_get_number())
-    {
-	cerr << "the " << name
-    	    << " filter requires an address and a byte count"
-    	    << endl;
-	exit(1);
-    }
     address = get_number("address");
     nbytes = 4;
     width = 1;

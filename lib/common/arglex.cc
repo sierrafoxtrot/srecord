@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002, 2003 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2003, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -38,38 +38,38 @@ using namespace std;
 
 static const arglex::table_ty default_table[] =
 {
-	{ "-",			arglex::token_stdio,		},
-	{ "-Help",		arglex::token_help,		},
-	{ "-LICense",		arglex::token_license,		},
-	{ "-Page_Length",	arglex::token_page_length,	},
-	{ "-Page_Width",	arglex::token_page_width,	},
-	{ "-TRACIng",		arglex::token_tracing,		},
-	{ "-Verbose",		arglex::token_verbose,		},
-	{ "-VERSion",		arglex::token_version,		},
-	ARGLEX_END_MARKER
+    { "-",			arglex::token_stdio,		},
+    { "-Help",		arglex::token_help,		},
+    { "-LICense",		arglex::token_license,		},
+    { "-Page_Length",	arglex::token_page_length,	},
+    { "-Page_Width",	arglex::token_page_width,	},
+    { "-TRACIng",		arglex::token_tracing,		},
+    { "-Verbose",		arglex::token_verbose,		},
+    { "-VERSion",		arglex::token_version,		},
+    ARGLEX_END_MARKER
 };
 
 
 arglex::arglex() :
-	argc(0),
-	argv(0),
-	tables(),
-	pushback_depth(0),
-	usage_tail_(0)
+    argc(0),
+    argv(0),
+    tables(),
+    pushback_depth(0),
+    usage_tail_(0)
 {
-	table_set(default_table);
+    table_set(default_table);
 }
 
 
 arglex::arglex(int ac, char **av) :
-	argc(ac - 1),
-	argv(av + 1),
-	tables(),
-	pushback_depth(0),
-	usage_tail_(0)
+    argc(ac - 1),
+    argv(av + 1),
+    tables(),
+    pushback_depth(0),
+    usage_tail_(0)
 {
-	progname_set(av[0]);
-	table_set(default_table);
+    progname_set(av[0]);
+    table_set(default_table);
 }
 
 
@@ -81,7 +81,7 @@ arglex::~arglex()
 void
 arglex::table_set(const table_ty *tp)
 {
-	tables.push_back(tp);
+    tables.push_back(tp);
 }
 
 
@@ -139,82 +139,83 @@ static char *partial;
 bool
 arglex_compare(const char *formal, char *actual)
 {
-	for (;;)
+    for (;;)
+    {
+	unsigned char ac = *actual++;
+	if (isupper(ac))
+	    ac = tolower(ac);
+	unsigned char fc = *formal++;
+	switch (fc)
 	{
-		unsigned char ac = *actual++;
-		if (isupper(ac))
-			ac = tolower(ac);
-		unsigned char fc = *formal++;
-		switch (fc)
-		{
-		case 0:
-			return !ac;
-			
-		case '_':
-			if (ac == '-')
-				break;
-			// fall through...
+	case 0:
+	    return !ac;
+	    
+	case '_':
+	    if (ac == '-')
+		break;
+	    // fall through...
 
-		case 'a': case 'b': case 'c': case 'd': case 'e':
-		case 'f': case 'g': case 'h': case 'i': case 'j':
-		case 'k': case 'l': case 'm': case 'n': case 'o':
-		case 'p': case 'q': case 'r': case 's': case 't':
-		case 'u': case 'v': case 'w': case 'x': case 'y':
-		case 'z': 
-			//
-			// optional characters
-			//
-			if (ac == fc && arglex_compare(formal, actual))
-				return true;
-			//
-			// skip forward to next
-			// mandatory character, or after '_'
-			//
-			while (islower(*formal))
-				++formal;
-			if (*formal == '_')
-			{
-				++formal;
-				if (ac == '_' || ac == '-')
-					++actual;
-			}
-			--actual;
-			break;
+	case 'a': case 'b': case 'c': case 'd': case 'e':
+	case 'f': case 'g': case 'h': case 'i': case 'j':
+	case 'k': case 'l': case 'm': case 'n': case 'o':
+	case 'p': case 'q': case 'r': case 's': case 't':
+	case 'u': case 'v': case 'w': case 'x': case 'y':
+	case 'z': 
+	    //
+	    // optional characters
+	    //
+	    if (ac == fc && arglex_compare(formal, actual))
+		return true;
 
-		case '*':
-			//
-			// This is a hack, it should really 
-			// check for a match match the stuff after
-			// the '*', too, a la glob.
-			//
-			if (!ac)
-				return false;
-			partial = actual - 1;
-			return true;
+	    //
+	    // skip forward to next
+	    // mandatory character, or after '_'
+	    //
+	    while (islower(*formal))
+		++formal;
+	    if (*formal == '_')
+	    {
+		++formal;
+		if (ac == '_' || ac == '-')
+	    	    ++actual;
+	    }
+	    --actual;
+	    break;
 
-		case '\\':
-			if (actual[-1] != *formal++)
-				return false;
-			break;
+	case '*':
+	    //
+	    // This is a hack, it should really 
+	    // check for a match match the stuff after
+	    // the '*', too, a la glob.
+	    //
+	    if (!ac)
+		return false;
+	    partial = actual - 1;
+	    return true;
 
-		case 'A': case 'B': case 'C': case 'D': case 'E':
-		case 'F': case 'G': case 'H': case 'I': case 'J':
-		case 'K': case 'L': case 'M': case 'N': case 'O':
-		case 'P': case 'Q': case 'R': case 'S': case 'T':
-		case 'U': case 'V': case 'W': case 'X': case 'Y':
-		case 'Z': 
-			fc = tolower(fc);
-			// fall through...
+	case '\\':
+	    if (actual[-1] != *formal++)
+		return false;
+	    break;
 
-		default:
-			//
-			// mandatory characters
-			//
-			if (fc != ac)
-				return false;
-			break;
-		}
+	case 'A': case 'B': case 'C': case 'D': case 'E':
+	case 'F': case 'G': case 'H': case 'I': case 'J':
+	case 'K': case 'L': case 'M': case 'N': case 'O':
+	case 'P': case 'Q': case 'R': case 'S': case 'T':
+	case 'U': case 'V': case 'W': case 'X': case 'Y':
+	case 'Z': 
+	    fc = tolower(fc);
+	    // fall through...
+
+	default:
+	    //
+	    // mandatory characters
+	    //
+	    if (fc != ac)
+		return false;
+	    break;
 	}
+    }
 }
 
 
@@ -250,93 +251,93 @@ arglex_compare(const char *formal, char *actual)
 static int
 is_a_number(const char *s, long &n)
 {
-	int		sign;
+    int		sign;
 
-	n = 0;
-	switch (*s)
+    n = 0;
+    switch (*s)
+    {
+    case '-':
+	++s;
+	sign = -1;
+	break;
+
+    case '+':
+	++s;
+	sign = 1;
+	break;
+
+    default:
+	sign = 1;
+	break;
+    }
+    switch (*s)
+    {
+    case '0':
+	if ((s[1] == 'x' || s[1] == 'X') && s[2])
 	{
-	case '-':
-		++s;
-		sign = -1;
-		break;
+	    s += 2;
+	    for (;;)
+	    {
+		switch (*s)
+		{
+		case '0': case '1': case '2': case '3':
+		case '4': case '5': case '6': case '7':
+		case '8': case '9':
+		    n = n * 16 + *s++ - '0';
+		    continue;
 
-	case '+':
-		++s;
-		sign = 1;
-		break;
+		case 'A': case 'B': case 'C':
+		case 'D': case 'E': case 'F':
+		    n = n * 16 + *s++ - 'A' + 10;
+		    continue;
 
-	default:
-		sign = 1;
+		case 'a': case 'b': case 'c':
+		case 'd': case 'e': case 'f':
+		    n = n * 16 + *s++ - 'a' + 10;
+		    continue;
+		}
 		break;
+	    }
 	}
-	switch (*s)
+	else
 	{
-	case '0':
-		if ((s[1] == 'x' || s[1] == 'X') && s[2])
-		{
-			s += 2;
-			for (;;)
-			{
-				switch (*s)
-				{
-				case '0': case '1': case '2': case '3':
-				case '4': case '5': case '6': case '7':
-				case '8': case '9':
-					n = n * 16 + *s++ - '0';
-					continue;
-
-				case 'A': case 'B': case 'C':
-				case 'D': case 'E': case 'F':
-					n = n * 16 + *s++ - 'A' + 10;
-					continue;
-
-				case 'a': case 'b': case 'c':
-				case 'd': case 'e': case 'f':
-					n = n * 16 + *s++ - 'a' + 10;
-					continue;
-				}
-				break;
-			}
-		}
-		else
-		{
-			for (;;)
-			{
-				switch (*s)
-				{
-				case '0': case '1': case '2': case '3':
-				case '4': case '5': case '6': case '7':
-					n = n * 8 + *s++ - '0';
-					continue;
-				}
-				break;
-			}
-		}
-		break;
-
-	case '1': case '2': case '3': case '4':
-	case '5': case '6': case '7': case '8': case '9':
-		for (;;)
-		{
-			switch (*s)
-			{
-			case '0': case '1': case '2': case '3':
-			case '4': case '5': case '6': case '7':
-			case '8': case '9':
-				n = n * 10 + *s++ - '0';
-				continue;
-			}
-			break;
-		}
-		break;
-
-	default:
-		return 0;
+	    for (;;)
+	    {
+	       	switch (*s)
+	       	{
+	       	case '0': case '1': case '2': case '3':
+	       	case '4': case '5': case '6': case '7':
+		    n = n * 8 + *s++ - '0';
+		    continue;
+	       	}
+	       	break;
+	    }
 	}
-	if (*s)
-		return 0;
-	n *= sign;
-	return 1;
+	break;
+
+    case '1': case '2': case '3': case '4':
+    case '5': case '6': case '7': case '8': case '9':
+	for (;;)
+	{
+	    switch (*s)
+	    {
+	    case '0': case '1': case '2': case '3':
+	    case '4': case '5': case '6': case '7':
+	    case '8': case '9':
+	       	n = n * 10 + *s++ - '0';
+	       	continue;
+	    }
+	    break;
+	}
+	break;
+
+default:
+	return 0;
+    }
+    if (*s)
+	return 0;
+    n *= sign;
+    return 1;
 }
 
 
@@ -366,295 +367,291 @@ is_a_number(const char *s, long &n)
 int
 arglex::token_next()
 {
-	const table_ty	*tp;
-	const table_ty	*hit[20];
-	int		nhit;
-	char		*arg;
+    const table_ty  *tp;
+    const table_ty  *hit[20];
+    int             nhit;
+    char            *arg;
 
-	if (pushback_depth > 0)
+    if (pushback_depth > 0)
+    {
+	//
+	// the second half of a "-foo=bar" style argument.
+	//
+	arg = pushback[--pushback_depth];
+    }
+    else
+    {
+	if (argc <= 0)
 	{
-		//
-		// the second half of a "-foo=bar" style argument.
-		//
-		arg = pushback[--pushback_depth];
+	    value_string_ = "";
+	    token = token_eoln;
+	    return token;
 	}
-	else
-	{
-		if (argc <= 0)
-		{
-			value_string_ = "";
-			token = token_eoln;
-			return token;
-		}
-		arg = argv[0];
-		argc--;
-		argv++;
-
-		//
-		// See if it looks like a GNU "-foo=bar" option.
-		// Split it at the '=' to make it something the
-		// rest of the code understands.
-		//
-		if (arg[0] == '-' && arg[1] != '=')
-		{
-			char *eqp;
-
-			eqp = strchr(arg, '=');
-			if (eqp)
-			{
-				pushback[pushback_depth++] = eqp + 1;
-				*eqp = 0;
-			}
-		}
-
-		//
-		// Turn the GNU-style leading "--"
-		// into "-" if necessary.
-		//
-		if
-		(
-			arg[0] == '-'
-		&&
-			arg[1] == '-'
-		&&
-			arg[2]
-		&&
-			!is_a_number(arg + 1, value_number_)
-		)
-			++arg;
-	}
-	value_string_ = arg;
+	arg = argv[0];
+	argc--;
+	argv++;
 
 	//
-	// see if it is a number
+	// See if it looks like a GNU "-foo=bar" option.
+	// Split it at the '=' to make it something the
+	// rest of the code understands.
 	//
-	if (is_a_number(arg, value_number_))
+	if (arg[0] == '-' && arg[1] != '=')
 	{
-		token = arglex::token_number;
-		return token;
+	    char *eqp = strchr(arg, '=');
+	    if (eqp)
+	    {
+	       	pushback[pushback_depth++] = eqp + 1;
+	       	*eqp = 0;
+	    }
 	}
 
 	//
-	// scan the tables to see what it matches
+	// Turn the GNU-style leading "--"
+	// into "-" if necessary.
 	//
-	nhit = 0;
-	partial = 0;
-	for
+	if
 	(
-		table_ptr_vec_t::iterator it = tables.begin();
-		it != tables.end();
-		++it
+	    arg[0] == '-'
+	&&
+	    arg[1] == '-'
+	&&
+	    arg[2]
+	&&
+	    !is_a_number(arg + 1, value_number_)
 	)
-	{
-		for (tp = *it; tp->name; tp++)
-		{
-			if (arglex_compare(tp->name, arg))
-				hit[nhit++] = tp;
-		}
-	}
+	    ++arg;
+    }
+    value_string_ = arg;
 
-	//
-	// deal with unknown or ambiguous options
-	//
-	switch (nhit)
-	{
-	case 0:
-		//
-		// not found in the tables
-		//
-		if (*value_string_ == '-')
-			token = arglex::token_option;
-		else
-			token = arglex::token_string;
-		break;
-
-	case 1:
-		if (partial)
-			pushback[pushback_depth++] = partial;
-		value_string_ = hit[0]->name;
-		token = hit[0]->token;
-		break;
-
-	default:
-		cerr << "option ``" << value_string_ <<
-			"'' is ambiguous" << endl;
-		exit(1);
-	}
+    //
+    // see if it is a number
+    //
+    if (is_a_number(arg, value_number_))
+    {
+	token = arglex::token_number;
 	return token;
+    }
+
+    //
+    // scan the tables to see what it matches
+    //
+    nhit = 0;
+    partial = 0;
+    for
+    (
+	table_ptr_vec_t::iterator it = tables.begin();
+	it != tables.end();
+	++it
+    )
+    {
+	for (tp = *it; tp->name; tp++)
+	{
+    	    if (arglex_compare(tp->name, arg))
+       		hit[nhit++] = tp;
+	}
+    }
+
+    //
+    // deal with unknown or ambiguous options
+    //
+    switch (nhit)
+    {
+    case 0:
+	//
+	// not found in the tables
+	//
+	if (*value_string_ == '-')
+	    token = arglex::token_option;
+	else
+	    token = arglex::token_string;
+	break;
+
+    case 1:
+	if (partial)
+	    pushback[pushback_depth++] = partial;
+	value_string_ = hit[0]->name;
+	token = hit[0]->token;
+	break;
+
+    default:
+	cerr << "option ``" << value_string_ << "'' is ambiguous" << endl;
+	exit(1);
+    }
+    return token;
 }
 
 
 const char *
 arglex::token_name(int n)
 {
-	switch (n)
+    switch (n)
+    {
+    case token_eoln:
+	return "end of command line";
+
+    case token_number:
+	return "number";
+
+    case token_option:
+	return "option";
+
+    case token_stdio:
+	return "standard input or output";
+
+    case token_string:
+	return "string";
+
+    default:
+	break;
+    }
+    for
+    (
+	table_ptr_vec_t::iterator it = tables.begin();
+	it != tables.end();
+	++it
+    )
+    {
+	for (const table_ty *tp = *it; tp->name; ++tp)
 	{
-	case token_eoln:
-		return "end of command line";
-
-	case token_number:
-		return "number";
-
-	case token_option:
-		return "option";
-
-	case token_stdio:
-		return "standard input or output";
-
-	case token_string:
-		return "string";
-
-	default:
-		break;
+    	    if (tp->token == n)
+       		return tp->name;
 	}
-	for
-	(
-		table_ptr_vec_t::iterator it = tables.begin();
-		it != tables.end();
-		++it
-	)
-	{
-		for (const table_ty *tp = *it; tp->name; ++tp)
-		{
-			if (tp->token == n)
-				return tp->name;
-		}
-	}
-	return "unknown command line token";
+    }
+    return "unknown command line token";
 }
 
 
 void
 arglex::help(const char *name)
-	const
+    const
 {
-	if (!name)
-		name = progname_get();
-	const char *cmd[3] = { "man", name, 0 };
-	execvp(cmd[0], (char *const *)cmd);
-	cerr << cmd[0] << ": " << strerror(errno) << endl;
-	exit(1);
+    if (!name)
+	name = progname_get();
+    const char *cmd[3] = { "man", name, 0 };
+    execvp(cmd[0], (char *const *)cmd);
+    cerr << cmd[0] << ": " << strerror(errno) << endl;
+    exit(1);
 }
 
 
 void
 arglex::version()
-	const
+    const
 {
-	cout << progname_get() << " version " << version_stamp() << endl;
-	cout << "Copyright (C) " << copyright_years() << " Peter Miller;"
-		<< endl;
-	cout << "All rights reserved." << endl;
-	cout << endl;
-	cout << "The " << progname_get()
-		<< " program comes with ABSOLUTELY NO WARRANTY;" << endl;
-	cout << "for details use the '" << progname_get()
-		<< " -LICense' command." << endl;
-	cout << "The " << progname_get()
-		<< " program is free software, and you are welcome" << endl;
-	cout << "to redistribute it under certain conditions; for" << endl;
-	cout << "details use the '" << progname_get() << " -LICense' command."
-		<< endl;
-	exit(0);
+    cout << progname_get() << " version " << version_stamp() << endl;
+    cout << "Copyright (C) " << copyright_years() << " Peter Miller;" << endl;
+    cout << "All rights reserved." << endl;
+    cout << endl;
+    cout << "The " << progname_get()
+	<< " program comes with ABSOLUTELY NO WARRANTY;" << endl;
+    cout << "for details use the '" << progname_get()
+	<< " -LICense' command." << endl;
+    cout << "The " << progname_get()
+	<< " program is free software, and you are welcome" << endl;
+    cout << "to redistribute it under certain conditions; for" << endl;
+    cout << "details use the '" << progname_get() << " -LICense' command."
+	<< endl;
+    exit(0);
 }
 
 
 void
 arglex::license()
-	const
+    const
 {
-	help("srec_license");
+    help("srec_license");
 }
 
 
 void
 arglex::bad_argument()
-	const
+    const
 {
-	switch (token_cur())
-	{
-	case token_string:
-		cerr << "misplaced file name (``" << value_string()
-			<< "'') on command line" << endl;
-		break;
+    switch (token_cur())
+    {
+    case token_string:
+	cerr << "misplaced file name (``" << value_string()
+	    << "'') on command line" << endl;
+	break;
 
-	case token_number:
-		cerr << "misplaced number (" << value_string()
-			<< ") on command line" << endl;
-		break;
+    case token_number:
+	cerr << "misplaced number (" << value_string()
+	    << ") on command line" << endl;
+	break;
 
-	case token_option:
-		cerr << "unknown ``" << value_string() << "'' option" << endl;
-		break;
+    case token_option:
+	cerr << "unknown ``" << value_string() << "'' option" << endl;
+	break;
 
-	case token_eoln:
-		cerr << "command line too short" << endl;
-		break;
+    case token_eoln:
+	cerr << "command line too short" << endl;
+	break;
 
-	default:
-		cerr << "misplaced ``" << value_string() << "'' option" << endl;
-		break;
-	}
-	usage();
-	exit(1);
+    default:
+	cerr << "misplaced ``" << value_string() << "'' option" << endl;
+	break;
+    }
+    usage();
+    exit(1);
 }
 
 
 int
 arglex::token_first()
 {
-	switch (token_next())
-	{
-	default:
-		return token_cur();
+    switch (token_next())
+    {
+    default:
+	return token_cur();
 
-	case token_help:
-		if (token_next() != token_eoln)
-			bad_argument();
-		help();
-		break;
+    case token_help:
+	if (token_next() != token_eoln)
+	    bad_argument();
+	help();
+	break;
 
-	case token_version:
-		if (token_next() != token_eoln)
-			bad_argument();
-		version();
-		break;
+    case token_version:
+	if (token_next() != token_eoln)
+	    bad_argument();
+	version();
+	break;
 
-	case token_license:
-		if (token_next() != token_eoln)
-			bad_argument();
-		license();
-		break;
-	}
-	exit(0);
+    case token_license:
+	if (token_next() != token_eoln)
+	    bad_argument();
+	license();
+	break;
+    }
+    exit(0);
 }
 
 
 void
 arglex::usage_tail_set(const char *s)
 {
-	usage_tail_ = s;
+    usage_tail_ = s;
 }
 
 
 const char *
 arglex::usage_tail_get()
-	const
+    const
 {
-	if (!usage_tail_)
-		usage_tail_ = "<filename>...";
-	return usage_tail_;
+    if (!usage_tail_)
+	usage_tail_ = "<filename>...";
+    return usage_tail_;
 }
 
 
 void
 arglex::usage()
-	const
+    const
 {
-	cerr << "Usage: " << progname_get() << " [ <option>... ] "
-		<< usage_tail_get() << endl;
-	cerr << "       " << progname_get() << " -Help" << endl;
-	cerr << "       " << progname_get() << " -VERSion" << endl;
-	cerr << "       " << progname_get() << " -LICense" << endl;
-	exit(1);
+    cerr << "Usage: " << progname_get() << " [ <option>... ] "
+	<< usage_tail_get() << endl;
+    cerr << "       " << progname_get() << " -Help" << endl;
+    cerr << "       " << progname_get() << " -VERSion" << endl;
+    cerr << "       " << progname_get() << " -LICense" << endl;
+    exit(1);
 }
