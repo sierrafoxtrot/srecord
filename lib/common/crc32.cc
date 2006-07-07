@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002 Peter Miller;
+//	Copyright (C) 2000-2002, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -17,19 +17,19 @@
 //	along with this program; if not, write to the Free Software
 //	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the crc32 class
+// MANIFEST: functions to implement the crc32 class
 //
-//	(I got this copy from http://www.gator.net/~garyg/C/CONTRIB/SNIP/
-//	but knowing the Internet, it's probably gone by now.  Search for
-//	"crc_32" and you should find it fairly quickly.  The same code
-//	also appears in the ZModem sources, as well, but they seem to
-//	abuse it slightly, and the way they initialize and terminate
-//	the CRC doesn't give the same answers as the way everyone else
-//	uses it.)
+//      (I got this copy from http://www.gator.net/~garyg/C/CONTRIB/SNIP/
+//      but as always on the Internet, it is now gone.  So use the
+//      Wayback Machine, http://www.archive.org/, or google for "crc_32"
+//      and you should find it fairly quickly.  The same code also
+//      appears in the ZModem sources, as well, but they seem to abuse
+//      it slightly, and the way they initialize and terminate the CRC
+//      doesn't give the same answers as the way everyone else uses it.)
 //
 // 32 BIT ANSI X3.66 CRC checksum
 //
-// This class mey be used to compute the 32-bit CRC used as the frame
+// This class may be used to compute the 32-bit CRC used as the frame
 // check sequence in ADCCP (ANSI X3.66, also known as FIPS PUB 71 and
 // FED-STD-1003, the U.S. versions of CCITT's X.25 link-level protocol).
 // The 32-bit FCS was added via the Federal Register, 1 June 1982,
