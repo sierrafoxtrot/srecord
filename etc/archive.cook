@@ -336,7 +336,16 @@ MANIFEST: etc/MANIFEST.head
 
 archive/%1-%2.png: archive/%1.png
 {
-    convert [resolve archive/%1.png] -scale %2 [target];
+    if [find_command pngcrush] then
+    {
+	convert [resolve archive/%1.png] -scale %2 [target].tmp;
+	pngcrush -brute -q [target].tmp [target];
+	rm [target].tmp;
+    }
+    else
+    {
+	convert [resolve archive/%1.png] -scale %2 [target];
+    }
 }
 
 archive/srecord.ico:
