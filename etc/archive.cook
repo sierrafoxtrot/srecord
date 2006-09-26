@@ -339,7 +339,7 @@ archive/%1-%2.png: archive/%1.png
     if [find_command pngcrush] then
     {
 	convert [resolve archive/%1.png] -scale %2 [target].tmp;
-	pngcrush -brute -q [target].tmp [target];
+	pngcrush -bkgd 255 255 255 -brute -q [target].tmp [target];
 	rm [target].tmp;
     }
     else
