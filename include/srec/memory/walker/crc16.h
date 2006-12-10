@@ -23,7 +23,6 @@
 #ifndef INCLUDE_SREC_MEMORY_WALKER_CRC16_H
 #define INCLUDE_SREC_MEMORY_WALKER_CRC16_H
 
-#pragma interface "srec_memory_walker_crc16"
 
 #include <crc16.h>
 #include <srec/memory/walker.h>

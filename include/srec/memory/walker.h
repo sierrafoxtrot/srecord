@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002, 2003 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2003, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 #ifndef INCLUDE_SREC_MEMORY_WALKER_H
 #define INCLUDE_SREC_MEMORY_WALKER_H
 
-#pragma interface "srec_memory_walker"
 
 class srec_record; // forward
 

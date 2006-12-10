@@ -23,7 +23,6 @@
 #ifndef INCLUDE_SREC_ARGLEX_H
 #define INCLUDE_SREC_ARGLEX_H
 
-#pragma interface "srec_arglex"
 
 #include <arglex.h>
 

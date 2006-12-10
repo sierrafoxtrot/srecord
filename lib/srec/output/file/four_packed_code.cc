@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_output_file_four_packed_code class
 //
 
-#pragma implementation "srec_output_file_four_packed_code"
 
 #include <srec/output/file/four_packed_code.h>
 #include <srec/record.h>

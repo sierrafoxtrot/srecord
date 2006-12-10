@@ -23,7 +23,6 @@
 #ifndef INCLUDE_CRC16_H
 #define INCLUDE_CRC16_H
 
-#pragma interface "crc16"
 
 #include <stddef.h>
 

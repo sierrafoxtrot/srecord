@@ -20,8 +20,6 @@
 // MANIFEST: functions to impliment the ${id ${trim_dir ${trim_ext $fn}}} class
 //
 
-#pragma implementation "${id ${trim_dir ${trim_ext $fn}}}"
-
 #include <${trim_dir ${trim_ext $fn}}.h>
 
 

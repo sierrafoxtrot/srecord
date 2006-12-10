@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_input_filter_crc32 class
 //
 
-#pragma implementation "srec_input_filter_crc32"
 
 #include <srec/input/filter/crc32.h>
 #include <srec/memory.h>

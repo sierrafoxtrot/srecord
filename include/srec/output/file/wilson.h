@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002, 2005 Peter Miller;
+//	Copyright (C) 2000-2002, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_WILSON_H
 #define INCLUDE_SREC_OUTPUT_FILE_WILSON_H
 
-#pragma interface "srec_output_file_wilson"
 
 #include <srec/output/file.h>
 

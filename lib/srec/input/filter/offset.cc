@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001, 2002, 2005 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001, 2002, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_input_filter_offset class
 //
 
-#pragma implementation "srec_input_filter_offset"
 
 #include <srec/input/filter/offset.h>
 #include <srec/record.h>

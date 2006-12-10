@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_input_file_emon52 class
 //
 
-#pragma implementation "srec_input_file_emon52"
 
 #include <srec/input/file/emon52.h>
 #include <srec/record.h>

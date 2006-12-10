@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002, 2003 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_input_file_binary class
 //
 
-#pragma implementation "srec_input_file_binary"
 
 #include <srec/input/file/binary.h>
 #include <srec/record.h>

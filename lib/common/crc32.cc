@@ -40,7 +40,6 @@
 // over 16-bit FCS.
 //
 
-#pragma implementation "crc32"
 
 #include <crc32.h>
 

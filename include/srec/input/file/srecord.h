@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002, 2003, 2005 Peter Miller;
+//	Copyright (C) 1998-2000, 2002, 2003, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 #ifndef INCLUDE_INPUT_FILE_SRECORD_H
 #define INCLUDE_INPUT_FILE_SRECORD_H
 
-#pragma interface "srec_input_file_srecord"
 
 #include <srec/input/file.h>
 

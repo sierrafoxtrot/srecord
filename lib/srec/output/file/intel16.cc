@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2003 Peter Miller;
+//	Copyright (C) 2003, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_output_file_intel16 class
 //
 
-#pragma implementation "srec_output_file_intel16"
 
 #include <srec/output/file/intel16.h>
 #include <srec/record.h>

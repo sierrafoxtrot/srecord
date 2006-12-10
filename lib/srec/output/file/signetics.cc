@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_output_file_signetics class
 //
 
-#pragma implementation "srec_output_file_signetics"
 
 #include <srec/output/file/signetics.h>
 #include <srec/record.h>

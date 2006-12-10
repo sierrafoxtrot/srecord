@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001-2003, 2005 Peter Miller;
+//	Copyright (C) 2001-2003, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_input_file_four_packed_code class
 //
 
-#pragma implementation "srec_input_file_four_packed_code"
 
 #include <srec/input/file/four_packed_code.h>
 #include <srec/record.h>

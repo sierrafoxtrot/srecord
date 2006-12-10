@@ -25,7 +25,6 @@
 // also appears in the ZModem sources, as well.
 //
 
-#pragma implementation "crc16"
 
 #include <crc16.h>
 

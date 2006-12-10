@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_arglex class
 //
 
-#pragma implementation "srec_arglex"
 
 #include <iostream>
 using namespace std;

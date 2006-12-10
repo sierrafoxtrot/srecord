@@ -23,7 +23,6 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_SRECORD_H
 #define INCLUDE_SREC_OUTPUT_FILE_SRECORD_H
 
-#pragma interface "srec_output_file_srecord"
 
 #include <srec/output/file.h>
 

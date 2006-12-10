@@ -23,7 +23,6 @@
 #ifndef INCLUDE_SREC_MEMORY_WALKER_CONTINUITY_H
 #define INCLUDE_SREC_MEMORY_WALKER_CONTINUITY_H
 
-#pragma interface "srec_memory_walker_continuity"
 
 #include <srec/memory/walker.h>
 

@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_input_filter_crc16 class
 //
 
-#pragma implementation "srec_input_filter_crc16"
 
 #include <srec/input/filter/crc16.h>
 #include <srec/memory.h>

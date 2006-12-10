@@ -23,7 +23,6 @@
 #ifndef INCLUDE_ARGLEX_H
 #define INCLUDE_ARGLEX_H
 
-#pragma interface "arglex"
 
 #include <list>
 #include <vector>

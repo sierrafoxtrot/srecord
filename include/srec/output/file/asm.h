@@ -23,7 +23,6 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_ASM_H
 #define INCLUDE_SREC_OUTPUT_FILE_ASM_H
 
-#pragma interface "srec_output_file_asm"
 
 #include <srec/output/file.h>
 #include <interval.h>

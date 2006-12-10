@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_memory class
 //
 
-#pragma implementation "srec_memory"
 
 #include <srec/input.h>
 #include <srec/memory.h>

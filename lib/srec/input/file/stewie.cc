@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_input_file_stewie class
 //
 
-#pragma implementation "srec_input_file_stewie"
 
 #include <srec/input/file/stewie.h>
 #include <srec/record.h>

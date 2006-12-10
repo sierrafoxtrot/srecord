@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2005 Peter Miller;
+//	Copyright (C) 2001, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_FASTLOAD_H
 #define INCLUDE_SREC_OUTPUT_FILE_FASTLOAD_H
 
-#pragma interface "srec_output_file_fastload"
 
 #include <srec/output/file.h>
 

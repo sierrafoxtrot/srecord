@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_memory_walker_continuity class
 //
 
-#pragma implementation "srec_memory_walker_continuity"
 
 #include <srec/memory/walker/continuity.h>
 

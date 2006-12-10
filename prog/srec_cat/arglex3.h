@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2005 Peter Miller;
+//	Copyright (C) 2000-2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 #ifndef PROG_SREC_CAT_ARGLEX3_H
 #define PROG_SREC_CAT_ARGLEX3_H
 
-#pragma interface "srec_cat_arglex3"
 
 #include <srec/arglex.h>
 

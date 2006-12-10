@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the versn_stamp class
 //
 
-#pragma implementation
 
 #include <versn_stamp.h>
 #include <patchlevel.h>

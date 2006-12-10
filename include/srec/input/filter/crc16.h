@@ -23,7 +23,6 @@
 #ifndef INCLUDE_SREC_INPUT_FILTER_CRC16_H
 #define INCLUDE_SREC_INPUT_FILTER_CRC16_H
 
-#pragma interface "srec_input_filter_crc16"
 
 #include <srec/input/filter.h>
 

@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002-2005 Peter Miller;
+//	Copyright (C) 1998-2000, 2002-2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 #ifndef INCLUDE_INTERVAL_H
 #define INCLUDE_INTERVAL_H
 
-#pragma interface "interval"
 
 #include <stddef.h>
 

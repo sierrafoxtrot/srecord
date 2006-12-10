@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_input_file_wilson class
 //
 
-#pragma implementation "srec_input_file_wilson"
 
 #include <srec/input/file/wilson.h>
 #include <srec/record.h>

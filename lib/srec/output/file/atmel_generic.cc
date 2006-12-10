@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2001, 2002 Peter Miller;
+//	Copyright (C) 2001, 2002, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -20,7 +20,6 @@
 // MANIFEST: functions to impliment the srec_output_file_atmel_generic class
 //
 
-#pragma implementation "srec_output_file_atmel_generic"
 
 #include <srec/output/file/atmel_generic.h>
 #include <srec/record.h>
