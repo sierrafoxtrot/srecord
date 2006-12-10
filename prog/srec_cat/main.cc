@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001-2005 Peter Miller;
+//	Copyright (C) 1998, 1999, 2001-2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -43,7 +43,7 @@ main(int argc, char **argv)
     srec_output *outfile = 0;
     int line_length = 0;
     int address_length = 0;
-    const char *header = 0;
+    std::string header;
     bool header_set = false;
     unsigned long start_address = 0;
     bool start_address_set = false;
@@ -149,7 +149,7 @@ main(int argc, char **argv)
     //
     srec_memory *mp = new srec_memory();
     if (header_set)
-	mp->set_header(header);
+	mp->set_header(header.c_str());
     for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
     {
 	srec_input *ifp = *it;

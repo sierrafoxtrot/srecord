@@ -65,7 +65,7 @@ srec_arglex::get_output()
     //
     // determine the file name
     //
-    const char *fn = "-";
+    std::string fn = "-";
     switch (token_cur())
     {
     case token_stdio:
@@ -99,162 +99,162 @@ srec_arglex::get_output()
 	// fall through...
 
     default:
-	ofp = new srec_output_file_srecord(fn);
+	ofp = new srec_output_file_srecord(fn.c_str());
 	break;
 
     case token_aomf:
 	token_next();
-	ofp = new srec_output_file_aomf(fn);
+	ofp = new srec_output_file_aomf(fn.c_str());
 	break;
 
     case token_ascii_hex:
 	token_next();
-	ofp = new srec_output_file_ascii_hex(fn);
+	ofp = new srec_output_file_ascii_hex(fn.c_str());
 	break;
 
     case token_assembler:
 	token_next();
-	ofp = new srec_output_file_asm(fn);
+	ofp = new srec_output_file_asm(fn.c_str());
 	break;
 
     case token_atmel_generic_be:
 	token_next();
-	ofp = new srec_output_file_atmel_generic(fn, true);
+	ofp = new srec_output_file_atmel_generic(fn.c_str(), true);
 	break;
 
     case token_atmel_generic_le:
 	token_next();
-	ofp = new srec_output_file_atmel_generic(fn, false);
+	ofp = new srec_output_file_atmel_generic(fn.c_str(), false);
 	break;
 
     case token_basic_data:
 	token_next();
-	ofp = new srec_output_file_basic(fn);
+	ofp = new srec_output_file_basic(fn.c_str());
 	break;
 
     case token_binary:
 	token_next();
-	ofp = new srec_output_file_binary(fn);
+	ofp = new srec_output_file_binary(fn.c_str());
 	break;
 
     case token_c_array:
 	token_next();
-	ofp = new srec_output_file_c(fn);
+	ofp = new srec_output_file_c(fn.c_str());
 	break;
 
     case token_cosmac:
 	token_next();
-	ofp = new srec_output_file_cosmac(fn);
+	ofp = new srec_output_file_cosmac(fn.c_str());
 	break;
 
     case token_dec_binary:
 	token_next();
-	ofp = new srec_output_file_dec_binary(fn);
+	ofp = new srec_output_file_dec_binary(fn.c_str());
 	break;
 
     case token_emon52:
 	token_next();
-	ofp = new srec_output_file_emon52(fn);
+	ofp = new srec_output_file_emon52(fn.c_str());
 	break;
 
     case token_fairchild:
 	token_next();
-	ofp = new srec_output_file_fairchild(fn);
+	ofp = new srec_output_file_fairchild(fn.c_str());
 	break;
 
     case token_fast_load:
 	token_next();
-	ofp = new srec_output_file_fastload(fn);
+	ofp = new srec_output_file_fastload(fn.c_str());
 	break;
 
     case token_formatted_binary:
 	token_next();
-	ofp = new srec_output_file_formatted_binary(fn);
+	ofp = new srec_output_file_formatted_binary(fn.c_str());
 	break;
 
     case token_four_packed_code:
 	token_next();
-	ofp = new srec_output_file_four_packed_code(fn);
+	ofp = new srec_output_file_four_packed_code(fn.c_str());
 	break;
 
     case token_intel:
 	token_next();
-	ofp = new srec_output_file_intel(fn);
+	ofp = new srec_output_file_intel(fn.c_str());
 	break;
 
     case token_intel16:
 	token_next();
-	ofp = new srec_output_file_intel16(fn);
+	ofp = new srec_output_file_intel16(fn.c_str());
 	break;
 
     case token_mos_tech:
 	token_next();
-	ofp = new srec_output_file_mos_tech(fn);
+	ofp = new srec_output_file_mos_tech(fn.c_str());
 	break;
 
     case token_needham_hex:
 	token_next();
-	ofp = new srec_output_file_needham(fn);
+	ofp = new srec_output_file_needham(fn.c_str());
 	break;
 
     case token_ohio_scientific:
 	token_next();
-	ofp = new srec_output_file_os65v(fn);
+	ofp = new srec_output_file_os65v(fn.c_str());
 	break;
 
     case token_signetics:
 	token_next();
-	ofp = new srec_output_file_signetics(fn);
+	ofp = new srec_output_file_signetics(fn.c_str());
 	break;
 
     case token_spasm_be:
 	token_next();
-	ofp = new srec_output_file_spasm(fn, true);
+	ofp = new srec_output_file_spasm(fn.c_str(), true);
 	break;
 
     case token_spasm_le:
 	token_next();
-	ofp = new srec_output_file_spasm(fn, false);
+	ofp = new srec_output_file_spasm(fn.c_str(), false);
 	break;
 
     case token_spectrum:
 	token_next();
-	ofp = new srec_output_file_spectrum(fn);
+	ofp = new srec_output_file_spectrum(fn.c_str());
 	break;
 
     case token_stewie:
 	token_next();
-	ofp = new srec_output_file_stewie(fn);
+	ofp = new srec_output_file_stewie(fn.c_str());
 	break;
 
     case token_tektronix:
 	token_next();
-	ofp = new srec_output_file_tektronix(fn);
+	ofp = new srec_output_file_tektronix(fn.c_str());
 	break;
 
     case token_tektronix_extended:
 	token_next();
-	ofp = new srec_output_file_tektronix_extended(fn);
+	ofp = new srec_output_file_tektronix_extended(fn.c_str());
 	break;
 
     case token_ti_tagged:
 	token_next();
-	ofp = new srec_output_file_ti_tagged(fn);
+	ofp = new srec_output_file_ti_tagged(fn.c_str());
 	break;
 
     case token_vhdl:
 	token_next();
-	ofp = new srec_output_file_vhdl(fn);
+	ofp = new srec_output_file_vhdl(fn.c_str());
 	break;
 
     case token_vmem:
 	token_next();
-	ofp = new srec_output_file_vmem(fn);
+	ofp = new srec_output_file_vmem(fn.c_str());
 	break;
 
     case token_wilson:
 	token_next();
-	ofp = new srec_output_file_wilson(fn);
+	ofp = new srec_output_file_wilson(fn.c_str());
 	break;
     }
 

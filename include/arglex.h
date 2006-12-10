@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002, 2003 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2003, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -25,7 +25,9 @@
 
 #pragma interface "arglex"
 
+#include <list>
 #include <vector>
+#include <string>
 
 #define ARGLEX_END_MARKER {0,0}
 
@@ -95,18 +97,10 @@ public:
 
 private:
     /**
-      * The argc instance variable tracks trhe length of the
-      * command line.  As command line arguments are processed,
-      * argc decreases.
+      * The arguments instance variable is used to remember the
+      * remaining command lie arguments.
       */
-    int argc;
-
-    /**
-      * The argv instance variable tracks the values of the strings
-      * which are the command line arguments.  As command line
-      * arguments are processed, argv increases.
-      */
-    char **argv;
+    std::list<std::string> arguments;
 
     /**
       * The token instance variable tracks the current token in the
@@ -118,7 +112,7 @@ private:
       * The value_string_ instance variable tracks the value of the
       * current command line argument.
       */
-    const char *value_string_;
+    std::string value_string_;
 
     /**
       * The value_number_ instance variable tracks the numeric value
@@ -140,20 +134,14 @@ private:
       * is a particular token.  There is usually one per derived
       * class.  Append more tables with the `table_set' method.
       */
-    table_ptr_vec_t	tables;
+    table_ptr_vec_t tables;
 
     /**
       * The pushback instance variable tracks command line argument
       * (or, often, portions of command line arguments) which have
       * been "pushed back" to be re-scanned later.
       */
-    char *pushback[4];
-
-    /**
-      * The pushback_depth instance variable tracks how many entries
-      * have been used in the `pushback' array.
-      */
-    int pushback_depth;
+    std::list<std::string> pushback;
 
 protected:
     /**
@@ -210,7 +198,7 @@ public:
       * The value_string method is used to get the string value of
       * the current token.
       */
-    const char *value_string() const { return value_string_; }
+    const std::string &value_string() const { return value_string_; }
 
     /**
       * The value_number method is used to get the numeric value of
@@ -219,7 +207,7 @@ public:
     long value_number() const { return value_number_; }
 
     /**
-      * The toke_name method is used to turn a token type number
+      * The token_name method is used to turn a token type number
       * into an equivalent string.  Useful for some error messages.
       */
     const char *token_name(int);
@@ -272,6 +260,20 @@ private:
       * the command line to be printed by the `usage' method.
       */
     const char *usage_tail_get() const;
+
+    /**
+      * The read_arguments_file method is used to process @filename
+      * command line arguments.  The file is read and separated into
+      * space separated words, and each word added to the arguments
+      * instance variable in the appropriate sequence.
+      *
+      * Blank lines are ignored.
+      * Comments (starting with '#' until end of line) are ignored.
+      *
+      * @param filename
+      *     The name of the file (not including the @) to be read.
+      */
+    void read_arguments_file(const char *filename);
 };
 
 /**
@@ -306,6 +308,6 @@ private:
   * such as "-\\I*", and the partial global variable will have the path
   * in it on return.
   */
-bool arglex_compare(const char *formal, char *actual);
+bool arglex_compare(const char *formal, const char *actual);
 
 #endif // INCLUDE_ARGLEX_H
