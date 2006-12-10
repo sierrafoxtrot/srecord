@@ -22,7 +22,7 @@
 
 
 #include <cstring>
-#include <srec/record.h>
+#include <lib/srec/record.h>
 
 
 srec_record::srec_record() :

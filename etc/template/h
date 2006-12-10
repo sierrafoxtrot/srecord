@@ -23,7 +23,7 @@
 #ifndef ${id ${upcase $fn}}
 #define ${id ${upcase $fn}}
 
-#include <${trim_dir ${dirname_rel $fn}}.h>
+#include <${dirname_rel $fn}.h>
 
 /**
   * The ${id ${trim_dir ${trim_ext $fn}}} class is used to represent

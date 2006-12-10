@@ -24,7 +24,7 @@
 #define PROG_SREC_CAT_ARGLEX3_H
 
 
-#include <srec/arglex.h>
+#include <lib/srec/arglex.h>
 
 class srec_cat_arglex3:
 	public srec_arglex

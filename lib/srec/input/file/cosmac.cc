@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/cosmac.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/cosmac.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_cosmac::~srec_input_file_cosmac()

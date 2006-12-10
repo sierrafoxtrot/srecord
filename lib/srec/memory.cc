@@ -21,11 +21,11 @@
 //
 
 
-#include <srec/input.h>
-#include <srec/memory.h>
-#include <srec/memory/walker/compare.h>
-#include <srec/memory/walker/continuity.h>
-#include <srec/record.h>
+#include <lib/srec/input.h>
+#include <lib/srec/memory.h>
+#include <lib/srec/memory/walker/compare.h>
+#include <lib/srec/memory/walker/continuity.h>
+#include <lib/srec/record.h>
 
 
 bool srec_memory::overwrite = false;

@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/filter/not.h>
-#include <srec/record.h>
+#include <lib/srec/input/filter/not.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_not::srec_input_filter_not(srec_input *arg)

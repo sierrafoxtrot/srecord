@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2004 Peter Miller;
+//	Copyright (C) 2004, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -20,10 +20,10 @@
 // MANIFEST: functions to impliment the srec_arglex_get_interval class
 //
 
-#include <interval.h>
-#include <srec/arglex.h>
-#include <srec/input.h>
-#include <srec/input/interval.h>
+#include <lib/interval.h>
+#include <lib/srec/arglex.h>
+#include <lib/srec/input.h>
+#include <lib/srec/input/interval.h>
 
 
 interval

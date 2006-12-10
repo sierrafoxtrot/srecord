@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/needham.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/needham.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_needham::srec_output_file_needham(const char *filename) :

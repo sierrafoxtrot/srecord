@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/aomf.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/aomf.h>
+#include <lib/srec/record.h>
 
 
 #define O96_Mod_Hdr                             0x02

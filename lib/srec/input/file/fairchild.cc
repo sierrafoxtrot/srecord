@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/fairchild.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/fairchild.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_fairchild::~srec_input_file_fairchild()

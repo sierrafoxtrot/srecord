@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/emon52.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/emon52.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_emon52::srec_output_file_emon52() :

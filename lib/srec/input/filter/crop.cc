@@ -21,9 +21,9 @@
 //
 
 
-#include <interval.h>
-#include <srec/input/filter/crop.h>
-#include <srec/record.h>
+#include <lib/interval.h>
+#include <lib/srec/input/filter/crop.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_crop::srec_input_filter_crop(srec_input *a1,

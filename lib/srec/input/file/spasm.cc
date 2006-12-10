@@ -21,9 +21,9 @@
 //
 
 
-#include <srec/input/file/spasm.h>
+#include <lib/srec/input/file/spasm.h>
 #include <ctype.h>
-#include <srec/record.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_spasm::srec_input_file_spasm(const char *filename, bool arg2) :

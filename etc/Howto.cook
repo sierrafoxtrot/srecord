@@ -122,31 +122,8 @@ all: [all];
 
 
 /*
- * Generate lists of object files for libraries just in case they ar
- * In general, it is probably easier to use the global library.
+ * The files which are linked to form the common library for the programs.
  */
-library_list_master =
-	[stringset
-		[fromto lib/%1/%0% %1 [match_mask lib/%0%.c [source_files]]]
-		[fromto lib/%1/%0% %1 [match_mask lib/%0%.cc [source_files]]]
-	];
-library_list = [library_list_master];
-loop
-{
-	library = [head [library_list]];
-	if [not [library]] then
-		loopstop;
-	library_list = [tail [library_list]];
-
-	lib/[library]/[library]_obj =
-		[fromto %0%.c [arch]/%0%.o
-			[match_mask lib/[library]/%0%.c [source_files]]
-		]
-		[fromto %0%.cc [arch]/%0%.o
-			[match_mask lib/[library]/%0%.cc [source_files]]
-		]
-		;
-}
 lib/[project_short]_obj =
 	[fromto %0%.c [arch]/%0%.o
 		[match_mask lib/%0%.c [source_files]]
@@ -214,8 +191,7 @@ if [not [defined c++]] then
 	c++ = g++;
 cc_include_flags =
 	[prepost "-I" "" [search_list]]
-	[prepost "-I" "/include" [search_list]]
-	[prepost "-I" /[arch]/include [search_list]]
+	[prepost "-I" /[arch] [search_list]]
 	;
 if [not [defined c++_flags]] then
 	c++_flags = -O [debug];
@@ -224,107 +200,89 @@ if [not [defined ld_flags]] then
 	ld_flags = [debug];
 
 
-[arch]/%1/%2/%0%.o: %1/%2/%0%.c
+[arch]/%0%.o: %0%.c
 {
-	[cc]
-		[stringset
-			[cc_include_flags]
-			[prepost -I /%1/%2 [search_list]]
-			[prepost -I /%1/%2/include [search_list]]
-			[prepost -I /[dirname %1/%2/%0%.c] [search_list]]
-		]
-		[cc_flags] -c [resolve %1/%2/%0%.c] -o [target];
+    [cc] [cc_include_flags] [cc_flags] -c [resolve %0%.c] -o [target];
 }
 
 
-[arch]/%1/%2/%0%.o: %1/%2/%0%.cc
+[arch]/%0%.o: %0%.cc
 {
-	[c++]
-		[stringset
-			[cc_include_flags]
-			[prepost -I /%1/%2 [search_list]]
-			[prepost -I /%1/%2/include [search_list]]
-			[prepost -I /[dirname %1/%2/%0%.cc] [search_list]]
-		]
-		[c++_flags] -c [resolve %1/%2/%0%.cc] -o [target]
+    [c++] [cc_include_flags] [c++_flags] -c [resolve %0%.cc] -o [target]
 	set meter;
 }
 
 
 c_incl = c_incl;
 
-%1/%2/%0%.c.d: %1/%2/%0%.c
+%0%.c.d: %0%.c
 	set no-cascade
 {
-	[c_incl] -nc -ns -nrec
-		[cc_include_flags]
-		[prepost -I /%1/%2 [search_list]]
-		[resolve %1/%2/%0%.c]
-		-prefix "'cascade %1/%2/%0%.c ='"
-		-suffix "';'"
-		-nsri
-		[prepost "-rlp=" "" [search_list]]
-		-slp [arch] "'[arch]'"
-		-o [target];
+    [c_incl] -nc -ns -nrec
+        [cc_include_flags]
+        [resolve %0%.c]
+        -prefix "'cascade %0%.c ='"
+        -suffix "';'"
+        -nsri
+        [prepost "-rlp=" "" [search_list]]
+        -slp [arch] "'[arch]'"
+        -o [target];
 }
 
-%1/%2/%0%.c,M:: %1/%2/%0%.c,Md;
+%0%.c,M:: %0%.c,Md;
 
-%1/%2/%0%.c,Md: %1/%2/%0%.c
+%0%.c,Md: %0%.c : etc/Makefile.file.sh
 {
-	[c_incl] -nc -ns
-		[cc_include_flags]
-		[prepost -I /%1/%2 [search_list]]
-		[resolve %1/%2/%0%.c]
-		-nsri
-		[prepost "-rlp=" "" [search_list]]
-		-slp [arch] "'[arch]'"
-		-o [target];
+    [c_incl] -nc -ns
+        [cc_include_flags]
+        [resolve %0%.c]
+        -nsri
+        [prepost "-rlp=" "" [search_list]]
+        -slp [arch] "'[arch]'"
+        -o [target];
 }
 
-%1/%2/%0%.h.d: %1/%2/%0%.h
+%0%.h.d: %0%.h
+    set no-cascade
+{
+    [c_incl] -nc -ns -nrec
+        [cc_include_flags]
+        [resolve %0%.h]
+        -prefix "'cascade %0%.h ='"
+        -suffix "';'"
+        -nsri
+        [prepost "-rlp=" "" [search_list]]
+        -slp [arch] "'[arch]'"
+        -o [target];
+}
+
+%0%.cc.d: %0%.cc
 	set no-cascade
 {
-	[c_incl] -nc -ns -nrec
-		[cc_include_flags]
-		[prepost -I /%1/%2 [search_list]]
-		[resolve %1/%2/%0%.h]
-		-prefix "'cascade %1/%2/%0%.h ='"
-		-suffix "';'"
-		-nsri
-		[prepost "-rlp=" "" [search_list]]
-		-slp [arch] "'[arch]'"
-		-o [target];
+    [c_incl] -nc -ns -nrec
+        [cc_include_flags]
+        [resolve %0%.cc]
+        -prefix "'cascade %0%.cc ='"
+        -suffix "';'"
+        -nsri
+        [prepost "-rlp=" "" [search_list]]
+        -slp [arch] "'[arch]'"
+        -o [target];
 }
 
-%1/%2/%0%.cc.d: %1/%2/%0%.cc
-	set no-cascade
+%0%.cc,M:: %0%.cc,Md;
+
+%0%.cc,Md: %0%.cc : etc/Makefile.file.sh
 {
-	[c_incl] -nc -ns -nrec
-		[cc_include_flags]
-		[prepost -I /%1/%2 [search_list]]
-		[resolve %1/%2/%0%.cc]
-		-prefix "'cascade %1/%2/%0%.cc ='"
-		-suffix "';'"
-		-nsri
-		[prepost "-rlp=" "" [search_list]]
-		-slp [arch] "'[arch]'"
-		-o [target];
+    [c_incl] -nc -ns
+        [cc_include_flags]
+        [resolve %0%.cc]
+        -nsri
+        [prepost "-rlp=" "" [search_list]]
+        -slp [arch] "'[arch]'"
+        -o [target];
 }
 
-%1/%2/%0%.cc,M:: %1/%2/%0%.cc,Md;
-
-%1/%2/%0%.cc,Md: %1/%2/%0%.cc
-{
-	[c_incl] -nc -ns
-		[cc_include_flags]
-		[prepost -I /%1/%2 [search_list]]
-		[resolve %1/%2/%0%.cc]
-		-nsri
-		[prepost "-rlp=" "" [search_list]]
-		-slp [arch] "'[arch]'"
-		-o [target];
-}
 cc_dep_files =
 	[fromto %0%.c %0%.c.d [match_mask %1/%2/%0%.c [source_files]]]
 	[fromto %0%.h %0%.h.d [match_mask %1/%2/%0%.h [source_files]]]
@@ -334,16 +292,16 @@ cc_dep_files =
 
 #include-cooked-nowarn [cc_dep_files]
 
-[arch]/bin/%: [%_obj] [%_libs]
+[arch]/bin/%: : [%_obj] [%_libs]
 {
-	[c++] [ld_flags] -o [target] [resolve [%_obj] [%_libs]] -lm;
+    [c++] [ld_flags] -o [target] [resolve [%_obj] [%_libs]] -lm;
 }
 
-[arch]/%0lib%.a: [%0%_obj]
+[arch]/%0lib%.a: : [%0%_obj]
 {
-	ar cq [target] [resolve [%0%_obj]];
-	if [find_command ranlib] then
-		ranlib [target];
+    ar cq [target] [resolve [%0%_obj]];
+    if [find_command ranlib] then
+        ranlib [target];
 }
 
 /*
@@ -360,7 +318,7 @@ cc_dep_files =
  * Explicit include dependencies.
  */
 #if [count [cc_dep_files]]
-[cc_dep_files]: [arch]/include/config.h;
+[cc_dep_files]: [arch]/lib/config.h;
 #endif
 
 
@@ -371,37 +329,37 @@ cc_dep_files =
  * deletes them for integration builds.)
  */
 
-include/patchlevel.h:
+lib/patchlevel.h:
 	set shallow
 {
-	copyright_years =
-		[collect
-			aegis -list version -p [project] -c [change]
-			| [awk] "-F'[[\\\\]]'" "'/^copyright_years/{print $2}'"
-		];
-	echo "'#define PATCHLEVEL \""[version]"\"'" > [target];
-	echo "'#define COPYRIGHT_YEARS \""[copyright_years]"\"'" >> [target];
+    copyright_years =
+        [collect
+            aegis -list version -p [project] -c [change]
+            | [awk] "-F'[[\\\\]]'" "'/^copyright_years/{print $2}'"
+        ];
+    echo "'#define PATCHLEVEL \""[version]"\"'" > [target];
+    echo "'#define COPYRIGHT_YEARS \""[copyright_years]"\"'" >> [target];
 }
 
 /*
  * Build the version include, but not too often.
  */
 etc/version.so:
-	set ['if' [or [not [defined baseline] ] [not [exists bl/etc/version.so
+    set ['if' [or [not [defined baseline] ] [not [exists bl/etc/version.so
 		] ] ] 'then' shallow]
 {
-	copyright_years =
-		[collect
-			aegis -list version -p [project] -c [change]
-			| [awk] "-F'[[\\\\]]'" "'/^copyright_years/{print $2}'"
-		];
-	echo "'.ds V) "[version]"'" > [target];
-	echo "'.ds v) "[version_short]"'" >> [target];
-	aegis -list version -p [project] -c [change]
-		| [awk] -F'\'"\'' "'/previous/{print $2}'"
-		| [awk] -F. "'{print \".ds w) \"$1\".\"$2}'"
-		>> [target];
-	echo "'.ds Y) "[copyright_years]"'" >> [target];
+    copyright_years =
+        [collect
+            aegis -list version -p [project] -c [change]
+            | [awk] "-F'[[\\\\]]'" "'/^copyright_years/{print $2}'"
+        ];
+    echo "'.ds V) "[version]"'" > [target];
+    echo "'.ds v) "[version_short]"'" >> [target];
+    aegis -list version -p [project] -c [change]
+        | [awk] -F'\'"\'' "'/previous/{print $2}'"
+        | [awk] -F. "'{print \".ds w) \"$1\".\"$2}'"
+        >> [target];
+    echo "'.ds Y) "[copyright_years]"'" >> [target];
 }
 
 
@@ -416,7 +374,7 @@ cascade etc/README.man = etc/version.so etc/new.so;
 cascade etc/change_log.man = etc/version.so etc/new.so;
 cascade etc/reference.man = etc/version.so ;
 cascade etc/srecord.lsm = etc/version.so ;
-cascade lib/common/versn_stamp.cc = include/patchlevel.h ;
+cascade lib/versn_stamp.cc = lib/patchlevel.h ;
 cascade man/man1/z_copyright.so = etc/version.so ;
 
 #include [resolve etc/doxygen.cook etc/metrics.cook etc/tags.cook ]

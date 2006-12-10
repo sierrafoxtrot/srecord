@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/mos_tech.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/mos_tech.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_mos_tech::srec_output_file_mos_tech()

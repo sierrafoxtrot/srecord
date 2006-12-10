@@ -21,7 +21,7 @@
 //
 
 
-#include <srec/input/filter/unfill.h>
+#include <lib/srec/input/filter/unfill.h>
 
 
 srec_input_filter_unfill::srec_input_filter_unfill(srec_input *a1, int a2,

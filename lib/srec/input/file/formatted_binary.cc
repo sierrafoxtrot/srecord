@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/formatted_binary.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/formatted_binary.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_formatted_binary::~srec_input_file_formatted_binary()

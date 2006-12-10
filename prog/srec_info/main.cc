@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2002, 2005 Peter Miller;
+//	Copyright (C) 1998-2002, 2005, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -20,11 +20,11 @@
 // MANIFEST: operating system entry point
 //
 
-#include <interval.h>
-#include <srec/arglex.h>
-#include <srec/input/file.h>
-#include <srec/memory.h>
-#include <srec/record.h>
+#include <lib/interval.h>
+#include <lib/srec/arglex.h>
+#include <lib/srec/input/file.h>
+#include <lib/srec/memory.h>
+#include <lib/srec/record.h>
 
 #include <cctype>
 #include <iostream>

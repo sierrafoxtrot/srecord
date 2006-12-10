@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/formatted_binary.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/formatted_binary.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_formatted_binary::~srec_output_file_formatted_binary()

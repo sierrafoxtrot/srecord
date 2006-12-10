@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2005 Peter Miller;
+//	Copyright (C) 2000-2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -20,34 +20,34 @@
 // MANIFEST: functions to guess the format
 //
 
-#include <quit/exception.h>
-#include <srec/input/file/aomf.h>
-#include <srec/input/file/ascii_hex.h>
-#include <srec/input/file/atmel_generic.h>
-#include <srec/input/file/binary.h>
-#include <srec/input/file/dec_binary.h>
-#include <srec/input/file/emon52.h>
-#include <srec/input/file/fairchild.h>
-#include <srec/input/file/fastload.h>
-#include <srec/input/file/formatted_binary.h>
-#include <srec/input/file/four_packed_code.h>
-#include <srec/input/file/guess.h>
-#include <srec/input/file/intel.h>
-#include <srec/input/file/intel16.h>
-#include <srec/input/file/mos_tech.h>
-#include <srec/input/file/needham.h>
-#include <srec/input/file/os65v.h>
-#include <srec/input/file/signetics.h>
-#include <srec/input/file/spasm.h>
-#include <srec/input/file/spectrum.h>
-#include <srec/input/file/srecord.h>
-#include <srec/input/file/stewie.h>
-#include <srec/input/file/tektronix.h>
-#include <srec/input/file/tektronix_extended.h>
-#include <srec/input/file/ti_tagged.h>
-#include <srec/input/file/vmem.h>
-#include <srec/input/file/wilson.h>
-#include <srec/record.h>
+#include <lib/quit/exception.h>
+#include <lib/srec/input/file/aomf.h>
+#include <lib/srec/input/file/ascii_hex.h>
+#include <lib/srec/input/file/atmel_generic.h>
+#include <lib/srec/input/file/binary.h>
+#include <lib/srec/input/file/dec_binary.h>
+#include <lib/srec/input/file/emon52.h>
+#include <lib/srec/input/file/fairchild.h>
+#include <lib/srec/input/file/fastload.h>
+#include <lib/srec/input/file/formatted_binary.h>
+#include <lib/srec/input/file/four_packed_code.h>
+#include <lib/srec/input/file/guess.h>
+#include <lib/srec/input/file/intel.h>
+#include <lib/srec/input/file/intel16.h>
+#include <lib/srec/input/file/mos_tech.h>
+#include <lib/srec/input/file/needham.h>
+#include <lib/srec/input/file/os65v.h>
+#include <lib/srec/input/file/signetics.h>
+#include <lib/srec/input/file/spasm.h>
+#include <lib/srec/input/file/spectrum.h>
+#include <lib/srec/input/file/srecord.h>
+#include <lib/srec/input/file/stewie.h>
+#include <lib/srec/input/file/tektronix.h>
+#include <lib/srec/input/file/tektronix_extended.h>
+#include <lib/srec/input/file/ti_tagged.h>
+#include <lib/srec/input/file/vmem.h>
+#include <lib/srec/input/file/wilson.h>
+#include <lib/srec/record.h>
 
 
 static srec_input *

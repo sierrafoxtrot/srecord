@@ -20,10 +20,10 @@
  * MANIFEST: functions to manipulate ${basename $fn .c}s
  */
 
-#include <${basename $fn .c}.h>
+#include <${trim_ext $fn}.h>
 
 
 void
-${id ${basename $fn .c}}()
+${id ${trim_ext $fn}}()
 {
 }

@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/binary.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/binary.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_binary::srec_output_file_binary(const char *filename)

@@ -20,17 +20,18 @@
 // MANIFEST: operating system entry point
 //
 
-#include <arglex3.h>
-#include <srec/input/file.h>
-#include <srec/memory.h>
-#include <srec/memory/walker/writer.h>
-#include <srec/output.h>
-#include <srec/output/file.h>
-
 #include <iostream>
 using namespace std;
 #include <cstdlib>
 #include <vector>
+
+#include <lib/srec/input/file.h>
+#include <lib/srec/memory.h>
+#include <lib/srec/memory/walker/writer.h>
+#include <lib/srec/output.h>
+#include <lib/srec/output/file.h>
+
+#include <prog/srec_cat/arglex3.h>
 
 
 int

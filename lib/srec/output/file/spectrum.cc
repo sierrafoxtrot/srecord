@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/spectrum.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/spectrum.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_spectrum::~srec_output_file_spectrum()

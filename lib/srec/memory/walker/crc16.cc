@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/memory/walker/crc16.h>
-#include <srec/output.h>
+#include <lib/srec/memory/walker/crc16.h>
+#include <lib/srec/output.h>
 
 
 srec_memory_walker_crc16::srec_memory_walker_crc16(bool ccitt_seed)

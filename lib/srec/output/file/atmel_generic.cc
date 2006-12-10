@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/atmel_generic.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/atmel_generic.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_atmel_generic::srec_output_file_atmel_generic(const char *filename,

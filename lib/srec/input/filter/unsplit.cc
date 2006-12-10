@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/filter/unsplit.h>
-#include <srec/record.h>
+#include <lib/srec/input/filter/unsplit.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_unsplit::srec_input_filter_unsplit(srec_input *a1, int a2,

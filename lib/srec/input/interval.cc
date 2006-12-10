@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002, 2003 Peter Miller;
+//	Copyright (C) 1998, 1999, 2002, 2003, 2006 Peter Miller;
 //	All rights reserved.
 //
 //	This program is free software; you can redistribute it and/or modify
@@ -20,10 +20,10 @@
 // MANIFEST: functions to impliment deriving an interval from an input file
 //
 
-#include <interval.h>
-#include <srec/input.h>
-#include <srec/input/interval.h>
-#include <srec/record.h>
+#include <lib/interval.h>
+#include <lib/srec/input.h>
+#include <lib/srec/input/interval.h>
+#include <lib/srec/record.h>
 
 
 interval

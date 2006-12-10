@@ -21,9 +21,9 @@
 //
 
 
-#include <srec/arglex.h>
-#include <srec/output/file/srecord.h>
-#include <srec/record.h>
+#include <lib/srec/arglex.h>
+#include <lib/srec/output/file/srecord.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_srecord::srec_output_file_srecord() :

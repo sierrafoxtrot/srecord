@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/filter/minimum.h>
-#include <srec/record.h>
+#include <lib/srec/input/filter/minimum.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_minimum::srec_input_filter_minimum(srec_input *a1, int a2,

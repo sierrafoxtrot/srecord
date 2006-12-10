@@ -21,9 +21,9 @@
 //
 
 
-#include <interval.h>
-#include <srec/input/filter/maximum.h>
-#include <srec/record.h>
+#include <lib/interval.h>
+#include <lib/srec/input/filter/maximum.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_maximum::srec_input_filter_maximum(srec_input *a1, int a2,

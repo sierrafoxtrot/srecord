@@ -27,7 +27,7 @@
 using namespace std;
 #include <cstring>
 
-#include <srec/input/file.h>
+#include <lib/srec/input/file.h>
 
 bool srec_input_file::ignore_checksums_default = false;
 

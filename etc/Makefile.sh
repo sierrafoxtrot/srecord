@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 1998, 2002 Peter Miller;
+#	Copyright (C) 1998, 2002, 2006 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -209,7 +209,7 @@ END { if (pos) printf "\n"; }'
 
 echo ""
 echo "distclean: clean"
-echo "	rm -f Makefile include/config.h"
+echo "	rm -f Makefile lib/config.h"
 echo "	rm -f config.status config.cache config.log"
 
 echo ""

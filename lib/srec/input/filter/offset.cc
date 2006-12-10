@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/filter/offset.h>
-#include <srec/record.h>
+#include <lib/srec/input/filter/offset.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_offset::srec_input_filter_offset(srec_input *a1, long a2) :

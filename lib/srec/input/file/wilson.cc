@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/wilson.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/wilson.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_wilson::srec_input_file_wilson(const char *filename) :

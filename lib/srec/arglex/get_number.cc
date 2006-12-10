@@ -20,10 +20,10 @@
 // MANIFEST: functions to impliment the srec_arglex_get_number class
 //
 
-#include <interval.h>
-#include <srec/arglex.h>
-#include <srec/input.h>
-#include <srec/input/interval.h>
+#include <lib/interval.h>
+#include <lib/srec/arglex.h>
+#include <lib/srec/input.h>
+#include <lib/srec/input/interval.h>
 
 
 unsigned long

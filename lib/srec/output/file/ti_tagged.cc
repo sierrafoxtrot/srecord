@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/ti_tagged.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/ti_tagged.h>
+#include <lib/srec/record.h>
 
 #include <cctype>
 

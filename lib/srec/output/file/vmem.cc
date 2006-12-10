@@ -22,9 +22,9 @@
 
 
 #include <cctype>
-#include <srec/arglex.h>
-#include <srec/output/file/vmem.h>
-#include <srec/record.h>
+#include <lib/srec/arglex.h>
+#include <lib/srec/output/file/vmem.h>
+#include <lib/srec/record.h>
 
 
 //

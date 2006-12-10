@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/ascii_hex.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/ascii_hex.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_ascii_hex::srec_output_file_ascii_hex(const char *filename) :

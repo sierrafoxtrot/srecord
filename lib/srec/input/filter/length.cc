@@ -21,9 +21,9 @@
 //
 
 
-#include <interval.h>
-#include <srec/input/filter/length.h>
-#include <srec/record.h>
+#include <lib/interval.h>
+#include <lib/srec/input/filter/length.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_length::srec_input_filter_length(srec_input *a1, int a2,

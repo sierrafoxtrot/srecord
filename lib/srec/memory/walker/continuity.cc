@@ -21,7 +21,7 @@
 //
 
 
-#include <srec/memory/walker/continuity.h>
+#include <lib/srec/memory/walker/continuity.h>
 
 
 srec_memory_walker_continuity::~srec_memory_walker_continuity()

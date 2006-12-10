@@ -23,8 +23,8 @@
 
 #include <cctype>
 
-#include <srec/input/file/ascii_hex.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/ascii_hex.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_ascii_hex::srec_input_file_ascii_hex(const char *filename) :

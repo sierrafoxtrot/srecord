@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 1998 Peter Miller;
+#	Copyright (C) 1998, 2006 Peter Miller;
 #	All rights reserved.
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -59,13 +59,13 @@ etc/new.so)
 	info="Indirection to release note for this release."
 	;;
 configure)
-	info="Shell script to construct Makefile and common/config.h"
+	info="Shell script to construct Makefile and lib/config.h"
 	;;
 Makefile.in)
 	info="Template for Makefile, used by configure"
 	;;
-common/config.h.in)
-	info="Template for common/config.h, used by configure"
+lib/config.h.in)
+	info="Template for lib/config.h, used by configure"
 	;;
 etc/template/*)
 	info="New file template."

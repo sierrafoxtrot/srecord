@@ -21,7 +21,7 @@
 //
 
 
-#include <srec/memory/walker.h>
+#include <lib/srec/memory/walker.h>
 
 
 srec_memory_walker::srec_memory_walker()

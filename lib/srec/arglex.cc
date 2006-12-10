@@ -24,7 +24,7 @@
 #include <iostream>
 using namespace std;
 
-#include <srec/arglex.h>
+#include <lib/srec/arglex.h>
 
 
 srec_arglex::srec_arglex(int argc, char **argv) :

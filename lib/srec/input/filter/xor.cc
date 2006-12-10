@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/filter/xor.h>
-#include <srec/record.h>
+#include <lib/srec/input/filter/xor.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_xor::srec_input_filter_xor(srec_input *a1, int a2) :

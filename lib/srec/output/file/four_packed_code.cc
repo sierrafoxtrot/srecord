@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/four_packed_code.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/four_packed_code.h>
+#include <lib/srec/record.h>
 
 
 static unsigned char digit[] = {

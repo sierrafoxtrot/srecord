@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/signetics.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/signetics.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_signetics::srec_output_file_signetics() :

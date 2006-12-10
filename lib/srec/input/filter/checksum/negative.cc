@@ -21,7 +21,7 @@
 //
 
 
-#include <srec/input/filter/checksum/negative.h>
+#include <lib/srec/input/filter/checksum/negative.h>
 
 
 srec_input_filter_checksum_negative::srec_input_filter_checksum_negative(

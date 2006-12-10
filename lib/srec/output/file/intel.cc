@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/intel.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/intel.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_intel::srec_output_file_intel(const char *filename) :

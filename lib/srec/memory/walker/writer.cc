@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/memory/walker/writer.h>
-#include <srec/output.h>
+#include <lib/srec/memory/walker/writer.h>
+#include <lib/srec/output.h>
 
 
 srec_memory_walker_writer::srec_memory_walker_writer(srec_output *arg) :

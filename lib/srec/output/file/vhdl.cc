@@ -20,11 +20,11 @@
 // MANIFEST: functions to impliment the srec_output_file_vhdl class
 //
 
-#include <srec/arglex.h>
-#include <interval.h>
-#include <srec/output/file/vhdl.h>
-#include <srec/record.h>
-#include <progname.h>
+#include <lib/srec/arglex.h>
+#include <lib/interval.h>
+#include <lib/srec/output/file/vhdl.h>
+#include <lib/srec/record.h>
+#include <lib/progname.h>
 
 
 srec_output_file_vhdl::srec_output_file_vhdl(const char *filename) :

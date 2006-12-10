@@ -28,8 +28,8 @@ using namespace std;
 #include <cstdio>
 #include <cstdarg>
 
-#include <srec/output.h>
-#include <srec/record.h>
+#include <lib/srec/output.h>
+#include <lib/srec/record.h>
 
 
 srec_output::srec_output()

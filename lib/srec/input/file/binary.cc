@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/binary.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/binary.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_binary::srec_input_file_binary(const char *filename) :

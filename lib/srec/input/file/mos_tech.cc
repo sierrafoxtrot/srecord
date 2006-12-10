@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/mos_tech.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/mos_tech.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_mos_tech::srec_input_file_mos_tech(const char *filename) :

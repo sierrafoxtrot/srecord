@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/spasm.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/spasm.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_spasm::srec_output_file_spasm(const char *filename,

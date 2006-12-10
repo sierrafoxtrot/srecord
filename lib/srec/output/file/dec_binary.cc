@@ -22,8 +22,8 @@
 
 
 #include <stdio.h> // HACK
-#include <srec/output/file/dec_binary.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/dec_binary.h>
+#include <lib/srec/record.h>
 
 #define BLOCK_SIZE 512
 #define BLOCK_SIZE_MASK (BLOCK_SIZE - 1)

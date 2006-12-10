@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/fastload.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/fastload.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_fastload::srec_output_file_fastload() :

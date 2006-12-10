@@ -21,9 +21,9 @@
 //
 
 
-#include <interval.h>
-#include <srec/output/file/asm.h>
-#include <srec/record.h>
+#include <lib/interval.h>
+#include <lib/srec/output/file/asm.h>
+#include <lib/srec/record.h>
 #include <cstdio> // for sprintf
 
 

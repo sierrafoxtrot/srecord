@@ -21,9 +21,9 @@
 //
 
 
-#include <srec/arglex.h>
-#include <srec/input/filter/byte_swap.h>
-#include <srec/record.h>
+#include <lib/srec/arglex.h>
+#include <lib/srec/input/filter/byte_swap.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_byte_swap::srec_input_filter_byte_swap(srec_input *arg) :

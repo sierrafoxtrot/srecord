@@ -21,10 +21,10 @@
 //
 
 
-#include <interval.h>
-#include <r250.h>
-#include <srec/input/filter/random_fill.h>
-#include <srec/record.h>
+#include <lib/interval.h>
+#include <lib/r250.h>
+#include <lib/srec/input/filter/random_fill.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_random_fill::srec_input_filter_random_fill(srec_input *a1,

@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2001, 2002, 2004 Peter Miller;
+.\"	Copyright (C) 2001, 2002, 2004, 2006 Peter Miller;
 .\"	All rights reserved.
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
@@ -27,7 +27,7 @@ How to add a new file format
 This section describes how to add a new file format.  It's mostly a
 set of reminders for the maintainer.  If you want a format added
 to the distribution, use this method and e-mail the maintainer a patch
-(generated with diff -u -r, usually) and it can be added to the sources
+(generated with \f[CW]diff -u -r\fP, usually) and it can be added to the sources
 if appropriate.
 .SS New Files
 The following files need to be create for a new format.
@@ -38,7 +38,7 @@ Take a look at the other files in the same directory
 for examples.  Also check out \fIinclude/srec/output/file.h\fP and
 \fIinclude/srec/output.h\fP for various helper methods.
 .TP 8n
-include/srec/output/file/\fIname\fP.h
+lib/srec/output/file/\fIname\fP.h
 This is the class declaration for the above file.
 .TP 8n
 lib/srec/input/file/\fIname\fP.cc
@@ -47,7 +47,7 @@ Take a look at the other files in the same directory
 for examples.  Also check out \fIinclude/srec/input/file.h\fP and
 \fIinclude/srec/input.h\fP for various helper methods.
 .TP 8n
-include/srec/input/file/\fIname\fP.h
+lib/srec/input/file/\fIname\fP.h
 This is the class declaration for the above file.
 .TP 8n
 man/man5/srec_\fIname\fP.5
@@ -64,7 +64,7 @@ etc/srecord.html
 Mention the new format in the section of this file which describes
 the supported file formats.
 .TP 8n
-include/srec/arglex.h
+lib/srec/arglex.h
 Add the new format to the command line argument type enum.
 .TP 8n
 lib/srec/arglex.cc

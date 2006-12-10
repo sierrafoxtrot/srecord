@@ -28,7 +28,7 @@ using namespace std;
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <srec/output/file.h>
+#include <lib/srec/output/file.h>
 
 
 bool srec_output_file::data_only_flag = false;

@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/fairchild.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/fairchild.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_fairchild::~srec_output_file_fairchild()

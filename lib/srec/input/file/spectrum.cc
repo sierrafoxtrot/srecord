@@ -23,8 +23,8 @@
 
 #include <cctype>
 
-#include <srec/input/file/spectrum.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/spectrum.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_spectrum::~srec_input_file_spectrum()

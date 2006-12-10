@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/signetics.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/signetics.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_signetics::srec_input_file_signetics(const char *filename) :

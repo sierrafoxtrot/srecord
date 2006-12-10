@@ -23,8 +23,8 @@
 
 #include <cctype>
 
-#include <srec/input/file/needham.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/needham.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_needham::~srec_input_file_needham()

@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/aomf.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/aomf.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_aomf::~srec_output_file_aomf()

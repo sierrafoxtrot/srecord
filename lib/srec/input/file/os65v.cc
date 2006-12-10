@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/os65v.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/os65v.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_os65v::~srec_input_file_os65v()

@@ -23,8 +23,8 @@
 
 #include <iostream>
 using namespace std;
-#include <srec/memory.h>
-#include <srec/memory/walker/compare.h>
+#include <lib/srec/memory.h>
+#include <lib/srec/memory/walker/compare.h>
 
 
 srec_memory_walker_compare::~srec_memory_walker_compare()

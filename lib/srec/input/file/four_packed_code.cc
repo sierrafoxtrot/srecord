@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/four_packed_code.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/four_packed_code.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_four_packed_code::srec_input_file_four_packed_code(

@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/tektronix_extended.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/tektronix_extended.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_tektronix_extended::srec_input_file_tektronix_extended(

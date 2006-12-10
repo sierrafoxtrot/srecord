@@ -21,7 +21,7 @@
 //
 
 
-#include <srec/input/filter.h>
+#include <lib/srec/input/filter.h>
 
 
 srec_input_filter::srec_input_filter(srec_input *arg) :

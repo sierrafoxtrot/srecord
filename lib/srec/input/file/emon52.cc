@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/emon52.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/emon52.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_emon52::srec_input_file_emon52(const char *filename) :

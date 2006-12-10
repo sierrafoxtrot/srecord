@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/os65v.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/os65v.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_os65v::~srec_output_file_os65v()

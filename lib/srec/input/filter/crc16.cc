@@ -21,10 +21,10 @@
 //
 
 
-#include <srec/input/filter/crc16.h>
-#include <srec/memory.h>
-#include <srec/memory/walker/crc16.h>
-#include <srec/record.h>
+#include <lib/srec/input/filter/crc16.h>
+#include <lib/srec/memory.h>
+#include <lib/srec/memory/walker/crc16.h>
+#include <lib/srec/record.h>
 
 srec_input_filter_crc16::~srec_input_filter_crc16()
 {

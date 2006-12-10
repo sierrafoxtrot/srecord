@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/filter/or.h>
-#include <srec/record.h>
+#include <lib/srec/input/filter/or.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_or::srec_input_filter_or(srec_input *a1, int a2) :

@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/filter/split.h>
-#include <srec/record.h>
+#include <lib/srec/input/filter/split.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_split::srec_input_filter_split(srec_input *a1, int a2, int a3,

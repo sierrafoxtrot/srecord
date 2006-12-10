@@ -22,8 +22,8 @@
 
 
 #include <cstring>
-#include <srec/memory/chunk.h>
-#include <srec/memory/walker.h>
+#include <lib/srec/memory/chunk.h>
+#include <lib/srec/memory/walker.h>
 
 
 srec_memory_chunk::srec_memory_chunk(unsigned long arg) :

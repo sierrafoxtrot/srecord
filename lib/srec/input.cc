@@ -26,9 +26,9 @@
 using namespace std;
 #include <cstring>
 
-#include <srec/input.h>
-#include <srec/record.h>
-#include <quit/prefix.h>
+#include <lib/srec/input.h>
+#include <lib/srec/record.h>
+#include <lib/quit/prefix.h>
 
 
 srec_input::srec_input() :

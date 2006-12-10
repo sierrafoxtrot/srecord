@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/cosmac.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/cosmac.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_cosmac::~srec_output_file_cosmac()

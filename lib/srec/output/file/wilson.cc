@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/wilson.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/wilson.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_wilson::srec_output_file_wilson()

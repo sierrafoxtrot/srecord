@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/filter/and.h>
-#include <srec/record.h>
+#include <lib/srec/input/filter/and.h>
+#include <lib/srec/record.h>
 
 
 srec_input_filter_and::srec_input_filter_and(srec_input *a1, int a2) :

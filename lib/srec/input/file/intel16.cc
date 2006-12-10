@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/input/file/intel16.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/intel16.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_intel16::srec_input_file_intel16(const char *filename) :

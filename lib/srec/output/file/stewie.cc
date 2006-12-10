@@ -21,8 +21,8 @@
 //
 
 
-#include <srec/output/file/stewie.h>
-#include <srec/record.h>
+#include <lib/srec/output/file/stewie.h>
+#include <lib/srec/record.h>
 
 
 srec_output_file_stewie::srec_output_file_stewie(const char *filename) :

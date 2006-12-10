@@ -22,8 +22,8 @@
 
 
 #include <cctype>
-#include <srec/input/file/vmem.h>
-#include <srec/record.h>
+#include <lib/srec/input/file/vmem.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_vmem::~srec_input_file_vmem()

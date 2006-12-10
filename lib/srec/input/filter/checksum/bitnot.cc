@@ -21,7 +21,7 @@
 //
 
 
-#include <srec/input/filter/checksum/bitnot.h>
+#include <lib/srec/input/filter/checksum/bitnot.h>
 
 
 srec_input_filter_checksum_bitnot::srec_input_filter_checksum_bitnot(

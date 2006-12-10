@@ -21,9 +21,9 @@
 //
 
 
-#include <srec/input/file/atmel_generic.h>
+#include <lib/srec/input/file/atmel_generic.h>
 #include <ctype.h>
-#include <srec/record.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_atmel_generic::srec_input_file_atmel_generic(

@@ -21,9 +21,9 @@
 //
 
 
-#include <srec/arglex.h>
-#include <srec/input/file/srecord.h>
-#include <srec/record.h>
+#include <lib/srec/arglex.h>
+#include <lib/srec/input/file/srecord.h>
+#include <lib/srec/record.h>
 
 
 srec_input_file_srecord::srec_input_file_srecord(const char *filename) :
