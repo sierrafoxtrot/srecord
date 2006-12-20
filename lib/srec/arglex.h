@@ -1,21 +1,21 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2006 Peter Miller;
-//	All rights reserved.
+//        srecord - manipulate eprom load files
+//        Copyright (C) 1998-2006 Peter Miller;
+//        All rights reserved.
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//        This program is free software; you can redistribute it and/or modify
+//        it under the terms of the GNU General Public License as published by
+//        the Free Software Foundation; either version 2 of the License, or
+//        (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//        This program is distributed in the hope that it will be useful,
+//        but WITHOUT ANY WARRANTY; without even the implied warranty of
+//        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//        GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//        You should have received a copy of the GNU General Public License
+//        along with this program; if not, write to the Free Software
+//        Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: interface definition for lib/srec/arglex.cc
 //
@@ -36,87 +36,89 @@ class srec_arglex:
 public:
     enum
     {
-	token_and = arglex::token_MAX,
-	token_aomf,
-	token_ascii_hex,
-	token_assembler,
-	token_atmel_generic_be,
-	token_atmel_generic_le,
-	token_basic_data,
-	token_binary,
-	token_byte_swap,
-	token_c_array,
-	token_checksum_be_bitnot,
-	token_checksum_be_negative,
-	token_checksum_be_positive,
-	token_checksum_le_bitnot,
-	token_checksum_le_negative,
-	token_checksum_le_positive,
-	token_constant,
-	token_constant_not,
-	token_cosmac,
-	token_crc16_be,
-	token_crc16_le,
-	token_crc16_xmodem,
-	token_crc32_be,
-	token_crc32_le,
-	token_crop,
-	token_dec_binary,
-	token_emon52,
-	token_exclude,
-	token_fairchild,
-	token_fast_load,
-	token_fill,
-	token_formatted_binary,
-	token_four_packed_code,
-	token_guess,
-	token_ignore_checksums,
-	token_include,
-	token_include_not,
-	token_intel,
-	token_intel16,
-	token_length,
-	token_length_be,
-	token_length_le,
-	token_maximum,
-	token_maximum_be,
-	token_maximum_le,
-	token_minimum,
-	token_minimum_be,
-	token_minimum_le,
-	token_mos_tech,
-	token_motorola,
-	token_multiple,
-	token_needham_hex,
-	token_not,
-	token_offset,
-	token_ohio_scientific,
-	token_or,
-	token_output,
-	token_over,
-	token_paren_begin,
-	token_paren_end,
-	token_random_fill,
-	token_round_down,
-	token_round_nearest,
-	token_round_up,
-	token_signetics,
-	token_spasm_be,
-	token_spasm_le,
-	token_spectrum,
-	token_split,
-	token_stewie,
-	token_tektronix,
-	token_tektronix_extended,
-	token_ti_tagged,
-	token_unfill,
-	token_unsplit,
-	token_vhdl,
-	token_vmem,
-	token_wilson,
-	token_within,
-	token_xor,
-	token_MAX
+        token_and = arglex::token_MAX,
+        token_aomf,
+        token_ascii_hex,
+        token_assembler,
+        token_atmel_generic_be,
+        token_atmel_generic_le,
+        token_basic_data,
+        token_binary,
+        token_byte_swap,
+        token_c_array,
+        token_checksum_be_bitnot,
+        token_checksum_be_negative,
+        token_checksum_be_positive,
+        token_checksum_le_bitnot,
+        token_checksum_le_negative,
+        token_checksum_le_positive,
+        token_constant,
+        token_constant_not,
+        token_cosmac,
+        token_crc16_be,
+        token_crc16_le,
+        token_crc16_xmodem,
+        token_crc32_be,
+        token_crc32_le,
+        token_crop,
+        token_dec_binary,
+        token_emon52,
+        token_exclude,
+        token_fairchild,
+        token_fast_load,
+        token_fill,
+        token_formatted_binary,
+        token_four_packed_code,
+        token_guess,
+        token_ignore_checksums,
+        token_include,
+        token_include_not,
+        token_intel,
+        token_intel16,
+        token_length,
+        token_length_be,
+        token_length_le,
+        token_maximum,
+        token_maximum_be,
+        token_maximum_le,
+        token_minimum,
+        token_minimum_be,
+        token_minimum_le,
+        token_mos_tech,
+        token_motorola,
+        token_multiple,
+        token_needham_hex,
+        token_not,
+        token_offset,
+        token_ohio_scientific,
+        token_or,
+        token_output,
+        token_over,
+        token_paren_begin,
+        token_paren_end,
+        token_random_fill,
+        token_round_down,
+        token_round_nearest,
+        token_round_up,
+        token_sequence_warnings_disable,
+        token_sequence_warnings_enable,
+        token_signetics,
+        token_spasm_be,
+        token_spasm_le,
+        token_spectrum,
+        token_split,
+        token_stewie,
+        token_tektronix,
+        token_tektronix_extended,
+        token_ti_tagged,
+        token_unfill,
+        token_unsplit,
+        token_vhdl,
+        token_vmem,
+        token_wilson,
+        token_within,
+        token_xor,
+        token_MAX
     };
 
     /**
@@ -163,6 +165,9 @@ public:
       */
     bool can_get_number() const;
 
+    // See base class for documentation.
+    void default_command_line_processing();
+
 private:
     /**
       * The get_interval_inner method is used to parse a single
@@ -181,7 +186,7 @@ private:
 
     /**
       * The get_interval method is used to parse an interval
-      * set form the command line.	Iyt consists of as many
+      * set form the command line.        Iyt consists of as many
       * get_interval_inner()s as possible.
       *
       * Used by the get_input method to parse the address intervals
@@ -212,7 +217,7 @@ private:
       * not return.
       */
     void get_address_and_nbytes(const char *err_msg_caption,
-	    unsigned long &addr, int &nbytes);
+            unsigned long &addr, int &nbytes);
 
     /**
       * The get_address_nbytes_width method is used to parse an address
@@ -223,7 +228,7 @@ private:
       * not return.
       */
     void get_address_nbytes_width(const char *err_msg_caption,
-	unsigned long &addr, int &nbytes, int &width);
+        unsigned long &addr, int &nbytes, int &width);
 
     /**
       * The stdin_used instance variable is used to remember whether

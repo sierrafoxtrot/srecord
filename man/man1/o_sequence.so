@@ -1,0 +1,32 @@
+.\"
+.\"	srecord - manipulate eprom load files
+.\"	Copyright (C) 2006 Peter Miller;
+.\"	All rights reserved.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"
+.\" MANIFEST: man/man1/o_sequence.so
+.\"
+.TP 8n
+\fB\-Enable_Sequence_Warnings\fP
+This option may be used to enable warnings about input files where the
+data records are not in strictly ascending address order.
+Only one warning is issued per input.
+This is the default.
+\fBNote:\fP the output of \fIsrec_cat\fP(1) is always in this order.
+.TP 8n
+\fB\-Disable_Sequence_Warnings\fP
+This option may be used to disable warnings about input files where the
+data records are not in stricyly ascending address order.

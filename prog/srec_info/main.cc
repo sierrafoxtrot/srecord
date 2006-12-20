@@ -46,21 +46,13 @@ main(int argc, char **argv)
 	switch (cmdline.token_cur())
 	{
 	default:
-	    cmdline.bad_argument();
-	    // NOTREACHED
+            cmdline.default_command_line_processing();
+            continue;
 
 	case srec_arglex::token_string:
 	case srec_arglex::token_stdio:
 	    infile.push_back(cmdline.get_input());
 	    continue;
-
-	case srec_arglex::token_multiple:
-	    srec_memory::allow_overwriting();
-	    break;
-
-	case srec_arglex::token_ignore_checksums:
-	    srec_input_file::ignore_all_checksums();
-	    break;
 	}
 	cmdline.token_next();
     }

@@ -718,4 +718,11 @@ arglex::usage()
     exit(1);
 }
 
-// vim: ts=8 sw=4 et
+
+void
+arglex::default_command_line_processing()
+{
+    bad_argument();
+}
+
+// vim:ts=8:sw=4:et

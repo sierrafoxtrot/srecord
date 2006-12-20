@@ -246,6 +246,12 @@ public:
       */
     void usage_tail_set(const char *);
 
+    /**
+      * The default_command_line_processing method is used to process
+      * command line arguments not handled by the derived class.
+      */
+    virtual void default_command_line_processing();
+
 private:
     /**
       * The usage_tail_ instance variable tracks the end part of
