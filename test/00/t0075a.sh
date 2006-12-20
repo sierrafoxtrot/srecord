@@ -911,7 +911,7 @@ if test $? -ne 0; then fail; fi
 $bin/srec_cat test.in -decbin -o test.out -decbin -multi > LOG 2>&1
 if test $? -ne 0; then cat LOG; fail; fi
 
-$bin/srec_cmp test.in -decbin test.out -decbin
+$bin/srec_cmp -dsw test.in -decbin test.out -decbin
 if test $? -ne 0; then fail; fi
 
 #

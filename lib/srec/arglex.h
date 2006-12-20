@@ -247,6 +247,17 @@ private:
     bool stdout_used;
 
     /**
+      * The issue_sequence_warnings instance variable is used to
+      * remember whether or not to issue data sequence warnings when
+      * data records are not in strictly ascending address order.
+      *
+      * Negative means not set from the command line, zero means diabled
+      * from the command line, positive means enabled on the command
+      * line.
+      */
+    int issue_sequence_warnings;
+
+    /**
       * The default constructor.  Do not use.
       */
     srec_arglex();

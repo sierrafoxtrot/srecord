@@ -67,6 +67,7 @@ using namespace std;
 #include <lib/srec/input/filter/offset.h>
 #include <lib/srec/input/filter/or.h>
 #include <lib/srec/input/filter/random_fill.h>
+#include <lib/srec/input/filter/sequence.h>
 #include <lib/srec/input/filter/split.h>
 #include <lib/srec/input/filter/unfill.h>
 #include <lib/srec/input/filter/unsplit.h>
@@ -287,6 +288,12 @@ srec_arglex::get_input()
 	ifp->disable_checksum_validation();
 	token_next();
     }
+
+    //
+    // warn about data record sequences, if asked to
+    //
+    if (issue_sequence_warnings != 0)
+        ifp = new srec_input_filter_sequence(ifp);
 
     //
     // apply any filters specified

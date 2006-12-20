@@ -31,7 +31,8 @@ using namespace std;
 srec_arglex::srec_arglex(int argc, char **argv) :
     arglex(argc, argv),
     stdin_used(false),
-    stdout_used(false)
+    stdout_used(false),
+    issue_sequence_warnings(-1)
 {
     static const table_ty table[] =
     {
@@ -257,12 +258,12 @@ srec_arglex::default_command_line_processing()
         break;
 
     case srec_arglex::token_sequence_warnings_enable:
-        srec_memory::enable_sequence_warnings();
+        issue_sequence_warnings = 1;
         token_next();
         break;
 
     case srec_arglex::token_sequence_warnings_disable:
-        srec_memory::disable_sequence_warnings();
+        issue_sequence_warnings = 0;
         token_next();
         break;
 

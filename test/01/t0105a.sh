@@ -77,8 +77,8 @@ test.in
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat @args
-if test $? -ne 0; then fail; fi
+$bin/srec_cat @args > LOG 2>&1
+if test $? -ne 0; then cat LOG; fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi

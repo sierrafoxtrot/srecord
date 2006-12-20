@@ -29,7 +29,6 @@
 
 
 bool srec_memory::overwrite = false;
-int srec_memory::issue_sequence_warnings = -1;
 
 
 srec_memory::srec_memory() :
@@ -264,8 +263,6 @@ void
 srec_memory::reader(srec_input *ifp, bool barf)
 {
     srec_record record;
-    srec_record::address_t last_address = 0;
-    bool jumbled_warning = false;
     while (ifp->read(record))
     {
 	switch (record.get_type())
@@ -282,24 +279,6 @@ srec_memory::reader(srec_input *ifp, bool barf)
 	    break;
 
 	case srec_record::type_data:
-            //
-            // Issue a warning if the data records are not in strictly
-            // ascending address order.
-            //
-            if
-            (
-                issue_sequence_warnings != 0
-            &&
-                record.get_address() < last_address
-            &&
-                !jumbled_warning
-            )
-            {
-                ifp->warning("data records not in strictly ascending order");
-                jumbled_warning = true;
-            }
-            last_address = record.get_address() + record.get_length();
-
             //
             // For each data byte, we have to check for duplicates.  We
             // issue warnings for redundant settings, and we issue error
