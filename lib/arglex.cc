@@ -1,7 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2002, 2003, 2006 Peter Miller;
-//      All rights reserved.
+//      Copyright (C) 1998, 1999, 2002, 2003, 2006 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -602,8 +601,7 @@ arglex::version()
     const
 {
     cout << progname_get() << " version " << version_stamp() << endl;
-    cout << "Copyright (C) " << copyright_years() << " Peter Miller;" << endl;
-    cout << "All rights reserved." << endl;
+    cout << "Copyright (C) " << copyright_years() << " Peter Miller" << endl;
     cout << endl;
     cout << "The " << progname_get()
         << " program comes with ABSOLUTELY NO WARRANTY;" << endl;

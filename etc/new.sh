@@ -1,8 +1,7 @@
 #!/bin/sh
 #
 #	srecord - manipulate eprom load files
-#	Copyright (C) 1998 Peter Miller;
-#	All rights reserved.
+#	Copyright (C) 1998, 2006 Peter Miller
 #
 # MANIFEST: shell script to sort include lists
 #

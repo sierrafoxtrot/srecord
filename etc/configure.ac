@@ -1,7 +1,6 @@
 dnl
 dnl	srecord - manipulate eprom load files
-dnl	Copyright (C) 1998, 1999, 2002, 2006 Peter Miller;
-dnl	All rights reserved.
+dnl	Copyright (C) 1998, 1999, 2002, 2006 Peter Miller
 dnl
 dnl	This program is free software; you can redistribute it and/or modify
 dnl	it under the terms of the GNU General Public License as published by
@@ -92,8 +91,7 @@ AC_SUBST(HAVE_GROFF)
 
 AH_TOP([/*
  *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2002, 2006 Peter Miller;
- *	All rights reserved.
+ *	Copyright (C) 1998-2002, 2006 Peter Miller
  *
  *	This program is free software; you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
