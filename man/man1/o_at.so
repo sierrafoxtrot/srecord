@@ -21,7 +21,9 @@
 .TP 8n
 \fB@\fP\fIfilename\fP
 The named text file is read for additional command line arguments.
-Arguments are separated by white space (space, tab, newline, \fIetc\fP)
-and there is no quoting mechanism.  Comments, which start with '\fB#\fP'
-and extend to the end of the line, are ignored.  Blank lines are
-ignored.
+Arguments are separated by white space (space, tab, newline, \fIetc\fP).
+There is no wildcard mechanism.
+There is no quoting mechanism.
+Comments, which start with '\fB#\fP'
+and extend to the end of the line, are ignored.
+Blank lines are ignored.

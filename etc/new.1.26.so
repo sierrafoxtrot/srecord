@@ -19,16 +19,25 @@
 .\"
 .\" MANIFEST: description of new 1.26 features
 .\"
-.\" you can create the initial cut of this file using the
-.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
-.\"             -p srecord.1 -c 26 -unf
-.\" command, and then editing it to be more appropriate.
-.\"
 .\" ------------------------------------------------------------------------
-.\" .PP
-.\" .if n *
-.\" .if t \(bu
-.\" .\" Change N
+.PP
+.if n *
+.if t \(bu
+.\" Change 22, 25
+[SourceForge Feature Request 1597637]
+There is a new warning issued when input data records are not in
+strictly ascending address order.  There is a new command line option to
+silence the warning.
+.PP
+.if n *
+.if t \(bu
+.\" Change 19
+[SourceForge  Feature Request 1592348]
+The command line processing of all srrecord commands now understands
+\f[CW]@\fP\fIfile\fP command line options, filled with additional space
+separated strings witch will be treated as of they were command line
+options.  This gets around absurdly short command line length limits in
+some operating systems.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.26 (26-May-2006)

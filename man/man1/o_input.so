@@ -259,7 +259,6 @@ of the data into the data.  Four bytes, big-endian order, are inserted
 at the address given.  Holes in the input data are ignored.  Bytes are
 processed in ascending address order (\fInot\fP in the order they appear
 in the input).
-.PP
 See also the note about holes, above.
 .TP 8n
 \fB\-Little_Endian_CRC32\fP \fIaddress\fP

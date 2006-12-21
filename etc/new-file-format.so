@@ -16,7 +16,7 @@
 .\"	along with this program; if not, write to the Free Software
 .\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: etc/new-file-format.o
+.\" MANIFEST: Documentation about how to add a new file format
 .\"
 .TH "New Format" "SRecord" "SRecord" "Reference Manual"
 .SH NAME
@@ -34,8 +34,8 @@ The following files need to be create for a new format.
 lib/srec/output/file/\fIname\fP.cc
 This file is how to write the new format.
 Take a look at the other files in the same directory
-for examples.  Also check out \fIinclude/srec/output/file.h\fP and
-\fIinclude/srec/output.h\fP for various helper methods.
+for examples.  Also check out \fIlib/srec/output/file.h\fP and
+\fIlib/srec/output.h\fP for various helper methods.
 .TP 8n
 lib/srec/output/file/\fIname\fP.h
 This is the class declaration for the above file.
@@ -43,8 +43,8 @@ This is the class declaration for the above file.
 lib/srec/input/file/\fIname\fP.cc
 This file is how to read the new format.
 Take a look at the other files in the same directory
-for examples.  Also check out \fIinclude/srec/input/file.h\fP and
-\fIinclude/srec/input.h\fP for various helper methods.
+for examples.  Also check out \fIlib/srec/input/file.h\fP and
+\fIlib/srec/input.h\fP for various helper methods.
 .TP 8n
 lib/srec/input/file/\fIname\fP.h
 This is the class declaration for the above file.

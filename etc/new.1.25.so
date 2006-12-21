@@ -26,9 +26,6 @@
 .\" pmiller, Fri May 26 14:46:33 2006, --maximum parse bug
 It is now possible to place parenteses on the command line in
 more places to clariy your intent.
-
-My thanks to Craig McQueen <craig_mcqueen@aapl.com.au> for
-reporting this problem.
 .PP
 .if n *
 .if t \(bu

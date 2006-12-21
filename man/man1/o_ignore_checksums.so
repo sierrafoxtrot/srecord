@@ -20,7 +20,7 @@
 .\"
 The \-ignore-checksums option may be used to disable checksum validation
 of input files, for those formats which have checksums at all.  Note
-that trhe checksum values are still read in and parse (so it is still an
+that the checksum values are still read in and parsed (so it is still an
 error if they are missing) but their values are not checked.
 Used after an input file name, the option affects that file alone;
 used anywhere else on the command line, it applies to all following files.
