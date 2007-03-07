@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2006, 2007 Peter Miller
+.\"     Copyright (C) 2007 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -16,15 +16,19 @@
 .\"     along with this program; if not, write to the Free Software
 .\"     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.27 features
+.\" MANIFEST: description of new 1.28 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" Change 15
-It is now possible to read and write files in the Freescale
-MC68EZ328 Dragonball bootstrap b-record format
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 28 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.27 (21-Dec-2006)
+.SS Version 1.28 (8-Mar-2007)
 .\" vim:ts=8:sw=4:et
