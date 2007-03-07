@@ -1,20 +1,20 @@
 /*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 2006 Peter Miller
+ *      srecord - manipulate eprom load files
+ *      Copyright (C) 2006, 2007 Peter Miller
  *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
+ *      This program is free software; you can redistribute it and/or modify
+ *      it under the terms of the GNU General Public License as published by
+ *      the Free Software Foundation; either version 2 of the License, or
+ *      (at your option) any later version.
  *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
+ *      This program is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      GNU General Public License for more details.
  *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+ *      You should have received a copy of the GNU General Public License
+ *      along with this program; if not, write to the Free Software
+ *      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  *
  * MANIFEST: tags.cook
  */
@@ -35,20 +35,20 @@ if [find_command ctags] then
     ctags-version = [collect ctags --version || true];
     if [in Exuberant [ctags-version]] then
     {
-	ctags-variant = exuberant;
+        ctags-variant = exuberant;
     }
     else
     if [in Emacs [ctags-version]] then
     {
-	ctags-variant = emacs;
+        ctags-variant = emacs;
     }
 
     all += tags;
 
     if [find_command etags] then
     {
-	etags = etags;
-	all += TAGS;
+        etags = etags;
+        all += TAGS;
     }
 
     /*
@@ -65,8 +65,8 @@ if [find_command ctags] then
     if [in exuberant [ctags-variant]] then
     {
         ctags-opts += --c-types\=+px -f;
-	etags = ctags -e;
-	all += TAGS;
+        etags = ctags -e;
+        all += TAGS;
     }
 
     /*
@@ -74,25 +74,25 @@ if [find_command ctags] then
      * to set the output file name.
      */
     if [in emacs [ctags-variant]] then
-	ctags-opts += --declarations --defines --globals --members --typedefs
-	    /* --no-warn (the man page says the --no-warn option exists,
-	       but is doesn't, really) */
+        ctags-opts += --declarations --defines --globals --members --typedefs
+            /* --no-warn (the man page says the --no-warn option exists,
+               but is doesn't, really) */
             -o
-	    ;
+            ;
 }
 
 tags: [change_source_files]
     set shallow no-cascade
 {
     xargs ctags [ctags-opts] [target]
-	    set meter;
+            set meter;
 data
 [unsplit "\n"
     [resolve
-	[stringset [source_files] - [match_mask %0%.h [source_files]]]
-	[match_mask %0%.h [source_files]]
-	[fromto %0%.def %0%.cc [match_mask %0%.def [source_files]]]
-	[fromto %0%.def %0%.h [match_mask %0%.def [source_files]]]
+        [stringset [source_files] - [match_mask %0%.h [source_files]]]
+        [match_mask %0%.h [source_files]]
+        [fromto %0%.def %0%.cc [match_mask %0%.def [source_files]]]
+        [fromto %0%.def %0%.h [match_mask %0%.def [source_files]]]
     ]
 ]
 dataend
@@ -102,13 +102,13 @@ TAGS: [change_source_files]
     set shallow no-cascade
 {
     xargs [etags] [ctags-opts] [target]
-	set meter;
+        set meter;
 data
 [unsplit "\n"
     [resolve
-	[source_files]
-	[fromto %0%.def %0%.cc [match_mask %0%.def [source_files]]]
-	[fromto %0%.def %0%.h [match_mask %0%.def [source_files]]]
+        [source_files]
+        [fromto %0%.def %0%.cc [match_mask %0%.def [source_files]]]
+        [fromto %0%.def %0%.h [match_mask %0%.def [source_files]]]
     ]
 ]
 dataend

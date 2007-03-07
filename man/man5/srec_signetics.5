@@ -1,20 +1,20 @@
 '\" t
-.\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2001, 2006 Peter Miller
+.\"     srecord - manipulate eprom load files
+.\"     Copyright (C) 2001, 2006, 2007 Peter Miller
 .\"
-.\"	This program is free software; you can redistribute it and/or modify
-.\"	it under the terms of the GNU General Public License as published by
-.\"	the Free Software Foundation; either version 2 of the License, or
-.\"	(at your option) any later version.
+.\"     This program is free software; you can redistribute it and/or modify
+.\"     it under the terms of the GNU General Public License as published by
+.\"     the Free Software Foundation; either version 2 of the License, or
+.\"     (at your option) any later version.
 .\"
-.\"	This program is distributed in the hope that it will be useful,
-.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
-.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-.\"	GNU General Public License for more details.
+.\"     This program is distributed in the hope that it will be useful,
+.\"     but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"     GNU General Public License for more details.
 .\"
-.\"	You should have received a copy of the GNU General Public License
-.\"	along with this program; if not, write to the Free Software
-.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"     You should have received a copy of the GNU General Public License
+.\"     along with this program; if not, write to the Free Software
+.\"     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
 .\" MANIFEST: manual entry for the srec_signetics.5 command
 .\"
@@ -92,7 +92,8 @@ only a few data bytes per record, because the address overhead will be
 too heavy in comparison to the payload.
 .SS Address Checksum
 This is not really a checksum anymore, it looks more like a CRC.
-The checksum can not only detect errors in the values of the bytes, but also bytes out of order can be detected.
+The checksum can not only detect errors in the values of the bytes, but
+also bytes out of order can be detected.
 .PP
 The checksum is calculated by this algorithm:
 .RS
@@ -156,6 +157,6 @@ even an Address Checksum.
 .SH SEE ALSO
 http://sbprojects.fol.nl/knowledge/fileformats/signetics.htm
 .SH AUTHOR
-This man page was taken from the above Web page. 
+This man page was taken from the above Web page.
 It was written by
-San Bergmans <sanmail@bigfoot.com> 
+San Bergmans <sanmail@bigfoot.com>

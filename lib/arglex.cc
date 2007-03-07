@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2002, 2003, 2006 Peter Miller
+//      Copyright (C) 1998, 1999, 2002, 2003, 2006, 2007 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -207,7 +207,7 @@ arglex_compare(const char *formal, const char *actual)
         {
         case 0:
             return !ac;
-            
+
         case '_':
             if (ac == '-')
                 break;
@@ -218,7 +218,7 @@ arglex_compare(const char *formal, const char *actual)
         case 'k': case 'l': case 'm': case 'n': case 'o':
         case 'p': case 'q': case 'r': case 's': case 't':
         case 'u': case 'v': case 'w': case 'x': case 'y':
-        case 'z': 
+        case 'z':
             //
             // optional characters
             //
@@ -242,7 +242,7 @@ arglex_compare(const char *formal, const char *actual)
 
         case '*':
             //
-            // This is a hack, it should really 
+            // This is a hack, it should really
             // check for a match match the stuff after
             // the '*', too, a la glob.
             //
@@ -261,7 +261,7 @@ arglex_compare(const char *formal, const char *actual)
         case 'K': case 'L': case 'M': case 'N': case 'O':
         case 'P': case 'Q': case 'R': case 'S': case 'T':
         case 'U': case 'V': case 'W': case 'X': case 'Y':
-        case 'Z': 
+        case 'Z':
             fc = tolower(fc);
             // fall through...
 

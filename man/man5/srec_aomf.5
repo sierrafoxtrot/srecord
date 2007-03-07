@@ -1,20 +1,20 @@
 '\" t
-.\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2004, 2006 Peter Miller
+.\"     srecord - manipulate eprom load files
+.\"     Copyright (C) 2004, 2006, 2007 Peter Miller
 .\"
-.\"	This program is free software; you can redistribute it and/or modify
-.\"	it under the terms of the GNU General Public License as published by
-.\"	the Free Software Foundation; either version 2 of the License, or
-.\"	(at your option) any later version.
+.\"     This program is free software; you can redistribute it and/or modify
+.\"     it under the terms of the GNU General Public License as published by
+.\"     the Free Software Foundation; either version 2 of the License, or
+.\"     (at your option) any later version.
 .\"
-.\"	This program is distributed in the hope that it will be useful,
-.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
-.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-.\"	GNU General Public License for more details.
+.\"     This program is distributed in the hope that it will be useful,
+.\"     but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"     GNU General Public License for more details.
 .\"
-.\"	You should have received a copy of the GNU General Public License
-.\"	along with this program; if not, write to the Free Software
-.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"     You should have received a copy of the GNU General Public License
+.\"     along with this program; if not, write to the Free Software
+.\"     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
 .\" MANIFEST: manual entry for the srec_aomf.5 command
 .\"
@@ -88,7 +88,7 @@ The records with the following types are extraneous (they may appear
 in the file but are ignored):  0x0E, 0x16 and 0x18 (definition records).
 All records which are not part of the AOMF and are not extraneous are
 considered erroneous.
-.SS Module Header Record 
+.SS Module Header Record
 .TS
 tab(;),center,allbox;
 cw(0.4i) cw(0.8i) cw(1.2i) cw(0.4i) cw(0.4i) cw(0.4i).
@@ -121,7 +121,7 @@ Each module must starts with a module header record.  It is used to
 identify the module for the RL51 and other future processors of 8051
 object files.  In addition to the Module Name the record contains:
 .TP 8n
-TRN ID 
+TRN ID
 The byte identifies the program which has generated this module:
 .TS
 tab(;),center;
@@ -130,7 +130,7 @@ l l.
 0xFE;PL/M-51
 0xFF;RL51.
 .TE
-.SS Module End Record 
+.SS Module End Record
 .TS
 tab(;),center,allbox;
 cw(0.4i) cw(0.8i) cw(1.2i) cw(0.8i) cw(0.4i) cw(0.4i) cw(0.4i).
@@ -164,11 +164,11 @@ T}
 The record ends the module sequence and contains the following
 information:  characteristics
 .TP 8n
-MODULE NAME 
+MODULE NAME
 The name of the module is given here for a consistency check.  It must
 match the name given in the Module Header Record.
 .TP 8n
-REGISTER MASK (REG MSK) 
+REGISTER MASK (REG MSK)
 .RS
 The field contains a bit for each of the four register banks.  Each bit,
 when set specifies that the corresponding bank is used by the module:
@@ -185,7 +185,7 @@ bank #2.
 Bit 3
 bank #3.
 .RE
-.SS Content Record 
+.SS Content Record
 .TS
 tab(;),center,allbox;
 cw(0.4i) cw(0.8i) cw(0.4i) cw(0.8i) cw(1.2i) cw(0.4i).
@@ -217,14 +217,14 @@ T}
 This record provides one or more bytes of contiguous data, from which
 a portion of a memory image may be constructed.
 .TP 8n
-SEG ID 
+SEG ID
 This field must be zero.
 .TP 8n
-OFFSET 
+OFFSET
 Gives the absolute address of the first byte of data in the record,
 within the CODE address space.
 .TP 8n
-DATA 
+DATA
 A sequence of data bytes to be loaded from OFFSET to OFFSET+RECORDLENGTH-5.
 .SS Size Multiplier
 In general, raw binary data will expand in sized by approximately 1.02 times

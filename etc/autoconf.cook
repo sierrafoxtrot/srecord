@@ -1,20 +1,20 @@
 /*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 2002, 2003, 2006 Peter Miller
+ *      srecord - manipulate eprom load files
+ *      Copyright (C) 1998, 2002, 2003, 2006, 2007 Peter Miller
  *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
+ *      This program is free software; you can redistribute it and/or modify
+ *      it under the terms of the GNU General Public License as published by
+ *      the Free Software Foundation; either version 2 of the License, or
+ *      (at your option) any later version.
  *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
+ *      This program is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      GNU General Public License for more details.
  *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+ *      You should have received a copy of the GNU General Public License
+ *      along with this program; if not, write to the Free Software
+ *      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  *
  * MANIFEST: instructions to cook, how to use GNU Autoconf
  */
@@ -26,7 +26,7 @@
  * If it is not found (not cooked yet) the following
  * symbols will be undefined.
  *
- *	Must be included *after* the search_list is defined.
+ *      Must be included *after* the search_list is defined.
  */
 #include-cooked-nowarn [arch]/etc/Howto.conf
 if [not [defined prefix]] then
@@ -45,12 +45,12 @@ configure: etc/configure.ac install-sh
 {
     if [not [exists install-sh]] then
     {
-	/*
-	 * Cook says it is up-to-date, so it must be in the
-	 * baseline; autoconf needs it in the current directory.
-	 */
-	cp [resolve install-sh] .
-	    set clearstat;
+        /*
+         * Cook says it is up-to-date, so it must be in the
+         * baseline; autoconf needs it in the current directory.
+         */
+        cp [resolve install-sh] .
+            set clearstat;
     }
     autoconf [resolve etc/configure.ac] > [target];
     chmod 755 [target];
@@ -69,8 +69,8 @@ loop install-sh-maybe =
 {
     if [exists [install-sh-maybe]] then
     {
-       	install-sh = [install-sh-maybe];
-       	loopstop;
+        install-sh = [install-sh-maybe];
+        loopstop;
     }
 }
 if [not [install-sh]] then
@@ -87,17 +87,17 @@ install-sh: [install-sh]
 {
     if [not [exists install-sh]] then
     {
-	/*
-	 * Cook says it is up-to-date, so it must be in the
-	 * baseline; autoconf needs it in the current directory.
-	 */
-	cp [resolve install-sh] .
-	    set clearstat;
+        /*
+         * Cook says it is up-to-date, so it must be in the
+         * baseline; autoconf needs it in the current directory.
+         */
+        cp [resolve install-sh] .
+            set clearstat;
     }
     ./[resolve configure] --cache-file\=/dev/null --verbose --no-create;
     mv config.status [arch]/config.status;
     if [exists config.log] then
-	mv config.log [arch]/config.log;
+        mv config.log [arch]/config.log;
 }
 
 lib/config.h.in: etc/configure.ac
@@ -110,14 +110,14 @@ lib/config.h.in: etc/configure.ac
     single-thread conftest.subs
 {
     CONFIG_FILES\= CONFIG_HEADERS\=[target]\:[resolve %0%.h.in]
-       	[resolve [arch]/config.status];
+        [resolve [arch]/config.status];
 }
 
 [arch]/%0%: %0%.in [arch]/config.status
     single-thread conftest.subs
 {
     CONFIG_FILES\=[target]\:[resolve %0%.in] CONFIG_HEADERS\=
-       	[resolve [arch]/config.status];
+        [resolve [arch]/config.status];
 }
 
 /* Sigh */

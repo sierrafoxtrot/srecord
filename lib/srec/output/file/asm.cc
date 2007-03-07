@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2003, 2006 Peter Miller
+//      Copyright (C) 2003, 2006, 2007 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ srec_output_file_asm::emit_byte(int n)
     }
     if (!column)
     {
-        put_string("\tDB\t");
+        put_string("        DB      ");
         column = 16;
     }
     else
@@ -98,21 +98,21 @@ srec_output_file_asm::write(const srec_record &record)
             const unsigned char *ep = cp + record.get_length();
             while (cp < ep)
             {
-		int c = *cp++;
-		if (c == '\n')
-		{
-		    put_char(c);
-		    bol = true;
-		    continue;
-		}
-		if (bol)
-		    put_string("; ");
-		if (isprint(c))
-		    put_char(c);
-		bol = false;
+                int c = *cp++;
+                if (c == '\n')
+                {
+                    put_char(c);
+                    bol = true;
+                    continue;
+                }
+                if (bol)
+                    put_string("; ");
+                if (isprint(c))
+                    put_char(c);
+                bol = false;
             }
             if (!bol)
-		put_char('\n');
+                put_char('\n');
         }
         break;
 
@@ -125,25 +125,25 @@ srec_output_file_asm::write(const srec_record &record)
                 column = 0;
             }
             current_address = record.get_address();
-	    if (range.empty())
-	    {
-		put_stringf
-	       	(
+            if (range.empty())
+            {
+                put_stringf
+                (
                     "; To avoid this next ORG directive, use the "
-			"--offset -0x%lX filter.\n",
-		    current_address
-		);
-	    }
-	    else if (!org_warn)
-	    {
-		org_warn = true;
-		put_string
-	       	(
+                        "--offset -0x%lX filter.\n",
+                    current_address
+                );
+            }
+            else if (!org_warn)
+            {
+                org_warn = true;
+                put_string
+                (
                     "; To avoid this next ORG directive, use the --fill "
-			"filter.\n"
-		);
-	    }
-	    put_stringf("\tORG\t%lu\n", current_address);
+                        "filter.\n"
+                );
+            }
+            put_stringf("        ORG     %lu\n", current_address);
         }
         range +=
             interval
@@ -157,15 +157,15 @@ srec_output_file_asm::write(const srec_record &record)
 
     case srec_record::type_start_address:
         taddr = record.get_address();
-	if (!data_only_flag)
-	{
+        if (!data_only_flag)
+        {
             if (column)
             {
                 put_char('\n');
                 column = 0;
             }
-	    put_stringf("; start addr =  0x%4.4lX\n", taddr);
-	}
+            put_stringf("; start addr =  0x%4.4lX\n", taddr);
+        }
         break;
     }
 }

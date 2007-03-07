@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002, 2003, 2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 2000, 2002, 2003, 2006, 2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: interface definition for lib/quit.cc
 //
@@ -60,7 +60,7 @@ public:
       * does not return.
       */
     virtual void fatal_error(const char *fmt, ...)
-							FORMAT_PRINTF(2, 3);
+                                                        FORMAT_PRINTF(2, 3);
     /**
       * The fatal_error_v method is used to report fatal errors.
       * The `fmt' string is in the same style a standard C vprintf
@@ -71,12 +71,12 @@ public:
 
     /**
       * The fatal_error_errno method is used to report fatal errors,
-      * and append the string equivalent of errno.	The `fmt' string
-      * is in the same style a standard C printf function.	It calls
+      * and append the string equivalent of errno.      The `fmt' string
+      * is in the same style a standard C printf function.      It calls
       * the fatal_error_errno_v method.  This method does not return.
       */
     virtual void fatal_error_errno(const char *fmt, ...)
-							FORMAT_PRINTF(2, 3);
+                                                        FORMAT_PRINTF(2, 3);
     /**
       * The fatal_error_errno_v method is used to report fatal
       * errors.  The `fmt' string is in the same style a standard C
@@ -91,7 +91,7 @@ public:
       * function.  It calls the warning_v method.
       */
     virtual void warning(const char *fmt, ...)
-							FORMAT_PRINTF(2, 3);
+                                                        FORMAT_PRINTF(2, 3);
     /**
       * The warning_v method is used to report likely but non-fatal
       * errors.  The `fmt' string is in the same style a standard
@@ -105,7 +105,7 @@ public:
       * a standard C printf function.  The message_v method is called.
       */
     virtual void message(const char *fmt, ...)
-							FORMAT_PRINTF(2, 3);
+                                                        FORMAT_PRINTF(2, 3);
     /**
       * The message_v method is used to send an error message to
       * a suitable destination.  The `fmt' string is in the same

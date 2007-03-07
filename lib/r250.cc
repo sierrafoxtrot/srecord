@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 2004, 2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 2004, 2006, 2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: functions to impliment the common_r250 class
 //
@@ -25,8 +25,8 @@
 
 #include <lib/r250.h>
 
-static	unsigned long	buf[250];
-static	unsigned long	*pos;
+static  unsigned long   buf[250];
+static  unsigned long   *pos;
 
 
 static inline int
@@ -40,15 +40,15 @@ static inline long
 rand32(void)
 {
     return
-	(
-	    ((unsigned long)rand8() << 24)
-	|
-	    ((unsigned long)rand8() << 16)
-	|
-	    ((unsigned long)rand8() << 8)
-	|
-	    (unsigned long)rand8()
-	);
+        (
+            ((unsigned long)rand8() << 24)
+        |
+            ((unsigned long)rand8() << 16)
+        |
+            ((unsigned long)rand8() << 8)
+        |
+            (unsigned long)rand8()
+        );
 }
 
 
@@ -80,7 +80,7 @@ r250_init(void)
      */
     unsigned long *bp;
     for (bp = buf; bp < ENDOF(buf); ++bp)
-	*bp = rand32();
+        *bp = rand32();
 
     /*
      * make sure the bits are linearly independent
@@ -88,9 +88,9 @@ r250_init(void)
     unsigned long bit;
     for (bit = 1, bp = buf + 3; bit; bp += 11, bit <<= 1)
     {
-	if (bp >= ENDOF(buf))
-    	    bp -= SIZEOF(buf);
-	*bp = (*bp & ~(bit - 1)) | bit;
+        if (bp >= ENDOF(buf))
+            bp -= SIZEOF(buf);
+        *bp = (*bp & ~(bit - 1)) | bit;
     }
 }
 
@@ -99,13 +99,13 @@ unsigned long
 r250(void)
 {
     if (!ready)
-	r250_init();
+        r250_init();
     unsigned long *other = pos + 103;
     if (other >= ENDOF(buf))
-	other -= SIZEOF(buf);
+        other -= SIZEOF(buf);
     *pos ^= *other;
     unsigned long result = *pos++;
     if (pos >= ENDOF(buf))
-	pos = buf;
+        pos = buf;
     return result;
 }

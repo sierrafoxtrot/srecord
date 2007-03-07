@@ -1,20 +1,20 @@
 '\" t
-.\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 2000-2007 Peter Miller
+.\"     srecord - manipulate eprom load files
+.\"     Copyright (C) 1998, 2000-2007 Peter Miller
 .\"
-.\"	This program is free software; you can redistribute it and/or modify
-.\"	it under the terms of the GNU General Public License as published by
-.\"	the Free Software Foundation; either version 2 of the License, or
-.\"	(at your option) any later version.
+.\"     This program is free software; you can redistribute it and/or modify
+.\"     it under the terms of the GNU General Public License as published by
+.\"     the Free Software Foundation; either version 2 of the License, or
+.\"     (at your option) any later version.
 .\"
-.\"	This program is distributed in the hope that it will be useful,
-.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
-.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-.\"	GNU General Public License for more details.
+.\"     This program is distributed in the hope that it will be useful,
+.\"     but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"     GNU General Public License for more details.
 .\"
-.\"	You should have received a copy of the GNU General Public License
-.\"	along with this program; if not, write to the Free Software
-.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"     You should have received a copy of the GNU General Public License
+.\"     along with this program; if not, write to the Free Software
+.\"     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
 .\" MANIFEST: manual entry for the srec_cat command
 .\"
@@ -39,7 +39,7 @@ srec_cat \- manipulate eprom load files
 The
 .I \*(n)
 program is used to assemble the given input files into a single output
-file.  
+file.
 The use of filters (see below) allows significant manipulations to be
 performed by this command.
 .PP
@@ -428,11 +428,11 @@ you need to remove the offset, and then replace it...
 .ft CW
 .ta 0.5i 1i 1.5i
 \*(n) firmware.hex \e
-	-offset -0x10000 -split 2 0 \e
-	-offset 0x10000 -o firmware.even.hex
+        -offset -0x10000 -split 2 0 \e
+        -offset 0x10000 -o firmware.even.hex
 \*(n) firmware.hex \e
-	-offset -0x10000 -split 2 1 \e
-	-offset 0x10000 -o firmware.odd.hex
+        -offset -0x10000 -split 2 1 \e
+        -offset 0x10000 -o firmware.odd.hex
 .ft R
 .fi
 .RE
@@ -463,8 +463,8 @@ use the following command:
 .ft CW
 .ta 0.5i 1i 1.5i
 \*(n) -o firmware.hex \e
-	firmware.even.hex -unsplit 2 0 \e
-	firmware.odd.hex  -unsplit 2 1
+        firmware.even.hex -unsplit 2 0 \e
+        firmware.odd.hex  -unsplit 2 1
 .ft R
 .fi
 .RE

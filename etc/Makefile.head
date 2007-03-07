@@ -1,20 +1,20 @@
 #
-#	srecord - manipulate eprom load files
-#	Copyright (C) 1998, 2002, 2006 Peter Miller
+#       srecord - manipulate eprom load files
+#       Copyright (C) 1998, 2002, 2006, 2007 Peter Miller
 #
-#	This program is free software; you can redistribute it and/or modify
-#	it under the terms of the GNU General Public License as published by
-#	the Free Software Foundation; either version 2 of the License, or
-#	(at your option) any later version.
+#       This program is free software; you can redistribute it and/or modify
+#       it under the terms of the GNU General Public License as published by
+#       the Free Software Foundation; either version 2 of the License, or
+#       (at your option) any later version.
 #
-#	This program is distributed in the hope that it will be useful,
-#	but WITHOUT ANY WARRANTY; without even the implied warranty of
-#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#	GNU General Public License for more details.
+#       This program is distributed in the hope that it will be useful,
+#       but WITHOUT ANY WARRANTY; without even the implied warranty of
+#       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#       GNU General Public License for more details.
 #
-#	You should have received a copy of the GNU General Public License
-#	along with this program; if not, write to the Free Software
-#	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+#       You should have received a copy of the GNU General Public License
+#       along with this program; if not, write to the Free Software
+#       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 #
 # MANIFEST: instructions to make, how to build the srecord package
 #
@@ -37,15 +37,15 @@
 # @configure_input@
 #
 # The configure script generates 2 files:
-#	1. This Makefile
-#	2. lib/config.h
+#       1. This Makefile
+#       2. lib/config.h
 # If you change this Makefile, you may also need to change these files.
 # To see what is configured by the configure script, search for @ in the
 # Makefile.in file.
 #
 # If you wish to reconfigure the installation directories it is
 # RECOMMENDED that you re-run the configure script.
-#	Use ``./configure --help'' for a list options.
+#       Use ``./configure --help'' for a list options.
 #
 
 #
@@ -89,15 +89,15 @@ exec_prefix = @exec_prefix@
 
 #
 # where to put the executables
-#	On a network, this would only be shared between machines
-#	of identical cpu-hw-os flavour.  It can be read-only.
+#       On a network, this would only be shared between machines
+#       of identical cpu-hw-os flavour.  It can be read-only.
 #
 bindir = $(RPM_BUILD_ROOT)@bindir@
 
 #
 # where to put the manuals
-#	On a network, this would be shared between all machines
-#	on the network.  It can be read-only.
+#       On a network, this would be shared between all machines
+#       on the network.  It can be read-only.
 #
 mandir = $(RPM_BUILD_ROOT)@mandir@
 
@@ -138,4 +138,4 @@ AR = ar
 default_target: all
 
 %.pdf: %.ps
-	ps2pdf $*.ps $*.pdf
+        ps2pdf $*.ps $*.pdf

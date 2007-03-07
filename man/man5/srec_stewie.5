@@ -1,20 +1,20 @@
 '\" t
-.\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2004, 2006 Peter Miller
+.\"     srecord - manipulate eprom load files
+.\"     Copyright (C) 2004, 2006, 2007 Peter Miller
 .\"
-.\"	This program is free software; you can redistribute it and/or modify
-.\"	it under the terms of the GNU General Public License as published by
-.\"	the Free Software Foundation; either version 2 of the License, or
-.\"	(at your option) any later version.
+.\"     This program is free software; you can redistribute it and/or modify
+.\"     it under the terms of the GNU General Public License as published by
+.\"     the Free Software Foundation; either version 2 of the License, or
+.\"     (at your option) any later version.
 .\"
-.\"	This program is distributed in the hope that it will be useful,
-.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
-.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-.\"	GNU General Public License for more details.
+.\"     This program is distributed in the hope that it will be useful,
+.\"     but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"     GNU General Public License for more details.
 .\"
-.\"	You should have received a copy of the GNU General Public License
-.\"	along with this program; if not, write to the Free Software
-.\"	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"     You should have received a copy of the GNU General Public License
+.\"     along with this program; if not, write to the Free Software
+.\"     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
 .\" MANIFEST: manual entry for the srec_motorola.5 command
 .\"
@@ -48,7 +48,7 @@ l l l l.
 .ne 2i
 .SS The Data Records
 Each data record consists of 5 fields. These are the type field,
-length field, address field, data field, and the checksum. 
+length field, address field, data field, and the checksum.
 The lines always start with a capital S character.
 .TS
 allbox,center,tab(;);
@@ -104,7 +104,7 @@ It contains the data ``Hello, World'' to be loaded at address 0.
 .RS
 .nf
 .ft CW
-0000: 53 30 30 33 53 31 10 00 00 48 65 6C 6C 6F 2C 20  S003S1...Hello, 
+0000: 53 30 30 33 53 31 10 00 00 48 65 6C 6C 6F 2C 20  S003S1...Hello,
 0010: 57 6F 72 6C 64 0A 9D 53 38                       World..S8
 .ft P
 .fi

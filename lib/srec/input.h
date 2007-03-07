@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002, 2003, 2005, 2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 1998-2000, 2002, 2003, 2005-2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: interface definition for lib/srec/input.cc
 //
@@ -69,7 +69,7 @@ public:
       * determine them.
       */
     virtual void fatal_error(const char *, ...) const
-							FORMAT_PRINTF(2, 3);
+                                                        FORMAT_PRINTF(2, 3);
     /**
       * The fatal_error_errno method is used to report problems
       * reading the input file.  Do not put a newline at the end
@@ -81,10 +81,10 @@ public:
       * determine them.
       */
     virtual void fatal_error_errno(const char *, ...) const
-							FORMAT_PRINTF(2, 3);
+                                                        FORMAT_PRINTF(2, 3);
     /**
       * The warning method is used to report potential (but non-fatal)
-      * problems parsing the file.	Do not put a newline at the
+      * problems parsing the file.      Do not put a newline at the
       * end of the message.  Usually called from within derived
       * class methods.
       *
@@ -93,7 +93,7 @@ public:
       * determine them.
       */
     virtual void warning(const char *, ...) const
-							FORMAT_PRINTF(2, 3);
+                                                        FORMAT_PRINTF(2, 3);
     /**
       * The filename method is used to get the name of the input file
       * being processed.  Derived classes must supply this method.

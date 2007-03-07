@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2000, 2002, 2004-2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 1998-2000, 2002, 2004-2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: functions to impliment the interval class
 //
@@ -27,22 +27,22 @@ using namespace std;
 
 //
 // NAME
-//	interval_create_empty - create an empty interval
+//      interval_create_empty - create an empty interval
 //
 // SYNOPSIS
-//	interval_ty *interval_create_empty(void);
+//      interval_ty *interval_create_empty(void);
 //
 // DESCRIPTION
-//	The interval_create_empty function is used to create
-//	an empty interval.
+//      The interval_create_empty function is used to create
+//      an empty interval.
 //
 // RETURNS
-//	a pointer to the new interval in dynamic memory
+//      a pointer to the new interval in dynamic memory
 //
 // CAVEAT
-//	It is the responsibility of the caller to release the
-//	interval to dynamic memory when no longer required.
-//	Use the interval_free function for this purpose.
+//      It is the responsibility of the caller to release the
+//      interval to dynamic memory when no longer required.
+//      Use the interval_free function for this purpose.
 //
 
 interval::interval()
@@ -60,34 +60,34 @@ static inline interval::data64_t
 promote(interval::data_t datum, size_t pos)
 {
     if (datum == 0 && (pos & 1))
-       	return ((interval::data64_t)1 << 32);
+        return ((interval::data64_t)1 << 32);
     return datum;
 }
 
 
 //
 // NAME
-//	interval_create_range - create a single range interval
+//      interval_create_range - create a single range interval
 //
 // SYNOPSIS
-//	interval_ty *interval_create_range(interval_data_ty first,
+//      interval_ty *interval_create_range(interval_data_ty first,
 //          interval_data_ty last);
 //
 // DESCRIPTION
-//	The interval_create_range function is used to create an interval
-//	consisting of a single range, from first to last inclusive.
+//      The interval_create_range function is used to create an interval
+//      consisting of a single range, from first to last inclusive.
 //
 // ARGUMENTS
-//	first	- the start of the range
-//	last	- the end of the range (inclusive)
+//      first   - the start of the range
+//      last    - the end of the range (inclusive)
 //
 // RETURNS
-//	a pointer to the new interval in dynamic memory
+//      a pointer to the new interval in dynamic memory
 //
 // CAVEAT
-//	It is the responsibility of the caller to release the
-//	interval to dynamic memory when no longer required.
-//	Use the interval_free function for this purpose.
+//      It is the responsibility of the caller to release the
+//      interval to dynamic memory when no longer required.
+//      Use the interval_free function for this purpose.
 //
 
 interval::interval(data_t first, data_t last)
@@ -99,13 +99,13 @@ interval::interval(data_t first, data_t last)
     scan_next_datum = 0;
     if (first <= promote(last, 1))
     {
-	data[0] = first;
-	data[1] = last;
+        data[0] = first;
+        data[1] = last;
     }
     else
     {
-	data[0] = last;
-	data[1] = first;
+        data[0] = last;
+        data[1] = first;
     }
     data[2] = 2;
     // assert(valid());
@@ -134,12 +134,12 @@ interval::interval(const interval &arg)
     scan_next_datum = 0;
     if (size)
     {
-	data = new data_t[size + 1];
-	for (size_t j = 0; j <= length; ++j)
-    	    data[j] = arg.data[j];
+        data = new data_t[size + 1];
+        for (size_t j = 0; j <= length; ++j)
+            data[j] = arg.data[j];
     }
     else
-	data = 0;
+        data = 0;
     // assert(valid());
 }
 
@@ -149,25 +149,25 @@ interval::operator=(const interval &arg)
 {
     if (this != &arg)
     {
-	if (data)
-	{
-	    delete [] data;
-	    data = 0;
-	}
-	// assert(arg.valid());
-	length = arg.length;
-	size = length;
-	scan_index = 0;
-	scan_next_datum = 0;
-	if (size)
-	{
-	    data = new data_t[size + 1];
-	    for (size_t j = 0; j <= length; ++j)
-	       	data[j] = arg.data[j];
-	}
-	else
-	    data = 0;
-	// assert(valid());
+        if (data)
+        {
+            delete [] data;
+            data = 0;
+        }
+        // assert(arg.valid());
+        length = arg.length;
+        size = length;
+        scan_index = 0;
+        scan_next_datum = 0;
+        if (size)
+        {
+            data = new data_t[size + 1];
+            for (size_t j = 0; j <= length; ++j)
+                data[j] = arg.data[j];
+        }
+        else
+            data = 0;
+        // assert(valid());
     }
     return *this;
 }
@@ -175,17 +175,17 @@ interval::operator=(const interval &arg)
 
 //
 // NAME
-//	interval_free - release interval memory
+//      interval_free - release interval memory
 //
 // SYNOPSIS
-//	void interval_free(interval_ty *ip);
+//      void interval_free(interval_ty *ip);
 //
 // DESCRIPTION
-//	The interval_free function is used to release the dynamic
-//	memory used by an interval back to the dynamic memory pool.
+//      The interval_free function is used to release the dynamic
+//      memory used by an interval back to the dynamic memory pool.
 //
 // ARGUMENTS
-//	ip	- the interval to release
+//      ip      - the interval to release
 //
 
 interval::~interval()
@@ -193,33 +193,33 @@ interval::~interval()
     // assert(valid());
     if (data)
     {
-       	delete [] data;
-       	data = 0;
+        delete [] data;
+        data = 0;
     }
 }
 
 
 //
 // NAME
-//	interval_valid - internal consistency check
+//      interval_valid - internal consistency check
 //
 // SYNOPSIS
-//	int interval_valid(interval_ty *ip);
+//      int interval_valid(interval_ty *ip);
 //
 // DESCRIPTION
-//	The interval_valid function is used to check the internal
-//	consistency of an interval.
+//      The interval_valid function is used to check the internal
+//      consistency of an interval.
 //
 // ARGUMENTS
-//	ip	- pointer to interval to check
+//      ip      - pointer to interval to check
 //
 // RETURNS
-//	int	1 if interval is valid
-//		0 if interval is not valid
+//      int     1 if interval is valid
+//              0 if interval is not valid
 //
 // CAVEAT
-//	This function is only available if DEBUG is defined,
-//	and is intended for use in assert() statements.
+//      This function is only available if DEBUG is defined,
+//      and is intended for use in assert() statements.
 //
 
 bool
@@ -227,15 +227,15 @@ interval::valid()
     const
 {
     if (length > size)
-	return false;
+        return false;
     if (length & 1)
-	return false;
+        return false;
     if ((size == 0) != (data == 0))
-	return false;
+        return false;
     if (length == 0)
-	return true;
+        return true;
     if (data[length] != length)
-	return false;
+        return false;
 
     //
     // As a special case, an upper bound of zero means
@@ -243,34 +243,34 @@ interval::valid()
     //
     size_t max = length;
     if (data[max - 1] == 0)
-	--max;
+        --max;
 
     for (size_t j = 1; j < max; ++j)
-	if (data[j - 1] >= data[j])
-    	    return false;
+        if (data[j - 1] >= data[j])
+            return false;
     return true;
 }
 
 
 //
 // NAME
-//	append - append datum to interval data
+//      append - append datum to interval data
 //
 // SYNOPSIS
-//	void append(interval_ty **ipp, interval_data_ty datum);
+//      void append(interval_ty **ipp, interval_data_ty datum);
 //
 // DESCRIPTION
-//	The append function is used to append a datum to
-//	the end of an interval under construction.
+//      The append function is used to append a datum to
+//      the end of an interval under construction.
 //
 // ARGUMENTS
-//	ipp	- pointer to inerval pointer.
-//	datum	- value to append.
+//      ipp     - pointer to inerval pointer.
+//      datum   - value to append.
 //
 // CAVEAT
-//	The interval may move in dynamic memory, with is why ** is used.
-//	The interval will need to be normalized before you
-//	next use interval_valid.
+//      The interval may move in dynamic memory, with is why ** is used.
+//      The interval will need to be normalized before you
+//      next use interval_valid.
 //
 
 void
@@ -280,22 +280,22 @@ interval::append(data_t datum)
     // should always be increasing
     //
     // assert(length < 1 || promote(datum, length) >=
-    //	promote(data[length - 1], length - 1));
+    //  promote(data[length - 1], length - 1));
 
     //
     // make it larger if necessary
     //
     if (length >= size)
     {
-	size = size * 2 + 8;
-	data_t *tmp = new data_t[size + 1];
-	if (data)
-	{
-    	    for (size_t k = 0; k < length; ++k)
-       		tmp[k] = data[k];
-    	    delete [] data;
-	}
-	data = tmp;
+        size = size * 2 + 8;
+        data_t *tmp = new data_t[size + 1];
+        if (data)
+        {
+            for (size_t k = 0; k < length; ++k)
+                tmp[k] = data[k];
+            delete [] data;
+        }
+        data = tmp;
     }
 
     //
@@ -315,32 +315,32 @@ interval::append(data_t datum)
     // Either way, discard the last two elements.
     //
     if (length >= 2 && data[length - 1] == data[length - 2])
-	length -= 2;
+        length -= 2;
 }
 
 
 //
 // NAME
-//	interval_union - union of two intervals
+//      interval_union - union of two intervals
 //
 // SYNOPSIS
-//	interval_ty *interval_union(interval_ty *left, interval_ty *right);
+//      interval_ty *interval_union(interval_ty *left, interval_ty *right);
 //
 // DESCRIPTION
-//	The interval_union function is used to form the
-//	union of two intervals.
+//      The interval_union function is used to form the
+//      union of two intervals.
 //
 // ARGUMENTS
-//	left	- interval to be unioned with
-//	right	- another interval
+//      left    - interval to be unioned with
+//      right   - another interval
 //
 // RETURNS
-//	a pointer to the new interval in dynamic memory
+//      a pointer to the new interval in dynamic memory
 //
 // CAVEAT
-//	It is the responsibility of the caller to release the
-//	interval to dynamic memory when no longer required.
-//	Use the interval_free function for this purpose.
+//      It is the responsibility of the caller to release the
+//      interval to dynamic memory when no longer required.
+//      Use the interval_free function for this purpose.
 //
 
 interval
@@ -354,46 +354,46 @@ interval::union_(const interval &left, const interval &right)
     int count = 0;
     for (;;)
     {
-	int old_count = count;
-	data_t place;
-	if (left_pos < left.length)
-	{
-	    if (right_pos < right.length)
-	    {
-		data64_t left_val = promote(left.data[left_pos], left_pos);
-		data64_t right_val = promote(right.data[right_pos], right_pos);
-		if (left_val < right_val)
-		{
-		    count += (left_pos & 1 ? -1 : 1);
-		    place = left.data[left_pos++];
-		}
-		else
-		{
-		    count += (right_pos & 1 ? -1 : 1);
-		    place = right.data[right_pos++];
-		}
-	    }
-	    else
-	    {
-		count += (left_pos & 1 ? -1 : 1);
-		place = left.data[left_pos++];
-	    }
-	}
-	else
-	{
-	    if (right_pos < right.length)
-	    {
-	       	count += (right_pos & 1 ? -1 : 1);
-	       	place = right.data[right_pos++];
-	    }
-	    else
-	       	break;
-	}
-	if ((count >= 1) != (old_count >= 1))
-	    result.append(place);
+        int old_count = count;
+        data_t place;
+        if (left_pos < left.length)
+        {
+            if (right_pos < right.length)
+            {
+                data64_t left_val = promote(left.data[left_pos], left_pos);
+                data64_t right_val = promote(right.data[right_pos], right_pos);
+                if (left_val < right_val)
+                {
+                    count += (left_pos & 1 ? -1 : 1);
+                    place = left.data[left_pos++];
+                }
+                else
+                {
+                    count += (right_pos & 1 ? -1 : 1);
+                    place = right.data[right_pos++];
+                }
+            }
+            else
+            {
+                count += (left_pos & 1 ? -1 : 1);
+                place = left.data[left_pos++];
+            }
+        }
+        else
+        {
+            if (right_pos < right.length)
+            {
+                count += (right_pos & 1 ? -1 : 1);
+                place = right.data[right_pos++];
+            }
+            else
+                break;
+        }
+        if ((count >= 1) != (old_count >= 1))
+            result.append(place);
     }
     if (result.length)
-	result.data[result.length] = result.length;
+        result.data[result.length] = result.length;
     // assert(result.valid());
     return result;
 }
@@ -401,27 +401,27 @@ interval::union_(const interval &left, const interval &right)
 
 //
 // NAME
-//	interval_intersection - intersection of two intervals
+//      interval_intersection - intersection of two intervals
 //
 // SYNOPSIS
-//	interval_ty *interval_intersection(interval_ty *left,
+//      interval_ty *interval_intersection(interval_ty *left,
 //          interval_ty *right);
 //
 // DESCRIPTION
-//	The interval_intersection function is used to form the
-//	intersection of two intervals.
+//      The interval_intersection function is used to form the
+//      intersection of two intervals.
 //
 // ARGUMENTS
-//	left	- interval to be intersected with
-//	right	- another interval
+//      left    - interval to be intersected with
+//      right   - another interval
 //
 // RETURNS
-//	a pointer to the new interval in dynamic memory
+//      a pointer to the new interval in dynamic memory
 //
 // CAVEAT
-//	It is the responsibility of the caller to release the
-//	interval to dynamic memory when no longer required.
-//	Use the interval_free function for this purpose.
+//      It is the responsibility of the caller to release the
+//      interval to dynamic memory when no longer required.
+//      Use the interval_free function for this purpose.
 //
 
 interval
@@ -435,46 +435,46 @@ interval::intersection(const interval &left, const interval &right)
     int count = 0;
     for (;;)
     {
-	int old_count = count;
-	data_t place;
-	if (left_pos < left.length)
-	{
-	    if (right_pos < right.length)
-	    {
-		data64_t left_val = promote(left.data[left_pos], left_pos);
-		data64_t right_val = promote(right.data[right_pos], right_pos);
-		if (left_val < right_val)
-		{
-		    count += (left_pos & 1 ? -1 : 1);
-		    place = left.data[left_pos++];
-		}
-		else
-		{
-		    count += (right_pos & 1 ? -1 : 1);
-		    place = right.data[right_pos++];
-		}
-	    }
-	    else
-	    {
-		count += (left_pos & 1 ? -1 : 1);
-		place = left.data[left_pos++];
-	    }
-	}
-	else
-	{
-	    if (right_pos < right.length)
-	    {
-	       	count += (right_pos & 1 ? -1 : 1);
-	       	place = right.data[right_pos++];
-	    }
-	    else
-	       	break;
-	}
-	if ((count >= 2) != (old_count >= 2))
-	    result.append(place);
+        int old_count = count;
+        data_t place;
+        if (left_pos < left.length)
+        {
+            if (right_pos < right.length)
+            {
+                data64_t left_val = promote(left.data[left_pos], left_pos);
+                data64_t right_val = promote(right.data[right_pos], right_pos);
+                if (left_val < right_val)
+                {
+                    count += (left_pos & 1 ? -1 : 1);
+                    place = left.data[left_pos++];
+                }
+                else
+                {
+                    count += (right_pos & 1 ? -1 : 1);
+                    place = right.data[right_pos++];
+                }
+            }
+            else
+            {
+                count += (left_pos & 1 ? -1 : 1);
+                place = left.data[left_pos++];
+            }
+        }
+        else
+        {
+            if (right_pos < right.length)
+            {
+                count += (right_pos & 1 ? -1 : 1);
+                place = right.data[right_pos++];
+            }
+            else
+                break;
+        }
+        if ((count >= 2) != (old_count >= 2))
+            result.append(place);
     }
     if (result.length)
-	result.data[result.length] = result.length;
+        result.data[result.length] = result.length;
     // assert(result.valid());
     return result;
 }
@@ -482,26 +482,26 @@ interval::intersection(const interval &left, const interval &right)
 
 //
 // NAME
-//	interval_difference - difference of two intervals
+//      interval_difference - difference of two intervals
 //
 // SYNOPSIS
-//	interval_ty *interval_difference(interval_ty *left, interval_ty *right);
+//      interval_ty *interval_difference(interval_ty *left, interval_ty *right);
 //
 // DESCRIPTION
-//	The interval_difference function is used to form the
-//	difference of two intervals.
+//      The interval_difference function is used to form the
+//      difference of two intervals.
 //
 // ARGUMENTS
-//	left	- interval to take things out of
-//	right	- things to take out of it
+//      left    - interval to take things out of
+//      right   - things to take out of it
 //
 // RETURNS
-//	a pointer to the new interval in dynamic memory
+//      a pointer to the new interval in dynamic memory
 //
 // CAVEAT
-//	It is the responsibility of the caller to release the
-//	interval to dynamic memory when no longer required.
-//	Use the interval_free function for this purpose.
+//      It is the responsibility of the caller to release the
+//      interval to dynamic memory when no longer required.
+//      Use the interval_free function for this purpose.
 //
 
 interval
@@ -515,46 +515,46 @@ interval::difference(const interval &left, const interval &right)
     int count = 0;
     for (;;)
     {
-	int old_count = count;
-	data_t place;
-	if (left_pos < left.length)
-	{
-	    if (right_pos < right.length)
-	    {
-		data64_t left_val = promote(left.data[left_pos], left_pos);
-		data64_t right_val = promote(right.data[right_pos], right_pos);
-		if (left_val < right_val)
-		{
-		    count += (left_pos & 1 ? -1 : 1);
-		    place = left.data[left_pos++];
-		}
-		else
-		{
-		    count -= (right_pos & 1 ? -1 : 1);
-		    place = right.data[right_pos++];
-		}
-	    }
-	    else
-	    {
-		count += (left_pos & 1 ? -1 : 1);
-		place = left.data[left_pos++];
-	    }
-	}
-	else
-	{
-	    if (right_pos < right.length)
-	    {
-	       	count -= (right_pos & 1 ? -1 : 1);
-	       	place = right.data[right_pos++];
-	    }
-	    else
-	       	break;
-	}
-	if ((count >= 1) != (old_count >= 1))
-	    result.append(place);
+        int old_count = count;
+        data_t place;
+        if (left_pos < left.length)
+        {
+            if (right_pos < right.length)
+            {
+                data64_t left_val = promote(left.data[left_pos], left_pos);
+                data64_t right_val = promote(right.data[right_pos], right_pos);
+                if (left_val < right_val)
+                {
+                    count += (left_pos & 1 ? -1 : 1);
+                    place = left.data[left_pos++];
+                }
+                else
+                {
+                    count -= (right_pos & 1 ? -1 : 1);
+                    place = right.data[right_pos++];
+                }
+            }
+            else
+            {
+                count += (left_pos & 1 ? -1 : 1);
+                place = left.data[left_pos++];
+            }
+        }
+        else
+        {
+            if (right_pos < right.length)
+            {
+                count -= (right_pos & 1 ? -1 : 1);
+                place = right.data[right_pos++];
+            }
+            else
+                break;
+        }
+        if ((count >= 1) != (old_count >= 1))
+            result.append(place);
     }
     if (result.length)
-	result.data[result.length] = result.length;
+        result.data[result.length] = result.length;
     // assert(result.valid());
     return result;
 }
@@ -562,22 +562,22 @@ interval::difference(const interval &left, const interval &right)
 
 //
 // NAME
-//	interval_member - test for membership
+//      interval_member - test for membership
 //
 // SYNOPSIS
-//	int interval_member(interval_ty *, interval_data_ty datum);
+//      int interval_member(interval_ty *, interval_data_ty datum);
 //
 // DESCRIPTION
-//	The interval_member function is used to test if a particular
-//	datum is included in an interval.
+//      The interval_member function is used to test if a particular
+//      datum is included in an interval.
 //
 // ARGUMENTS
-//	ip	- interval to test
-//	datum	- value to test for
+//      ip      - interval to test
+//      datum   - value to test for
 //
 // RETURNS
-//	int	1 if is a member
-//		0 if is not a member
+//      int     1 if is a member
+//              0 if is not a member
 //
 
 bool
@@ -585,21 +585,21 @@ interval::member(data_t datum)
     const
 {
     if (length == 0)
-	return false;
+        return false;
     // assert(valid());
     long min = 0;
     long max = length - 2;
     while (min <= max)
     {
-	long mid = ((min + max) / 2) & ~1;
-	data_t lo = data[mid];
-	data64_t hi = promote(data[mid + 1], mid + 1);
-	if (lo <= datum && datum < hi)
-    	    return true;
-	if (lo < datum)
-    	    min = mid + 2;
-	else
-    	    max = mid - 2;
+        long mid = ((min + max) / 2) & ~1;
+        data_t lo = data[mid];
+        data64_t hi = promote(data[mid + 1], mid + 1);
+        if (lo <= datum && datum < hi)
+            return true;
+        if (lo < datum)
+            min = mid + 2;
+        else
+            max = mid - 2;
     }
     return false;
 }
@@ -607,17 +607,17 @@ interval::member(data_t datum)
 
 //
 // NAME
-//	interval_scan_begin
+//      interval_scan_begin
 //
 // SYNOPSIS
-//	void interval_scan_begin(interval_ty *ip);
+//      void interval_scan_begin(interval_ty *ip);
 //
 // DESCRIPTION
-//	The interval_scan_begin function is used to
-//	start traversing every datum in the interval.
+//      The interval_scan_begin function is used to
+//      start traversing every datum in the interval.
 //
 // ARGUMENTS
-//	ip	- interval to scan
+//      ip      - interval to scan
 //
 
 void
@@ -627,30 +627,30 @@ interval::scan_begin()
     // assert(!scan_index);
     scan_index = 1;
     if (length)
-       	scan_next_datum = data[0];
+        scan_next_datum = data[0];
     else
-       	scan_next_datum = 0;
+        scan_next_datum = 0;
 }
 
 
 //
 // NAME
-//	interval_scan_next
+//      interval_scan_next
 //
 // SYNOPSIS
-//	int interval_scan_next(interval_ty *ip, interval_data_ty *datum);
+//      int interval_scan_next(interval_ty *ip, interval_data_ty *datum);
 //
 // DESCRIPTION
-//	The interval_scan_next function is used to
-//	traverse every datum in the interval.
+//      The interval_scan_next function is used to
+//      traverse every datum in the interval.
 //
 // ARGUMENTS
-//	ip	- interval to scan
-//	datum	- pointer to where to place datum
+//      ip      - interval to scan
+//      datum   - pointer to where to place datum
 //
 // RETURNS
-//	int	1 if datum available
-//		0 if reached end of interval
+//      int     1 if datum available
+//              0 if reached end of interval
 //
 
 bool
@@ -659,13 +659,13 @@ interval::scan_next(data_t &datum)
     // assert(valid());
     // assert(scan_index & 1);
     if (scan_index >= length)
-       	return false;
+        return false;
     if (scan_next_datum >= promote(data[scan_index], scan_index))
     {
-       	scan_index += 2;
-       	if (scan_index >= length)
-	    return false;
-       	scan_next_datum = data[scan_index - 1];
+        scan_index += 2;
+        if (scan_index >= length)
+            return false;
+        scan_next_datum = data[scan_index - 1];
     }
     datum = scan_next_datum++;
     return true;
@@ -674,17 +674,17 @@ interval::scan_next(data_t &datum)
 
 //
 // NAME
-//	interval_scan_end
+//      interval_scan_end
 //
 // SYNOPSIS
-//	void interval_scan_end(interval_ty *ip);
+//      void interval_scan_end(interval_ty *ip);
 //
 // DESCRIPTION
-//	The interval_scan_end function is used to
-//	finish traversing every datum in the interval.
+//      The interval_scan_end function is used to
+//      finish traversing every datum in the interval.
 //
 // ARGUMENTS
-//	ip	- interval to scan
+//      ip      - interval to scan
 //
 
 void
@@ -703,8 +703,8 @@ interval::first_interval_only()
     // assert(valid());
     if (length > 2)
     {
-       	length = 2;
-       	data[length] = length;
+        length = 2;
+        data[length] = length;
     }
 }
 
@@ -721,10 +721,10 @@ bool
 interval::equal(const interval &lhs, const interval &rhs)
 {
     if (lhs.length != rhs.length)
-       	return false;
+        return false;
     for (size_t j = 0; j < lhs.length; ++j)
-       	if (lhs.data[j] != rhs.data[j])
-	    return false;
+        if (lhs.data[j] != rhs.data[j])
+            return false;
     return true;
 }
 
@@ -752,17 +752,17 @@ interval::print(ostream &os)
     const
 {
     if (length != 2)
-	os << "(";
+        os << "(";
     for (size_t j = 0; j < length; j += 2)
     {
-	if (j)
-    	    os << ", ";
-	os << data[j];
-	if (data[j] + 2 == data[j + 1])
-    	    os << ", " << data[j] + 1;
-	else if (data[j] + 1 != data[j + 1])
-    	    os << " - " << (data[j + 1] - 1);
+        if (j)
+            os << ", ";
+        os << data[j];
+        if (data[j] + 2 == data[j + 1])
+            os << ", " << data[j] + 1;
+        else if (data[j] + 1 != data[j + 1])
+            os << " - " << (data[j + 1] - 1);
     }
     if (length != 2)
-	os << ")";
+        os << ")";
 }

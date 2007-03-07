@@ -1,20 +1,20 @@
 /*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998, 1999, 2001-2003, 2006 Peter Miller
+ *      srecord - manipulate eprom load files
+ *      Copyright (C) 1998, 1999, 2001-2003, 2006, 2007 Peter Miller
  *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
+ *      This program is free software; you can redistribute it and/or modify
+ *      it under the terms of the GNU General Public License as published by
+ *      the Free Software Foundation; either version 2 of the License, or
+ *      (at your option) any later version.
  *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
+ *      This program is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      GNU General Public License for more details.
  *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+ *      You should have received a copy of the GNU General Public License
+ *      along with this program; if not, write to the Free Software
+ *      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  *
  * MANIFEST: instructions to Cook: how to build the project
  */
@@ -49,16 +49,16 @@ search_tmp = [tail [split ':' [search_path]]];
 search_name = bl;
 loop
 {
-	search_dir = [head [search_tmp]];
-	if [not [search_dir]] then
-		loopstop;
-	search_tmp = [tail [search_tmp]];
+        search_dir = [head [search_tmp]];
+        if [not [search_dir]] then
+                loopstop;
+        search_tmp = [tail [search_tmp]];
 
-	if [not [exists [search_name]]] then
-		ln -s [search_dir] [search_name]
-			set clearstat;
-	search_list = [search_list] [search_name];
-	search_name = [search_name]bl;
+        if [not [exists [search_name]]] then
+                ln -s [search_dir] [search_name]
+                        set clearstat;
+        search_list = [search_list] [search_name];
+        search_name = [search_name]bl;
 }
 
 /*
@@ -69,29 +69,29 @@ version_short = [fromto %1.C%2 %1 [subst D C [version]]];
 
 version_shorter = [split "." [version_short]] _ _;
 version_shorter = [unsplit "." [word 1 [version_shorter]]
-	[word 2 [version_shorter]]];
+        [word 2 [version_shorter]]];
 project_short = [fromto %.[version_short] % [project]];
 project_minus = [project_short]-[version_short];
 
 change_source_files = ;
 #include-cooked-nowarn etc/cook/change_files.[version]
 etc/cook/change_files.[version]:
-	set shallow nodefault
+        set shallow nodefault
 {
-	echo "'change_source_files ='" > [target];
-	aegis -l cf -p [project] -c [change] -terse
-		>> [target];
-	echo "';'" >> [target];
+        echo "'change_source_files ='" > [target];
+        aegis -l cf -p [project] -c [change] -terse
+                >> [target];
+        echo "';'" >> [target];
 }
 project_source_files = ;
 #include-cooked-nowarn etc/cook/project_files.[version]
 etc/cook/project_files.[version]:
-	set shallow nodefault
+        set shallow nodefault
 {
-	echo "'project_source_files ='" > [target];
-	aegis -l pf -p [project] -c [change] -terse
-		>> [target];
-	echo "';'" >> [target];
+        echo "'project_source_files ='" > [target];
+        aegis -l pf -p [project] -c [change] -terse
+                >> [target];
+        echo "';'" >> [target];
 }
 source_files = [sort [project_source_files] [change_source_files]];
 
@@ -102,12 +102,12 @@ source_files = [sort [project_source_files] [change_source_files]];
 if [count [project_source_files]] then
 if [count [change_source_files]] then
 {
-	leaf_file_accept = [project_source_files] [change_source_files];
-	leaf_pattern_accept = /%0%;
+        leaf_file_accept = [project_source_files] [change_source_files];
+        leaf_pattern_accept = /%0%;
 }
 
-debug = /* -g */ ;	/* g++ takes forever if you say -g for complex
-			template usage */
+debug = /* -g */ ;      /* g++ takes forever if you say -g for complex
+                        template usage */
 
 all = ;
 
@@ -124,62 +124,62 @@ all: [all];
  * The files which are linked to form the common library for the programs.
  */
 lib/[project_short]_obj =
-	[fromto %0%.c [arch]/%0%.o
-		[match_mask lib/%0%.c [source_files]]
-	]
-	[fromto %0%.cc [arch]/%0%.o
-		[match_mask lib/%0%.cc [source_files]]
-	]
-	;
+        [fromto %0%.c [arch]/%0%.o
+                [match_mask lib/%0%.c [source_files]]
+        ]
+        [fromto %0%.cc [arch]/%0%.o
+                [match_mask lib/%0%.cc [source_files]]
+        ]
+        ;
 
 /*
  * Generate lists of object files for programs
  */
 program_list_master =
-	[stringset
-		[fromto prog/%1/%0% %1 [match_mask prog/%0%.c [source_files]]]
-		[fromto prog/%1/%0% %1 [match_mask prog/%0%.cc [source_files]]]
-	];
+        [stringset
+                [fromto prog/%1/%0% %1 [match_mask prog/%0%.c [source_files]]]
+                [fromto prog/%1/%0% %1 [match_mask prog/%0%.cc [source_files]]]
+        ];
 program_list = [program_list_master];
 loop
 {
-	program = [head [program_list]];
-	if [not [program]] then
-		loopstop;
-	program_list = [tail [program_list]];
+        program = [head [program_list]];
+        if [not [program]] then
+                loopstop;
+        program_list = [tail [program_list]];
 
-	[program]_obj =
-		[fromto %0%.c [arch]/%0%.o
-			[match_mask prog/[program]/%0%.c [source_files]]
-		]
-		[fromto %0%.cc [arch]/%0%.o
-			[match_mask prog/[program]/%0%.cc [source_files]]
-		]
-		;
-	[program]_libs =
-		[arch]/lib/lib[project_short].a
-		;
-	all =
-		[all]
-		[arch]/bin/[program]
-		;
+        [program]_obj =
+                [fromto %0%.c [arch]/%0%.o
+                        [match_mask prog/[program]/%0%.c [source_files]]
+                ]
+                [fromto %0%.cc [arch]/%0%.o
+                        [match_mask prog/[program]/%0%.cc [source_files]]
+                ]
+                ;
+        [program]_libs =
+                [arch]/lib/lib[project_short].a
+                ;
+        all =
+                [all]
+                [arch]/bin/[program]
+                ;
 }
 
 if [match %1C%2 [version]] then
 {
-	baseline = bl;
+        baseline = bl;
 }
 else
 {
-	/*
-	 * this is essential so that aeipass does the right thing
-	 *
-	 * It also means that generated files (e.g. from objen) have consistent
-	 * mod-times after integration, sop everythign does not immediately
-	 * re-build.
-	 */
-	set time-adjust-back;
-	all = [all] integration-build-targets;
+        /*
+         * this is essential so that aeipass does the right thing
+         *
+         * It also means that generated files (e.g. from objen) have consistent
+         * mod-times after integration, sop everythign does not immediately
+         * re-build.
+         */
+        set time-adjust-back;
+        all = [all] integration-build-targets;
 }
 
 
@@ -187,16 +187,16 @@ else
  * Note: this must come *after* the etc/autoconf.cook include.
  */
 if [not [defined c++]] then
-	c++ = g++;
+        c++ = g++;
 cc_include_flags =
-	[prepost "-I" "" [search_list]]
-	[prepost "-I" /[arch] [search_list]]
-	;
+        [prepost "-I" "" [search_list]]
+        [prepost "-I" /[arch] [search_list]]
+        ;
 if [not [defined c++_flags]] then
-	c++_flags = -O [debug];
+        c++_flags = -O [debug];
 c++_flags = [c++_flags] -Wall -Werror;
 if [not [defined ld_flags]] then
-	ld_flags = [debug];
+        ld_flags = [debug];
 
 
 [arch]/%0%.o: %0%.c
@@ -208,14 +208,14 @@ if [not [defined ld_flags]] then
 [arch]/%0%.o: %0%.cc
 {
     [c++] [cc_include_flags] [c++_flags] -c [resolve %0%.cc] -o [target]
-	set meter;
+        set meter;
 }
 
 
 c_incl = c_incl;
 
 %0%.c.d: %0%.c
-	set no-cascade
+        set no-cascade
 {
     [c_incl] -nc -ns -nrec
         [cc_include_flags]
@@ -256,7 +256,7 @@ c_incl = c_incl;
 }
 
 %0%.cc.d: %0%.cc
-	set no-cascade
+        set no-cascade
 {
     [c_incl] -nc -ns -nrec
         [cc_include_flags]
@@ -283,11 +283,11 @@ c_incl = c_incl;
 }
 
 cc_dep_files =
-	[fromto %0%.c %0%.c.d [match_mask %1/%2/%0%.c [source_files]]]
-	[fromto %0%.h %0%.h.d [match_mask %1/%2/%0%.h [source_files]]]
-	[fromto %0%.cc %0%.cc.d [match_mask %1/%2/%0%.cc [source_files]]]
-	[fromto %0%.y %0%.gen.c.d [match_mask %1/%2/%0%.y [source_files]]]
-	;
+        [fromto %0%.c %0%.c.d [match_mask %1/%2/%0%.c [source_files]]]
+        [fromto %0%.h %0%.h.d [match_mask %1/%2/%0%.h [source_files]]]
+        [fromto %0%.cc %0%.cc.d [match_mask %1/%2/%0%.cc [source_files]]]
+        [fromto %0%.y %0%.gen.c.d [match_mask %1/%2/%0%.y [source_files]]]
+        ;
 
 #include-cooked-nowarn [cc_dep_files]
 
@@ -322,14 +322,14 @@ cc_dep_files =
 
 
 /*
- * The version stamp is to be updated for every 
+ * The version stamp is to be updated for every
  * integration and development build.
  * (The integrate_begin_command in the config file
  * deletes them for integration builds.)
  */
 
 lib/patchlevel.h:
-	set shallow
+        set shallow
 {
     copyright_years =
         [collect
@@ -345,7 +345,7 @@ lib/patchlevel.h:
  */
 etc/version.so:
     set ['if' [or [not [defined baseline] ] [not [exists bl/etc/version.so
-		] ] ] 'then' shallow]
+                ] ] ] 'then' shallow]
 {
     copyright_years =
         [collect

@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2001-2003, 2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 1998, 1999, 2001-2003, 2006, 2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: interface definition for lib/srec/output.cc
 //
@@ -67,7 +67,7 @@ public:
     /**
       * The write_start_address method is used to write a start
       * address record to the output.  If no record is specified,
-      * a default record will be supplied.	The write method will
+      * a default record will be supplied.      The write method will
       * be called.
       */
     virtual void write_start_address(const srec_record * = 0);
@@ -84,7 +84,7 @@ public:
       * The address_length_set method is used to set the minimum
       * number of bytes to be written for addresses in the output,
       * for those formats for which this is a meaningful concept, and
-      * the address length is at all controllable.	Derived classes
+      * the address length is at all controllable.      Derived classes
       * must implement this method.
       */
     virtual void address_length_set(int) = 0;
@@ -104,7 +104,7 @@ public:
       * does not return.
       */
     virtual void fatal_error(const char *fmt, ...) const
-							FORMAT_PRINTF(2, 3);
+                                                        FORMAT_PRINTF(2, 3);
     /**
       * The fatal_error_v method is used to report fatal errors.
       * The `fmt' string is in the same style a standard C vprintf
@@ -119,7 +119,7 @@ public:
       * ::exit().  This method does not return.
       */
     virtual void fatal_error_errno(const char *fmt, ...) const
-							FORMAT_PRINTF(2, 3);
+                                                        FORMAT_PRINTF(2, 3);
     /**
       * The fatal_error_errno_v method is used to report fatal
       * errors.  The `fmt' string is in the same style a standard C
@@ -134,7 +134,7 @@ public:
       * function.  It calls the warning_v method.
       */
     virtual void warning(const char *fmt, ...) const
-							FORMAT_PRINTF(2, 3);
+                                                        FORMAT_PRINTF(2, 3);
     /**
       * The warning_v method is used to report likely but non-fatal
       * errors.  The `fmt' string is in the same style a standard

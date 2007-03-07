@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 2000-2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: functions to impliment the srec_output_file_vmem class
 //
@@ -56,20 +56,20 @@ calc_width_shift(int x)
     // with a number of bits.)
     //
     if (x == 1)
-	return 0;
+        return 0;
     if (x == 2)
-	return 1;
+        return 1;
     if (x == 4)
-	return 2;
+        return 2;
 
     //
     // The documented interface is a number of bits.
     //
     for (int j = 0; j < 28; ++j)
     {
-	int nbits = 8 << j;
-	if (x <= nbits)
-	    return j;
+        int nbits = 8 << j;
+        if (x <= nbits)
+            return j;
     }
 
     //
@@ -105,11 +105,11 @@ srec_output_file_vmem::command_line(srec_arglex *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_number)
     {
-	int n = cmdln->value_number();
-	cmdln->token_next();
+        int n = cmdln->value_number();
+        cmdln->token_next();
 
-	width_shift = calc_width_shift(n);
-	width_mask = calc_width_mask(n);
+        width_shift = calc_width_shift(n);
+        width_mask = calc_width_mask(n);
     }
 }
 
@@ -117,9 +117,9 @@ srec_output_file_vmem::command_line(srec_arglex *cmdln)
 srec_output_file_vmem::~srec_output_file_vmem()
 {
     while (address & width_mask)
-	write_byte(0xFF);
+        write_byte(0xFF);
     if (column)
-	put_char('\n');
+        put_char('\n');
 }
 
 
@@ -135,13 +135,13 @@ srec_output_file_vmem::write_byte(unsigned value)
     // because it is easy to parse that it is not the start of a hex byte.)
     //
     if (column == 0)
-	put_stringf("@%08lX", address >> width_shift);
+        put_stringf("@%08lX", address >> width_shift);
 
     //
     // Put a space between each memory-width chunk of bytes.
     //
     if ((column & width_mask) == 0)
-	put_char(' ');
+        put_char(' ');
 
     //
     // Write the byte and crank the address.
@@ -156,8 +156,8 @@ srec_output_file_vmem::write_byte(unsigned value)
     ++column;
     if (column >= pref_block_size)
     {
-	put_char('\n');
-	column = 0;
+        put_char('\n');
+        column = 0;
     }
 }
 
@@ -186,22 +186,22 @@ srec_output_file_vmem::write_byte_at(unsigned long new_addr, unsigned value)
     //
     while (address != new_addr)
     {
-	if (address & width_mask)
-	    write_byte(0xFF);
-	else
-	{
-	    if (column)
-	    {
-		put_char('\n');
-		column = 0;
-	    }
-	    // Round down, which provokes the beginning padding, when required.
-	    unsigned long zero = new_addr & ~(unsigned long)width_mask;
-	    if (address == zero)
-		write_byte(0xFF);
-	    else
-		address = zero;
-	}
+        if (address & width_mask)
+            write_byte(0xFF);
+        else
+        {
+            if (column)
+            {
+                put_char('\n');
+                column = 0;
+            }
+            // Round down, which provokes the beginning padding, when required.
+            unsigned long zero = new_addr & ~(unsigned long)width_mask;
+            if (address == zero)
+                write_byte(0xFF);
+            else
+                address = zero;
+        }
     }
 
     //
@@ -217,42 +217,42 @@ srec_output_file_vmem::write(const srec_record &record)
     switch (record.get_type())
     {
     case srec_record::type_header:
-	// emit header records as comments in the file
-	{
-	    put_string("/* ");
-	    if (record.get_address() != 0)
-		put_stringf("%08lX: ", record.get_address());
-	    const unsigned char *cp = record.get_data();
-	    const unsigned char *ep = cp + record.get_length();
-	    while (cp < ep)
-	    {
-		int c = *cp++;
-		if (isprint(c) || isspace(c))
-		    put_char(c);
-		else
-		    put_stringf("\\%o", c);
-		// make sure we don't end the comment
-		if (c == '*' && cp < ep && *cp == '/')
-		    put_char(' ');
-	    }
-	    put_string(" */\n");
-	}
-	break;
+        // emit header records as comments in the file
+        {
+            put_string("/* ");
+            if (record.get_address() != 0)
+                put_stringf("%08lX: ", record.get_address());
+            const unsigned char *cp = record.get_data();
+            const unsigned char *ep = cp + record.get_length();
+            while (cp < ep)
+            {
+                int c = *cp++;
+                if (isprint(c) || isspace(c))
+                    put_char(c);
+                else
+                    put_stringf("\\%o", c);
+                // make sure we don't end the comment
+                if (c == '*' && cp < ep && *cp == '/')
+                    put_char(' ');
+            }
+            put_string(" */\n");
+        }
+        break;
 
     case srec_record::type_data:
-	for (int j = 0; j < record.get_length(); ++j)
-	{
-	    write_byte_at(record.get_address() + j, record.get_data(j));
-	}
-	break;
+        for (int j = 0; j < record.get_length(); ++j)
+        {
+            write_byte_at(record.get_address() + j, record.get_data(j));
+        }
+        break;
 
     case srec_record::type_data_count:
     case srec_record::type_start_address:
-	// ignore
-	break;
+        // ignore
+        break;
 
     case srec_record::type_unknown:
-	fatal_error("can't write unknown record type");
+        fatal_error("can't write unknown record type");
     }
 }
 
@@ -263,9 +263,9 @@ srec_output_file_vmem::line_length_set(int linlen)
     int nchunks = (linlen - 9) / ((2 << width_shift) + 1);
     int max_chunks = srec_record::max_data_length >> width_shift;
     if (nchunks > max_chunks)
-	nchunks = max_chunks;
+        nchunks = max_chunks;
     if (nchunks < 1)
-	nchunks = 1;
+        nchunks = 1;
     int nbytes = nchunks << width_shift;
     pref_block_size = nbytes;
 }

@@ -1,33 +1,33 @@
 /*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 2001, 2006 Peter Miller
+ *      srecord - manipulate eprom load files
+ *      Copyright (C) 2001, 2006, 2007 Peter Miller
  *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
+ *      This program is free software; you can redistribute it and/or modify
+ *      it under the terms of the GNU General Public License as published by
+ *      the Free Software Foundation; either version 2 of the License, or
+ *      (at your option) any later version.
  *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
+ *      This program is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      GNU General Public License for more details.
  *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+ *      You should have received a copy of the GNU General Public License
+ *      along with this program; if not, write to the Free Software
+ *      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  *
  * MANIFEST: etc/doxygen.cook
  */
 
 doxygen = [find_command doxygen];
 if [not [doxygen]] then
-	doxygen = doxygen;
+        doxygen = doxygen;
 all += doc/include/index.html;
 
 doc/%0index.html: [match_mask %0%%0%%.h [source_files]]
-	etc/doxygen.cfg
+        etc/doxygen.cfg
 {
-	cat [resolve etc/doxygen.cfg] - > Doxyfile;
+        cat [resolve etc/doxygen.cfg] - > Doxyfile;
 data
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or
 # absolute) base path where the generated documentation will be
@@ -46,18 +46,18 @@ INPUT = [unsplit " \\\n" [resolve [stringset [need] - etc/Doxygen.cfg]]]
 # documentation or if some version control system is used.
 PROJECT_NUMBER = [version]
 dataend
-	[doxygen] Doxyfile
-		-d [reldir doc/%0index.html]
-		[resolve [stringset [need] - etc/doxygen.cfg]]
-						/*
-						 * have Cook tell use how long
-						 * it takes to cook.
-						 */
-						set meter
-		;
-	rm -rf [reldir doc/%0index.html]
-		set silent errok;
-	mv doxygen-tmp/html [reldir doc/%0index.html];
-	rm -rf Doxyfile doxygen-tmp
-		set errok silent;
+        [doxygen] Doxyfile
+                -d [reldir doc/%0index.html]
+                [resolve [stringset [need] - etc/doxygen.cfg]]
+                                                /*
+                                                 * have Cook tell use how long
+                                                 * it takes to cook.
+                                                 */
+                                                set meter
+                ;
+        rm -rf [reldir doc/%0index.html]
+                set silent errok;
+        mv doxygen-tmp/html [reldir doc/%0index.html];
+        rm -rf Doxyfile doxygen-tmp
+                set errok silent;
 }

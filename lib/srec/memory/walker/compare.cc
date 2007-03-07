@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 2000, 2002, 2005, 2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 2000, 2002, 2005-2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: functions to impliment the srec_memory_walker_compare class
 //
@@ -32,7 +32,7 @@ srec_memory_walker_compare::~srec_memory_walker_compare()
 
 
 srec_memory_walker_compare::srec_memory_walker_compare(const srec_memory &a1,
-	bool a2) :
+        bool a2) :
     other(a1),
     check_wrong(a2)
 {
@@ -49,17 +49,31 @@ srec_memory_walker_compare::observe(unsigned long addr, const void *p,
     unsigned char *data = (unsigned char *)p;
     for (int j = 0; j < len; ++j)
     {
-	if (other.set_p(addr + j))
-	{
-    	    if (check_wrong && data[j] != other.get(addr + j))
-       		wrongTemp += interval(addr + j);
-	}
-	else
-    	    unsetTemp += interval(addr + j);
+        if (other.set_p(addr + j))
+        {
+            if (check_wrong && data[j] != other.get(addr + j))
+                wrongTemp += interval(addr + j);
+        }
+        else
+            unsetTemp += interval(addr + j);
     }
 
     wrong += wrongTemp;
     unset += unsetTemp;
+}
+
+
+static std::string
+spaces(int n)
+{
+    // inefficient, but it isn't used much.
+    std::string result;
+    while (n > 0)
+    {
+        result += " ";
+        --n;
+    }
+    return result;
 }
 
 
@@ -68,16 +82,19 @@ srec_memory_walker_compare::print(const char *caption)
     const
 {
     ios::fmtflags old =
-	cout.setf
-	(
-	    static_cast<ios::fmtflags>(ios::showbase + ios::hex),
-	    static_cast<ios::fmtflags>(ios::showbase + ios::hex + ios::dec +
-		ios::oct)
-	);
+        cout.setf
+        (
+            static_cast<ios::fmtflags>(ios::showbase + ios::hex),
+            static_cast<ios::fmtflags>(ios::showbase + ios::hex + ios::dec +
+                ios::oct)
+        );
     if (!wrong.empty())
-	    cout << "Different:\t" << wrong << endl;
+        cout << "Different:      " << wrong << endl;
     if (!unset.empty())
-	    cout << caption << " only:\t" << unset << endl;
+    {
+        std::string s(caption);
+        cout << s << " only:" << spaces(10 - s.size()) << unset << endl;
+    }
     cout.flags(old);
 }
 

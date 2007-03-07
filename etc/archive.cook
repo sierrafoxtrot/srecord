@@ -1,81 +1,81 @@
 /*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2000, 2003, 2004, 2006 Peter Miller
+ *      srecord - manipulate eprom load files
+ *      Copyright (C) 1998-2000, 2003, 2004, 2006, 2007 Peter Miller
  *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
+ *      This program is free software; you can redistribute it and/or modify
+ *      it under the terms of the GNU General Public License as published by
+ *      the Free Software Foundation; either version 2 of the License, or
+ *      (at your option) any later version.
  *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
+ *      This program is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      GNU General Public License for more details.
  *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+ *      You should have received a copy of the GNU General Public License
+ *      along with this program; if not, write to the Free Software
+ *      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  *
  * MANIFEST: How to build the release sets
  */
 
 integration-build-targets:
-	archive/change_log.txt
-	archive/[project_minus].README
-	archive/[project_minus].lsm
-	archive/[project_minus].spec
-	archive/[project_minus].tar.gz
-	archive/[project_minus].pdf
-	archive/[project_short].png
-	archive/[project_short].ico
-	archive/[project_short]-128.png
-	archive/[project_short]-64.png
-	archive/[project_short]-32.png
-	archive/[project_short]-16.png
-	[fromto etc/%.html archive/%.html
-	    [match_mask etc/%.html [source_files]]
-	]
-	;
+        archive/change_log.txt
+        archive/[project_minus].README
+        archive/[project_minus].lsm
+        archive/[project_minus].spec
+        archive/[project_minus].tar.gz
+        archive/[project_minus].pdf
+        archive/[project_short].png
+        archive/[project_short].ico
+        archive/[project_short]-128.png
+        archive/[project_short]-64.png
+        archive/[project_short]-32.png
+        archive/[project_short]-16.png
+        [fromto etc/%.html archive/%.html
+            [match_mask etc/%.html [source_files]]
+        ]
+        ;
 
 source_file_order =
-	README
-	[sort
-		[stringset
-			[source_files]
-			BUILDING
-			MANIFEST
-			LICENSE
+        README
+        [sort
+                [stringset
+                        [source_files]
+                        BUILDING
+                        MANIFEST
+                        LICENSE
 
-			/*
-			 * These two are for time stamping the distribution.
-			 */
-			etc/version.so
-			lib/patchlevel.h
+                        /*
+                         * These two are for time stamping the distribution.
+                         */
+                        etc/version.so
+                        lib/patchlevel.h
 
-			/*
-			 * These four are for building the distribution.
-			 */
-			Makefile.in
-			lib/config.h.in
-			install-sh
-			configure
+                        /*
+                         * These four are for building the distribution.
+                         */
+                        Makefile.in
+                        lib/config.h.in
+                        install-sh
+                        configure
 
-			/*
-			 * This is for building the RPM package
-			 */
-			[project_minus].spec
+                        /*
+                         * This is for building the RPM package
+                         */
+                        [project_minus].spec
 
-			/*
-			 * for the reference manual
-			 */
-			etc/ref-index.so
-			etc/ref-parts.so
-			etc/new.so
-		-
-			README
-		]
-	]
-	;
+                        /*
+                         * for the reference manual
+                         */
+                        etc/ref-index.so
+                        etc/ref-parts.so
+                        etc/new.so
+                -
+                        README
+                ]
+        ]
+        ;
 
 
 /*
@@ -85,106 +85,106 @@ source_file_order =
  */
 
 makefile-per-file =
-	[addsuffix ",M"
-		[source_files]
-		[fromto %0%.y %0%.gen.cc [match_mask %0%.y [source_files]]]
-	];
+        [addsuffix ",M"
+                [source_files]
+                [fromto %0%.y %0%.gen.cc [match_mask %0%.y [source_files]]]
+        ];
 
 Makefile.in: etc/Makefile.head etc/Makefile.sh etc/Makefile.awk
-	/* [vs_file] */
-	[makefile-per-file]
+        /* [vs_file] */
+        [makefile-per-file]
 {
-	cat [resolve etc/Makefile.head [makefile-per-file]] > [target];
-	sh [resolve etc/Makefile.sh] [source_files]
-		| [awk] -f [resolve etc/Makefile.awk]
-		>> [target];
+        cat [resolve etc/Makefile.head [makefile-per-file]] > [target];
+        sh [resolve etc/Makefile.sh] [source_files]
+                | [awk] -f [resolve etc/Makefile.awk]
+                >> [target];
 }
 
 %0%,M: etc/Makefile.file.sh etc/Makefile.awk
 {
-	sh [resolve etc/Makefile.file.sh] %0% [resolve %0%]
-		[resolve [match_mask %%0%%,Md [need]]]
-	| [awk] -f [resolve etc/Makefile.awk]
-	> [target];
+        sh [resolve etc/Makefile.file.sh] %0% [resolve %0%]
+                [resolve [match_mask %%0%%,Md [need]]]
+        | [awk] -f [resolve etc/Makefile.awk]
+        > [target];
 }
 
 archive/[project_minus].tar.gz: [source_file_order]
-	set shallow
+        set shallow
 {
-	tar cf - [resolve [source_file_order]]
-		| tardy
-			-una Peter -gna Miller
-			-unu 0 -gnu 0
-			-ms 0644 -mc 07022
-			-now
-			-prefix\=[project_minus]
-			[prepost "-rp=" "" [search_list]]
-		| gzip -9
-		> [target];
+        tar cf - [resolve [source_file_order]]
+                | tardy
+                        -una Peter -gna Miller
+                        -unu 0 -gnu 0
+                        -ms 0644 -mc 07022
+                        -now
+                        -prefix\=[project_minus]
+                        [prepost "-rp=" "" [search_list]]
+                | gzip -9
+                > [target];
 }
 
 archive/[project_minus].%: %
-	set shallow
+        set shallow
 {
-	cat [resolve [need]] > [target];
+        cat [resolve [need]] > [target];
 }
 
 archive/[project_minus].pdf: etc/reference.pdf
-	set shallow
+        set shallow
 {
-	cat [resolve [need]] > [target];
+        cat [resolve [need]] > [target];
 }
 
 %: etc/%.man
 {
-	roffpp
-		[prepost "-I" /[arch]/etc [search_list]]
-		[prepost "-I" "/etc" [search_list]]
-		[resolve etc/%.man]
-	| groff -Tascii -t -P-bcu -man
-	> [target];
+        roffpp
+                [prepost "-I" /[arch]/etc [search_list]]
+                [prepost "-I" "/etc" [search_list]]
+                [resolve etc/%.man]
+        | groff -Tascii -t -P-bcu -man
+        > [target];
 }
 
 archive/%.txt: etc/%.man
     set shallow
 {
-	roffpp
-		[prepost "-I" /[arch]/etc [search_list]]
-		[prepost "-I" "/etc" [search_list]]
-		[resolve etc/%.man]
-	| groff -Tascii -t -P-bcu -man
-	> [target];
+        roffpp
+                [prepost "-I" /[arch]/etc [search_list]]
+                [prepost "-I" "/etc" [search_list]]
+                [resolve etc/%.man]
+        | groff -Tascii -t -P-bcu -man
+        > [target];
 }
 
 etc/%.man.d: etc/%.man
-	set no-cascade
+        set no-cascade
 {
-	[c_incl] -nc -ns -api -nrec
-		--lang\=roff
-		[addprefix "-I" [search_list]]
-		[prepost "-I" "/man/man1" [search_list]]
-		[prepost "-I" "/man/man5" [search_list]]
-		[prepost "-I" "/etc" [search_list]]
-		[resolve etc/%.man]
-		-prefix "'cascade etc/%.man ='"
-		-suffix "';'"
-		[addprefix "-rlp=" [search_list]]
-		-o [target];
+        [c_incl] -nc -ns -api -nrec
+                --lang\=roff
+                [addprefix "-I" [search_list]]
+                [prepost "-I" "/man/man1" [search_list]]
+                [prepost "-I" "/man/man5" [search_list]]
+                [prepost "-I" "/etc" [search_list]]
+                [resolve etc/%.man]
+                -prefix "'cascade etc/%.man ='"
+                -suffix "';'"
+                [addprefix "-rlp=" [search_list]]
+                -o [target];
 }
 
 etc/%.man,M:: etc/%.man,Md;
 
 etc/%.man,Md: etc/%.man
 {
-	[c_incl] -nc -ns -api
-		--lang\=roff
-		[addprefix "-I" [search_list]]
-		[prepost "-I" "/man/man1" [search_list]]
-		[prepost "-I" "/man/man5" [search_list]]
-		[prepost "-I" "/etc" [search_list]]
-		[resolve etc/%.man]
-		[addprefix "-rlp=" [search_list]]
-		-o [target];
+        [c_incl] -nc -ns -api
+                --lang\=roff
+                [addprefix "-I" [search_list]]
+                [prepost "-I" "/man/man1" [search_list]]
+                [prepost "-I" "/man/man5" [search_list]]
+                [prepost "-I" "/etc" [search_list]]
+                [resolve etc/%.man]
+                [addprefix "-rlp=" [search_list]]
+                -o [target];
 }
 
 #include-cooked [addsuffix ".d" [match_mask etc/%.man [source_files]]]
@@ -198,152 +198,152 @@ etc/%.man,Md: etc/%.man
 RPM: archive/[project_minus]-1.i386.rpm;
 
 archive/[project_minus]-1.i386.rpm archive/[project_minus]-1.src.rpm:
-		archive/[project_minus].tar.gz etc/rpm-build.sh
-	set shallow
+                archive/[project_minus].tar.gz etc/rpm-build.sh
+        set shallow
 {
-	sh [resolve etc/rpm-build.sh]
-		RPM-temporary
-		[resolve archive/[project_minus].tar.gz]
-		;
-	mv RPM-temporary/RPMS/i386/[project_minus]-1.i386.rpm
-		archive/[project_minus]-1.i386.rpm
-		;
-	mv RPM-temporary/SRPMS/[project_minus]-1.src.rpm
-		archive/[project_minus]-1.src.rpm
-		;
-	rm -r RPM-temporary;
+        sh [resolve etc/rpm-build.sh]
+                RPM-temporary
+                [resolve archive/[project_minus].tar.gz]
+                ;
+        mv RPM-temporary/RPMS/i386/[project_minus]-1.i386.rpm
+                archive/[project_minus]-1.i386.rpm
+                ;
+        mv RPM-temporary/SRPMS/[project_minus]-1.src.rpm
+                archive/[project_minus]-1.src.rpm
+                ;
+        rm -r RPM-temporary;
 }
 
 [project_minus].spec: etc/spec.sh [source_files]
 {
-	version\=[version_short]
-	sh [resolve etc/spec.sh] [source_files]
-		> [target];
+        version\=[version_short]
+        sh [resolve etc/spec.sh] [source_files]
+                > [target];
 }
 
 archive/[project_minus].spec: [project_minus].spec
-	set shallow
+        set shallow
 {
-	cat [resolve [need]] > [target];
+        cat [resolve [need]] > [target];
 }
 
 archive/%: etc/%.uue
-	set shallow
+        set shallow
 {
-	uudecode -o [target] [resolve [need]];
+        uudecode -o [target] [resolve [need]];
 }
 
 
 etc/%.html.d: etc/%.html
-	set no-cascade
+        set no-cascade
 {
-	c_incl -nc -ns -eia -r -nrec
-		[prepost "-I" /[arch]/etc [search_list]]
-		[prepost "-I" "/etc" [search_list]]
-		-prefix "'cascade etc/"%".html ='"
-		-suffix "';'"
-		[resolve etc/%.html]
-		[prepost "-rlp=" "" [search_list]] /* remove leading path */
-		-slp [arch] "'[arch]'" /* substitute leading path */
-		-o [target];
+        c_incl -nc -ns -eia -r -nrec
+                [prepost "-I" /[arch]/etc [search_list]]
+                [prepost "-I" "/etc" [search_list]]
+                -prefix "'cascade etc/"%".html ='"
+                -suffix "';'"
+                [resolve etc/%.html]
+                [prepost "-rlp=" "" [search_list]] /* remove leading path */
+                -slp [arch] "'[arch]'" /* substitute leading path */
+                -o [target];
 }
 
 etc/%.html,M:: etc/%.html,Md;
 
 etc/%.html,Md: etc/%.html
 {
-	c_incl -nc -ns -eia -r
-		[prepost "-I" /[arch]/etc [search_list]]
-		[prepost "-I" "/etc" [search_list]]
-		[resolve etc/%.html]
-		[prepost "-rlp=" "" [search_list]] /* remove leading path */
-		-slp [arch] "'[arch]'" /* substitute leading path */
-		-o [target];
+        c_incl -nc -ns -eia -r
+                [prepost "-I" /[arch]/etc [search_list]]
+                [prepost "-I" "/etc" [search_list]]
+                [resolve etc/%.html]
+                [prepost "-rlp=" "" [search_list]] /* remove leading path */
+                -slp [arch] "'[arch]'" /* substitute leading path */
+                -o [target];
 }
 
 #include-cooked [addsuffix ".d" [match_mask etc/%.html [source_files]]]
 
 archive/%.html: etc/%.html etc/ssp.awk
-	set shallow
+        set shallow
 {
-	roffpp
-		[prepost "-I" /[arch]/etc [search_list]]
-		[prepost "-I" "/etc" [search_list]]
-		[resolve etc/%.html]
-	| groff -Tascii -t -P-bcu -man
-	| [awk] -f [resolve etc/ssp.awk]
-	> [target];
+        roffpp
+                [prepost "-I" /[arch]/etc [search_list]]
+                [prepost "-I" "/etc" [search_list]]
+                [resolve etc/%.html]
+        | groff -Tascii -t -P-bcu -man
+        | [awk] -f [resolve etc/ssp.awk]
+        > [target];
 }
 
 
 etc/[project_short].lsm.d: etc/[project_short].lsm
-	set no-cascade
+        set no-cascade
 {
-	c_incl -nc -ns -eia -r -nrec
-		[prepost "-I" /[arch]/etc [search_list]]
-		[prepost "-I" "/etc" [search_list]]
-		-prefix "'cascade etc/"[project_short]".lsm ='"
-		-suffix "';'"
-		[resolve etc/[project_short].lsm]
-		[prepost "-rlp=" "" [search_list]] /* remove leading path */
-		-slp [arch] "'[arch]'" /* substitute leading path */
-		-o [target];
+        c_incl -nc -ns -eia -r -nrec
+                [prepost "-I" /[arch]/etc [search_list]]
+                [prepost "-I" "/etc" [search_list]]
+                -prefix "'cascade etc/"[project_short]".lsm ='"
+                -suffix "';'"
+                [resolve etc/[project_short].lsm]
+                [prepost "-rlp=" "" [search_list]] /* remove leading path */
+                -slp [arch] "'[arch]'" /* substitute leading path */
+                -o [target];
 }
 
 etc/[project_short].lsm,M:: etc/[project_short].lsm,Md;
 
 etc/[project_short].lsm,Md: etc/[project_short].lsm
 {
-	c_incl -nc -ns -eia -r
-		[prepost "-I" /[arch]/etc [search_list]]
-		[prepost "-I" "/etc" [search_list]]
-		[resolve etc/[project_short].lsm]
-		[prepost "-rlp=" "" [search_list]] /* remove leading path */
-		-slp [arch] "'[arch]'" /* substitute leading path */
-		-o [target];
+        c_incl -nc -ns -eia -r
+                [prepost "-I" /[arch]/etc [search_list]]
+                [prepost "-I" "/etc" [search_list]]
+                [resolve etc/[project_short].lsm]
+                [prepost "-rlp=" "" [search_list]] /* remove leading path */
+                -slp [arch] "'[arch]'" /* substitute leading path */
+                -o [target];
 }
 
 #include-cooked-nowarn etc/[project_short].lsm.d
 
 archive/[project_minus].lsm: etc/[project_short].lsm etc/ssp.awk
-	set shallow
+        set shallow
 {
-	roffpp
-		[prepost "-I" /[arch]/etc [search_list]]
-		[prepost "-I" "/etc" [search_list]]
-		[resolve etc/[project_short].lsm]
-	| groff -Tascii -t -P-bcu -man
-	| [awk] -f [resolve etc/ssp.awk]
-	> [target];
+        roffpp
+                [prepost "-I" /[arch]/etc [search_list]]
+                [prepost "-I" "/etc" [search_list]]
+                [resolve etc/[project_short].lsm]
+        | groff -Tascii -t -P-bcu -man
+        | [awk] -f [resolve etc/ssp.awk]
+        > [target];
 }
 
 LICENSE: man/cat1/srec_license.1
 {
-	cat [resolve [need]] > [target];
+        cat [resolve [need]] > [target];
 }
 
 %0%,m: %0%: etc/MANIFEST.sh
 {
-	sh [resolve etc/MANIFEST.sh] %0% [resolve %0%] > [target];
+        sh [resolve etc/MANIFEST.sh] %0% [resolve %0%] > [target];
 }
 
 MANIFEST: etc/MANIFEST.head
-	[addsuffix ",m" [stringset [source_files] - MANIFEST]]
+        [addsuffix ",m" [stringset [source_files] - MANIFEST]]
 {
-	cat [resolve [need]] > [target];
+        cat [resolve [need]] > [target];
 }
 
 archive/%1-%2.png: archive/%1.png
 {
     if [find_command pngcrush] then
     {
-	convert [resolve archive/%1.png] -scale %2 [target].tmp;
-	pngcrush -bkgd 255 255 255 -brute -q [target].tmp [target];
-	rm [target].tmp;
+        convert [resolve archive/%1.png] -scale %2 [target].tmp;
+        pngcrush -bkgd 255 255 255 -brute -q [target].tmp [target];
+        rm [target].tmp;
     }
     else
     {
-	convert [resolve archive/%1.png] -scale %2 [target];
+        convert [resolve archive/%1.png] -scale %2 [target];
     }
 }
 

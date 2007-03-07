@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 1998-2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: functions to impliment the srec_input_file class
 //
@@ -62,16 +62,16 @@ srec_input_file::srec_input_file(const char *file_name) :
 {
     if (file_name == string("-"))
     {
-	file_name = "standard input";
-	vfp = stdin;
+        file_name = "standard input";
+        vfp = stdin;
     }
     else
     {
-	//
-	// The call to fopen is deferred until the constructor has
-	// completed.  This is so that the virtual mode() method
-	// is available (it isn't in the base class constructor).
-	//
+        //
+        // The call to fopen is deferred until the constructor has
+        // completed.  This is so that the virtual mode() method
+        // is available (it isn't in the base class constructor).
+        //
     }
 }
 
@@ -81,18 +81,18 @@ srec_input_file::get_fp()
 {
     if (!vfp)
     {
-	//
-	// The call to fopen is deferred until the constructor has
-	// completed.  This is so that the virtual mode() method
-	// is available (it isn't in the base class constructor).
-	//
-	const char *the_mode = mode();
-	vfp = fopen(file_name.c_str(), the_mode);
-	if (!vfp)
-		fatal_error_errno("open");
-	is_text = !strchr(the_mode, 'b');
-	if (!is_text)
-	    line_number = 0;
+        //
+        // The call to fopen is deferred until the constructor has
+        // completed.  This is so that the virtual mode() method
+        // is available (it isn't in the base class constructor).
+        //
+        const char *the_mode = mode();
+        vfp = fopen(file_name.c_str(), the_mode);
+        if (!vfp)
+                fatal_error_errno("open");
+        is_text = !strchr(the_mode, 'b');
+        if (!is_text)
+            line_number = 0;
     }
     return vfp;
 }
@@ -102,7 +102,7 @@ srec_input_file::~srec_input_file()
 {
     FILE *fp = (FILE *)get_fp();
     if (fp != stdin && fclose(fp))
-	fatal_error_errno("close");
+        fatal_error_errno("close");
 }
 
 
@@ -119,12 +119,12 @@ srec_input_file::filename_and_line()
     const
 {
     if (!vfp)
-	return file_name;
+        return file_name;
     char buffer[20];
     if (is_text)
-	sprintf(buffer, ": %d", line_number);
+        sprintf(buffer, ": %d", line_number);
     else
-	sprintf(buffer, ": 0x%04X", line_number);
+        sprintf(buffer, ": 0x%04X", line_number);
     return (file_name + buffer);
 }
 
@@ -134,40 +134,40 @@ srec_input_file::get_char()
 {
     FILE *fp = (FILE *)get_fp();
     if (prev_was_newline)
-	++line_number;
+        ++line_number;
     int c = getc(fp);
     if (c == EOF)
     {
-	if (ferror(fp))
-	    fatal_error_errno("read");
+        if (ferror(fp))
+            fatal_error_errno("read");
 
-	//
-	// If this is a text file, but the last character wasn't
-	// a newline, insert one.
-	//
-	c = ((is_text && !prev_was_newline) ? '\n' : -1);
+        //
+        // If this is a text file, but the last character wasn't
+        // a newline, insert one.
+        //
+        c = ((is_text && !prev_was_newline) ? '\n' : -1);
     }
     else if (c == '\r' && is_text)
     {
-	//
-	// If this is a text file, turn CRLF into LF.
-	// Leave all other sequences containing CR alone.
-	//
-	c = getc(fp);
-	if (c == EOF)
-	{
-	    if (ferror(fp))
-	       	fatal_error_errno("read");
-	    c = '\r';
-	}
-	else if (c != '\n')
-	{
-	    ungetc(c, fp);
-	    c = '\r';
-	}
+        //
+        // If this is a text file, turn CRLF into LF.
+        // Leave all other sequences containing CR alone.
+        //
+        c = getc(fp);
+        if (c == EOF)
+        {
+            if (ferror(fp))
+                fatal_error_errno("read");
+            c = '\r';
+        }
+        else if (c != '\n')
+        {
+            ungetc(c, fp);
+            c = '\r';
+        }
     }
     if (!is_text && c >= 0)
-	++line_number;
+        ++line_number;
     prev_was_newline = (is_text && c == '\n');
     return c;
 }
@@ -178,11 +178,11 @@ srec_input_file::get_char_undo(int c)
 {
     if (c >= 0)
     {
-	FILE *fp = (FILE *)get_fp();
-	prev_was_newline = false;
-	if (!is_text)
-	    --line_number;
-	ungetc(c, fp);
+        FILE *fp = (FILE *)get_fp();
+        prev_was_newline = false;
+        if (!is_text)
+            --line_number;
+        ungetc(c, fp);
     }
 }
 
@@ -194,12 +194,12 @@ srec_input_file::peek_char()
     int c = getc(fp);
     if (c == EOF)
     {
-	if (ferror(fp))
-    	    fatal_error_errno("read");
-	c = -1;
+        if (ferror(fp))
+            fatal_error_errno("read");
+        c = -1;
     }
     else
-	ungetc(c, fp);
+        ungetc(c, fp);
     return c;
 }
 
@@ -212,13 +212,13 @@ srec_input_file::get_nibble()
     {
     case '0': case '1': case '2': case '3': case '4':
     case '5': case '6': case '7': case '8': case '9':
-	    return (c - '0');
+            return (c - '0');
 
     case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
-	    return (c - 'a' + 10);
+            return (c - 'a' + 10);
 
     case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
-	    return (c - 'A' + 10);
+            return (c - 'A' + 10);
     }
     fatal_error("hexadecimal digit expected");
     // NOTREACHED

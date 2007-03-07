@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002, 2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 2000-2002, 2006, 2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: functions to impliment the crc16 class
 //
@@ -43,10 +43,10 @@ calculate_table()
 {
     for (int b = 0; b < 256; ++b)
     {
-	unsigned short v = b << 8;
-	for (int i = 8; --i >= 0; )
-    	    v = (v & 0x8000) ? ((v << 1) ^ POLYNOMIAL) : (v << 1);
-	table[b] = v;
+        unsigned short v = b << 8;
+        for (int i = 8; --i >= 0; )
+            v = (v & 0x8000) ? ((v << 1) ^ POLYNOMIAL) : (v << 1);
+        table[b] = v;
     }
 }
 
@@ -54,13 +54,13 @@ calculate_table()
 crc16::crc16(bool ccitt)
 {
     if (ccitt)
-	seed = ccitt_seed;
+        seed = ccitt_seed;
     else
-	seed = xmodem_seed;
-    
+        seed = xmodem_seed;
+
     state = seed;
     if (!table[1])
-	calculate_table();
+        calculate_table();
 }
 
 
@@ -76,8 +76,8 @@ crc16::operator=(const crc16 &arg)
 {
     if (this != &arg)
     {
-	state = arg.state;
-	seed = arg.seed;
+        state = arg.state;
+        seed = arg.seed;
     }
     return *this;
 }
@@ -118,9 +118,9 @@ crc16::nextbuf(const void *data, size_t nbytes)
     unsigned char *dp = (unsigned char *)data;
     while (nbytes > 0)
     {
-	state = updcrc(*dp, state);
-	++dp;
-	--nbytes;
+        state = updcrc(*dp, state);
+        ++dp;
+        --nbytes;
     }
 }
 

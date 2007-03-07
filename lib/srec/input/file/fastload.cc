@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 2001-2003, 2005, 2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 2001-2003, 2005-2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: functions to impliment the srec_input_file_fastload class
 //
@@ -119,17 +119,17 @@ srec_input_file_fastload::get_number(int min_digits, int max_digits)
     unsigned long result = 0;
     for (int ndigits = 0; ndigits < max_digits; ++ndigits)
     {
-	int c = get_digit();
-	if (c < 0)
-	{
-	    if (ndigits < min_digits)
-	    {
-	       	fatal_error("base-64 number expected (%d < %d)",
-		    ndigits, min_digits);
-	    }
-	    break;
-	}
-	result = (result << 6) | c;
+        int c = get_digit();
+        if (c < 0)
+        {
+            if (ndigits < min_digits)
+            {
+                fatal_error("base-64 number expected (%d < %d)",
+                    ndigits, min_digits);
+            }
+            break;
+        }
+        result = (result << 6) | c;
     }
     return result;
 }
@@ -146,10 +146,10 @@ srec_input_file_fastload::expect_white_space()
     case '\r':
     case '\n':
     case '/':
-	break;
+        break;
 
     default:
-	fatal_error("white space expected");
+        fatal_error("white space expected");
     }
 }
 
@@ -165,122 +165,123 @@ srec_input_file_fastload::read_inner(srec_record &record)
     unsigned char the_byte;
     for (;;)
     {
-	switch (peek_char())
-	{
-	case -1:
-	    return 0;
+        switch (peek_char())
+        {
+        case -1:
+            return 0;
 
-	case ' ':
-	case '\t':
-	case '\n':
-	case '\r':
-	    get_char();
-	    break;
+        case ' ':
+        case '\t':
+        case '\n':
+        case '\r':
+            get_char();
+            break;
 
-	case '/':
-	    if (data_length > 0)
-	    {
-		got_a_record:
-		record =
-		    srec_record
-		    (
-			srec_record::type_data,
-			data_address,
-			data,
-			data_length
-		    );
-		return 1;
-	    }
-	    get_char();
-	    switch (get_char())
-	    {
-	    case 'A':
-		address = get_number(1, 6);
-		expect_white_space();
-		data_address = address;
-		break;
+        case '/':
+            if (data_length > 0)
+            {
+                got_a_record:
+                record =
+                    srec_record
+                    (
+                        srec_record::type_data,
+                        data_address,
+                        data,
+                        data_length
+                    );
+                return 1;
+            }
+            get_char();
+            switch (get_char())
+            {
+            case 'A':
+                address = get_number(1, 6);
+                expect_white_space();
+                data_address = address;
+                break;
 
-	    case 'B':
-		the_byte = get_number(1, 6);
-		data[data_length++] = the_byte;
-		checksum_add(the_byte);
-		expect_white_space();
-		address++;
-		// assert(data_length == 1);
-		break;
+            case 'B':
+                the_byte = get_number(1, 6);
+                data[data_length++] = the_byte;
+                checksum_add(the_byte);
+                expect_white_space();
+                address++;
+                // assert(data_length == 1);
+                break;
 
-	    case 'C':
-		n = get_number(1, 6);
-		if (use_checksums())
-		{
-		    int csum = checksum_get16();
-		    if ((int)n != csum)
-		    {
-			fatal_error("checksum mismatch (%04X != %04X)",
-			    (int)n, csum);
-		    }
-		}
-		expect_white_space();
-		break;
+            case 'C':
+                n = get_number(1, 6);
+                if (use_checksums())
+                {
+                    int csum = checksum_get16();
+                    if ((int)n != csum)
+                    {
+                        fatal_error("checksum mismatch (%04X != %04X)",
+                            (int)n, csum);
+                    }
+                }
+                expect_white_space();
+                break;
 
-	    case 'E':
-		get_number(1, 6);
-		seek_to_end();
-		type = srec_record::type_start_address;
-		record = srec_record(type, address, 0, 0);
-		return 1;
+            case 'E':
+                get_number(1, 6);
+                seek_to_end();
+                type = srec_record::type_start_address;
+                record = srec_record(type, address, 0, 0);
+                return 1;
 
-	    case 'K':
-		get_number(1, 6);
-		expect_white_space();
-		checksum_reset();
-		break;
+            case 'K':
+                get_number(1, 6);
+                expect_white_space();
+                checksum_reset();
+                break;
 
-	    case 'S':
-		// Ignore symbols
-		for (;;)
-		{
-		    int c = get_char();
-		    if (c < 0)
-		       	fatal_error("end-of-input in symbol");
-		    if (c == ',')
-		       	break;
-		}
-		get_number(1, 6);
-		expect_white_space();
-		break;
-											    case 'Z':
-		n = get_number(1, 6);
-		expect_white_space();
-		if (n >= srec_record::max_data_length)
-		    fatal_error("clearing too many bytes (%lu)", n);
-		memset(data, 0, n);
-		type = srec_record::type_data;
-		record = srec_record(type, address, data, n);
-		address += n;
-		return 1;
+            case 'S':
+                // Ignore symbols
+                for (;;)
+                {
+                    int c = get_char();
+                    if (c < 0)
+                        fatal_error("end-of-input in symbol");
+                    if (c == ',')
+                        break;
+                }
+                get_number(1, 6);
+                expect_white_space();
+                break;
 
-	    default:
-		fatal_error("unknown command");
-	    }
-	    break;
+            case 'Z':
+                n = get_number(1, 6);
+                expect_white_space();
+                if (n >= srec_record::max_data_length)
+                    fatal_error("clearing too many bytes (%lu)", n);
+                memset(data, 0, n);
+                type = srec_record::type_data;
+                record = srec_record(type, address, data, n);
+                address += n;
+                return 1;
 
-	default:
-	    if (data_length + 3 > srec_record::max_data_length)
-		goto got_a_record;
-	    n = get_number(4, 4);
-	    the_byte = n >> 16;
-	    data[data_length++] = the_byte;
-	    checksum_add(the_byte);
-	    the_byte = n >> 8;
-	    data[data_length++] = the_byte;
-	    checksum_add(the_byte);
-	    the_byte = n;
-	    data[data_length++] = the_byte;
-	    checksum_add(the_byte);
-	    address += 3;
-	    break;
-	}
+            default:
+                fatal_error("unknown command");
+            }
+            break;
+
+        default:
+            if (data_length + 3 > srec_record::max_data_length)
+                goto got_a_record;
+            n = get_number(4, 4);
+            the_byte = n >> 16;
+            data[data_length++] = the_byte;
+            checksum_add(the_byte);
+            the_byte = n >> 8;
+            data[data_length++] = the_byte;
+            checksum_add(the_byte);
+            the_byte = n;
+            data[data_length++] = the_byte;
+            checksum_add(the_byte);
+            address += 3;
+            break;
+        }
     }
 }
 
@@ -290,9 +291,9 @@ srec_input_file_fastload::read(srec_record &record)
 {
     if (!read_inner(record))
     {
-	if (!seen_some_input)
-    	    fatal_error("file contains no data");
-	return 0;
+        if (!seen_some_input)
+            fatal_error("file contains no data");
+        return 0;
     }
     seen_some_input = true;
     return 1;

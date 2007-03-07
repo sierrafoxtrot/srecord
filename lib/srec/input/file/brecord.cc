@@ -39,7 +39,7 @@ int
 srec_input_file_brecord::read_inner(srec_record &record)
 {
     if (peek_char() < 0)
-	return 0;
+        return 0;
 
     unsigned long address = get_4bytes();
     unsigned char length = get_byte();
@@ -50,7 +50,7 @@ srec_input_file_brecord::read_inner(srec_record &record)
     for (unsigned j = 0; j < length; ++j)
         data[j] = get_byte();
     if (get_char() != '\n')
-	fatal_error("end of line expected");
+        fatal_error("end of line expected");
 
     if (length == 0)
         record = srec_record(srec_record::type_start_address, address, 0, 0);
@@ -65,9 +65,9 @@ srec_input_file_brecord::read(srec_record &record)
 {
     if (!read_inner(record))
     {
-	if (!seen_some_input)
-    	    fatal_error("file contains no data");
-	return 0;
+        if (!seen_some_input)
+            fatal_error("file contains no data");
+        return 0;
     }
     seen_some_input = true;
     return 1;

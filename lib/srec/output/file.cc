@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2002, 2005-2007 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 1998-2002, 2005-2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: functions to impliment the srec_output_file class
 //
@@ -71,17 +71,17 @@ srec_output_file::srec_output_file(const char *fn) :
 {
     if (file_name == string("-"))
     {
-	file_name = "standard output";
-	vfp = stdout;
-	set_is_regular();
+        file_name = "standard output";
+        vfp = stdout;
+        set_is_regular();
     }
     else
     {
-	//
-	// The call to fopen is deferred until the constructor has
-	// completed.  This is so that the virtual mode() method
-	// is available (it isn't in the base class constructor).
-	//
+        //
+        // The call to fopen is deferred until the constructor has
+        // completed.  This is so that the virtual mode() method
+        // is available (it isn't in the base class constructor).
+        //
     }
 }
 
@@ -99,15 +99,15 @@ srec_output_file::get_fp()
 {
     if (!vfp)
     {
-	//
-	// The call to fopen is deferred until the constructor has
-	// completed.  This is so that the virtual mode() method
-	// is available (it isn't in the base class constructor).
-	//
-	vfp = fopen(file_name.c_str(), mode());
-	if (!vfp)
-	    fatal_error_errno("open");
-	set_is_regular();
+        //
+        // The call to fopen is deferred until the constructor has
+        // completed.  This is so that the virtual mode() method
+        // is available (it isn't in the base class constructor).
+        //
+        vfp = fopen(file_name.c_str(), mode());
+        if (!vfp)
+            fatal_error_errno("open");
+        set_is_regular();
     }
     return vfp;
 }
@@ -117,9 +117,9 @@ srec_output_file::~srec_output_file()
 {
     FILE *fp = (FILE *)get_fp();
     if (fflush(fp))
-	fatal_error_errno("write");
+        fatal_error_errno("write");
     if (fp != stdout && fclose(fp))
-	fatal_error_errno("close");
+        fatal_error_errno("close");
 }
 
 
@@ -139,14 +139,14 @@ srec_output_file::put_char(int c)
     FILE *fp = (FILE *)get_fp();
     if (crlf_flag && c == '\n')
     {
-	putc('\r', fp);
-	++position;
+        putc('\r', fp);
+        ++position;
     }
     putc(c, fp);
     if (ferror(fp))
-	fatal_error_errno("write");
+        fatal_error_errno("write");
     if (c == '\n')
-	++line_number;
+        ++line_number;
     ++position;
 }
 
@@ -231,11 +231,11 @@ srec_output_file::seek_to(unsigned long address)
     //
     if (!is_regular)
     {
-	while (position < address)
-	    put_char(0);
+        while (position < address)
+            put_char(0);
     }
     if (address == position)
-	return;
+        return;
 
     //
     // We'll have to try a seek.
@@ -244,21 +244,21 @@ srec_output_file::seek_to(unsigned long address)
     errno = 0;
     if (fseek(fp, address, 0) < 0)
     {
-	if (errno == EINVAL && address >= 0x80000000uL)
-	{
-	    warning
-	    (
+        if (errno == EINVAL && address >= 0x80000000uL)
+        {
+            warning
+            (
                 "It appears that the implementation of fseek on your "
                 "system is unable to cope with addresses which have "
                 "the most significant bit set (this is POSIX and ANSI "
                 "C conforming behaviour).  You probably did not intend "
                 "to create a %3.1fGB file.  See the manual for a "
                 "description of the --offset filter, remembering that "
-		"you can give negative offsets.",
-		((double)address / (double)(1uL << 30))
-	    );
-	}
-	fatal_error_errno("seek 0x%lX", address);
+                "you can give negative offsets.",
+                ((double)address / (double)(1uL << 30))
+            );
+        }
+        fatal_error_errno("seek 0x%lX", address);
     }
     position = address;
 }
@@ -268,7 +268,7 @@ void
 srec_output_file::put_string(const char *s)
 {
     while (*s)
-	put_char(*s++);
+        put_char(*s++);
 }
 
 

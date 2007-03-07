@@ -1,21 +1,21 @@
 #!/bin/sh
 #
-#	srecord - manipulate eprom load files
-#	Copyright (C) 2000, 2003, 2006 Peter Miller
+#       srecord - manipulate eprom load files
+#       Copyright (C) 2000, 2003, 2006, 2007 Peter Miller
 #
-#	This program is free software; you can redistribute it and/or modify
-#	it under the terms of the GNU General Public License as published by
-#	the Free Software Foundation; either version 2 of the License, or
-#	(at your option) any later version.
+#       This program is free software; you can redistribute it and/or modify
+#       it under the terms of the GNU General Public License as published by
+#       the Free Software Foundation; either version 2 of the License, or
+#       (at your option) any later version.
 #
-#	This program is distributed in the hope that it will be useful,
-#	but WITHOUT ANY WARRANTY; without even the implied warranty of
-#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#	GNU General Public License for more details.
+#       This program is distributed in the hope that it will be useful,
+#       but WITHOUT ANY WARRANTY; without even the implied warranty of
+#       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#       GNU General Public License for more details.
 #
-#	You should have received a copy of the GNU General Public License
-#	along with this program; if not, write to the Free Software
-#	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+#       You should have received a copy of the GNU General Public License
+#       along with this program; if not, write to the Free Software
+#       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 #
 # MANIFEST: Test the srec_cmp --verbose functionality
 #
@@ -25,26 +25,26 @@ work=${TMP_DIR-/tmp}/$$
 
 pass()
 {
-	cd $here
-	rm -rf $work
-	echo PASSED
-	exit 0
+        cd $here
+        rm -rf $work
+        echo PASSED
+        exit 0
 }
 
 fail()
 {
-	cd $here
-	rm -rf $work
-	echo 'FAILED test of the srec_cmp --verbose functionality'
-	exit 1
+        cd $here
+        rm -rf $work
+        echo 'FAILED test of the srec_cmp --verbose functionality'
+        exit 1
 }
 
 no_result()
 {
-	cd $here
-	rm -rf $work
-	echo 'NO RESULT for test of the srec_cmp --verbose functionality'
-	exit 2
+        cd $here
+        rm -rf $work
+        echo 'NO RESULT for test of the srec_cmp --verbose functionality'
+        exit 2
 }
 
 trap "no_result" 1 2 3 15
@@ -72,17 +72,17 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok1 << 'fubar'
-Different:	(0x1, 0x2, 0x4 - 0xd)
-Left only:	0xe
-Right only:	0x0
+Different:      (0x1, 0x2, 0x4 - 0xd)
+Left only:      0xe
+Right only:     0x0
 Start address 1 not equal to 0.
 fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok2 << 'fubar'
-Different:	(0x1, 0x2, 0x4 - 0xd)
-Left only:	0xe
-Right only:	0
+Different:      (0x1, 0x2, 0x4 - 0xd)
+Left only:      0xe
+Right only:     0
 Start address 1 not equal to 0.
 fubar
 if test $? -ne 0; then no_result; fi

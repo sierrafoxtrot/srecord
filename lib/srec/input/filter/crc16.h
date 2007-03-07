@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2003, 2005, 2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 2000-2003, 2005-2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: interface definition for include/srec/input/filter/crc16.cc
 //
@@ -37,12 +37,12 @@ public:
       * The destructor.
       */
     virtual ~srec_input_filter_crc16();
-    
+
     /**
       * The constructor.
       */
     srec_input_filter_crc16(srec_input *deeper, unsigned long address,
-	    int order, bool ccitt_seed);
+            int order, bool ccitt_seed);
 
     // See base class for documentation.
     virtual int read(srec_record &);
@@ -59,7 +59,7 @@ private:
       * order is big-endian (0) or little-endian (1).
       */
     int order;
-    
+
     /**
       * The ccitt_seed instance variable is used to remember whether to
       * use the CCITT seed for CRC16 calculation.

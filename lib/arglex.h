@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 1998, 1999, 2002, 2003, 2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 1998, 1999, 2002, 2003, 2006, 2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: interface definition for the lib/common/arglex.cc file
 //
@@ -42,19 +42,19 @@ public:
       */
     enum
     {
-	token_eoln,
-	token_help,
-	token_license,
-	token_number,
-	token_option,
-	token_page_width,
-	token_page_length,
-	token_stdio,
-	token_string,
-	token_tracing,
-	token_verbose,
-	token_version,
-	token_MAX
+        token_eoln,
+        token_help,
+        token_license,
+        token_number,
+        token_option,
+        token_page_width,
+        token_page_length,
+        token_stdio,
+        token_string,
+        token_tracing,
+        token_verbose,
+        token_version,
+        token_MAX
     };
 
     /**
@@ -63,16 +63,16 @@ public:
       */
     struct value_ty
     {
-	/**
-	  * The literal string value of the token.
-	  */
-	const char *alv_string;
+        /**
+          * The literal string value of the token.
+          */
+        const char *alv_string;
 
-	/**
-	  * The integer vale of the token.  Only meaningful
-	  * for token_number, otherwise zero.
-	  */
-	long alv_number;
+        /**
+          * The integer vale of the token.  Only meaningful
+          * for token_number, otherwise zero.
+          */
+        long alv_number;
     };
 
     /**
@@ -82,15 +82,15 @@ public:
       */
     struct table_ty
     {
-	/**
-	  * The name of the commen line option.
-	  */
-	const char *name;
+        /**
+          * The name of the commen line option.
+          */
+        const char *name;
 
-	/**
-	  * The corresponding token.
-	  */
-	int token;
+        /**
+          * The corresponding token.
+          */
+        int token;
     };
 
 private:

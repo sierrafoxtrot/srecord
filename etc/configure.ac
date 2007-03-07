@@ -1,20 +1,20 @@
 dnl
-dnl	srecord - manipulate eprom load files
-dnl	Copyright (C) 1998, 1999, 2002, 2006 Peter Miller
+dnl     srecord - manipulate eprom load files
+dnl     Copyright (C) 1998, 1999, 2002, 2006, 2007 Peter Miller
 dnl
-dnl	This program is free software; you can redistribute it and/or modify
-dnl	it under the terms of the GNU General Public License as published by
-dnl	the Free Software Foundation; either version 2 of the License, or
-dnl	(at your option) any later version.
+dnl     This program is free software; you can redistribute it and/or modify
+dnl     it under the terms of the GNU General Public License as published by
+dnl     the Free Software Foundation; either version 2 of the License, or
+dnl     (at your option) any later version.
 dnl
-dnl	This program is distributed in the hope that it will be useful,
-dnl	but WITHOUT ANY WARRANTY; without even the implied warranty of
-dnl	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-dnl	GNU General Public License for more details.
+dnl     This program is distributed in the hope that it will be useful,
+dnl     but WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+dnl     GNU General Public License for more details.
 dnl
-dnl	You should have received a copy of the GNU General Public License
-dnl	along with this program; if not, write to the Free Software
-dnl	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+dnl     You should have received a copy of the GNU General Public License
+dnl     along with this program; if not, write to the Free Software
+dnl     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 dnl
 dnl MANIFEST: how to configure srecord, input to the GNU autoconf program
 dnl
@@ -40,14 +40,14 @@ then
 fi
 
 dnl
-dnl	Test to find a Bourne shell which understands functions
+dnl     Test to find a Bourne shell which understands functions
 dnl
 AC_MSG_CHECKING([for a Bourne shell which understands functions])
 if test "z$SH" = "z"; then
     if test -f /bin/sh5; then
-	SH=/bin/sh5
+        SH=/bin/sh5
     else
-	SH=/bin/sh
+        SH=/bin/sh
     fi
 fi
 AC_SUBST(SH)
@@ -57,9 +57,9 @@ which understands functions.])
 AC_MSG_RESULT($SH)
 
 dnl
-dnl	If the soelim program exists, and understands the -I option,
-dnl	arrange for the Makefile to install the .ps files from the
-dnl	documentation source files.
+dnl     If the soelim program exists, and understands the -I option,
+dnl     arrange for the Makefile to install the .ps files from the
+dnl     documentation source files.
 dnl
 if test -n "$SOELIM"
 then
@@ -68,10 +68,10 @@ then
     : nothing
   else
     AC_MSG_RESULT([])
-    AC_MSG_RESULT([	The $SOELIM program does not understand the -I])
-    AC_MSG_RESULT([	option.  There is a patch available for GNU Groff])
-    AC_MSG_RESULT([	which makes this work correctly.  See the BUILDING])
-    AC_MSG_RESULT([	file for details.])
+    AC_MSG_RESULT([     The $SOELIM program does not understand the -I])
+    AC_MSG_RESULT([     option.  There is a patch available for GNU Groff])
+    AC_MSG_RESULT([     which makes this work correctly.  See the BUILDING])
+    AC_MSG_RESULT([     file for details.])
     GROFF=
   fi
 fi
@@ -81,31 +81,31 @@ then
  else
   HAVE_GROFF=no
   AC_MSG_RESULT([])
-  AC_MSG_RESULT([	The SRecord documentation set and manual pages will])
-  AC_MSG_RESULT([	be formatted and installed if you first install])
-  AC_MSG_RESULT([	GNU Groff and then re-run this ./configure script.])
-  AC_MSG_RESULT([	Remember to use \`\`rm config.cache'' before you do.])
+  AC_MSG_RESULT([       The SRecord documentation set and manual pages will])
+  AC_MSG_RESULT([       be formatted and installed if you first install])
+  AC_MSG_RESULT([       GNU Groff and then re-run this ./configure script.])
+  AC_MSG_RESULT([       Remember to use \`\`rm config.cache'' before you do.])
   AC_MSG_RESULT([])
 fi
 AC_SUBST(HAVE_GROFF)
 
 AH_TOP([/*
- *	srecord - manipulate eprom load files
- *	Copyright (C) 1998-2002, 2006 Peter Miller
+ *      srecord - manipulate eprom load files
+ *      Copyright (C) 1998-2002, 2006, 2007 Peter Miller
  *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
+ *      This program is free software; you can redistribute it and/or modify
+ *      it under the terms of the GNU General Public License as published by
+ *      the Free Software Foundation; either version 2 of the License, or
+ *      (at your option) any later version.
  *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
+ *      This program is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      GNU General Public License for more details.
  *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+ *      You should have received a copy of the GNU General Public License
+ *      along with this program; if not, write to the Free Software
+ *      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  *
  * MANIFEST: template lib/config.h file
  */

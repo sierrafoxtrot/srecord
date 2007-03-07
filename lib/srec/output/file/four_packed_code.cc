@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2002, 2005, 2006 Peter Miller
+//      Copyright (C) 2001, 2002, 2005-2007 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -25,14 +25,14 @@
 
 
 static unsigned char digit[] = {
-    '%',			//  0
-    '&',			//  1
-    '\'',			//  2
-    '(',			//  3
-    ')',			//  4
-    '+',			//  5
-    ',',			//  6
-    '-',			//  7
+    '%',                        //  0
+    '&',                        //  1
+    '\'',                       //  2
+    '(',                        //  3
+    ')',                        //  4
+    '+',                        //  5
+    ',',                        //  6
+    '-',                        //  7
     '.', //  8
     '/', //  9
     '0', // 10
@@ -123,7 +123,7 @@ srec_output_file_four_packed_code::srec_output_file_four_packed_code():
 
 
 srec_output_file_four_packed_code::srec_output_file_four_packed_code(
-	const char *filename):
+        const char *filename):
     srec_output_file(filename),
     pref_block_size(32),
     put_byte_pos(0),
@@ -133,7 +133,7 @@ srec_output_file_four_packed_code::srec_output_file_four_packed_code(
 
 
 srec_output_file_four_packed_code::srec_output_file_four_packed_code(
-	const srec_output_file_four_packed_code &):
+        const srec_output_file_four_packed_code &):
     srec_output_file(),
     pref_block_size(32),
     put_byte_pos(0),
@@ -145,7 +145,7 @@ srec_output_file_four_packed_code::srec_output_file_four_packed_code(
 
 srec_output_file_four_packed_code &
 srec_output_file_four_packed_code::operator=(
-	const srec_output_file_four_packed_code &)
+        const srec_output_file_four_packed_code &)
 {
     fatal_error("bug (%s, %d)", __FILE__, __LINE__);
     return *this;
@@ -165,22 +165,22 @@ srec_output_file_four_packed_code::put_byte(unsigned char n)
     ++put_byte_pos;
     if (put_byte_pos >= 4)
     {
-	int n5 = put_byte_value % 85;
-	put_byte_value /= 85;
-	int n4 = put_byte_value % 85;
-	put_byte_value /= 85;
-	int n3 = put_byte_value % 85;
-	put_byte_value /= 85;
-	int n2 = put_byte_value % 85;
-	put_byte_value /= 85;
-	int n1 = put_byte_value;
-	put_char(digit[n1]);
-	put_char(digit[n2]);
-	put_char(digit[n3]);
-	put_char(digit[n4]);
-	put_char(digit[n5]);
-	put_byte_pos = 0;
-	put_byte_value = 0;
+        int n5 = put_byte_value % 85;
+        put_byte_value /= 85;
+        int n4 = put_byte_value % 85;
+        put_byte_value /= 85;
+        int n3 = put_byte_value % 85;
+        put_byte_value /= 85;
+        int n2 = put_byte_value % 85;
+        put_byte_value /= 85;
+        int n1 = put_byte_value;
+        put_char(digit[n1]);
+        put_char(digit[n2]);
+        put_char(digit[n3]);
+        put_char(digit[n4]);
+        put_char(digit[n5]);
+        put_byte_pos = 0;
+        put_byte_value = 0;
     }
 }
 
@@ -193,7 +193,7 @@ srec_output_file_four_packed_code::write_inner(unsigned long address,
     // Make sure the line is not too long.
     //
     if (data_nbytes > 252)
-	fatal_error("data length (%d) too long", data_nbytes);
+        fatal_error("data length (%d) too long", data_nbytes);
 
     //
     // Assemble the data for this line.
@@ -206,9 +206,9 @@ srec_output_file_four_packed_code::write_inner(unsigned long address,
     srec_record::encode_big_endian(buffer + 4, address, 4);
     if (data_nbytes)
     {
-	memcpy(buffer + 8, data, data_nbytes);
-	while (data_nbytes & 3)
-	    buffer[8 + data_nbytes++] = 0;
+        memcpy(buffer + 8, data, data_nbytes);
+        while (data_nbytes & 3)
+            buffer[8 + data_nbytes++] = 0;
     }
     int nbytes = 8 + data_nbytes;
 
@@ -217,7 +217,7 @@ srec_output_file_four_packed_code::write_inner(unsigned long address,
     //
     int checksum = 0;
     for (int j = 0; j < nbytes; ++j)
-	checksum += buffer[j];
+        checksum += buffer[j];
     buffer[0] = -checksum;
 
     //
@@ -225,7 +225,7 @@ srec_output_file_four_packed_code::write_inner(unsigned long address,
     //
     put_char('$');
     for (int j = 0; j < nbytes; ++j)
-	put_byte(buffer[j]);
+        put_byte(buffer[j]);
     put_char('\n');
 }
 
@@ -236,37 +236,37 @@ srec_output_file_four_packed_code::write(const srec_record & record)
     switch (record.get_type())
     {
     case srec_record::type_header:
-	// This format can't do header records
-	break;
+        // This format can't do header records
+        break;
 
     case srec_record::type_data:
-	if (record.get_address() + record.get_length() > (1UL << 16))
-	{
-	    fatal_error
-	    (
-	       	"data address (0x%lX..0x%lX) too large",
-		record.get_address(),
-		record.get_address() + record.get_length() - 1
-	    );
-	}
-	write_inner
-	(
-	    record.get_address(),
-	    record.get_data(),
-	    record.get_length()
-	);
-	break;
+        if (record.get_address() + record.get_length() > (1UL << 16))
+        {
+            fatal_error
+            (
+                "data address (0x%lX..0x%lX) too large",
+                record.get_address(),
+                record.get_address() + record.get_length() - 1
+            );
+        }
+        write_inner
+        (
+            record.get_address(),
+            record.get_data(),
+            record.get_length()
+        );
+        break;
 
     case srec_record::type_data_count:
-	// ignore
-	break;
+        // ignore
+        break;
 
     case srec_record::type_start_address:
-	// This format can't do start addresses.
-	break;
+        // This format can't do start addresses.
+        break;
 
     case srec_record::type_unknown:
-	fatal_error("can't write unknown record type");
+        fatal_error("can't write unknown record type");
     }
 }
 
@@ -284,16 +284,16 @@ srec_output_file_four_packed_code::line_length_set(int linlen)
     // Constrain based on the file format.
     //
     if (n < 1)
-	n = 1;
+        n = 1;
     else if (n > 252)
-	n = 252;
+        n = 252;
 
     //
     // An additional constraint is the size of the srec_record
     // data buffer.
     //
     if (n > srec_record::max_data_length)
-	n = srec_record::max_data_length;
+        n = srec_record::max_data_length;
     pref_block_size = n;
 }
 

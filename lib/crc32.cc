@@ -1,20 +1,20 @@
 //
-//	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2002, 2006 Peter Miller
+//      srecord - manipulate eprom load files
+//      Copyright (C) 2000-2002, 2006, 2007 Peter Miller
 //
-//	This program is free software; you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation; either version 2 of the License, or
-//	(at your option) any later version.
+//      This program is free software; you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation; either version 2 of the License, or
+//      (at your option) any later version.
 //
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
+//      This program is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
 //
-//	You should have received a copy of the GNU General Public License
-//	along with this program; if not, write to the Free Software
-//	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+//      You should have received a copy of the GNU General Public License
+//      along with this program; if not, write to the Free Software
+//      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
 // MANIFEST: functions to implement the crc32 class
 //
@@ -83,27 +83,27 @@ static unsigned long table[256];
 static void
 calculate_table()
 {
-	int	b, i;
-	unsigned long v;
+        int     b, i;
+        unsigned long v;
 
-	for (b = 0; b < 256; ++b)
-	{
-		for (v = b, i = 8; --i >= 0; )
-			v = (v & 1) ? ((v >> 1) ^ POLYNOMIAL) : (v >> 1);
-		table[b] = v;
-	}
+        for (b = 0; b < 256; ++b)
+        {
+                for (v = b, i = 8; --i >= 0; )
+                        v = (v & 1) ? ((v >> 1) ^ POLYNOMIAL) : (v >> 1);
+                table[b] = v;
+        }
 }
 
 crc32::crc32()
-	: state(0xFFFFFFFF)
+        : state(0xFFFFFFFF)
 {
-	if (!table[1])
-		calculate_table();
+        if (!table[1])
+                calculate_table();
 }
 
 
 crc32::crc32(const crc32 &arg)
-	: state(arg.state)
+        : state(arg.state)
 {
 }
 
@@ -111,11 +111,11 @@ crc32::crc32(const crc32 &arg)
 crc32 &
 crc32::operator=(const crc32 &arg)
 {
-	if (this != &arg)
-	{
-		state = arg.state;
-	}
-	return *this;
+        if (this != &arg)
+        {
+                state = arg.state;
+        }
+        return *this;
 }
 
 
@@ -127,54 +127,54 @@ crc32::~crc32()
 static inline unsigned long
 UPDC32(unsigned char octet, unsigned long crc)
 {
-	// The original code had this as a #define
-	return table[(crc ^ octet) & 0xFF] ^ (crc >> 8);
+        // The original code had this as a #define
+        return table[(crc ^ octet) & 0xFF] ^ (crc >> 8);
 }
 
 
 void
 crc32::next(unsigned char x)
 {
-	state = UPDC32(x, state);
+        state = UPDC32(x, state);
 }
 
 
 void
 crc32::nextbuf(const void *data, size_t nbytes)
 {
-	const unsigned char *dp = (unsigned char *)data;
-	while (nbytes > 0)
-	{
-	    state = UPDC32(*dp, state);
-	    ++dp;
-	    --nbytes;
-	}
+        const unsigned char *dp = (unsigned char *)data;
+        while (nbytes > 0)
+        {
+            state = UPDC32(*dp, state);
+            ++dp;
+            --nbytes;
+        }
 }
 
 unsigned long
 crc32::get()
-	const
+        const
 {
 #if 1
-	return ~state;
+        return ~state;
 #else
-	//
-	// The crc_32.c program floating around on the Internet prints
-	// two numbers.  The first is calculated as follows (the second
-	// is the CRC as returned 5 lines back).  It appears to be an
-	// attempt to embed the crc into the data, and tell you what
-	// the CRC should be if you calculate the CRC over the data and
-	// the CRC.  However, it makes the assumption that you store
-	// the CRC little-endian, and it doesn't do the final bit-not.
-	//
-	// To simulate this (or something very much like it) try
-	//	srec_cat <file> -lecrc32 <addr> -lecrc32 <addr+4>
-	//
-	unsigned long temp = state;
-	temp = UPDC32( ~state        & 0xFF, temp);
-	temp = UPDC32((~state >>  8) & 0xFF, temp);
-	temp = UPDC32((~state >> 16) & 0xFF, temp);
-	temp = UPDC32((~state >> 24) & 0xFF, temp);
-	return temp; // I wonder why this isn't bit-not-ed?
+        //
+        // The crc_32.c program floating around on the Internet prints
+        // two numbers.  The first is calculated as follows (the second
+        // is the CRC as returned 5 lines back).  It appears to be an
+        // attempt to embed the crc into the data, and tell you what
+        // the CRC should be if you calculate the CRC over the data and
+        // the CRC.  However, it makes the assumption that you store
+        // the CRC little-endian, and it doesn't do the final bit-not.
+        //
+        // To simulate this (or something very much like it) try
+        //      srec_cat <file> -lecrc32 <addr> -lecrc32 <addr+4>
+        //
+        unsigned long temp = state;
+        temp = UPDC32( ~state        & 0xFF, temp);
+        temp = UPDC32((~state >>  8) & 0xFF, temp);
+        temp = UPDC32((~state >> 16) & 0xFF, temp);
+        temp = UPDC32((~state >> 24) & 0xFF, temp);
+        return temp; // I wonder why this isn't bit-not-ed?
 #endif
 }

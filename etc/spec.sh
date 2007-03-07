@@ -1,21 +1,21 @@
 #!/bin/sh
 #
-#	srecord - manipulate eprom load files
-#	Copyright (C) 1998, 2001, 2003, 2005, 2006 Peter Miller
+#       srecord - manipulate eprom load files
+#       Copyright (C) 1998, 2001, 2003, 2005-2007 Peter Miller
 #
-#	This program is free software; you can redistribute it and/or modify
-#	it under the terms of the GNU General Public License as published by
-#	the Free Software Foundation; either version 2 of the License, or
-#	(at your option) any later version.
+#       This program is free software; you can redistribute it and/or modify
+#       it under the terms of the GNU General Public License as published by
+#       the Free Software Foundation; either version 2 of the License, or
+#       (at your option) any later version.
 #
-#	This program is distributed in the hope that it will be useful,
-#	but WITHOUT ANY WARRANTY; without even the implied warranty of
-#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#	GNU General Public License for more details.
+#       This program is distributed in the hope that it will be useful,
+#       but WITHOUT ANY WARRANTY; without even the implied warranty of
+#       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#       GNU General Public License for more details.
 #
-#	You should have received a copy of the GNU General Public License
-#	along with this program; if not, write to the Free Software
-#	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+#       You should have received a copy of the GNU General Public License
+#       along with this program; if not, write to the Free Software
+#       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 #
 # MANIFEST: shell script to generate RedHat spec file
 #
@@ -106,33 +106,33 @@ files=
 
 remember_prog()
 {
-	if eval "test \"\${prog_${1}-no}\" != yes"
-	then
-		eval "prog_${1}=yes"
-		files="$files %{_bindir}/${1}"
-	fi
+        if eval "test \"\${prog_${1}-no}\" != yes"
+        then
+                eval "prog_${1}=yes"
+                files="$files %{_bindir}/${1}"
+        fi
 }
 
 for file in $*
 do
-	case $file in
+        case $file in
 
-	prog/*/main.cc)
-		dir=`echo $file | sed 's|prog/\([^/]*\)/.*|\1|'`
-		remember_prog $dir
-		;;
+        prog/*/main.cc)
+                dir=`echo $file | sed 's|prog/\([^/]*\)/.*|\1|'`
+                remember_prog $dir
+                ;;
 
-	man/man[0-9]/*.[0-9])
-		ff=`echo $file | sed 's|^man/||'`
-		files="$files %{_mandir}/${ff}*"
-		;;
+        man/man[0-9]/*.[0-9])
+                ff=`echo $file | sed 's|^man/||'`
+                files="$files %{_mandir}/${ff}*"
+                ;;
 
-	*)
-		;;
-	esac
+        *)
+                ;;
+        esac
 done
 
 for file in $files
 do
-	echo "$file"
+        echo "$file"
 done | sort
