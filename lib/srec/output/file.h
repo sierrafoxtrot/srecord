@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2003, 2005, 2006 Peter Miller
+//	Copyright (C) 1998-2003, 2005-2007 Peter Miller
 //
 //	This program is free software; you can redistribute it and/or modify
 //	it under the terms of the GNU General Public License as published by
@@ -114,6 +114,14 @@ protected:
       * first).
       */
     virtual void put_3bytes(unsigned long);
+
+    /**
+      * The put_4bytes method is used to send a 32-bit value to the
+      * output.  The put_byte() method is called four times, and the
+      * four byte values are sent big-endian (most significant byte
+      * first).
+      */
+    virtual void put_4bytes(unsigned long);
 
     /**
       * The checksum_reset method is used to set the running checksum to

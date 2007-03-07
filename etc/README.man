@@ -1,6 +1,6 @@
 '\" t
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998, 2000-2004, 2006 Peter Miller
+.\"	Copyright (C) 1998, 2000-2004, 2006, 2007 Peter Miller
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
 .\"	it under the terms of the GNU General Public License as published by
@@ -60,6 +60,9 @@ This format cannot be read.
 .TP 8n
 Binary
 Binary files can both be read and written.
+.TP 8n
+B-Record
+Files in Freescale Dragonball bootstrap b-record format can be read and written.
 .TP 8n
 C
 It is also possible to write a C array declaration which contains the data.

@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 2001, 2002, 2004, 2006 Peter Miller
+.\"	Copyright (C) 2001, 2002, 2004, 2006, 2007 Peter Miller
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
 .\"	it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ etc/README.man
 Mention the new format in the section of this file which describes
 the supported file formats.
 .TP 8n
-etc/srecord.html
+etc/index.html
 Mention the new format in the section of this file which describes
 the supported file formats.
 .TP 8n

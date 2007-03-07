@@ -1,6 +1,6 @@
 .\"
 .\"	srecord - manipulate eprom load files
-.\"	Copyright (C) 1998-2006 Peter Miller
+.\"	Copyright (C) 1998-2007 Peter Miller
 .\"
 .\"	This program is free software; you can redistribute it and/or modify
 .\"	it under the terms of the GNU General Public License as published by
@@ -56,6 +56,11 @@ for a description of this file format.
 \fB\-Binary\fP
 This option says the file is a raw binary file, and should be read literally.
 (May also be written \-Raw.)
+.TP 8n
+\fB\-B-Record\fP
+This option says to use the Freescale MC68EZ328 Dragonball bootstrap
+b-record format to read the file.
+See \fIsrec_brecord\fP(5) for a description of this file format.
 .TP 8n
 \fB\-COsmac\fP
 This option says to use the RCA Cosmac Elf format to read the file.

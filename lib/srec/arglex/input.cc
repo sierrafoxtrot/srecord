@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 1998-2006 Peter Miller
+//	Copyright (C) 1998-2007 Peter Miller
 //
 //	This program is free software; you can redistribute it and/or modify
 //	it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ using namespace std;
 #include <lib/srec/input/file/ascii_hex.h>
 #include <lib/srec/input/file/atmel_generic.h>
 #include <lib/srec/input/file/binary.h>
+#include <lib/srec/input/file/brecord.h>
 #include <lib/srec/input/file/cosmac.h>
 #include <lib/srec/input/file/dec_binary.h>
 #include <lib/srec/input/file/emon52.h>
@@ -156,6 +157,11 @@ srec_arglex::get_input()
     case token_binary:
 	token_next();
 	ifp = new srec_input_file_binary(fn.c_str());
+	break;
+
+    case token_brecord:
+	token_next();
+	ifp = new srec_input_file_brecord(fn.c_str());
 	break;
 
     case token_cosmac:

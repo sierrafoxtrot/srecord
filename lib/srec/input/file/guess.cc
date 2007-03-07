@@ -1,6 +1,6 @@
 //
 //	srecord - manipulate eprom load files
-//	Copyright (C) 2000-2006 Peter Miller
+//	Copyright (C) 2000-2007 Peter Miller
 //
 //	This program is free software; you can redistribute it and/or modify
 //	it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include <lib/srec/input/file/ascii_hex.h>
 #include <lib/srec/input/file/atmel_generic.h>
 #include <lib/srec/input/file/binary.h>
+#include <lib/srec/input/file/brecord.h>
 #include <lib/srec/input/file/dec_binary.h>
 #include <lib/srec/input/file/emon52.h>
 #include <lib/srec/input/file/fairchild.h>
@@ -65,6 +66,12 @@ static srec_input *
 create_atmel_generic(const char *fn)
 {
     return new srec_input_file_atmel_generic(fn);
+}
+
+static srec_input *
+create_brecord(const char *fn)
+{
+    return new srec_input_file_brecord(fn);
 }
 
 static srec_input *
@@ -203,6 +210,7 @@ static func_p table[] =
     create_aomf,
     create_ascii_hex,
     create_atmel_generic,
+    create_brecord,
     create_dec_binary,
     create_emon52,
     create_fairchild,
