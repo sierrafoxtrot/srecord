@@ -33,4 +33,4 @@ The \fIsrec_cat\fP(1) command now only writes a start address into the
 output if there was a start address present in the input.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.24 (8-Mar-2006)
+.SS Version 1.24 (2006-Mar-08)

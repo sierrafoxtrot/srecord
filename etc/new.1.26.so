@@ -40,4 +40,4 @@ options.  This gets around absurdly short command line length limits in
 some operating systems.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.26 (26-May-2006)
+.SS Version 1.26 (2006-May-26)

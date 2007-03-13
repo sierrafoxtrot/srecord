@@ -36,4 +36,4 @@ There is a new bit-wise NOT filter, which may be used to invert the data.
 A couple of bugs have been fixed in the CRC filters.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.7 (19-Mar-2001)
+.SS Version 1.7 (2001-Mar-19)

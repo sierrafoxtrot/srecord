@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2004-2007 Peter Miller
+.\"     Copyright (C) 2007 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -16,36 +16,19 @@
 .\"     along with this program; if not, write to the Free Software
 .\"     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.20 features
+.\" MANIFEST: description of new 1.29 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" Change 26, 25, 23, 22
-More Doxygen comments have been added to the class header files.
-.PP
-.if n *
-.if t \(bu
-.\" Change 21
-There is a new \fIsrec_cat --crlf\fP option, which may be used for force
-CRLF output on operating systems which don't use that style of line
-termination.
-.PP
-.if n *
-.if t \(bu
-.\" Change 18
-A number of problems with GCC, particularly with the early 3.\fIx\fP series.
-.PP
-.if n *
-.if t \(bu
-.\" Change 16
-There is a new "Stewie" format, an undocumented format loosely based on
-the Motorola S-Record format, apparently used in mobile phones.
-More information would be most welcome.
-.PP
-.if n *
-.if t \(bu
-A number of build problems have been fixed.
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 29 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.20 (2004-Feb-08)
+.SS Version 1.29 (2007-Mar-13)
+.\" vim:ts=8:sw=4:et

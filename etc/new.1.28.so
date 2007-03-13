@@ -18,17 +18,12 @@
 .\"
 .\" MANIFEST: description of new 1.28 features
 .\"
-.\" you can create the initial cut of this file using the
-.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
-.\"             -p srecord.1 -c 28 -unf
-.\" command, and then editing it to be more appropriate.
-.\"
-.\" ------------------------------------------------------------------------
-.\" .PP
-.\" .if n *
-.\" .if t \(bu
-.\" .\" Change N
+.PP
+.if n *
+.if t \(bu
+.\" Change 15
+A serious bug has been fixed in the generated Makefile.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.28 (8-Mar-2007)
+.SS Version 1.28 (2007-Mar-08)
 .\" vim:ts=8:sw=4:et

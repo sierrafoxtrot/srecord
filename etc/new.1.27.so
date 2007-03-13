@@ -26,5 +26,5 @@ It is now possible to read and write files in the Freescale
 MC68EZ328 Dragonball bootstrap b-record format
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.27 (21-Dec-2006)
+.SS Version 1.27 (2006-Dec-21)
 .\" vim:ts=8:sw=4:et

@@ -40,4 +40,4 @@ except that the bytes counts and the addresses refer to words (hi,lo)
 rather than bytes.  See \fIsrec_intel16\fP(5) for more information.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.16 (28-Jul-2003)
+.SS Version 1.16 (2003-Jul-28)

@@ -56,4 +56,4 @@ The Needham EMP programmer format has been added for reading and writing.
 See \fIsrec_needham\fP(5) for more information.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.14 (11-Mar-2003)
+.SS Version 1.14 (2003-Mar-11)

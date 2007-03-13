@@ -38,4 +38,4 @@ There is a new \fIsrec_cat \-Random_Fill\fP filter, like the \fIsrec_cat
 \-Fill\fP filter except that it uses random values.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.18 (1-Jan-2004)
+.SS Version 1.18 (2004-Jan-01)

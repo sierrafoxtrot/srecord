@@ -53,4 +53,4 @@ A bug has been fixed in the C array output.  It used to generate invalid
 output when the input had holes in the data.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.6 (3-Dec-2000)
+.SS Version 1.6 (2000-Dec-03)

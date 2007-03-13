@@ -83,4 +83,4 @@ allowing you to specify the maximum width of output lines.
 See \fIsrec_cat\fP(1) for more information.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.4 (13-Jan-2000)
+.SS Version 1.4 (2000-Jan-13)

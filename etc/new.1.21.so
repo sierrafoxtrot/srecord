@@ -75,4 +75,4 @@ in and parsed (so it is still an error if they are missing) but
 their values are not checked.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.21 (7-Feb-2005)
+.SS Version 1.21 (2005-Feb-07)

@@ -79,4 +79,4 @@ There is a new SPASM format for PIC programmers.
 See \fIsrec_spasm\fP(5) for more information.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.8 (20-Apr-2001)
+.SS Version 1.8 (2001-Apr-20)

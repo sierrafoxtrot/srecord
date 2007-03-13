@@ -32,4 +32,4 @@ The CRC 16 filters have been enhanced to accept an argument to
 specify whether CCITT or XMODEM calculations are to be performed.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.23 (23-Sep-2005)
+.SS Version 1.23 (2005-Sep-23)
