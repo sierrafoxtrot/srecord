@@ -358,3 +358,9 @@ archive/srecord.ico:
 {
     png2ico [target] [resolve [need]];
 }
+
+
+check-tarball: etc/check-tarball.sh archive/[project_minus].tar.gz
+{
+    sh [resolve etc/check-tarball.sh archive/[project_minus].tar.gz];
+}

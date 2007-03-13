@@ -21,6 +21,8 @@
 #
 clean_files="core y.tab.c y.tab.h y.output .bin .bindir lib/libsrecord.a"
 
+TAB=`echo | tr '\n' '\t'`
+
 #
 # list of progams to be linked and installed
 #
@@ -46,9 +48,9 @@ recursive_mkdir()
                         else
                                 echo "$src_dir/.${flavor}:"
                         fi
-                        echo "  -\$(INSTALL) -m 0755 -d $dst_dir"
-                        echo "  @-test -d $dst_dir && touch \$@"
-                        echo "  @sleep 1"
+                        echo "${TAB}-\$(INSTALL) -m 0755 -d $dst_dir"
+                        echo "${TAB}@-test -d $dst_dir && touch \$@"
+                        echo "${TAB}@sleep 1"
                         eval "${dirvar}_${flavor}=yes"
                         clean_files="$clean_files $src_dir/.${flavor}"
                 fi
@@ -136,13 +138,14 @@ do
 
         echo ""
         echo "bin/${prog}: \$(${prog}_obj) lib/libsrecord.a .bin"
-        echo "  \$(CXX) \$(LDFLAGS) -o \$@ \$(${prog}_obj) lib/libsrecord.a \$(LIBS)"
+        echo "${TAB}\$(CXX) \$(LDFLAGS) -o \$@ \$(${prog}_obj)" \
+            "lib/libsrecord.a \$(LIBS)"
 
         all="${all} bin/${prog}"
 
         echo ""
         echo "\$(bindir)/${prog}: bin/${prog} .bindir"
-        echo "  \$(INSTALL_PROGRAM) bin/${prog} \$@"
+        echo "${TAB}\$(INSTALL_PROGRAM) bin/${prog} \$@"
 
         install_bin="${install_bin} \$(bindir)/${prog}"
 done
@@ -160,37 +163,40 @@ echo ''
 echo 'doc-yes: etc/reference.ps'
 echo ''
 echo 'doc-no:'
+echo ''
+echo '%.pdf: %.ps'
+echo "${TAB}ps2pdf \$*.ps \$*.pdf"
 
 echo ""
 echo "lib_obj =" $lib_files
 echo ""
 echo "lib/libsrecord.a: \$(lib_obj)"
-echo "  rm -f \$@"
-echo "  \$(AR) qc \$@ \$(lib_obj)"
-echo "  \$(RANLIB) \$@"
+echo "${TAB}rm -f \$@"
+echo "${TAB}\$(AR) qc \$@ \$(lib_obj)"
+echo "${TAB}\$(RANLIB) \$@"
 
 echo ""
 echo ".bin:"
-echo "  -mkdir bin"
-echo "  -chmod 0755 bin"
-echo "  @-test -d bin && touch \$@"
-echo "  @sleep 1"
+echo "${TAB}-mkdir bin"
+echo "${TAB}-chmod 0755 bin"
+echo "${TAB}@-test -d bin && touch \$@"
+echo "${TAB}@sleep 1"
 
 echo ""
 echo ".bindir:"
-echo "  -\$(INSTALL) -m 0755 -d \$(bindir)"
-echo "  @-test -d \$(bindir) && touch \$@"
-echo "  @sleep 1"
+echo "${TAB}-\$(INSTALL) -m 0755 -d \$(bindir)"
+echo "${TAB}@-test -d \$(bindir) && touch \$@"
+echo "${TAB}@sleep 1"
 
 echo ""
 echo "sure:" $test_files
-echo "  @echo Passed All Tests"
+echo "${TAB}@echo Passed All Tests"
 
 echo ""
 echo "clean-obj:"
 echo $clean_files | tr ' ' '\12' | gawk '{
         if (pos > 0 && pos + length($1) > 71) { printf("\n"); pos = 0; }
-        if (pos == 0) { printf "        rm -f"; pos = 13; }
+        if (pos == 0) { printf "\trm -f"; pos = 13; }
         printf " %s", $1
         pos += 1 + length($1);
 }
@@ -200,7 +206,7 @@ echo ""
 echo "clean: clean-obj"
 echo $all | tr ' ' '\12' | gawk '{
         if (pos > 0 && pos + length($1) > 71) { printf("\n"); pos = 0; }
-        if (pos == 0) { printf "        rm -f"; pos = 13; }
+        if (pos == 0) { printf "\trm -f"; pos = 13; }
         printf " %s", $1
         pos += 1 + length($1);
 }
@@ -208,8 +214,8 @@ END { if (pos) printf "\n"; }'
 
 echo ""
 echo "distclean: clean"
-echo "  rm -f Makefile lib/config.h"
-echo "  rm -f config.status config.cache config.log"
+echo "${TAB}rm -f Makefile lib/config.h"
+echo "${TAB}rm -f config.status config.cache config.log"
 
 echo ""
 echo "install-bin:" ${install_bin}

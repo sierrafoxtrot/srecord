@@ -34,6 +34,8 @@ esac
 file="$1"
 rfn="$2"
 
+TAB=`echo | tr '\n' '\t'`
+
 case $file in
 
 */*.y)
@@ -50,11 +52,11 @@ case $file in
         yy=`echo $stem | sed -e 's|^[^/]*/||' -e 's|[^a-zA-Z0-9]|_|g'`
         echo ""
         echo "${stem}.gen.cc ${stem}.gen.h: $file"
-        echo "  @echo Expect $numconf conflicts:"
-        echo "  \$(YACC) -d $file"
-        echo "  sed -e 's/[yY][yY]/${yy}_/g' y.tab.c > ${stem}.gen.cc"
-        echo "  sed -e 's/[yY][yY]/${yy}_/g' y.tab.h > ${stem}.gen.h"
-        echo "  rm y.tab.c y.tab.h"
+        echo "${TAB}@echo Expect $numconf conflicts:"
+        echo "${TAB}\$(YACC) -d $file"
+        echo "${TAB}sed -e 's/[yY][yY]/${yy}_/g' y.tab.c > ${stem}.gen.cc"
+        echo "${TAB}sed -e 's/[yY][yY]/${yy}_/g' y.tab.h > ${stem}.gen.h"
+        echo "${TAB}rm y.tab.c y.tab.h"
         ;;
 
 */*.cc)
@@ -69,8 +71,8 @@ case $file in
 
         echo ""
         echo "${stem}.o: $file" $dep
-        echo "  \$(CXX) \$(CPPFLAGS) \$(CXXFLAGS) -I. -c $file"
-        echo "  mv ${root}.o ${stem}.o"
+        echo "${TAB}\$(CXX) \$(CPPFLAGS) \$(CXXFLAGS) -I. -c $file"
+        echo "${TAB}mv ${root}.o ${stem}.o"
         ;;
 
 man/man[0-9]/*.[0-9])
@@ -84,9 +86,9 @@ man/man[0-9]/*.[0-9])
 
         echo ""
         echo "\$(mandir)/$stem: $file" $dep $dir/.mandir
-        echo "  \$(SOELIM) -I. -Ietc $file > tmp"
-        echo "  \$(INSTALL_DATA) tmp \$@"
-        echo "  @rm -f tmp"
+        echo "${TAB}\$(SOELIM) -I. -Ietc $file > tmp"
+        echo "${TAB}\$(INSTALL_DATA) tmp \$@"
+        echo "${TAB}@rm -f tmp"
         ;;
 
 etc/*.man)
@@ -99,22 +101,22 @@ etc/*.man)
 
         echo ""
         echo "etc/$base.ps: $file" $dep
-        echo "  \$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc $file | \$(GROFF) -t -man > \$@"
+        echo "${TAB}\$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc $file | \$(GROFF) -t -man > \$@"
 
         echo ""
         echo "etc/$base.dvi: $file" $dep
-        echo "  \$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc $file | \$(GROFF) -Tdvi -t -man > \$@"
+        echo "${TAB}\$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc $file | \$(GROFF) -Tdvi -t -man > \$@"
 
         echo ""
         echo "etc/$base.txt: $file" $dep
-        echo "  \$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc $file | \$(GROFF) -Tascii -t -man > \$@"
+        echo "${TAB}\$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc $file | \$(GROFF) -Tascii -t -man > \$@"
         ;;
 
 test/*/*.sh)
         root=`basename $file .sh`
         echo ""
         echo "$root: $file all"
-        echo "  \$(SH) $file"
+        echo "${TAB}\$(SH) $file"
         ;;
 
 *)
