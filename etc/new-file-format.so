@@ -90,6 +90,79 @@ Makefile
 Actually, the system the maintainer uses automatically generates this
 file, but if you aren't using Aegis you will need to edit this file for
 your own use.
+.SH IMPLEMENTATION ISSUES
+In implementing a new file format, there are a couple of philosophical
+issues which affect technical decissions:
+.TP 8n
+Be liberal in what you accept
+Where ever possible, consume the widest possible interpretation of
+valid data.  This includes treating mandatory input fields as optional
+(\f[I]e.g.\fP file headers and start addresses), and coping with input
+definitions to their logical extremes (\f[I]e.g.\fP 255 byte data
+records in Motorola format).
+Checksums should always be checked on input, only ignore them if the
+\-ignore-checksums command line option has been given.
+.TP 8n
+Be conservative in what you produce
+Even when the input is questionable, the output produced by
+\f[I]srec_cat\fP must always be strictly conforming with the format
+definition (except as mandated by command line options, see below).
+Checksums, if the format has them, must always be correct on output.
+.TP
+Round Trip
+.RS
+.TP 3n
+In general, what went in is what comes out.
+.TP 3n
+\(bu
+The data may be re-arranged in order, the line lengths may change, but
+the same data should go out as came in.
+.TP 3n
+\(bu
+If the input has no header record, the output should not have one either
+(if at all possible).  This means not automagically inserting a header
+record if the output file code sees data as the first method call.
+(The \-data-only flag affects this, too.)
+.TP 3n
+\(bu
+If the input has no start address record, the output should not have one
+either (if at all possible).  This means not automagically inserting a
+start address record if the output file code does not see one by the
+time the destructor is called.
+(The \-data-only flag affects this, too.)
+.RE
+.TP 8n
+Holes
+Do not to fill in holes in the data.  That said, sometimes you
+\f[I]have\fP to fill holes in the data.  This happens, for example, when
+a 16-bit format is faced with an 8-bit byte of data for one or other
+half of a 16-bit word.  If there is no other way around it, fill the
+hole with 0xFF.  This is because most erased EPROMs have 0xFF data, and
+so the 0xFF won't change anything.
+.PP
+There are also some command line arguments you will need to take into account:
+.TP 8n
+\fB\-ignore-checksums\fP
+If this flag is set, your file input methods must parse \f[I]but not
+check\fP checksums, if the format has checksums.  This is available in
+the \f[CW]use_checksums()\fP method within the methods of your derived
+class.  This only applies to input; output must always produce correct
+checksums.
+.TP 8n
+\fB\-data-only\fP
+If this flag is set, only data records should be produced.  No headers,
+no start addresses, nothing, even if the format specifications
+considers these mandatory.  Do what the user said.  This is available
+as the \f[CW]data_only_flag\fP instance variable in the methods of your
+derived class.
+.TP 8n
+\fB\-line-length\fP
+Where your ouput format is text, and there exists the possibility of
+putting more or less text on each line (\f[I]e.g.\fP the Motorola format
+allows a variable number of data bytes per record) then this should be
+controlable.  This manifests in the \f[CW]address_length_set\fP and
+\f[CW]preferred_block_size_get\fP methods you must implement in your
+derived class.
 .SH AUTHOR
 .TS
 tab(;);
