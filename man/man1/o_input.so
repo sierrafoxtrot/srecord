@@ -174,6 +174,12 @@ See
 .IR srec_ti_tagged (5)
 for a description of this file format.
 .TP 8n
+\fB\-Texas_Instruments_Tagged_16\fP
+This option says to use the Texas Instruments SDSMAC 320 format to read
+the file.  See
+.IR srec_ti_tagged_16 (5)
+for a description of this file format.
+.TP 8n
 \fB\-VMem\fP
 This option says to use the Verilog VMEM format to read the file.
 See \fIsrec_vmem\fP(5) for a description of this file format.
