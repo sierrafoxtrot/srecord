@@ -303,13 +303,30 @@ srec_input_file_intel::read(srec_record &record)
                 fatal_error("file contains no data");
             if (!termination_seen)
             {
-                warning("no start address record");
+                //
+                // Eric Weddington:  ''From looking at the "Hexadecimal
+                // Object File Format Specification" from Intel,
+                // Revision A, January 6, 1988, the Extended Segment
+                // Address Record (0x02) and the Extended Linear Address
+                // Record (0x04) are both optional. The respective
+                // addresses default to 0 until either type of record is
+                // encounterd.''
+                //
                 termination_seen = true;
+#if 0
+                //
+                // We could synthesize a start address, but that means
+                // the input and output don't agree when a round-trip
+                // occurs.
+                //
+                record = srec_record(srec_record::type_start_address, 0, 0, 0);
+                return 1;
+#endif
             }
             if (!end_seen)
             {
                 warning("no end-of-file record");
-                termination_seen = true;
+                end_seen = true;
             }
             return 0;
         }
