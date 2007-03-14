@@ -48,6 +48,7 @@
 #include <lib/srec/output/file/tektronix_extended.h>
 #include <lib/srec/output/file/tektronix.h>
 #include <lib/srec/output/file/ti_tagged.h>
+#include <lib/srec/output/file/ti_tagged_16.h>
 #include <lib/srec/output/file/vhdl.h>
 #include <lib/srec/output/file/vmem.h>
 #include <lib/srec/output/file/wilson.h>
@@ -245,6 +246,11 @@ srec_arglex::get_output()
     case token_ti_tagged:
         token_next();
         ofp = new srec_output_file_ti_tagged(fn.c_str());
+        break;
+
+    case token_ti_tagged_16:
+        token_next();
+        ofp = new srec_output_file_ti_tagged_16(fn.c_str());
         break;
 
     case token_vhdl:

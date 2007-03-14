@@ -19,27 +19,26 @@
 // MANIFEST: functions to impliment the srec_input_file_ti_tagged class
 //
 
-
 #include <cctype>
-#include <lib/srec/input/file/ti_tagged.h>
+#include <lib/srec/input/file/ti_tagged_16.h>
 #include <lib/srec/record.h>
 
 
-srec_input_file_ti_tagged::srec_input_file_ti_tagged(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_ti_tagged_16::srec_input_file_ti_tagged_16(const char *filnam) :
+    srec_input_file(filnam),
     address(0),
     csum(0)
 {
 }
 
 
-srec_input_file_ti_tagged::~srec_input_file_ti_tagged()
+srec_input_file_ti_tagged_16::~srec_input_file_ti_tagged_16()
 {
 }
 
 
 int
-srec_input_file_ti_tagged::get_char()
+srec_input_file_ti_tagged_16::get_char()
 {
     int c = inherited::get_char();
     if (c < 0 || c == '\n')
@@ -51,7 +50,7 @@ srec_input_file_ti_tagged::get_char()
 
 
 int
-srec_input_file_ti_tagged::read(srec_record &record)
+srec_input_file_ti_tagged_16::read(srec_record &record)
 {
     for (;;)
     {
@@ -120,7 +119,7 @@ srec_input_file_ti_tagged::read(srec_record &record)
 
         case '9':
             // load address which represents a word location.
-            address = get_word();
+            address = get_word() * 2;
             break;
 
         case 'B':
@@ -171,8 +170,8 @@ srec_input_file_ti_tagged::read(srec_record &record)
 
 
 const char *
-srec_input_file_ti_tagged::get_file_format_name()
+srec_input_file_ti_tagged_16::get_file_format_name()
     const
 {
-    return "Texas Instruments Tagged (SDSMAC)";
+    return "Texas Instruments SDSMAC (320)";
 }

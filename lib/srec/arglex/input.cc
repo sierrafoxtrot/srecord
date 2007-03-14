@@ -49,6 +49,7 @@ using namespace std;
 #include <lib/srec/input/file/tektronix_extended.h>
 #include <lib/srec/input/file/tektronix.h>
 #include <lib/srec/input/file/ti_tagged.h>
+#include <lib/srec/input/file/ti_tagged_16.h>
 #include <lib/srec/input/file/vmem.h>
 #include <lib/srec/input/file/wilson.h>
 #include <lib/srec/input/filter/and.h>
@@ -267,6 +268,11 @@ srec_arglex::get_input()
     case token_ti_tagged:
         token_next();
         ifp = new srec_input_file_ti_tagged(fn.c_str());
+        break;
+
+    case token_ti_tagged_16:
+        token_next();
+        ifp = new srec_input_file_ti_tagged_16(fn.c_str());
         break;
 
     case token_vmem:

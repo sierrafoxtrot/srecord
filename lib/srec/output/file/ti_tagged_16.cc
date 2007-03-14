@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2007 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -19,15 +19,14 @@
 // MANIFEST: functions to impliment the srec_output_file_ti_tagged class
 //
 
-
-#include <lib/srec/output/file/ti_tagged.h>
+#include <lib/srec/output/file/ti_tagged_16.h>
 #include <lib/srec/record.h>
 
 #include <cctype>
 
 
-srec_output_file_ti_tagged::srec_output_file_ti_tagged(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_ti_tagged_16::srec_output_file_ti_tagged_16(const char *fn) :
+    srec_output_file(fn),
     address(0),
     column(0),
     line_length(74),
@@ -36,7 +35,7 @@ srec_output_file_ti_tagged::srec_output_file_ti_tagged(const char *filename) :
 }
 
 
-srec_output_file_ti_tagged::~srec_output_file_ti_tagged()
+srec_output_file_ti_tagged_16::~srec_output_file_ti_tagged_16()
 {
     if (column)
         put_eoln();
@@ -44,7 +43,7 @@ srec_output_file_ti_tagged::~srec_output_file_ti_tagged()
 
 
 void
-srec_output_file_ti_tagged::put_char(int c)
+srec_output_file_ti_tagged_16::put_char(int c)
 {
     if (c == '\n')
     {
@@ -59,8 +58,9 @@ srec_output_file_ti_tagged::put_char(int c)
     inherited::put_char(c);
 }
 
+
 void
-srec_output_file_ti_tagged::put_eoln()
+srec_output_file_ti_tagged_16::put_eoln()
 {
     put_char('7');
     put_word(-csum);
@@ -70,7 +70,7 @@ srec_output_file_ti_tagged::put_eoln()
 
 
 void
-srec_output_file_ti_tagged::write(const srec_record &record)
+srec_output_file_ti_tagged_16::write(const srec_record &record)
 {
     int pos = 0;
     switch (record.get_type())
@@ -92,7 +92,7 @@ srec_output_file_ti_tagged::write(const srec_record &record)
         break;
 
     case srec_record::type_data:
-        if (record.get_address() + record.get_length() > (1UL << 16))
+        if (record.get_address() + record.get_length() > (1UL << 17))
         {
             fatal_error
             (
@@ -104,15 +104,35 @@ srec_output_file_ti_tagged::write(const srec_record &record)
         // assert(record.get_length() > 0);
         if (record.get_length() == 0)
             break;
+        pos = 0;
         if (address != record.get_address())
         {
             address = record.get_address();
             if (column + 5 > line_length)
                 put_eoln();
             put_char('9');
-            put_word(address);
+            put_word(address >> 1);
+
+            //
+            // Odd addresses are impossible, so we have to handle them
+            // carefully.  We fake an 0xFF byte before the first byte of
+            // real data, this will leave the erased EPROM data alone.
+            //
+            // The srec_cat command only ever writes data in ascending
+            // order, and always on even address boundaries, so this
+            // will not cause duplicate values for any addresses.
+            //
+            if (address & 1)
+            {
+                if (column + 5 > line_length)
+                    put_eoln();
+                put_char('B');
+                put_byte(0xFF);
+                put_byte(record.get_data(0));
+                ++address;
+                pos = 1;
+            }
         }
-        pos = 0;
         for (; pos + 2 <= record.get_length(); pos += 2)
         {
             if (column + 5 > line_length)
@@ -152,7 +172,7 @@ srec_output_file_ti_tagged::write(const srec_record &record)
 
 
 void
-srec_output_file_ti_tagged::line_length_set(int linlen)
+srec_output_file_ti_tagged_16::line_length_set(int linlen)
 {
     // reduce the line length by 6 characters, to account for the
     // checksum, so we don't keep subtracting it later.
@@ -165,14 +185,14 @@ srec_output_file_ti_tagged::line_length_set(int linlen)
 
 
 void
-srec_output_file_ti_tagged::address_length_set(int)
+srec_output_file_ti_tagged_16::address_length_set(int)
 {
-    // ignore (this is a 16-bit format)
+    // ignore (addresses are always 16 bits)
 }
 
 
 int
-srec_output_file_ti_tagged::preferred_block_size_get()
+srec_output_file_ti_tagged_16::preferred_block_size_get()
     const
 {
     int n = (line_length / 5) * 2;

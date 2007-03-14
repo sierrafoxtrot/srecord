@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2000, 2001, 2006, 2007 Peter Miller
+.\"     Copyright (C) 2007 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -18,19 +18,20 @@
 .\"
 .\" MANIFEST: manual entry for the srec_ti_tagged.5 command
 .\"
-.ds n) srec_ti_tagged
+.ds n) srec_ti_tagged_16
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
-srec_ti_tagged \- Texas Instruments Tagged (SDSMAC) file format
-.XX "srec_ti_tagged(5)" "Texas Instruments Tagged (SDSMAC) file format"
+srec_ti_tagged_16 \- Texas Instruments Tagged (SDSMAC 320) file format
+.XX "srec_ti_tagged_16(5)" "Texas Instruments Tagged (SDSMAC 320) file format"
 .SH DESCRIPTION
-This format is also known as the \f[I]TI-Tagged\fP or \f[I]TI-SDSMAC\fP format.
+This format is also known as the \f[I]TI-Tagged\fP
+or \f[I]Textas Instruments SDSMAC (320)\fP format.
 .PP
 .\" ------------------------------------------------------------------------
 This format allows binary files to be uploaded and downloaded between
 two computer systems, typically between a computer system (such as a
 PC, Macintosh, or workstation) and an emulator or evaluation board for
-microcontrollers and microprocessors.
+16-bit microcontrollers and microprocessors.
 .SS The Lines
 Unlike many other object formats, the lines themselves are not especially
 significant.  The format consits of a number of \fItagged\fP fields,
@@ -56,7 +57,7 @@ T}
 Dummy checksum (ignored).
 T}
 9;T{
-Address.
+Word Address.
 T}
 B;T{
 Data word.
@@ -104,9 +105,10 @@ lf(CW) lf(I) lf(I).
 .TE
 .sp 0.5
 The optional start-of-file record begins with a tag character ('0') and
-a 12-character file header. The first four characters are the byte count
-of the file data.  The remaining 8 characters are the name of the file
-and may be any ASCII characters, blank padded.
+a 12-character file header. The first four characters are the count (in
+hex) of the 16-bit data word values (B) which follow, not including data
+byte values (*). The remaining file header characters are the name of
+the file and may be any ASCII characters, blank padded.
 .\" - - - - - - - - - - - - - - - - -
 .br
 .ne 2i
@@ -145,8 +147,8 @@ lf(CW) lf(I) lf(I) lf(I) lf(I).
 9;n;n;n;n
 .TE
 .sp 0.5
-Addresses may be given for any data byte, but none is mandatory.
-The file begins at 0000 if no address is given before the first data field.
+Addresses may be given for any data byte, but none is mandatory.  The
+file begins at 0000 if no address is given before the first data field.
 The \fInnnn\fP is 16-bit big-endian hexadecimal.
 .\" - - - - - - - - - - - - - - - - -
 .br
@@ -183,10 +185,10 @@ lf(CW) lf(I) lf(I) lf(I) lf(I) lf(I).
 K;n;n;n;n;text
 .TE
 .sp 0.5
-The program identifier can contain a brief description of the program, or
-can be empty (\fIi.e.\fP the text portion is optional).  The \fInnnn\fP
-length (hex) of the field includes the `K', the length and the text; it is at
-least 5.
+The program identifier can contain a brief description of the program,
+or can be empty (\fIi.e.\fP the text portion is optional).  The
+\fInnnn\fP length (hex) of the field includes the `K', the length and
+the text; it is at least 5.
 .\" - - - - - - - - - - - - - - - - -
 .br
 .ne 21
@@ -202,22 +204,21 @@ It contains the data ``Hello, World'' to be loaded at address 0x0100.
 .RS
 .nf
 .ft CW
-K000590080B4865B6C6CB6F2CB2057B6F72B6C64*0A7F648F
+K000590080B4865B6C6CB6F2CB2057B6F72B6C64*0A7F641F
 :
 .ft P
 .fi
 .RE
-and here is another example from the
-reference below
+Here is another example from the reference below
 .RS
 .nf
 .ft CW
-00050        7FDD4F
+00028        7FDCFF
 90000BFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFF7F400F
+90008BFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFF7F3F8F
 90010BFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFF7F3FFF
+90018BFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFF7F3F7F
 90020BFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFF7F3FEF
-90030BFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFF7F3FDF
-90040BFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFFBFFFF7F3FCF
 :
 .ft P
 .fi
@@ -225,5 +226,5 @@ reference below
 .\" ------------------------------------------------------------------------
 .ds n) srec_cat
 .SH SEE ALSO
-http://www.dataio.com/pdf/Manuals/Unifamily/981-0014-016.pdf (page 6-33)
+http://www.dataio.com/pdf/Manuals/Unifamily/981-0014-016.pdf (page 6-7)
 .so ../man1/z_copyright.so
