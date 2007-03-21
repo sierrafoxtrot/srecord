@@ -235,60 +235,18 @@ All filters may be applied to all file formats.
 The latest version of
 .I SRecord
 is available on the Web from:
-.RS 4m
 .TS
-tab(;);
+center,tab(;);
 l l s
 l l l.
 URL:;http://srecord.sourceforge.net/
-File:;srecord.html;# the SRecord page
+File:;index.html;# the SRecord page
 File:;srecord-\*(v).README;# Description, from the tar file
 File:;srecord-\*(v).lsm;# Description, LSM format
 File:;srecord-\*(v).spec;# RedHat package specification
 File:;srecord-\*(v).tar.gz;# the complete source
 File:;srecord-\*(v).pdf;# Reference Manual
 .TE
-.RE
-.PP
-This Web page also contains a few other pieces of software written by me.
-Please have a look if you are interested.
-.PP
-SRecord is also carried by \f(CWsunsite.unc.edu\fP in its Linux archives.
-You will be able to find SRecord on any of its mirrors.
-.RS 4m
-.TS
-tab(;);
-l l s
-l l l.
-URL:;ftp://sunsite.unc.edu/pub/Linux/apps/circuits/
-File:;srecord-\*(v).README;# Description, from the tar file
-File:;srecord-\*(v).lsm;# Description, LSM format
-File:;srecord-\*(v).spec;# RedHat package specification
-File:;srecord-\*(v).tar.gz;# the complete source
-File:;srecord-\*(v).pdf;# Reference Manual
-.TE
-.RE
-This site is extensively mirrored around the world,
-so look for a copy near you (you will get much better response).
-.SS FTP by EMail
-For those of you without Web or FTP access,
-I recommend the use of an ftp-by-email server.
-Here is a list of a few (there may be more):
-.TS
-center,tab(;);
-l l.
-ftpmail@cs.uow.edu.au;Australia
-ftpmail@ftp.uni-stuttgart.de;Germany
-ftpmail@grasp.insa-lyon.fr;France
-ftpmail@doc.ic.ac.uk;Great Britain
-ftpmail@ieunet.ie;Ireland
-ftpmail@sunsite.unc.edu;USA
-ftpmail@ftp.uu.net;USA
-.TE
-.PP
-In general, you can get a help message about how to use each system
-by sending email with a subject of "help"
-and a message body containing just the word "help".
 .br
 .ne 1i
 .SH BUILDING SRECORD
