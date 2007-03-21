@@ -76,9 +76,35 @@ private:
     int pref_block_size;
 
     /**
-        The fubar instance variable is used to remember
+      * The line_length instance variable is used to remember the
+      * maximum length of text lines.
+      */
+    int line_length;
+
+    /**
+      * The address_length instance variable is used to remember
+      * how many bytes of addresses are are to emit.
       */
     int address_length;
+
+    /**
+      * The start_code_emitted instance variable is used to remember
+      * whether or not the start code (Ctrl-B) has been emitted.
+      */
+    bool start_code_emitted;
+
+    /**
+      * The end_code_emitted instance variable is used to remember
+      * whether or not the end code (Ctrl-C) has been emitted.
+      */
+    bool end_code_emitted;
+
+    /**
+      * The emit_end_of_file method is used to write the ETX and
+      * checksum out to the file.  It is safe top call this method more
+      * than once, only one ETX will be written.
+      */
+    void emit_end_of_file();
 
     /**
       * The default constructor.  Do not use.
