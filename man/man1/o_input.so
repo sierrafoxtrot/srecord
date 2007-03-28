@@ -180,6 +180,11 @@ the file.  See
 .IR srec_ti_tagged_16 (5)
 for a description of this file format.
 .TP 8n
+\fB\-Texas_Instruments_TaXT\fP
+This option says to use the Texas Instruments TXT (MSP430) format to
+read the file.  See \f[I]srec_ti_txt\fP(5) for a description of this
+file format.
+.TP 8n
 \fB\-VMem\fP
 This option says to use the Verilog VMEM format to read the file.
 See \fIsrec_vmem\fP(5) for a description of this file format.

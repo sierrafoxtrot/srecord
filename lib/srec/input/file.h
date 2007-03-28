@@ -93,6 +93,18 @@ protected:
     int peek_char();
 
     /**
+      * The get_nibble_value class method is used to translate a
+      * character into its hexadecimal value.
+      *
+      * @param c
+      *     The character to translate
+      * @returns
+      *     int; 0..9 for '0'..'9', 10..15 for 'a'..'f',
+      *     10..15 for 'A-Z', and -1 for everything else.
+      */
+    static int get_nibble_value(int c);
+
+    /**
       * The get_nibble method is used to fetch one hexadecimal digit
       * from the input, via the get_char method.  It is not case
       * sensitive.  It returns a value for 0 to 15.  Characters which

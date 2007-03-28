@@ -122,6 +122,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Tektronix_Extended", token_tektronix_extended, },
         { "-Texas_Instruments_Tagged", token_ti_tagged, },
         { "-Texas_Instruments_Tagged_16", token_ti_tagged_16, },
+        { "-Texas_Instruments_TeXT", token_ti_txt, },
         { "-Un_Fill", token_unfill, },
         { "-Un_SPlit", token_unsplit, },
         { "-VHdl", token_vhdl, },

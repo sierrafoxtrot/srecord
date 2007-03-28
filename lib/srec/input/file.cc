@@ -205,24 +205,32 @@ srec_input_file::peek_char()
 
 
 int
-srec_input_file::get_nibble()
+srec_input_file::get_nibble_value(int c)
 {
-    int c = get_char();
     switch (c)
     {
     case '0': case '1': case '2': case '3': case '4':
     case '5': case '6': case '7': case '8': case '9':
-            return (c - '0');
+        return (c - '0');
 
     case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
-            return (c - 'a' + 10);
+        return (c - 'a' + 10);
 
     case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
-            return (c - 'A' + 10);
+        return (c - 'A' + 10);
     }
-    fatal_error("hexadecimal digit expected");
-    // NOTREACHED
     return -1;
+}
+
+
+int
+srec_input_file::get_nibble()
+{
+    int c = get_char();
+    int n = get_nibble_value(c);
+    if (n < 0)
+        fatal_error("hexadecimal digit expected");
+    return n;
 }
 
 

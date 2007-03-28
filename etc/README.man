@@ -133,8 +133,14 @@ The Tektronix hexadecimal format and the Tektronix Extended hexadecimal
 format are both understood for both reading and writing.
 .TP 8n
 Texas Instruments Tagged
-The Texas Instruments Tagged format is understood for both reading and writing.
-(Also known as the TI-tagged or TI-SDSMAC format.)
+The Texas Instruments Tagged format is understood for both reading and
+writing (both 8 and 16 bit).  Also known as the TI-tagged or TI-SDSMAC
+format.
+.TP 8n
+Texas Instruments ti-txt
+The TI-TXT format is understood for reading and writing.  This format is
+used with the bootstrap loader of the Texas Instruments MSP430 family of
+processors.
 .TP 8n
 VHDL
 It is possible to write VHDL file.

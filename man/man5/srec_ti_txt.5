@@ -1,0 +1,66 @@
+'\" t
+.\"     srecord - The "srecord" program.
+.\"     Copyright (C) 2007 Peter Miller
+.\"
+.\"     This program is free software; you can redistribute it and/or modify
+.\"     it under the terms of the GNU General Public License as published by
+.\"     the Free Software Foundation; either version 2 of the License, or
+.\"     (at your option) any later version.
+.\"
+.\"     This program is distributed in the hope that it will be useful,
+.\"     but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"     GNU General Public License for more details.
+.\"
+.\"     You should have received a copy of the GNU General Public License
+.\"     along with this program; if not, write to the Free Software
+.\"     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+.\"
+.\" MANIFEST: manual entry for the srec_ti_txt.5 command
+.\"
+.ds n) srec_ti_txt
+.TH srec_ti_txt 5 SRecord "Reference Manual"
+.SH NAME
+srec_ti_txt \- Texas Instruments ti-txt (MSP430) file format
+.XX "srec_ti_txt(5)" "Texas Instruments ti-txt (MSP430) file format"
+.SH DESCRIPTION
+The ti-TXT format is used by the Texas Instruments MSP430 familty
+programming adapter.
+.PP
+The TI-TXT hex format supports 16-bit hexadecimal data.  It consists of
+one or more sections, followed by the end-of-file indicator.
+.PP
+Each section consistes of an at (@) sign followed a start address (in
+hexadecimal), and newline, and then data bytes (in hexadecimal).  The
+section address must be even, and is followed by a newline.  The number
+of data bytes must be even.  There are to be 16 data bytes per line,
+except for the last line in a section.
+The number of data bytes in a section is to be even.
+.PP
+The end-of-file indicator is the letter Q (or q)
+followed by a newline.
+The end-of-file indicator mandatory.
+.SS Size Multiplier
+In general, binary data will expand in sized by approximately 3.0 times
+when represented with this format.
+.SH EXAMPLE
+Here is an example ti-txt file taken from the reference below:
+.RS
+.ft CW
+.nf
+@F000
+31 40 00 03 B2 40 80 5A 20 01 D2 D3 22 00 D2 E3
+21 00 3F 40 E8 FD 1F 83 FE 23 F9 3F
+@FFFE
+00 F0
+Q
+.ft P
+.fi
+.RE
+.br
+.ne 1i
+.SH SEE ALSO
+http://focus.ti.com/lit/ug/slau048f/slau048f.pdf
+section A.2
+.so ../man1/z_copyright.so
+.\" vim:ts=8:sw=4:et

@@ -112,6 +112,7 @@ public:
         token_tektronix_extended,
         token_ti_tagged,
         token_ti_tagged_16,
+        token_ti_txt,
         token_unfill,
         token_unsplit,
         token_vhdl,
