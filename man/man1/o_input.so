@@ -55,7 +55,8 @@ for a description of this file format.
 .TP 8n
 \fB\-Binary\fP
 This option says the file is a raw binary file, and should be read literally.
-(May also be written \-Raw.)
+(This option may also be written \-Raw.)
+See \f[I]srec_binary\fP(5) for more information.
 .TP 8n
 \fB\-B-Record\fP
 This option says to use the Freescale MC68EZ328 Dragonball bootstrap
