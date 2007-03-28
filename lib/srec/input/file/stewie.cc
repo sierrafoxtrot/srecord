@@ -24,8 +24,8 @@
 #include <lib/srec/record.h>
 
 
-srec_input_file_stewie::srec_input_file_stewie(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_stewie::srec_input_file_stewie(const string &a_file_name) :
+    srec_input_file(a_file_name),
     data_count(0),
     garbage_warning(false),
     seen_some_input(false),

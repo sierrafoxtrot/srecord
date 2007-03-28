@@ -25,8 +25,8 @@
 #include <lib/srec/record.h>
 
 
-srec_input_file_ti_tagged::srec_input_file_ti_tagged(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_ti_tagged::srec_input_file_ti_tagged(const string &a_filename) :
+    srec_input_file(a_filename),
     address(0),
     csum(0)
 {

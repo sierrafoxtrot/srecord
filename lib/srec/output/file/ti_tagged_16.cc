@@ -25,8 +25,9 @@
 #include <cctype>
 
 
-srec_output_file_ti_tagged_16::srec_output_file_ti_tagged_16(const char *fn) :
-    srec_output_file(fn),
+srec_output_file_ti_tagged_16::srec_output_file_ti_tagged_16(
+        const string &a_file_name) :
+    srec_output_file(a_file_name),
     address(0),
     column(0),
     line_length(74),

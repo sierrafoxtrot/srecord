@@ -49,8 +49,11 @@ public:
     /**
       * A constructor.  The output will be sent to the named file (or
       * the standard output if the file nameis "-").
+      *
+      * @param file_name
+      *     The name of the file to be written.
       */
-    srec_output_file_signetics(const char *);
+    srec_output_file_signetics(const string &file_name);
 
     // See base class for documentation.
     virtual void write(const srec_record &);

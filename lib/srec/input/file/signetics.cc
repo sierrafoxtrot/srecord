@@ -24,8 +24,8 @@
 #include <lib/srec/record.h>
 
 
-srec_input_file_signetics::srec_input_file_signetics(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_signetics::srec_input_file_signetics(const string &a_filename) :
+    srec_input_file(a_filename),
     garbage_warning(false),
     seen_some_input(false)
 {

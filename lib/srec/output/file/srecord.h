@@ -47,11 +47,11 @@ public:
     /**
       * The constructor.
       *
-      * @param filename
+      * @param file_name
       *     The file name to open to write data to.  The name "-" is
       *     understood to mean the standard output.
       */
-    srec_output_file_srecord(const char *filename);
+    srec_output_file_srecord(const string &file_name);
 
     // See base class for documentation.
     void write(const srec_record &);

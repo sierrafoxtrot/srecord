@@ -38,8 +38,8 @@ srec_output_file_formatted_binary::~srec_output_file_formatted_binary()
 
 
 srec_output_file_formatted_binary::srec_output_file_formatted_binary(
-        const char *filename) :
-    srec_output_file(filename),
+        const string &a_file_name) :
+    srec_output_file(a_file_name),
     upper_bound(0),
     address(0),
     check_sum(0)

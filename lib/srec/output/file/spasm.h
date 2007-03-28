@@ -47,14 +47,14 @@ public:
     /**
       * The constructor.
       *
-      * @param filename
+      * @param file_name
       *     The name of the file to write the output to.  The string "-"
       *     is understood to mean the standrad output.
       * @param bigendian
       *     Whether to output big endian data (true) or little endian
       *     data (false).
       */
-    srec_output_file_spasm(const char *filename, bool bigendian = true);
+    srec_output_file_spasm(const string &file_name, bool bigendian = true);
 
     // See base class for documentation.
     virtual void write(const srec_record &);

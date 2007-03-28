@@ -24,8 +24,8 @@
 #include <lib/srec/record.h>
 
 
-srec_input_file_intel::srec_input_file_intel(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_intel::srec_input_file_intel(const string &a_file_name) :
+    srec_input_file(a_file_name),
     data_record_count(0),
     garbage_warning(false),
     seen_some_input(false),

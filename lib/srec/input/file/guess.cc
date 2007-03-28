@@ -52,103 +52,103 @@
 
 
 static srec_input *
-create_aomf(const char *fn)
+create_aomf(const string &fn)
 {
     return new srec_input_file_aomf(fn);
 }
 
 static srec_input *
-create_ascii_hex(const char *fn)
+create_ascii_hex(const string &fn)
 {
     return new srec_input_file_ascii_hex(fn);
 }
 
 static srec_input *
-create_atmel_generic(const char *fn)
+create_atmel_generic(const string &fn)
 {
     return new srec_input_file_atmel_generic(fn);
 }
 
 static srec_input *
-create_brecord(const char *fn)
+create_brecord(const string &fn)
 {
     return new srec_input_file_brecord(fn);
 }
 
 static srec_input *
-create_dec_binary(const char *fn)
+create_dec_binary(const string &fn)
 {
     return new srec_input_file_dec_binary(fn);
 }
 
 static srec_input *
-create_formatted_binary(const char *fn)
+create_formatted_binary(const string &fn)
 {
     return new srec_input_file_formatted_binary(fn);
 }
 
 static srec_input *
-create_four_packed_code(const char *fn)
+create_four_packed_code(const string &fn)
 {
     return new srec_input_file_four_packed_code(fn);
 }
 
 static srec_input *
-create_emon52(const char *fn)
+create_emon52(const string &fn)
 {
     return new srec_input_file_emon52(fn);
 }
 
 static srec_input *
-create_fairchild(const char *fn)
+create_fairchild(const string &fn)
 {
     return new srec_input_file_fairchild(fn);
 }
 
 static srec_input *
-create_fastload(const char *fn)
+create_fastload(const string &fn)
 {
     return new srec_input_file_fastload(fn);
 }
 
 static srec_input *
-create_intel(const char *fn)
+create_intel(const string &fn)
 {
     return new srec_input_file_intel(fn);
 }
 
 static srec_input *
-create_intel16(const char *fn)
+create_intel16(const string &fn)
 {
     return new srec_input_file_intel16(fn);
 }
 
 static srec_input *
-create_mos_tech(const char *fn)
+create_mos_tech(const string &fn)
 {
     return new srec_input_file_mos_tech(fn);
 }
 
 static srec_input *
-create_needham(const char *fn)
+create_needham(const string &fn)
 {
     return new srec_input_file_needham(fn);
 }
 
 static srec_input *
-create_ohio_scientific(const char *fn)
+create_ohio_scientific(const string &fn)
 {
     return new srec_input_file_os65v(fn);
 }
 
 static srec_input *
-create_signetics(const char *fn)
+create_signetics(const string &fn)
 {
     return new srec_input_file_signetics(fn);
 }
 
 static srec_input *
-create_spasm(const char *fn)
+create_spasm(const string &fn)
 {
     // don't we need to test the big-endian and little-endian forms?
     // but they are indistinguishable.
@@ -156,61 +156,61 @@ create_spasm(const char *fn)
 }
 
 static srec_input *
-create_spectrum(const char *fn)
+create_spectrum(const string &fn)
 {
     return new srec_input_file_spectrum(fn);
 }
 
 static srec_input *
-create_srecord(const char *fn)
+create_srecord(const string &fn)
 {
     return new srec_input_file_srecord(fn);
 }
 
 static srec_input *
-create_stewie(const char *fn)
+create_stewie(const string &fn)
 {
     return new srec_input_file_stewie(fn);
 }
 
 static srec_input *
-create_tektronix(const char *fn)
+create_tektronix(const string &fn)
 {
     return new srec_input_file_tektronix(fn);
 }
 
 static srec_input *
-create_tektronix_extended(const char *fn)
+create_tektronix_extended(const string &fn)
 {
     return new srec_input_file_tektronix_extended(fn);
 }
 
 static srec_input *
-create_ti_tagged(const char *fn)
+create_ti_tagged(const string &fn)
 {
     return new srec_input_file_ti_tagged(fn);
 }
 
 static srec_input *
-create_ti_txt(const char *fn)
+create_ti_txt(const string &fn)
 {
     return new srec_input_file_ti_txt(fn);
 }
 
 static srec_input *
-create_vmem(const char *fn)
+create_vmem(const string &fn)
 {
     return new srec_input_file_vmem(fn);
 }
 
 static srec_input *
-create_wilson(const char *fn)
+create_wilson(const string &fn)
 {
     return new srec_input_file_wilson(fn);
 }
 
 
-typedef srec_input *(*func_p)(const char *);
+typedef srec_input *(*func_p)(const string &file_name);
 
 static func_p table[] =
 {
@@ -247,9 +247,9 @@ static func_p table[] =
 
 
 srec_input *
-srec_input_file_guess(const char *fn)
+srec_input_file_guess(const string &fn)
 {
-    if (!fn || !*fn || (fn[0] == '-' && fn[1] == 0))
+    if (fn.empty() || fn == "-")
     {
         quit_default.fatal_error
         (
@@ -316,7 +316,7 @@ srec_input_file_guess(const char *fn)
     quit_default.warning
     (
         "%s: unable to determine the file format, assuming binary",
-        fn
+        fn.c_str()
     );
     return new srec_input_file_binary(fn);
 }

@@ -24,8 +24,8 @@
 #include <lib/srec/record.h>
 
 
-srec_input_file_wilson::srec_input_file_wilson(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_wilson::srec_input_file_wilson(const string &a_file_name) :
+    srec_input_file(a_file_name),
     garbage_warning(false),
     seen_some_input(false),
     termination_seen(false)

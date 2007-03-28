@@ -47,10 +47,10 @@ public:
     /**
       * The constructor.
       *
-      * @param filename
+      * @param file_name
       *     The file name to open and write output to.
       */
-    srec_output_file_binary(const char *filename);
+    srec_output_file_binary(const string &file_name);
 
     // See base class for documentation.
     virtual void write(const srec_record &);

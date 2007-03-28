@@ -66,8 +66,9 @@ memrchr(const char *data, char c, size_t len)
 
 
 static string
-build_include_file_name(const char *fn)
+build_include_file_name(const string &filename)
 {
+    const char *fn = filename.c_str();
     // Watch out for out base class adding a line number.
     const char *colon = strstr(fn, ": ");
     if (!colon)
@@ -86,8 +87,8 @@ build_include_file_name(const char *fn)
 }
 
 
-srec_output_file_c::srec_output_file_c(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_c::srec_output_file_c(const string &a_file_name) :
+    srec_output_file(a_file_name),
     prefix("eprom"),
     taddr(0),
     header_done(false),
@@ -97,7 +98,7 @@ srec_output_file_c::srec_output_file_c(const char *filename) :
     address_length(4),
     constant(true),
     include(false),
-    include_file_name(build_include_file_name(filename))
+    include_file_name(build_include_file_name(a_file_name))
 {
 }
 

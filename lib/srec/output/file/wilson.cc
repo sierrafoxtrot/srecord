@@ -31,8 +31,8 @@ srec_output_file_wilson::srec_output_file_wilson() :
 }
 
 
-srec_output_file_wilson::srec_output_file_wilson(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_wilson::srec_output_file_wilson(const string &a_file_name) :
+    srec_output_file(a_file_name),
     pref_block_size(32)
 {
 }

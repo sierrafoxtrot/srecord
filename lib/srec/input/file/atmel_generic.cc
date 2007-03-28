@@ -26,8 +26,8 @@
 
 
 srec_input_file_atmel_generic::srec_input_file_atmel_generic(
-        const char *filename, bool arg2) :
-    srec_input_file(filename),
+        const string &a_file_name, bool arg2) :
+    srec_input_file(a_file_name),
     seen_some_input(false),
     bigend(arg2)
 {

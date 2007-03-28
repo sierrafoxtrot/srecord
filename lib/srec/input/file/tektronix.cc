@@ -24,8 +24,8 @@
 #include <lib/srec/record.h>
 
 
-srec_input_file_tektronix::srec_input_file_tektronix(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_tektronix::srec_input_file_tektronix(const string &a_filename) :
+    srec_input_file(a_filename),
     data_record_count(0),
     garbage_warning(false),
     seen_some_input(false),

@@ -39,8 +39,11 @@ public:
 
     /**
       * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be written.
       */
-    srec_output_file_needham(const char *);
+    srec_output_file_needham(const string &file_name);
 
     // See base class for documentation.
     void write(const srec_record &);

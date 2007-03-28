@@ -24,8 +24,8 @@
 #include <lib/srec/record.h>
 
 
-srec_output_file_stewie::srec_output_file_stewie(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_stewie::srec_output_file_stewie(const string &a_file_name) :
+    srec_output_file(a_file_name),
     data_count(0),
     address_length(2),
     preferred_block_size(128)

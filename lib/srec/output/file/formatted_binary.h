@@ -40,8 +40,11 @@ public:
 
     /**
       * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be written.
       */
-    srec_output_file_formatted_binary(const char *filename);
+    srec_output_file_formatted_binary(const string &file_name);
 
     // See base class for documentation.
     void notify_upper_bound(long unsigned);

@@ -40,8 +40,11 @@ public:
 
     /**
       * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be written.
       */
-    srec_output_file_intel16(const char *);
+    srec_output_file_intel16(const string &file_name);
 
     // See base class for documentation.
     virtual void write(const srec_record &);

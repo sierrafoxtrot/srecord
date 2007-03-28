@@ -39,8 +39,11 @@ public:
 
     /**
       * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be written.
       */
-    srec_output_file_ti_txt(const char *filename);
+    srec_output_file_ti_txt(const string &file_name);
 
 protected:
     // See base class for documentation.

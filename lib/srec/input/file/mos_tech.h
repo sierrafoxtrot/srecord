@@ -35,8 +35,11 @@ public:
     /**
       * A constructor.  The input is read from the named file (or
       * the standard input if the file anme is "-").
+      *
+      * @param file_name
+      *     The name of the file to be read.
       */
-    srec_input_file_mos_tech(const char *filename);
+    srec_input_file_mos_tech(const string &file_name);
 
     /**
       * The destructor.

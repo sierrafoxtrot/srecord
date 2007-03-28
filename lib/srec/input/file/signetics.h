@@ -36,8 +36,11 @@ public:
     /**
       * The constructor.  The input will be read from the named file
       * (or the standatd input if the filename is "-").
+      *
+      * @param file_name
+      *     The name of the file to be read.
       */
-    srec_input_file_signetics(const char *);
+    srec_input_file_signetics(const string &file_name);
 
     /**
       * The destructor.

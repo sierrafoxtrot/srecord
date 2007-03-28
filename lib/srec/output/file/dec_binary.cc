@@ -33,8 +33,9 @@ srec_output_file_dec_binary::srec_output_file_dec_binary() :
 }
 
 
-srec_output_file_dec_binary::srec_output_file_dec_binary(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_dec_binary::srec_output_file_dec_binary(
+        const string &a_file_name) :
+    srec_output_file(a_file_name),
     pref_block_size(preferred_block_size_calculate())
 {
 }

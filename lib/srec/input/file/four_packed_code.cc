@@ -25,8 +25,8 @@
 
 
 srec_input_file_four_packed_code::srec_input_file_four_packed_code(
-        const char *filename) :
-    srec_input_file(filename),
+        const string &a_file_name) :
+    srec_input_file(a_file_name),
     garbage_warning(false),
     seen_some_input(false),
     running_address(0)

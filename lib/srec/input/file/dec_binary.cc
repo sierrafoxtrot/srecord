@@ -24,8 +24,9 @@
 #include <lib/srec/record.h>
 
 
-srec_input_file_dec_binary::srec_input_file_dec_binary(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_dec_binary::srec_input_file_dec_binary(
+        const string &a_file_name) :
+    srec_input_file(a_file_name),
     current_pos(0),
     current_length(0),
     current_address(0)

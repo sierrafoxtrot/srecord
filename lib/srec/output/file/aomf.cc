@@ -35,8 +35,8 @@ srec_output_file_aomf::srec_output_file_aomf() :
 }
 
 
-srec_output_file_aomf::srec_output_file_aomf(const char *filename) :
-    srec_output_file(filename)
+srec_output_file_aomf::srec_output_file_aomf(const string &a_file_name) :
+    srec_output_file(a_file_name)
 {
 }
 

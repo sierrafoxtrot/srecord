@@ -37,8 +37,11 @@ public:
     /**
       * The constructor.  The input will be read from the named file
       * (or the standard input if the name is "-").
+      *
+      * @param file_name
+      *     The name of the file to be read.
       */
-    srec_input_file_four_packed_code(const char *);
+    srec_input_file_four_packed_code(const string &file_name);
 
     /**
       * The destructor.

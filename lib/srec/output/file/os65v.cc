@@ -31,8 +31,8 @@ srec_output_file_os65v::~srec_output_file_os65v()
 }
 
 
-srec_output_file_os65v::srec_output_file_os65v(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_os65v::srec_output_file_os65v(const string &a_file_name) :
+    srec_output_file(a_file_name),
     address(0),
     state(0),
     seen_start_address(false)

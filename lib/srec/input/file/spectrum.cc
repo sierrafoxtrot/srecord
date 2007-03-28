@@ -31,8 +31,8 @@ srec_input_file_spectrum::~srec_input_file_spectrum()
 }
 
 
-srec_input_file_spectrum::srec_input_file_spectrum(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_spectrum::srec_input_file_spectrum(const string &a_file_name) :
+    srec_input_file(a_file_name),
     header_seen(false),
     trailer_seen(false),
     file_contains_data(false)

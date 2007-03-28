@@ -31,8 +31,8 @@ srec_output_file_mos_tech::srec_output_file_mos_tech() :
 }
 
 
-srec_output_file_mos_tech::srec_output_file_mos_tech(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_mos_tech::srec_output_file_mos_tech(const string &a_filename) :
+    srec_output_file(a_filename),
     pref_block_size(32)
 {
 }

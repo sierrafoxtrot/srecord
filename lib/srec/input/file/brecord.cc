@@ -23,8 +23,8 @@
 #include <lib/srec/record.h>
 
 
-srec_input_file_brecord::srec_input_file_brecord(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_brecord::srec_input_file_brecord(const string &a_file_name) :
+    srec_input_file(a_file_name),
     seen_some_input(false)
 {
 }

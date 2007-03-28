@@ -45,8 +45,11 @@ public:
     /**
       * The constructor.  The output will be sent to the named file (or
       * the standard output if the file name is "-").
+      *
+      * @param file_name
+      *     The name of the file to be written.
       */
-    srec_output_file(const char *);
+    srec_output_file(const string &file_name);
 
     /**
       * The destructor.

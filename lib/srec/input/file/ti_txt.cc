@@ -30,8 +30,8 @@ srec_input_file_ti_txt::~srec_input_file_ti_txt()
 }
 
 
-srec_input_file_ti_txt::srec_input_file_ti_txt(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_ti_txt::srec_input_file_ti_txt(const string &a_file_name) :
+    srec_input_file(a_file_name),
     seen_some_input(false),
     address(0),
     token(token_start_up),

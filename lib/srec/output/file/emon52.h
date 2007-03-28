@@ -47,8 +47,11 @@ public:
     /**
       * A constructor.  The input will be read from the named file (or
       * the standard input if the file name is "-").
+      *
+      * @param file_name
+      *     The name of the file to be written.
       */
-    srec_output_file_emon52(const char *filename);
+    srec_output_file_emon52(const string &file_name);
 
     // See base class for documentation.
     void write(const srec_record &);

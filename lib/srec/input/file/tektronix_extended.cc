@@ -25,8 +25,8 @@
 
 
 srec_input_file_tektronix_extended::srec_input_file_tektronix_extended(
-        const char *filename) :
-    srec_input_file(filename),
+        const string &a_file_name) :
+    srec_input_file(a_file_name),
     garbage_warning(false),
     seen_some_input(false),
     termination_seen(false)

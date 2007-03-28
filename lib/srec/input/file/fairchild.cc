@@ -29,8 +29,8 @@ srec_input_file_fairchild::~srec_input_file_fairchild()
 }
 
 
-srec_input_file_fairchild::srec_input_file_fairchild(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_fairchild::srec_input_file_fairchild(const string &a_filename) :
+    srec_input_file(a_filename),
     header_seen(false),
     address(0),
     file_contains_data(false)

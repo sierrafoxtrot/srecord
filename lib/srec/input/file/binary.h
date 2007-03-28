@@ -40,8 +40,11 @@ public:
 
     /**
       * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be read.
       */
-    srec_input_file_binary(const char *filename);
+    srec_input_file_binary(const string &file_name);
 
     // See nase class for documentation.
     int read(srec_record &);

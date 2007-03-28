@@ -46,11 +46,11 @@ public:
     /**
       * The constructor.
       *
-      * @param filename
+      * @param file_name
       *     The name of the file to write the output to.  The string "-"
       *     is understood to mean the standrad output.
       */
-    srec_output_file_brecord(const char *filename);
+    srec_output_file_brecord(const string &file_name);
 
     // See base class for documentation.
     virtual void write(const srec_record &);

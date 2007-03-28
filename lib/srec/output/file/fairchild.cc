@@ -29,8 +29,9 @@ srec_output_file_fairchild::~srec_output_file_fairchild()
 }
 
 
-srec_output_file_fairchild::srec_output_file_fairchild(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_fairchild::srec_output_file_fairchild(
+        const string &a_file_name) :
+    srec_output_file(a_file_name),
     address(~0uL),
     data_bytes_emitted(0)
 {

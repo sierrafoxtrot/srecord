@@ -23,8 +23,8 @@
 #include <lib/srec/record.h>
 
 
-srec_output_file_brecord::srec_output_file_brecord(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_brecord::srec_output_file_brecord(const string &a_file_name) :
+    srec_output_file(a_file_name),
     buffer_address(0),
     buffer_length(0),
     buffer_maximum(BUFFER_MAXIMUM_MAXIMUM)

@@ -47,12 +47,6 @@ srec_output_file::srec_output_file() :
 }
 
 
-srec_output_file::srec_output_file(const srec_output_file &)
-{
-    fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
 const char *
 srec_output_file::mode()
     const
@@ -61,15 +55,15 @@ srec_output_file::mode()
 }
 
 
-srec_output_file::srec_output_file(const char *fn) :
-    file_name(fn),
+srec_output_file::srec_output_file(const string &a_file_name) :
+    file_name(a_file_name),
     line_number(1),
     vfp(0),
     checksum(0),
     position(0),
     is_regular(true)
 {
-    if (file_name == string("-"))
+    if (file_name == "-")
     {
         file_name = "standard output";
         vfp = stdout;
@@ -83,14 +77,6 @@ srec_output_file::srec_output_file(const char *fn) :
         // is available (it isn't in the base class constructor).
         //
     }
-}
-
-
-srec_output_file &
-srec_output_file::operator=(const srec_output_file &)
-{
-    fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-    return *this;
 }
 
 

@@ -121,8 +121,8 @@ srec_input_file_aomf::~srec_input_file_aomf()
 }
 
 
-srec_input_file_aomf::srec_input_file_aomf(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_aomf::srec_input_file_aomf(const string &a_filename) :
+    srec_input_file(a_filename),
     current_buffer(0),
     current_length(0),
     current_maximum(0),

@@ -24,8 +24,8 @@
 #include <lib/srec/record.h>
 
 
-srec_output_file_binary::srec_output_file_binary(const char *filename)
-    : srec_output_file(filename)
+srec_output_file_binary::srec_output_file_binary(const string &a_file_name) :
+    srec_output_file(a_file_name)
 {
 }
 

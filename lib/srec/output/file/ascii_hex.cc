@@ -23,8 +23,9 @@
 #include <lib/srec/record.h>
 
 
-srec_output_file_ascii_hex::srec_output_file_ascii_hex(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_ascii_hex::srec_output_file_ascii_hex(
+        const string &a_file_name) :
+    srec_output_file(a_file_name),
     address(0),
     column(0),
     pref_block_size(16),

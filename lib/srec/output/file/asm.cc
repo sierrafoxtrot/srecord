@@ -26,8 +26,8 @@
 #include <cstdio> // for sprintf
 
 
-srec_output_file_asm::srec_output_file_asm(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_asm::srec_output_file_asm(const string &a_file_name) :
+    srec_output_file(a_file_name),
     taddr(0),
     column(0),
     current_address(0),

@@ -26,8 +26,8 @@
 #include <lib/srec/record.h>
 
 
-srec_input_file_ascii_hex::srec_input_file_ascii_hex(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_ascii_hex::srec_input_file_ascii_hex(const string &a_filename) :
+    srec_input_file(a_filename),
     garbage_warning(false),
     seen_some_input(false),
     address(0),

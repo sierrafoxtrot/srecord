@@ -26,12 +26,12 @@
 #include <cstdio> // for sprintf
 
 
-srec_output_file_basic::srec_output_file_basic(const char *filename) :
-        srec_output_file(filename),
-        taddr(0),
-        column(0),
-        current_address(0),
-        line_length(75)
+srec_output_file_basic::srec_output_file_basic(const string &a_file_name) :
+    srec_output_file(a_file_name),
+    taddr(0),
+    column(0),
+    current_address(0),
+    line_length(75)
 {
 }
 
@@ -39,129 +39,129 @@ srec_output_file_basic::srec_output_file_basic(const char *filename) :
 void
 srec_output_file_basic::emit_byte(int n)
 {
-        char buffer[8];
-        sprintf(buffer, "%d", (unsigned char)n);
-        int len = strlen(buffer);
-        if (column && column + 1 + len > line_length)
-        {
-                put_char('\n');
-                column = 0;
-        }
-        if (!column)
-        {
-                put_string("DATA ");
-                column = 5;
-        }
-        else
-        {
-                put_char(',');
-                ++column;
-        }
-        put_string(buffer);
-        column += len;
-        ++current_address;
+    char buffer[8];
+    sprintf(buffer, "%d", (unsigned char)n);
+    int len = strlen(buffer);
+    if (column && column + 1 + len > line_length)
+    {
+        put_char('\n');
+        column = 0;
+    }
+    if (!column)
+    {
+        put_string("DATA ");
+        column = 5;
+    }
+    else
+    {
+        put_char(',');
+        ++column;
+    }
+    put_string(buffer);
+    column += len;
+    ++current_address;
 }
 
 
 srec_output_file_basic::~srec_output_file_basic()
 {
-        if (range.empty())
-                emit_byte(0xFF);
-        if (column)
-                put_char('\n');
+    if (range.empty())
+        emit_byte(0xFF);
+    if (column)
+        put_char('\n');
 
-        if (!data_only_flag)
-        {
-                put_stringf("REM termination = %lu\n", taddr);
-                put_stringf("REM start = %lu\n", range.get_lowest());
-                put_stringf("REM finish = %lu\n", range.get_highest());
-        }
-        unsigned long len = range.get_highest() - range.get_lowest();
-        put_stringf("REM length = %lu\n", len);
+    if (!data_only_flag)
+    {
+        put_stringf("REM termination = %lu\n", taddr);
+        put_stringf("REM start = %lu\n", range.get_lowest());
+        put_stringf("REM finish = %lu\n", range.get_highest());
+    }
+    unsigned long len = range.get_highest() - range.get_lowest();
+    put_stringf("REM length = %lu\n", len);
 }
 
 
 void
 srec_output_file_basic::write(const srec_record &record)
 {
-        switch (record.get_type())
+    switch (record.get_type())
+    {
+    default:
+        // ignore
+        break;
+
+    case srec_record::type_header:
+        // emit header records as comments in the file
         {
-        default:
-                // ignore
-                break;
-
-        case srec_record::type_header:
-                // emit header records as comments in the file
-                {
-                    bool bol = true;
-                    const unsigned char *cp = record.get_data();
-                    const unsigned char *ep = cp + record.get_length();
-                    while (cp < ep)
-                    {
-                        int c = *cp++;
-                        if (c == '\n')
-                        {
-                            put_char(c);
-                            bol = true;
-                            continue;
-                        }
-                        if (bol)
-                            put_string("REM ");
-                        if (isprint(c))
-                            put_char(c);
-                        bol = false;
-                    }
-                    if (!bol)
-                        put_char('\n');
-                }
-                break;
-
-        case srec_record::type_data:
-                if (range.empty())
-                        current_address = record.get_address();
-                range +=
-                        interval
-                        (
-                                record.get_address(),
-                                record.get_address() + record.get_length()
-                        );
-                while (current_address < record.get_address())
-                        emit_byte(0xFF);
-                for (int j = 0; j < record.get_length(); ++j)
-                {
-                        if (record.get_address() + j < current_address)
-                                continue;
-                        emit_byte(record.get_data(j));
-                }
-                break;
-
-        case srec_record::type_start_address:
-                taddr = record.get_address();
-                break;
+            bool bol = true;
+            const unsigned char *cp = record.get_data();
+            const unsigned char *ep = cp + record.get_length();
+            while (cp < ep)
+            {
+            int c = *cp++;
+            if (c == '\n')
+            {
+                put_char(c);
+                bol = true;
+                continue;
+            }
+            if (bol)
+                put_string("REM ");
+            if (isprint(c))
+                put_char(c);
+            bol = false;
+            }
+            if (!bol)
+            put_char('\n');
         }
+        break;
+
+    case srec_record::type_data:
+        if (range.empty())
+            current_address = record.get_address();
+        range +=
+            interval
+            (
+                record.get_address(),
+                record.get_address() + record.get_length()
+            );
+        while (current_address < record.get_address())
+            emit_byte(0xFF);
+        for (int j = 0; j < record.get_length(); ++j)
+        {
+            if (record.get_address() + j < current_address)
+                continue;
+            emit_byte(record.get_data(j));
+        }
+        break;
+
+    case srec_record::type_start_address:
+        taddr = record.get_address();
+        break;
+    }
 }
 
 
 void
 srec_output_file_basic::line_length_set(int n)
 {
-        line_length = n;
+    line_length = n;
 }
 
 
 void
 srec_output_file_basic::address_length_set(int n)
 {
-        // ignore
+    // ignore
 }
 
 
 int
 srec_output_file_basic::preferred_block_size_get()
-        const
+    const
 {
-        //
-        // Irrelevant.  Use the largest we can get.
-        //
-        return srec_record::max_data_length;
+    //
+    // Irrelevant.  Use the largest we can get.
+    //
+    return srec_record::max_data_length;
 }

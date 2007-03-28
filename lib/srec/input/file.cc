@@ -51,8 +51,8 @@ srec_input_file::mode()
 }
 
 
-srec_input_file::srec_input_file(const char *file_name) :
-    file_name(file_name),
+srec_input_file::srec_input_file(const string &a_file_name) :
+    file_name(a_file_name),
     line_number(1),
     prev_was_newline(false),
     vfp(0),

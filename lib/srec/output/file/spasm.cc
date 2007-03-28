@@ -24,10 +24,10 @@
 #include <lib/srec/record.h>
 
 
-srec_output_file_spasm::srec_output_file_spasm(const char *filename,
-                bool endianness) :
-        srec_output_file(filename),
-        bigend(endianness)
+srec_output_file_spasm::srec_output_file_spasm(const string &a_file_name,
+        bool endianness) :
+    srec_output_file(a_file_name),
+    bigend(endianness)
 {
 }
 
@@ -40,102 +40,102 @@ srec_output_file_spasm::~srec_output_file_spasm()
 void
 srec_output_file_spasm::write(const srec_record &record)
 {
-        // This format can't do header records or termination records
-        if (record.get_type() != srec_record::type_data)
-                return;
+    // This format can't do header records or termination records
+    if (record.get_type() != srec_record::type_data)
+        return;
 
-        if (record.get_address() + record.get_length() > (1UL << 17))
-        {
-                fatal_error
-                (
-                        "data address (0x%lX..0x%lX) too large",
-                        record.get_address(),
-                        record.get_address() + record.get_length() - 1
-                );
-        }
+    if (record.get_address() + record.get_length() > (1UL << 17))
+    {
+        fatal_error
+        (
+            "data address (0x%lX..0x%lX) too large",
+            record.get_address(),
+            record.get_address() + record.get_length() - 1
+        );
+    }
 
-        long address = record.get_address();
-        int j = 0;
-        if (address & 1)
+    long address = record.get_address();
+    int j = 0;
+    if (address & 1)
+    {
+        put_word(address++ / 2);
+        put_char(' ');
+        if (bigend)
         {
-                put_word(address++ / 2);
-                put_char(' ');
-                if (bigend)
-                {
-                        put_byte(record.get_data(j++));
-                        put_byte(0xFF);
-                }
-                else
-                {
-                        put_byte(0xFF);
-                        put_byte(record.get_data(j++));
-                }
-                put_char('\n');
+            put_byte(record.get_data(j++));
+            put_byte(0xFF);
         }
+        else
+        {
+            put_byte(0xFF);
+            put_byte(record.get_data(j++));
+        }
+        put_char('\n');
+    }
 
-        while (j + 1 < record.get_length())
+    while (j + 1 < record.get_length())
+    {
+        put_word(address / 2);
+        put_char(' ');
+        if (bigend)
         {
-                put_word(address / 2);
-                put_char(' ');
-                if (bigend)
-                {
-                        put_byte(record.get_data(j + 1));
-                        put_byte(record.get_data(j));
-                }
-                else
-                {
-                        put_byte(record.get_data(j));
-                        put_byte(record.get_data(j + 1));
-                }
-                put_char('\n');
-                address += 2;
-                j += 2;
+            put_byte(record.get_data(j + 1));
+            put_byte(record.get_data(j));
         }
+        else
+        {
+            put_byte(record.get_data(j));
+            put_byte(record.get_data(j + 1));
+        }
+        put_char('\n');
+        address += 2;
+        j += 2;
+    }
 
-        if (j < record.get_length())
+    if (j < record.get_length())
+    {
+        put_word(address / 2);
+        put_char(' ');
+        if (bigend)
         {
-                put_word(address / 2);
-                put_char(' ');
-                if (bigend)
-                {
-                        put_byte(0xFF);
-                        put_byte(record.get_data(j));
-                }
-                else
-                {
-                        put_byte(record.get_data(j));
-                        put_byte(0xFF);
-                }
-                put_char('\n');
+            put_byte(0xFF);
+            put_byte(record.get_data(j));
         }
+        else
+        {
+            put_byte(record.get_data(j));
+            put_byte(0xFF);
+        }
+        put_char('\n');
+    }
 }
 
 
 void
 srec_output_file_spasm::line_length_set(int)
 {
-        //
-        // Irrelevant.  Ignore.
-        //
+    //
+    // Irrelevant.  Ignore.
+    //
 }
 
 
 void
 srec_output_file_spasm::address_length_set(int)
 {
-        //
-        // Irrelevant.  Ignore.
-        //
+    //
+    // Irrelevant.  Ignore.
+    //
 }
 
 
 int
 srec_output_file_spasm::preferred_block_size_get()
-        const
+    const
 {
-        //
-        // Irrelevant.  Use the largest we can get.
-        // But make sure it is an even number of bytes long.
-        //
-        return (srec_record::max_data_length & ~1);
+    //
+    // Irrelevant.  Use the largest we can get.
+    // But make sure it is an even number of bytes long.
+    //
+    return (srec_record::max_data_length & ~1);
 }

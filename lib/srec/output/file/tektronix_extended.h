@@ -47,11 +47,11 @@ public:
     /**
       * The constructor.
       *
-      * @param filename
+      * @param file_name
       *     The file name to open to write data to.  The file name "-"
       *     is understood to mean the standard output.
       */
-    srec_output_file_tektronix_extended(const char *filename);
+    srec_output_file_tektronix_extended(const string &file_name);
 
     // See base class for documentation.
     void write(const srec_record &);

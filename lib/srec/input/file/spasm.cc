@@ -25,8 +25,9 @@
 #include <lib/srec/record.h>
 
 
-srec_input_file_spasm::srec_input_file_spasm(const char *filename, bool arg2) :
-    srec_input_file(filename),
+srec_input_file_spasm::srec_input_file_spasm(const string &a_file_name,
+        bool arg2) :
+    srec_input_file(a_file_name),
     seen_some_input(false),
     bigend(arg2)
 {

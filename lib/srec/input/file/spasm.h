@@ -40,8 +40,11 @@ public:
 
     /**
       * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be read.
       */
-    srec_input_file_spasm(const char *filename, bool bigendian = true);
+    srec_input_file_spasm(const string &file_name, bool bigendian = true);
 
     // See base class for documentation.
     int read(srec_record &);

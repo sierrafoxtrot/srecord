@@ -23,8 +23,8 @@
 #include <lib/srec/record.h>
 
 
-srec_output_file_ti_txt::srec_output_file_ti_txt(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_ti_txt::srec_output_file_ti_txt(const string &a_file_name) :
+    srec_output_file(a_file_name),
     address(),
     address_set(false),
     address_length(2),

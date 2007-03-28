@@ -29,8 +29,8 @@ srec_output_file_cosmac::~srec_output_file_cosmac()
 }
 
 
-srec_output_file_cosmac::srec_output_file_cosmac(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_cosmac::srec_output_file_cosmac(const string &a_file_name) :
+    srec_output_file(a_file_name),
     address(0),
     address_length(4),
     line_length(80),

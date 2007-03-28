@@ -39,8 +39,11 @@ public:
 
     /**
       * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be read.
       */
-    srec_input_file_ti_tagged_16(const char *filename);
+    srec_input_file_ti_tagged_16(const string &file_name);
 
 protected:
     // See base class for documentation.

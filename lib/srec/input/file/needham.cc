@@ -31,8 +31,8 @@ srec_input_file_needham::~srec_input_file_needham()
 }
 
 
-srec_input_file_needham::srec_input_file_needham(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_needham::srec_input_file_needham(const string &a_file_name) :
+    srec_input_file(a_file_name),
     seen_some_input(false),
     address(0)
 {

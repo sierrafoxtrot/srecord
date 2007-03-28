@@ -29,7 +29,8 @@
   * The srec_output_file_ti_tagged class is used to represent the output
   * state of a file in Texas Instruments Tagged format.
   */
-class srec_output_file_ti_tagged: public srec_output_file
+class srec_output_file_ti_tagged:
+    public srec_output_file
 {
 public:
     /**
@@ -39,8 +40,11 @@ public:
 
     /**
       * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be written.
       */
-    srec_output_file_ti_tagged(const char *);
+    srec_output_file_ti_tagged(const string &file_name);
 
     // See base class for documentation.
     void write(const srec_record &);

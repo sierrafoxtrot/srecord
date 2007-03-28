@@ -29,9 +29,9 @@
   * unknown type.  It attempts all of the know formats one after the
   * other.
   *
-  * @param filename
+  * @param file_name
   *     The name of the file to be opened.
   */
-srec_input *srec_input_file_guess(const char *filename);
+srec_input *srec_input_file_guess(const string &file_name);
 
 #endif // INCLUDE_SREC_INPUT_FILE_GUESS_H

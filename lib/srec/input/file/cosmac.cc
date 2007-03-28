@@ -29,8 +29,8 @@ srec_input_file_cosmac::~srec_input_file_cosmac()
 }
 
 
-srec_input_file_cosmac::srec_input_file_cosmac(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_cosmac::srec_input_file_cosmac(const string &a_file_name) :
+    srec_input_file(a_file_name),
     state('\n'),
     address(0),
     seen_some_input(false)

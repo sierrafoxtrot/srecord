@@ -29,8 +29,8 @@ srec_input_file_os65v::~srec_input_file_os65v()
 }
 
 
-srec_input_file_os65v::srec_input_file_os65v(const char *filename) :
-    srec_input_file(filename),
+srec_input_file_os65v::srec_input_file_os65v(const string &a_file_name) :
+    srec_input_file(a_file_name),
     seen_some_input(false),
     address(0),
     state(0),

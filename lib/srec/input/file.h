@@ -63,8 +63,11 @@ protected:
       * (or the standard input if the filename is "-").
       *
       * Only derived classes may use this constructor.
+      *
+      * @param file_name
+      *     The name of the file to be read.
       */
-    srec_input_file(const char *);
+    srec_input_file(const string &file_name);
 
     /**
       * The get_char method is used to fetch a character from

@@ -42,8 +42,11 @@ public:
 
     /**
       * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be read.
       */
-    srec_input_file_wilson(const char *filename);
+    srec_input_file_wilson(const string &file_name);
 
     // See base class for documentation.
     int read(srec_record &);

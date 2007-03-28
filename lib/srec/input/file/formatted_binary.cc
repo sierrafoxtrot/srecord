@@ -30,8 +30,8 @@ srec_input_file_formatted_binary::~srec_input_file_formatted_binary()
 
 
 srec_input_file_formatted_binary::srec_input_file_formatted_binary(
-        const char *filename) :
-    srec_input_file(filename),
+        const string &a_file_name) :
+    srec_input_file(a_file_name),
     header_seen(false),
     upper_bound(0),
     address(0),

@@ -29,8 +29,8 @@ srec_output_file_spectrum::~srec_output_file_spectrum()
 }
 
 
-srec_output_file_spectrum::srec_output_file_spectrum(const char *filename) :
-    srec_output_file(filename)
+srec_output_file_spectrum::srec_output_file_spectrum(const string &a_filename) :
+    srec_output_file(a_filename)
 {
 }
 

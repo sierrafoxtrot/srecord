@@ -27,8 +27,8 @@
 #include <lib/progname.h>
 
 
-srec_output_file_vhdl::srec_output_file_vhdl(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_vhdl::srec_output_file_vhdl(const string &a_file_name) :
+    srec_output_file(a_file_name),
     bytes_per_word(1),
     prefix("eprom"),
     header_done(false),

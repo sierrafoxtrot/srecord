@@ -47,14 +47,14 @@ public:
     /**
       * The constructor.
       *
-      * @param filename
+      * @param file_name
       *     The file to write the data to, or "-" to mean the standard
       *     output.
       * @param bigend
       *     The byte order of the output, true means big endian, and
       *     false means little endian.
       */
-    srec_output_file_atmel_generic(const char *filename, bool bigend);
+    srec_output_file_atmel_generic(const string &file_name, bool bigend);
 
     // See base class for documentation.
     void write(const srec_record &);

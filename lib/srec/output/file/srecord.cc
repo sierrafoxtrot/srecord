@@ -36,8 +36,8 @@ srec_output_file_srecord::srec_output_file_srecord() :
 }
 
 
-srec_output_file_srecord::srec_output_file_srecord(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_srecord::srec_output_file_srecord(const string &a_file_name) :
+    srec_output_file(a_file_name),
     data_count(0),
     pref_block_size(32),
     address_length(2),

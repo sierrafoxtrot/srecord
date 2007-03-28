@@ -33,8 +33,8 @@ srec_output_file_tektronix_extended::srec_output_file_tektronix_extended() :
 
 
 srec_output_file_tektronix_extended::srec_output_file_tektronix_extended(
-        const char *filename) :
-    srec_output_file(filename),
+        const string &a_file_name) :
+    srec_output_file(a_file_name),
     pref_block_size(32),
     address_length(4)
 {

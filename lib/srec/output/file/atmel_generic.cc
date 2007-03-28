@@ -25,8 +25,8 @@
 
 
 srec_output_file_atmel_generic::srec_output_file_atmel_generic(
-        const char *filename, bool endianness) :
-    srec_output_file(filename),
+        const string &a_file_name, bool endianness) :
+    srec_output_file(a_file_name),
     bigend(endianness)
 {
 }

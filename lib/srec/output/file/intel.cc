@@ -24,8 +24,8 @@
 #include <lib/srec/record.h>
 
 
-srec_output_file_intel::srec_output_file_intel(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_intel::srec_output_file_intel(const string &a_file_name) :
+    srec_output_file(a_file_name),
     address_base(1),
     pref_block_size(32),
     mode(linear)

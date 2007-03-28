@@ -32,8 +32,9 @@ srec_output_file_signetics::srec_output_file_signetics() :
 }
 
 
-srec_output_file_signetics::srec_output_file_signetics(const char *filename) :
-    srec_output_file(filename),
+srec_output_file_signetics::srec_output_file_signetics(
+        const string &a_file_name) :
+    srec_output_file(a_file_name),
     pref_block_size(32),
     last_address(0)
 {
