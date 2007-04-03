@@ -68,15 +68,15 @@ srec_output_file_vhdl::emit_header()
 {
     if (header_done)
         return;
-    put_stringf
-    (
-        "--\n"
-        "-- Generated automatically by %s -VHDL - do not edit\n"
-        "--\n",
-        progname_get()
-    );
     if (!data_only_flag)
     {
+        put_stringf
+        (
+            "--\n"
+            "-- Generated automatically by %s -VHDL - do not edit\n"
+            "--\n",
+            progname_get()
+        );
         put_stringf
         (
             "library IEEE;\n"
@@ -215,11 +215,14 @@ srec_output_file_vhdl::write(const srec_record &record)
         break;
 
     case srec_record::type_header:
+        if (!data_only_flag && record.get_length() > 0)
         {
             //
             // Output the header record as a comment.
             //
             put_string("-- ");
+            if (record.get_address() != 0)
+                put_stringf("%08lX: ", record.get_address());
             const unsigned char *cp = record.get_data();
             const unsigned char *ep = cp + record.get_length();
             while (cp < ep)
