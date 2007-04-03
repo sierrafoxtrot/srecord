@@ -57,6 +57,16 @@ which understands functions.])
 AC_MSG_RESULT($SH)
 
 dnl
+dnl     Test to see if this operating system has the ZFS sparse file support.
+dnl
+AC_MSG_CHECKING([for sparse file lseek support])
+AC_TRY_COMPILE([#include <unistd.h>], [fpathconf(0, _PC_MIN_HOLE_SIZE);
+lseek(0, 0L, SEEK_DATA); lseek(0, 0L, SEEK_HOLE); ],
+AC_DEFINE(HAVE_SPARSE_LSEEK, 1, [Define this symbol if your
+operating system has support for sparse file seeking.])
+AC_MSG_RESULT(yes),AC_MSG_RESULT(no))dnl
+
+dnl
 dnl     If the soelim program exists, and understands the -I option,
 dnl     arrange for the Makefile to install the .ps files from the
 dnl     documentation source files.

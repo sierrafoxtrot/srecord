@@ -39,11 +39,25 @@ srec_input_file_binary::~srec_input_file_binary()
 int
 srec_input_file_binary::read(srec_record &record)
 {
+#ifdef HAVE_SPARSE_LSEEK
+    //
+    // On Solaris, they have a couple of new lseek whences in order to
+    // navigate around holes in the file data.
+    //
+    //     fpathconf(fd, _PC_MIN_HOLE_SIZE);
+    //     lseek(fd, address, SEEK_DATA);
+    //     lseek(fd, address, SEEK_HOLE);
+    //
+    // Using these, it would be possible to actually report file holes
+    // via the srecord API.
+    //
+#endif
+
     int c = get_char();
     if (c < 0)
         return 0;
     int length = 0;
-    unsigned char data[256];
+    unsigned char data[srec_record::max_data_length];
     for (;;)
     {
         data[length++] = c;
