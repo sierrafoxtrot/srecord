@@ -45,7 +45,7 @@ srec_output_file_ti_txt::~srec_output_file_ti_txt()
     }
     if (column > 0)
         put_char('\n');
-    put_stringf("Q\n");
+    put_stringf("q\n");
     column = 0;
 }
 

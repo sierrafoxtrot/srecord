@@ -70,7 +70,7 @@ cat > test.ok << 'fubar'
 21 00 3F 40 E8 FD 1F 83 FE 23 F9 3F
 @FFFE
 00 F0
-Q
+q
 fubar
 if test $? -ne 0; then no_result; fi
 

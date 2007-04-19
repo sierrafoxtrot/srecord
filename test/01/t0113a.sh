@@ -69,12 +69,12 @@ cat > test.ok << 'fubar'
 FF 65 6C FF FF 20 57 6F
 @000A
 64 FF
-Q
+q
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -o test.out -ti-txt
-if test $? -ne 0; then fail; fi
+$bin/srec_cat test.in -o test.out -ti-txt > LOG 2>&1
+if test $? -ne 0; then cat LOG; fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi

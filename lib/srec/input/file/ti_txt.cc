@@ -35,7 +35,8 @@ srec_input_file_ti_txt::srec_input_file_ti_txt(const string &a_file_name) :
     seen_some_input(false),
     address(0),
     token(token_start_up),
-    token_value(0)
+    token_value(0),
+    address_warning(false)
 {
 }
 
@@ -56,10 +57,13 @@ srec_input_file_ti_txt::get_next_token()
         {
         case ' ':
         case '\t':
-        case '\r':
-        case '\n':
         case '\f':
             // ignore all white space
+            break;
+
+        case '\r':
+        case '\n':
+            // ignore end of line
             break;
 
         case '\32':
@@ -127,10 +131,20 @@ srec_input_file_ti_txt::read(srec_record &record)
             if (token != token_number)
                 fatal_error("@ must be followed by an address");
             address = token_value;
+#if 0
+            //
+            // Despite // http://www.ti.com/lit/pdf/slau101 section A.2
+            // stating that "the start address must be even", it doesn't
+            // have to be.
+            //
             if (address & 1)
                 warning("addresses should be even");
-            if (address >= (1 << 20))
+#endif
+            if (address >= (1 << 20) && !address_warning)
+            {
                 warning("addresses (0x%08lX) too large", address);
+                address_warning = true;
+            }
             get_next_token();
             break;
 
@@ -145,11 +159,19 @@ srec_input_file_ti_txt::read(srec_record &record)
                         fatal_error("byte value (%ld) too large", token_value);
                     buffer[n++] = token_value;
                     get_next_token();
+                    if (n >= srec_record::max_data_length)
+                        break;
                     if (token != token_number)
                         break;
                 }
+                if (address >= (1 << 20) && !address_warning)
+                {
+                    warning("addresses (0x%08lX) too large", address);
+                    address_warning = true;
+                }
                 record =
                     srec_record(srec_record::type_data, address, buffer, n);
+                address += n;
                 return 1;
             }
 

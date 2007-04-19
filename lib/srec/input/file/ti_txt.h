@@ -100,6 +100,13 @@ private:
     unsigned long token_value;
 
     /**
+      * The address_warning instance variable is used to remember
+      * whether or not we have already warned about addresses which are
+      * too large.
+      */
+    bool address_warning;
+
+    /**
       * The get_next_token method is used to partition the input into
       * the next symbol.  All the digits of a hexadecimal number are
       * considered a single symbol.
