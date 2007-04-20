@@ -37,12 +37,6 @@ srec_output_file_ti_txt::srec_output_file_ti_txt(const string &a_file_name) :
 
 srec_output_file_ti_txt::~srec_output_file_ti_txt()
 {
-    if (address & 1)
-    {
-        // The format definition says there is always an even number of
-        // bytes.  Pad with 0xFF if necessary.
-        put_byte_wrap(0xFF);
-    }
     if (column > 0)
         put_char('\n');
     put_stringf("q\n");
@@ -79,38 +73,6 @@ srec_output_file_ti_txt::write(const srec_record &record)
         break;
 
     case srec_record::type_data:
-        if (address_set && (address & 1) && address != record.get_address())
-        {
-            // assert(address_set);
-
-            // The format definition says there is always an even number
-            // of bytes in each section, and sections always start on
-            // even addresses.  Pad with 0xFF if necessary.
-            put_byte_wrap(0xFF);
-
-            // There is a teeny tiny chance that once the data is
-            // padded, the address will one again line up.  We want to
-            // do nothing if at all possible, which is why we do the
-            // address check all over again.
-        }
-
-        //
-        // Watch out for the corner case where the end of one section is
-        // padded and the beginning of the next section is padded, and
-        // they line up perfectly.
-        //
-        if
-        (
-            address_set
-        &&
-            (record.get_address() & 1)
-        &&
-            address + 1 == record.get_address()
-        )
-        {
-            put_byte_wrap(0xFF);
-        }
-
         if (!address_set || address != record.get_address())
         {
             if (column > 0)
@@ -122,15 +84,6 @@ srec_output_file_ti_txt::write(const srec_record &record)
             address = record.get_address();
             address_set = true;
 
-            bool bogus_byte = false;
-            if (address & 1)
-            {
-                // The format definition requires that all addresses are
-                // even.  So we will adjust with a bogus 0xFF byte.
-                address &= ~1;
-                bogus_byte = true;
-            }
-
             int width = 2;
             if (address >= 0x1000000)
                 width = 4;
@@ -140,9 +93,6 @@ srec_output_file_ti_txt::write(const srec_record &record)
                 width = address_length;
             width *= 2;
             put_stringf("@%0*lX\n", width, address);
-
-            if (bogus_byte)
-                put_byte_wrap(0xFF);
         }
         for (int j = 0; j < record.get_length(); ++j)
         {
