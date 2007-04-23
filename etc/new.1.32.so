@@ -16,22 +16,19 @@
 .\"     along with this program; if not, write to the Free Software
 .\"     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.31 features
+.\" MANIFEST: description of new 1.32 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" Change 12
-The TI-TXT format output has been improved; it is less spec conforming
-but more reality conforming.  It now allows odd alignment without
-padding.  It also ends with a \f[CW]q\fP instead of a \f[CW]Q\fP.
-.PP
-.if n *
-.if t \(bu
-.\" Change 11
-The warning for odd input addresses has been dropped.  The spec didn't
-like them, but the MSP430 handles them without a hiccup.
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 32 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.31 (2007-Apr-03)
+.SS Version 1.32 (2007-Apr-24)
 .\" vim:ts=8:sw=4:et
