@@ -413,9 +413,22 @@ it may be anything any other input specification can be.
 (You may need to enclose \fIinput-specification\fP in parentheses
 to make sure it can't misinterpret which arguments go with input
 specification.)
+.TP 8n
+\f[I]address-range\fP \fB\-RAnge-PADding\fP \f[I]number\fP
+.RS
+It is also possible to pad ranges to be whole aligned multiples of the
+given number.  For example
+.RS
+\f[I]input-file\fP -fill 0xFF -within \f[I]input-file\fP -range-pad 512
+.RE
+will fill the \f[I]input-file\fP so that it consists of whole 512-byte
+blocks, aligned on 512 byte boundaries.  Any large holes in the data
+will also be multiples of 512 bytes, though they may have been shrunk as
+blocks before and after are padded.
+.RE
 .PP
 In addition, all of these methods may be used, and used more than once,
-and the results will be added together.
+and the results will be combined.
 .SS Calculated Values
 Most of the places above where a number is expected, you may supply one
 of the following:

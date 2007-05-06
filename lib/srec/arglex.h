@@ -97,6 +97,7 @@ public:
         token_paren_begin,
         token_paren_end,
         token_random_fill,
+        token_range_padding,
         token_round_down,
         token_round_nearest,
         token_round_up,

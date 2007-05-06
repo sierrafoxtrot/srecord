@@ -104,6 +104,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Output", token_output, },
         { "-OVer", token_over, },
         { "-Random_Fill", token_random_fill, },
+        { "-RAnge_PADding", token_range_padding, },
         { "-RAw", token_binary, },
         { "-Round", token_round_nearest, },
         { "-Round_Down", token_round_down, },

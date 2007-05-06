@@ -170,6 +170,19 @@ public:
       */
     void print(ostream &) const;
 
+    /**
+      * The pad method is used to expand an interval by padding each
+      * sub-interval.  For each sub-interval the minimum is rounded
+      * down to a multiple of x, and the upper bound is rounded up to a
+      * multiple of x.
+      *
+      * @param x
+      *     The multiple to expand to.  No action is taken if x < 2.
+      * @returns
+      *     new padded interval.
+      */
+    interval pad(int x) const;
+
 private:
     /**
       * The length instance variable is used to remember the length of

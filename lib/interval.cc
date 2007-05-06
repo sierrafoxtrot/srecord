@@ -766,3 +766,22 @@ interval::print(ostream &os)
     if (length != 2)
         os << ")";
 }
+
+
+interval
+interval::pad(int mult)
+    const
+{
+    if (mult < 2)
+        return *this;
+    interval result;
+    for (size_t j = 0; j < length; j += 2)
+    {
+        data_t lo = data[j];
+        lo = (lo / mult) * mult;
+        data_t hi = data[j + 1];
+        hi = ((hi + mult - 1) / mult) * mult;
+        result += interval(lo, hi);
+    }
+    return result;
+}

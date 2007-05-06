@@ -105,5 +105,31 @@ srec_arglex::get_interval(const char *name)
         }
         break;
     }
+    if (token_cur() == token_range_padding)
+    {
+        token_next();
+
+        //
+        // Collect the multiple from the command line.
+        //
+        if (!can_get_number())
+        {
+            cerr << "the --range-padding option requires a numeric argument"
+                << endl;
+            exit(1);
+        }
+        long mult = get_number("address range minimum");
+        if (mult < 2)
+        {
+            cerr << "a --range-padding multipe of " << mult << " is invalid"
+                << endl;
+            exit(1);
+        }
+
+        //
+        // Pad the range so that is contains whole multiples, aligned.
+        //
+        range = range.pad(mult);
+    }
     return range;
 }
