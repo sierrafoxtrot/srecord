@@ -171,6 +171,15 @@ protected:
     void put_string(const char *);
 
     /**
+      * The put_string method is used to send C++ string
+      * to the output.  Multiple calls to put_char() are made.
+      *
+      * @param s
+      *     The string to pint.
+      */
+    void put_string(const string &s);
+
+    /**
       * The put_stringf method is used to send a formatted string to the
       * output.  The format and operation ios similar to the standard
       * printf function.  Multiple calls to put_char() are made.

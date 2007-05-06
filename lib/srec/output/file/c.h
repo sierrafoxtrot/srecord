@@ -132,6 +132,30 @@ private:
     string include_file_name;
 
     /**
+      * The output_word instance variable is used to remember whether or not
+      * the input bytes should be emitted as word.
+      */
+    bool output_word;
+
+    /**
+      * The hex_style instance variable is used to remember whether or
+      * not we are to output number in hexadecimal (true) or decimal
+      * (false).
+      */
+    bool hex_style;
+
+    /**
+      * The section_style instance variable is used to remember whether
+      * or not the output is to contain "sections".
+      *
+      * In non-section output, padding of 0xFF is used to pad the data
+      * for correct addressing.  In section output, tables of addresses
+      * and lenthgs are emitted, and the actual data is intended to be
+      * relocated at run time.
+      */
+    bool section_style;
+
+    /**
       * The emit_header method is used to emit the initial portion
       * of the array declaration.  It does nothing if header_done
       * is true.
@@ -143,6 +167,21 @@ private:
       * column to track the position, so as not to exceed line_length.
       */
     void emit_byte(int);
+
+    /**
+      * The emit_byte method is used to emit a single byte.  It uses
+      * column to track the position, so as not to exceed line_length.
+      */
+    void emit_word(unsigned int);
+
+    /**
+      * The format_address method is used to format an address, taking
+      * the hex_style and address_length instance variable settings.
+      *
+      * @param addr
+      *     The adress to be formatted
+      */
+    string format_address(unsigned long addr);
 
     /**
       * The default constructor.  Do not use.

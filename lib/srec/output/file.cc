@@ -259,6 +259,16 @@ srec_output_file::put_string(const char *s)
 
 
 void
+srec_output_file::put_string(const string &s)
+{
+    const char *cp = s.c_str();
+    const char *ep = cp + s.size();
+    while (cp < ep)
+        put_char(*cp++);
+}
+
+
+void
 srec_output_file::put_stringf(const char *fmt, ...)
 {
     va_list ap;

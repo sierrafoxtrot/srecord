@@ -115,6 +115,7 @@ public:
         token_stewie,
         token_style_dot,
         token_style_hexadecimal,
+        token_style_hexadecimal_not,
         token_style_section,
         token_tektronix,
         token_tektronix_extended,

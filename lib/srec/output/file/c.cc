@@ -29,22 +29,6 @@
 #include <lib/srec/record.h>
 
 
-srec_output_file_c::srec_output_file_c() :
-    srec_output_file("-"),
-    prefix("eprom"),
-    taddr(0),
-    header_done(false),
-    column(0),
-    current_address(0),
-    line_length(75),
-    address_length(4),
-    constant(true),
-    include(false),
-    include_file_name("eprom.h")
-{
-}
-
-
 static const char *
 memrchr(const char *data, char c, size_t len)
 {
@@ -98,13 +82,17 @@ srec_output_file_c::srec_output_file_c(const string &a_file_name) :
     address_length(4),
     constant(true),
     include(false),
-    include_file_name(build_include_file_name(a_file_name))
+    include_file_name(build_include_file_name(a_file_name)),
+    output_word(false),
+    hex_style(true),
+    section_style(false)
 {
 }
 
 
+
 void
-srec_output_file_c::command_line(srec_arglex *cmdln)
+srec_output_file_c::command_line(srec_arglex * cmdln)
 {
     if (cmdln->token_cur() == arglex::token_string)
     {
@@ -135,6 +123,34 @@ srec_output_file_c::command_line(srec_arglex *cmdln)
             include = false;
             break;
 
+        case srec_arglex::token_c_compressed:
+            cmdln->token_next();
+            hex_style = true;
+            section_style = true;
+            break;
+
+        case srec_arglex::token_output_word:
+            cmdln->token_next();
+            output_word = true;
+            break;
+
+        case srec_arglex::token_style_hexadecimal:
+            cmdln->token_next();
+            hex_style = true;
+            break;
+
+        case srec_arglex::token_style_hexadecimal_not:
+            cmdln->token_next();
+            hex_style = false;
+            break;
+
+        case srec_arglex::token_style_section:
+        case srec_arglex::token_a430:
+        case srec_arglex::token_cl430:
+            cmdln->token_next();
+            section_style = true;
+            break;
+
         default:
             return;
         }
@@ -149,33 +165,76 @@ srec_output_file_c::emit_header()
         return;
     if (constant)
         put_stringf("const ");
-    put_stringf("unsigned char %s[] =\n{\n", prefix.c_str());
+    if (output_word)
+        put_string("unsigned short");
+    else
+        put_string("unsigned char");
+    put_char(' ');
+    put_string(prefix.c_str());
+    put_string("[] =\n{\n");
     header_done = true;
+    column = 0;
 }
 
 
 void
 srec_output_file_c::emit_byte(int n)
 {
-    if (column >= line_length)
+    char buffer[30];
+    if (hex_style)
+        snprintf(buffer, sizeof(buffer), "0x%2.2X", (unsigned char)n);
+    else
+        snprintf(buffer, sizeof(buffer), "%u", (unsigned char)n);
+    int len = strlen(buffer);
+
+    if (column && column + 2 + len > line_length)
     {
         put_char('\n');
         column = 0;
     }
-    else if (column)
+    if (column)
     {
         put_char(' ');
         ++column;
     }
-    put_stringf("0x%02X,", (unsigned char)n);
-    column += 5;
+    put_string(buffer);
+    column += len;
+    put_char(',');
+    ++column;
+}
+
+
+void
+srec_output_file_c::emit_word(unsigned int n)
+{
+    char buffer[30];
+    if (hex_style)
+        snprintf(buffer, sizeof(buffer), "0x%4.4X", (unsigned short)n);
+    else
+        snprintf(buffer, sizeof(buffer), "%u", (unsigned short)n);
+    int len = strlen(buffer);
+
+    if (column && column + 2 + len > line_length)
+    {
+        put_char('\n');
+        column = 0;
+    }
+    if (column)
+    {
+        put_char(' ');
+        ++column;
+    }
+    put_string(buffer);
+    column += len;
+    put_char(',');
+    ++column;
 }
 
 
 static string
 toupper(const string &s)
 {
-    char *buffer = new char [s.size() + 1];
+    char *buffer = new char[s.size() + 1];
     char *bp = buffer;
     const char *cp = s.c_str();
     while (*cp)
@@ -187,7 +246,7 @@ toupper(const string &s)
             *bp++ = c;
     }
     string result(buffer, bp - buffer);
-    delete buffer;
+    delete [] buffer;
     return result;
 }
 
@@ -195,7 +254,7 @@ toupper(const string &s)
 static string
 identifier(const string &s)
 {
-    char *buffer = new char [s.size() + 1];
+    char *buffer = new char[s.size() + 1];
     char *bp = buffer;
     const char *cp = s.c_str();
     while (*cp)
@@ -209,55 +268,226 @@ identifier(const string &s)
             *bp++ = '_';
     }
     string result(buffer, bp - buffer);
-    delete buffer;
+    delete [] buffer;
     return result;
+}
+
+
+string
+srec_output_file_c::format_address(unsigned long addr)
+{
+    char buffer[30];
+    if (hex_style)
+        snprintf(buffer, sizeof(buffer), "0x%0*lX", address_length * 2, addr);
+    else
+        snprintf(buffer, sizeof(buffer), "%lu", addr);
+    return buffer;
 }
 
 
 srec_output_file_c::~srec_output_file_c()
 {
+    //
+    // Finish initializing the data array.
+    //
     emit_header();
     if (range.empty())
-        emit_byte(0xFF);
+    {
+        if (output_word)
+            emit_word(0xFFFF);
+        else
+            emit_byte(0xFF);
+    }
     if (column)
+    {
         put_char('\n');
+        column = 0;
+    }
     put_string("};\n");
 
-    int width = 2 * address_length;
+    int nsections = 0;
+    if (section_style)
+    {
+        //
+        // emit list of section addresses
+        //
+        put_string("\n");
+        if (constant)
+            put_string("const ");
+        put_stringf("unsigned long %s_address[] =\n{\n", prefix.c_str());
+        interval x = range;
+        while (!x.empty())
+        {
+            //
+            // FIXME: this is a byte index into a word array.
+            // FIXME: should we divide by two?
+            //
+            interval x2 = x;
+            x2.first_interval_only();
+            x -= x2;
+            unsigned long address = x2.get_lowest();
+
+            string s = format_address(address);
+            int len = s.size();
+
+            if (column && column + len + 2 > line_length)
+            {
+                put_char('\n');
+                column = 0;
+            }
+            if (column)
+            {
+                put_char(' ');
+                ++column;
+            }
+            put_string(s);
+            column += len;
+            put_char(',');
+            ++column;
+        }
+        if (column)
+        {
+            put_char('\n');
+            column = 0;
+        }
+        put_stringf("};\n");
+
+        //
+        // emit list of section lengths
+        //
+        if (constant)
+            put_string("const ");
+        put_stringf
+        (
+            "unsigned long %s_length_of_sections[] =\n{\n",
+            prefix.c_str()
+        );
+        x = range;
+        while (!x.empty())
+        {
+            //
+            // FIXME: this is a byte length for a word array.
+            // FIXME: should we divide by two?
+            //
+            interval x2 = x;
+            x2.first_interval_only();
+            x -= x2;
+            unsigned long length = x2.get_highest() - x2.get_lowest();
+            ++nsections;
+
+            string s = format_address(length);
+            int len = s.size();
+
+            if (column && column + len + 2 > line_length)
+            {
+                put_char('\n');
+                column = 0;
+            }
+            if (column)
+            {
+                put_char(' ');
+                ++column;
+            }
+            put_string(s);
+            column += len;
+            put_char(',');
+            ++column;
+        }
+        if (column)
+        {
+            put_char('\n');
+            column = 0;
+        }
+        put_string("};\n");
+
+        //
+        // emit the number of sections
+        //
+        if (constant)
+            put_string("const ");
+        put_string("unsigned long ");
+        put_string(prefix.c_str());
+        put_string("_sections    = ");
+        put_string(format_address(nsections));
+        put_string(";\n");
+    }
+
     if (!data_only_flag)
     {
         if (constant)
-            put_stringf("const ");
-        put_stringf("unsigned long %s_termination = 0x%0*lX;\n",
-            prefix.c_str(), width, taddr);
+            put_string("const ");
+        put_stringf
+        (
+            "unsigned long %s_termination = %s;\n",
+            prefix.c_str(),
+            format_address(taddr).c_str()
+        );
         if (constant)
-            put_stringf("const ");
-        put_stringf("unsigned long %s_start       = 0x%0*lX;\n",
-            prefix.c_str(), width, range.get_lowest());
+            put_string("const ");
+        put_stringf
+        (
+            "unsigned long %s_start       = %s;\n",
+            prefix.c_str(),
+            format_address(range.get_lowest()).c_str()
+        );
         if (constant)
-            put_stringf("const ");
-        put_stringf("unsigned long %s_finish      = 0x%0*lX;\n",
-            prefix.c_str(), width, range.get_highest());
+            put_string("const ");
+        put_stringf
+        (
+            "unsigned long %s_finish      = %s;\n",
+            prefix.c_str(),
+            format_address(range.get_highest()).c_str()
+        );
     }
 
     if (constant)
-        put_stringf("const ");
-    put_stringf("unsigned long %s_length      = 0x%0*lX;\n",
-        prefix.c_str(), width, range.get_highest() - range.get_lowest());
-    put_stringf("\n");
+        put_string("const ");
+    put_stringf
+    (
+        "unsigned long %s_length      = %s;\n",
+        prefix.c_str(),
+        format_address(range.get_highest() - range.get_lowest()).c_str()
+    );
 
     //
     // Some folks prefer #define instead
     //
+    put_char('\n');
+
     string PREFIX = toupper(prefix);
-    put_stringf("#define %s_TERMINATION 0x%0*lX\n",
-        PREFIX.c_str(), width, taddr);
-    put_stringf("#define %s_START       0x%0*lX\n",
-        PREFIX.c_str(), width, range.get_lowest());
-    put_stringf("#define %s_FINISH      0x%0*lX\n",
-        PREFIX.c_str(), width, range.get_highest());
-    put_stringf("#define %s_LENGTH      0x%0*lX\n",
-        PREFIX.c_str(), width, range.get_highest() - range.get_lowest());
+    put_stringf
+    (
+        "#define %s_TERMINATION %s\n",
+        PREFIX.c_str(),
+        format_address(taddr).c_str()
+    );
+    put_stringf
+    (
+        "#define %s_START       %s\n",
+        PREFIX.c_str(),
+        format_address(range.get_lowest()).c_str()
+    );
+    put_stringf
+    (
+        "#define %s_FINISH      %s\n",
+        PREFIX.c_str(),
+        format_address(range.get_highest()).c_str()
+    );
+    put_stringf
+    (
+        "#define %s_LENGTH      %s\n",
+        PREFIX.c_str(),
+        format_address(range.get_highest() - range.get_lowest()).c_str()
+    );
+    if (section_style)
+    {
+        put_stringf
+        (
+            "#define %s_SECTIONS    %s\n",
+            PREFIX.c_str(),
+            format_address(nsections).c_str()
+        );
+    }
 
     if (include)
     {
@@ -272,8 +502,12 @@ srec_output_file_c::~srec_output_file_c()
         {
             if (constant)
                 fprintf(fp, "const ");
-            fprintf(fp, "extern unsigned long %s_termination;\n",
-                prefix.c_str());
+            fprintf
+            (
+                fp,
+                "extern unsigned long %s_termination;\n",
+                prefix.c_str()
+            );
             if (constant)
                 fprintf(fp, "const ");
             fprintf(fp, "extern unsigned long %s_start;\n", prefix.c_str());
@@ -284,6 +518,12 @@ srec_output_file_c::~srec_output_file_c()
         if (constant)
             fprintf(fp, "const ");
         fprintf(fp, "extern unsigned long %s_length;\n", prefix.c_str());
+        if (section_style)
+        {
+            if (constant)
+                fprintf(fp, "const ");
+            fprintf(fp, "extern unsigned long %s_sections;\n", prefix.c_str());
+        }
         if (constant)
             fprintf(fp, "const ");
         fprintf(fp, "extern unsigned char %s[];\n", prefix.c_str());
@@ -315,7 +555,7 @@ srec_output_file_c::write(const srec_record &record)
             const unsigned char *ep = cp + record.get_length();
             while (cp < ep)
             {
-                int c = *cp++;
+                unsigned char c = *cp++;
                 if (isprint(c) || isspace(c))
                     put_char(c);
                 else
@@ -329,26 +569,72 @@ srec_output_file_c::write(const srec_record &record)
         break;
 
     case srec_record::type_data:
-        if (range.empty())
-            current_address = record.get_address();
-        range +=
-            interval
-            (
-                record.get_address(),
-                record.get_address() + record.get_length()
-            );
         emit_header();
-        while (current_address < record.get_address())
+        if (output_word)
         {
-            emit_byte(0xFF);
-            ++current_address;
+            unsigned long min = record.get_address() & ~1uL;
+            unsigned long max =
+                (record.get_address() + record.get_length() + 1) & ~1uL;
+            if (!section_style && !range.empty())
+            {
+                // assert(current_address <= min);
+                while (current_address < min)
+                {
+                    emit_word(0xFFFF);
+                    current_address += 2;
+                }
+            }
+
+            range += interval(min, max);
+
+            int j = 0;
+            if (record.get_address() & 1)
+            {
+                unsigned char n1 = 0xFF;
+                unsigned char n2 = record.get_data(0);
+                // little endian
+                unsigned short n = n1 + (n2 << 8);
+                emit_word(n);
+                ++j;
+            }
+            for (; j + 1 < record.get_length(); j += 2)
+            {
+                unsigned char n1 = record.get_data(j);
+                unsigned char n2 = record.get_data(j + 1);
+                // little endian
+                unsigned short n = n1 + (n2 << 8);
+                emit_word(n);
+            }
+            if (j < record.get_length())
+            {
+                unsigned char n1 = record.get_data(j);
+                unsigned char n2 = 0xFF;
+                // little endian
+                unsigned short n = n1 + (n2 << 8);
+                emit_word(n);
+            }
+            current_address = max;
         }
-        for (int j = 0; j < record.get_length(); ++j)
+        else
         {
-            if (record.get_address() + j < current_address)
-                continue;
-            emit_byte(record.get_data(j));
-            ++current_address;
+            unsigned long min = record.get_address();
+            unsigned long max = record.get_address() + record.get_length();
+            if (!section_style && !range.empty())
+            {
+                // assert(current_address <= min);
+                while (current_address < min)
+                {
+                    emit_byte(0xFF);
+                    ++current_address;
+                }
+            }
+
+            range += interval(min, max);
+            for (int j = 0; j < record.get_length(); ++j)
+            {
+                emit_byte(record.get_data(j));
+            }
+            current_address = max;
         }
         break;
 
@@ -362,10 +648,6 @@ srec_output_file_c::write(const srec_record &record)
 void
 srec_output_file_c::line_length_set(int n)
 {
-    n = (n + 1) / 6;
-    if (n < 1)
-        n = 1;
-    n = n * 6 - 1;
     line_length = n;
 }
 
@@ -384,6 +666,14 @@ srec_output_file_c::address_length_set(int n)
     case 3:
     case 4:
         address_length = n;
+        break;
+
+    case 16:
+        address_length = 2;
+        break;
+
+    case 32:
+        address_length = 4;
         break;
     }
 }

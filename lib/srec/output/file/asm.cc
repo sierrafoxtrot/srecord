@@ -80,6 +80,11 @@ srec_output_file_asm::command_line(srec_arglex *cmdln)
             hex_style = true;
             break;
 
+        case srec_arglex::token_style_hexadecimal_not:
+            cmdln->token_next();
+            hex_style = false;
+            break;
+
         case srec_arglex::token_style_section:
             cmdln->token_next();
             section_style = true;

@@ -48,7 +48,7 @@ public:
       *
       * @param file_name
       *     The name of the file to write the output to.  The string "-"
-      *     is understood to mean the standrad output.
+      *     is understood to mean the standard output.
       */
     srec_output_file_brecord(const string &file_name);
 

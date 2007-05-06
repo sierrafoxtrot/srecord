@@ -112,9 +112,11 @@ assumes little-endian words; you will need to use the \-Byte-Swap filter
 if your target is big-endian.
 No attempt is made to align the words onto even address boundaries;
 use and input filter such as
-.RS
+.nf
+.in +8n
 \f[I]input-file\fP \-fill 0xFF -within \f[I]input-file\fP -range-pad 2
-.RE
+.in -8n
+.fi
 to pad the data to whole words first.
 .RE
 .TP 8n
@@ -138,13 +140,39 @@ A raw binary file will be written.
 If you get unexpected results \f[B]please\fP see the
 \f[I]srec_binary\fP(5) manual for more information.
 .TP 8n
-\fB\-C-Array\fP [ \fIidentifier\fP ][ \-INClude ][ \-No-CONST ]
-A C array declaration will be written.
-The \fIidentifier\fP is the name of the variable to be defined.
-The \-INClude options asks for an include file to be generated as well.
-The \-No-CONST options asks for the variables to not use the const
+\fB\-C-Array\fP [ \f[I]identifier\fP ][ \-\f[I]option\fP... ]
+.RS
+A C array defintion will be written.
+.PP
+The optional \fIidentifier\fP is the name of the variable to be defined,
+or \f[CW]bugus\fP if not specified.
+.TP 8n
+\fB\-INClude\fP
+This option asks for an include file to be generated as well.
+.TP 8n
+\fB\-No-CONST
+This options asks for the variables to not use the const
 keyword (they are declared constant be default, so that they are placed
 into the read-only segment in embedded systems).
+.TP 8n
+\fB\-A430\fP
+.TP 8n
+\fB\-CL430\fP
+.TP 8n
+\fB\-C_COMpressed\fP
+These options ask for an compressed c-array whose memory
+gaps will not be filled.
+.TP 8n
+\fB\-Output_Word\fP
+This option asks for an output which is in words not in
+bytes.  This is little endian, so you may need to
+use the \-Swap-bytes filter.  Filler bytes of 0xFF may be inserted
+if necessary; use \-fill \-range-pad for a different value.
+.TP 8n
+\fB\-DECimal_STyle\fP
+This option may be used to get decimal constants in the output, rather
+than the default hexadecimal constants.
+.RE
 .TP 8n
 \fB\-COsmac\fP
 An RCA Cosmac Elf format file will be written.
