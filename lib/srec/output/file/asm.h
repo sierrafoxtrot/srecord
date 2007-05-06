@@ -22,7 +22,6 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_ASM_H
 #define INCLUDE_SREC_OUTPUT_FILE_ASM_H
 
-
 #include <lib/srec/output/file.h>
 #include <lib/interval.h>
 
@@ -59,7 +58,16 @@ public:
     // See base class for documentation.
     int preferred_block_size_get() const;
 
+    // See base class for documentation.
+    void command_line(srec_arglex *cmdln);
+
 private:
+    /**
+      * The prefix instance variable is used to remember the variable
+      * name prefix to be used in the output.
+      */
+    string prefix;
+
     /**
       * The taddr instance variabel is used to remember the
       * termination address, to be emitted in the footer.
@@ -98,10 +106,61 @@ private:
     bool org_warn;
 
     /**
+      * The output_word instance variable is used to remember whether or not
+      * the input bytes should be emitted as word.
+      */
+    bool output_word;
+
+    /**
       * The emit_byte method is used to emit a single byte.  It uses
       * column to track the position, so as not to exceed line_length.
       */
     void emit_byte(int);
+
+    /**
+      * The emit_word method is used to emit 2 byte.  It uses
+      * column to track the position, so as not to exceed line_length.
+      * It is called by output_word addition.
+      */
+    void emit_word(unsigned int);
+
+    /**
+      * The emit_4byte method is used to emit a double word (4 Byte).  It uses
+      * column to track the position, so as not to exceed line_length.
+      */
+    void emit_4byte_array(unsigned long *);
+
+    /**
+      * The dot_style instance variable is used to remember whether or
+      * not "dot" style pseudo-ops are being used.  Such as:
+      *
+      *     not dot_style  dot_style
+      *     -------------  ------------------------
+      *     DB             .byte
+      *     DL             .long
+      *     DW             .short
+      *     END            .end
+      *     ORG            .org
+      *     PUBLIC         .global
+      */
+    bool dot_style;
+
+    /**
+      * The section_style instance variable is used to remember whether
+      * or not the output is to contain "sections".
+      *
+      * In non-section output, the output uses ORG (.org) directives to
+      * place the code at the appropriate addresses.  In section output,
+      * tables of addresses and lenthgs are emitted, and the actual data
+      * is intended to be relocated at run time.
+      */
+    bool section_style;
+
+    /**
+      * The hex_style is used to reember whether or not we are using
+      * hexadecimal constatnts or decimal constants.
+      */
+    bool hex_style;
 
     /**
       * The default constructor.  Do not use.

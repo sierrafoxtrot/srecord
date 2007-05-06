@@ -21,19 +21,79 @@
 
 
 #include <lib/interval.h>
+#include <lib/srec/arglex.h>
 #include <lib/srec/output/file/asm.h>
 #include <lib/srec/record.h>
 #include <cstdio> // for sprintf
 
 
-srec_output_file_asm::srec_output_file_asm(const string &a_file_name) :
-    srec_output_file(a_file_name),
+srec_output_file_asm::srec_output_file_asm(const string &filename) :
+    srec_output_file(filename),
+    prefix("eprom"),
     taddr(0),
     column(0),
     current_address(0),
     line_length(75),
-    org_warn(false)
+    org_warn(false),
+    output_word(false),
+    dot_style(false),
+    section_style(false),
+    hex_style(false)
 {
+}
+
+
+void
+srec_output_file_asm::command_line(srec_arglex *cmdln)
+{
+    if (cmdln->token_cur() == arglex::token_string)
+    {
+        prefix = cmdln->value_string();
+        cmdln->token_next();
+    }
+    for (;;)
+    {
+        switch (cmdln->token_cur())
+        {
+        case srec_arglex::token_a430:
+            cmdln->token_next();
+            // Generate "IAR assembler compiler compliant" output.
+            section_style = true;
+            hex_style = true;
+            break;
+
+        case srec_arglex::token_cl430:
+            cmdln->token_next();
+            // Generate "Code Composer Essential compliant" output.
+            dot_style = true;
+            section_style = true;
+            hex_style = true;
+            break;
+
+        case srec_arglex::token_style_dot:
+            cmdln->token_next();
+            dot_style = true;
+            break;
+
+        case srec_arglex::token_style_hexadecimal:
+            cmdln->token_next();
+            hex_style = true;
+            break;
+
+        case srec_arglex::token_style_section:
+            cmdln->token_next();
+            section_style = true;
+            break;
+
+        case srec_arglex::token_output_word:
+            cmdln->token_next();
+            output_word = true;
+            break;
+
+        default:
+            return;
+        }
+    }
 }
 
 
@@ -41,7 +101,10 @@ void
 srec_output_file_asm::emit_byte(int n)
 {
     char buffer[8];
-    sprintf(buffer, "%d", (unsigned char)n);
+    if (hex_style)
+        sprintf(buffer, "0x%2.2X", (unsigned char)n);
+    else
+        sprintf(buffer, "%u", (unsigned char)n);
     int len = strlen(buffer);
     if (column && (column + 1 + len) > line_length)
     {
@@ -50,8 +113,16 @@ srec_output_file_asm::emit_byte(int n)
     }
     if (!column)
     {
-        put_string("        DB      ");
-        column = 16;
+        if (dot_style)
+        {
+            put_string("        .byte   ");
+            column = 16;
+        }
+        else
+        {
+            put_string("        DB      ");
+            column = 16;
+        }
     }
     else
     {
@@ -64,12 +135,192 @@ srec_output_file_asm::emit_byte(int n)
 }
 
 
+void
+srec_output_file_asm::emit_word(unsigned int n)
+{
+    char buffer[16];
+    if (hex_style)
+        snprintf(buffer, sizeof(buffer), "0x%4.4X", (unsigned short)n);
+    else
+        snprintf(buffer, sizeof(buffer), "%u", (unsigned short)n);
+    int len = strlen(buffer);
+    if (column && (column + 1 + len) > line_length)
+    {
+        put_char('\n');
+        column = 0;
+    }
+    if (!column)
+    {
+        if (dot_style)
+        {
+            put_string("        .short      ");
+            column = 20;
+        }
+        else
+        {
+            put_string("        DW      ");
+            column = 16;
+        }
+    }
+    else
+    {
+        put_char(',');
+        ++column;
+    }
+    put_string(buffer);
+    column += len;
+    current_address += 2;
+}
+
+
 srec_output_file_asm::~srec_output_file_asm()
 {
-    if (range.empty())
-        emit_byte(0xFF);
+    if (!section_style && range.empty())
+    {
+        if (output_word)
+            emit_word(0xFFFF);
+        else
+            emit_byte(0xFF);
+    }
     if (column)
+    {
         put_char('\n');
+        column = 0;
+    }
+
+    //
+    // write out sections data
+    //
+    if (section_style)
+    {
+        // address
+        put_char('\n');
+        if (dot_style)
+            put_stringf("        .global %s_address\n", prefix.c_str());
+        else
+            put_stringf("        PUBLIC  %s_address\n", prefix.c_str());
+        put_stringf("%s_address\n", prefix.c_str());
+        interval x = range;
+        while (!x.empty())
+        {
+            interval x2 = x;
+            x2.first_interval_only();
+            x -= x2;
+
+            char buffer[20];
+            if (hex_style)
+                snprintf(buffer, sizeof(buffer), "0x%8.8lX", x2.get_lowest());
+            else
+                snprintf(buffer, sizeof(buffer), "%lu", x2.get_lowest());
+            long len = strlen(buffer);
+
+            if (column && column + len + 2 > line_length)
+            {
+                put_char('\n');
+                column = 0;
+            }
+            if (column == 0)
+            {
+                if (dot_style)
+                    put_stringf("        .long   ");
+                else
+                    put_stringf("        DL      ");
+                column = 16;
+            }
+            else
+            {
+                put_stringf(", ");
+                column += 2;
+            }
+            put_string(buffer);
+            column += len;
+        }
+        if (column)
+        {
+            put_char('\n');
+            column = 0;
+        }
+
+        // length_of_sections
+        put_char('\n');
+        if (dot_style)
+        {
+            put_stringf
+            (
+                "        .global %s_length_of_sections\n",
+                prefix.c_str()
+            );
+        }
+        else
+        {
+            put_stringf
+            (
+                "        PUBLIC  %s_length_of_sections\n",
+                prefix.c_str()
+            );
+        }
+        put_stringf("%s_length_of_sections\n", prefix.c_str());
+        long nsections = 0;
+        x = range;
+        while (!x.empty())
+        {
+            interval x2 = x;
+            x2.first_interval_only();
+            x -= x2;
+            ++nsections;
+
+            unsigned long slen = x2.get_highest() - x2.get_lowest();
+            char buffer[30];
+            if (hex_style)
+                snprintf(buffer, sizeof(buffer), "0x%8.8lX", slen);
+            else
+                snprintf(buffer, sizeof(buffer), "%lu", slen);
+            long len = strlen(buffer);
+
+            if (column && column + len + 2 > line_length)
+            {
+                put_char('\n');
+                column = 0;
+            }
+            if (column == 0)
+            {
+                if (dot_style)
+                    put_stringf("        .long   ");
+                else
+                    put_stringf("        DL      ");
+                column = 16;
+            }
+            else
+            {
+                put_stringf(", ");
+                column += 2;
+            }
+            put_string(buffer);
+            column += len;
+        }
+        if (column)
+        {
+            put_char('\n');
+            column = 0;
+        }
+
+        // sections
+        put_char('\n');
+        if (dot_style)
+            put_stringf("        .global %s_sections\n", prefix.c_str());
+        else
+            put_stringf("        PUBLIC  %s_sections\n", prefix.c_str());
+        put_stringf("%s_sections\n", prefix.c_str());
+        if (dot_style)
+            put_string("        .long   ");
+        else
+            put_string("        DL      ");
+        if (hex_style)
+            put_stringf("0x%4.4lX\n", nsections);
+        else
+            put_stringf("%lu\n", nsections);
+    }
+
 
     if (!data_only_flag)
     {
@@ -78,11 +329,19 @@ srec_output_file_asm::~srec_output_file_asm()
     }
     unsigned long len = range.get_highest() - range.get_lowest();
     put_stringf("; length =      0x%4.4lX\n", len);
+
+    if (section_style)
+    {
+        if (dot_style)
+            put_stringf("        .end\n");
+        else
+            put_stringf("        END\n");
+    }
 }
 
 
 void
-srec_output_file_asm::write(const srec_record &record)
+srec_output_file_asm::write(const srec_record & record)
 {
     switch (record.get_type())
     {
@@ -117,42 +376,107 @@ srec_output_file_asm::write(const srec_record &record)
         break;
 
     case srec_record::type_data:
+        //
+        // emit the data prelude, if we have not done so already
+        //
+        if (section_style && range.empty())
+        {
+            if (dot_style)
+            {
+                put_stringf("        .global %s\n", prefix.c_str());
+                put_stringf("        .text\n");
+                put_stringf("%s\n", prefix.c_str());
+            }
+            else
+            {
+                put_stringf("        PUBLIC  %s\n", prefix.c_str());
+                put_stringf("        RSEG    CODE\n");
+                put_stringf("%s\n", prefix.c_str());
+            }
+        }
+
         if (current_address != record.get_address())
         {
-            if (column)
-            {
-                put_char('\n');
-                column = 0;
-            }
             current_address = record.get_address();
-            if (range.empty())
+
+            if (!section_style)
             {
-                put_stringf
-                (
-                    "; To avoid this next ORG directive, use the "
-                        "--offset -0x%lX filter.\n",
-                    current_address
-                );
+                if (column)
+                {
+                    put_char('\n');
+                    column = 0;
+                }
+
+                const char *org = dot_style ? ".org" : "ORG";
+                if (range.empty())
+                {
+                    put_stringf
+                    (
+                        "; To avoid this next %s directive, use the "
+                            "--offset -0x%lX filter.\n",
+                        org,
+                        current_address
+                    );
+                }
+                else if (!org_warn)
+                {
+                    org_warn = true;
+                    put_stringf
+                    (
+                        "; To avoid this next %s directive, use the "
+                            "--fill filter.\n",
+                        org
+                    );
+                }
+                put_stringf("        %-7s %lu\n", org, current_address);
             }
-            else if (!org_warn)
-            {
-                org_warn = true;
-                put_string
-                (
-                    "; To avoid this next ORG directive, use the --fill "
-                        "filter.\n"
-                );
-            }
-            put_stringf("        ORG     %lu\n", current_address);
         }
-        range +=
-            interval
-            (
-                record.get_address(),
-                record.get_address() + record.get_length()
-            );
-        for (int j = 0; j < record.get_length(); ++j)
-            emit_byte(record.get_data(j));
+        if (output_word)
+        {
+            unsigned long len = record.get_length();
+            if (len & 1)
+                ++len;
+            range += interval(record.get_address(), record.get_address() + len);
+
+            //
+            // No attempt is made to align the data on even byte
+            // boundaries, use the --fill --range-pad filter for that.
+            //
+            // The data is padded with a single 0xFF byte if the data
+            // block would be and odd length.  This will never cause an
+            // overlap because srec_cat stores its data internally on
+            // powers-of-two block boundaries.
+            //
+            for (int j = 0; j < record.get_length(); j += 2)
+            {
+                unsigned char n1 = record.get_data(j);
+                unsigned char n2 =
+                    (
+                        j + 1 < record.get_length()
+                    ?
+                        record.get_data(j + 1)
+                    :
+                        0xFF
+                    );
+                // little-endian
+                unsigned short n = n1 + (n2 << 8);
+                emit_word(n);
+            }
+        }
+        else
+        {
+            range +=
+                interval
+                (
+                    record.get_address(),
+                    record.get_address() + record.get_length()
+                );
+
+            for (int j = 0; j < record.get_length(); ++j)
+            {
+                emit_byte(record.get_data(j));
+            }
+        }
         break;
 
     case srec_record::type_start_address:

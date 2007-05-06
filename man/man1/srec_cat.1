@@ -43,10 +43,10 @@ file.
 The use of filters (see below) allows significant manipulations to be
 performed by this command.
 .PP
-A warning will be emitted for each address wich is redundantly se to the
+A warning will be emitted for each address which is redundantly set to the
 same value.  A fatal error will be issued if any address is set with
 contradictory values.
-To supress this behaviour, use an \fB\-exclude \-within\fP filter.
+To suppress this behavior, use an \fB\-exclude \-within\fP filter.
 .so o_input.so
 .br
 .ne 1i
@@ -74,8 +74,49 @@ An Ascii-Hex file will be written.
 .IR srec_ascii_hex (5)
 for a description of this file format.)
 .TP 8n
-\fB\-ASM\fP
+\fB\-ASM\fP [ \f[I]prefix\fP ][ \-\f[I]option\fP... ]
+.RS
 A series of assembler DB statements will be written.
+.PP
+The optional \fIprefix\fP may be specified to change the names of the
+symbols generated.  The defaults to "\f[CW]eprom\fP" if not set.
+.PP
+Several options are available to modify the style of output:
+.TP 8n
+\fB\-Dot_STyle\fP
+Use "dot" style pseudo-ops instead of words.
+For example \f[CW].byte\fP instead of the \f[CW]DB\fP default.
+.TP 8n
+\fB\-HEXadecimal_STyle\fP
+Use hexadecimal numbers in the output,
+rather than the default decimal numbers.
+.TP 8n
+\fB\-Section_STyle\fP
+By default the generated assemble of placed at the correct address using
+\f[CW]ORG\fP pseudo-ops.  Section style output emits tables of section
+addresses and lengths, so the data may be related at runtime.
+.TP 8n
+\fB\-A430\fP
+Generate output which is compliant to the \f[CW]a430.exe\fP compiler as
+it is used, \f[I]e.g.\fP in IAR Embedded Workbench.
+This is short-hand for \-section-style \-hex-style
+.TP 8n
+\fB\-CL430\fP
+Generate  output which is Code Composer Essentials compliant,
+\f[I]i.e.\fP the compiler of it.
+This is short-hand for \-section-style \-hex-style \-dot-style
+.TP 8n
+\fB\-Output_Word\fP
+Generate output which is in two-byte words rather than bytes.  This
+assumes little-endian words; you will need to use the \-Byte-Swap filter
+if your target is big-endian.
+No attempt is made to align the words onto even address boundaries;
+use and input filter such as
+.RS
+\f[I]input-file\fP \-fill 0xFF -within \f[I]input-file\fP -range-pad 2
+.RE
+to pad the data to whole words first.
+.RE
 .TP 8n
 \fB\-Atmel_Generic\fP
 An Atmel Generic file will be written.
@@ -102,7 +143,7 @@ A C array declaration will be written.
 The \fIidentifier\fP is the name of the variable to be defined.
 The \-INClude options asks for an include file to be generated as well.
 The \-No-CONST options asks for the variables to not use the const
-keyword (they are declared contant be default, so that they are placed
+keyword (they are declared constant be default, so that they are placed
 into the read-only segment in embedded systems).
 .TP 8n
 \fB\-COsmac\fP
@@ -170,7 +211,7 @@ if you wish to force S37 use the \fB--address-length=4\fP option
 The optional \fIwidth\fP argument describes the number of bytes which
 form each address multiple.  For normal uses the default of one (1) byte
 is appropriate.  Some systems with 16-bit or 32-bit targets mutilate the
-addresses in the file; this option will imitate that ehaviour.
+addresses in the file; this option will imitate that behavior.
 Unlike most other parameters, this one cannot be guessed.
 .RE
 .TP 8n
@@ -226,14 +267,14 @@ A Texas Instruments SDSMAC 320 format file will be written.
 .IR srec_ti_tagged_16 (5)
 for a description of this file format.)
 .TP 8n
-\fB\-Texas_Instruments_TaXT\fP
+\fB\-Texas_Instruments_TeXT\fP
 This option says to use the Texas Instruments TXT (MSP430) format to
 write the file.  See \f[I]srec_ti_txt\fP(5) for a description of this
 file format.
 .TP 8n
 \fB\-VHdl\fP [ \fIbytes-per-word\fP [ \fIname\fP ]]
 A VHDL format file will be written.
-The \fIbytes-per-word\fP defaaults to one,
+The \fIbytes-per-word\fP defaults to one,
 the \fIname\fP defaults to \f[CW]eprom\fP.
 The \fIetc/x_defs_pack.vhd\fP file in the source distribution contains an
 example ROM definitions pack for the type-independent output.
