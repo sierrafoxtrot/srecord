@@ -19,6 +19,8 @@
 // MANIFEST: functions to impliment the srec_arglex_get_interval class
 //
 
+#include <climits>
+
 #include <lib/interval.h>
 #include <lib/srec/arglex.h>
 #include <lib/srec/input.h>
@@ -26,7 +28,7 @@
 
 
 interval
-srec_arglex::get_interval_inner(const char *name)
+srec_arglex::get_interval_factor(const char *name)
 {
     switch (token_cur())
     {
@@ -98,54 +100,70 @@ srec_arglex::get_interval_inner(const char *name)
 
 
 interval
-srec_arglex::get_interval(const char *name)
+srec_arglex::get_interval_term(const char *name)
 {
-    interval range;
+    interval result = get_interval_factor(name);
     for (;;)
     {
-        range += get_interval_inner(name);
+        switch (token_cur())
+        {
+        case token_intersection:
+            {
+                token_next();
+                result *= get_interval_factor(name);
+            }
+            break;
+
+        default:
+            return result;
+        }
+    }
+}
+
+
+interval
+srec_arglex::get_interval(const char *name)
+{
+    interval result = get_interval_term(name);
+    for (;;)
+    {
         switch (token_cur())
         {
         case token_number:
         case token_within:
         case token_over:
         case token_paren_begin:
+            result += get_interval_term(name);
             continue;
 
-        default:
+        case token_union:
+            token_next();
+            result += get_interval_term(name);
+            continue;
+
+        case token_minus:
+            token_next();
+            result -= get_interval_term(name);
+            continue;
+
+        case token_range_padding:
+            {
+                token_next();
+
+                //
+                // Collect the multiple from the command line.
+                //
+                long mult = get_number("--range-padding", 2, USHRT_MAX);
+
+                //
+                // Pad the range so that is contains whole multiples, aligned.
+                //
+                result = result.pad(mult);
+            }
             break;
-        }
-        break;
-    }
-    if (token_cur() == token_range_padding)
-    {
-        token_next();
 
-        //
-        // Collect the multiple from the command line.
-        //
-        if (!can_get_number())
-        {
-            fatal_error
-            (
-                "the --range-padding option requires a numeric argument"
-            );
+        default:
+            return result;
         }
-        long mult = get_number("address range minimum");
-        if (mult < 2)
-        {
-            fatal_error
-            (
-                "a --range-padding multipe of %ld is invalid",
-                mult
-            );
-            // NOTREACHED
-        }
-
-        //
-        // Pad the range so that is contains whole multiples, aligned.
-        //
-        range = range.pad(mult);
     }
-    return range;
 }

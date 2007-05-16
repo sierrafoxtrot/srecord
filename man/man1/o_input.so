@@ -241,7 +241,7 @@ srec_cat \-generate 0x1000 0x2000 \-repeat-data 0xDE 0xAD
 .in -0.25i
 .fi
 .PP
-The repeat boundaries are aligned with the base of the addres srange,
+The repeat boundaries are aligned with the base of the address range,
 modulo the number of bytes.
 .RE
 .TP 8n
@@ -499,10 +499,30 @@ will fill the \f[I]input-file\fP so that it consists of whole 512-byte
 blocks, aligned on 512 byte boundaries.  Any large holes in the data
 will also be multiples of 512 bytes, though they may have been shrunk as
 blocks before and after are padded.
-.RE
 .PP
-In addition, all of these methods may be used, and used more than once,
-and the results will be combined.
+This operator has the same precedence as the explicit union operator.
+.RE
+.TP 8n
+\f[I]address-range\fP \fB\-INTERsect\fP \fIaddress-range\fP
+You can intersect two address ranges to produce a smaller address range.
+The insersection operator has higher precedence than the implicit union
+operator (evaluated left to right).
+.TP 8n
+\f[I]address-range\fP \fB\-UNIon\fP \fIaddress-range\fP
+You can union two address ranges to produce a larger address range.  The
+union operator has lower precedence than the intersection operator
+(evaluated left to right).
+.TP 8n
+\f[I]address-range\fP \fB\-DIFference\fP \fIaddress-range\fP
+You can difference two address ranges to produce a smaller address
+range.  The result is the left hand range with all of the right hand
+range removed.  The difference operator has the same precedence as the
+implicit union operator (evaluated left to right).
+.TP 8n
+\f[I]address-range\fP \fIaddress-range\fP
+In addition, all of these methods may be used, and used more than
+once, and the results will be combined (implicit union operator, same
+precedence as explicit union operator).
 .SS Calculated Values
 Most of the places above where a number is expected, you may supply one
 of the following:

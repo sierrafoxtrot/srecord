@@ -82,6 +82,7 @@ public:
         token_include_not,
         token_intel,
         token_intel16,
+        token_intersection,
         token_length,
         token_length_be,
         token_length_le,
@@ -91,6 +92,7 @@ public:
         token_minimum,
         token_minimum_be,
         token_minimum_le,
+        token_minus,
         token_mos_tech,
         token_motorola,
         token_multiple,
@@ -130,6 +132,7 @@ public:
         token_ti_tagged_16,
         token_ti_txt,
         token_unfill,
+        token_union,
         token_unsplit,
         token_vhdl,
         token_vmem,
@@ -201,8 +204,10 @@ public:
       * set form the command line.  It consists of as many
       * get_interval_inner()s as possible.
       *
-      * Used by the get_input method to parse the address intervals
-      * used by various filters.
+      * Used by the get_input method to parse the address intervals used
+      * by various filters.  It is the lowest precedence level, and
+      * handsles set union (the implicit operator) and set difference
+      * (the - operator).
       *
       * If the parse is unsuccessful (is not present on command
       * line) a fatal error will be issued and the method call will
@@ -224,19 +229,36 @@ public:
 
 private:
     /**
-      * The get_interval_inner method is used to parse a single
+      * The get_interval_factor method is used to parse a single
       * interval from the command line (usually, a pair of number
       * representing the [lower, upper) bounds, but it could be
       * -over or -within, too).
       *
-      * This method should only every be called by the get_interval
+      * This method parses the highest precedence operators in the range
+      * parsing.
+      *
+      * This method should only every be called by the get_interval_term
       * method.
       *
       * If the parse is unsuccessful (is not present on command
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    interval get_interval_inner(const char *err_msg_caption);
+    interval get_interval_factor(const char *err_msg_caption);
+
+    /**
+      * The get_interval_term method is used to parse set-intersection
+      * precedence intervals from the command line.  This method parses
+      * the middle precedence operators in the range parsing.
+      *
+      * This method should only every be called by the get_interval_term
+      * method.
+      *
+      * If the parse is unsuccessful (is not present on command
+      * line) a fatal error will be issued and the method call will
+      * not return.
+      */
+    interval get_interval_term(const char *err_msg_caption);
 
     /**
       * The get_address method is used to parse an address from the
