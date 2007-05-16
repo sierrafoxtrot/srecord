@@ -22,6 +22,7 @@
 #ifndef INCLUDE_ARGLEX_H
 #define INCLUDE_ARGLEX_H
 
+#include <lib/format_printf.h>
 
 #include <list>
 #include <vector>
@@ -93,6 +94,18 @@ public:
         int token;
     };
 
+    /**
+      * The fatal_error method may be used to print a fatal error
+      * message, and then exit via the usage() method.
+      *
+      * @param fmt
+      *     The format of the string - it controls the rest of the
+      *     arguments.  See printf(3) for more information.
+      * @note
+      *     This method never returns.
+      */
+    void fatal_error(const char *fmt, ...)                  FORMAT_PRINTF(2, 3);
+
 private:
     /**
       * The arguments instance variable is used to remember the
@@ -120,9 +133,9 @@ private:
     long value_number_;
 
     /**
-      * The table_ptr_vec_t type is used to declare the `tables'
+      * The table_ptr_vec_t type is used to declare the 'tables'
       * instance variable.  Also used to simplify the code use to
-      * manipulate the `tables' instance variable.
+      * manipulate the 'tables' instance variable.
      */
     typedef std::vector<const table_ty *> table_ptr_vec_t;
 
@@ -130,7 +143,7 @@ private:
       * The tables instance variable tracks the command line token
       * tables to be scanned to determine if a command line argument
       * is a particular token.  There is usually one per derived
-      * class.  Append more tables with the `table_set' method.
+      * class.  Append more tables with the 'table_set' method.
       */
     table_ptr_vec_t tables;
 
@@ -217,7 +230,7 @@ public:
     void usage() const;
 
     /**
-      * The help method is used to print a helpmessage.
+      * The help method is used to print a help message.
       */
     void help(const char * = 0) const;
 
@@ -254,14 +267,14 @@ public:
 private:
     /**
       * The usage_tail_ instance variable tracks the end part of
-      * the command line printed by the `usage' method.
+      * the command line printed by the 'usage' method.
       * Defaults to the empty string.
       */
     mutable const char *usage_tail_;
 
     /**
       * The usage_tail_get method is used to get the tail end of
-      * the command line to be printed by the `usage' method.
+      * the command line to be printed by the 'usage' method.
       */
     const char *usage_tail_get() const;
 

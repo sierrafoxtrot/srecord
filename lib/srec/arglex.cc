@@ -78,6 +78,8 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Fill", token_fill, },
         { "-Formatted_Binary", token_formatted_binary, },
         { "-Four_Packed_Code", token_four_packed_code, },
+        { "-GENerate", token_generator },
+        { "-GENerator", token_generator },
         { "-GUess", token_guess, },
         { "-HEXadecimal_STyle", token_style_hexadecimal, },
         { "-IGnore_Checksums", token_ignore_checksums, },
@@ -110,9 +112,12 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Output", token_output, },
         { "-Output_Words", token_output_word, },
         { "-OVer", token_over, },
+        { "-RANDom", token_random, },
         { "-Random_Fill", token_random_fill, },
         { "-RAnge_PADding", token_range_padding, },
         { "-RAw", token_binary, },
+        { "-REPeat_Data", token_repeat_data, },
+        { "-REPeat_String", token_repeat_string, },
         { "-Round", token_round_nearest, },
         { "-Round_Down", token_round_down, },
         { "-Round_Nearest", token_round_nearest, },
@@ -174,8 +179,8 @@ srec_arglex::get_address(const char *name, unsigned long &address)
 {
     if (!can_get_number())
     {
-        cerr << "the " << name << " filter requires an address" << endl;
-        exit(1);
+        fatal_error("the %s filter requires an address", name);
+        // NOTREACHED
     }
     address = get_number("address");
 }
@@ -187,30 +192,26 @@ srec_arglex::get_address_and_nbytes(const char *name, unsigned long &address,
 {
     if (!can_get_number())
     {
-        cerr << "the " << name
-                << " filter requires an address and a byte count"
-                << endl;
-        exit(1);
+        fatal_error("the %s filter requires an address and a byte count", name);
+        // NOTREACHED
     }
     address = get_number("address");
     nbytes = 4;
     if (can_get_number())
     {
-        nbytes = get_number("byte count");
-        if (nbytes < 1 || nbytes > 8)
-        {
-                cerr << "the " << name << " byte count " << nbytes
-                       << " is out of range (1..8)"
-                       << endl;
-                exit(1);
-        }
+        nbytes = get_number("byte count", 1, 8);
     }
     if ((long long)address + nbytes > (1LL << 32))
     {
-        cerr << "the " << name << " address (" << address
-                << ") and byte count (" << nbytes
-                << ") may not span the top of memory" << endl;
-        exit(1);
+        fatal_error
+        (
+            "the %s address (0x%8.8lX) and byte count (%d) may not span the "
+                "top of memory",
+            name,
+            address,
+            nbytes
+        );
+        // NOTREACHED
     }
 }
 
@@ -224,32 +225,23 @@ srec_arglex::get_address_nbytes_width(const char *name, unsigned long &address,
     width = 1;
     if (can_get_number())
     {
-        nbytes = get_number("byte count");
-        if (nbytes < 1 || nbytes > 8)
-        {
-            cerr << "the " << name << " byte count " << nbytes
-                       << " is out of range (1..8)"
-                       << endl;
-            exit(1);
-        }
+        nbytes = get_number("byte count", 1, 8);
         if (can_get_number())
         {
-            width = get_number("width");
-            if (width < 1 || width > nbytes)
-            {
-                       cerr << "the " << name << " sum width "
-                    << width << " is out of range (1.."
-                    << nbytes << ")" << endl;
-                       exit(1);
-            }
+            width = get_number("width", 1, nbytes);
         }
     }
     if ((long long)address + nbytes > (1LL << 32))
     {
-        cerr << "the " << name << " address (" << address
-                << ") and byte count (" << nbytes
-                << ") may not span the top of memory" << endl;
-        exit(1);
+        fatal_error
+        (
+            "the %s address (0x%8.8lX) and byte count (%d) may not span the "
+                "top of memory",
+            name,
+            address,
+            nbytes
+        );
+        // NOTREACHED
     }
 }
 

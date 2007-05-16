@@ -165,6 +165,12 @@ public:
     void set_data(int n, int d) { data[n] = d; }
 
     /**
+      * The set_data_extend method is used to set values in the data array.
+      * The record length is adjusted if necessary.
+      */
+    void set_data_extend(int n, int d);
+
+    /**
       * The get_type method is used to get the type of the record.
       */
     type_t get_type() const { return type; }
@@ -182,22 +188,22 @@ public:
     static int maximum_data_length(address_t);
 
     /**
-      * The decode_big_endian method is used to extract `len'
-      * bytes from the given `data' and assemble a big-endian value
+      * The decode_big_endian method is used to extract 'len'
+      * bytes from the given 'data' and assemble a big-endian value
       * (most significant byte first).
       */
     static address_t decode_big_endian(data_t *data, int len);
 
     /**
-      * The encode_big_endian method is used to break down `val' into
-      * 'len' bytes of `data' orderdd big-endian (most significan
+      * The encode_big_endian method is used to break down 'val' into
+      * 'len' bytes of 'data' orderdd big-endian (most significan
       * byte first).
       */
     static void encode_big_endian(data_t *data, address_t val, int len);
 
     /**
       * The encode_little_endian method is used to break down
-      * `val' into 'len' bytes of `data' orderdd big-endian (least
+      * 'val' into 'len' bytes of 'data' orderdd big-endian (least
       * significan byte first).
       */
     static void encode_little_endian(data_t *data, address_t val, int len);
@@ -224,13 +230,13 @@ private:
 
     /**
       * The length instance variable is used to remember the number
-      * of valid bytes in the `data' array.
+      * of valid bytes in the 'data' array.
       */
     int length;
 
     /**
       * The data instance variable is used to remember the data
-      * of the record.  Only the first `length' bytes are valid,
+      * of the record.  Only the first 'length' bytes are valid,
       * the rest are undefined.
       */
     data_t data[max_data_length];

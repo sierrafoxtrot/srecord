@@ -22,8 +22,11 @@
 #ifndef INCLUDE_SREC_ARGLEX_H
 #define INCLUDE_SREC_ARGLEX_H
 
-
 #include <lib/arglex.h>
+
+class interval; // forward
+class srec_input; // forward
+class srec_output; // forward
 
 /**
   * The srec_arglex is used to parse command line with srec-specific
@@ -72,6 +75,7 @@ public:
         token_fill,
         token_formatted_binary,
         token_four_packed_code,
+        token_generator,
         token_guess,
         token_ignore_checksums,
         token_include,
@@ -100,8 +104,11 @@ public:
         token_over,
         token_paren_begin,
         token_paren_end,
+        token_random,
         token_random_fill,
         token_range_padding,
+        token_repeat_data,
+        token_repeat_string,
         token_round_down,
         token_round_nearest,
         token_round_up,
@@ -152,7 +159,7 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    class srec_input *get_input();
+    srec_input *get_input();
 
     /**
       * The get_output method is used to parse an output specification
@@ -162,19 +169,55 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    class srec_output *get_output();
+    srec_output *get_output();
 
     /**
-      * The get_number method is used to parse a numeric value fromthe
+      * The get_number method is used to parse a numeric value from the
       * command line.
       */
     unsigned long get_number(const char *caption);
+
+    /**
+      * The get_number method is used to parse a numeric value
+      * from the command line, and check it agains a specified range.
+      *
+      * @param caption
+      *     for the error message, if necessary
+      * @param min
+      *     The minimum acceptable value (inclusive)
+      * @param max
+      *     The maximum acceptable value (inclusive)
+      */
+    unsigned long get_number(const char *caption, long min, long max);
 
     /**
       * The can_get_number method is used to determine if it is possible
       * to parse a number from the next token on the command line.
       */
     bool can_get_number() const;
+
+    /**
+      * The get_interval method is used to parse an interval
+      * set form the command line.  It consists of as many
+      * get_interval_inner()s as possible.
+      *
+      * Used by the get_input method to parse the address intervals
+      * used by various filters.
+      *
+      * If the parse is unsuccessful (is not present on command
+      * line) a fatal error will be issued and the method call will
+      * not return.
+      */
+    interval get_interval(const char *err_msg_caption);
+
+    /**
+      * The get_string method may be used to get a string from the
+      * command line, or issue a fatal error if one is not available.
+      *
+      * @param caption
+      *     The text for the error message.
+      */
+    std::string get_string(const char *caption);
 
     // See base class for documentation.
     void default_command_line_processing();
@@ -193,21 +236,7 @@ private:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    class interval get_interval_inner(const char *err_msg_caption);
-
-    /**
-      * The get_interval method is used to parse an interval
-      * set form the command line.        Iyt consists of as many
-      * get_interval_inner()s as possible.
-      *
-      * Used by the get_input method to parse the address intervals
-      * used by various filters.
-      *
-      * If the parse is unsuccessful (is not present on command
-      * line) a fatal error will be issued and the method call will
-      * not return.
-      */
-    class interval get_interval(const char *err_msg_caption);
+    interval get_interval_inner(const char *err_msg_caption);
 
     /**
       * The get_address method is used to parse an address from the

@@ -29,7 +29,7 @@ An input file specification looks like this:
 The
 .I filename
 The filename may be specified as a file name,
-or the special name ``-'' which is understood to mean the standard input.
+or the special name \(lq-\(rq which is understood to mean the standard input.
 .SS File Formats
 The
 .I format
@@ -197,6 +197,80 @@ See
 for a description of this file format.
 .SS Ignore Checksums
 .so o_ignore_checksums.so
+.SS Generators
+It is also possible to generate data, rather than read it from a file.
+You may use a generator anywhere you could use a file.
+An input generator specification looks like this:
+.PP
+.in +0.25i
+\fB\-GENerate\fP \fIaddress-range\fP \fB\-\fP\fIdata-source\fP
+.in -0.25i
+.PP
+The \fB\-\fP\fIdata-source\fP may be one of the following:
+.TP 8n
+\fB\-CONSTant\fP \fInumber\fP
+.RS
+This generator manufactures data with the given byte value of the
+the given address range.
+For example, to fill memory addresses 100..199 with newlines (0x0A),
+you could use a command like
+.PP
+.nf
+.in +0.25i
+.ft CW
+srec_cat \-generate 100 200 \-constant 10 -o newlines.srec
+.ft P
+.in -0.25i
+.fi
+.PP
+This can, of course, be combined with data from files.
+.RE
+.TP 8n
+\fB\-REPeat_Data\fP \fInumber\fP...
+.RS
+This generator manufactures data with the given byte values repeating
+over the the given address range.
+For example, to create a data region with 0xDE in the even bytes and 0xAD
+in the odd bytes, use a generator like this:
+.PP
+.nf
+.in +0.25i
+.ft CW
+srec_cat \-generate 0x1000 0x2000 \-repeat-data 0xDE 0xAD
+.ft P
+.in -0.25i
+.fi
+.PP
+The repeat boundaries are aligned with the base of the addres srange,
+modulo the number of bytes.
+.RE
+.TP 8n
+\fB\-REPeat_String\fP \fItext\fP
+.RS
+This generator is almost identical to \-repeat-data except that the data
+to be repeated is the text of the given string.
+For example, to fill the holes in an eprom image \fIeprom.srec\fP with the
+text \(lqCopyright (C) 1812 Tchaikovsky\(rq, combine a generator and an
+\-exclude filter, such as the command
+.PP
+.nf
+.in +0.25i
+.ft CW
+srec_cat eprom.srec \e
+    -generate 0 0x100000 \e
+        -repeat-string 'Copyright (C) 1812 Tchaikovsky. ' \e
+        -exclude -within eprom.srec \e
+    -o eprom.filled.srec
+.ft R
+.in -0.25i
+.fi
+.PP
+The thing to note is that we have two data sources: the \fIeprom.srec\fP
+file, and generated data over an address range which covers first
+megabyte of memory but excluding areas covered by the \fIeprom.srec\fP data.
+.RE
+.PP
+Anything else will result in an error.
 .SS Input Filters
 You may specify zero or more \fIfilters\fP to be applied.
 Filters are applied in the order the user specifies.

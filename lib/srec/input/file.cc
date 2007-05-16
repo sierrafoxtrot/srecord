@@ -106,7 +106,7 @@ srec_input_file::~srec_input_file()
 }
 
 
-const string
+string
 srec_input_file::filename()
     const
 {
@@ -114,7 +114,7 @@ srec_input_file::filename()
 }
 
 
-const string
+string
 srec_input_file::filename_and_line()
     const
 {

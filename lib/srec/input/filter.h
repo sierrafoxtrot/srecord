@@ -45,10 +45,10 @@ public:
     virtual int read(class srec_record &);
 
     // See base class for documentation.
-    virtual const string filename() const;
+    virtual string filename() const;
 
     // See base class for documentation.
-    virtual const string filename_and_line() const;
+    virtual string filename_and_line() const;
 
     // See base class for documentation.
     virtual const char *get_file_format_name() const;

@@ -183,6 +183,12 @@ public:
       */
     interval pad(int x) const;
 
+    /**
+      * The representation method is used to manufacture a textural
+      * representation of this interval.
+      */
+    string representation() const;
+
 private:
     /**
       * The length instance variable is used to remember the length of

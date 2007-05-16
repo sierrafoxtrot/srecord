@@ -74,6 +74,7 @@ using namespace std;
 #include <lib/srec/input/filter/unfill.h>
 #include <lib/srec/input/filter/unsplit.h>
 #include <lib/srec/input/filter/xor.h>
+#include <lib/srec/input/generator.h>
 #include <lib/srec/input/interval.h>
 
 
@@ -92,13 +93,21 @@ srec_arglex::get_input()
             srec_input *ifp = get_input();
             if (token_cur() != token_paren_end)
             {
-                cerr << "closing parenthesis expected before "
-                    << token_name(token_cur()) << endl;
-                exit(1);
+                fatal_error
+                (
+                    "closing parenthesis expected before %s",
+                    token_name(token_cur())
+                );
+                // NOTREACHED
             }
             token_next();
             return ifp;
         }
+
+    case token_generator:
+        // Don't need a file name,
+        // but do NOT discard this token, yet.
+        break;
 
     case token_string:
         fn = value_string();
@@ -112,10 +121,11 @@ srec_arglex::get_input()
     default:
         if (stdin_used)
         {
-            cerr <<
+            fatal_error
+            (
                 "the standard input may only be named once on the command line"
-                << endl;
-            exit(1);
+            );
+            // NOTREACHED
         }
         stdin_used = true;
         break;
@@ -199,6 +209,11 @@ srec_arglex::get_input()
     case token_four_packed_code:
         token_next();
         ifp = new srec_input_file_four_packed_code(fn);
+        break;
+
+    case token_generator:
+        token_next();
+        ifp = srec_input_generator::create(this);
         break;
 
     case token_guess:
@@ -390,19 +405,8 @@ srec_arglex::get_input()
         case token_fill:
             {
                 token_next();
-                if (!can_get_number())
-                {
-                    cerr << "the -fill filter requires a fill value" << endl;
-                    exit(1);
-                }
-                int filler = get_number("fill value");
-                if (filler < 0 || filler >= 256)
-                {
-                    cerr << "fill value " << filler << " out of range (0..255)"
-                        << endl;
-                    exit(1);
-                }
-                interval range = get_interval("-Fill");
+                int filler = get_number("--Fill", 0, 255);
+                interval range = get_interval("--Fill");
                 ifp = new srec_input_filter_fill(ifp, filler, range);
             }
             break;
@@ -418,17 +422,11 @@ srec_arglex::get_input()
         case token_and:
             {
                 token_next();
-                if (!can_get_number())
-                {
-                    cerr << "the -and filter requires a fill value" << endl;
-                    exit(1);
-                }
-                int filler = get_number("and value");
+                int filler = get_number("--and", 0, 255);
                 if (filler < 0 || filler >= 256)
                 {
-                    cerr << "-and value " << filler << " out of range (0..255)"
-                        << endl;
-                    exit(1);
+                    fatal_error("-and value %d out of range (0..255)", filler);
+                    // NOTREACHED
                 }
                 ifp = new srec_input_filter_and(ifp, filler);
             }
@@ -437,18 +435,7 @@ srec_arglex::get_input()
         case token_xor:
             {
                 token_next();
-                if (!can_get_number())
-                {
-                    cerr << "the -xor filter requires a fill value" << endl;
-                    exit(1);
-                }
-                int filler = get_number("xor value");
-                if (filler < 0 || filler >= 256)
-                {
-                    cerr << "-xor value " << filler << " out of range (0..255)"
-                        << endl;
-                    exit(1);
-                }
+                int filler = get_number("--xor", 0, 255);
                 ifp = new srec_input_filter_xor(ifp, filler);
             }
             break;
@@ -456,25 +443,14 @@ srec_arglex::get_input()
         case token_or:
             {
                 token_next();
-                if (!can_get_number())
-                {
-                    cerr << "the -or filter requires a fill value" << endl;
-                    exit(1);
-                }
-                int filler = get_number("or value");
-                if (filler < 0 || filler >= 256)
-                {
-                    cerr << "-or value " << filler << " out of range (0..255)"
-                        << endl;
-                    exit(1);
-                }
+                int filler = get_number("--or value", 0, 255);
                 ifp = new srec_input_filter_or(ifp, filler);
             }
             break;
 
         case token_length:
-            cerr << "Use --big-endian-length or --little-endian-length" << endl;
-            exit(1);
+            fatal_error("Use --big-endian-length or --little-endian-length");
+            // NOTREACHED
 
         case token_length_be:
             {
@@ -502,9 +478,8 @@ srec_arglex::get_input()
             break;
 
         case token_maximum:
-            cerr << "Use --big-endian-maximum or --little-endian-maximum"
-                << endl;
-            exit(1);
+            fatal_error("Use --big-endian-maximum or --little-endian-maximum");
+            // NOTREACHED
 
         case token_maximum_be:
             {
@@ -532,9 +507,8 @@ srec_arglex::get_input()
             break;
 
         case token_minimum:
-            cerr << "Use --big-endian-minimum or --little-endian-minimum"
-                << endl;
-            exit(1);
+            fatal_error("Use --big-endian-minimum or --little-endian-minimum");
+            // NOTREACHED
 
         case token_minimum_be:
             {
@@ -708,13 +682,7 @@ srec_arglex::get_input()
         case token_offset:
             {
                 token_next();
-                if (!can_get_number())
-                {
-                    cerr << "the -offset filter requires a numeric argument"
-                        << endl;
-                    exit(1);
-                }
-                unsigned long amount = get_number("address offset");
+                unsigned long amount = get_number("--offset");
                 ifp = new srec_input_filter_offset(ifp, amount);
             }
             break;
@@ -722,39 +690,23 @@ srec_arglex::get_input()
         case token_split:
             {
                 token_next();
-                if (!can_get_number())
-                {
-                    cerr << "the -split filter requires three numeric arguments"
-                        << endl;
-                    exit(1);
-                }
-                int split_modulus = get_number("split modulus");
+                int split_modulus = get_number("--split modulus");
                 if (split_modulus < 2)
                 {
-                    cerr << "the -split modulus must be two or more" << endl;
-                    exit(1);
+                    fatal_error("the -split modulus must be two or more");
+                    // NOTREACHED
                 }
                 int split_offset = 0;
                 if (can_get_number())
                 {
-                    split_offset = get_number("split offset");
-                    if (split_offset < 0 || split_offset >= split_modulus)
-                    {
-                        cerr << "the -split offset must be 0.."
-                            << (split_modulus - 1) << endl;
-                        exit(1);
-                    }
+                    split_offset =
+                        get_number("split offset", 0, split_modulus - 1);
                 }
                 int split_width = 1;
                 if (can_get_number())
                 {
-                    split_width = get_number("split width");
-                    if (split_width < 1 || split_width >= split_modulus)
-                    {
-                        cerr << "the -split width must be 1.."
-                            << (split_modulus - 1) << endl;
-                        exit(1);
-                    }
+                    split_width =
+                        get_number("split width", 1, split_modulus - 1);
                 }
                 ifp =
                     new srec_input_filter_split
@@ -770,27 +722,11 @@ srec_arglex::get_input()
         case token_unfill:
             {
                 token_next();
-                if (!can_get_number())
-                {
-                    cerr << "the -unfill filter requires two numeric arguments"
-                        << endl;
-                    exit(1);
-                }
-                int fill_value = get_number("unfill value");
-                if (fill_value < 0 || fill_value >= 256)
-                {
-                    cerr << "the -unfill value must be 0..255" << endl;
-                    exit(1);
-                }
+                int fill_value = get_number("--unfill value", 0, 255);
                 int fill_minimum = 1;
                 if (can_get_number())
                 {
-                    fill_minimum = get_number("unfill minimum");
-                    if (fill_minimum < 1 || fill_minimum > 16)
-                    {
-                        cerr << "the -unfill run length must be 1..16" << endl;
-                        exit(1);
-                    }
+                    fill_minimum = get_number("--unfill minimum", 1, 16);
                 }
                 ifp =
                     new srec_input_filter_unfill(ifp, fill_value, fill_minimum);
@@ -800,40 +736,23 @@ srec_arglex::get_input()
         case token_unsplit:
             {
                 token_next();
-                if (!can_get_number())
-                {
-                    cerr <<
-                        "the -unsplit filter requires three numeric arguments"
-                        << endl;
-                    exit(1);
-                }
-                int split_modulus = get_number("unsplit modulus");
+                int split_modulus = get_number("--unsplit modulus");
                 if (split_modulus < 2)
                 {
-                    cerr << "the -unsplit modulus must be two or more" << endl;
-                    exit(1);
+                    fatal_error("the -unsplit modulus must be two or more");
+                    // NOTREACHED
                 }
                 int split_offset = 0;
                 if (can_get_number())
                 {
-                    split_offset = get_number("unsplit offset");
-                    if (split_offset < 0 || split_offset >= split_modulus)
-                    {
-                        cerr << "the -unsplit offset must be 0.."
-                            << (split_modulus - 1) << endl;
-                        exit(1);
-                    }
+                    split_offset =
+                        get_number("--unsplit offset", 0, split_modulus - 1);
                 }
                 int split_width = 1;
                 if (can_get_number())
                 {
-                    split_width = get_number("unsplit width");
-                    if (split_width < 1 || split_width >= split_modulus)
-                    {
-                        cerr << "the -unsplit width must be 1.."
-                            << (split_modulus - 1) << endl;
-                        exit(1);
-                    }
+                    split_width =
+                        get_number("--unsplit width", 1, split_modulus - 1);
                 }
                 ifp =
                     new srec_input_filter_unsplit

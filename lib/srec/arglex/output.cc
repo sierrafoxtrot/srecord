@@ -77,9 +77,11 @@ srec_arglex::get_output()
     default:
         if (stdout_used)
         {
-            cerr << "the standard output may only be named once on the command "
-                "line" << endl;
-            exit(1);
+            fatal_error
+            (
+                "the standard output may only be named once on the command line"
+            );
+            // NOTREACHED
         }
         stdout_used = true;
         break;

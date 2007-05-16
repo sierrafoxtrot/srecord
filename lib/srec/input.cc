@@ -77,7 +77,7 @@ srec_input::warning(const char *fmt, ...)
 }
 
 
-const string
+string
 srec_input::filename_and_line()
     const
 {

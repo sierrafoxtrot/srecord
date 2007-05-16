@@ -28,7 +28,7 @@
 unsigned long
 srec_arglex::get_number(const char *caption)
 {
-    unsigned long value;
+    unsigned long value = 0;
     unsigned long multiple;
     srec_input *ifp;
     interval over;
@@ -40,9 +40,12 @@ srec_arglex::get_number(const char *caption)
         value = get_number(caption);
         if (token_cur() != token_paren_end)
         {
-            cerr << "closing parenthesis expected before"
-                << token_name(token_cur()) << endl;
-            exit(1);
+            fatal_error
+            (
+                "closing parenthesis expected before %s",
+                token_name(token_cur())
+            );
+            // NOTREACHED
         }
         token_next();
         return value;
@@ -77,10 +80,13 @@ srec_arglex::get_number(const char *caption)
         break;
 
     default:
-        cerr << "number expected for " << caption << " before "
-            << token_name(token_cur()) << endl;
-        exit(1);
-        return 0;
+        fatal_error
+        (
+            "number expected for %s before %s",
+            caption,
+            token_name(token_cur())
+        );
+        // NOTREACHED
     }
     switch (token_cur())
     {
@@ -104,6 +110,26 @@ srec_arglex::get_number(const char *caption)
         value = (value + multiple / 2) / multiple;
         value *= multiple;
         break;
+    }
+    return value;
+}
+
+
+unsigned long
+srec_arglex::get_number(const char *caption, long minimum, long maximum)
+{
+    long value = get_number(caption);
+    if (value < minimum || value > maximum)
+    {
+        fatal_error
+        (
+            "%s value %ld out of range (%ld, %ld)",
+            caption,
+            value,
+            minimum,
+            maximum
+        );
+        // NOTREACHED
     }
     return value;
 }

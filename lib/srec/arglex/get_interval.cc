@@ -36,8 +36,12 @@ srec_arglex::get_interval_inner(const char *name)
             interval retval = get_interval(name);
             if (token_cur() != token_paren_end)
             {
-                    cerr << "``)'' expected" << endl;
-                    exit(1);
+                fatal_error
+                (
+                    "closing parentheses expected before %s",
+                    token_name(token_cur())
+                );
+                // NOTREACHED
             }
             token_next();
             return retval;
@@ -47,9 +51,12 @@ srec_arglex::get_interval_inner(const char *name)
         {
             if (!can_get_number())
             {
-                cerr << "the " << name
-                    << " range requires two numeric arguments" << endl;
-                exit(1);
+                fatal_error
+                (
+                    "the %s range requires two numeric arguments",
+                    name
+                );
+                // NOTREACHED
             }
             unsigned long n1 = get_number("address range minimum");
             unsigned long n2 = 0;
@@ -57,9 +64,14 @@ srec_arglex::get_interval_inner(const char *name)
                     n2 = get_number("address range maximum");
             if (n2 && n1 >= n2)
             {
-                    cerr << "the " << name << " range " << n1
-                            << ".." << n2 << " is invalid" << endl;
-                    exit(1);
+                fatal_error
+                (
+                    "the %s range %lu..%lu is invalid",
+                    name,
+                    n1,
+                    n2
+                );
+                // NOTREACHED
             }
             return interval(n1, n2);
         }
@@ -114,16 +126,20 @@ srec_arglex::get_interval(const char *name)
         //
         if (!can_get_number())
         {
-            cerr << "the --range-padding option requires a numeric argument"
-                << endl;
-            exit(1);
+            fatal_error
+            (
+                "the --range-padding option requires a numeric argument"
+            );
         }
         long mult = get_number("address range minimum");
         if (mult < 2)
         {
-            cerr << "a --range-padding multipe of " << mult << " is invalid"
-                << endl;
-            exit(1);
+            fatal_error
+            (
+                "a --range-padding multipe of %ld is invalid",
+                mult
+            );
+            // NOTREACHED
         }
 
         //

@@ -1,6 +1,6 @@
 //
-//      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2000, 2002, 2003, 2005-2007 Peter Miller
+//      srecord - The "srecord" program.
+//      Copyright (C) 2007 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -16,58 +16,46 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_input_filter class
-//
+
+#include <lib/srec/input/generator/constant.h>
 
 
-#include <lib/srec/input/filter.h>
-
-
-srec_input_filter::srec_input_filter(srec_input *arg) :
-    ifp(arg)
+srec_input_generator_constant::~srec_input_generator_constant()
 {
 }
 
 
-srec_input_filter::~srec_input_filter()
+srec_input_generator_constant::srec_input_generator_constant(
+        const interval &a_range, unsigned char a_datum) :
+    srec_input_generator(a_range),
+    datum(a_datum)
 {
-    delete ifp;
+}
+
+
+unsigned char
+srec_input_generator_constant::generate_data(unsigned long)
+{
+    return datum;
 }
 
 
 string
-srec_input_filter::filename()
+srec_input_generator_constant::filename()
     const
 {
-    return ifp->filename();
-}
-
-
-string
-srec_input_filter::filename_and_line()
-    const
-{
-    return ifp->filename_and_line();
-}
-
-
-int
-srec_input_filter::read(srec_record &record)
-{
-    return ifp->read(record);
+    char buffer[20];
+    snprintf(buffer, sizeof(buffer), "constant 0x%2.2X", datum);
+    return buffer;
 }
 
 
 const char *
-srec_input_filter::get_file_format_name()
+srec_input_generator_constant::get_file_format_name()
     const
 {
-    return ifp->get_file_format_name();
+    return "constant";
 }
 
 
-void
-srec_input_filter::disable_checksum_validation()
-{
-    ifp->disable_checksum_validation();
-}
+// vim:ts=8:sw=4:et

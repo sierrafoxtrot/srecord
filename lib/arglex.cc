@@ -525,6 +525,33 @@ arglex::token_next()
             token = arglex::token_string;
         break;
 
+    default:
+        //
+        // if all the hits are the same, it isn't ambiguous
+        //
+        {
+            bool all_same = true;
+            string possibilities = hit[0]->name;
+            for (int k = 1; k < nhit; ++k)
+            {
+                if (hit[0]->token != hit[k]->token)
+                    all_same = false;
+                possibilities += ", ";
+                possibilities += hit[k]->name;
+            }
+            if (!all_same)
+            {
+                fatal_error
+                (
+                    "option \"%s\" is ambiguous, did you mean one of: %s?",
+                    value_string_.c_str(),
+                    possibilities.c_str()
+                );
+                // NOTREACHED
+            }
+        }
+        // fall through...
+
     case 1:
         if (partial)
         {
@@ -534,10 +561,6 @@ arglex::token_next()
         value_string_ = hit[0]->name;
         token = hit[0]->token;
         break;
-
-    default:
-        cerr << "option ``" << value_string_ << "'' is ambiguous" << endl;
-        exit(1);
     }
     return token;
 }
@@ -631,8 +654,8 @@ arglex::bad_argument()
     switch (token_cur())
     {
     case token_string:
-        cerr << "misplaced file name (``" << value_string()
-            << "'') on command line" << endl;
+        cerr << "misplaced file name (\"" << value_string()
+            << "\") on command line" << endl;
         break;
 
     case token_number:
@@ -641,7 +664,7 @@ arglex::bad_argument()
         break;
 
     case token_option:
-        cerr << "unknown ``" << value_string() << "'' option" << endl;
+        cerr << "unknown \"" << value_string() << "\" option" << endl;
         break;
 
     case token_eoln:
@@ -649,11 +672,11 @@ arglex::bad_argument()
         break;
 
     default:
-        cerr << "misplaced ``" << value_string() << "'' option" << endl;
+        cerr << "misplaced \"" << value_string() << "\" option" << endl;
         break;
     }
     usage();
-    exit(1);
+    // NOTREACHED
 }
 
 
@@ -714,6 +737,7 @@ arglex::usage()
     cerr << "       " << progname_get() << " -VERSion" << endl;
     cerr << "       " << progname_get() << " -LICense" << endl;
     exit(1);
+    // NOTREACHED
 }
 
 
@@ -721,6 +745,17 @@ void
 arglex::default_command_line_processing()
 {
     bad_argument();
+}
+
+
+void
+arglex::fatal_error(const char *fmt, ...)
+{
+    va_list ap;
+    va_start(ap, fmt);
+    quit_default.fatal_error_v(fmt, ap);
+    // NOTREACHED
+    va_end(ap);
 }
 
 // vim:ts=8:sw=4:et

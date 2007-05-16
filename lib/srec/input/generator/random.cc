@@ -1,6 +1,6 @@
 //
-//      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2000, 2002, 2003, 2005-2007 Peter Miller
+//      srecord - The "srecord" program.
+//      Copyright (C) 2007 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -16,58 +16,43 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_input_filter class
-//
+
+#include <lib/r250.h>
+#include <lib/srec/input/generator/random.h>
 
 
-#include <lib/srec/input/filter.h>
-
-
-srec_input_filter::srec_input_filter(srec_input *arg) :
-    ifp(arg)
+srec_input_generator_random::~srec_input_generator_random()
 {
 }
 
 
-srec_input_filter::~srec_input_filter()
+srec_input_generator_random::srec_input_generator_random(
+        const interval &a_range) :
+    srec_input_generator(a_range)
 {
-    delete ifp;
+}
+
+
+unsigned char
+srec_input_generator_random::generate_data(unsigned long)
+{
+    return r250();
 }
 
 
 string
-srec_input_filter::filename()
+srec_input_generator_random::filename()
     const
 {
-    return ifp->filename();
-}
-
-
-string
-srec_input_filter::filename_and_line()
-    const
-{
-    return ifp->filename_and_line();
-}
-
-
-int
-srec_input_filter::read(srec_record &record)
-{
-    return ifp->read(record);
+    return "random";
 }
 
 
 const char *
-srec_input_filter::get_file_format_name()
+srec_input_generator_random::get_file_format_name()
     const
 {
-    return ifp->get_file_format_name();
+    return "random";
 }
 
-
-void
-srec_input_filter::disable_checksum_validation()
-{
-    ifp->disable_checksum_validation();
-}
+// vim:ts=8:sw=4:et

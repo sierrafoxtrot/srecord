@@ -57,6 +57,7 @@ main(int argc, char **argv)
 
         case srec_arglex::token_string:
         case srec_arglex::token_stdio:
+        case srec_arglex::token_generator:
             infile.push_back(cmdline.get_input());
             continue;
 

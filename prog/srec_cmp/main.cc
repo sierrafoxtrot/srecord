@@ -56,6 +56,7 @@ main(int argc, char **argv)
 
         case srec_arglex::token_string:
         case srec_arglex::token_stdio:
+        case srec_arglex::token_generator:
             if (!if1)
                 if1 = cmdline.get_input();
             else if (!if2)
@@ -114,8 +115,8 @@ main(int argc, char **argv)
         }
         if (different)
             exit(2);
-        cerr << argv[0] << ": files ``" << if1->filename() << "'' and ``"
-            << if2->filename() << "'' are the same." << endl;
+        cerr << argv[0] << ": files \"" << if1->filename() << "\" and \""
+            << if2->filename() << "\" are the same." << endl;
     }
     else
     {
@@ -130,8 +131,8 @@ main(int argc, char **argv)
             )
         )
         {
-            cerr << argv[0] << ": files ``" << if1->filename() << "'' and ``"
-                << if2->filename() << "'' differ" << endl;
+            cerr << argv[0] << ": files \"" << if1->filename() << "\" and \""
+                << if2->filename() << "\" differ" << endl;
             exit(2);
         }
     }
