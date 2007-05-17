@@ -79,6 +79,7 @@ Ascii-Hex
 <dd>
 The Ascii-Hex format is understood for both reading and writing.
 (Also known as the Ascii-Space-Hex format.)
+<p>
 .br
 <dt>
 ASM
@@ -86,12 +87,14 @@ ASM
 It is possible, for output only, to produce a series of DB statements
 containing the data.  This can be useful for embedding data into assembler
 programs.
+<p>
 .br
 <dt>
 Atmel Generic
 <dd>
 This format is produced by the Atmel AVR assembler.
 It is understood for both reading and writing.
+<p>
 .br
 <dt>
 BASIC
@@ -99,81 +102,96 @@ BASIC
 It is possible, for output only, to produce a series of DATA statements
 containing the data.  This can be useful for embedding data into BASIC
 programs.
+<p>
 .br
 <dt>
 Binary
 <dd>
 Binary files can both be read and written.
+<p>
 .br
 <dt>
 B-Record
 <dd>
 Files in Freescale Dragonball bootstrap b-record format can be read and written.
+<p>
 .br
 <dt>
 C Array
 <dd>
 It is possible, for output only, to produce a C array definition containing
 the data.  This can be useful for embedding data into other programs.
+<p>
 .br
 <dt>
 Cosmac
 <dd>
 The RCA Cosmac Elf format is understood for both reading and writing.
+<p>
 .br
 <dt>
 DEC Binary
 <dd>
 The DEC Binary (XXDP) format is understood for both reading and writing.
+<p>
 .br
 <dt>
 Elektor Monitor (EMON52)
 <dd>
 The EMON52 format is understood for both reading and writing.
+<p>
 .br
 <dt>
 Fairchild Fairbug
 <dd>
 The Fairchild Fairbug format is understood for both reading and writing.
+<p>
 .br
 <dt>
 LSI Logic Fast Load
 <dd>
 The LSI Logic Fast Load format is understood for both reading and writing.
+<p>
 .br
 <dt>
 Formatted Binary
 <dd>
 The Formatted Binary (XXDP) format is understood for both reading and writing.
+<p>
 .br
 <dt>
 Four Packed Code (FPC)
 <dd>
 The FPC format is understood for both reading and writing.
+<p>
 .br
 <dt>
 Intel
 <dd>
 The Intel hexadecimal format is understood for both reading and writing.
 (Also known as the Intel MCS-86 Object format.)
+<p>
 .br
 <dt>
 Intel AOMF
 <dd>
 The Intel Absolute Object Module Format (AOMF) is understood for both
 reading and writing.
+<p>
 .br
 <dt>
 Intel 16
 <dd>
 The Intel hexadecimal 16 format is understood for both reading and writing.
 (Also known as the INHX16 file format.)
+<p>
 .br
 <dt>
 MOS Technology
 <dd>
 The MOS Technology hexadecimal format is understood for both reading
 and writing.
+<p>
 .br
 <dt>
 Motorola S-Record
@@ -181,40 +199,47 @@ Motorola S-Record
 The Motorola hexadecimal S-Record format is understood for both reading
 and writing.
 (Also known as the Exorciser, Exormacs or Exormax format.)
+<p>
 .br
 <dt>
 Needham Electronics
 <dd>
 The Needham Electronics ASCII file format is understood for both reading
 and writing.
+<p>
 .br
 <dt>
 Ohio Scientific
 <dd>
 The Ohio Scientific hexadecimal format is understood for both reading
 and writing.
+<p>
 .br
 <dt>
 Signetics
 <dd>
 The Signetics format is understood for both reading and writing.
+<p>
 .br
 <dt>
 Spectrum
 <dd>
 The Spectrum format is understood for both reading and writing.
+<p>
 .br
 <dt>
 SPASM
 <dd>
 The SPASM format is used by a variety of PIC programmers; it is understood
 for both reading and writing.
+<p>
 .br
 <dt>
 Tektronix (Extended)
 <dd>
 The Tektronix hexadecimal format and the Tektronix extended hexadecimal
 format are understood for both reading and writing.
+<p>
 .br
 <dt>
 Texas Instruments Tagged
@@ -222,6 +247,7 @@ Texas Instruments Tagged
 The Texas Instruments Tagged hexadecimal format is understood for both
 reading and writing (both 8 and 16 bits).  Also known as the TI-Tagged
 or TI-SDSMAC object format.
+<p>
 .br
 <dt>
 ti-txt
@@ -229,18 +255,21 @@ ti-txt
 The TI-TXT format is understood for reading and writing.  This format is
 used with the bootstrap loader of the Texas Instruments MSP430 family of
 processors.
+<p>
 .br
 <dt>
 VHDL
 <dd>
 It is possible, for output only, to produce a VHDL definition containing
 the data.  This can be useful for some embedded development systems.
+<p>
 .br
 <dt>
 Verilog VMEM
 <dd>
 It is possible to write a Verilog VMEM file suitable for loading with
 \f[CW]$readmemh()\fP.  This format is supported for reading and writing.
+<p>
 <dt>
 Wilson
 <dd>
@@ -267,12 +296,14 @@ files, or portions of EPROM load files, together.  Because it understands
 all of the input and output formats, it can also be used to convert
 files from one format to another.
 It also understands <i>filters</i>, see below.
+<p>
 .br
 <dt>
 srec_cmp
 <dd>
 The <i>srec_cmp</i> program may be used to compare EPROM load files,
 or portions of EPROM load files, for equality.
+<p>
 .br
 <dt>
 srec_info
@@ -296,6 +327,7 @@ crc
 <dd>
 The <i>crc</i> filters may be used to insert an inustry standard cyclic
 redundancy check (CRC) into the data.
+<p>
 .br
 <dt>
 checksum
@@ -303,53 +335,62 @@ checksum
 The <i>checksum</i> filters may be used to insert a checksum into
 the data.  Positive, negative and bit-not checksums are available,
 as well as big-endian and little-endian byte orders.
+<p>
 .br
 <dt>
 crop
 <dd>
 The <i>crop</i> filter may be used to isolate an input address range,
 or ranges, and discard the rest.
+<p>
 .br
 <dt>
 exclude
 <dd>
 The <i>exclude</i> filter may be used to exclude an input address range,
 or ranges, and keep the rest.
+<p>
 .br
 <dt>
 fill
 <dd>
 The <i>fill</i> filter may be used to fill holes in the data with a
 given byte value.
+<p>
 .br
 <dt>
 unfill
 <dd>
 The <i>unfill</i> filter may be used to make holes in the data for bytes
 with a given value.
+<p>
 .br
 <dt>
 random fill
 <dd>
 The <i>random fill</i> filter may be used to fill holes in the data with
 random byte values.
+<p>
 .br
 <dt>
 length
 <dd>
 The <i>length</i> filter may be used to insert the data length into
 the data.
+<p>
 .br
 <dt>
 offset
 <dd>
 The <i>offset</i> filter may be used to offset the address of data records,
 both forwards and backwards.
+<p>
 <dt>
 split
 <dd>
 The <i>split</i> filter may be used to split EPROM images for wide data
 buses or other memory striping schemes.
+<p>
 <dt>
 unsplit
 <dd>
@@ -361,6 +402,35 @@ reverse the effects of the <i>split</i> filter.
 More than one filter may be applied to each input file.
 Different filters may be applied to each input file.
 All filters may be applied to all file formats.
+<p>
+<br>
+<p>
+<br>
+<p>
+.br
+<p align=center><b>The Generators</b></p>
+<p>
+The <i>SRecord</i> package is made more powerful by the concept of
+<i>input generators</i>.  Wherever an input file may be specified,
+a generator may be specified instead.  The following generators are
+available:
+<dl>
+.br
+<dt>constant
+<dd>The <i>constant</i> generator may be used to create constant value bytes.
+<p>
+.br
+<dt>random
+<dd>The <i>random</i> generator may be used to create random bytes.
+<p>
+.br
+<dt>repeated data
+<dd>The <i>repeated data</i> generator may be used to create data which
+repeats a sequence of byte values over and over again.
+.br
+</dl>
+<p>
+Generators and data files can be combined on the same command line.
 </td></tr></table>
 .\" ------------------------------------------------------------------------
 .br
