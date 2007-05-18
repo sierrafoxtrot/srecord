@@ -28,9 +28,9 @@ The \f[I]srec_cat\fP command is very powerful, due to the ability to combine
 the the input filters in almost unlimited ways.
 This manual page describes a few of them.
 .PP
-This manual page descibes how to use the varios input files, input
-filters and input generators.  For more complete details, see the
-\f[I]srec_input\fP(1) manual page.
+This manual page describes how to use the various input files, input
+filters and input generators.  But these are only examples, for more
+complete details, see the \f[I]srec_input\fP(1) manual page.
 .SS Your Examples Wanted
 If you have a clever way of using SRecord, or have solve a difficult
 problem with SRecord, you could contribute to this manual page, making
@@ -43,7 +43,7 @@ section, that you can do many of these things simultaneously in one
 command.  They are only broken out separately to make them easier to
 understand.
 .SS Intel to Motorola
-One of the simplest esamples is converting files from Intel hex format
+One of the simplest examples is converting files from Intel hex format
 to Motorola S-Record format:
 .RS
 .ft CW
@@ -52,7 +52,7 @@ srec_cat \f[I]intel-file\fP -intel -o \f[I]srec-file\fP
 .RE
 Pick any two formats that SRecord understands,
 it can convert between all of them.
-(Except the assembler and C outputs which are write only.)
+(Except the assembler, FPGA and C outputs which are write only.)
 .SS Motorola to Intel
 Converting the other way is just as simple:
 .RS
@@ -63,7 +63,7 @@ srec_cat \f[I]srec-file\fP -o \f[I]intel-file\fP -intel
 The default format is Motorola S-Record format,
 so it does not need to be specified.
 .SS Different Shapes of the Same Format
-It is regretably common that some addle-pated EPROM programmers only
+It is regrettably common that some addle-pated EPROM programmers only
 implement a portion of the specification used to represent their hex
 files.  For example, some compilers produce \(lqs19\(rq Motorola
 data (that is, S1 data records with S9 start records, 16 bit address
@@ -80,7 +80,7 @@ This command says to use four byte (32-bit) addresses on output.
 .PP
 This section also applies to Intel hex files, as they, too, have the
 ability to select from a variety of address widths.
-.SS Line Lenths
+.SS Line Lengths
 From time to time you will come across a feeble-minded EPROM programmer
 that can't cope with long SRecord lines, they assume that there will
 only ever be 16 bytes of data per line, and barf when they see the
@@ -101,9 +101,9 @@ tinkering to optimize for your particular situation many be necessary.
 .SS Just the Data, Please
 There are some bonehead EPROM programmers which can only cope with data
 records, and are unable to cope with header records or start address
-records.  If you have the problem, the \fB\-data-only\fP option can be
-uased to suppress just about everything except the data.  The actual
-effect depends on the format, of couse, because some don't have these
+records.  If you have this problem, the \fB\-data-only\fP option can be
+used to suppress just about everything except the data.  The actual
+effect depends on the format, of course, because some don't have these
 features anyway.
 .SS Data Headers
 The \f[I]srec_cat\fP(1) command always tries to pass through header
@@ -118,7 +118,7 @@ string (to insulate it from the shell) if it contains spaces or shell
 meta-characters.
 .SS Start Addresses
 The \f[I]srec_cat\fP(1) command always tries to pass through start
-addresses (typically occuring at the end of the file), whenever they
+addresses (typically occurring at the end of the file), whenever they
 are present.  They are adjusted along with the data records by the
 \fB\-offset\fP filter.  It even tries preserve them across file format
 changes, to the limit the file formats are capable of.
@@ -127,7 +127,7 @@ If there is no start address record and you would like to add one,
 or you which to override an existing start address record, use the
 \fB\-start-address\fP=\f[I]number\fP option.
 .SS Fixing Checksums
-Some emebedded firmware developers are saddled with featherbrained tools
+Some embedded firmware developers are saddled with featherbrained tools
 which produce incorrect checksums, which the more vigilant models of
 EPROM programmer will not accept.
 .PP
@@ -265,56 +265,13 @@ This filter results in data from 0x100..0x1FF and data from
 0x1000..0x1200 to pass through, the rest is dropped.  This is is more
 efficient than chaining a \-crop and an \-exclude filter together.
 .\" ------------------------------------------------------------------------
-.SS Filling the Blanks
-It is possible to fill the blanks where your data does not lie.
-The simplest example of this fills the entire EPROM:
-.RS
-.ft CW
-srec_cat \f[I]infile\fP -fill 0x00 0x200000 0x300000 -o \f[I]outfile\fP
-.ft R
-.RE
-This example fills the holes, if any, with zeros.
-You must specify a range \- with a 32-bit address space,
-filling everything generates \f[I]huge\fP load files.
-.PP
-If you only want to fill the gaps in your data,
-and don't want to fill the entire EPROM, try:
-.RS
-.ft CW
-srec_cat \f[I]infile\fP -fill 0x00 -over \f[I]infile\fP -o \f[I]outfile\fP
-.ft R
-.RE
-This example demonstrates the fact that wherever an address range may be
-specified, the \fB\-over\fP and \fB\-within\fP options may be used.
-.SS Unfilling the Blanks
-It is common to need to \(lqunfill\(rq an eprom image after you read it out of
-a chip.  Usually, it will have had all the holes filled with 0xFF (areas
-of the EPROM you don't program show as 0xFF when you read them back).
-.PP
-To get rid of all the 0xFF bytes in the data, use this filter:
-.RS
-.ft CW
-srec_cat \f[I]infile\fP -unfill 0xFF -o \f[I]outfile\fP
-.ft R
-.RE
-This will get rid of \f[I]all\fP the 0xFF bytes, including the ones you
-actually wanted in there.  There are two ways to deal with this.  First,
-you can specify a minimum run length to the un-fill:
-.RS
-.ft CW
-srec_cat \f[I]infile\fP -unfill 0xFF 5 -o \f[I]outfile\fP
-.ft R
-.RE
-This says that runs of 1 to 4 bytes of 0xFF are OK, and that a hole
-should only be created for runs of 5 or more 0xFF bytes in a row.
-The second method is to re-fill over the intermediate gaps:
-.RS
-.ft CW
-srec_cat \f[I]outile\fP -fill 0xFF -over \f[I]outfile\fP -o \f[I]outfile2\fP
-.ft R
-.RE
-Which method you choose depends on your needs, and the shape of the data
-in your EPROM.  You may need to combine both techniques.
+.SH MOVING THINGS AROUND
+The \fB\-offset\fP filter operates on the addresses of records
+.SS Binary Output
+You need to watch out for binary files on output, because the holes are
+filled with zeros.  You 100kB program at the top of 32-bit addressed
+memory will make a 4GB file.  See \f[I]srec_binary\fP(1) for how
+understand and avoid this problem, usually with the \-offset filter.
 .SS Splitting an Image
 If you have a 16-bit data bus, but you are using two 8-bit EPROMs to
 hold your firmware, you can generate the even and odd images by using
@@ -361,7 +318,7 @@ srec_cat firmware.hex -split 0x800 0x600 0x200 -o firmware.3.hex
 .ft R
 .fi
 .RE
-.PP
+.SS Unspliting Images
 The unsplit filter may be used to reverse the effects of the split filter.
 Note that the address range is expanded leaving holes between the stripes.
 By using all the stripes, the complete input is reassembled, without
@@ -377,5 +334,134 @@ srec_cat -o firmware.hex \e
 .ft R
 .fi
 .RE
+.\" ------------------------------------------------------------------------
+.SH FILLING THE BLANKS
+Often EPROM load files will have \(lqholes\(rq in them, places where the
+compiler and linker did not put anything.  For some purposes this is OK,
+and for other purposes something has to be done about the holes.
+.SS The Fill Filter
+It is possible to fill the blanks where your data does not lie.
+The simplest example of this fills the entire EPROM:
+.RS
+.ft CW
+srec_cat \f[I]infile\fP -fill 0x00 0x200000 0x300000 -o \f[I]outfile\fP
+.ft R
+.RE
+This example fills the holes, if any, with zeros.
+You must specify a range \- with a 32-bit address space,
+filling everything generates \f[I]huge\fP load files.
+.PP
+If you only want to fill the gaps in your data,
+and don't want to fill the entire EPROM, try:
+.RS
+.ft CW
+srec_cat \f[I]infile\fP -fill 0x00 -over \f[I]infile\fP -o \f[I]outfile\fP
+.ft R
+.RE
+This example demonstrates the fact that wherever an address range may be
+specified, the \fB\-over\fP and \fB\-within\fP options may be used.
+.SS Unfilling the Blanks
+It is common to need to \(lqunfill\(rq an EPROM image after you read it
+out of a chip.  Usually, it will have had all the holes filled with 0xFF
+(areas of the EPROM you don't program show as 0xFF when you read them back).
+.PP
+To get rid of all the 0xFF bytes in the data, use this filter:
+.RS
+.ft CW
+srec_cat \f[I]infile\fP -unfill 0xFF -o \f[I]outfile\fP
+.ft R
+.RE
+This will get rid of \f[I]all\fP the 0xFF bytes, including the ones you
+actually wanted in there.  There are two ways to deal with this.  First,
+you can specify a minimum run length to the un-fill:
+.RS
+.ft CW
+srec_cat \f[I]infile\fP -unfill 0xFF 5 -o \f[I]outfile\fP
+.ft R
+.RE
+This says that runs of 1 to 4 bytes of 0xFF are OK, and that a hole
+should only be created for runs of 5 or more 0xFF bytes in a row.
+The second method is to re-fill over the intermediate gaps:
+.RS
+.ft CW
+.nf
+srec_cat \f[I]outfile\fP -fill 0xFF -over \f[I]outfile\fP \e
+    -o \f[I]outfile2\fP
+.fi
+.ft R
+.RE
+Which method you choose depends on your needs, and the shape of the data
+in your EPROM.  You may need to combine both techniques.
+.SS Address Range Padding
+Some data formats are 16 bits wide, and automatically fill with 0xFF bytes if
+it is necessary to fill out the other half of a word which is not in the data.
+If you need to fill with a different value, you can use a command like this:
+.RS
+.nf
+srec_cat \f[I]infile\fP -fill 0x0A \e
+    -within \f[I]infile\fP -range-padding 2 \e
+    -o \f[I]outfile\fP
+.fi
+.RE
+This gives the fill filter an address range calculated from details of
+the input file.  The address range is all the address ranges covered by
+data in the \f[I]infile\fP, extended downwards (if necessary) at the
+start of each sub-range to a 2 byte multiple and extended upwards (if
+necessary) at the end of each sub-range to a 2 byte multiple.  This also
+works for larger multiples, like 1kB page boundaries of flash chips.
+This address range padding works anywhere an address range is required.
+.SS Fill with Copyright
+It is possible to fill unused portions of your EPROM with a repeating
+copyright message.  Anyone trying to reverse engineer your EPROMs is
+going to see the copyright notice in their hex editor.
+.PP
+This is accomplished with two input sources, one from a data file,
+and one which is generated on-the-fly.
+.RS
+.nf
+srec_cat \f[I]infile\fP \e
+    -generate '(' 0 0x100000 -minus -within \f[I]infile\fP ')' \e
+        -repeat-string 'Copyright (C) 1812 Tchaikovsky.  ' \e
+    -o \f[I]outfile\fP
+.fi
+.RE
+Notice how the address range for the data generation: it takes the
+address range of your EPROM, in this case 1MB starting from 0, and
+subtracts from it the address ranges used by the input file.
+.PP
+The string specified is repeated over and over again, until it has
+filled all the holes.
+.SS Obfuscating with Noise
+Sometimes you want to fill your EPROM images with noise, to conceal
+where the real data stops and starts.
+You can do this with the \fB\-random-fill\fP filter.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP -random-fill 0x200000 0x300000 \e
+    -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+It works just like the \fB\-fill\fP filter,
+but uses random numbers instead of a constant byte value.
+.SS Fill With 16-bit Words
+When filling the image with a constant byte value doesn't work, and you
+need a constant 16-bit word value instead, use the \fB\-repeat-data\fP
+generator, which takes an arbitrarily long sequence of bytes to use as
+the fill pattern:
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP \e
+    -generator '(' 0x200000 0x300000 -minus -within \f[I]infile\fP ')' \e
+        -repeat-data 0x1B 0x08 \e
+    -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+Notice how the generator's address range once again avoids the address
+ranges occupied by the \f[I]infile\fP's data.
+You have to get the endian-ness right yourself.
 .so z_copyright.so
 .\" vim:ts=8:sw=4:et
