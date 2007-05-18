@@ -25,33 +25,17 @@
 #include <lib/quit/prefix.h>
 
 
-quit_prefix::quit_prefix(quit &a1, const char *a2)
-        : prefix(a2), deeper(a1)
+quit_prefix::quit_prefix(quit &a1, const char *a2) :
+    prefix(a2),
+    deeper(a1)
 {
 }
 
 
-quit_prefix::quit_prefix(quit &a1, const string &a2)
-        : prefix(a2), deeper(a1)
+quit_prefix::quit_prefix(quit &a1, const string &a2) :
+    prefix(a2),
+    deeper(a1)
 {
-}
-
-
-quit_prefix::quit_prefix(const quit_prefix &arg)
-        : prefix(arg.prefix), deeper(arg.deeper)
-{
-}
-
-
-quit_prefix &
-quit_prefix::operator=(const quit_prefix &arg)
-{
-        if (this != &arg)
-        {
-                prefix = arg.prefix;
-                deeper = arg.deeper;
-        }
-        return *this;
 }
 
 
@@ -63,25 +47,25 @@ quit_prefix::~quit_prefix()
 void
 quit_prefix::exit(int n)
 {
-        deeper.exit(n);
+    deeper.exit(n);
 }
 
 
 void
 quit_prefix::message_v(const char *fmt, va_list ap)
 {
-        if (prefix != string(""))
-        {
-                char buf[1024];
-                vsnprintf(buf, sizeof(buf), fmt, ap);
-                deeper.message
-                (
-                        "%.*s: %s",
-                        (int)prefix.length(),
-                        prefix.data(),
-                        buf
-                );
-        }
-        else
-                deeper.message_v(fmt, ap);
+    if (prefix != string(""))
+    {
+        char buf[1024];
+        vsnprintf(buf, sizeof(buf), fmt, ap);
+        deeper.message
+        (
+            "%.*s: %s",
+            (int)prefix.length(),
+            prefix.data(),
+            buf
+        );
+    }
+    else
+        deeper.message_v(fmt, ap);
 }

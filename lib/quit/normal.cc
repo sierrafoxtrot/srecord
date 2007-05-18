@@ -34,18 +34,6 @@ quit_normal::quit_normal()
 }
 
 
-quit_normal::quit_normal(const quit_normal &arg)
-{
-}
-
-
-quit_normal &
-quit_normal::operator=(const quit_normal &arg)
-{
-        return *this;
-}
-
-
 quit_normal::~quit_normal()
 {
 }
@@ -54,19 +42,19 @@ quit_normal::~quit_normal()
 void
 quit_normal::exit(int n)
 {
-        ::exit(n);
+    ::exit(n);
 }
 
 
 void
 quit_normal::message_v(const char *fmt, va_list ap)
 {
-        cout.flush();
-        cerr << progname_get() << ": ";
-        char buf[1024];
-        vsnprintf(buf, sizeof(buf), fmt, ap);
-        cerr << buf << endl;
-        cerr.flush();
+    cout.flush();
+    cerr << progname_get() << ": ";
+    char buf[1024];
+    vsnprintf(buf, sizeof(buf), fmt, ap);
+    cerr << buf << endl;
+    cerr.flush();
 }
 
 

@@ -37,7 +37,7 @@ srec_memory_walker_continuity::srec_memory_walker_continuity() :
 
 
 void
-srec_memory_walker_continuity::observe(unsigned long addr, const void *data,
+srec_memory_walker_continuity::observe(unsigned long addr, const void *,
     int nbytes)
 {
     if (data_seen)

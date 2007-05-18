@@ -28,32 +28,20 @@ quit_exception::quit_exception()
 }
 
 
-quit_exception::quit_exception(const quit_exception &arg)
-{
-}
-
-
-quit_exception &
-quit_exception::operator=(const quit_exception &arg)
-{
-        return *this;
-}
-
-
 quit_exception::~quit_exception()
 {
 }
 
 
 void
-quit_exception::exit(int n)
+quit_exception::exit(int)
 {
-        throw vomit();
+    throw vomit();
 }
 
 
 void
 quit_exception::message_v(const char *, va_list)
 {
-        // don't say anything
+    // don't say anything
 }

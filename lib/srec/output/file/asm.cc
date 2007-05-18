@@ -508,7 +508,7 @@ srec_output_file_asm::line_length_set(int n)
 
 
 void
-srec_output_file_asm::address_length_set(int n)
+srec_output_file_asm::address_length_set(int)
 {
     // ignore
 }

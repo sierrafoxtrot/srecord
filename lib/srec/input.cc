@@ -100,6 +100,6 @@ srec_input::reset_quit()
 
 
 void
-srec_input::command_line(srec_arglex *cmdln)
+srec_input::command_line(srec_arglex *)
 {
 }

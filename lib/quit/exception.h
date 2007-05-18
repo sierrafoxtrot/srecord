@@ -44,25 +44,27 @@ public:
     quit_exception();
 
     /**
-      * The copy constructor.
-      */
-    quit_exception(const quit_exception &);
-
-    /**
-      * the assignment operator.
-      */
-    quit_exception &operator=(const quit_exception &);
-
-    /**
       * the vomit class is used for the throw.
       */
     class vomit { };
 
+protected:
     // see base class for documentation
     virtual void exit(int n);
 
     // see base class for documentation
     virtual void message_v(const char *fmt, va_list);
+
+private:
+    /**
+      * The copy constructor.  Do not use.
+      */
+    quit_exception(const quit_exception &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    quit_exception &operator=(const quit_exception &);
 };
 
 #endif // INCLUDE_QUIT_EXCEPTION_H

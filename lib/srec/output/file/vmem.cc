@@ -274,7 +274,7 @@ srec_output_file_vmem::line_length_set(int linlen)
 
 
 void
-srec_output_file_vmem::address_length_set(int n)
+srec_output_file_vmem::address_length_set(int)
 {
     // ignore
 }

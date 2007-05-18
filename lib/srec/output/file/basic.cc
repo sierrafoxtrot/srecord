@@ -150,7 +150,7 @@ srec_output_file_basic::line_length_set(int n)
 
 
 void
-srec_output_file_basic::address_length_set(int n)
+srec_output_file_basic::address_length_set(int)
 {
     // ignore
 }

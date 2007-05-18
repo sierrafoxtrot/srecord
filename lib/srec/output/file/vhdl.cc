@@ -261,7 +261,7 @@ srec_output_file_vhdl::write(const srec_record &record)
 
 
 void
-srec_output_file_vhdl::line_length_set(int n)
+srec_output_file_vhdl::line_length_set(int)
 {
     // ignore
 }

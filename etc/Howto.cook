@@ -194,7 +194,7 @@ cc_include_flags =
         ;
 if [not [defined c++_flags]] then
         c++_flags = -O [debug];
-c++_flags = [c++_flags] -Wall -Werror;
+c++_flags = [c++_flags] -Wall -Wextra -Werror;
 if [not [defined ld_flags]] then
         ld_flags = [debug];
 

@@ -81,7 +81,7 @@ void
 srec_output_file_aomf::content_record(unsigned long address,
     const unsigned char *data, size_t len)
 {
-    enum { maxlen = 4 * srec_record::max_data_length };
+    size_t maxlen = 4 * srec_record::max_data_length;
     while (len > 0)
     {
         unsigned char buffer[maxlen + 3];

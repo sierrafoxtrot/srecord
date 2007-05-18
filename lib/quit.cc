@@ -32,15 +32,15 @@ quit::quit()
 }
 
 
-quit::quit(const quit &arg)
+quit::quit(const quit &)
 {
 }
 
 
 quit &
-quit::operator=(const quit &arg)
+quit::operator=(const quit &)
 {
-        return *this;
+    return *this;
 }
 
 
@@ -52,65 +52,65 @@ quit::~quit()
 void
 quit::fatal_error(const char *fmt, ...)
 {
-        va_list ap;
-        va_start(ap, fmt);
-        fatal_error_v(fmt, ap);
-        va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    fatal_error_v(fmt, ap);
+    va_end(ap);
 }
 
 
 void
 quit::fatal_error_v(const char *fmt, va_list ap)
 {
-        message_v(fmt, ap);
-        exit(1);
+    message_v(fmt, ap);
+    exit(1);
 }
 
 
 void
 quit::fatal_error_errno(const char *fmt, ...)
 {
-        va_list ap;
-        va_start(ap, fmt);
-        fatal_error_errno_v(fmt, ap);
-        va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    fatal_error_errno_v(fmt, ap);
+    va_end(ap);
 }
 
 
 void
 quit::fatal_error_errno_v(const char *fmt, va_list ap)
 {
-        int n = errno;
-        char buf[1024];
-        vsnprintf(buf, sizeof(buf), fmt, ap);
-        fatal_error("%s: %s", buf, strerror(n));
+    int n = errno;
+    char buf[1024];
+    vsnprintf(buf, sizeof(buf), fmt, ap);
+    fatal_error("%s: %s", buf, strerror(n));
 }
 
 
 void
 quit::warning(const char *fmt, ...)
 {
-        va_list ap;
-        va_start(ap, fmt);
-        warning_v(fmt, ap);
-        va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    warning_v(fmt, ap);
+    va_end(ap);
 }
 
 
 void
 quit::warning_v(const char *fmt, va_list ap)
 {
-        char buf[1024];
-        vsnprintf(buf, sizeof(buf), fmt, ap);
-        message("warning: %s", buf);
+    char buf[1024];
+    vsnprintf(buf, sizeof(buf), fmt, ap);
+    message("warning: %s", buf);
 }
 
 
 void
 quit::message(const char *fmt, ...)
 {
-        va_list ap;
-        va_start(ap, fmt);
-        message_v(fmt, ap);
-        va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    message_v(fmt, ap);
+    va_end(ap);
 }

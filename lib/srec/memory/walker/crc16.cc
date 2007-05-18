@@ -37,8 +37,7 @@ srec_memory_walker_crc16::~srec_memory_walker_crc16()
 
 
 void
-srec_memory_walker_crc16::observe(unsigned long address, const void *data,
-    int length)
+srec_memory_walker_crc16::observe(unsigned long, const void *data, int length)
 {
     checksum->nextbuf(data, length);
 }

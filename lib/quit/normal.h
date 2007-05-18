@@ -44,21 +44,23 @@ public:
       */
     quit_normal();
 
-    /**
-      * The copy constructor.
-      */
-    quit_normal(const quit_normal &);
-
-    /**
-      * The assignment operator.
-      */
-    quit_normal &operator=(const quit_normal &);
-
+protected:
     // see base class for documentation
     virtual void exit(int);
 
     // see base class for documentation
     virtual void message_v(const char *, va_list);
+
+private:
+    /**
+      * The copy constructor.  Do not use.
+      */
+    quit_normal(const quit_normal &);
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    quit_normal &operator=(const quit_normal &);
 };
 
 #endif // INCLUDE_QUIT_NORMAL_H
