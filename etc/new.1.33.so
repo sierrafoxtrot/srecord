@@ -16,39 +16,19 @@
 .\"     along with this program; if not, write to the Free Software
 .\"     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.32 features
+.\" MANIFEST: description of new 1.33 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" Change 18, 19, 20
-More examples have been added to the documentation.
-.PP
-.if n *
-.if t \(bu
-.\" Change 17
-It is now possible to perform set intersection and set
-difference on address ranges on the command line.
-.PP
-.if n *
-.if t \(bu
-.\" Change 16
-There is a new category of data source: generators.
-You can generate constant data, random data and repeating data.
-.PP
-.if n *
-.if t \(bu
-.\" Change 11, 12
-The assembler and C-Array outputs now support additional options to
-facilitate MSP430 systems.  They can also optionally write shorts rather
-than bytes.
-.PP
-.if n *
-.if t \(bu
-.\" Change 15
-You can now round address ranges on the command line to be whole
-mutiples of a number of bytes.
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 33 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.32 (2007-Apr-24)
+.SS Version 1.33 (2007-May-18)
 .\" vim:ts=8:sw=4:et
