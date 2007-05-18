@@ -18,7 +18,7 @@
 .\"
 .\" MANIFEST: manual entry for the srec_examples command
 .\"
-.ds n) srec_examples
+.ds n) srec_cat
 .TH srec_examples 1 SRecord "Reference Manual"
 .SH NAME
 srec_examples \- examples of how to use SRecord
@@ -32,7 +32,7 @@ This manual page describes how to use the various input files, input
 filters and input generators.  But these are only examples, for more
 complete details, see the \f[I]srec_input\fP(1) manual page.
 .SS Your Examples Wanted
-If you have a clever way of using SRecord, or have solve a difficult
+If you have a clever way of using SRecord, or have solves a difficult
 problem with SRecord, you could contribute to this manual page, making
 it more useful for everyone.  Send an email to the email address at the
 end of this manual page.
@@ -52,7 +52,7 @@ srec_cat \f[I]intel-file\fP -intel -o \f[I]srec-file\fP
 .RE
 Pick any two formats that SRecord understands,
 it can convert between all of them.
-(Except the assembler, FPGA and C outputs which are write only.)
+(Except the assembler, BASIC, C and FPGA outputs which are write only.)
 .SS Motorola to Intel
 Converting the other way is just as simple:
 .RS
@@ -74,7 +74,9 @@ records, 32 bit address fields).
 It is possible to convert from one Motorola shape to another using the
 \fB\-Address-Length\fP option:
 .RS
+.ft CW
 srec_cat short.srec -o long.srec --address-length=4
+.ft R
 .RE
 This command says to use four byte (32-bit) addresses on output.
 .PP
@@ -94,7 +96,9 @@ The \-line-length option may be used to specify the maximum line length
 (not including the newline) to be used on output.
 For example, 16 byte payloads for Motorola hex
 .RS
+.ft CW
 srec_cat long.srec -o short.s19 --line-length=46
+.ft R
 .RE
 The line length option interacts with the address length option, so some
 tinkering to optimize for your particular situation many be necessary.
@@ -134,7 +138,9 @@ EPROM programmer will not accept.
 To fix the checksums on a file, use the \fB\-ignore-checksums\fP option.
 For example:
 .RS
+.ft CW
 srec_cat broken.srec --ignore-checksums -o fixed.srec
+.ft R
 .RE
 The checksums in \f[I]broken.srec\fP are parsed (it is still
 and error if they are absent) but are not checked.  The
@@ -148,7 +154,7 @@ including Intel hex.
 The \f[I]srec_cat\fP command takes its name from the UNIX \f[I]cat\fP(1)
 command, which is short for 'catenate' or 'to join'.
 The \f[I]srec_cat\fP command joins EPROM load files together.
-.SS Joining Files Together
+.SS All In One
 Joining EPROM load files together into a single file is simple, just
 name as many files on the command line as you need:
 .RS
@@ -162,8 +168,10 @@ default format.  You can have multiple formats in the one command, and
 same format:
 .RS
 .nf
+.ft CW
 srec_cat \f[I]infile1\fP -spectrum \f[I]infile2\fP -needham \e
     -o \f[I]outfile\fP -signetics
+.ft R
 .fi
 .RE
 These are all ancient formats, however it isn't uncommon to have to mix
@@ -200,7 +208,7 @@ a number may be used (also \-minimum and \-range).
 .SH CROPPING THE DATA
 It is possible to copy an EPROM load file,
 selecting addresses to keep and addresses to discard.
-.SS Cropping the Data
+.SS What To Keep
 A common activity is to crop your data to match your EPROM location.
 Your linker may add other junk that you are not interested in, \f[I]e.g.\fP
 at the RAM location.  In this example, there is a 1MB EPROM at the 2MB
@@ -234,7 +242,7 @@ the output record addresses.  In this case, shifting the image back to zero.
 This example also demonstrates how the input filters may be chained
 together: first the crop and then the offset, all in one command,
 without the need for temporary files.
-.SS Excluding Some Data
+.SS What To Throw Away
 There are times when you need to exclude an small address range from an
 EPROM load file, rather than wanting to keep a small address range.
 The \fB\-exclude\fP filter may be used for this purpose.
@@ -243,12 +251,15 @@ For example, if you wish to exclude the address range where the serial
 number of an embedded device is kept, say 0x20 bytes at 0x100, you would use
 a command like this:
 .RS
+.ft CW
 srec_cat input.srec -exclude 0x100 0x120 -o output.srec
+.ft R
 .RE
 The \f[I]output.srec\fP file will have a hole in the data at the
 necessary locations.
 .PP
-Note that you can have both \-crop and \-exclude on the same command line,
+Note that you can have both \fB\-crop\fP and \fB\-exclude\fP on the same
+command line,
 whichever works more naturally for your situation.
 .SS Discontinuous Address Ranges
 Address ranges don't have to be a single range, you can build up an
@@ -266,7 +277,37 @@ This filter results in data from 0x100..0x1FF and data from
 efficient than chaining a \-crop and an \-exclude filter together.
 .\" ------------------------------------------------------------------------
 .SH MOVING THINGS AROUND
-The \fB\-offset\fP filter operates on the addresses of records
+It is also possible to change the address of data records, both forwards
+and backwards.  It is also possible rearrange where data records are
+placed in memory.
+.SS Offset Filter
+The \fB\-offset=\fP\f[I]number\fP filter operates on the addresses of
+records.  If the number is positive the addresses move that many bytes
+higher in memory, negative values move lower.
+.RS
+.nf
+.ft CW
+srec_cat \f[I]infile\fP -crop 0x200000 0x300000 -offset -0x200000 \e
+    -o \f[I]outfile\fP
+.ft R
+.fi
+.RE
+The above example moves the 1MB block of data at 0x200000 down to zero
+(the offset is \f[I]negative\fP) and discards the rest of the data.
+.SS Byte Swapping
+There are times when the bytes in the data need to be swapped,
+converting between big-endian and little-endian data usually.
+.RS
+.nf
+.ft CW
+srec_cat \f[I]infile\fP --byte-swap 4 -o \f[I]outfile\fP
+.ft R
+.fi
+.RE
+This reverses bytes in 32 bit values (4 bytes).  The default, if you
+don't supply a width, is to reverse bytes in 16 bit values (2 bytes).
+You can actually use any weird value you like, although 64 bits (8
+bytes) may be useful one day.
 .SS Binary Output
 You need to watch out for binary files on output, because the holes are
 filled with zeros.  You 100kB program at the top of 32-bit addressed
@@ -292,19 +333,18 @@ you need to remove the offset, and then replace it...
 .RS
 .nf
 .ft CW
-.ta 0.5i 1i 1.5i
 srec_cat firmware.hex \e
-        -offset -0x10000 -split 2 0 \e
-        -offset 0x10000 -o firmware.even.hex
+    -offset -0x10000 -split 2 0 \e
+    -offset 0x10000 -o firmware.even.hex
 srec_cat firmware.hex \e
-        -offset -0x10000 -split 2 1 \e
-        -offset 0x10000 -o firmware.odd.hex
+    -offset -0x10000 -split 2 1 \e
+    -offset 0x10000 -o firmware.odd.hex
 .ft R
 .fi
 .RE
 Note how the ability to apply multiple filters simplifies what would
 otherwise be a much longer script.
-.PP
+.SS Striping
 A second use for the \-SPlit filter is memory striping.
 In this example, the hardware requires that 512-byte blocks alternate
 between 4 EPROMs.  Generating the 4 images would be done as follows:
@@ -322,18 +362,17 @@ srec_cat firmware.hex -split 0x800 0x600 0x200 -o firmware.3.hex
 The unsplit filter may be used to reverse the effects of the split filter.
 Note that the address range is expanded leaving holes between the stripes.
 By using all the stripes, the complete input is reassembled, without
-any holes.  For example, to reverse our previous 16-bit data bus example,
-use the following command:
+any holes.
 .RS
 .nf
 .ft CW
-.ta 0.5i 1i 1.5i
 srec_cat -o firmware.hex \e
-        firmware.even.hex -unsplit 2 0 \e
-        firmware.odd.hex  -unsplit 2 1
+    firmware.even.hex -unsplit 2 0 \e
+    firmware.odd.hex  -unsplit 2 1
 .ft R
 .fi
 .RE
+The above example reverses the previous 16-bit data bus example,.
 .\" ------------------------------------------------------------------------
 .SH FILLING THE BLANKS
 Often EPROM load files will have \(lqholes\(rq in them, places where the
@@ -398,9 +437,11 @@ it is necessary to fill out the other half of a word which is not in the data.
 If you need to fill with a different value, you can use a command like this:
 .RS
 .nf
+.ft CW
 srec_cat \f[I]infile\fP -fill 0x0A \e
     -within \f[I]infile\fP -range-padding 2 \e
     -o \f[I]outfile\fP
+.ft R
 .fi
 .RE
 This gives the fill filter an address range calculated from details of
@@ -419,10 +460,12 @@ This is accomplished with two input sources, one from a data file,
 and one which is generated on-the-fly.
 .RS
 .nf
+.ft CW
 srec_cat \f[I]infile\fP \e
     -generate '(' 0 0x100000 -minus -within \f[I]infile\fP ')' \e
         -repeat-string 'Copyright (C) 1812 Tchaikovsky.  ' \e
     -o \f[I]outfile\fP
+.ft R
 .fi
 .RE
 Notice how the address range for the data generation: it takes the
@@ -463,5 +506,288 @@ srec_cat \f[I]infile\fP \e
 Notice how the generator's address range once again avoids the address
 ranges occupied by the \f[I]infile\fP's data.
 You have to get the endian-ness right yourself.
+.SH DATA ABOUT THE DATA
+It is possible to add a variety of data about the data to the output.
+.SS Checksums
+The \fB\-big-endian-checksum-negative\fP filter may be used to sum the
+data, and then insert the negative of the sum into the data.  This has
+the effect of summing to zero when the checksum itself is summed across,
+provided the sum width matches the inserted value width.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP \e
+        --crop 0 0xFFFFFC \e
+        --random-fill 0 0xFFFFFC \e
+        --b-e-checksum-neg 0xFFFFFC 4 4 \e
+    -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+In this example, we have an EPROM in the lowest megabyte of memory.
+The \-crop filter ensures we are only summing the data within the EPROM,
+and not anywhere else.
+The \-random-fill filter fills any holes left in the data with random values.
+Finally, the \-b-e-checksum-neg filter inserts a 32 bit (4 byte) checksum
+in big-endian format in the last 4 bytes of the EPROM image.
+Naturally, there is a little endian version of this filter as well.
+.PP
+Your embedded code can check the EPROM using C code similar to the following:
+.RS
+.nf
+.ft CW
+unsigned long *begin = (unsigned long *)0;
+unsigned long *end = (unsigned long *)0x100000;
+unsigned long sum = 0;
+while (begin < end)
+    sum += *begin++;
+if (sum != 0)
+{
+    \f[I]Oops\fP
+}
+.ft R
+.fi
+.RE
+.PP
+The \-big-endian-checksum-bitnot filter is similar, except that summing
+over the checksum should yield a value of all-one-bits (-1).
+For example, using shorts rather than longs:
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP \e
+        --crop 0 0xFFFFFE \e
+        --fill 0xCC 0x00000 0xFFFFFE \e
+        --b-e-checksum-neg 0xFFFFFE 2 2 \e
+    -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+Assuming you chose the correct endian-ness filter,
+your embedded code can check the EPROM using C code similar to the following:
+.RS
+.nf
+.ft CW
+unsigned short *begin = (unsigned long *)0;
+unsigned short *end = (unsigned long *)0x100000;
+unsigned short sum = 0;
+while (begin < end)
+    sum += *begin++;
+if (sum != 0xFFFF)
+{
+    \f[I]Oops\fP
+}
+.ft R
+.fi
+.RE
+.PP
+There is also a \-b-e-checksum-positive filter, and a matching
+little-endian filter, which inserts the simple sum, and which would be
+checked in C using an equality test.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP \e
+        --crop 0 0xFFFFFF \e
+        --fill 0x00 0x00000 0xFFFFFF \e
+        --b-e-checksum-neg 0xFFFFFF 1 1 \e
+    -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+Assuming you chose the correct endian-ness filter,
+your embedded code can check the EPROM using C code similar to the following:
+.RS
+.nf
+.ft CW
+unsigned char *begin = (unsigned long *)0;
+unsigned char *end = (unsigned long *)0xFFFFF;
+unsigned char sum = 0;
+while (begin < end)
+    sum += *begin++;
+if (sum != *end)
+{
+    \f[I]Oops\fP
+}
+.ft R
+.fi
+.RE
+In the 8-bit case, it doesn't matter whether you use the big-endian or
+little-endian filter.
+.SS Cyclic Redundancy Checks
+The simple additive checksums have a number of theoretical limitations,
+to do with errors they can and can't detect.  The CRC methods have fewer
+problems.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP \e
+        --crop 0 0xFFFFFC \e
+        --fill 0x00 0x00000 0xFFFFFC \e
+        --b-e-crc32 0xFFFFFC \e
+    -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+In the above example, we have an EPROM in the lowest megabyte of memory.
+The \-crop filter ensures we are only summing the data within the EPROM,
+and not anywhere else.
+The \-fill filter fills any holes left in the data.
+Finally, the \-b-e-checksum-neg filter inserts a 32 bit (4 byte) checksum
+in big-endian format in the last 4 bytes of the EPROM image.
+Naturally, there is a little endian version of this filter as well.
+.PP
+The checksum is calculated using the industry standard 32-bit CRC.
+Because SRecord is open source, you can always read the source code
+to see how it works.  There are many non-GPL version of this code
+available on the Internet, and suitable for embedding in proprietary
+firmware.
+.PP
+There is also a 16-bit CRC available.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP \e
+        --crop 0 0xFFFFFE \e
+        --fill 0x00 0x00000 0xFFFFFE \e
+        --b-e-crc16 0xFFFFFE \e
+    -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+.PP
+The checksum is calculated using the CCITT formula.
+Because SRecord is open source, you can always read the source code
+to see how it works.  There are many non-GPL version of this code
+available on the Internet, and suitable for embedding in proprietary
+firmware.
+.SS Where Am I?
+There are several properties of you EPROM image that you may wish to
+insert into the data.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP --b-e-minimum 0xFFFFFE 2 -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+The above example inserts the minimum address of the data
+(\f[I]low water\fP)
+into the data.  This includes the minimum itself.
+If the data already contains bytes at the given address,
+you need to use an exclude filter.
+The value will be written with the most significant byte first.
+The number of bytes defaults to 4.
+There is also a little-endian variant.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP --b-e-maximum 0xFFFFFE 2 -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+The above example inserts the maximum address of the data
+(\f[I]high water + 1\fP, just like address ranges)
+into the data.  This includes the maximum itself.
+If the data already contains bytes at the given address,
+you need to use an exclude filter.
+The value will be written with the most significant byte first.
+The number of bytes defaults to 4.
+There is also a little-endian variant.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP --b-e-maximum 0xFFFFFE 2 -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+The above example inserts the length of the data
+(\f[I]high water\fP + 1 - \f[I]low water\fP) into the data.
+This includes the length itself.
+If the data already contains bytes at the length location,
+you need to use an exclude filter.
+The value will be written with the most significant byte first.
+The number of bytes defaults to 4.
+There is also a little-endian variant.
+.SS What Format Is This?
+You can obtain a variety of information about an EPROM load file
+by using the \f[I]srec_info\fP(1) command.
+For example:
+.RS
+.ft CW
+.nf
+$ \f[CB]srec_info example.srec\fP
+Format: Motorola S-Record
+Header: "http://srecord.sourceforge.net/"
+Start:  00000000
+Data:   0000 - 0122
+        0456 - 0FFF
+$
+.fi
+.ft R
+.RE
+This example show that the file is a Motorola S-Record.  The text in the
+file header is printed, along with the start address.  The final section
+shows the address ranges containing data (the upper bound of each
+subrange is \f[I]in\f[P]clusive, rather than the \f[I]ex\f[P]clusive form
+used on the command line.
+.RS
+.ft CW
+.nf
+$ \f[CB]srec_info some-weird-file.hex --guess\fP
+Format: Signetics
+Data:   0000 - 0122
+        0456 - 0FFF
+$
+.fi
+.ft R
+.RE
+The above example guesses the EPROM load file format.
+It isn't infallible but it usually gets it right.
+You can use \fB\-guess\fP anywhere you would give an explicit format,
+but it tends to be slower and not recommended.
+.SH MANGLING THE DATA
+It is possible to change the values of the data bytes in several ways.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP --and 0xF0 -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+The above example performs a bit-wise AND of the data bytes with the 0xF0 mask.
+The addresses of records are unchanged.
+I can't actually think of a use for this filter.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP --or 0x0F -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+The above example performs a bit-wise OR of the data bytes with the 0x0F bits.
+The addresses of records are unchanged.
+I can't actually think of a use for this filter.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP --xor 0xA5 -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+The above example performs a bit-wise exclusive OR of the data bytes
+with the 0xA5 bits.
+The addresses of records are unchanged.
+You could use this to obfuscate the contents of your EPROM.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP --not -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+The above example performs a bit-wise NOT of the data bytes.
+The addresses of records are unchanged.
+Security by obscurity?
 .so z_copyright.so
 .\" vim:ts=8:sw=4:et
