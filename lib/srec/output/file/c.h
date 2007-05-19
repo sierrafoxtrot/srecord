@@ -48,7 +48,7 @@ public:
 
 protected:
     // See base class for documentation.
-    virtual void write(const srec_record &);
+    void write(const srec_record &);
 
     // See base class for documentation.
     void line_length_set(int);
