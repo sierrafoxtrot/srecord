@@ -16,9 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_fastload class
-//
-
 
 #include <lib/srec/output/file/fastload.h>
 #include <lib/srec/record.h>
@@ -37,7 +34,8 @@ srec_output_file_fastload::srec_output_file_fastload() :
 }
 
 
-srec_output_file_fastload::srec_output_file_fastload(const string &a_filename) :
+srec_output_file_fastload::srec_output_file_fastload(
+        const std::string &a_filename) :
     srec_output_file(a_filename),
     line_length(0),
     address(~0uL),
@@ -243,4 +241,12 @@ srec_output_file_fastload::preferred_block_size_get()
 {
     // Prefer a multiple of 3
     return ((srec_record::max_data_length / 3) * 3);
+}
+
+
+const char *
+srec_output_file_fastload::format_name()
+    const
+{
+    return "FastLoad";
 }

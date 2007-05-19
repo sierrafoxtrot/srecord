@@ -16,15 +16,13 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_intel class
-//
 
 
 #include <lib/srec/output/file/intel.h>
 #include <lib/srec/record.h>
 
 
-srec_output_file_intel::srec_output_file_intel(const string &a_file_name) :
+srec_output_file_intel::srec_output_file_intel(const std::string &a_file_name) :
     srec_output_file(a_file_name),
     address_base(1),
     pref_block_size(32),
@@ -175,4 +173,12 @@ srec_output_file_intel::preferred_block_size_get()
         const
 {
     return pref_block_size;
+}
+
+
+const char *
+srec_output_file_intel::format_name()
+    const
+{
+    return "Intel-Hex";
 }

@@ -16,9 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_srecord class
-//
-
 
 #include <lib/srec/arglex.h>
 #include <lib/srec/output/file/srecord.h>
@@ -36,7 +33,8 @@ srec_output_file_srecord::srec_output_file_srecord() :
 }
 
 
-srec_output_file_srecord::srec_output_file_srecord(const string &a_file_name) :
+srec_output_file_srecord::srec_output_file_srecord(
+        const std::string &a_file_name) :
     srec_output_file(a_file_name),
     data_count(0),
     pref_block_size(32),
@@ -304,4 +302,12 @@ srec_output_file_srecord::preferred_block_size_get()
     const
 {
     return pref_block_size;
+}
+
+
+const char *
+srec_output_file_srecord::format_name()
+    const
+{
+    return "Motorola S-Record";
 }

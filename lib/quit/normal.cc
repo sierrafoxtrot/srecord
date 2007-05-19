@@ -16,15 +16,10 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the quit_normal class
-//
 
-
-#include <cstdio>
 #include <cstdarg>
-
 #include <iostream>
-using namespace std;
+
 #include <lib/progname.h>
 #include <lib/quit/normal.h>
 
@@ -49,12 +44,56 @@ quit_normal::exit(int n)
 void
 quit_normal::message_v(const char *fmt, va_list ap)
 {
-    cout.flush();
-    cerr << progname_get() << ": ";
-    char buf[1024];
-    vsnprintf(buf, sizeof(buf), fmt, ap);
-    cerr << buf << endl;
-    cerr.flush();
+    char buf[2000];
+    snprintf(buf, sizeof(buf), "%s: ", progname_get());
+    size_t len = strlen(buf);
+    vsnprintf(buf + len, sizeof(buf) - len, fmt, ap);
+
+    std::cout.flush();
+
+    int column = 0;
+    char *cp = buf;
+    for (;;)
+    {
+        unsigned char c = *cp++;
+        if (!c)
+            break;
+        if (isspace(c) || !isprint(c))
+            continue;
+
+        std::string word;
+        for (;;)
+        {
+            word += c;
+            c = *cp;
+            if (!c)
+                break;
+            if (isspace(c) || !isprint(c))
+                break;
+            ++cp;
+        }
+        if (!column)
+        {
+            std::cerr << word;
+            column = word.size();
+        }
+        else if (column + 1 + word.size() > 80)
+        {
+            std::cerr << std::endl << "    ";
+            column = 4;
+            std::cerr << word;
+            column += word.size();
+        }
+        else
+        {
+            std::cerr << ' ';
+            ++column;
+            std::cerr << word;
+            column += word.size();
+        }
+    }
+    std::cerr << std::endl;
+    std::cerr.flush();
 }
 
 

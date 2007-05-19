@@ -16,15 +16,13 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_needham class
-//
-
 
 #include <lib/srec/output/file/needham.h>
 #include <lib/srec/record.h>
 
 
-srec_output_file_needham::srec_output_file_needham(const string &a_file_name) :
+srec_output_file_needham::srec_output_file_needham(
+        const std::string &a_file_name) :
     srec_output_file(a_file_name),
     address(0),
     column(0),
@@ -131,4 +129,12 @@ srec_output_file_needham::preferred_block_size_get()
     const
 {
     return pref_block_size;
+}
+
+
+const char *
+srec_output_file_needham::format_name()
+    const
+{
+    return "Needham";
 }

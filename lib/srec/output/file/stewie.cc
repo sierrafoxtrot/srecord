@@ -16,15 +16,13 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_stewie class
-//
-
 
 #include <lib/srec/output/file/stewie.h>
 #include <lib/srec/record.h>
 
 
-srec_output_file_stewie::srec_output_file_stewie(const string &a_file_name) :
+srec_output_file_stewie::srec_output_file_stewie(
+        const std::string &a_file_name) :
     srec_output_file(a_file_name),
     data_count(0),
     address_length(2),
@@ -219,4 +217,12 @@ srec_output_file_stewie::mode()
     const
 {
     return "wb";
+}
+
+
+const char *
+srec_output_file_stewie::format_name()
+    const
+{
+    return "Stewie";
 }

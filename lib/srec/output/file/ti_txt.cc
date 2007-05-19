@@ -16,14 +16,13 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_ti_txt class
-//
 
 #include <lib/srec/output/file/ti_txt.h>
 #include <lib/srec/record.h>
 
 
-srec_output_file_ti_txt::srec_output_file_ti_txt(const string &a_file_name) :
+srec_output_file_ti_txt::srec_output_file_ti_txt(
+        const std::string &a_file_name) :
     srec_output_file(a_file_name),
     address(),
     address_set(false),
@@ -143,4 +142,12 @@ srec_output_file_ti_txt::preferred_block_size_get()
     const
 {
     return pref_block_size;
+}
+
+
+const char *
+srec_output_file_ti_txt::format_name()
+    const
+{
+    return "TI-Txt";
 }

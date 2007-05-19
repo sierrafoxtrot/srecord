@@ -16,9 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_fairchild class
-//
-
 
 #include <lib/srec/output/file/fairchild.h>
 #include <lib/srec/record.h>
@@ -30,7 +27,7 @@ srec_output_file_fairchild::~srec_output_file_fairchild()
 
 
 srec_output_file_fairchild::srec_output_file_fairchild(
-        const string &a_file_name) :
+        const std::string &a_file_name) :
     srec_output_file(a_file_name),
     address(~0uL),
     data_bytes_emitted(0)
@@ -179,4 +176,12 @@ srec_output_file_fairchild::preferred_block_size_get()
     const
 {
     return 8;
+}
+
+
+const char *
+srec_output_file_fairchild::format_name()
+    const
+{
+    return "Fairchild";
 }

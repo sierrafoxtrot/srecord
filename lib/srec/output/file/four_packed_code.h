@@ -16,8 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: interface definition for lib/srec/output/file/four_packed_code.cc
-//
 
 #ifndef INCLUDE_SREC_OUTPUT_FILE_FOUR_PACKED_CODE_H
 #define INCLUDE_SREC_OUTPUT_FILE_FOUR_PACKED_CODE_H
@@ -51,8 +49,9 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_four_packed_code(const string &file_name);
+    srec_output_file_four_packed_code(const std::string &file_name);
 
+protected:
     // See base class for documentation.
     void write(const srec_record &);
 
@@ -64,6 +63,9 @@ public:
 
     // See base class for documentation.
     int preferred_block_size_get() const;
+
+    // See base class for documentation.
+    const char *format_name() const;
 
 private:
     /**

@@ -16,15 +16,12 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_spasm class
-//
-
 
 #include <lib/srec/output/file/spasm.h>
 #include <lib/srec/record.h>
 
 
-srec_output_file_spasm::srec_output_file_spasm(const string &a_file_name,
+srec_output_file_spasm::srec_output_file_spasm(const std::string &a_file_name,
         bool endianness) :
     srec_output_file(a_file_name),
     bigend(endianness)
@@ -138,4 +135,12 @@ srec_output_file_spasm::preferred_block_size_get()
     // But make sure it is an even number of bytes long.
     //
     return (srec_record::max_data_length & ~1);
+}
+
+
+const char *
+srec_output_file_spasm::format_name()
+    const
+{
+    return "Spasm";
 }

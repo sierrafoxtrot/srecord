@@ -16,8 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_ti_tagged class
-//
 
 #include <lib/srec/output/file/ti_tagged_16.h>
 #include <lib/srec/record.h>
@@ -26,7 +24,7 @@
 
 
 srec_output_file_ti_tagged_16::srec_output_file_ti_tagged_16(
-        const string &a_file_name) :
+        const std::string &a_file_name) :
     srec_output_file(a_file_name),
     address(0),
     column(0),
@@ -202,4 +200,12 @@ srec_output_file_ti_tagged_16::preferred_block_size_get()
     if (n > srec_record::max_data_length)
         n = srec_record::max_data_length;
     return n;
+}
+
+
+const char *
+srec_output_file_ti_tagged_16::format_name()
+    const
+{
+    return "TI-Tagged-16";
 }

@@ -16,9 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_formatted_binary class
-//
-
 
 #include <lib/srec/output/file/formatted_binary.h>
 #include <lib/srec/record.h>
@@ -38,7 +35,7 @@ srec_output_file_formatted_binary::~srec_output_file_formatted_binary()
 
 
 srec_output_file_formatted_binary::srec_output_file_formatted_binary(
-        const string &a_file_name) :
+        const std::string &a_file_name) :
     srec_output_file(a_file_name),
     upper_bound(0),
     address(0),
@@ -166,4 +163,12 @@ srec_output_file_formatted_binary::preferred_block_size_get()
     // Irrelevant.  Use the largest we can get.
     //
     return srec_record::max_data_length;
+}
+
+
+const char *
+srec_output_file_formatted_binary::format_name()
+    const
+{
+    return "Formatted-Binary";
 }

@@ -16,8 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: interface defn for include/srec/output/file/formatted_binary.cc
-//
 
 #ifndef INCLUDE_SREC_OUTPUT_FILE_FORMATTED_BINARY_H
 #define INCLUDE_SREC_OUTPUT_FILE_FORMATTED_BINARY_H
@@ -44,8 +42,9 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_formatted_binary(const string &file_name);
+    srec_output_file_formatted_binary(const std::string &file_name);
 
+protected:
     // See base class for documentation.
     void notify_upper_bound(long unsigned);
 
@@ -63,6 +62,9 @@ public:
 
     // See base class for documentation.
     const char *mode() const;
+
+    // See base class for documentation.
+    const char *format_name() const;
 
 private:
     /**

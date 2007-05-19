@@ -16,8 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: interface definition for lib/srec/output/file/ti_tagged_16.cc
-//
 
 #ifndef LIB_SREC_OUTPUT_FILE_TI_TAGGED_16_H
 #define LIB_SREC_OUTPUT_FILE_TI_TAGGED_16_H
@@ -42,7 +40,7 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_ti_tagged_16(const string &file_name);
+    srec_output_file_ti_tagged_16(const std::string &file_name);
 
 protected:
     // See base class for documentation.
@@ -59,6 +57,9 @@ protected:
 
     // See base class for documentation.
     void put_char(int);
+
+    // See base class for documentation.
+    const char *format_name() const;
 
 private:
     typedef srec_output_file inherited;

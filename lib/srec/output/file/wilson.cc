@@ -16,9 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_wilson class
-//
-
 
 #include <lib/srec/output/file/wilson.h>
 #include <lib/srec/record.h>
@@ -31,7 +28,8 @@ srec_output_file_wilson::srec_output_file_wilson() :
 }
 
 
-srec_output_file_wilson::srec_output_file_wilson(const string &a_file_name) :
+srec_output_file_wilson::srec_output_file_wilson(
+        const std::string &a_file_name) :
     srec_output_file(a_file_name),
     pref_block_size(32)
 {
@@ -210,4 +208,12 @@ srec_output_file_wilson::mode()
     const
 {
     return "wb";
+}
+
+
+const char *
+srec_output_file_wilson::format_name()
+    const
+{
+    return "Wilson";
 }

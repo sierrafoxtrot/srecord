@@ -16,8 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: interface definition for include/srec/output/file/spasm.cc
-//
 
 #ifndef INCLUDE_SREC_OUTPUT_FILE_SPASM_H
 #define INCLUDE_SREC_OUTPUT_FILE_SPASM_H
@@ -54,8 +52,9 @@ public:
       *     Whether to output big endian data (true) or little endian
       *     data (false).
       */
-    srec_output_file_spasm(const string &file_name, bool bigendian = true);
+    srec_output_file_spasm(const std::string &file_name, bool bigendian = true);
 
+protected:
     // See base class for documentation.
     virtual void write(const srec_record &);
 
@@ -67,6 +66,9 @@ public:
 
     // See base class for documentation.
     virtual int preferred_block_size_get() const;
+
+    // See base class for documentation.
+    const char *format_name() const;
 
 private:
     /**

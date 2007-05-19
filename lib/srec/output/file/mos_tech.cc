@@ -16,8 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_mos_tech class
-//
 
 
 #include <lib/srec/output/file/mos_tech.h>
@@ -31,7 +29,8 @@ srec_output_file_mos_tech::srec_output_file_mos_tech() :
 }
 
 
-srec_output_file_mos_tech::srec_output_file_mos_tech(const string &a_filename) :
+srec_output_file_mos_tech::srec_output_file_mos_tech(
+        const std::string &a_filename) :
     srec_output_file(a_filename),
     pref_block_size(32)
 {
@@ -132,4 +131,12 @@ srec_output_file_mos_tech::preferred_block_size_get()
     const
 {
     return pref_block_size;
+}
+
+
+const char *
+srec_output_file_mos_tech::format_name()
+    const
+{
+    return "MOS-Tech";
 }

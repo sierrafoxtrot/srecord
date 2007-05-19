@@ -16,16 +16,12 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: interface definition for lib/srec/output.cc
-//
 
 #ifndef INCLUDE_SREC_OUTPUT_H
 #define INCLUDE_SREC_OUTPUT_H
 
-
 #include <stdarg.h>
 #include <string>
-using namespace std;
 #include <lib/format_printf.h>
 
 class srec_arglex; // forward
@@ -147,7 +143,13 @@ public:
       * output file.  It is used for the various error messages.
       * Derived classes must implement this method.
       */
-    virtual const string filename() const = 0;
+    virtual const std::string filename() const = 0;
+
+    /**
+      * The format_name method is used to obtain the name of this output
+      * format.
+      */
+    virtual const char *format_name() const = 0;
 
     /**
       * The notify_upper_bound method is used to notify the output class

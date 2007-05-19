@@ -16,9 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_dec_binary class
-//
-
 
 #include <lib/srec/output/file/dec_binary.h>
 #include <lib/srec/record.h>
@@ -34,7 +31,7 @@ srec_output_file_dec_binary::srec_output_file_dec_binary() :
 
 
 srec_output_file_dec_binary::srec_output_file_dec_binary(
-        const string &a_file_name) :
+        const std::string &a_file_name) :
     srec_output_file(a_file_name),
     pref_block_size(preferred_block_size_calculate())
 {
@@ -192,4 +189,12 @@ srec_output_file_dec_binary::mode()
     const
 {
     return "wb";
+}
+
+
+const char *
+srec_output_file_dec_binary::format_name()
+    const
+{
+    return "DEC-Binary";
 }

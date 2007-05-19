@@ -16,14 +16,13 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_brecord class
-//
 
 #include <lib/srec/output/file/brecord.h>
 #include <lib/srec/record.h>
 
 
-srec_output_file_brecord::srec_output_file_brecord(const string &a_file_name) :
+srec_output_file_brecord::srec_output_file_brecord(
+        const std::string &a_file_name) :
     srec_output_file(a_file_name),
     buffer_address(0),
     buffer_length(0),
@@ -119,4 +118,12 @@ srec_output_file_brecord::preferred_block_size_get()
     const
 {
     return BUFFER_MAXIMUM_MAXIMUM;
+}
+
+
+const char *
+srec_output_file_brecord::format_name()
+    const
+{
+    return "B-Record";
 }

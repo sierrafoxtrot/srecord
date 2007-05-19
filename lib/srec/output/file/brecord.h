@@ -16,8 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: interface definition for lib/srec/output/file/brecord.cc
-//
 
 #ifndef LIB_SREC_OUTPUT_FILE_BRECORD_H
 #define LIB_SREC_OUTPUT_FILE_BRECORD_H
@@ -50,8 +48,9 @@ public:
       *     The name of the file to write the output to.  The string "-"
       *     is understood to mean the standard output.
       */
-    srec_output_file_brecord(const string &file_name);
+    srec_output_file_brecord(const std::string &file_name);
 
+protected:
     // See base class for documentation.
     virtual void write(const srec_record &);
 
@@ -63,6 +62,9 @@ public:
 
     // See base class for documentation.
     virtual int preferred_block_size_get() const;
+
+    // See base class for documentation.
+    const char *format_name() const;
 
 private:
     enum { BUFFER_MAXIMUM_MAXIMUM = 31 };

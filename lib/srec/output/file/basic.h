@@ -16,8 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: interface definition for include/srec/output/file/basic.cc
-//
 
 #ifndef INCLUDE_SREC_OUTPUT_FILE_BASIC_H
 #define INCLUDE_SREC_OUTPUT_FILE_BASIC_H
@@ -47,6 +45,7 @@ public:
       */
     srec_output_file_basic(const string &file_name);
 
+protected:
     // See base class for docum,entation.
     virtual void write(const srec_record &);
 
@@ -58,6 +57,9 @@ public:
 
     // See base class for docum,entation.
     int preferred_block_size_get() const;
+
+    // See base class for documentation.
+    const char *format_name() const;
 
 private:
     /**

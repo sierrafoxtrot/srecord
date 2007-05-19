@@ -16,9 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_four_packed_code class
-//
-
 
 #include <lib/srec/output/file/four_packed_code.h>
 #include <lib/srec/record.h>
@@ -123,7 +120,7 @@ srec_output_file_four_packed_code::srec_output_file_four_packed_code():
 
 
 srec_output_file_four_packed_code::srec_output_file_four_packed_code(
-        const string &a_file_name):
+        const std::string &a_file_name):
     srec_output_file(a_file_name),
     pref_block_size(32),
     put_byte_pos(0),
@@ -309,4 +306,12 @@ void
 srec_output_file_four_packed_code::address_length_set(int)
 {
     // Ignore.  We always emit a 32-bit address.
+}
+
+
+const char *
+srec_output_file_four_packed_code::format_name()
+    const
+{
+    return "Four-Packed-Code";
 }

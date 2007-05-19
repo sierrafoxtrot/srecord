@@ -16,8 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_signetics class
-//
 
 
 #include <lib/srec/output/file/signetics.h>
@@ -33,7 +31,7 @@ srec_output_file_signetics::srec_output_file_signetics() :
 
 
 srec_output_file_signetics::srec_output_file_signetics(
-        const string &a_file_name) :
+        const std::string &a_file_name) :
     srec_output_file(a_file_name),
     pref_block_size(32),
     last_address(0)
@@ -164,4 +162,12 @@ int
 srec_output_file_signetics::preferred_block_size_get() const
 {
     return pref_block_size;
+}
+
+
+const char *
+srec_output_file_signetics::format_name()
+    const
+{
+    return "Signetics";
 }

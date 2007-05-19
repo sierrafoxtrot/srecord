@@ -17,8 +17,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_vhdl class
-//
 
 #include <lib/srec/arglex.h>
 #include <lib/interval.h>
@@ -282,4 +280,12 @@ srec_output_file_vhdl::preferred_block_size_get()
     // Irrelevant.  Use the largest we can get.
     //
     return srec_record::max_data_length;
+}
+
+
+const char *
+srec_output_file_vhdl::format_name()
+    const
+{
+    return "Vhdl";
 }

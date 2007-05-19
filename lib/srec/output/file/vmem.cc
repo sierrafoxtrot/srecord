@@ -16,8 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_vmem class
-//
 
 #include <cctype>
 #include <lib/srec/arglex.h>
@@ -88,7 +86,7 @@ calc_width_mask(int x)
 }
 
 
-srec_output_file_vmem::srec_output_file_vmem(const string &a_file_name) :
+srec_output_file_vmem::srec_output_file_vmem(const std::string &a_file_name) :
     srec_output_file(a_file_name),
     address(0),
     column(0),
@@ -285,4 +283,12 @@ srec_output_file_vmem::preferred_block_size_get()
     const
 {
     return pref_block_size;
+}
+
+
+const char *
+srec_output_file_vmem::format_name()
+    const
+{
+    return "Vmem";
 }

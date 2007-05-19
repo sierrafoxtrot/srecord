@@ -16,9 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_os65v class
-//
-
 
 #include <lib/srec/output/file/os65v.h>
 #include <lib/srec/record.h>
@@ -31,7 +28,7 @@ srec_output_file_os65v::~srec_output_file_os65v()
 }
 
 
-srec_output_file_os65v::srec_output_file_os65v(const string &a_file_name) :
+srec_output_file_os65v::srec_output_file_os65v(const std::string &a_file_name) :
     srec_output_file(a_file_name),
     address(0),
     state(0),
@@ -123,4 +120,12 @@ srec_output_file_os65v::mode(void)
     const
 {
     return "wb";
+}
+
+
+const char *
+srec_output_file_os65v::format_name()
+    const
+{
+    return "OS65V";
 }

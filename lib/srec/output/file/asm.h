@@ -16,8 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: interface definition for include/srec/output/file/asm.cc
-//
 
 #ifndef INCLUDE_SREC_OUTPUT_FILE_ASM_H
 #define INCLUDE_SREC_OUTPUT_FILE_ASM_H
@@ -46,6 +44,7 @@ public:
       */
     srec_output_file_asm(const string &file_name);
 
+protected:
     // See base class for documentation.
     virtual void write(const srec_record &);
 
@@ -60,6 +59,9 @@ public:
 
     // See base class for documentation.
     void command_line(srec_arglex *cmdln);
+
+    // See base class for documentation.
+    const char *format_name() const;
 
 private:
     /**

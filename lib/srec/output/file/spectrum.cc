@@ -16,9 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_spectrum class
-//
-
 
 #include <lib/srec/output/file/spectrum.h>
 #include <lib/srec/record.h>
@@ -29,7 +26,8 @@ srec_output_file_spectrum::~srec_output_file_spectrum()
 }
 
 
-srec_output_file_spectrum::srec_output_file_spectrum(const string &a_filename) :
+srec_output_file_spectrum::srec_output_file_spectrum(
+        const std::string &a_filename) :
     srec_output_file(a_filename)
 {
 }
@@ -108,4 +106,12 @@ srec_output_file_spectrum::preferred_block_size_get()
     const
 {
     return srec_record::max_data_length;
+}
+
+
+const char *
+srec_output_file_spectrum::format_name()
+    const
+{
+    return "Spectrum";
 }

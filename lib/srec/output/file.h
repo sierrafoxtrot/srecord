@@ -16,8 +16,6 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: interface definition for lib/srec/output/file.cc
-//
 
 #ifndef INCLUDE_SREC_OUTPUT_FILE_H
 #define INCLUDE_SREC_OUTPUT_FILE_H
@@ -49,7 +47,7 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file(const string &file_name);
+    srec_output_file(const std::string &file_name);
 
     /**
       * The destructor.
@@ -57,7 +55,7 @@ public:
     virtual ~srec_output_file();
 
     // See base class for documentation.
-    virtual const string filename() const;
+    virtual const std::string filename() const;
 
     /**
       * Call this method if you want the output to contain only data
@@ -177,7 +175,7 @@ protected:
       * @param s
       *     The string to pint.
       */
-    void put_string(const string &s);
+    void put_string(const std::string &s);
 
     /**
       * The put_stringf method is used to send a formatted string to the
@@ -214,7 +212,7 @@ private:
       * filename_and_line() methods to report the name of the input
       * file.  This makes for informative error mesages.
       */
-    string file_name;
+    std::string file_name;
 
     /**
       * The line_number instance variable is used by the get_char

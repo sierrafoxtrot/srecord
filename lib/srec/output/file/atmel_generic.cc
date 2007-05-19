@@ -16,16 +16,13 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 //
-// MANIFEST: functions to impliment the srec_output_file_atmel_generic class
-//
-
 
 #include <lib/srec/output/file/atmel_generic.h>
 #include <lib/srec/record.h>
 
 
 srec_output_file_atmel_generic::srec_output_file_atmel_generic(
-        const string &a_file_name, bool endianness) :
+        const std::string &a_file_name, bool endianness) :
     srec_output_file(a_file_name),
     bigend(endianness)
 {
@@ -138,4 +135,12 @@ srec_output_file_atmel_generic::preferred_block_size_get()
     // But make sure it is an even number of bytes long.
     //
     return (srec_record::max_data_length & ~1);
+}
+
+
+const char *
+srec_output_file_atmel_generic::format_name()
+    const
+{
+    return "Atmel-Generic";
 }
