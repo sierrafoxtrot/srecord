@@ -504,8 +504,10 @@ srec_output_file_asm::preferred_block_size_get()
     const
 {
     //
-    // Irrelevant.  Use the largest we can get.
+    // Use the largest we can get.
     //
+    if (output_word)
+        return (srec_record::max_data_length & ~1);
     return srec_record::max_data_length;
 }
 
@@ -514,5 +516,5 @@ const char *
 srec_output_file_asm::format_name()
     const
 {
-    return (output_word ?  "Assembler (16-bit)" : "Assembler (8-bit)");
+    return (output_word ? "Assembler (16-bit)" : "Assembler (8-bit)");
 }
