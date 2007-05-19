@@ -435,31 +435,19 @@ srec_output_file_asm::write(const srec_record & record)
         }
         if (output_word)
         {
-            unsigned long len = record.get_length();
+            int len = record.get_length();
             if (len & 1)
-                ++len;
+                fatal_alignment_error(2);
             range += interval(record.get_address(), record.get_address() + len);
 
             //
             // No attempt is made to align the data on even byte
             // boundaries, use the --fill --range-pad filter for that.
             //
-            // The data is padded with a single 0xFF byte if the data
-            // block would be and odd length.  This will never cause an
-            // overlap because srec_cat stores its data internally on
-            // powers-of-two block boundaries.
-            //
-            for (int j = 0; j < record.get_length(); j += 2)
+            for (int j = 0; j < len; j += 2)
             {
                 unsigned char n1 = record.get_data(j);
-                unsigned char n2 =
-                    (
-                        j + 1 < record.get_length()
-                    ?
-                        record.get_data(j + 1)
-                    :
-                        0xFF
-                    );
+                unsigned char n2 = record.get_data(j + 1);
                 // little-endian
                 unsigned short n = n1 + (n2 << 8);
                 emit_word(n);
@@ -526,5 +514,5 @@ const char *
 srec_output_file_asm::format_name()
     const
 {
-    return "ASemBler";
+    return (output_word ?  "Assembler (16-bit)" : "Assembler (8-bit)");
 }
