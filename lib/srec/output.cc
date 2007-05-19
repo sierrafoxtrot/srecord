@@ -20,33 +20,15 @@
 //
 
 
-#include <errno.h>
-#include <iostream>
-using namespace std;
+#include <cerrno>
 
-#include <cstdio>
-#include <cstdarg>
-
+#include <lib/quit.h>
 #include <lib/srec/output.h>
 #include <lib/srec/record.h>
 
 
 srec_output::srec_output()
 {
-}
-
-
-srec_output::srec_output(const srec_output &)
-{
-        fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
-srec_output &
-srec_output::operator=(const srec_output &)
-{
-        fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-        return *this;
 }
 
 
@@ -57,77 +39,72 @@ srec_output::~srec_output()
 
 void
 srec_output::fatal_error(const char *fmt, ...)
-        const
+    const
 {
-        va_list ap;
-        va_start(ap, fmt);
-        fatal_error_v(fmt, ap);
-        va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    fatal_error_v(fmt, ap);
+    va_end(ap);
 }
 
 
 void
 srec_output::fatal_error_v(const char *fmt, va_list ap)
-        const
+    const
 {
-        cout.flush();
-        cerr << filename() << ": ";
-        char buf[1024];
-        vsnprintf(buf, sizeof(buf), fmt, ap);
-        cerr << buf << endl;
-        cerr.flush();
-        exit(1);
+    char buf[1024];
+    vsnprintf(buf, sizeof(buf), fmt, ap);
+    quit_default.fatal_error("%s: %s", filename().c_str(), buf);
 }
 
 
 void
 srec_output::fatal_error_errno(const char *fmt, ...)
-        const
+    const
 {
-        va_list ap;
-        va_start(ap, fmt);
-        fatal_error_errno_v(fmt, ap);
-        va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    fatal_error_errno_v(fmt, ap);
+    va_end(ap);
 }
 
 
 void
 srec_output::fatal_error_errno_v(const char *fmt, va_list ap)
-        const
+    const
 {
-        int n = errno;
-        cout.flush();
-        cerr << filename() << ": ";
-        char buf[1024];
-        vsnprintf(buf, sizeof(buf), fmt, ap);
-        cerr << buf;
-        cerr << ": " << strerror(n) << " [" << n << "]" << endl;
-        cerr.flush();
-        exit(1);
+    int n = errno;
+    char buf[1024];
+    vsnprintf(buf, sizeof(buf), fmt, ap);
+    quit_default.fatal_error_errno
+    (
+        "%s: %s: %s [%d]",
+        filename().c_str(),
+        buf,
+        strerror(n),
+        n
+    );
 }
 
 
 void
 srec_output::warning(const char *fmt, ...)
-        const
+    const
 {
-        va_list ap;
-        va_start(ap, fmt);
-        warning_v(fmt, ap);
-        va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    warning_v(fmt, ap);
+    va_end(ap);
 }
 
 
 void
 srec_output::warning_v(const char *fmt, va_list ap)
-        const
+    const
 {
-        cout.flush();
-        cerr << filename() << ": warning: ";
-        char buf[1024];
-        vsnprintf(buf, sizeof(buf), fmt, ap);
-        cerr << buf << endl;
-        cerr.flush();
+    char buf[1024];
+    vsnprintf(buf, sizeof(buf), fmt, ap);
+    quit_default.warning("%s: %s", filename().c_str(), buf);
 }
 
 
@@ -148,8 +125,13 @@ srec_output::write_header(const srec_record *rp)
         // If you want to change it, this is the place.
         //
         static char hdr[] = "http://srecord.sourceforge.net/";
-        srec_record record(srec_record::type_header, (srec_record::address_t)0,
-            (const srec_record::data_t *)hdr, strlen(hdr));
+        srec_record record
+        (
+            srec_record::type_header,
+            (srec_record::address_t)0,
+            (const srec_record::data_t *)hdr,
+            strlen(hdr)
+        );
         write(record);
     }
 }
@@ -158,18 +140,17 @@ srec_output::write_header(const srec_record *rp)
 void
 srec_output::write_data(unsigned long address, const void *data, size_t length)
 {
-        const srec_record::data_t *data_p = (const srec_record::data_t *)data;
-        size_t block_size = preferred_block_size_get();
-        while (length > 0)
-        {
-                int nbytes = (length > block_size ? block_size : length);
-                srec_record record(srec_record::type_data, address, data_p,
-                        nbytes);
-                write(record);
-                address += nbytes;
-                data_p += nbytes;
-                length -= nbytes;
-        }
+    const srec_record::data_t *data_p = (const srec_record::data_t *)data;
+    size_t block_size = preferred_block_size_get();
+    while (length > 0)
+    {
+        int nbytes = (length > block_size ? block_size : length);
+        srec_record record(srec_record::type_data, address, data_p, nbytes);
+        write(record);
+        address += nbytes;
+        data_p += nbytes;
+        length -= nbytes;
+    }
 }
 
 

@@ -241,6 +241,16 @@ protected:
       */
     int checksum;
 
+    /**
+      * The fatal_alignment_error method is used to report problems
+      * with unaligned data in formats that require aligned data.  It
+      * suggests a fill to fix the problem.
+      *
+      * @param alignment
+      *     The necessary byte alignment
+      */
+    void fatal_alignment_error(int alignment);
+
 private:
     /**
       * The position instance variable is used to remember the
