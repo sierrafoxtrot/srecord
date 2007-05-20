@@ -69,12 +69,13 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
-K0008HDRB4865B6C6CB6F2C*2090091BFF57B6F72B6C64B210A7F42DF
+K0008HDRB4865B6C6CB6F2CB20FF90091BFF57B6F72B6C64B210A7F389F
 :
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -o test.out -ti-tagged-16
+$bin/srec_cat test.in -fill 0xFF -within test.in -range-padding 2 \
+        -o test.out -ti-tagged-16
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

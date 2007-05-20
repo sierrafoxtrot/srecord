@@ -100,10 +100,17 @@ srec_output_file_ti_tagged_16::write(const srec_record &record)
                 record.get_address() + record.get_length() - 1
             );
         }
+
+        //
+        // we can't start at an odd address,
+        // but don't test for odd lengths
+        //
+        if (record.get_address() & 1)
+            fatal_alignment_error(2);
+
         // assert(record.get_length() > 0);
         if (record.get_length() == 0)
             break;
-        pos = 0;
         if (address != record.get_address())
         {
             address = record.get_address();
@@ -111,26 +118,6 @@ srec_output_file_ti_tagged_16::write(const srec_record &record)
                 put_eoln();
             put_char('9');
             put_word(address >> 1);
-
-            //
-            // Odd addresses are impossible, so we have to handle them
-            // carefully.  We fake an 0xFF byte before the first byte of
-            // real data, this will leave the erased EPROM data alone.
-            //
-            // The srec_cat command only ever writes data in ascending
-            // order, and always on even address boundaries, so this
-            // will not cause duplicate values for any addresses.
-            //
-            if (address & 1)
-            {
-                if (column + 5 > line_length)
-                    put_eoln();
-                put_char('B');
-                put_byte(0xFF);
-                put_byte(record.get_data(0));
-                ++address;
-                pos = 1;
-            }
         }
         for (; pos + 2 <= record.get_length(); pos += 2)
         {
@@ -195,11 +182,11 @@ srec_output_file_ti_tagged_16::preferred_block_size_get()
     const
 {
     int n = (line_length / 5) * 2;
-    if (n < 1)
-        n = 1;
+    if (n < 2)
+        n = 2;
     if (n > srec_record::max_data_length)
         n = srec_record::max_data_length;
-    return n;
+    return (n & ~1);
 }
 
 
