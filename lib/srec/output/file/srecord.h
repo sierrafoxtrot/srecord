@@ -56,13 +56,13 @@ protected:
     void write(const srec_record &);
 
     // See base class for documentation.
-    virtual void line_length_set(int);
+    void line_length_set(int);
 
     // See base class for documentation.
-    virtual void address_length_set(int);
+    void address_length_set(int);
 
     // See base class for documentation.
-    virtual int preferred_block_size_get() const;
+    int preferred_block_size_get() const;
 
     // See base class for documentation.
     void command_line(srec_arglex *cmdln);

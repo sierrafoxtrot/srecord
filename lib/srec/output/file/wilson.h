@@ -56,19 +56,19 @@ protected:
     void write(const srec_record &);
 
     // See base class for documentation.
-    virtual void line_length_set(int);
+    void line_length_set(int);
 
     // See base class for documentation.
-    virtual void address_length_set(int);
+    void address_length_set(int);
 
     // See base class for documentation.
-    virtual int preferred_block_size_get() const;
+    int preferred_block_size_get() const;
 
     // See base class for documentation.
     const char *mode() const;
 
     // See base class for documentation.
-    virtual void put_byte(unsigned char);
+    void put_byte(unsigned char);
 
     // See base class for documentation.
     const char *format_name() const;

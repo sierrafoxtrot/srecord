@@ -51,12 +51,12 @@ public:
       */
     srec_output_file_dec_binary(const std::string &file_name);
 
-private:
+protected:
     // See base class for documentation.
     void write(const srec_record &);
 
     // See base class for documentation.
-    virtual int preferred_block_size_get() const;
+    int preferred_block_size_get() const;
 
     // See base class for documentation.
     void line_length_set(int);
