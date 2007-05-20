@@ -306,11 +306,29 @@ srec_output_file::set_is_regular()
 void
 srec_output_file::fatal_alignment_error(int multiple)
 {
-    fatal_error
-    (
-        "The %s output format uses 16-bit data, but unaligned "
-        "data is present.  Use a \"--fill 0xNN --within "
-        "<input> --range-padding %d\" filter to fix this "
-        "problem.", format_name(), multiple
-    );
+    if (multiple > 4)
+    {
+        fatal_error
+        (
+            "The %s output format uses %d-byte alignment, but unaligned "
+                "data is present.  Use a \"--fill 0xNN --within <input> "
+                "--range-padding %d\" filter to fix this problem.",
+            format_name(),
+            multiple,
+            multiple
+        );
+    }
+    else
+    {
+        fatal_error
+        (
+            "The %s output format uses %d-bit data, but unaligned "
+                "data is present.  Use a \"--fill 0xNN --within "
+                "<input> --range-padding %d\" filter to fix this "
+                "problem.",
+            format_name(),
+            multiple * 8,
+            multiple
+        );
+    }
 }

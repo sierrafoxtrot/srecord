@@ -29,8 +29,7 @@ srec_output_file_fairchild::~srec_output_file_fairchild()
 srec_output_file_fairchild::srec_output_file_fairchild(
         const std::string &a_file_name) :
     srec_output_file(a_file_name),
-    address(~0uL),
-    data_bytes_emitted(0)
+    address(~0uL)
 {
 }
 
@@ -54,65 +53,6 @@ srec_output_file_fairchild::put_byte(unsigned char n)
 
 
 void
-srec_output_file_fairchild::emit(unsigned long addr, unsigned char data)
-{
-    if (data_bytes_emitted != 0)
-    {
-        //
-        // Fill out the data record until we reach the address we want,
-        // or the data record is full.  There is no way to have a short
-        // data record.
-        //
-        while (address < addr && data_bytes_emitted < 8)
-        {
-            put_byte(0xFF);
-            ++address;
-            ++data_bytes_emitted;
-        }
-
-        //
-        // See if we have reached the end of a data record.
-        // (They only ever have 8 bytes.)
-        //
-        if (data_bytes_emitted >= 8)
-        {
-            put_nibble(checksum_get());
-            put_char('\n');
-            data_bytes_emitted = 0;
-        }
-    }
-    if (data_bytes_emitted == 0)
-    {
-        if (address != addr)
-        {
-            put_stringf("S%4.4lX\n", addr);
-            address = addr;
-        }
-        put_char('X');
-        checksum_reset();
-    }
-
-    //
-    // Emit the one byte of data we were given.
-    //
-    put_byte(data);
-    ++address;
-    ++data_bytes_emitted;
-
-    //
-    // See if we have reached the end of a data record.
-    // (They only ever have 8 bytes.)
-    //
-    if (data_bytes_emitted >= 8)
-    {
-        put_nibble(checksum_get());
-        put_char('\n');
-        data_bytes_emitted = 0;
-    }
-}
-
-
-void
 srec_output_file_fairchild::write(const srec_record &record)
 {
     switch (record.get_type())
@@ -127,30 +67,38 @@ srec_output_file_fairchild::write(const srec_record &record)
         {
             int len = record.get_length();
             unsigned long new_addr = record.get_address();
-            for (int j = 0; j < len; ++j, ++new_addr)
-                emit(new_addr, record.get_data(j));
+            if ((new_addr & 7) || (len & 7))
+                fatal_alignment_error(8);
+            if (address != new_addr)
+            {
+                put_stringf("S%4.4lX\n", new_addr);
+                address = new_addr;
+            }
+            for (int j = 0; j < len; j += 8)
+            {
+                put_char('X');
+                checksum_reset();
+
+                //
+                // Emit the one line of data.
+                //
+                put_byte(record.get_data(j));
+                put_byte(record.get_data(j + 1));
+                put_byte(record.get_data(j + 2));
+                put_byte(record.get_data(j + 3));
+                put_byte(record.get_data(j + 4));
+                put_byte(record.get_data(j + 5));
+                put_byte(record.get_data(j + 6));
+                put_byte(record.get_data(j + 7));
+                address += 8;
+
+                put_nibble(checksum_get());
+                put_char('\n');
+            }
         }
         break;
 
     case srec_record::type_start_address:
-        if (data_bytes_emitted != 0)
-        {
-            //
-            // Fill out the data record until it is full.  There is no
-            // way to have a short data record.
-            //
-            for (;;)
-            {
-                put_byte(0xFF);
-                ++address;
-                ++data_bytes_emitted;
-                if (data_bytes_emitted >= 8)
-                    break;
-            }
-            put_nibble(checksum_get());
-            put_char('\n');
-            data_bytes_emitted = 0;
-        }
         put_string("*\n");
         break;
     }

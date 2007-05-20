@@ -62,13 +62,6 @@ protected:
 
 private:
     /**
-      * The emit method is used to emit a single byte to the output.
-      * This method maintains the state of where we are in relation to
-      * the output record structure.
-      */
-    void emit(unsigned long address, unsigned char value);
-
-    /**
       * The put_nibble method puts a single hex-digit on the output.
       * We override the one in the base class because the checksum is
       * nibble-based, not byte-based.
@@ -87,13 +80,6 @@ private:
       * memory position within the output.
       */
     unsigned long address;
-
-    /**
-      * The data_bytes_emitted instance variable is used by the emit
-      * method to remember how many bytes have been emitted to the
-      * current output record.  (They are always exactly 8 bytes long.)
-      */
-    unsigned data_bytes_emitted;
 
     /**
       * The default constructor.  Do not use.
