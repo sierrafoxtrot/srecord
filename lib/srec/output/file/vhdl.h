@@ -85,37 +85,10 @@ private:
     bool header_done;
 
     /**
-      * The current_address instance variable is used to remember where
-      * we are up to in remebering data.  Note that it is potentially
-      * <i>within</i> the current_word.
-      */
-    unsigned long current_address;
-
-    /**
-      * The current_byte instance variable is used to remember where we
-      * are located within the current_word.  The value will be in the
-      * range 0..(bytes_per_word-1).
-      */
-    unsigned current_byte;
-
-    /**
-      * The current_word instance variable is used to remember the
-      * accumulated bytes values, modulo bytes_per_word.
-      */
-    unsigned long current_word;
-
-    /**
       * The emit_header method is used to emit the file header,
       * if necessary.
       */
     void emit_header();
-
-    /**
-      * The emit_word method is used to add another byte to the outout.
-      * It will be accumulated withing current_word until we have
-      * bytes_per_word bytes, and then emitted as a row of output.
-      */
-    void emit_word(unsigned long address, unsigned value);
 
     /**
       * The default constructor.  Do not use.

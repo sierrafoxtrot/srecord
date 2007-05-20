@@ -29,10 +29,7 @@ srec_output_file_vhdl::srec_output_file_vhdl(const string &a_file_name) :
     srec_output_file(a_file_name),
     bytes_per_word(1),
     prefix("eprom"),
-    header_done(false),
-    current_address(0),
-    current_byte(0),
-    current_word(0)
+    header_done(false)
 {
 }
 
@@ -103,98 +100,9 @@ srec_output_file_vhdl::emit_header()
 }
 
 
-void
-srec_output_file_vhdl::emit_word(unsigned long address, unsigned n)
-{
-    //
-    // If there is a gap in the address sequence, fill the gap with 0xFF.
-    // Be careful of gaps within a single word.
-    //
-    while (address != current_address && current_byte)
-    {
-        current_word = (current_word << 8) | 0xFF;
-        ++current_address;
-        ++current_byte;
-        if (current_byte >= bytes_per_word)
-        {
-            put_stringf
-            (
-                "  %lu => %s_entry(%lu),\n",
-                (current_address / bytes_per_word) - 1,
-                prefix.c_str(),
-                current_word
-            );
-            current_byte = 0;
-            current_word = 0;
-        }
-    }
-
-    //
-    // If the is the first byte to be set within this current_word, we may need
-    // to fill the beginning with 0xFF bytes.
-    //
-    if (!current_byte)
-    {
-        for (int partial = address % bytes_per_word; partial > 0; --partial)
-        {
-            current_word = (current_word << 8) | 0xFF;
-            ++current_byte;
-        }
-
-        //
-        // Leap over gaps if necessary.
-        //
-        current_address = address;
-    }
-
-    //
-    // Insert the bytes into the current_word.
-    // Emit the current_word if we fill it.
-    //
-    current_word = (current_word << 8) | (n & 0xFF);
-    ++current_address;
-    ++current_byte;
-    if (current_byte >= bytes_per_word)
-    {
-        put_stringf
-        (
-            "  %lu => %s_entry(%lu),\n",
-            (current_address / bytes_per_word) - 1,
-            prefix.c_str(),
-            current_word
-        );
-        current_byte = 0;
-        current_word = 0;
-    }
-}
-
-
 srec_output_file_vhdl::~srec_output_file_vhdl()
 {
     emit_header();
-
-    //
-    // Make sure ther there isn't any pending output.
-    //
-    while (current_byte)
-    {
-        current_word = (current_word << 8) | 0xFF;
-        ++current_address;
-        ++current_byte;
-        if (current_byte >= bytes_per_word)
-        {
-            put_stringf
-            (
-                "  %lu => %s_entry(%lu),\n",
-                (current_address / bytes_per_word) - 1,
-                prefix.c_str(),
-                current_word
-            );
-            current_byte = 0;
-            current_word = 0;
-        }
-    }
-
     put_stringf("  others => %s_dont_care\n" " );\n", prefix.c_str());
     if (!data_only_flag)
     {
@@ -240,10 +148,36 @@ srec_output_file_vhdl::write(const srec_record &record)
         break;
 
     case srec_record::type_data:
-        emit_header();
-        for (int j = 0; j < record.get_length(); ++j)
+        //
+        // Make sure the data is aligned.
+        //
+        if
+        (
+            bytes_per_word > 1
+        &&
+            (
+                (record.get_address() % bytes_per_word)
+            ||
+                (record.get_length() % bytes_per_word)
+            )
+        )
         {
-            emit_word(record.get_address() + j, record.get_data(j));
+            fatal_alignment_error(bytes_per_word);
+        }
+
+        emit_header();
+        for (int j = 0; j < record.get_length(); j += bytes_per_word)
+        {
+            unsigned long current_word = 0;
+            for (unsigned k = 0; k < bytes_per_word; ++k)
+                current_word = (current_word << 8) + record.get_data(j + k);
+            put_stringf
+            (
+                "  %lu => %s_entry(%lu),\n",
+                (record.get_address() + j) / bytes_per_word,
+                prefix.c_str(),
+                current_word
+            );
         }
         break;
 
@@ -277,9 +211,13 @@ srec_output_file_vhdl::preferred_block_size_get()
     const
 {
     //
-    // Irrelevant.  Use the largest we can get.
+    // Use the largest we can get, but it has to be a multiple of our
+    // word size.
     //
-    return srec_record::max_data_length;
+    int n = srec_record::max_data_length;
+    if (bytes_per_word > 1)
+        n -= (n % bytes_per_word);
+    return n;
 }
 
 
@@ -287,5 +225,5 @@ const char *
 srec_output_file_vhdl::format_name()
     const
 {
-    return "Vhdl";
+    return "VHDL";
 }
