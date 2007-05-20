@@ -66,19 +66,14 @@ if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
 /* http://srecord.sourceforge.net/ */
-@00000050 0203 0C05 0030 0C80 0C01 0026 07E3 0A56
-@00000058 0203 0C02 0026 0203 0210 0027 07E3 0A5E
-@00000060 02F0 0A53 0A50
+@00000050 0203 0C05 0030 0C80 0C01 0026 07E3 0A56 0203 0C02 0026 0203 0210 0027
+@0000005E 07E3 0A5E 02F0 0A53 0A50
 @000001FF 0A50
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -intel -byteswap -o test.out -vmem 16 > LOG 2>&1
-if test $? -ne 0
-then
-    cat LOG
-    fail
-fi
+$bin/srec_cat test.in -intel -byteswap -o test.out -vmem 16
+test $? -eq 0 || fail
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi

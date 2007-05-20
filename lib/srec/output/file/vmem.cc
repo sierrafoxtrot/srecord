@@ -33,7 +33,7 @@
 
 
 //
-// Calculate log2(bytes_per_value)
+// Calculate log2(bytes_per_word)
 //
 // For example...
 // Return  Num    Num
@@ -60,14 +60,18 @@ calc_width_shift(int x)
         return 2;
 
     //
-    // The documented interface is a number of bits.
+    // Number of bits.
     //
-    for (int j = 0; j < 28; ++j)
-    {
-        int nbits = 8 << j;
-        if (x <= nbits)
-            return j;
-    }
+    if (x == 8)
+        return 0;
+    if (x == 16)
+        return 1;
+    if (x == 32)
+        return 2;
+    if (x == 64)
+        return 3;
+    if (x == 128)
+        return 4;
 
     //
     // The default number of bits is 32.
@@ -82,18 +86,20 @@ calc_width_shift(int x)
 static unsigned
 calc_width_mask(int x)
 {
-    return ((1u << calc_width_shift(x)) - 1u);
+    return ((1uL << calc_width_shift(x)) - 1uL);
 }
 
 
 srec_output_file_vmem::srec_output_file_vmem(const std::string &a_file_name) :
     srec_output_file(a_file_name),
+    bytes_per_word(4),
     address(0),
     column(0),
-    pref_block_size(16),
-    width_shift(calc_width_shift(DEFAULT_MEM_WIDTH)),
-    width_mask(calc_width_mask(DEFAULT_MEM_WIDTH))
+    pref_block_size(4 * bytes_per_word),
+    width_shift(calc_width_shift(8 * bytes_per_word)),
+    width_mask(calc_width_mask(8 * bytes_per_word))
 {
+    line_length_set(80);
 }
 
 
@@ -106,105 +112,22 @@ srec_output_file_vmem::command_line(srec_arglex *cmdln)
         cmdln->token_next();
 
         width_shift = calc_width_shift(n);
+        bytes_per_word = 1u << width_shift;
         width_mask = calc_width_mask(n);
+
+        //
+        // Recalculate the preferred block size
+        // for an 80 column line.
+        //
+        line_length_set(80);
     }
 }
 
 
 srec_output_file_vmem::~srec_output_file_vmem()
 {
-    while (address & width_mask)
-        write_byte(0xFF);
     if (column)
         put_char('\n');
-}
-
-
-void
-srec_output_file_vmem::write_byte(unsigned value)
-{
-    //
-    // Each line starts with an address.
-    // The addresses are actually divided by the memory width,
-    // rather than being byte adddresses.
-    //
-    // (The presence of the @ character would seem to imply this is optional,
-    // because it is easy to parse that it is not the start of a hex byte.)
-    //
-    if (column == 0)
-        put_stringf("@%08lX", address >> width_shift);
-
-    //
-    // Put a space between each memory-width chunk of bytes.
-    //
-    if ((column & width_mask) == 0)
-        put_char(' ');
-
-    //
-    // Write the byte and crank the address.
-    //
-    put_byte(value);
-    ++address;
-
-    //
-    // Crank the column.
-    // If the line is too long, finish it.
-    //
-    ++column;
-    if (column >= pref_block_size)
-    {
-        put_char('\n');
-        column = 0;
-    }
-}
-
-
-void
-srec_output_file_vmem::write_byte_at(unsigned long new_addr, unsigned value)
-{
-    //
-    // We have to seek to the new address, but there are several cases.
-    //
-    // The easiest (and commonest) case is that the address is already
-    // exactly where we need it.
-    //
-    // The next commonest is that the current address is nicely aligned
-    // on a memory width boundary, and the new address is also nicely
-    // aligned.  No padding is required in this case; the loop simply
-    // sets the new address.
-    //
-    // There are three cases where we need padding
-    //       nn nn nn FF         on the end of a memory width chunk
-    //       FF nn nn nn         on the beginning of a memory width chunk
-    //       nn FF nn nn         in the middle of a memory width chunk
-    // sometimes end AND beginning padding will be required for the one
-    // change of address.  The loop takes care of all these cases,
-    // padding with an 0xFF value.
-    //
-    while (address != new_addr)
-    {
-        if (address & width_mask)
-            write_byte(0xFF);
-        else
-        {
-            if (column)
-            {
-                put_char('\n');
-                column = 0;
-            }
-            // Round down, which provokes the beginning padding, when required.
-            unsigned long zero = new_addr & ~(unsigned long)width_mask;
-            if (address == zero)
-                write_byte(0xFF);
-            else
-                address = zero;
-        }
-    }
-
-    //
-    // Now that the address is correct, write out the byte.
-    //
-    write_byte(value);
 }
 
 
@@ -240,9 +163,75 @@ srec_output_file_vmem::write(const srec_record &record)
         break;
 
     case srec_record::type_data:
-        for (int j = 0; j < record.get_length(); ++j)
+        //
+        // make sure the data is aligned properly
+        //
+        if
+        (
+            (record.get_address() & width_mask)
+        ||
+            (record.get_length() & width_mask)
+        )
+            fatal_alignment_error(1u << width_shift);
+
+        //
+        // If we need to advance the address, it has to be at the start
+        // of a line.
+        //
+        if (address != record.get_address())
         {
-            write_byte_at(record.get_address() + j, record.get_data(j));
+            if (column)
+            {
+                put_char('\n');
+                column = 0;
+            }
+            address = record.get_address();
+        }
+
+        //
+        // emit the data bytes
+        //
+        for (int j = 0; j < record.get_length(); j += bytes_per_word)
+        {
+            //
+            // Each line starts with an address.
+            // The addresses are actually divided by the memory width,
+            // rather than being byte adddresses.
+            //
+            // The presence of the @ character would seem to imply this
+            // is optional.  It would be easy to figure out that an
+            // address is an address, and not a data byte.
+            //
+            if (column == 0)
+                put_stringf("@%08lX", address >> width_shift);
+
+            //
+            // Put a space between each word
+            //
+            put_char(' ');
+
+            //
+            // emit the bytes of the word
+            //
+            for (unsigned k = 0; k < bytes_per_word; ++k)
+            {
+                //
+                // Write the byte and crank the address.
+                //
+                put_byte(record.get_data(j + k));
+                ++address;
+
+                //
+                // Crank the column.
+                // If the line is too long, finish it.
+                //
+                ++column;
+                if (column >= pref_block_size)
+                {
+                    put_char('\n');
+                    column = 0;
+                }
+            }
         }
         break;
 
@@ -260,14 +249,13 @@ srec_output_file_vmem::write(const srec_record &record)
 void
 srec_output_file_vmem::line_length_set(int linlen)
 {
-    int nchunks = (linlen - 9) / ((2 << width_shift) + 1);
-    int max_chunks = srec_record::max_data_length >> width_shift;
-    if (nchunks > max_chunks)
-        nchunks = max_chunks;
-    if (nchunks < 1)
-        nchunks = 1;
-    int nbytes = nchunks << width_shift;
-    pref_block_size = nbytes;
+    int nwords = (linlen - 9) / (bytes_per_word * 2 + 1);
+    int max_words = srec_record::max_data_length >> width_shift;
+    if (nwords > max_words)
+        nwords = max_words;
+    if (nwords < 1)
+        nwords = 1;
+    pref_block_size = nwords * bytes_per_word;
 }
 
 
@@ -290,5 +278,5 @@ const char *
 srec_output_file_vmem::format_name()
     const
 {
-    return "Vmem";
+    return "VMem";
 }

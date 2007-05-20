@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - manipulate eprom load files
-#       Copyright (C) 2004, 2006, 2007 Peter Miller
+#       Copyright (C) 2007 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -55,8 +55,6 @@ if test $? -ne 0; then no_result; fi
 cd $work
 if test $? -ne 0; then no_result; fi
 
-# ---------- Test Writing (64-bit) -----------------------------------------
-
 cat > test.in << 'fubar'
 S00600004844521B
 S111000048656C6C6F2C20576F726C64210A7B
@@ -66,39 +64,16 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
-/* HDR */
-@00000000 48656C6C6F2C2057 6F726C64210AFFFF
+srec_cat: test.out: 2: The VMem output format uses 32-bit data, but unaligned
+    data is present. Use a "--fill 0xNN --within <input> --range-padding 4"
+    filter to fix this problem.
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -fill 0xFF -within test.in -range-padding 8 \
-    -o test.out -vmem 64
-if test $? -ne 0; then fail; fi
+$bin/srec_cat test.in -o test.out -vmem > LOG 2>&1
+if test $? -ne 1; then cat LOG; fail; fi
 
-diff test.ok test.out
-if test $? -ne 0; then fail; fi
-
-# ---------- Test Writing (128-bit) ----------------------------------------
-
-cat > test.in << 'fubar'
-S00600004844521B
-S111000048656C6C6F2C20576F726C64210A7B
-S5030001FB
-S9030000FC
-fubar
-if test $? -ne 0; then no_result; fi
-
-cat > test.ok << 'fubar'
-/* HDR */
-@00000000 48656C6C6F2C20576F726C64210AFFFF
-fubar
-if test $? -ne 0; then no_result; fi
-
-$bin/srec_cat test.in -fill 0xFF -within test.in -range-pad 16 \
-    -o test.out -vmem 128
-if test $? -ne 0; then fail; fi
-
-diff test.ok test.out
+diff test.ok LOG
 if test $? -ne 0; then fail; fi
 
 #
