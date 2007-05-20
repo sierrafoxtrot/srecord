@@ -52,25 +52,10 @@ srec_output_file_spasm::write(const srec_record &record)
     }
 
     long address = record.get_address();
-    int j = 0;
-    if (address & 1)
-    {
-        put_word(address++ / 2);
-        put_char(' ');
-        if (bigend)
-        {
-            put_byte(record.get_data(j++));
-            put_byte(0xFF);
-        }
-        else
-        {
-            put_byte(0xFF);
-            put_byte(record.get_data(j++));
-        }
-        put_char('\n');
-    }
+    if ((address & 1) || (record.get_length() & 1))
+        fatal_alignment_error(2);
 
-    while (j + 1 < record.get_length())
+    for (int j = 0; j < record.get_length(); j += 2)
     {
         put_word(address / 2);
         put_char(' ');
@@ -86,24 +71,6 @@ srec_output_file_spasm::write(const srec_record &record)
         }
         put_char('\n');
         address += 2;
-        j += 2;
-    }
-
-    if (j < record.get_length())
-    {
-        put_word(address / 2);
-        put_char(' ');
-        if (bigend)
-        {
-            put_byte(0xFF);
-            put_byte(record.get_data(j));
-        }
-        else
-        {
-            put_byte(record.get_data(j));
-            put_byte(0xFF);
-        }
-        put_char('\n');
     }
 }
 

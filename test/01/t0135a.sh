@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-#       srecord - manipulate eprom load files
-#       Copyright (C) 2001, 2006, 2007 Peter Miller
+#       srecord - The "srecord" program.
+#       Copyright (C) 2007 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 #       along with this program; if not, write to the Free Software
 #       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 #
-# MANIFEST: Test the SPASM write functionality
+# MANIFEST: Test the spasm alignment functionality
 #
 here=`pwd`
 if test $? -ne 0 ; then exit 2; fi
@@ -35,7 +35,7 @@ fail()
 {
         cd $here
         rm -rf $work
-        echo 'FAILED test of the SPASM write functionality'
+        echo 'FAILED test of the spasm alignment functionality'
         exit 1
 }
 
@@ -43,7 +43,7 @@ no_result()
 {
         cd $here
         rm -rf $work
-        echo 'NO RESULT for test of the SPASM write functionality'
+        echo 'NO RESULT for test of the spasm alignment functionality'
         exit 2
 }
 
@@ -57,58 +57,23 @@ if test $? -ne 0; then no_result; fi
 
 cat > test.in << 'fubar'
 S00600004844521B
-S111000048656C6C6F2C20576F726C64210A7B
+S10800000001020304ED
 S5030001FB
 S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
-0000 6548
-0001 6C6C
-0002 2C6F
-0003 5720
-0004 726F
-0005 646C
-0006 0A21
+srec_cat: test.out: 1: The Spasm output format uses 16-bit data, but unaligned
+    data is present. Use a "--fill 0xNN --within <input> --range-padding 2"
+    filter to fix this problem.
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -o test.out -spasm
-if test $? -ne 0; then fail; fi
+$bin/srec_cat test.in -o test.out -spasm > LOG 2>&1
+if test $? -ne 1; then cat LOG; fail; fi
 
-diff test.ok test.out
-if test $? -ne 0; then fail; fi
-
-cat > test.ok << 'fubar'
-0000 4865
-0001 6C6C
-0002 6F2C
-0003 2057
-0004 6F72
-0005 6C64
-0006 210A
-fubar
-if test $? -ne 0; then no_result; fi
-
-$bin/srec_cat test.in -o test.out -spasmle
-if test $? -ne 0; then fail; fi
-
-diff test.ok test.out
-if test $? -ne 0; then fail; fi
-
-cat > test.ok << 'fubar'
-0001 6C6C
-0002 6F2C
-0003 2057
-0004 6F72
-fubar
-if test $? -ne 0; then no_result; fi
-
-$bin/srec_cat test.in -crop 2 10 -o test.out -spasmle
-if test $? -ne 0; then fail; fi
-
-diff test.ok test.out
+diff test.ok LOG
 if test $? -ne 0; then fail; fi
 
 #
@@ -116,3 +81,5 @@ if test $? -ne 0; then fail; fi
 # No other guarantees are made.
 #
 pass
+
+# vim:ts=8:sw=4:et
