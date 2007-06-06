@@ -315,10 +315,6 @@ srec_output_file_c::~srec_output_file_c()
         interval x = range;
         while (!x.empty())
         {
-            //
-            // FIXME: this is a byte index into a word array.
-            // FIXME: should we divide by two?
-            //
             interval x2 = x;
             x2.first_interval_only();
             x -= x2;
@@ -362,16 +358,14 @@ srec_output_file_c::~srec_output_file_c()
         x = range;
         while (!x.empty())
         {
-            //
-            // FIXME: this is a byte length for a word array.
-            // FIXME: should we divide by two?
-            //
             interval x2 = x;
             x2.first_interval_only();
             x -= x2;
             unsigned long length = x2.get_highest() - x2.get_lowest();
             ++nsections;
 
+            if (output_word)
+                length /= 2;
             string s = format_address(length);
             int len = s.size();
 

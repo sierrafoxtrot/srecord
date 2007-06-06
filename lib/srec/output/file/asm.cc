@@ -272,13 +272,14 @@ srec_output_file_asm::~srec_output_file_asm()
             ++nsections;
 
             unsigned long slen = x2.get_highest() - x2.get_lowest();
+            if (output_word)
+                slen /= 2;
             char buffer[30];
             if (hex_style)
                 snprintf(buffer, sizeof(buffer), "0x%8.8lX", slen);
             else
                 snprintf(buffer, sizeof(buffer), "%lu", slen);
             long len = strlen(buffer);
-
             if (column && column + len + 2 > line_length)
             {
                 put_char('\n');
