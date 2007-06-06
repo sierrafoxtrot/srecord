@@ -86,7 +86,7 @@ man/man[0-9]/*.[0-9])
 
         echo ""
         echo "\$(mandir)/$stem: $file" $dep $dir/.mandir
-        echo "${TAB}\$(SOELIM) -I. -Ietc $file > tmp"
+        echo "${TAB}\$(SOELIM) -I. -Ietc -I$dir $file > tmp"
         echo "${TAB}\$(INSTALL_DATA) tmp \$@"
         echo "${TAB}@rm -f tmp"
         ;;
@@ -101,15 +101,18 @@ etc/*.man)
 
         echo ""
         echo "etc/$base.ps: $file" $dep
-        echo "${TAB}\$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc $file | \$(GROFF) -t -man > \$@"
+        echo "${TAB}\$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc" \
+            "$file | \$(GROFF) -t -man > \$@"
 
         echo ""
         echo "etc/$base.dvi: $file" $dep
-        echo "${TAB}\$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc $file | \$(GROFF) -Tdvi -t -man > \$@"
+        echo "${TAB}\$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc" \
+            "$file | \$(GROFF) -Tdvi -t -man > \$@"
 
         echo ""
         echo "etc/$base.txt: $file" $dep
-        echo "${TAB}\$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc $file | \$(GROFF) -Tascii -t -man > \$@"
+        echo "${TAB}\$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc" \
+            $file | \$(GROFF) -Tascii -t -man > \$@"
         ;;
 
 test/*/*.sh)
