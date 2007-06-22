@@ -1,5 +1,5 @@
 .\"
-.\"     srecord - manipulate eprom load files
+.\"     srecord - The "srecord" program.
 .\"     Copyright (C) 2007 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
@@ -16,19 +16,19 @@
 .\"     along with this program; if not, write to the Free Software
 .\"     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.33 features
+.\" MANIFEST: description of new 1.34 features
 .\"
-.PP
-.if n *
-.if t \(bu
-.\" Change 28
-The C and ASM output formats have been improved in the word mode.
-.PP
-.if n *
-.if t \(bu
-.\" Change 27
-Several build problems have been fixed.
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 34 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.33 (2007-May-18)
+.SS Version 1.34 (2007-Jun-22)
 .\" vim:ts=8:sw=4:et
