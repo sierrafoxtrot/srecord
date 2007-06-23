@@ -16,13 +16,19 @@
 .\"     along with this program; if not, write to the Free Software
 .\"     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
 .\"
-.\" MANIFEST: description of new 1.34 features
+.\" MANIFEST: description of new 1.35 features
 .\"
-.if n *
-.if t \(bu
-.\" Change 11
-A major build problem with the generated makefile has been fxed.
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 35 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.34 (2007-Jun-22)
+.SS Version 1.35 (2007-Jun-23)
 .\" vim:ts=8:sw=4:et
