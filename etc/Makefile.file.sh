@@ -112,7 +112,7 @@ etc/*.man)
         echo ""
         echo "etc/$base.txt: $file" $dep
         echo "${TAB}\$(SOELIM) -I. -Iman/man1 -Iman/man5 -Ietc" \
-            $file | \$(GROFF) -Tascii -t -man > \$@"
+            "$file | \$(GROFF) -Tascii -t -man > $@"
         ;;
 
 test/*/*.sh)
