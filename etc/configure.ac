@@ -12,9 +12,10 @@ dnl     but WITHOUT ANY WARRANTY; without even the implied warranty of
 dnl     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 dnl     GNU General Public License for more details.
 dnl
-dnl     You should have received a copy of the GNU General Public License
-dnl     along with this program; if not, write to the Free Software
-dnl     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+dnl     You should have received a copy of the GNU General Public
+dnl     License along with this program; if not, write to the Free
+dnl     Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+dnl     Boston, MA 02110-1301 USA.
 dnl
 dnl MANIFEST: how to configure srecord, input to the GNU autoconf program
 dnl
@@ -115,7 +116,8 @@ AH_TOP([/*
  *
  *      You should have received a copy of the GNU General Public License
  *      along with this program; if not, write to the Free Software
- *      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
+ *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ *      02110-1301 USA.
  *
  * MANIFEST: template lib/config.h file
  */

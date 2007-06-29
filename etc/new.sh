@@ -10,7 +10,9 @@ if test "$1" = "-r"; then
         sortflag=r
         shift
 fi
-echo $* | tr ' ' '\12' | sort -t. +1n$sortflag -2 +2n$sortflag -3 +3n$sortflag -5 |
+echo $* |
+tr ' ' '\12' |
+sort -t. +1n$sortflag -2 +2n$sortflag -3 +3n$sortflag -5 |
 while read f
 do
         echo ".br"
