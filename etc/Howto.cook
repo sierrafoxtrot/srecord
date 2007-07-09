@@ -49,16 +49,16 @@ search_tmp = [tail [split ':' [search_path]]];
 search_name = bl;
 loop
 {
-        search_dir = [head [search_tmp]];
-        if [not [search_dir]] then
-                loopstop;
-        search_tmp = [tail [search_tmp]];
+    search_dir = [head [search_tmp]];
+    if [not [search_dir]] then
+        loopstop;
+    search_tmp = [tail [search_tmp]];
 
-        if [not [exists [search_name]]] then
-                ln -s [search_dir] [search_name]
-                        set clearstat;
-        search_list = [search_list] [search_name];
-        search_name = [search_name]bl;
+    if [not [exists [search_name]]] then
+        ln -s [search_dir] [search_name]
+            set clearstat;
+    search_list = [search_list] [search_name];
+    search_name = [search_name]bl;
 }
 
 /*
@@ -69,29 +69,27 @@ version_short = [fromto %1.C%2 %1 [subst D C [version]]];
 
 version_shorter = [split "." [version_short]] _ _;
 version_shorter = [unsplit "." [word 1 [version_shorter]]
-        [word 2 [version_shorter]]];
+    [word 2 [version_shorter]]];
 project_short = [fromto %.[version_short] % [project]];
 project_minus = [project_short]-[version_short];
 
 change_source_files = ;
 #include-cooked-nowarn etc/cook/change_files.[version]
 etc/cook/change_files.[version]:
-        set shallow nodefault
+    set shallow nodefault
 {
-        echo "'change_source_files ='" > [target];
-        aegis -l cf -p [project] -c [change] -terse
-                >> [target];
-        echo "';'" >> [target];
+    echo "'change_source_files ='" > [target];
+    aegis -l cf -p [project] -c [change] -terse >> [target];
+    echo "';'" >> [target];
 }
 project_source_files = ;
 #include-cooked-nowarn etc/cook/project_files.[version]
 etc/cook/project_files.[version]:
-        set shallow nodefault
+    set shallow nodefault
 {
-        echo "'project_source_files ='" > [target];
-        aegis -l pf -p [project] -c [change] -terse
-                >> [target];
-        echo "';'" >> [target];
+    echo "'project_source_files ='" > [target];
+    aegis -l pf -p [project] -c [change] -terse >> [target];
+    echo "';'" >> [target];
 }
 source_files = [sort [project_source_files] [change_source_files]];
 
@@ -102,8 +100,8 @@ source_files = [sort [project_source_files] [change_source_files]];
 if [count [project_source_files]] then
 if [count [change_source_files]] then
 {
-        leaf_file_accept = [project_source_files] [change_source_files];
-        leaf_pattern_accept = /%0%;
+    leaf_file_accept = [project_source_files] [change_source_files];
+    leaf_pattern_accept = /%0%;
 }
 
 debug = /* -g */ ;      /* g++ takes forever if you say -g for complex
@@ -124,62 +122,37 @@ all: [all];
  * The files which are linked to form the common library for the programs.
  */
 lib/[project_short]_obj =
-        [fromto %0%.c [arch]/%0%.o
-                [match_mask lib/%0%.c [source_files]]
-        ]
-        [fromto %0%.cc [arch]/%0%.o
-                [match_mask lib/%0%.cc [source_files]]
-        ]
-        ;
+    [fromto %0%.cc [arch]/%0%.o [match_mask lib/%0%.cc [source_files]]] ;
 
 /*
  * Generate lists of object files for programs
  */
-program_list_master =
-        [stringset
-                [fromto prog/%1/%0% %1 [match_mask prog/%0%.c [source_files]]]
-                [fromto prog/%1/%0% %1 [match_mask prog/%0%.cc [source_files]]]
-        ];
-program_list = [program_list_master];
-loop
+program_list = [fromto %1/%2 %1 [match_mask %/main.cc [source_files]]];
+loop program = [program_list]
 {
-        program = [head [program_list]];
-        if [not [program]] then
-                loopstop;
-        program_list = [tail [program_list]];
-
-        [program]_obj =
-                [fromto %0%.c [arch]/%0%.o
-                        [match_mask prog/[program]/%0%.c [source_files]]
-                ]
-                [fromto %0%.cc [arch]/%0%.o
-                        [match_mask prog/[program]/%0%.cc [source_files]]
-                ]
-                ;
-        [program]_libs =
-                [arch]/lib/lib[project_short].a
-                ;
-        all =
-                [all]
-                [arch]/bin/[program]
-                ;
+    [program]_obj =
+        [fromto %0%.cc [arch]/%0%.o
+            [match_mask [program]/%0%.cc [source_files]]
+        ];
+    [program]_libs = [arch]/lib/lib[project_short].a ;
+    all += [arch]/bin/[program] ;
 }
 
 if [match %1C%2 [version]] then
 {
-        baseline = bl;
+    baseline = bl;
 }
 else
 {
-        /*
-         * this is essential so that aeipass does the right thing
-         *
-         * It also means that generated files (e.g. from objen) have consistent
-         * mod-times after integration, sop everythign does not immediately
-         * re-build.
-         */
-        set time-adjust-back;
-        all = [all] integration-build-targets;
+    /*
+     * this is essential so that aeipass does the right thing
+     *
+     * It also means that generated files (e.g. from objen) have consistent
+     * mod-times after integration, sop everythign does not immediately
+     * re-build.
+     */
+    set time-adjust-back;
+    all = [all] integration-build-targets;
 }
 
 
@@ -187,16 +160,16 @@ else
  * Note: this must come *after* the etc/autoconf.cook include.
  */
 if [not [defined c++]] then
-        c++ = g++;
+    c++ = g++;
 cc_include_flags =
-        [prepost "-I" "" [search_list]]
-        [prepost "-I" /[arch] [search_list]]
-        ;
+    [prepost "-I" "" [search_list]]
+    [prepost "-I" /[arch] [search_list]]
+    ;
 if [not [defined c++_flags]] then
-        c++_flags = -O [debug];
+    c++_flags = -O [debug];
 c++_flags = [c++_flags] -Wall -Wextra -Werror;
 if [not [defined ld_flags]] then
-        ld_flags = [debug];
+    ld_flags = [debug];
 
 
 [arch]/%0%.o: %0%.c

@@ -30,7 +30,7 @@ using namespace std;
 #include <lib/srec/output.h>
 #include <lib/srec/output/file.h>
 
-#include <prog/srec_cat/arglex3.h>
+#include <srec_cat/arglex3.h>
 
 
 int

@@ -19,7 +19,7 @@
 // MANIFEST: functions to impliment the srec_cat_arglex3 class
 //
 
-#include <prog/srec_cat/arglex3.h>
+#include <srec_cat/arglex3.h>
 
 
 srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv) :
