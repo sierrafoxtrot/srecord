@@ -16,8 +16,6 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-# MANIFEST: ptx1.awk
-#
 function getc()
 {
         getc_tmp = substr(getc_buf, getc_pos, 1)

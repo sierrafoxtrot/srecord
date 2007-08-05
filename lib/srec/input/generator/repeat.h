@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/srec/input/generator/repeat.cc
-//
 
 #ifndef LIB_SREC_INPUT_GENERATOR_REPEAT_H
 #define LIB_SREC_INPUT_GENERATOR_REPEAT_H

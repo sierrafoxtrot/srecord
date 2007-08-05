@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: manual entry for the ${basename $fn .1} command
-.\"
 .ds n) ${basename $fn .1}
 .TH \*(n) 1 SRecord "Reference Manual"
 .SH NAME

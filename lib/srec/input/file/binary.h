@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for srec/input/file/binary.cc
-//
 
 #ifndef INCLUDE_SREC_INPUT_FILE_BINARY_H
 #define INCLUDE_SREC_INPUT_FILE_BINARY_H

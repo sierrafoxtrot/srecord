@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for include/crc32.cc
-//
 
 #ifndef INCLUDE_CRC32_H
 #define INCLUDE_CRC32_H

@@ -17,8 +17,6 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-# MANIFEST: shell script to manipulate ptxs
-#
 echo $* |
 tr ' ' '\12' |
 sort |

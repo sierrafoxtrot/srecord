@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/srec/memory/walker/writer.cc
-//
 
 #ifndef INCLUDE_SREC_MEMORY_WALKER_WRITER_H
 #define INCLUDE_SREC_MEMORY_WALKER_WRITER_H

@@ -17,8 +17,6 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-# MANIFEST: shell script to generate Makefile fragment for each source file
-#
 depfile=no-such-file-or-directory
 case $# in
 2)

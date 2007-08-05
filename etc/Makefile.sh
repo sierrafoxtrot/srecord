@@ -17,8 +17,6 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-# MANIFEST: shell script to generate Makefile file
-#
 clean_files="core y.tab.c y.tab.h y.output .bin .bindir lib/libsrecord.a"
 
 TAB=`echo | tr '\n' '\t'`

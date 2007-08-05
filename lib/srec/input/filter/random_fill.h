@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/srec/input/filter/fill.cc
-//
 
 #ifndef INCLUDE_SREC_INPUT_FILTER_RANDOM_FILL_H
 #define INCLUDE_SREC_INPUT_FILTER_RANDOM_FILL_H

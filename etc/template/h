@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for ${trim_extension $fn}.cc
-//
 
 #ifndef ${id ${upcase $fn}}
 #define ${id ${upcase $fn}}

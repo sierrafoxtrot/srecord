@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to impliment the srec_input_file_os65v class
-//
 
 
 #include <lib/srec/input/file/os65v.h>

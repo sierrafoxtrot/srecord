@@ -16,8 +16,6 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-# MANIFEST: helper file for generating Makefile file
-#
 length <= 72
 length > 72 {
         if (substr($0, 1, 1) == "\t")

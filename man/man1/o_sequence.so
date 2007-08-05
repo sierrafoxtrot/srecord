@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: man/man1/o_sequence.so
-.\"
 .TP 8n
 \fB\-Enable_Sequence_Warnings\fP
 This option may be used to enable warnings about input files where the

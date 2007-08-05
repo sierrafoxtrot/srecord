@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/common/progname.cc
-//
 
 #ifndef INCLUDE_PROGNAME_H
 #define INCLUDE_PROGNAME_H

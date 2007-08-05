@@ -17,8 +17,6 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-# MANIFEST: shell script to generate RedHat spec file
-#
 echo '#'
 echo '# This file is generated.  Please do not send the maintainer'
 echo '# patches to this file.  Please update etc/spec.sh and send a'

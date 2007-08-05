@@ -16,8 +16,6 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-# MANIFEST: awk script to supress multiple blank lines
-#
 BEGIN { count = -99999 }
 /^[     ]*$/ { ++count; next }
 {

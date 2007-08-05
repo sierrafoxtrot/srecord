@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to impliment the crc16 class
-//
 // I got this copy from http://www.gator.net/~garyg/C/CONTRIB/SNIP/
 // but knowing the Internet, it's probably gone by now.  Search for
 // "crc-16" and you should find it fairly quickly.  The same code

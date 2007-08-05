@@ -17,8 +17,6 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-# MANIFEST: shell script to rpm-build
-#
 case $# in
 2)
         ;;

@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: input for archive/srecord-N.N.lsm
-.\"
 .\" LSM = Linux Software Module, an archive description file
 .\"
 .\" Descriptions of the LSM file format can be found in the

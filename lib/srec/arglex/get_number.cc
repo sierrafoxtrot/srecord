@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to impliment the srec_arglex_get_number class
-//
 
 #include <lib/interval.h>
 #include <lib/srec/arglex.h>

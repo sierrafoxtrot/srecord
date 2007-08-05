@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to impliment the srec_cat_arglex3 class
-//
 
 #include <srec_cat/arglex3.h>
 

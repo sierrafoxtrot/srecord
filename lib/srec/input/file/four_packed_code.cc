@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to impliment the srec_input_file_four_packed_code class
-//
 
 
 #include <lib/srec/input/file/four_packed_code.h>

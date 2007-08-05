@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: description of new 1.7 features
-.\"
 .PP
 .if n *
 .if t \(bu

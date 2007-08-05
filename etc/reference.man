@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: Reference Manual
-.\"
 .\" Format and print this file using the GNU groff command
 .\"     groff -s -p -t -ms -I. -I../man/man1 -I../man/man5 main.man | lpr
 .\"

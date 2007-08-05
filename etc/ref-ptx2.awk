@@ -16,8 +16,6 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-# MANIFEST: ptx2.awk
-#
 BEGIN {
         print ".hy 0"
         print ".de TH"

@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for include/config.messy.cc
-//
 
 #ifndef INCLUDE_CONFIG_MESSY_H
 #define INCLUDE_CONFIG_MESSY_H

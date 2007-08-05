@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: table of contents macros
-.\"
 .\" ----------  XX  -----------------------------------------------------------
 .\"
 .\" The XX macro accumulates table of contents entries.  It takes two

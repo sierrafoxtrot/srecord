@@ -15,8 +15,6 @@
  *      You should have received a copy of the GNU General Public License
  *      along with this program. If not, see
  *      <http://www.gnu.org/licenses/>.
- *
- * MANIFEST: How to build the release sets
  */
 
 integration-build-targets:
@@ -43,7 +41,6 @@ source_file_order =
                 [stringset
                         [source_files]
                         BUILDING
-                        MANIFEST
                         LICENSE
 
                         /*
@@ -318,17 +315,6 @@ archive/[project_minus].lsm: etc/[project_short].lsm etc/ssp.awk
 }
 
 LICENSE: man/cat1/srec_license.1
-{
-        cat [resolve [need]] > [target];
-}
-
-%0%,m: %0%: etc/MANIFEST.sh
-{
-        sh [resolve etc/MANIFEST.sh] %0% [resolve %0%] > [target];
-}
-
-MANIFEST: etc/MANIFEST.head
-        [addsuffix ",m" [stringset [source_files] - MANIFEST]]
 {
         cat [resolve [need]] > [target];
 }

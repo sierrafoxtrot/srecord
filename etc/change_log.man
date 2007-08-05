@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: source of the README file
-.\"
 .TH "Change Log" SRecord SRecord "Change Log"
 .so version.so
 .hy 0

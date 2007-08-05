@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/quit/exception.cc
-//
 
 #ifndef INCLUDE_QUIT_EXCEPTION_H
 #define INCLUDE_QUIT_EXCEPTION_H

@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/srec/input/file/brecord.cc
-//
 
 #ifndef LIB_SREC_INPUT_FILE_BRECORD_H
 #define LIB_SREC_INPUT_FILE_BRECORD_H

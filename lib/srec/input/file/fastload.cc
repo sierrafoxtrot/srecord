@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to impliment the srec_input_file_fastload class
-//
 
 
 #include <lib/srec/input/file/fastload.h>

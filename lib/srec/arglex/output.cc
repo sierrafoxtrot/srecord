@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to impliment the srec_arglex_output class
-//
 
 #include <lib/srec/arglex.h>
 #include <lib/srec/output/file/aomf.h>

@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: operating system entry point
-//
 
 #include <lib/interval.h>
 #include <lib/srec/arglex.h>

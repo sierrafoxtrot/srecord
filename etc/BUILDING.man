@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: source of the BUILDING file
-.\"
 .TH Build SRecord SRecord "Reference Manual"
 .so version.so
 .if n .hy 0

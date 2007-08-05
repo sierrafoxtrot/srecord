@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/srec/input/file/tektronix.cc
-//
 
 #ifndef INCLUDE_SREC_INPUT_FILE_TEKTRONIX_H
 #define INCLUDE_SREC_INPUT_FILE_TEKTRONIX_H

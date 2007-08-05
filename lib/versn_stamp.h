@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/common/versn_stamp.cc
-//
 
 #ifndef LIB_COMMON_VERSN_STAMP_H
 #define LIB_COMMON_VERSN_STAMP_H

@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for include/srec/input/file/aomf.cc
-//
 
 #ifndef INCLUDE_SREC_INPUT_FILE_AOMF_H
 #define INCLUDE_SREC_INPUT_FILE_AOMF_H

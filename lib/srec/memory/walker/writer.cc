@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to impliment the srec_memory_walker_writer class
-//
 
 
 #include <lib/srec/memory/walker/writer.h>

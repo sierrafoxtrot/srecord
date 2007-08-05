@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to impliment the srec_input_filter_crc32 class
-//
 
 
 #include <lib/srec/input/filter/crc32.h>

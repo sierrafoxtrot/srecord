@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: document describing the -multiple option
-.\"
 .TP 8n
 \fB\-MULTiple\fP
 Use this option to permit a file to contain multiple (contradictory)

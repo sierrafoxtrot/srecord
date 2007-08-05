@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to impliment the srec_input_filter_checksum_positive clas
-//
 
 
 #include <lib/srec/input/filter/checksum/positive.h>

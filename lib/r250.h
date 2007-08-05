@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for include/r250.cc
-//
 
 #ifndef INCLUDE_R250_H
 #define INCLUDE_R250_H

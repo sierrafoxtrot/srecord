@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface defn for include/srec/input/file/formatted_binary.cc
-//
 
 #ifndef INCLUDE_SREC_INPUT_FILE_FORMATTED_BINARY_H
 #define INCLUDE_SREC_INPUT_FILE_FORMATTED_BINARY_H

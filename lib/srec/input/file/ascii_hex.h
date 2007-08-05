@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for include/srec/input/file/ascii_hex.cc
-//
 
 #ifndef INCLUDE_SREC_INPUT_FILE_ASCII_HEX_H
 #define INCLUDE_SREC_INPUT_FILE_ASCII_HEX_H

@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to impliment deriving an interval from an input file
-//
 
 #include <lib/interval.h>
 #include <lib/srec/input.h>

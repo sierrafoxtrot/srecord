@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: man/man1/o_ignore_checksums.so
-.\"
 The \-ignore-checksums option may be used to disable checksum validation
 of input files, for those formats which have checksums at all.  Note
 that the checksum values are still read in and parsed (so it is still an

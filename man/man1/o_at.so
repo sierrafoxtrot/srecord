@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: man/man1/o_at.so
-.\"
 .TP 8n
 \fB@\fP\fIfilename\fP
 The named text file is read for additional command line arguments.

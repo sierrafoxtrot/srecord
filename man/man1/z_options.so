@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: description of option up/down case convention
-.\"
 .PP
 All options may be abbreviated;
 the abbreviation is documented as the upper case letters,

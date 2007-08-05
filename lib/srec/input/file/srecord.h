@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/input/file/srecord.cc
-//
 
 #ifndef INCLUDE_INPUT_FILE_SRECORD_H
 #define INCLUDE_INPUT_FILE_SRECORD_H

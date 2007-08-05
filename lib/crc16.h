@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for include/crc16.cc
-//
 
 #ifndef INCLUDE_CRC16_H
 #define INCLUDE_CRC16_H

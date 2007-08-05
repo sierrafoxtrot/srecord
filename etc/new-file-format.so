@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: Documentation about how to add a new file format
-.\"
 .TH "New Format" "SRecord" "SRecord" "Reference Manual"
 .SH NAME
 How to add a new file format

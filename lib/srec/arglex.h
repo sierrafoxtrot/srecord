@@ -16,8 +16,6 @@
 //        along with this program. If not, see
 //        <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/srec/arglex.cc
-//
 
 #ifndef INCLUDE_SREC_ARGLEX_H
 #define INCLUDE_SREC_ARGLEX_H

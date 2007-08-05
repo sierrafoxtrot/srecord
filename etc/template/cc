@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to impliment the ${id ${trim_dir ${trim_ext $fn}}} class
-//
 
 #include <${trim_ext $fn}.h>
 

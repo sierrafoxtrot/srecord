@@ -17,8 +17,6 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-# MANIFEST: etc/page-list.awk
-#
 function output_end()
 {
         if (start == 0)

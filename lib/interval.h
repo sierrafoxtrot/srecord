@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/common/interval.cc
-//
 
 #ifndef INCLUDE_INTERVAL_H
 #define INCLUDE_INTERVAL_H

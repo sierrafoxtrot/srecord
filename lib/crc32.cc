@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: functions to implement the crc32 class
-//
 //      (I got this copy from http://www.gator.net/~garyg/C/CONTRIB/SNIP/
 //      but as always on the Internet, it is now gone.  So use the
 //      Wayback Machine, http://www.archive.org/, or google for "crc_32"

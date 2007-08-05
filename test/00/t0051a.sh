@@ -17,8 +17,6 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-# MANIFEST: Test the 2s compl checksum functionality
-#
 here=`pwd`
 if test $? -ne 0 ; then exit 2; fi
 work=${TMP_DIR-/tmp}/$$

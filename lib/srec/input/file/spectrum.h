@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for include/srec/input/file/spectrum.cc
-//
 
 #ifndef INCLUDE_SREC_INPUT_FILE_SPECTRUM_H
 #define INCLUDE_SREC_INPUT_FILE_SPECTRUM_H

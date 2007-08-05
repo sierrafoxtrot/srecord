@@ -16,8 +16,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" MANIFEST: description of new 1.32 features
-.\"
 .PP
 .if n *
 .if t \(bu

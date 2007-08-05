@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: printf formatting attribute insulation
-//
 
 #ifndef INCLUDE_FORMAT_PRINTF_H
 #define INCLUDE_FORMAT_PRINTF_H

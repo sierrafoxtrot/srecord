@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for include/srec/input/filter/crc16.cc
-//
 
 #ifndef INCLUDE_SREC_INPUT_FILTER_CRC16_H
 #define INCLUDE_SREC_INPUT_FILTER_CRC16_H

@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/srec/input/file/four_packed_code.cc
-//
 
 #ifndef INCLUDE_SREC_INPUT_FILE_FOUR_PACKED_CODE_H
 #define INCLUDE_SREC_INPUT_FILE_FOUR_PACKED_CODE_H

@@ -16,8 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-// MANIFEST: interface definition for lib/quit.cc
-//
 
 #ifndef INCLUDE_QUIT_H
 #define INCLUDE_QUIT_H
