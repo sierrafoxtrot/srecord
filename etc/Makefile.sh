@@ -86,17 +86,16 @@ ${stem}.gen.o"
                 clean_files="$clean_files ${stem}.o"
                 ;;
 
-        prog/*.y)
+        *.y)
                 prog=`echo $file |sed 's|^[^/]*/||;s|/.*||'`
                 stem=`echo $file | sed 's/\.y$//'`
                 eval "${prog}_files=\"\$${prog}_files ${stem}.gen.o\""
                 clean_files="$clean_files ${stem}.gen.cc ${stem}.gen.h \
 ${stem}.gen.o"
-                remember_prog $prog
                 ;;
 
-        prog/*.cc)
-                prog=`echo $file |sed 's|^[^/]*/||;s|/.*||'`
+        *.cc)
+                prog=`echo $file | sed 's|/.*||'`
                 stem=`echo $file | sed 's/\.cc$//'`
                 eval "${prog}_files=\"\$${prog}_files ${stem}.o\""
                 clean_files="$clean_files ${stem}.o"
