@@ -15,6 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
+//
+// See http://www.joegeluso.com/software/articles/ccitt.htm for a great
+// write-up on the CRC16 calculation.
+//
 
 #ifndef INCLUDE_CRC16_H
 #define INCLUDE_CRC16_H
@@ -40,8 +44,11 @@ public:
       * @param ccitt
       *     This is true for a CCITT calculation, or false for the
       *     XModem calculation.
+      * @param augment
+      *     This is true if the 16-zero-bit augmentation is desired.
+      *     This is the default.  False if no augmentation is desired.
       */
-    crc16(bool ccitt = true);
+    crc16(bool ccitt = true, bool augment = true);
 
     /**
       * The copy constructor.
@@ -75,6 +82,13 @@ private:
       * value of the 16-bit cyclic redundancy check.
       */
     unsigned short state;
+
+    /**
+      * The augment instance variable is used to remember whether or
+      * not the 16 zero bits of augmentation are to be processed before
+      * reporting the result.
+      */
+    bool augment;
 };
 
 #endif // INCLUDE_CRC16_H

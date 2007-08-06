@@ -28,7 +28,7 @@
 static void
 usage()
 {
-    fprintf(stderr, "Usage: [ -x ] %s\n", progname_get());
+    fprintf(stderr, "Usage: [ -av ] %s\n", progname_get());
     exit(1);
 }
 
@@ -38,15 +38,20 @@ main(int argc, char **argv)
 {
     progname_set(argv[0]);
     bool ccitt = true;
+    bool augment = true;
     for (;;)
     {
-        int c = getopt(argc, argv, "x");
+        int c = getopt(argc, argv, "ax");
         if (c == EOF)
             break;
         switch (c)
         {
+        case 'a':
+            augment = !augment;
+            break;
+
         case 'x':
-            ccitt = false;
+            ccitt = !ccitt;
             break;
 
         default:
@@ -57,7 +62,7 @@ main(int argc, char **argv)
     if (optind != argc)
         usage();
 
-    crc16 check(ccitt);
+    crc16 check(ccitt, augment);
     for (;;)
     {
         char buffer[1024];

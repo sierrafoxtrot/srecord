@@ -21,15 +21,20 @@
 // "A painless guide to CRC error detection algorithms"
 // http://www.repairfaq.org/filipg/LINK/F_crc_v3.html
 //
+// See also http://www.joegeluso.com/software/articles/ccitt.htm
+//
+// See test/01/t0150a.sh for test vectors.
+//
+
+#include <cstdio> // HACK
+#include <cstdlib> // HACK
 
 #include <lib/crc16.h>
 
 //
-// The CRC polynomial.  This is used by CCITT and XMODEM, but not X25.
+// The CRC polynomial.  This is used by CCITT and XMODEM, but not X.25
 //
 #define POLYNOMIAL 0x1021
-
-// #define EXPLICIT_AUGMENTATION 1
 
 static unsigned short table[256];
 
@@ -43,7 +48,7 @@ static unsigned short table[256];
 // updcrc function:
 //     ubdcrc(0, updcrc(0, 0xFFFF))
 //
-#ifdef EXPLICIT_AUGMENTATION
+#if 1
 static unsigned short const ccitt_seed = 0xFFFF;
 #else
 static unsigned short const ccitt_seed = 0x1D0F;
@@ -55,31 +60,29 @@ static unsigned short const xmodem_seed = 0;
 static void
 calculate_table()
 {
-    for (int b = 0; b < 256; ++b)
+    if (table[1])
+        return;
+    for (unsigned b = 0; b < 256; ++b)
     {
         unsigned short v = b << 8;
-        for (int i = 8; --i >= 0; )
+        for (unsigned j = 0; j < 8; ++j)
             v = (v & 0x8000) ? ((v << 1) ^ POLYNOMIAL) : (v << 1);
         table[b] = v;
     }
 }
 
 
-crc16::crc16(bool ccitt) :
-    state(0)
+crc16::crc16(bool ccitt, bool aug) :
+    state(ccitt ? ccitt_seed : xmodem_seed),
+    augment(aug)
 {
-    if (ccitt)
-        state = ccitt_seed;
-    else
-        state = xmodem_seed;
-
-    if (!table[1])
-        calculate_table();
+    calculate_table();
 }
 
 
 crc16::crc16(const crc16 &arg) :
-    state(arg.state)
+    state(arg.state),
+    augment(arg.augment)
 {
 }
 
@@ -90,6 +93,7 @@ crc16::operator=(const crc16 &arg)
     if (this != &arg)
     {
         state = arg.state;
+        augment = arg.augment;
     }
     return *this;
 }
@@ -106,6 +110,7 @@ crc16::~crc16()
 // This is the simplest possible implementation.  It can be used to
 // validate the two following table-driven implementations.
 //
+
 static unsigned short
 updcrc(unsigned char c, unsigned short state)
 {
@@ -125,8 +130,6 @@ updcrc(unsigned char c, unsigned short state)
 #endif
 
 
-#ifdef EXPLICIT_AUGMENTATION
-
 //
 // This version of updcrc doesn't augment automagically, you must
 // do it explicitly in the get() method.  It is a more intuitave
@@ -136,13 +139,15 @@ updcrc(unsigned char c, unsigned short state)
 // chapter 10, http://www.repairfaq.org/filipg/LINK/F_crc_v33.html#CRCV_002
 // for an explanation.
 //
+
 static inline unsigned short
 updcrc(unsigned char c, unsigned short state)
 {
-    return ((state << 8) | c) ^ table[state >> 8]
+    return ((state << 8) | c) ^ table[state >> 8];
 }
 
-#else
+
+#if 0
 
 //
 // This version of updcrc means that the 16-zero-bit augmentation has
@@ -165,9 +170,9 @@ updcrc(unsigned char c, unsigned short state)
 
 
 void
-crc16::next(unsigned char x)
+crc16::next(unsigned char ch)
 {
-    state = updcrc(x, state);
+    state = updcrc(ch, state);
 }
 
 
@@ -177,8 +182,7 @@ crc16::nextbuf(const void *data, size_t nbytes)
     unsigned char *dp = (unsigned char *)data;
     while (nbytes > 0)
     {
-        state = updcrc(*dp, state);
-        ++dp;
+        state = updcrc(*dp++, state);
         --nbytes;
     }
 }
@@ -188,9 +192,9 @@ unsigned short
 crc16::get()
     const
 {
-#ifdef EXPLICIT_AUGMENTATION
-    return updcrc(0, updcrc(0, state));
-#else
+    if (augment)
+    {
+        return updcrc(0, updcrc(0, state));
+    }
     return state;
-#endif
 }
