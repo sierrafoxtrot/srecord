@@ -140,11 +140,16 @@ do
 
         all="${all} bin/${prog}"
 
-        echo ""
-        echo "\$(bindir)/${prog}: bin/${prog} .bindir"
-        echo "${TAB}\$(INSTALL_PROGRAM) bin/${prog} \$@"
-
-        install_bin="${install_bin} \$(bindir)/${prog}"
+        case $prog in
+        test_*)
+            ;;
+        *)
+            echo ""
+            echo "\$(bindir)/${prog}: bin/${prog} .bindir"
+            echo "${TAB}\$(INSTALL_PROGRAM) bin/${prog} \$@"
+            install_bin="${install_bin} \$(bindir)/${prog}"
+            ;;
+        esac
 done
 
 echo ""
