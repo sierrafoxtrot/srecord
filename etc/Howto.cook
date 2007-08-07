@@ -254,10 +254,10 @@ c_incl = c_incl;
 }
 
 cc_dep_files =
-        [fromto %0%.c %0%.c.d [match_mask %1/%2/%0%.c [source_files]]]
-        [fromto %0%.h %0%.h.d [match_mask %1/%2/%0%.h [source_files]]]
-        [fromto %0%.cc %0%.cc.d [match_mask %1/%2/%0%.cc [source_files]]]
-        [fromto %0%.y %0%.gen.c.d [match_mask %1/%2/%0%.y [source_files]]]
+        [fromto %0%.c %0%.c.d [match_mask %1/%0%.c [source_files]]]
+        [fromto %0%.h %0%.h.d [match_mask %1/%0%.h [source_files]]]
+        [fromto %0%.cc %0%.cc.d [match_mask %1/%0%.cc [source_files]]]
+        [fromto %0%.y %0%.gen.c.d [match_mask %1/%0%.y [source_files]]]
         ;
 
 #include-cooked-nowarn [cc_dep_files]
