@@ -332,7 +332,7 @@ assumed to be number of bits.)
 It is not possuble to swap non-power-of-two addresses.
 To change the alignment, use the offset filter before and after.
 .TP 8n
-\fB\-Big_Endian_CRC16\fP \fIaddress\fP [ -Cyclic_Redundancy_Check_16_XMODEM ]
+\fB\-Big_Endian_CRC16\fP \fIaddress\fP [ -XMODEM ][ -No-AUGment ]
 .RS
 This filter may be used to insert an industry standard 16-bit CRC checksum
 of the data into the data.  Two bytes, big-endian order, are inserted
@@ -341,8 +341,14 @@ processed in ascending address order (\fInot\fP in the order they appear
 in the input).
 .PP
 By default a CCITT calculation is performed.  If the optional
-\fB\-Cyclic_Redundancy_Check_16_XMODEM\fP argument is present, the
-alternate XMODEM calculation is performed.
+\fB\-XMODEM\fP argument is present, the alternate XMODEM calculation is
+performed (this involves nothing more than changing the initial "seed"
+from 0xFFFF to 0x0000).
+.PP
+By default the CRC is augmented by sixteen zero bits at the end of the
+calculation.  This is more standard conforming, but some implementations
+do not use it.  To work instead with the unaugmented data, use the
+\fB\-No-AUGment\fP option.
 .PP
 \fBNote:\fP If you have holes in your data, you will get a different CRC
 than if there were no holes.  This is important because the in-memory

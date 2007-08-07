@@ -49,6 +49,8 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Atmel_Generic", token_atmel_generic_le, },
         { "-Atmel_Generic_BigEndian", token_atmel_generic_be, },
         { "-Atmel_Generic_LittleEndian", token_atmel_generic_le, },
+        { "-AUGment", token_crc16_augment },
+        { "-Not_AUGment", token_crc16_augment_not },
         { "-BAsic", token_basic_data, },
         { "-Big_Endian_Checksum", token_checksum_be_bitnot, },
         { "-Big_Endian_Checksum_BitNot", token_checksum_be_bitnot, },
@@ -68,6 +70,9 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-COsmac", token_cosmac, },
         { "-CRop", token_crop, },
         { "-Cyclic_Redundancy_Check_16_XMODEM", token_crc16_xmodem,},
+        { "-Comite_Consultatif_International_Telephonique_et_Telegraphique",
+            token_crc16_ccitt,},
+        { "-International_Telecommunication_Union", token_crc16_ccitt,},
         { "-C_Array", token_c_array, },
         { "-Dec_Binary", token_dec_binary, },
         { "-DECimal_STyle", token_style_hexadecimal_not, },
@@ -151,6 +156,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-VMem", token_vmem, },
         { "-WILson", token_wilson, },
         { "-Within", token_within, },
+        { "-X_MODEM", token_crc16_xmodem,},
         { "-XOR", token_xor, },
         ARGLEX_END_MARKER
     };

@@ -22,9 +22,10 @@
 #include <lib/srec/output.h>
 
 
-srec_memory_walker_crc16::srec_memory_walker_crc16(bool ccitt_seed)
+srec_memory_walker_crc16::srec_memory_walker_crc16(bool ccitt_flag,
+    bool augment_flag)
 {
-    checksum = new crc16(ccitt_seed);
+    checksum = new crc16(ccitt_flag, augment_flag);
 }
 
 

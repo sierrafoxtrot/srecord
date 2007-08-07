@@ -18,6 +18,7 @@
 //
 
 
+#include <lib/srec/arglex.h>
 #include <lib/srec/input/filter/crc16.h>
 #include <lib/srec/memory.h>
 #include <lib/srec/memory/walker/crc16.h>
@@ -31,17 +32,52 @@ srec_input_filter_crc16::~srec_input_filter_crc16()
 
 
 srec_input_filter_crc16::srec_input_filter_crc16(srec_input *deeper_arg,
-        unsigned long address_arg, int order_arg, bool seed_arg) :
+        unsigned long address_arg, int order_arg) :
     srec_input_filter(deeper_arg),
     address(address_arg),
     order(order_arg),
-    ccitt_seed(seed_arg),
+    ccitt_flag(true),
+    augment_flag(true),
     buffer(0),
     buffer_pos(0),
     have_forwarded_header(false),
     have_given_crc(false),
     have_forwarded_start_address(false)
 {
+}
+
+
+void
+srec_input_filter_crc16::command_line(srec_arglex *cmdln)
+{
+    for (;;)
+    {
+        switch (cmdln->token_cur())
+        {
+        case srec_arglex::token_crc16_xmodem:
+            ccitt_flag = false;
+            cmdln->token_next();
+            break;
+
+        case srec_arglex::token_crc16_ccitt:
+            ccitt_flag = true;
+            cmdln->token_next();
+            break;
+
+        case srec_arglex::token_crc16_augment:
+            augment_flag = true;
+            cmdln->token_next();
+            break;
+
+        case srec_arglex::token_crc16_augment_not:
+            augment_flag = false;
+            cmdln->token_next();
+            break;
+
+        default:
+            return;
+        }
+    }
 }
 
 
@@ -95,7 +131,7 @@ srec_input_filter_crc16::read(srec_record &record)
         // Now CRC16 the bytes in order from lowest address to
         // highest.  (Holes are ignored, not filled.)
         //
-        srec_memory_walker_crc16 walker(ccitt_seed);
+        srec_memory_walker_crc16 walker(ccitt_flag, augment_flag);
         buffer->walk(&walker);
         unsigned crc = walker.get();
 

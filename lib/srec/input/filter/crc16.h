@@ -40,10 +40,13 @@ public:
       * The constructor.
       */
     srec_input_filter_crc16(srec_input *deeper, unsigned long address,
-            int order, bool ccitt_seed);
+        int order);
 
     // See base class for documentation.
-    virtual int read(srec_record &);
+    int read(srec_record &);
+
+    // See base class for documentation.
+    void command_line(srec_arglex *cmdln);
 
 private:
     /**
@@ -59,10 +62,18 @@ private:
     int order;
 
     /**
-      * The ccitt_seed instance variable is used to remember whether to
-      * use the CCITT seed for CRC16 calculation.
+      * The ccitt_flag instance variable is used to remember whether to
+      * use the CCITT seed for CRC16 calculation (rather than XMODEM).
+      * Almost always true.
       */
-    bool ccitt_seed;
+    bool ccitt_flag;
+
+    /**
+      * The augment_flag instance variable is used to remember whether
+      * or not the final 16-zero-bits augmentation should be applied to
+      * the CRC.  Almost always true.
+      */
+    bool augment_flag;
 
     /**
       * The buffer instance variable is used to remember the contents

@@ -347,13 +347,7 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address("-Big_Endian_CRC16", address);
-                bool ccitt_seed = true;
-                if (token_cur() == token_crc16_xmodem)
-                {
-                    token_next();
-                    ccitt_seed = false;
-                }
-                ifp = new srec_input_filter_crc16(ifp, address, 0, ccitt_seed);
+                ifp = new srec_input_filter_crc16(ifp, address, 0);
             }
             break;
 
@@ -362,13 +356,7 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address("-Little_Endian_CRC16", address);
-                bool ccitt_seed = true;
-                if (token_cur() == token_crc16_xmodem)
-                {
-                    token_next();
-                    ccitt_seed = false;
-                }
-                ifp = new srec_input_filter_crc16(ifp, address, 1, ccitt_seed);
+                ifp = new srec_input_filter_crc16(ifp, address, 1);
             }
             break;
 

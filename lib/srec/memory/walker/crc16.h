@@ -40,7 +40,7 @@ public:
     /**
       * The default constructor.
       */
-    srec_memory_walker_crc16(bool ccitt_seed);
+    srec_memory_walker_crc16(bool ccitt_flag, bool augment_flag);
 
     // See base class for documentation.
     void observe(unsigned long, const void *, int);
