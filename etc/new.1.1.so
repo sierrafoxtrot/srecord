@@ -31,7 +31,7 @@ See \fIsrec_intel\fP(5) for more information.
 .if n *
 .if t \(bu
 The Tektronix hex format is now supported (only the 16-bit version,
-Extended tektronix hex is not yet suppported).
+Extended Tektronix hex is not yet supported).
 See \fIsrec_tektronix\fP(5) for more information.
 .PP
 .if n *

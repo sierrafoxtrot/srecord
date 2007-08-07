@@ -17,7 +17,6 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" ------------------------------------------------------------------------
 .PP
 .if n *
 .if t \(bu
@@ -31,7 +30,7 @@ silence the warning.
 .if t \(bu
 .\" Change 19
 [SourceForge  Feature Request 1592348]
-The command line processing of all srrecord commands now understands
+The command line processing of all srecord commands now understands
 \f[CW]@\fP\fIfile\fP command line options, filled with additional space
 separated strings witch will be treated as of they were command line
 options.  This gets around absurdly short command line length limits in

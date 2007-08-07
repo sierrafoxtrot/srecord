@@ -20,7 +20,7 @@
 .if n *
 .if t \(bu
 .\" change 18
-There is now support for Intel Extended Segment aasddressing output,
+There is now support for Intel Extended Segment addressing output,
 via the --address-length=2 option.
 .PP
 .if n *

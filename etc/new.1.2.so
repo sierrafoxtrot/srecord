@@ -25,7 +25,7 @@ dump core sometimes.
 .if n *
 .if t \(bu
 A bug has been fixed where binary files were handled incorrectly on
-Windows NT (acually, any system in which text files aren't the same as
+Windows NT (actually, any system in which text files aren't the same as
 binary files).
 .PP
 .if n *

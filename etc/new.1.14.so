@@ -20,7 +20,7 @@
 .if n *
 .if t \(bu
 .\" change 19
-The Ascii-Hex implementation is now slightly more complete.
+The ASCII-Hex implementation is now slightly more complete.
 I still haven't found a definitive description.
 .PP
 .if n *

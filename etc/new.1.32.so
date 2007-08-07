@@ -45,7 +45,7 @@ than bytes.
 .if t \(bu
 .\" Change 15
 You can now round address ranges on the command line to be whole
-mutiples of a number of bytes.
+multiples of a number of bytes.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.32 (2007-Apr-24)

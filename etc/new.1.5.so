@@ -39,7 +39,7 @@ There is a new VHDL output format.
 .if t \(bu
 .\" change 14
 There are new checksum filters: in addition to the existing one's
-complement (bitnot) checksum filter, there are now negative and positive
+complement (bit not) checksum filter, there are now negative and positive
 checksum filters.
 See \fIsrec_cat\fP(1) for more information.
 .PP

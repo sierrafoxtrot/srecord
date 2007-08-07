@@ -16,14 +16,13 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.\" ------------------------------------------------------------------------
 .PP
 .if n *
 .if t \(bu
 .\" srecord.1.30.D006
 .\" Change 17
-.\" pmiller, Tue Apr  3 20:57:40 2007, verilog comments
-The verilog format now suppresses comments when you specify
+.\" pmiller, Tue Apr  3 20:57:40 2007, Verilog comments
+The Verilog format now suppresses comments when you specify
 the --data-only option.
 .PP
 .if n *
