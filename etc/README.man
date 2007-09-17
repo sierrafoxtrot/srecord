@@ -79,6 +79,9 @@ The EMON52 format is understood for both reading and writing.
 Fairchild Fairbug
 The Fairchild Fairbug format is understood for both reading and writing.
 .TP
+hexdump
+It is possible to get a simple hexdump as output.
+.TP
 LSI Logic Fast Load
 The LSI Logic Fast Load format is understood for both reading and writing.
 .TP

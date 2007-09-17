@@ -87,9 +87,8 @@ srec_output_file_c::srec_output_file_c(const string &a_file_name) :
 }
 
 
-
 void
-srec_output_file_c::command_line(srec_arglex * cmdln)
+srec_output_file_c::command_line(srec_arglex *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_string)
     {

@@ -33,6 +33,7 @@
 #include <lib/srec/output/file/fastload.h>
 #include <lib/srec/output/file/formatted_binary.h>
 #include <lib/srec/output/file/four_packed_code.h>
+#include <lib/srec/output/file/hexdump.h>
 #include <lib/srec/output/file/intel.h>
 #include <lib/srec/output/file/intel16.h>
 #include <lib/srec/output/file/mos_tech.h>
@@ -182,6 +183,11 @@ srec_arglex::get_output()
     case token_four_packed_code:
         token_next();
         ofp = new srec_output_file_four_packed_code(fn.c_str());
+        break;
+
+    case token_hexdump:
+        token_next();
+        ofp = new srec_output_file_hexdump(fn.c_str());
         break;
 
     case token_intel:

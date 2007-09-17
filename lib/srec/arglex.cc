@@ -90,6 +90,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-GENerate", token_generator },
         { "-GENerator", token_generator },
         { "-GUess", token_guess, },
+        { "-HEXadecimal_Dump", token_hexdump, },
         { "-HEXadecimal_STyle", token_style_hexadecimal, },
         { "-IGnore_Checksums", token_ignore_checksums, },
         { "-INCLude", token_include, },

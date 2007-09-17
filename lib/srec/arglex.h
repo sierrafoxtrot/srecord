@@ -78,6 +78,7 @@ public:
         token_four_packed_code,
         token_generator,
         token_guess,
+        token_hexdump,
         token_ignore_checksums,
         token_include,
         token_include_not,
