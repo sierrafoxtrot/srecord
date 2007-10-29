@@ -101,7 +101,7 @@ This option says to use the FPC format to read the file.
 See \fIsrec_fpc\fP(5) for a description of this file format.
 .TP 8n
 \fB\-Guess\fP
-This option may be uased to ask \*(n) to guess the input format.
+This option may be used to ask \*(n) to guess the input format.
 This is slower than specifying an explicit format,
 as it may open and close the file a number of times.
 .TP 8n
@@ -190,7 +190,7 @@ the file.  See
 .IR srec_ti_tagged_16 (5)
 for a description of this file format.
 .TP 8n
-\fB\-Texas_Instruments_TaXT\fP
+\fB\-Texas_Instruments_TeXT\fP
 This option says to use the Texas Instruments TXT (MSP430) format to
 read the file.  See \f[I]srec_ti_txt\fP(5) for a description of this
 file format.
@@ -258,7 +258,7 @@ modulo the number of bytes.
 .RS
 This generator is almost identical to \-repeat-data except that the data
 to be repeated is the text of the given string.
-For example, to fill the holes in an eprom image \fIeprom.srec\fP with the
+For example, to fill the holes in an EPROM image \fIeprom.srec\fP with the
 text \(lqCopyright (C) 1812 Tchaikovsky\(rq, combine a generator and an
 \-exclude filter, such as the command
 .PP
@@ -288,7 +288,7 @@ Filters are applied in the order the user specifies.
 \f[I]width\fP ]]
 This filter may be used to insert the one's complement checksum of the
 data into the data, most significant byte first.
-The data is literaly summed; if there are duplicate bytes, this will
+The data is literally summed; if there are duplicate bytes, this will
 produce an incorrect result, if there are holes, it will be as if they were
 filled with zeros.
 If the data already contains bytes at the checksum location,
@@ -329,7 +329,7 @@ This filter may be used to swap pairs of odd and even bytes.
 By specifying a width (in bytes) it is possible to reverse the order
 of 4 and 8 bytes, the default is 2 bytes.  (Widths in excess of 8 are
 assumed to be number of bits.)
-It is not possuble to swap non-power-of-two addresses.
+It is not possible to swap non-power-of-two addresses.
 To change the alignment, use the offset filter before and after.
 .TP 8n
 \fB\-Big_Endian_CRC16\fP \fIaddress\fP [ -XMODEM ][ -No-AUGment ]
@@ -352,14 +352,14 @@ do not use it.  To work instead with the unaugmented data, use the
 .PP
 \fBNote:\fP If you have holes in your data, you will get a different CRC
 than if there were no holes.  This is important because the in-memory
-EEPROM image will not have holes.  You almost always want to use the
+EPROM image will not have holes.  You almost always want to use the
 \fB\-fill\fP filter before any of the CRC filters.
 You will receive a warning if the data presented for CRC has holes.
 .PP
 You should also be aware that the lower and upper bounds of your data
-may not be the same as the lower and upper bounds of your EEPROM.  This
+may not be the same as the lower and upper bounds of your EPROM.  This
 is another reason to use the \fB\-fill\fP filter, because it will
-establish the data across the full EEPROM address range.
+establish the data across the full EPROM address range.
 .RE
 .TP 8n
 \fB\-Little_Endian_CRC16\fP \fIaddress\fP
@@ -520,7 +520,7 @@ This operator has the same precedence as the explicit union operator.
 .TP 8n
 \f[I]address-range\fP \fB\-INTERsect\fP \fIaddress-range\fP
 You can intersect two address ranges to produce a smaller address range.
-The insersection operator has higher precedence than the implicit union
+The intersection operator has higher precedence than the implicit union
 operator (evaluated left to right).
 .TP 8n
 \f[I]address-range\fP \fB\-UNIon\fP \fIaddress-range\fP
@@ -541,6 +541,17 @@ precedence as explicit union operator).
 .SS Calculated Values
 Most of the places above where a number is expected, you may supply one
 of the following:
+.TP 8n
+\- \f[I]value\fP
+.RS
+The value of this expression is the negative of the expression argument.
+.RS
+.ft CW
+srec_cat in.srec -offset - -minimum in.srec -o out.srec
+.FT P
+.RE
+This example show how to  move data to the base of memory.
+.RE
 .TP 8n
 \fB\-MINimum\fP \fIinput-specification\fP
 This inserts the minimum address of the specified input file.
@@ -588,7 +599,7 @@ or equal to a whole multiple of the \fInumber\fP.
 .PP
 When using parentheses,
 they must each be a separate command line argument,
-they can't be within the text of the preceeding or following option,
+they can't be within the text of the preceding or following option,
 and you will need to quote them to get them past the shell,
 as \f[CW]'('\fP and \f[CW]')'\fP.
 .so z_copyright.so

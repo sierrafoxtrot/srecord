@@ -77,6 +77,11 @@ srec_arglex::get_number(const char *caption)
         value = (over.get_highest() - over.get_lowest());
         break;
 
+    case token_stdio:
+        token_next();
+        value = -get_number(caption);
+        break;
+
     default:
         fatal_error
         (
