@@ -223,7 +223,22 @@ The lower bound for all address ranges is inclusive, the upper bound is
 exclusive.  If you subtract them, you get the number of bytes.
 .SS Address Offset
 Just possibly, you have a moronic EPROM programmer, and it barfs if the
-EPROM image doesn't start at zero.  Rather than butcher the linker command file,
+EPROM image doesn't start at zero.
+To find out just where is \f[I]does\fP start in memory,
+use the \f[I]srec_inf\fP(1) command:
+.RS
+.ft CW
+.nf
+$ \f[CB]srec_info example.srec\fP
+Format: Motorola S-Record
+Header: extra-whizz tool chain linker
+Start:  0x00200000
+Data:   0x200000 - 0x32AAEF
+$
+.fi
+.ft R
+.RE
+Rather than butcher the linker command file,
 just offset the addresses:
 .RS
 .ft CW
@@ -240,6 +255,20 @@ the output record addresses.  In this case, shifting the image back to zero.
 This example also demonstrates how the input filters may be chained
 together: first the crop and then the offset, all in one command,
 without the need for temporary files.
+.PP
+If all you want to do is offest the data to start from address zero,
+this can be automated, so you don't have to know the minimum address in
+advance, by using \f[I]srec_cat\fP's ability to calculate some things on
+the command line:
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP -offset - -minmum \f[I]infile\fP \e
+    -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+Note the spaces either side of the minus sign, they are mandatory.
 .SS What To Throw Away
 There are times when you need to exclude an small address range from an
 EPROM load file, rather than wanting to keep a small address range.
