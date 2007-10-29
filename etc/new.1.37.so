@@ -16,25 +16,18 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" Change 15
-It is now possible to have negative expressions on the command
-line, to facilitate \[lq]--offset - -minimum foo\[rq] usages.
-.PP
-.if n *
-.if t \(bu
-.\" Change 12
-The \f[I]srec_cat\fP(1) command now has a simple hexadecimal dump output
-format.
-.PP
-.if n *
-.if t \(bu
-.\" Change 11
-The use of \f[I]uudecode\fP(1) in the tests has been removed,
-so \f[I]sharutils\fP is no longer a build dependency.
+.\"
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 37 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.36 (2007-Aug-07)
+.SS Version 1.37 (2007-Oct-29)
 .\" vim:ts=8:sw=4:et

@@ -542,16 +542,26 @@ precedence as explicit union operator).
 Most of the places above where a number is expected, you may supply one
 of the following:
 .TP 8n
-\- \f[I]value\fP
+\f[B]\-\fP \f[I]value\fP
 .RS
 The value of this expression is the negative of the expression argument.
+Note the \f[B]space\fP between the minus sign and its argument:
+this space is mandatory.
 .RS
 .ft CW
 srec_cat in.srec -offset - -minimum in.srec -o out.srec
-.FT P
+.ft P
 .RE
-This example show how to  move data to the base of memory.
+This example shows how to move data to the base of memory.
 .RE
+.TP 8n
+\f[CW](\fP \f[I]value\fP \f[CW])\fP
+You may use parentheses for grouping.
+When using parentheses,
+they must each be a separate command line argument,
+they can't be within the text of the preceding or following option,
+and you will need to quote them to get them past the shell,
+such as \f[CW]'('\fP and \f[CW]')'\fP.
 .TP 8n
 \fB\-MINimum\fP \fIinput-specification\fP
 This inserts the minimum address of the specified input file.
