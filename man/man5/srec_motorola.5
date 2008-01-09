@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2000-2002, 2006, 2007 Peter Miller
+.\"     Copyright (C) 1998, 2000-2002, 2006-2008 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ S;Type;Record Length;Address;Data;Checksum
 .TP 8n
 Type
 The type field is a 1 character field that specifies whether
-the record is an S0, S1, S2, S3, S5, S7, S8 or S9 field.
+the record is an S0, S1, S2, S3, S5, S6, S7, S8 or S9 field.
 .TP 8n
 Record Length
 The record length field is a 2 character (1 byte) field that specifies the
@@ -95,13 +95,15 @@ A record containing data and the 4-byte address at which the data is
 to reside.
 .TP 8n
 S5
-A record containing the number of S1, S2 and S3 records transmitted in
-a particular block.  The count appears in the two-byte address field.
+An optional record containing the number of S1, S2 and S3 records
+transmitted in a particular block.
+The count appears in the two-byte address field.
 There is no data field.
 .TP 8n
 S6
-A record containing the number of S1, S2 and S3 records transmitted in
-a particular block.  The count appears in the three-byte address field.
+An optional record containing the number of S1, S2 and S3 records
+transmitted in a particular block.
+The count appears in the three-byte address field.
 There is no data field.
 .TP 8n
 S7
