@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - The "srecord" program.
-.\"     Copyright (C) 1998-2007 Peter Miller
+.\"     Copyright (C) 1998-2008 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -360,6 +360,12 @@ You should also be aware that the lower and upper bounds of your data
 may not be the same as the lower and upper bounds of your EPROM.  This
 is another reason to use the \fB\-fill\fP filter, because it will
 establish the data across the full EPROM address range.
+.PP
+Note that there are a great many CRC16 implementations out there,
+see http://www.joegeluso.com/software/articles/ccitt.htm for more
+information.  If all else fails, SRecord is open source software: read
+the SRecord source code.  The CR16 code has a great many explanatory
+comments.
 .RE
 .TP 8n
 \fB\-Little_Endian_CRC16\fP \fIaddress\fP
