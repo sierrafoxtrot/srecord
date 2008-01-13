@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2002, 2006, 2007 Peter Miller
+// Copyright (C) 2000-2002, 2006-2008 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -48,12 +48,8 @@ static unsigned short table[256];
 // updcrc function:
 //     ubdcrc(0, updcrc(0, 0xFFFF))
 //
-#if 1
 static unsigned short const ccitt_seed = 0xFFFF;
-#else
-static unsigned short const ccitt_seed = 0x1D0F;
-#endif
-
+static unsigned short const broken_seed = 0x84CF;
 static unsigned short const xmodem_seed = 0;
 
 
@@ -72,8 +68,26 @@ calculate_table()
 }
 
 
-crc16::crc16(bool ccitt, bool aug) :
-    state(ccitt ? ccitt_seed : xmodem_seed),
+static int
+state_from_seed_mode(crc16::seed_mode_t seed_mode)
+{
+    switch (seed_mode)
+    {
+    case crc16::seed_mode_ccitt:
+        return ccitt_seed;
+
+    case crc16::seed_mode_xmodem:
+        return xmodem_seed;
+
+    case crc16::seed_mode_broken:
+        return broken_seed;
+    }
+    return ccitt_seed;
+}
+
+
+crc16::crc16(seed_mode_t seed_mode, bool aug) :
+    state(state_from_seed_mode(seed_mode)),
     augment(aug)
 {
     calculate_table();

@@ -1,6 +1,6 @@
 //
 //        srecord - manipulate eprom load files
-//        Copyright (C) 1998-2007 Peter Miller
+//        Copyright (C) 1998-2008 Peter Miller
 //
 //        This program is free software; you can redistribute it and/or modify
 //        it under the terms of the GNU General Public License as published by
@@ -63,6 +63,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Big_Endian_MInimum",token_minimum_be, },
         { "-BINary", token_binary, },
         { "-B_Record", token_brecord, },
+        { "-BROken", token_crc16_broken, },
         { "-Byte_Swap", token_byte_swap, },
         { "-C_COMpressed", token_c_compressed, },
         { "-CL430", token_cl430, },

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000, 2002, 2006, 2007 Peter Miller
+//      Copyright (C) 2000, 2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #ifndef INCLUDE_SREC_MEMORY_WALKER_CRC16_H
 #define INCLUDE_SREC_MEMORY_WALKER_CRC16_H
 
-
 #include <lib/crc16.h>
 #include <lib/srec/memory/walker.h>
 
@@ -39,17 +38,23 @@ public:
 
     /**
       * The default constructor.
+      *
+      * @param seed_mode
+      *     The selector for the initial seed for the calculation
+      * @param augment_flag
+      *     Whether or not to augment the calculation
       */
-    srec_memory_walker_crc16(bool ccitt_flag, bool augment_flag);
-
-    // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    srec_memory_walker_crc16(crc16::seed_mode_t seed_mode, bool augment_flag);
 
     /**
       * The get method is used to get the CRC16 checksum once all memory
       * chunks have been processed by calls to our observe method.
       */
     unsigned get() const;
+
+protected:
+    // See base class for documentation.
+    void observe(unsigned long, const void *, int);
 
 private:
     /**

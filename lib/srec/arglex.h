@@ -1,6 +1,6 @@
 //
 //        srecord - manipulate eprom load files
-//        Copyright (C) 1998-2007 Peter Miller
+//        Copyright (C) 1998-2008 Peter Miller
 //
 //        This program is free software; you can redistribute it and/or modify
 //        it under the terms of the GNU General Public License as published by
@@ -59,12 +59,13 @@ public:
         token_constant,
         token_constant_not,
         token_cosmac,
-        token_crc16_be,
-        token_crc16_le,
-        token_crc16_xmodem,
-        token_crc16_ccitt,
         token_crc16_augment,
         token_crc16_augment_not,
+        token_crc16_be,
+        token_crc16_broken,
+        token_crc16_ccitt,
+        token_crc16_le,
+        token_crc16_xmodem,
         token_crc32_be,
         token_crc32_le,
         token_crop,

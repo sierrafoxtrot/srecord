@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2003, 2006, 2007 Peter Miller
+// Copyright (C) 2000-2003, 2006-2008 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -33,6 +33,13 @@
 class crc16
 {
 public:
+    enum seed_mode_t
+    {
+        seed_mode_ccitt,
+        seed_mode_xmodem,
+        seed_mode_broken
+    };
+
     /**
       * The destructor.
       */
@@ -41,14 +48,13 @@ public:
     /**
       * The default constructor.
       *
-      * @param ccitt
-      *     This is true for a CCITT calculation, or false for the
-      *     XModem calculation.
+      * @param seed_mode
+      *     This selects which CRC16 calculation seed is to be used.
       * @param augment
       *     This is true if the 16-zero-bit augmentation is desired.
       *     This is the default.  False if no augmentation is desired.
       */
-    crc16(bool ccitt = true, bool augment = true);
+    crc16(seed_mode_t seed_mode = seed_mode_ccitt, bool augment = true);
 
     /**
       * The copy constructor.

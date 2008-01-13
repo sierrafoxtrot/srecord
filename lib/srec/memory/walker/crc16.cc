@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2002, 2006, 2007 Peter Miller
+//      Copyright (C) 2000-2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -22,10 +22,10 @@
 #include <lib/srec/output.h>
 
 
-srec_memory_walker_crc16::srec_memory_walker_crc16(bool ccitt_flag,
+srec_memory_walker_crc16::srec_memory_walker_crc16(crc16::seed_mode_t seed_mode,
     bool augment_flag)
 {
-    checksum = new crc16(ccitt_flag, augment_flag);
+    checksum = new crc16(seed_mode, augment_flag);
 }
 
 

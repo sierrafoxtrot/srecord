@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2003, 2005-2007 Peter Miller
+//      Copyright (C) 2000-2003, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #ifndef INCLUDE_SREC_INPUT_FILTER_CRC16_H
 #define INCLUDE_SREC_INPUT_FILTER_CRC16_H
 
-
+#include <lib/crc16.h>
 #include <lib/srec/input/filter.h>
 
 /**
@@ -62,11 +62,10 @@ private:
     int order;
 
     /**
-      * The ccitt_flag instance variable is used to remember whether to
-      * use the CCITT seed for CRC16 calculation (rather than XMODEM).
-      * Almost always true.
+      * The seed_mode instance variable is used to remember the desired
+      * seed for the CRC16 calculation.  Defaults to CCITT.
       */
-    bool ccitt_flag;
+    crc16::seed_mode_t seed_mode;
 
     /**
       * The augment_flag instance variable is used to remember whether

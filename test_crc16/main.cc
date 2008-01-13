@@ -1,6 +1,6 @@
 //
 // srecord - The "srecord" program.
-// Copyright (C) 2007 Peter Miller
+// Copyright (C) 2007, 2008 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -37,11 +37,11 @@ int
 main(int argc, char **argv)
 {
     progname_set(argv[0]);
-    bool ccitt = true;
+    crc16::seed_mode_t seed_mode = crc16::seed_mode_ccitt;
     bool augment = true;
     for (;;)
     {
-        int c = getopt(argc, argv, "ax");
+        int c = getopt(argc, argv, "abcx");
         if (c == EOF)
             break;
         switch (c)
@@ -50,8 +50,16 @@ main(int argc, char **argv)
             augment = !augment;
             break;
 
+        case 'b':
+            seed_mode = crc16::seed_mode_broken;
+            break;
+
+        case 'c':
+            seed_mode = crc16::seed_mode_ccitt;
+            break;
+
         case 'x':
-            ccitt = !ccitt;
+            seed_mode = crc16::seed_mode_xmodem;
             break;
 
         default:
@@ -62,7 +70,7 @@ main(int argc, char **argv)
     if (optind != argc)
         usage();
 
-    crc16 check(ccitt, augment);
+    crc16 check(seed_mode, augment);
     for (;;)
     {
         char buffer[1024];
