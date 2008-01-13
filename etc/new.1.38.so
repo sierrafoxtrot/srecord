@@ -1,6 +1,6 @@
 .\"
 .\" srecord - The "srecord" program.
-.\" Copyright (C) 2007, 2008 Peter Miller
+.\" Copyright (C) 2008 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -16,35 +16,18 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" Change 16
-The CRC16 filters now support a -Broken option, to perform a
-common-but-broken CRC16 calculation, in addition to the CCITT
-and XMODEM calculations.
-.PP
-.if n *
-.if t \(bu
-.\" Change 15
-A link has been added to the CRC16 man page section
-to the www.joegeluso.com/software/articles/ccitt.htm web page,
-to explain the difficulties in seeding CRC16 calculations.
-.PP
-.if n *
-.if t \(bu
-.\" srecord.1.37.D003
-.\" Change 12
-A buglet has been fixed in the \f[I]srec-motorola\fP(5) man page, it now
-includes \f[CW]S6\fP in the list of things that can appear in the type
-field.
-.PP
-.if n *
-.if t \(bu
-.\" Change 11
-The ability to negate expressions is now mentioned in the
-\f[I]srec_examples\fP(1) man page.
+.\"
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 38 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.37 (2007-Oct-29)
+.SS Version 1.38 (2008-Jan-14)
 .\" vim:ts=8:sw=4:et
