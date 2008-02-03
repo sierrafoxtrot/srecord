@@ -40,6 +40,13 @@ The
 .I filename
 The filename may be specified as a file name,
 or the special name \(lq-\(rq which is understood to mean the standard input.
+.SS Grouping with Parentheses
+There are some cases where operator precedence of the filters can
+be ambiguous.  Input specifications may also be enclosed by \fB(\fP
+parentheses \fB)\fP to make grouping explicit.  Remember that the
+presenthese must be separate words, \f[I]i.e.\fP surrounded by
+spaces, and they will need to be quoted to get them past the shell's
+interpretation of parentheses.
 .SS File Formats
 The
 .I format
@@ -179,19 +186,19 @@ See
 .IR srec_tektronix_extended (5)
 for a description of this file format.
 .TP 8n
-\fB\-Texasf[I]nstruments_Tagged\fP
+\fB\-Texas_Instruments_Tagged\fP
 This option says to use the Texas Instruments Tagged format to read the file.
 See
 .IR srec_ti_tagged (5)
 for a description of this file format.
 .TP 8n
-\fB\-Texasf[I]nstruments_Tagged_16\fP
+\fB\-Texas_Instruments_Tagged_16\fP
 This option says to use the Texas Instruments SDSMAC 320 format to read
 the file.  See
 .IR srec_ti_tagged_16 (5)
 for a description of this file format.
 .TP 8n
-\fB\-Texasf[I]nstruments_TeXT\fP
+\fB\-Texas_Instruments_TeXT\fP
 This option says to use the Texas Instruments TXT (MSP430) format to
 read the file.  See \f[I]srec_ti_txt\fP(5) for a description of this
 file format.
@@ -512,22 +519,41 @@ more than the last address).  If the maximum is given as zero then the
 range extends to the end of the address space.
 .TP 8n
 \fB\-Within\fP \f[I]input-specification\fP
+.RS
 This says to use the specified input file as a mask.  The range
 includes all the places the specified input has data, and holes where
 it has holes.  The input specification need not be just a file name,
 it may be anything any other input specification can be.
-(You may need to enclose \f[I]input-specification\fP in parentheses
-to make sure it can't misinterpret which arguments go with input
-specification.)
+.PP
+See also the \fB\-over\fP option for a discusson on operator precedence.
+.RE
 .TP 8n
 \fB\-OVER\fP \f[I]input-specification\fP
+.RS
 This says to use the specified input file as a mask.  The range
 extends from the minimum to the maximum address used by the input, and
 ignores any holes.  The input specification need not be just a file name,
 it may be anything any other input specification can be.
-(You may need to enclose \f[I]input-specification\fP in parentheses
-to make sure it can't misinterpret which arguments go with input
-specification.)
+.PP
+You may need to enclose \f[I]input-specification\fP in parentheses
+to make sure it can't misinterpret which arguments go with which input
+specification.
+This is particularly inportant when a filter
+is to follow.  For example
+.RS
+\f[I]filename\fP -fill 0 -over \f[I]filename2\fP \-swap-bytes
+.RE
+groups as
+.RS
+\f[I]filename\fP -fill 0 -over '(' \f[I]filename2\fP \-swap-bytes ')'
+.RE
+when what you actually wanted was
+.RS
+\&'(' \f[I]filename\fP -fill 0 -over \f[I]filename2\fP ')' \-swap-bytes
+.RE
+The command line expression parsing tends to be \[lq]greedy\[rq] (or
+right associative) rather than conservative (or left associative).
+.RE
 .TP 8n
 \f[I]address-range\fP \fB\-RAnge-PADding\fP \f[I]number\fP
 .RS
@@ -590,31 +616,34 @@ and you will need to quote them to get them past the shell,
 such as \f[CW]'('\fP and \f[CW]')'\fP.
 .TP 8n
 \fB\-MINimum\fP \f[I]input-specification\fP
+.RS
 This inserts the minimum address of the specified input file.
 The input specification need not be just a file name,
 it may be anything any other input specification can be.
-(You may need to enclose \f[I]input-specification\fP in parentheses
-to make sure it can't misinterpret which arguments go with input
-specification.)
+.PP
+See also the \fB\-over\fP option for a discusson on operator precedence.
+.RE
 .TP 8n
 \fB\-MAXimum\fP \f[I]input-specification\fP
+.RS
 This inserts the maximum address of the specified input file, plus one.
 The input specification need not be just a file name,
 it may be anything any other input specification can be.
-(You may need to enclose \f[I]input-specification\fP in parentheses
-to make sure it can't misinterpret which arguments go with input
-specification.)
+.PP
+See also the \fB\-over\fP option for a discusson on operator precedence.
+.RE
 .TP 8n
 \fB\-Length\fP \f[I]input-specification\fP
+.RS
 This inserts the length of the address range in the specified input file,
 ignoring any holes.  The input specification need not be just a file name,
 it may be anything any other input specification can be.
-(You may need to enclose \f[I]input-specification\fP in parentheses
-to make sure it can't misinterpret which arguments go with input
-specification.)
 .PP
-For example, the \fB-OVER\fP \f[I]file\fP option can be thought of a
-short-hand for
+See also the \fB\-over\fP option for a discusson on operator precedence.
+.RE
+.PP
+For example, the \fB-OVER\fP \f[I]input-specification\fP
+option can be thought of as short-hand for
 \fB'(' \-min\fP \f[I]file\fP \fB\-max\fP \f[I]file\fP \fB')'\fP,
 except that it is
 much easier to type, and also more efficient.

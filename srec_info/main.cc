@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2002, 2005-2007 Peter Miller
+//      Copyright (C) 1998-2002, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@ main(int argc, char **argv)
             cmdline.default_command_line_processing();
             continue;
 
+        case srec_arglex::token_paren_begin:
         case srec_arglex::token_string:
         case srec_arglex::token_stdio:
         case srec_arglex::token_generator:
@@ -55,7 +56,7 @@ main(int argc, char **argv)
         cmdline.token_next();
     }
     if (infile.size() == 0)
-            infile.push_back(cmdline.get_input());
+        infile.push_back(cmdline.get_input());
 
     //
     // Read each file and emit informative gumph.

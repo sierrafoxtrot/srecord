@@ -323,6 +323,17 @@ private:
     int issue_sequence_warnings;
 
     /**
+      * The get_simple_input method is used to parse an input filename
+      * or generator from the command line.  It shall only be used by
+      * the #get_input method.
+      *
+      * If the parse is unsuccessful (is not present on command
+      * line) a fatal error will be issued and the method call will
+      * not return.
+      */
+    srec_input *get_simple_input();
+
+    /**
       * The default constructor.  Do not use.
       */
     srec_arglex();

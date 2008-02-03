@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2007 Peter Miller
+//      Copyright (C) 1998-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -77,11 +77,8 @@ using namespace std;
 
 
 srec_input *
-srec_arglex::get_input()
+srec_arglex::get_simple_input()
 {
-    //
-    // determine the file name
-    //
     std::string fn = "-";
     switch (token_cur())
     {
@@ -133,7 +130,7 @@ srec_arglex::get_input()
     // determine the file format
     // and open the input file
     //
-    srec_input *ifp;
+    srec_input *ifp = 0;
     switch (token_cur())
     {
     case token_motorola:
@@ -304,6 +301,7 @@ srec_arglex::get_input()
         ifp = new srec_input_file_wilson(fn);
         break;
     }
+    // assert(ifp);
 
     //
     // Process any additional format-specfic command line options.
@@ -324,6 +322,18 @@ srec_arglex::get_input()
     //
     if (issue_sequence_warnings != 0)
         ifp = new srec_input_filter_sequence(ifp);
+
+    //
+    // report success
+    //
+    return ifp;
+}
+
+
+srec_input *
+srec_arglex::get_input()
+{
+    srec_input *ifp = get_simple_input();
 
     //
     // apply any filters specified
