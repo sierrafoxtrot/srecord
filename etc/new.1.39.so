@@ -1,5 +1,5 @@
 .\"
-.\" srecord - The "srecord" program.
+.\" srecord - Manipulate EPROM load files
 .\" Copyright (C) 2008 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
@@ -19,17 +19,15 @@
 .\"
 .\" you can create the initial cut of this file using the
 .\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
-.\"             -p srecord.1 -c 38 -unf
+.\"             -p srecord.1 -c 39 -unf
 .\" command, and then editing it to be more appropriate.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" Change 11
-A bug has been fixed in the use of parentheses to group filters
-and override the default precedences.
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.38 (2008-Jan-14)
+.SS Version 1.39 (2008-Feb-04)
 .\" vim:ts=8:sw=4:et
