@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - manipulate eprom load files
-#       Copyright (C) 2000, 2003, 2006, 2007 Peter Miller
+#       Copyright (C) 2000, 2003, 2006-2008 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -17,41 +17,9 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-here=`pwd`
-if test $? -ne 0 ; then exit 2; fi
-work=${TMP_DIR-/tmp}/$$
 
-pass()
-{
-        cd $here
-        rm -rf $work
-        echo PASSED
-        exit 0
-}
-
-fail()
-{
-        cd $here
-        rm -rf $work
-        echo 'FAILED test of the srec_cmp --verbose functionality'
-        exit 1
-}
-
-no_result()
-{
-        cd $here
-        rm -rf $work
-        echo 'NO RESULT for test of the srec_cmp --verbose functionality'
-        exit 2
-}
-
-trap "no_result" 1 2 3 15
-
-bin=$here/${1-.}/bin
-mkdir $work
-if test $? -ne 0; then no_result; fi
-cd $work
-if test $? -ne 0; then no_result; fi
+TEST_SUBJECT="srec_cmp --verbose"
+. test_prelude
 
 cat > test.one << 'fubar'
 S00600004844521B
@@ -85,7 +53,7 @@ Start address 1 not equal to 0.
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cmp -verbose test.one -offset 1 test.two > test.out 2>&1
+srec_cmp -verbose test.one -offset 1 test.two > test.out 2>&1
 if test $? -ne 2; then fail; fi
 
 diff test.ok1 test.out > LOG 2>&1 || diff test.ok2 test.out >> LOG 2>&1

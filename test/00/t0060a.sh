@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - manipulate eprom load files
-#       Copyright (C) 2001, 2006, 2007 Peter Miller
+#       Copyright (C) 2001, 2006-2008 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -17,41 +17,9 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-here=`pwd`
-if test $? -ne 0 ; then exit 2; fi
-work=${TMP_DIR-/tmp}/$$
 
-pass()
-{
-        cd $here
-        rm -rf $work
-        echo PASSED
-        exit 0
-}
-
-fail()
-{
-        cd $here
-        rm -rf $work
-        echo 'FAILED test of the memory chunk iterator functionality'
-        exit 1
-}
-
-no_result()
-{
-        cd $here
-        rm -rf $work
-        echo 'NO RESULT for test of the memory chunk iterator functionality'
-        exit 2
-}
-
-trap "no_result" 1 2 3 15
-
-bin=$here/${1-.}/bin
-mkdir $work
-if test $? -ne 0; then no_result; fi
-cd $work
-if test $? -ne 0; then no_result; fi
+TEST_SUBJECT="memory chunk iterator"
+. test_prelude
 
 cat > test.in.srec << 'fubar'
 S00A0000746573742E696E30
@@ -81,14 +49,14 @@ Different:      0x40 - 0x43
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in.srec -o test.in -bin
+srec_cat test.in.srec -o test.in -bin
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -bin -exclude 0x40 0x44 -becrc32 0x40 -o test.out -bin \
+srec_cat test.in -bin -exclude 0x40 0x44 -becrc32 0x40 -o test.out -bin \
     > LOG 2>&1
 if test $? -ne 0; then cat LOG; fail; fi
 
-$bin/srec_cmp -v test.in -bin test.out -bin > log
+srec_cmp -v test.in -bin test.out -bin > log
 if test $? -ne 2; then fail; fi
 
 diff test.ok log

@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - manipulate eprom load files
-#       Copyright (C) 2005-2007 Peter Miller
+#       Copyright (C) 2005-2008 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -17,41 +17,9 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-here=`pwd`
-if test $? -ne 0 ; then exit 2; fi
-work=${TMP_DIR-/tmp}/$$
 
-pass()
-{
-        cd $here
-        rm -rf $work
-        echo PASSED
-        exit 0
-}
-
-fail()
-{
-        cd $here
-        rm -rf $work
-        echo 'FAILED test of the CRLF functionality'
-        exit 1
-}
-
-no_result()
-{
-        cd $here
-        rm -rf $work
-        echo 'NO RESULT for test of the CRLF functionality'
-        exit 2
-}
-
-trap "no_result" 1 2 3 15
-
-bin=$here/${1-.}/bin
-mkdir $work
-if test $? -ne 0; then no_result; fi
-cd $work
-if test $? -ne 0; then no_result; fi
+TEST_SUBJECT="CRLF"
+. test_prelude
 
 cat > test.in << 'fubar'
 S109000068656C6C6F0AD8
@@ -66,10 +34,10 @@ S11100600D0A533530333030303146420D0A2C
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.ok.srec -o test.ok -bin > LOG 2>&1
+srec_cat test.ok.srec -o test.ok -bin > LOG 2>&1
 if test $? -ne 0; then cat LOG; no_result; fi
 
-$bin/srec_cat test.in -o test.out -crlf > LOG 2>&1
+srec_cat test.in -o test.out -crlf > LOG 2>&1
 if test $? -ne 0; then cat LOG; fail; fi
 
 cmp test.ok test.out

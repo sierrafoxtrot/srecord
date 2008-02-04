@@ -1,6 +1,6 @@
 /*
  *      srecord - manipulate eprom load files
- *      Copyright (C) 1998, 1999, 2001-2003, 2006, 2007 Peter Miller
+ *      Copyright (C) 1998, 1999, 2001-2003, 2006-2008 Peter Miller
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -263,6 +263,8 @@ cc_dep_files =
 #include-cooked-nowarn [cc_dep_files]
 
 [arch]/bin/%: : [%_obj] [%_libs]
+    set gate-first
+    if [defined %_obj]
 {
     [c++] [ld_flags] -o [target] [resolve [%_obj] [%_libs]] -lm;
 }
@@ -273,6 +275,28 @@ cc_dep_files =
     if [find_command ranlib] then
         ranlib [target];
 }
+
+
+[arch]/bin/%: script/%
+{
+    cp script/% [target];
+    chmod a+rx [target];
+}
+
+
+[arch]/bin/%: [arch]/script/%
+{
+    cp [arch]/script/% [target];
+    chmod a+rx [target];
+}
+
+all +=
+    [fromto script/% [arch]/bin/%
+        [fromto %1/%2.in %1/%2
+            [match_mask script/% [source_files]]
+        ]
+    ];
+
 
 /*
  * How to build the release sets.

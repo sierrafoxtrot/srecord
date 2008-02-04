@@ -1,7 +1,6 @@
-#!/bin/sh
 #
-#       srecord - manipulate eprom load files
-#       Copyright (C) 2001, 2006-2008 Peter Miller
+#       srecord - Manipulate EPROM load files
+#       Copyright (C) 2008 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -18,25 +17,9 @@
 #       <http://www.gnu.org/licenses/>.
 #
 
-TEST_SUBJECT="-multiple"
-. test_prelude
+test_command =
+    "PATH=${path_reduce ${addpathsuffix $arch/bin ${spe}} ${env PATH}} "
+    "$shell $filename $arch"
+    ;
 
-cat > test.in << 'fubar'
-S00600004844521B
-S111000048656C6C6F2C20576F726C64210A7B
-S1140000436F6D706C65746520527562626973680AB9
-S9030000FC
-fubar
-if test $? -ne 0; then no_result; fi
-
-srec_cat test.in -o test.out -mult > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
-
-srec_cmp -dsw test.in test.out -mult
-if test $? -ne 0; then fail; fi
-
-#
-# The things tested here, worked.
-# No other guarantees are made.
-#
-pass
+# vim:ts=8:sw=4:et

@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - manipulate eprom load files
-#       Copyright (C) 2003, 2006, 2007 Peter Miller
+#       Copyright (C) 2003, 2006-2008 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -17,41 +17,9 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-here=`pwd`
-if test $? -ne 0 ; then exit 2; fi
-work=${TMP_DIR-/tmp}/$$
 
-pass()
-{
-        cd $here
-        rm -rf $work
-        echo PASSED
-        exit 0
-}
-
-fail()
-{
-        cd $here
-        rm -rf $work
-        echo 'FAILED test of the Verilog VMEM functionality'
-        exit 1
-}
-
-no_result()
-{
-        cd $here
-        rm -rf $work
-        echo 'NO RESULT for test of the Verilog VMEM functionality'
-        exit 2
-}
-
-trap "no_result" 1 2 3 15
-
-bin=$here/${1-.}/bin
-mkdir $work
-if test $? -ne 0; then no_result; fi
-cd $work
-if test $? -ne 0; then no_result; fi
+TEST_SUBJECT="Verilog VMEM format"
+. test_prelude
 
 # ---------- Test Writing (32-bit) -----------------------------------------
 
@@ -69,7 +37,7 @@ cat > test.ok << 'fubar'
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -fill 0xFF -within test.in -range-padding 4 \
+srec_cat test.in -fill 0xFF -within test.in -range-padding 4 \
     -o test.out -vmem
 if test $? -ne 0; then fail; fi
 
@@ -84,7 +52,7 @@ cat > test.ok << 'fubar'
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -o test.out -vmem 16 -header hello
+srec_cat test.in -o test.out -vmem 16 -header hello
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -102,7 +70,7 @@ cat > test.ok << 'fubar'
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -o test.out -vmem 8 -ll 20
+srec_cat test.in -o test.out -vmem 8 -ll 20
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -127,7 +95,7 @@ cat > test.in << 'fubar'
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cmp test.ok test.in -vmem
+srec_cmp test.ok test.in -vmem
 if test $? -ne 0; then fail; fi
 
 # ---------- Test Reading (16-bit) -----------------------------------------
@@ -149,7 +117,7 @@ cat > test.in << 'fubar'
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cmp test.ok test.in -vmem
+srec_cmp test.ok test.in -vmem
 if test $? -ne 0; then fail; fi
 
 # ---------- Test Reading (8-bit) ------------------------------------------
@@ -168,7 +136,7 @@ cat > test.in << 'fubar'
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cmp test.ok test.in -vmem
+srec_cmp test.ok test.in -vmem
 if test $? -ne 0; then fail; fi
 
 #

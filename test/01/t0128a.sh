@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - The "srecord" program.
-#       Copyright (C) 2007 Peter Miller
+#       Copyright (C) 2007, 2008 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -17,41 +17,9 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-here=`pwd`
-if test $? -ne 0 ; then exit 2; fi
-work=${TMP_DIR-/tmp}/$$
 
-pass()
-{
-        cd $here
-        rm -rf $work
-        echo PASSED
-        exit 0
-}
-
-fail()
-{
-        cd $here
-        rm -rf $work
-        echo 'FAILED test of the interval arithmetic functionality'
-        exit 1
-}
-
-no_result()
-{
-        cd $here
-        rm -rf $work
-        echo 'NO RESULT for test of the interval arithmetic functionality'
-        exit 2
-}
-
-trap "no_result" 1 2 3 15
-
-bin=$here/${1-.}/bin
-mkdir $work
-if test $? -ne 0; then no_result; fi
-cd $work
-if test $? -ne 0; then no_result; fi
+TEST_SUBJECT="interval arithmetic"
+. test_prelude
 
 # ---------- set difference ------------------------------------------------
 
@@ -64,11 +32,11 @@ Data:   0000 - 00FF
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat -generate { 0 0x1000 -diff 0x100 0xE00 } -random \
+srec_cat -generate { 0 0x1000 -diff 0x100 0xE00 } -random \
     -o test.srec -header HDR -start-addr 0
 if test $? -ne 0; then fail; fi
 
-$bin/srec_info test.srec > test.out
+srec_info test.srec > test.out
 if test $? -ne 0; then no_result; fi
 
 diff test.ok test.out
@@ -84,11 +52,11 @@ Data:   0100 - 0FFF
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat -generate { 0 0x1000 -intersect 0x100 0xE000 } -random \
+srec_cat -generate { 0 0x1000 -intersect 0x100 0xE000 } -random \
     -o test.srec -header HDR -start-addr 0
 if test $? -ne 0; then fail; fi
 
-$bin/srec_info test.srec > test.out
+srec_info test.srec > test.out
 if test $? -ne 0; then no_result; fi
 
 diff test.ok test.out
@@ -106,12 +74,12 @@ Data:   0080 - 00C7
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat -generate { { 0 200 400 600 800 1000 } -intersect 0x80 0xE000 } \
+srec_cat -generate { { 0 200 400 600 800 1000 } -intersect 0x80 0xE000 } \
     -random \
     -o test.srec -header HDR -start-addr 0
 if test $? -ne 0; then fail; fi
 
-$bin/srec_info test.srec > test.out
+srec_info test.srec > test.out
 if test $? -ne 0; then no_result; fi
 
 diff test.ok test.out

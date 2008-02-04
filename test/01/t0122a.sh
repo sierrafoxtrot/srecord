@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - The "srecord" program.
-#       Copyright (C) 2007 Peter Miller
+#       Copyright (C) 2007, 2008 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -17,41 +17,9 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-here=`pwd`
-if test $? -ne 0 ; then exit 2; fi
-work=${TMP_DIR-/tmp}/$$
 
-pass()
-{
-        cd $here
-        rm -rf $work
-        echo PASSED
-        exit 0
-}
-
-fail()
-{
-        cd $here
-        rm -rf $work
-        echo 'FAILED test of the -c-array -section-style functionality'
-        exit 1
-}
-
-no_result()
-{
-        cd $here
-        rm -rf $work
-        echo 'NO RESULT for test of the -c-array -section-style functionality'
-        exit 2
-}
-
-trap "no_result" 1 2 3 15
-
-bin=$here/${1-.}/bin
-mkdir $work
-if test $? -ne 0; then no_result; fi
-cd $work
-if test $? -ne 0; then no_result; fi
+TEST_SUBJECT="-c-array -section-style"
+. test_prelude
 
 cat > test.in << 'fubar'
 S00600004844521B
@@ -95,7 +63,7 @@ const unsigned long eprom_length      = 0x00000049;
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -o test.out -c-array -section-style
+srec_cat test.in -o test.out -c-array -section-style
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -134,7 +102,7 @@ const unsigned long eprom_length      = 0x0000004A;
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -fill 0xFF -within test.in -range-padding=2 \
+srec_cat test.in -fill 0xFF -within test.in -range-padding=2 \
     -o test.out -c-array -section-style -ow
 if test $? -ne 0; then fail; fi
 
@@ -173,7 +141,7 @@ const unsigned long eprom_length      = 74;
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -fill 0xFF -within test.in -range-padding=2 \
+srec_cat test.in -fill 0xFF -within test.in -range-padding=2 \
     -o test.out -c-array -section-style -ow -dec-style
 if test $? -ne 0; then fail; fi
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - manipulate eprom load files
-#       Copyright (C) 2000, 2006, 2007 Peter Miller
+#       Copyright (C) 2000, 2006-2008 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -17,41 +17,12 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-here=`pwd`
-if test $? -ne 0 ; then exit 2; fi
-work=${TMP_DIR-/tmp}/$$
 
-pass()
-{
-        cd $here
-        rm -rf $work
-        echo PASSED
-        exit 0
-}
+TEST_SUBJECT="C-array"
+. test_prelude
 
-fail()
-{
-        cd $here
-        rm -rf $work
-        echo 'FAILED test of the C-array functionality'
-        exit 1
-}
-
-no_result()
-{
-        cd $here
-        rm -rf $work
-        echo 'NO RESULT for test of the C-array functionality'
-        exit 2
-}
-
-trap "no_result" 1 2 3 15
-
-bin=$here/${1-.}/bin
-mkdir $work $work/foo
-if test $? -ne 0; then no_result; fi
-cd $work
-if test $? -ne 0; then no_result; fi
+mkdir foo
+test $? -eq 0 || no_result
 
 cat > test.in << 'fubar'
 S00600004844521B
@@ -81,7 +52,7 @@ const unsigned long eprom_length      = 0x00000017;
 fubar
 test $? -eq 0 || no_result
 
-$bin/srec_cat test.in -o foo/test.out -ca -incl
+srec_cat test.in -o foo/test.out -ca -incl
 test $? -eq 0 || fail
 
 diff test.ok foo/test.out

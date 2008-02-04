@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - manipulate eprom load files
-#       Copyright (C) 2001, 2006, 2007 Peter Miller
+#       Copyright (C) 2001, 2006-2008 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -17,41 +17,9 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-here=`pwd`
-if test $? -ne 0 ; then exit 2; fi
-work=${TMP_DIR-/tmp}/$$
 
-pass()
-{
-        cd $here
-        rm -rf $work
-        echo PASSED
-        exit 0
-}
-
-fail()
-{
-        cd $here
-        rm -rf $work
-        echo 'FAILED test of the Fast Load functionality'
-        exit 1
-}
-
-no_result()
-{
-        cd $here
-        rm -rf $work
-        echo 'NO RESULT for test of the Fast Load functionality'
-        exit 2
-}
-
-trap "no_result" 1 2 3 15
-
-bin=$here/${1-.}/bin
-mkdir $work
-if test $? -ne 0; then no_result; fi
-cd $work
-if test $? -ne 0; then no_result; fi
+TEST_SUBJECT="Fast Load format"
+. test_prelude
 
 #
 # Test the Fast Load format
@@ -120,10 +88,10 @@ li3oFSXLXI,ubUVGJ4blP6mNinGKLHWkvGruun85AhVn/BDq/CC0B/AAAA/EAA
 fubar
 if test $? -ne 0; then no_result; fi
 
-$bin/srec_cat test.in -o test.out -fastload
+srec_cat test.in -o test.out -fastload
 if test $? -ne 0; then fail; fi
 
-$bin/srec_cmp test.in test.out -fastload
+srec_cmp test.in test.out -fastload
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
