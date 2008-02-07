@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2000-2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 //
 
 
+#include <lib/srec/arglex.h>
 #include <lib/srec/input/filter/crc32.h>
 #include <lib/srec/memory.h>
 #include <lib/srec/memory/walker/crc32.h>
@@ -26,22 +27,47 @@
 
 srec_input_filter_crc32::~srec_input_filter_crc32()
 {
-        delete buffer;
-        buffer = 0;
+    delete buffer;
+    buffer = 0;
 }
 
 
 srec_input_filter_crc32::srec_input_filter_crc32(srec_input *deeper_arg,
-                unsigned long address_arg, int order_arg) :
-        srec_input_filter(deeper_arg),
-        address(address_arg),
-        order(order_arg),
-        buffer(0),
-        buffer_pos(0),
-        have_forwarded_header(false),
-        have_given_crc(false),
-        have_forwarded_start_address(false)
+        unsigned long address_arg, int order_arg) :
+    srec_input_filter(deeper_arg),
+    address(address_arg),
+    order(order_arg),
+    buffer(0),
+    buffer_pos(0),
+    have_forwarded_header(false),
+    have_given_crc(false),
+    have_forwarded_start_address(false),
+    seed_mode(crc32::seed_mode_ccitt)
 {
+}
+
+
+void
+srec_input_filter_crc32::command_line(srec_arglex *cmdln)
+{
+    for (;;)
+    {
+        switch (cmdln->token_cur())
+        {
+        case srec_arglex::token_crc16_xmodem:
+            seed_mode = crc32::seed_mode_xmodem;
+            cmdln->token_next();
+            break;
+
+        case srec_arglex::token_crc16_ccitt:
+            seed_mode = crc32::seed_mode_ccitt;
+            cmdln->token_next();
+            break;
+
+        default:
+            return;
+        }
+    }
 }
 
 
@@ -95,7 +121,7 @@ srec_input_filter_crc32::read(srec_record &record)
         // Now CRC32 the bytes in order from lowest address to
         // highest.  (Holes are ignored, not filled.)
         //
-        srec_memory_walker_crc32 walker;
+        srec_memory_walker_crc32 walker(seed_mode);
         buffer->walk(&walker);
         unsigned long crc = walker.get();
 

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2003, 2005-2007 Peter Miller
+//      Copyright (C) 2000-2003, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #ifndef INCLUDE_SREC_INPUT_FILTER_CRC32_H
 #define INCLUDE_SREC_INPUT_FILTER_CRC32_H
 
-
+#include <lib/crc32.h>
 #include <lib/srec/input/filter.h>
 
 /**
@@ -40,10 +40,13 @@ public:
       * The constructor.
       */
     srec_input_filter_crc32(srec_input *deeper, unsigned long address,
-            int order);
+        int order);
 
     // See base class for documentation.
     virtual int read(srec_record &);
+
+    // See base class for documentation.
+    void command_line(srec_arglex *cmdln);
 
 private:
     /**
@@ -90,6 +93,13 @@ private:
       * reader yet.
       */
     bool have_forwarded_start_address;
+
+    /**
+      * The seed_mode instance variable is used to remember what the
+      * user wants for the initial seed.  The default is to use the
+      * standard CCITT seed.
+      */
+    crc32::seed_mode_t seed_mode;
 
     /**
       * The default constructor.  Do not use.

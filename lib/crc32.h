@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2000-2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -30,6 +30,12 @@
 class crc32
 {
 public:
+    enum seed_mode_t
+    {
+        seed_mode_ccitt, // all ones
+        seed_mode_xmodem // all zero
+    };
+
     /**
       * The destructor.
       */
@@ -38,7 +44,7 @@ public:
     /**
       * The default constructor.
       */
-    crc32();
+    crc32(seed_mode_t seed_mode = seed_mode_ccitt);
 
     /**
       * The copy constructor.

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2000, 2002, 2003, 2005-2007 Peter Miller
+//      Copyright (C) 1998-2000, 2002, 2003, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -134,14 +134,14 @@ public:
     virtual void disable_checksum_validation() = 0;
 
     /**
-      * The command_line method is used by arglex_srec::get_input when
-      * parsing the command line, to give the format an opportunity
-      * to grab extra arguments off the command line.  The default
-      * implementation does nothing.
+      * The command_line method is used by arglex_srec::get_input
+      * when parsing the command line, to give a format or filter an
+      * opportunity to grab extra arguments off the command line.  The
+      * default implementation does nothing.
       *
       * @param cmdln
-      *     Where to obtain information about the curreent parse stat of
-      *     the command line.
+      *     Where to obtain information about the curreent parse state
+      *     of the command line.
       */
     virtual void command_line(srec_arglex *cmdln);
 

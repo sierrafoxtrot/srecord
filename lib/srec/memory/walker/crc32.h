@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000, 2002, 2006, 2007 Peter Miller
+//      Copyright (C) 2000, 2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 
 #ifndef INCLUDE_SREC_MEMORY_WALKER_CRC32_H
 #define INCLUDE_SREC_MEMORY_WALKER_CRC32_H
-
 
 #include <lib/crc32.h>
 #include <lib/srec/memory/walker.h>
@@ -40,7 +39,7 @@ public:
     /**
       * The default constructor.
       */
-    srec_memory_walker_crc32();
+    srec_memory_walker_crc32(crc32::seed_mode_t seed_mode);
 
     // See base class for documentation.
     void observe(unsigned long, const void *, int);

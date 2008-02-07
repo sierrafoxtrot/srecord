@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2002, 2006, 2007 Peter Miller
+//      Copyright (C) 2000-2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -39,6 +39,10 @@
 
 
 #include <lib/crc32.h>
+
+
+static unsigned long ccitt_seed = 0xFFFFFFFF;
+static unsigned long xmodem_seed = 0;
 
 
 //
@@ -81,27 +85,42 @@ static unsigned long table[256];
 static void
 calculate_table()
 {
-        int     b, i;
-        unsigned long v;
-
-        for (b = 0; b < 256; ++b)
-        {
-                for (v = b, i = 8; --i >= 0; )
-                        v = (v & 1) ? ((v >> 1) ^ POLYNOMIAL) : (v >> 1);
-                table[b] = v;
-        }
+    for (unsigned b = 0; b < 256; ++b)
+    {
+        unsigned long v = b;
+        int i = 8;
+        for (; --i >= 0; )
+            v = (v & 1) ? ((v >> 1) ^ POLYNOMIAL) : (v >> 1);
+        table[b] = v;
+    }
 }
 
-crc32::crc32()
-        : state(0xFFFFFFFF)
+
+static unsigned long
+initial_state_from_seed_mode(crc32::seed_mode_t seed_mode)
 {
-        if (!table[1])
-                calculate_table();
+    switch (seed_mode)
+    {
+    case crc32::seed_mode_ccitt:
+        return ccitt_seed;
+
+    case crc32::seed_mode_xmodem:
+        return xmodem_seed;
+    }
+    return ccitt_seed;
 }
 
 
-crc32::crc32(const crc32 &arg)
-        : state(arg.state)
+crc32::crc32(seed_mode_t seed_mode) :
+    state(initial_state_from_seed_mode(seed_mode))
+{
+    if (!table[1])
+        calculate_table();
+}
+
+
+crc32::crc32(const crc32 &arg) :
+    state(arg.state)
 {
 }
 
@@ -109,11 +128,11 @@ crc32::crc32(const crc32 &arg)
 crc32 &
 crc32::operator=(const crc32 &arg)
 {
-        if (this != &arg)
-        {
-                state = arg.state;
-        }
-        return *this;
+    if (this != &arg)
+    {
+        state = arg.state;
+    }
+    return *this;
 }
 
 
@@ -125,54 +144,55 @@ crc32::~crc32()
 static inline unsigned long
 UPDC32(unsigned char octet, unsigned long crc)
 {
-        // The original code had this as a #define
-        return table[(crc ^ octet) & 0xFF] ^ (crc >> 8);
+    // The original code had this as a #define
+    return table[(crc ^ octet) & 0xFF] ^ (crc >> 8);
 }
 
 
 void
 crc32::next(unsigned char x)
 {
-        state = UPDC32(x, state);
+    state = UPDC32(x, state);
 }
 
 
 void
 crc32::nextbuf(const void *data, size_t nbytes)
 {
-        const unsigned char *dp = (unsigned char *)data;
-        while (nbytes > 0)
-        {
-            state = UPDC32(*dp, state);
-            ++dp;
-            --nbytes;
-        }
+    const unsigned char *dp = (const unsigned char *)data;
+    while (nbytes > 0)
+    {
+        state = UPDC32(*dp, state);
+        ++dp;
+        --nbytes;
+    }
 }
+
 
 unsigned long
 crc32::get()
-        const
+    const
 {
 #if 1
-        return ~state;
+    return ~state;
 #else
-        //
-        // The crc_32.c program floating around on the Internet prints
-        // two numbers.  The first is calculated as follows (the second
-        // is the CRC as returned 5 lines back).  It appears to be an
-        // attempt to embed the crc into the data, and tell you what
-        // the CRC should be if you calculate the CRC over the data and
-        // the CRC.  However, it makes the assumption that you store
-        // the CRC little-endian, and it doesn't do the final bit-not.
-        //
-        // To simulate this (or something very much like it) try
-        //      srec_cat <file> -lecrc32 <addr> -lecrc32 <addr+4>
-        //
-        unsigned long temp = state;
-        temp = UPDC32( ~state        & 0xFF, temp);
-        temp = UPDC32((~state >>  8) & 0xFF, temp);
-        temp = UPDC32((~state >> 16) & 0xFF, temp);
-        temp = UPDC32((~state >> 24) & 0xFF, temp);
-        return temp; // I wonder why this isn't bit-not-ed?
+    //
+    // The crc_32.c program floating around on the Internet prints
+    // two numbers.  The first is calculated as follows (the second
+    // is the CRC as returned 5 lines back).  It appears to be an
+    // attempt to embed the crc into the data, and tell you what
+    // the CRC should be if you calculate the CRC over the data and
+    // the CRC.  However, it makes the assumption that you store
+    // the CRC little-endian, and it doesn't do the final bit-not.
+    //
+    // To simulate this (or something very much like it) try
+    //      srec_cat <file> -lecrc32 <addr> -lecrc32 <addr+4>
+    //
+    unsigned long temp = state;
+    temp = UPDC32( ~state    & 0xFF, temp);
+    temp = UPDC32((~state >>  8) & 0xFF, temp);
+    temp = UPDC32((~state >> 16) & 0xFF, temp);
+    temp = UPDC32((~state >> 24) & 0xFF, temp);
+    return temp; // I wonder why this isn't bit-not-ed?
 #endif
 }
