@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2000, 2002-2007 Peter Miller
+//      Copyright (C) 1998-2000, 2002-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -186,6 +186,13 @@ public:
       * representation of this interval.
       */
     string representation() const;
+
+    /**
+      * The flatten method is used to convert an interval with holes
+      * in it to a simple interval with no holes in it, by using the
+      * mimimum and maximum values.
+      */
+    interval flatten() const;
 
 private:
     /**

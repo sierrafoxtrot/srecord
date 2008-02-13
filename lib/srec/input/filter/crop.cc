@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001, 2002, 2006, 2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2001, 2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -22,10 +22,10 @@
 #include <lib/srec/record.h>
 
 
-srec_input_filter_crop::srec_input_filter_crop(srec_input *a1,
-        const interval &a2) :
-    srec_input_filter(a1),
-    range(a2),
+srec_input_filter_crop::srec_input_filter_crop(srec_input *a_deeper,
+        const interval &a_range) :
+    srec_input_filter(a_deeper),
+    range(a_range),
     data(),
     data_range()
 {
@@ -52,12 +52,14 @@ srec_input_filter_crop::read(srec_record &record)
             // If the input is exhausted, we are done.
             //
             if (!srec_input_filter::read(data))
+            {
                 return 0;
+            }
             switch (data.get_type())
             {
             default:
                 //
-                // If the input is of a typoe we don't
+                // If the input is of a type we don't
                 // care about, pass it through.
                 //
                 record = data;

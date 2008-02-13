@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2004, 2006, 2007 Peter Miller
+//      Copyright (C) 2004, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -73,25 +73,26 @@ srec_arglex::get_interval_factor(const char *name)
                 );
                 // NOTREACHED
             }
-            return interval(n1, n2);
+            interval result(n1, n2);
+            return result;
         }
 
     case token_within:
         {
             token_next();
             srec_input *ifp = get_input();
-            interval over = srec_input_interval(ifp);
+            interval result = srec_input_interval(ifp);
             delete ifp;
-            return over;
+            return result;
         }
 
     case token_over:
         {
             token_next();
             srec_input *ifp = get_input();
-            interval over = srec_input_interval(ifp);
+            interval result = srec_input_interval(ifp);
             delete ifp;
-            return interval(over.get_lowest(), over.get_highest());
+            return result.flatten();
         }
     }
 }
