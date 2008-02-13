@@ -1,6 +1,6 @@
 dnl
 dnl  srecord - manipulate eprom load files
-dnl  Copyright (C) 1998, 1999, 2002, 2006, 2007 Peter Miller
+dnl  Copyright (C) 1998, 1999, 2002, 2006-2008 Peter Miller
 dnl
 dnl  This program is free software; you can redistribute it and/or modify
 dnl  it under the terms of the GNU General Public License as published by
@@ -96,9 +96,42 @@ then
 fi
 AC_SUBST(HAVE_GROFF)
 
+#
+# Evaluate some of the variables, to remove ${prefix} references.
+# This way, they can be used in C programs and Roff input.
+# Make sure that srecord is mentioned in the libdir and datadir paths;
+# add it if it is not already there.
+#
+test "x$prefix" = xNONE && prefix="${ac_default_prefix-/usr/local}"
+test "x$exec_prefix" = xNONE && exec_prefix="$prefix"
+eval "exec_prefix=$exec_prefix"
+eval "bindir=$bindir"
+eval "datarootdir=$datarootdir"
+eval "mandir=$mandir"
+eval "libdir=$libdir"
+eval "datadir=$datadir"
+case "$libdir" in
+*/srecord/* | */srecord )
+    ;;
+*)
+    libdir="${libdir}/srecord"
+    AC_MSG_RESULT([Rewriting --libdir=$libdir])
+    ;;
+esac
+case "$datadir" in
+    */srecord/* | */srecord )
+    ;;
+*)
+    datadir="${datadir}/srecord"
+    AC_MSG_RESULT([Rewriting --datadir=$datadir])
+;;
+esac
+
+
+
 AH_TOP([/*
  * srecord - manipulate eprom load files
- * Copyright (C) 1998-2002, 2006, 2007 Peter Miller
+ * Copyright (C) 1998-2002, 2006-2008 Peter Miller
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
