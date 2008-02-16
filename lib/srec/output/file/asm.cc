@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 #include <lib/srec/arglex.h>
 #include <lib/srec/output/file/asm.h>
 #include <lib/srec/record.h>
-#include <cstdio> // for sprintf
 
 
 srec_output_file_asm::srec_output_file_asm(const string &filename) :
