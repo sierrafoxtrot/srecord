@@ -17,6 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
+#include <cstring>
+
 #include <lib/interval.h>
 #include <lib/srec/output/file/basic.h>
 #include <lib/srec/record.h>

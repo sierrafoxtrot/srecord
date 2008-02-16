@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001-2003, 2005-2007 Peter Miller
+//      Copyright (C) 2001-2003, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
+#include <cstring>
 
 #include <lib/srec/input/file/fastload.h>
 #include <lib/srec/record.h>
