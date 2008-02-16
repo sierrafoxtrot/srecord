@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2001, 2005-2007 Peter Miller
+.\"     Copyright (C) 1998, 2001, 2005-2008 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -41,12 +41,12 @@ obtain input about eprom load files.
 It reads the files specified, and then presents statistics about them.
 These statistics include: the file header if any, the start address if
 any, and the address ranges covered by the data if any.
-.so o_input.so
+.so man/man1/o_input.so
 .br
 .ne 1i
 .SH OPTIONS
 The following options are understood:
-.so o_at.so
+.so man/man1/o_at.so
 .TP 8n
 .B -Help
 .br
@@ -55,9 +55,9 @@ Provide some help with using the
 program.
 .TP 8n
 \fB\-IGnore_Checksums\fP
-.so o_ignore_checksums.so
-.so o_sequence.so
-.so o_multiple.so
+.so man/man1/o_ignore_checksums.so
+.so man/man1/o_sequence.so
+.so man/man1/o_multiple.so
 .TP 8n
 .B -VERSion
 .br
@@ -66,6 +66,6 @@ Print the version of the
 program being executed.
 .PP
 All other options will produce a diagnostic error.
-.so z_options.so
-.so z_exit.so
-.so z_copyright.so
+.so man/man1/z_options.so
+.so man/man1/z_exit.so
+.so man/man1/z_copyright.so

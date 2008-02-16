@@ -23,7 +23,7 @@ AC_PROG_INSTALL
 AC_PROG_YACC
 AC_PROG_RANLIB
 AC_CHECK_PROGS(GROFF, groff roff)
-AC_CHECK_PROGS(SOELIM, roffpp gsoelim soelim)
+AC_CHECK_PROGS(SOELIM, gsoelim soelim roffpp)
 AC_CHECK_FUNCS(snprintf vsnprintf)
 
 #

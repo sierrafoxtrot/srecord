@@ -1,6 +1,6 @@
 #
 # srecord - manipulate eprom load files
-# Copyright (C) 1998, 2006, 2007 Peter Miller
+# Copyright (C) 1998, 2006-2008 Peter Miller
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ while read f
 do
         echo ".br"
         echo ".ne 3i"
-        echo ".so $f"
+        echo ".so etc/$f"
 done
 exit 0
 # vim:ts=8:sw=4:et

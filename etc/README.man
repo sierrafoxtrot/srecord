@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2000-2004, 2006, 2007 Peter Miller
+.\"     Copyright (C) 1998, 2000-2004, 2006-2008 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 .\"     <http://www.gnu.org/licenses/>.
 .\"
 .TH "Read Me" SRecord SRecord "Reference Manual"
-.so version.so
+.so etc/version.so
 .hy 0
 .ad l
 .SH NAME
@@ -315,4 +315,4 @@ This section details the various features and bug fixes of the various
 releases.  For excruciating and complete detail, and also credits for
 those of you who have generously sent me suggestions and bug reports,
 see the \fIetc/CHANGES.*\fP files.
-.so new.so
+.so etc/new.so
