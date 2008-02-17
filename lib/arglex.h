@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2002, 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2002, 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -36,6 +36,11 @@
 class arglex
 {
 public:
+    /**
+      * The destructor.
+      */
+    virtual ~arglex();
+
     /**
       * The "normal" command line tokens common to all programs.
       */
@@ -104,10 +109,44 @@ public:
       */
     void fatal_error(const char *fmt, ...)                  FORMAT_PRINTF(2, 3);
 
+    /**
+      * The compare class method is used to compare a command line string
+      * with a formal spec of the option, to see if they compare equal.
+      *
+      * The actual is case-insensitive.  Uppercase in the formal means a
+      * mandatory character, while lower case means optional.  Any number of
+      * consecutive optional characters may be supplied by actual, but none
+      * may be skipped, unless all are skipped to the next non-lower-case
+      * letter.
+      *
+      * The underscore (_) is like a lower-case minus, it matches "", "-"
+      * and "_".
+      *
+      * The "*" in a pattern matches everything to the end of the line,
+      * anything after the "*" is ignored.  The rest of the line is pointed
+      * to by the "partial" variable as a side-effect (else it will be 0).
+      * This rather ugly feature is to support "-I./dir" type options.
+      *
+      * A backslash in a pattern nominates an exact match required, case
+      * must matche excatly here.  This rather ugly feature is to support
+      * "-I./dir" type options.
+      *
+      * For example: "-project" and "-P' both match "-Project", as does
+      * "-proJ", but "-prj" does not.
+      *
+      * For example: "-devDir" and "-d_d' both match "-Development_Directory",
+      * but "-dvlpmnt_drctry" does not.
+      *
+      * For example: to match include path specifications, use a pattern
+      * such as "-\\I*", and the partial global variable will have the path
+      * in it on return.
+      */
+    static bool compare(const char *formal, const char *actual);
+
 private:
     /**
       * The arguments instance variable is used to remember the
-      * remaining command lie arguments.
+      * remaining command line arguments.
       */
     std::list<std::string> arguments;
 
@@ -176,11 +215,6 @@ public:
       * passed to main().  Not manipulation is required.
       */
     arglex(int argc, char **argv);
-
-    /**
-      * The destructor.
-      */
-    virtual ~arglex();
 
     /**
       * The token_cur method is used to get the type of the current
@@ -290,39 +324,5 @@ private:
       */
     void read_arguments_file(const char *filename);
 };
-
-/**
-  * The arglex_compare function is used to compare a command line string
-  * with a formal spec of the option, to see if they compare equal.
-  *
-  * The actual is case-insensitive.  Uppercase in the formal means a
-  * mandatory character, while lower case means optional.  Any number of
-  * consecutive optional characters may be supplied by actual, but none
-  * may be skipped, unless all are skipped to the next non-lower-case
-  * letter.
-  *
-  * The underscore (_) is like a lower-case minus, it matches "", "-"
-  * and "_".
-  *
-  * The "*" in a pattern matches everything to the end of the line,
-  * anything after the "*" is ignored.  The rest of the line is pointed
-  * to by the "partial" variable as a side-effect (else it will be 0).
-  * This rather ugly feature is to support "-I./dir" type options.
-  *
-  * A backslash in a pattern nominates an exact match required, case
-  * must matche excatly here.  This rather ugly feature is to support
-  * "-I./dir" type options.
-  *
-  * For example: "-project" and "-P' both match "-Project", as does
-  * "-proJ", but "-prj" does not.
-  *
-  * For example: "-devDir" and "-d_d' both match "-Development_Directory",
-  * but "-dvlpmnt_drctry" does not.
-  *
-  * For example: to match include path specifications, use a pattern
-  * such as "-\\I*", and the partial global variable will have the path
-  * in it on return.
-  */
-bool arglex_compare(const char *formal, const char *actual);
 
 #endif // INCLUDE_ARGLEX_H

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2006, 2007 Peter Miller
+//      Copyright (C) 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -36,10 +36,18 @@ public:
       */
     virtual ~srec_input_filter_sequence();
 
+private:
     /**
       * The constructor.
       */
-    srec_input_filter_sequence(srec_input *deeper);
+    srec_input_filter_sequence(srec_input::pointer deeper);
+
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      */
+    static pointer create(srec_input::pointer deeper);
 
 protected:
     // See base class for documentation.

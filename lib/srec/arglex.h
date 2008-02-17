@@ -21,9 +21,9 @@
 #define INCLUDE_SREC_ARGLEX_H
 
 #include <lib/arglex.h>
+#include <lib/srec/input.h>
 
 class interval; // forward
-class srec_input; // forward
 class srec_output; // forward
 
 /**
@@ -165,7 +165,7 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    srec_input *get_input();
+    srec_input::pointer get_input();
 
     /**
       * The get_output method is used to parse an output specification
@@ -331,7 +331,7 @@ private:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    srec_input *get_simple_input();
+    srec_input::pointer get_simple_input();
 
     /**
       * The default constructor.  Do not use.

@@ -1,6 +1,6 @@
 //
 //      srecord - The "srecord" program.
-//      Copyright (C) 2007 Peter Miller
+//      Copyright (C) 2007, 2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -30,6 +30,14 @@ srec_input_generator_constant::srec_input_generator_constant(
     srec_input_generator(a_range),
     datum(a_datum)
 {
+}
+
+
+srec_input::pointer
+srec_input_generator_constant::create(const interval &a_range,
+    unsigned char a_datum)
+{
+    return pointer(new srec_input_generator_constant(a_range, a_datum));
 }
 
 

@@ -80,18 +80,16 @@ srec_arglex::get_interval_factor(const char *name)
     case token_within:
         {
             token_next();
-            srec_input *ifp = get_input();
+            srec_input::pointer ifp = get_input();
             interval result = srec_input_interval(ifp);
-            delete ifp;
             return result;
         }
 
     case token_over:
         {
             token_next();
-            srec_input *ifp = get_input();
+            srec_input::pointer ifp = get_input();
             interval result = srec_input_interval(ifp);
-            delete ifp;
             return result.flatten();
         }
     }

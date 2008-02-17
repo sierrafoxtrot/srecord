@@ -22,8 +22,13 @@
 #include <lib/srec/record.h>
 
 
-srec_input_filter_crop::srec_input_filter_crop(srec_input *a_deeper,
-        const interval &a_range) :
+srec_input_filter_crop::~srec_input_filter_crop()
+{
+}
+
+
+srec_input_filter_crop::srec_input_filter_crop(
+        const srec_input::pointer &a_deeper, const interval &a_range) :
     srec_input_filter(a_deeper),
     range(a_range),
     data(),
@@ -32,8 +37,11 @@ srec_input_filter_crop::srec_input_filter_crop(srec_input *a_deeper,
 }
 
 
-srec_input_filter_crop::~srec_input_filter_crop()
+srec_input::pointer
+srec_input_filter_crop::create(const srec_input::pointer &a_deeper,
+    const interval &a_range)
 {
+    return pointer(new srec_input_filter_crop(a_deeper, a_range));
 }
 
 

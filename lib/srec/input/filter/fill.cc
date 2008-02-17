@@ -24,8 +24,14 @@
 #include <lib/srec/record.h>
 
 
-srec_input_filter_fill::srec_input_filter_fill(srec_input *a1, int a2,
-        const interval &a3) :
+srec_input_filter_fill::~srec_input_filter_fill()
+{
+    delete [] filler_block;
+}
+
+
+srec_input_filter_fill::srec_input_filter_fill(const srec_input::pointer &a1,
+        int a2, const interval &a3) :
     srec_input_filter(a1),
     filler_value(a2),
     filler_block(0),
@@ -34,10 +40,11 @@ srec_input_filter_fill::srec_input_filter_fill(srec_input *a1, int a2,
 }
 
 
-srec_input_filter_fill::~srec_input_filter_fill()
+srec_input::pointer
+srec_input_filter_fill::create(const srec_input::pointer &a_deeper,
+    int a_value, const interval &a_range)
 {
-    if (filler_block)
-        delete [] filler_block;
+    return pointer(new srec_input_filter_fill(a_deeper, a_value, a_range));
 }
 
 

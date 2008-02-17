@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2007 Peter Miller
+//      Copyright (C) 2000-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@
 #include <lib/srec/input/file/fastload.h>
 #include <lib/srec/input/file/formatted_binary.h>
 #include <lib/srec/input/file/four_packed_code.h>
-#include <lib/srec/input/file/guess.h>
 #include <lib/srec/input/file/intel.h>
 #include <lib/srec/input/file/intel16.h>
 #include <lib/srec/input/file/mos_tech.h>
@@ -49,203 +48,44 @@
 #include <lib/srec/record.h>
 
 
-static srec_input *
-create_aomf(const string &fn)
-{
-    return new srec_input_file_aomf(fn);
-}
-
-static srec_input *
-create_ascii_hex(const string &fn)
-{
-    return new srec_input_file_ascii_hex(fn);
-}
-
-static srec_input *
-create_atmel_generic(const string &fn)
-{
-    return new srec_input_file_atmel_generic(fn);
-}
-
-static srec_input *
-create_brecord(const string &fn)
-{
-    return new srec_input_file_brecord(fn);
-}
-
-static srec_input *
-create_dec_binary(const string &fn)
-{
-    return new srec_input_file_dec_binary(fn);
-}
-
-static srec_input *
-create_formatted_binary(const string &fn)
-{
-    return new srec_input_file_formatted_binary(fn);
-}
-
-static srec_input *
-create_four_packed_code(const string &fn)
-{
-    return new srec_input_file_four_packed_code(fn);
-}
-
-static srec_input *
-create_emon52(const string &fn)
-{
-    return new srec_input_file_emon52(fn);
-}
-
-static srec_input *
-create_fairchild(const string &fn)
-{
-    return new srec_input_file_fairchild(fn);
-}
-
-static srec_input *
-create_fastload(const string &fn)
-{
-    return new srec_input_file_fastload(fn);
-}
-
-static srec_input *
-create_intel(const string &fn)
-{
-    return new srec_input_file_intel(fn);
-}
-
-static srec_input *
-create_intel16(const string &fn)
-{
-    return new srec_input_file_intel16(fn);
-}
-
-static srec_input *
-create_mos_tech(const string &fn)
-{
-    return new srec_input_file_mos_tech(fn);
-}
-
-static srec_input *
-create_needham(const string &fn)
-{
-    return new srec_input_file_needham(fn);
-}
-
-static srec_input *
-create_ohio_scientific(const string &fn)
-{
-    return new srec_input_file_os65v(fn);
-}
-
-static srec_input *
-create_signetics(const string &fn)
-{
-    return new srec_input_file_signetics(fn);
-}
-
-static srec_input *
-create_spasm(const string &fn)
-{
-    // don't we need to test the big-endian and little-endian forms?
-    // but they are indistinguishable.
-    return new srec_input_file_spasm(fn);
-}
-
-static srec_input *
-create_spectrum(const string &fn)
-{
-    return new srec_input_file_spectrum(fn);
-}
-
-static srec_input *
-create_srecord(const string &fn)
-{
-    return new srec_input_file_srecord(fn);
-}
-
-static srec_input *
-create_stewie(const string &fn)
-{
-    return new srec_input_file_stewie(fn);
-}
-
-static srec_input *
-create_tektronix(const string &fn)
-{
-    return new srec_input_file_tektronix(fn);
-}
-
-static srec_input *
-create_tektronix_extended(const string &fn)
-{
-    return new srec_input_file_tektronix_extended(fn);
-}
-
-static srec_input *
-create_ti_tagged(const string &fn)
-{
-    return new srec_input_file_ti_tagged(fn);
-}
-
-static srec_input *
-create_ti_txt(const string &fn)
-{
-    return new srec_input_file_ti_txt(fn);
-}
-
-static srec_input *
-create_vmem(const string &fn)
-{
-    return new srec_input_file_vmem(fn);
-}
-
-static srec_input *
-create_wilson(const string &fn)
-{
-    return new srec_input_file_wilson(fn);
-}
-
-
-typedef srec_input *(*func_p)(const string &file_name);
+typedef srec_input::pointer (*func_p)(const string &file_name);
 
 static func_p table[] =
 {
-    create_aomf,
-    create_ascii_hex,
-    create_atmel_generic,
-    create_brecord,
-    create_dec_binary,
-    create_emon52,
-    create_fairchild,
-    create_fastload,
-    create_formatted_binary,
-    create_four_packed_code,
-    create_intel,
-    create_intel16,
-    create_mos_tech,
-    create_needham,
-    create_ohio_scientific,
-    create_signetics,
-    create_spasm,
-    create_spectrum,
-    create_srecord,
-    create_stewie,
-    create_tektronix,
-    create_tektronix_extended,
-    create_ti_tagged,
-    create_ti_txt,
-    create_vmem,
-    create_wilson,
+    srec_input_file_aomf::create,
+    srec_input_file_ascii_hex::create,
+    srec_input_file_atmel_generic::create_be,
+    srec_input_file_brecord::create,
+    srec_input_file_dec_binary::create,
+    srec_input_file_emon52::create,
+    srec_input_file_fairchild::create,
+    srec_input_file_fastload::create,
+    srec_input_file_formatted_binary::create,
+    srec_input_file_four_packed_code::create,
+    srec_input_file_intel::create,
+    srec_input_file_intel16::create,
+    srec_input_file_mos_tech::create,
+    srec_input_file_needham::create,
+    srec_input_file_os65v::create,
+    srec_input_file_signetics::create,
+    srec_input_file_spasm::create_be,
+    srec_input_file_spectrum::create,
+    srec_input_file_srecord::create,
+    srec_input_file_stewie::create,
+    srec_input_file_tektronix::create,
+    srec_input_file_tektronix_extended::create,
+    srec_input_file_ti_tagged::create,
+    srec_input_file_ti_txt::create,
+    srec_input_file_vmem::create,
+    srec_input_file_wilson::create,
 };
 
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 #define ENDOF(a) ((a) + SIZEOF(a))
 
 
-srec_input *
-srec_input_file_guess(const string &fn)
+srec_input::pointer
+srec_input_file::guess(const string &fn)
 {
     if (fn.empty() || fn == "-")
     {
@@ -265,7 +105,7 @@ srec_input_file_guess(const string &fn)
         // Create a new file reader
         //
         func_p func = *tp;
-        srec_input *ifp = func(fn);
+        srec_input::pointer ifp = func(fn);
         try
         {
             //
@@ -289,7 +129,7 @@ srec_input_file_guess(const string &fn)
                 // some data, also (c) we need a chance to use the
                 // input::command_line() method.
                 //
-                delete ifp;
+                ifp.reset();
 
                 //
                 // Return a brand-new file reader.
@@ -305,7 +145,7 @@ srec_input_file_guess(const string &fn)
         // Wrong format.
         // Toss this one, and try another.
         //
-        delete ifp;
+        ifp.reset();
     }
 
     //
@@ -316,5 +156,5 @@ srec_input_file_guess(const string &fn)
         "%s: unable to determine the file format, assuming binary",
         fn.c_str()
     );
-    return new srec_input_file_binary(fn);
+    return srec_input_file_binary::create(fn);
 }

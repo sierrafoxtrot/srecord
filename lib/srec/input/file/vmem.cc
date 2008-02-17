@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2003, 2005-2007 Peter Miller
+//      Copyright (C) 2003, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <cctype>
 #include <lib/srec/input/file/vmem.h>
 #include <lib/srec/record.h>
@@ -33,6 +32,13 @@ srec_input_file_vmem::srec_input_file_vmem(const string &a_file_name) :
     seen_some_input(false),
     address(0)
 {
+}
+
+
+srec_input::pointer
+srec_input_file_vmem::create(const string &a_file_name)
+{
+    return pointer(new srec_input_file_vmem(a_file_name));
 }
 
 

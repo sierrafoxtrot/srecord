@@ -41,8 +41,8 @@ main(int argc, char **argv)
     srec_arglex cmdline(argc, argv);
     cmdline.usage_tail_set("<file1> <file2>");
     cmdline.token_first();
-    srec_input *if1 = 0;
-    srec_input *if2 = 0;
+    srec_input::pointer if1;
+    srec_input::pointer if2;
     bool verbose = false;
     while (cmdline.token_cur() != srec_arglex::token_eoln)
     {
@@ -136,12 +136,8 @@ main(int argc, char **argv)
         }
     }
 
-    delete if1;
-    delete if2;
-
     //
     // success
     //
-    exit(0);
     return 0;
 }

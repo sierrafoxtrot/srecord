@@ -1,6 +1,6 @@
 //
 //      srecord - The "srecord" program.
-//      Copyright (C) 2007 Peter Miller
+//      Copyright (C) 2007, 2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -35,10 +35,18 @@ public:
       */
     virtual ~srec_input_generator_constant();
 
+private:
     /**
       * The constructor.
       */
     srec_input_generator_constant(const interval &range, unsigned char datum);
+
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      */
+    static pointer create(const interval &range, unsigned char datum);
 
 protected:
     // See base class for documentation.

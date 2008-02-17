@@ -17,7 +17,6 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <lib/srec/arglex.h>
 #include <lib/srec/input/filter/crc32.h>
 #include <lib/srec/memory.h>
@@ -32,8 +31,9 @@ srec_input_filter_crc32::~srec_input_filter_crc32()
 }
 
 
-srec_input_filter_crc32::srec_input_filter_crc32(srec_input *deeper_arg,
-        unsigned long address_arg, int order_arg) :
+srec_input_filter_crc32::srec_input_filter_crc32(
+        const srec_input::pointer &deeper_arg, unsigned long address_arg,
+        int order_arg) :
     srec_input_filter(deeper_arg),
     address(address_arg),
     order(order_arg),
@@ -44,6 +44,14 @@ srec_input_filter_crc32::srec_input_filter_crc32(srec_input *deeper_arg,
     have_forwarded_start_address(false),
     seed_mode(crc32::seed_mode_ccitt)
 {
+}
+
+
+srec_input::pointer
+srec_input_filter_crc32::create(const srec_input::pointer &a_deeper,
+    unsigned long a_address, int a_order)
+{
+    return pointer(new srec_input_filter_crc32(a_deeper, a_address, a_order));
 }
 
 

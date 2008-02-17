@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2007 Peter Miller
+//      Copyright (C) 1998-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #ifndef INCLUDE_SREC_INPUT_FILE_H
 #define INCLUDE_SREC_INPUT_FILE_H
 
-
 #include <string>
 using namespace std;
 #include <lib/srec/input.h>
@@ -39,6 +38,23 @@ public:
       */
     virtual ~srec_input_file();
 
+    /**
+      * The guess class method is used to open a file of an unknown
+      * type.  It attempts all of the know formats one after the other.
+      *
+      * @param file_name
+      *     The name of the file to be opened.
+      */
+    static pointer guess(const string &file_name);
+
+    /**
+      * The ignore_all_checksums method is used to set the global
+      * ignore checksums flag.  This is usually the result of an
+      * --ignore-checksums command line option.
+      */
+    static void ignore_all_checksums() { ignore_checksums_default = true; }
+
+protected:
     // See base class for documentation.
     virtual string filename() const;
 
@@ -47,13 +63,6 @@ public:
 
     // See base class for documentation.
     void disable_checksum_validation();
-
-    /**
-      * The ignore_all_checksums method is used to set the global
-      * ignore checksums flag.  This is usually the result of an
-      * --ignore-checksums command line option.
-      */
-    static void ignore_all_checksums() { ignore_checksums_default = true; }
 
 protected:
     /**

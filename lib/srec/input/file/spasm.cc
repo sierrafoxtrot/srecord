@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001-2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2001-2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,10 +17,14 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <lib/srec/input/file/spasm.h>
 #include <ctype.h>
 #include <lib/srec/record.h>
+
+
+srec_input_file_spasm::~srec_input_file_spasm()
+{
+}
 
 
 srec_input_file_spasm::srec_input_file_spasm(const string &a_file_name,
@@ -32,8 +36,17 @@ srec_input_file_spasm::srec_input_file_spasm(const string &a_file_name,
 }
 
 
-srec_input_file_spasm::~srec_input_file_spasm()
+srec_input::pointer
+srec_input_file_spasm::create_be(const string &a_file_name)
 {
+    return pointer(new srec_input_file_spasm(a_file_name));
+}
+
+
+srec_input::pointer
+srec_input_file_spasm::create(const string &a_file_name, bool bigend)
+{
+    return pointer(new srec_input_file_spasm(a_file_name, bigend));
 }
 
 

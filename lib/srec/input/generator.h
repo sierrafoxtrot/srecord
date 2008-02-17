@@ -1,6 +1,6 @@
 //
 //      srecord - The "srecord" program.
-//      Copyright (C) 2007 Peter Miller
+//      Copyright (C) 2007, 2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ public:
       * @param cmdln
       *     The command line arguments, for deciding what to generate.
       */
-    static srec_input *create(srec_arglex *cmdln);
+    static srec_input::pointer create(srec_arglex *cmdln);
 
 protected:
     // See base class for documentation

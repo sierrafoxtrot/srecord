@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2002, 2005-2007 Peter Miller
+//      Copyright (C) 2001, 2002, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 
 #ifndef INCLUDE_SREC_INPUT_FILTER_UNFILL_H
 #define INCLUDE_SREC_INPUT_FILTER_UNFILL_H
-
 
 #include <lib/srec/input/filter.h>
 #include <lib/srec/record.h>
@@ -45,6 +44,7 @@ public:
       */
     virtual ~srec_input_filter_unfill();
 
+private:
     /**
       * The constructor.
       *
@@ -55,8 +55,25 @@ public:
       * @param minimum
       *     The minimum run length to be considered a hole.
       */
-    srec_input_filter_unfill(srec_input *deeper, int value, int minimum);
+    srec_input_filter_unfill(const srec_input::pointer &deeper, int value,
+        int minimum);
 
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param deeper
+      *     The incoming data source to be filtered
+      * @param value
+      *     The value of the bytes to be turned into holes.
+      * @param minimum
+      *     The minimum run length to be considered a hole.
+      */
+    static pointer create(const srec_input::pointer &deeper, int value,
+        int minimum);
+
+protected:
     // See base class for documentation.
     virtual int read(srec_record &);
 

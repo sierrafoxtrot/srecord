@@ -36,12 +36,25 @@ public:
       */
     virtual ~srec_input_filter_crc32();
 
+private:
     /**
       * The constructor.
       */
-    srec_input_filter_crc32(srec_input *deeper, unsigned long address,
-        int order);
+    srec_input_filter_crc32(const srec_input::pointer &deeper,
+        unsigned long address, int order);
 
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param deeper
+      *     The incoming data source to be filtered
+      */
+    static pointer create(const srec_input::pointer &deeper,
+        unsigned long address, int order);
+
+protected:
     // See base class for documentation.
     virtual int read(srec_record &);
 

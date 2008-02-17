@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2006, 2007 Peter Miller
+//      Copyright (C) 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -36,6 +36,13 @@ srec_input_file_ti_txt::srec_input_file_ti_txt(const string &a_file_name) :
     token_value(0),
     address_warning(false)
 {
+}
+
+
+srec_input::pointer
+srec_input_file_ti_txt::create(const string &a_file_name)
+{
+    return pointer(new srec_input_file_ti_txt(a_file_name));
 }
 
 

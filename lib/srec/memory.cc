@@ -258,7 +258,7 @@ srec_memory::walk(srec_memory_walker *w)
 
 
 void
-srec_memory::reader(srec_input *ifp, bool barf)
+srec_memory::reader(const srec_input::pointer &ifp, bool barf)
 {
     srec_record record;
     while (ifp->read(record))

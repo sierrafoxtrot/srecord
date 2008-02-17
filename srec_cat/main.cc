@@ -36,7 +36,7 @@ main(int argc, char **argv)
 {
     srec_cat_arglex3 cmdline(argc, argv);
     cmdline.token_first();
-    typedef vector<srec_input *> infile_t;
+    typedef vector<srec_input::pointer> infile_t;
     infile_t infile;
     srec_output *outfile = 0;
     int line_length = 0;
@@ -144,9 +144,8 @@ main(int argc, char **argv)
         mp->set_header(header.c_str());
     for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
     {
-        srec_input *ifp = *it;
+        srec_input::pointer ifp = *it;
         mp->reader(ifp, true);
-        delete ifp;
     }
     if (start_address_set)
         mp->set_start_address(start_address);

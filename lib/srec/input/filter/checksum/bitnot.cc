@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2002, 2006, 2007 Peter Miller
+//      Copyright (C) 2000-2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -21,20 +21,32 @@
 #include <lib/srec/input/filter/checksum/bitnot.h>
 
 
-srec_input_filter_checksum_bitnot::srec_input_filter_checksum_bitnot(
-                srec_input *a1, int a2, int a3, int a4, int a5) :
-        srec_input_filter_checksum(a1, a2, a3, a4, a5)
+srec_input_filter_checksum_bitnot::~srec_input_filter_checksum_bitnot()
 {
 }
 
 
-srec_input_filter_checksum_bitnot::~srec_input_filter_checksum_bitnot()
+srec_input_filter_checksum_bitnot::srec_input_filter_checksum_bitnot(
+        srec_input::pointer a1, int a2, int a3, int a4, int a5) :
+    srec_input_filter_checksum(a1, a2, a3, a4, a5)
 {
+}
+
+
+srec_input::pointer
+srec_input_filter_checksum_bitnot::create(const srec_input::pointer &a_deeper,
+    int a2, int a3, int a4, int a5)
+{
+    return
+        pointer
+        (
+            new srec_input_filter_checksum_bitnot(a_deeper, a2, a3, a4, a5)
+        );
 }
 
 
 srec_input_filter_checksum::sum_t
 srec_input_filter_checksum_bitnot::calculate()
 {
-        return ~sum;
+    return ~sum;
 }

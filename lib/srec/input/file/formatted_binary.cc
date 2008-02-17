@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
 //      along with this program. If not, see
 //      <http://www.gnu.org/licenses/>.
 //
-
 
 #include <lib/srec/input/file/formatted_binary.h>
 #include <lib/srec/record.h>
@@ -36,6 +35,13 @@ srec_input_file_formatted_binary::srec_input_file_formatted_binary(
     trailer_seen(false),
     check_sum(0)
 {
+}
+
+
+srec_input::pointer
+srec_input_file_formatted_binary::create(const string &a_file_name)
+{
+    return pointer(new srec_input_file_formatted_binary(a_file_name));
 }
 
 

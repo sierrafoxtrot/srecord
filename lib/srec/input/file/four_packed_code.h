@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001-2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2001-2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #ifndef INCLUDE_SREC_INPUT_FILE_FOUR_PACKED_CODE_H
 #define INCLUDE_SREC_INPUT_FILE_FOUR_PACKED_CODE_H
 
-
 #include <lib/srec/input/file.h>
 
 /**
@@ -33,6 +32,12 @@ class srec_input_file_four_packed_code:
 {
 public:
     /**
+      * The destructor.
+      */
+    virtual ~srec_input_file_four_packed_code();
+
+private:
+    /**
       * The constructor.  The input will be read from the named file
       * (or the standard input if the name is "-").
       *
@@ -41,11 +46,19 @@ public:
       */
     srec_input_file_four_packed_code(const string &file_name);
 
+public:
     /**
-      * The destructor.
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param file_name
+      *     The name of the file to be read.
+      * @returns
+      *     smart pointer to new instance
       */
-    virtual ~srec_input_file_four_packed_code();
+    static pointer create(const string &file_name);
 
+protected:
     // See base class for documentation.
     int read(srec_record &);
 

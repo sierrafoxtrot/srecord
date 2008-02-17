@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2007 Peter Miller
+//      Copyright (C) 2007, 2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ public:
       */
     virtual ~srec_input_file_ti_tagged_16();
 
+private:
     /**
       * The constructor.
       *
@@ -42,6 +43,18 @@ public:
       *     The name of the file to be read.
       */
     srec_input_file_ti_tagged_16(const string &file_name);
+
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param file_name
+      *     The name of the file to be read.
+      * @returns
+      *     smart pointer to new instance
+      */
+    static pointer create(const string &file_name);
 
 protected:
     // See base class for documentation.

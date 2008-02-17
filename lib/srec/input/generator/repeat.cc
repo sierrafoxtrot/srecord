@@ -1,6 +1,6 @@
 //
 //      srecord - The "srecord" program.
-//      Copyright (C) 2007 Peter Miller
+//      Copyright (C) 2007, 2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -37,6 +37,14 @@ srec_input_generator_repeat::srec_input_generator_repeat(
     data = new unsigned char [length];
     for (size_t j = 0; j < length; ++j)
         data[j] = a_data[j];
+}
+
+
+srec_input::pointer
+srec_input_generator_repeat::create(const interval &a_range,
+    unsigned char *a_data, size_t a_length)
+{
+    return pointer(new srec_input_generator_repeat(a_range, a_data, a_length));
 }
 
 

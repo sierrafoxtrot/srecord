@@ -33,7 +33,6 @@ using namespace std;
 #include <lib/srec/input/file/fastload.h>
 #include <lib/srec/input/file/formatted_binary.h>
 #include <lib/srec/input/file/four_packed_code.h>
-#include <lib/srec/input/file/guess.h>
 #include <lib/srec/input/file/intel.h>
 #include <lib/srec/input/file/intel16.h>
 #include <lib/srec/input/file/mos_tech.h>
@@ -76,7 +75,7 @@ using namespace std;
 #include <lib/srec/input/interval.h>
 
 
-srec_input *
+srec_input::pointer
 srec_arglex::get_simple_input()
 {
     std::string fn = "-";
@@ -85,7 +84,7 @@ srec_arglex::get_simple_input()
     case token_paren_begin:
         {
             token_next();
-            srec_input *ifp = get_input();
+            srec_input::pointer ifp = get_input();
             if (token_cur() != token_paren_end)
             {
                 fatal_error
@@ -130,7 +129,7 @@ srec_arglex::get_simple_input()
     // determine the file format
     // and open the input file
     //
-    srec_input *ifp = 0;
+    srec_input::pointer ifp;
     switch (token_cur())
     {
     case token_motorola:
@@ -138,72 +137,72 @@ srec_arglex::get_simple_input()
         // fall through...
 
     default:
-        ifp = new srec_input_file_srecord(fn);
+        ifp = srec_input_file_srecord::create(fn);
         break;
 
     case token_aomf:
         token_next();
-        ifp = new srec_input_file_aomf(fn);
+        ifp = srec_input_file_aomf::create(fn);
         break;
 
     case token_ascii_hex:
         token_next();
-        ifp = new srec_input_file_ascii_hex(fn);
+        ifp = srec_input_file_ascii_hex::create(fn);
         break;
 
     case token_atmel_generic_be:
         token_next();
-        ifp = new srec_input_file_atmel_generic(fn, true);
+        ifp = srec_input_file_atmel_generic::create(fn, true);
         break;
 
     case token_atmel_generic_le:
         token_next();
-        ifp = new srec_input_file_atmel_generic(fn, false);
+        ifp = srec_input_file_atmel_generic::create(fn, false);
         break;
 
     case token_binary:
         token_next();
-        ifp = new srec_input_file_binary(fn);
+        ifp = srec_input_file_binary::create(fn);
         break;
 
     case token_brecord:
         token_next();
-        ifp = new srec_input_file_brecord(fn);
+        ifp = srec_input_file_brecord::create(fn);
         break;
 
     case token_cosmac:
         token_next();
-        ifp = new srec_input_file_cosmac(fn);
+        ifp = srec_input_file_cosmac::create(fn);
         break;
 
     case token_dec_binary:
         token_next();
-        ifp = new srec_input_file_dec_binary(fn);
+        ifp = srec_input_file_dec_binary::create(fn);
         break;
 
     case token_emon52:
         token_next();
-        ifp = new srec_input_file_emon52(fn);
+        ifp = srec_input_file_emon52::create(fn);
         break;
 
     case token_fairchild:
         token_next();
-        ifp = new srec_input_file_fairchild(fn);
+        ifp = srec_input_file_fairchild::create(fn);
         break;
 
     case token_fast_load:
         token_next();
-        ifp = new srec_input_file_fastload(fn);
+        ifp = srec_input_file_fastload::create(fn);
         break;
 
     case token_formatted_binary:
         token_next();
-        ifp = new srec_input_file_formatted_binary(fn);
+        ifp = srec_input_file_formatted_binary::create(fn);
         break;
 
     case token_four_packed_code:
         token_next();
-        ifp = new srec_input_file_four_packed_code(fn);
+        ifp = srec_input_file_four_packed_code::create(fn);
         break;
 
     case token_generator:
@@ -213,92 +212,92 @@ srec_arglex::get_simple_input()
 
     case token_guess:
         token_next();
-        ifp = srec_input_file_guess(fn);
+        ifp = srec_input_file::guess(fn);
         break;
 
     case token_intel:
         token_next();
-        ifp = new srec_input_file_intel(fn);
+        ifp = srec_input_file_intel::create(fn);
         break;
 
     case token_intel16:
         token_next();
-        ifp = new srec_input_file_intel16(fn);
+        ifp = srec_input_file_intel16::create(fn);
         break;
 
     case token_mos_tech:
         token_next();
-        ifp = new srec_input_file_mos_tech(fn);
+        ifp = srec_input_file_mos_tech::create(fn);
         break;
 
     case token_ohio_scientific:
         token_next();
-        ifp = new srec_input_file_os65v(fn);
+        ifp = srec_input_file_os65v::create(fn);
         break;
 
     case token_needham_hex:
         token_next();
-        ifp = new srec_input_file_needham(fn);
+        ifp = srec_input_file_needham::create(fn);
         break;
 
     case token_signetics:
         token_next();
-        ifp = new srec_input_file_signetics(fn);
+        ifp = srec_input_file_signetics::create(fn);
         break;
 
     case token_spasm_be:
         token_next();
-        ifp = new srec_input_file_spasm(fn, true);
+        ifp = srec_input_file_spasm::create(fn, true);
         break;
 
     case token_spasm_le:
         token_next();
-        ifp = new srec_input_file_spasm(fn, false);
+        ifp = srec_input_file_spasm::create(fn, false);
         break;
 
     case token_spectrum:
         token_next();
-        ifp = new srec_input_file_spectrum(fn);
+        ifp = srec_input_file_spectrum::create(fn);
         break;
 
     case token_stewie:
         token_next();
-        ifp = new srec_input_file_stewie(fn);
+        ifp = srec_input_file_stewie::create(fn);
         break;
 
     case token_tektronix:
         token_next();
-        ifp = new srec_input_file_tektronix(fn);
+        ifp = srec_input_file_tektronix::create(fn);
         break;
 
     case token_tektronix_extended:
         token_next();
-        ifp = new srec_input_file_tektronix_extended(fn);
+        ifp = srec_input_file_tektronix_extended::create(fn);
         break;
 
     case token_ti_tagged:
         token_next();
-        ifp = new srec_input_file_ti_tagged(fn);
+        ifp = srec_input_file_ti_tagged::create(fn);
         break;
 
     case token_ti_tagged_16:
         token_next();
-        ifp = new srec_input_file_ti_tagged_16(fn);
+        ifp = srec_input_file_ti_tagged_16::create(fn);
         break;
 
     case token_ti_txt:
         token_next();
-        ifp = new srec_input_file_ti_txt(fn);
+        ifp = srec_input_file_ti_txt::create(fn);
         break;
 
     case token_vmem:
         token_next();
-        ifp = new srec_input_file_vmem(fn);
+        ifp = srec_input_file_vmem::create(fn);
         break;
 
     case token_wilson:
         token_next();
-        ifp = new srec_input_file_wilson(fn);
+        ifp = srec_input_file_wilson::create(fn);
         break;
     }
     // assert(ifp);
@@ -321,7 +320,7 @@ srec_arglex::get_simple_input()
     // warn about data record sequences, if asked to
     //
     if (issue_sequence_warnings != 0)
-        ifp = new srec_input_filter_sequence(ifp);
+        ifp = srec_input_filter_sequence::create(ifp);
 
     //
     // report success
@@ -330,10 +329,10 @@ srec_arglex::get_simple_input()
 }
 
 
-srec_input *
+srec_input::pointer
 srec_arglex::get_input()
 {
-    srec_input *ifp = get_simple_input();
+    srec_input::pointer ifp = get_simple_input();
 
     //
     // apply any filters specified
@@ -344,12 +343,12 @@ srec_arglex::get_input()
         {
         case token_byte_swap:
             token_next();
-            ifp = new srec_input_filter_byte_swap(ifp);
+            ifp = srec_input_filter_byte_swap::create(ifp);
             break;
 
         case token_not:
             token_next();
-            ifp = new srec_input_filter_not(ifp);
+            ifp = srec_input_filter_not::create(ifp);
             break;
 
         case token_crc16_be:
@@ -357,7 +356,7 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address("-Big_Endian_CRC16", address);
-                ifp = new srec_input_filter_crc16(ifp, address, 0);
+                ifp = srec_input_filter_crc16::create(ifp, address, 0);
             }
             break;
 
@@ -366,7 +365,7 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address("-Little_Endian_CRC16", address);
-                ifp = new srec_input_filter_crc16(ifp, address, 1);
+                ifp = srec_input_filter_crc16::create(ifp, address, 1);
             }
             break;
 
@@ -375,7 +374,7 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address("-Big_Endian_CRC32", address);
-                ifp = new srec_input_filter_crc32(ifp, address, 0);
+                ifp = srec_input_filter_crc32::create(ifp, address, 0);
             }
             break;
 
@@ -384,18 +383,19 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address("-Little_Endian_CRC32", address);
-                ifp = new srec_input_filter_crc32(ifp, address, 1);
+                ifp = srec_input_filter_crc32::create(ifp, address, 1);
             }
             break;
 
         case token_crop:
             token_next();
-            ifp = new srec_input_filter_crop(ifp, get_interval("-Crop"));
+            ifp = srec_input_filter_crop::create(ifp, get_interval("-Crop"));
             break;
 
         case token_exclude:
             token_next();
-            ifp = new srec_input_filter_crop(ifp, -get_interval("-Exclude"));
+            ifp =
+                srec_input_filter_crop::create(ifp, -get_interval("-Exclude"));
             break;
 
         case token_fill:
@@ -403,7 +403,7 @@ srec_arglex::get_input()
                 token_next();
                 int filler = get_number("--Fill", 0, 255);
                 interval range = get_interval("--Fill");
-                ifp = new srec_input_filter_fill(ifp, filler, range);
+                ifp = srec_input_filter_fill::create(ifp, filler, range);
             }
             break;
 
@@ -411,7 +411,7 @@ srec_arglex::get_input()
             {
                 token_next();
                 interval range = get_interval("-Random_Fill");
-                ifp = new srec_input_filter_random_fill(ifp, range);
+                ifp = srec_input_filter_random_fill::create(ifp, range);
             }
             break;
 
@@ -424,7 +424,7 @@ srec_arglex::get_input()
                     fatal_error("-and value %d out of range (0..255)", filler);
                     // NOTREACHED
                 }
-                ifp = new srec_input_filter_and(ifp, filler);
+                ifp = srec_input_filter_and::create(ifp, filler);
             }
             break;
 
@@ -432,7 +432,7 @@ srec_arglex::get_input()
             {
                 token_next();
                 int filler = get_number("--xor", 0, 255);
-                ifp = new srec_input_filter_xor(ifp, filler);
+                ifp = srec_input_filter_xor::create(ifp, filler);
             }
             break;
 
@@ -440,7 +440,7 @@ srec_arglex::get_input()
             {
                 token_next();
                 int filler = get_number("--or value", 0, 255);
-                ifp = new srec_input_filter_or(ifp, filler);
+                ifp = srec_input_filter_or::create(ifp, filler);
             }
             break;
 
@@ -454,7 +454,7 @@ srec_arglex::get_input()
                 unsigned long address;
                 int nbytes;
                 get_address_and_nbytes("-Big_Endian_Length", address, nbytes);
-                ifp = new srec_input_filter_length(ifp, address, nbytes, 0);
+                ifp = srec_input_filter_length::create(ifp, address, nbytes, 0);
             }
             break;
 
@@ -469,7 +469,7 @@ srec_arglex::get_input()
                     address,
                     nbytes
                 );
-                ifp = new srec_input_filter_length(ifp, address, nbytes, 1);
+                ifp = srec_input_filter_length::create(ifp, address, nbytes, 1);
             }
             break;
 
@@ -483,7 +483,8 @@ srec_arglex::get_input()
                 unsigned long address;
                 int nbytes;
                 get_address_and_nbytes("-Big_Endian_MAximum", address, nbytes);
-                ifp = new srec_input_filter_maximum(ifp, address, nbytes, 0);
+                ifp =
+                    srec_input_filter_maximum::create(ifp, address, nbytes, 0);
             }
             break;
 
@@ -498,7 +499,8 @@ srec_arglex::get_input()
                     address,
                     nbytes
                 );
-                ifp = new srec_input_filter_maximum(ifp, address, nbytes, 1);
+                ifp =
+                    srec_input_filter_maximum::create(ifp, address, nbytes, 1);
             }
             break;
 
@@ -512,7 +514,8 @@ srec_arglex::get_input()
                 unsigned long address;
                 int nbytes;
                 get_address_and_nbytes("-Big_Endian_MInimum", address, nbytes);
-                ifp = new srec_input_filter_minimum(ifp, address, nbytes, 0);
+                ifp =
+                    srec_input_filter_minimum::create(ifp, address, nbytes, 0);
             }
             break;
 
@@ -527,7 +530,8 @@ srec_arglex::get_input()
                     address,
                     nbytes
                 );
-                ifp = new srec_input_filter_minimum(ifp, address, nbytes, 1);
+                ifp =
+                    srec_input_filter_minimum::create(ifp, address, nbytes, 1);
             }
             break;
 
@@ -544,7 +548,7 @@ srec_arglex::get_input()
                     width
                 );
                 ifp =
-                    new srec_input_filter_checksum_bitnot
+                    srec_input_filter_checksum_bitnot::create
                     (
                         ifp,
                         address,
@@ -568,7 +572,7 @@ srec_arglex::get_input()
                     width
                 );
                 ifp =
-                    new srec_input_filter_checksum_bitnot
+                    srec_input_filter_checksum_bitnot::create
                     (
                         ifp,
                         address,
@@ -592,7 +596,7 @@ srec_arglex::get_input()
                     width
                 );
                 ifp =
-                    new srec_input_filter_checksum_negative
+                    srec_input_filter_checksum_negative::create
                     (
                         ifp,
                         address,
@@ -616,7 +620,7 @@ srec_arglex::get_input()
                     width
                 );
                 ifp =
-                    new srec_input_filter_checksum_negative
+                    srec_input_filter_checksum_negative::create
                     (
                         ifp,
                         address,
@@ -640,7 +644,7 @@ srec_arglex::get_input()
                     width
                 );
                 ifp =
-                    new srec_input_filter_checksum_positive
+                    srec_input_filter_checksum_positive::create
                     (
                         ifp,
                         address,
@@ -664,7 +668,7 @@ srec_arglex::get_input()
                     width
                 );
                 ifp =
-                    new srec_input_filter_checksum_positive
+                    srec_input_filter_checksum_positive::create
                     (
                         ifp,
                         address,
@@ -679,7 +683,7 @@ srec_arglex::get_input()
             {
                 token_next();
                 unsigned long amount = get_number("--offset");
-                ifp = new srec_input_filter_offset(ifp, amount);
+                ifp = srec_input_filter_offset::create(ifp, amount);
             }
             break;
 
@@ -705,7 +709,7 @@ srec_arglex::get_input()
                         get_number("split width", 1, split_modulus - 1);
                 }
                 ifp =
-                    new srec_input_filter_split
+                    srec_input_filter_split::create
                     (
                         ifp,
                         split_modulus,
@@ -725,7 +729,12 @@ srec_arglex::get_input()
                     fill_minimum = get_number("--unfill minimum", 1, 16);
                 }
                 ifp =
-                    new srec_input_filter_unfill(ifp, fill_value, fill_minimum);
+                    srec_input_filter_unfill::create
+                    (
+                        ifp,
+                        fill_value,
+                        fill_minimum
+                    );
             }
             break;
 
@@ -751,7 +760,7 @@ srec_arglex::get_input()
                         get_number("--unsplit width", 1, split_modulus - 1);
                 }
                 ifp =
-                    new srec_input_filter_unsplit
+                    srec_input_filter_unsplit::create
                     (
                         ifp,
                         split_modulus,

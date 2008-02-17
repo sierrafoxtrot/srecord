@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2003, 2005-2007 Peter Miller
+//      Copyright (C) 1998-2003, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -61,14 +61,14 @@ protected:
       * \param deeper
       *     The deeper input to be filtered.
       */
-    srec_input_filter(srec_input *deeper);
+    srec_input_filter(srec_input::pointer deeper);
 
     //
     // I'd like this to be private, but srec_input_filter_crc16 and
     // srec_input_filter_crc32 need to access it directly, rather than
     // going through the srec_input_filter::read method.
     //
-    srec_input *ifp;
+    srec_input::pointer ifp;
 
 private:
     /**

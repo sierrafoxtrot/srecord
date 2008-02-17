@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001, 2002, 2005-2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2001, 2002, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -60,8 +60,8 @@ protected:
       *     wider, it is assumed that they are alligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    srec_input_filter_checksum(srec_input *deeper, int address, int length,
-        int order, int width = 1);
+    srec_input_filter_checksum(srec_input::pointer deeper, int address,
+        int length, int order, int width = 1);
 
     typedef unsigned long sum_t;
 

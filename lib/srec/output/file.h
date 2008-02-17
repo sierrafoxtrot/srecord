@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2003, 2005-2007 Peter Miller
+//      Copyright (C) 1998-2003, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_H
 #define INCLUDE_SREC_OUTPUT_FILE_H
 
-
 #include <string>
 #include <lib/srec/output.h>
 #include <lib/format_printf.h>
@@ -35,6 +34,11 @@ class srec_output_file:
 {
 public:
     /**
+      * The destructor.
+      */
+    virtual ~srec_output_file();
+
+    /**
       * The default constructor.
       * Output will be sent to the standard output.
       */
@@ -48,11 +52,6 @@ public:
       *     The name of the file to be written.
       */
     srec_output_file(const std::string &file_name);
-
-    /**
-      * The destructor.
-      */
-    virtual ~srec_output_file();
 
     // See base class for documentation.
     virtual const std::string filename() const;

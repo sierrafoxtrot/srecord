@@ -26,16 +26,6 @@ AC_CHECK_PROGS(GROFF, groff roff)
 AC_CHECK_PROGS(SOELIM, gsoelim soelim roffpp)
 AC_CHECK_FUNCS(snprintf vsnprintf)
 
-#
-# If we are using the GNU C++ compiler, add the -fno-rtti command line
-# option.  This fixes the ugly GCC 3.x "undefined symbols" bug on Cygwin
-# and MacOsX.
-#
-if test "$ac_cv_cxx_compiler_gnu" = "yes"
-then
-    CXXFLAGS="$CXXFLAGS -fno-rtti"
-fi
-
 dnl
 dnl     Test to find a Bourne shell which understands functions
 dnl

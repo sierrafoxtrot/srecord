@@ -24,6 +24,7 @@
 #include <string>
 using namespace std;
 #include <stdarg.h>
+#include <boost/shared_ptr.hpp>
 #include <lib/format_printf.h>
 
 
@@ -38,6 +39,8 @@ class srec_arglex; // forward
 class srec_input
 {
 public:
+    typedef boost::shared_ptr<srec_input> pointer;
+
     /**
       * The destructor.
       */

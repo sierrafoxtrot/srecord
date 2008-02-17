@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001, 2002, 2005-2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2001, 2002, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 
 #ifndef INCLUDE_SREC_INPUT_FILTER_UNSPLIT_H
 #define INCLUDE_SREC_INPUT_FILTER_UNSPLIT_H
-
 
 #include <lib/srec/input/filter.h>
 #include <lib/srec/record.h>
@@ -43,6 +42,7 @@ public:
       */
     virtual ~srec_input_filter_unsplit();
 
+private:
     /**
       * The constructor.
       *
@@ -55,9 +55,27 @@ public:
       * @param width
       *     The width of each stripe within the swathe.
       */
-    srec_input_filter_unsplit(srec_input *deeper, int modulus, int offset,
-        int width);
+    srec_input_filter_unsplit(const srec_input::pointer &deeper, int modulus,
+        int offset, int width);
 
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param deeper
+      *     The incoming data source to be filtered
+      * @param modulus
+      *     The number of bytes wide each swathe is.
+      * @param offset
+      *     The offset within the swathe.
+      * @param width
+      *     The width of each stripe within the swathe.
+      */
+    static pointer create(const srec_input::pointer &deeper, int modulus,
+        int offset, int width);
+
+protected:
     // See base class for documentation.
     virtual int read(srec_record &);
 

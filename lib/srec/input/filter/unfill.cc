@@ -21,8 +21,13 @@
 #include <lib/srec/input/filter/unfill.h>
 
 
-srec_input_filter_unfill::srec_input_filter_unfill(srec_input *a1, int a2,
-        int a3) :
+srec_input_filter_unfill::~srec_input_filter_unfill()
+{
+}
+
+
+srec_input_filter_unfill::srec_input_filter_unfill(
+        const srec_input::pointer &a1, int a2, int a3) :
     srec_input_filter(a1),
     fill_value(a2),
     fill_minimum(a3),
@@ -32,8 +37,11 @@ srec_input_filter_unfill::srec_input_filter_unfill(srec_input *a1, int a2,
 }
 
 
-srec_input_filter_unfill::~srec_input_filter_unfill()
+srec_input::pointer
+srec_input_filter_unfill::create(const srec_input::pointer &a_deeper, int a2,
+    int a3)
 {
+    return pointer(new srec_input_filter_unfill(a_deeper, a2, a3));
 }
 
 

@@ -26,12 +26,12 @@
 #include <lib/quit/normal.h>
 
 
-quit_normal::quit_normal()
+quit_normal::~quit_normal()
 {
 }
 
 
-quit_normal::~quit_normal()
+quit_normal::quit_normal()
 {
 }
 

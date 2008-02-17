@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000, 2002, 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2000, 2002, 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,10 +17,14 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <cctype>
 #include <lib/srec/input/file/ti_tagged.h>
 #include <lib/srec/record.h>
+
+
+srec_input_file_ti_tagged::~srec_input_file_ti_tagged()
+{
+}
 
 
 srec_input_file_ti_tagged::srec_input_file_ti_tagged(const string &a_filename) :
@@ -31,8 +35,10 @@ srec_input_file_ti_tagged::srec_input_file_ti_tagged(const string &a_filename) :
 }
 
 
-srec_input_file_ti_tagged::~srec_input_file_ti_tagged()
+srec_input::pointer
+srec_input_file_ti_tagged::create(const string &a_file_name)
 {
+    return pointer(new srec_input_file_ti_tagged(a_file_name));
 }
 
 

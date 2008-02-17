@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001, 2002, 2006, 2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2001, 2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -21,8 +21,13 @@
 #include <lib/srec/record.h>
 
 
-srec_input_filter_minimum::srec_input_filter_minimum(srec_input *a1, int a2,
-        int a3, int a4) :
+srec_input_filter_minimum::~srec_input_filter_minimum()
+{
+}
+
+
+srec_input_filter_minimum::srec_input_filter_minimum(
+        const srec_input::pointer &a1, int a2, int a3, int a4) :
     srec_input_filter(a1),
     minimum_address(a2),
     minimum_length(a3),
@@ -39,8 +44,11 @@ srec_input_filter_minimum::srec_input_filter_minimum(srec_input *a1, int a2,
 }
 
 
-srec_input_filter_minimum::~srec_input_filter_minimum()
+srec_input::pointer
+srec_input_filter_minimum::create(const srec_input::pointer &a_deeper, int a2,
+    int a3, int a4)
 {
+    return pointer(new srec_input_filter_minimum(a_deeper, a2, a3, a4));
 }
 
 

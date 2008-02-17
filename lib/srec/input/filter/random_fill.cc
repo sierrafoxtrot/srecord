@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2004, 2006, 2007 Peter Miller
+//      Copyright (C) 2004, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,23 +17,30 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <lib/interval.h>
 #include <lib/r250.h>
 #include <lib/srec/input/filter/random_fill.h>
 #include <lib/srec/record.h>
 
 
-srec_input_filter_random_fill::srec_input_filter_random_fill(srec_input *a1,
-        const interval &a3) :
+srec_input_filter_random_fill::~srec_input_filter_random_fill()
+{
+}
+
+
+srec_input_filter_random_fill::srec_input_filter_random_fill(
+        const srec_input::pointer &a1, const interval &a3) :
     srec_input_filter(a1),
     range(a3)
 {
 }
 
 
-srec_input_filter_random_fill::~srec_input_filter_random_fill()
+srec_input::pointer
+srec_input_filter_random_fill::create(const srec_input::pointer &a_deeper,
+    const interval &a_range)
 {
+    return pointer(new srec_input_filter_random_fill(a_deeper, a_range));
 }
 
 

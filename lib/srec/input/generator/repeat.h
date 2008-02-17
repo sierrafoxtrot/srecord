@@ -1,6 +1,6 @@
 //
 //      srecord - The "srecord" program.
-//      Copyright (C) 2007 Peter Miller
+//      Copyright (C) 2007, 2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ public:
       */
     virtual ~srec_input_generator_repeat();
 
+private:
     /**
       * The constructor.
       *
@@ -46,6 +47,21 @@ public:
       *     The length of the array of data to be repeated.
       */
     srec_input_generator_repeat(const interval &range, unsigned char *data,
+        size_t length);
+
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param range
+      *     The address range over which to generate data.
+      * @param data
+      *     Pointer to the base of an array of data to be repeated.
+      * @param length
+      *     The length of the array of data to be repeated.
+      */
+    static pointer create(const interval &range, unsigned char *data,
         size_t length);
 
 protected:

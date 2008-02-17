@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2003, 2006, 2007 Peter Miller
+//      Copyright (C) 1998-2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #ifndef INCLUDE_SREC_MEMORY_H
 #define INCLUDE_SREC_MEMORY_H
 
-
+#include <lib/srec/input.h>
 #include <lib/srec/memory/chunk.h>
 
 class srec_record; // forward
@@ -108,7 +108,7 @@ public:
       * warning, instead.  If `barf' is false, no checking of any
       * kind is performed.
       */
-    void reader(class srec_input *input, bool barf = false);
+    void reader(const srec_input::pointer &input, bool barf = false);
 
     /**
       * The equal method may be used to determine if two srec_memory

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <lib/srec/input/file/cosmac.h>
 #include <lib/srec/record.h>
 
@@ -33,6 +32,13 @@ srec_input_file_cosmac::srec_input_file_cosmac(const string &a_file_name) :
     address(0),
     seen_some_input(false)
 {
+}
+
+
+srec_input::pointer
+srec_input_file_cosmac::create(const string &a_file_name)
+{
+    return pointer(new srec_input_file_cosmac(a_file_name));
 }
 
 

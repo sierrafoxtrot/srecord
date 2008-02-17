@@ -1,6 +1,6 @@
 //
 //      srecord - The "srecord" program.
-//      Copyright (C) 2007 Peter Miller
+//      Copyright (C) 2007, 2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -30,6 +30,13 @@ srec_input_generator_random::srec_input_generator_random(
         const interval &a_range) :
     srec_input_generator(a_range)
 {
+}
+
+
+srec_input::pointer
+srec_input_generator_random::create(const interval &a_range)
+{
+    return pointer(new srec_input_generator_random(a_range));
 }
 
 

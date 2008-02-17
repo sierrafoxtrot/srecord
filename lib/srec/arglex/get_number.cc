@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2004, 2006, 2007 Peter Miller
+//      Copyright (C) 2004, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@ srec_arglex::get_number(const char *caption)
 {
     unsigned long value = 0;
     unsigned long multiple;
-    srec_input *ifp;
     interval over;
 
     switch (token_cur())
@@ -54,27 +53,30 @@ srec_arglex::get_number(const char *caption)
         return value;
 
     case token_minimum:
-        token_next();
-        ifp = get_input();
-        over = srec_input_interval(ifp);
-        delete ifp;
-        value = over.get_lowest();
+        {
+            token_next();
+            srec_input::pointer ifp = get_input();
+            over = srec_input_interval(ifp);
+            value = over.get_lowest();
+        }
         break;
 
     case token_maximum:
-        token_next();
-        ifp = get_input();
-        over = srec_input_interval(ifp);
-        delete ifp;
-        value = over.get_highest();
+        {
+            token_next();
+            srec_input::pointer ifp = get_input();
+            over = srec_input_interval(ifp);
+            value = over.get_highest();
+        }
         break;
 
     case token_length:
-        token_next();
-        ifp = get_input();
-        over = srec_input_interval(ifp);
-        delete ifp;
-        value = (over.get_highest() - over.get_lowest());
+        {
+            token_next();
+            srec_input::pointer ifp = get_input();
+            over = srec_input_interval(ifp);
+            value = (over.get_highest() - over.get_lowest());
+        }
         break;
 
     case token_stdio:

@@ -36,7 +36,7 @@ main(int argc, char **argv)
 {
     srec_arglex cmdline(argc, argv);
     cmdline.token_first();
-    typedef vector<srec_input *> infile_t;
+    typedef vector<srec_input::pointer> infile_t;
     infile_t infile;
     while (cmdline.token_cur() != arglex::token_eoln)
     {
@@ -63,7 +63,7 @@ main(int argc, char **argv)
     //
     for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
     {
-        srec_input *ifp = *it;
+        srec_input::pointer ifp = *it;
         if (infile.size() > 1)
         {
             cout << endl;

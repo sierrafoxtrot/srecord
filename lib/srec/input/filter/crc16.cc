@@ -31,8 +31,9 @@ srec_input_filter_crc16::~srec_input_filter_crc16()
 }
 
 
-srec_input_filter_crc16::srec_input_filter_crc16(srec_input *deeper_arg,
-        unsigned long address_arg, int order_arg) :
+srec_input_filter_crc16::srec_input_filter_crc16(
+        const srec_input::pointer &deeper_arg, unsigned long address_arg,
+        int order_arg) :
     srec_input_filter(deeper_arg),
     address(address_arg),
     order(order_arg),
@@ -44,6 +45,14 @@ srec_input_filter_crc16::srec_input_filter_crc16(srec_input *deeper_arg,
     have_given_crc(false),
     have_forwarded_start_address(false)
 {
+}
+
+
+srec_input::pointer
+srec_input_filter_crc16::create(const srec_input::pointer &a_deeper,
+    unsigned long a_address, int a_order)
+{
+    return pointer(new srec_input_filter_crc16(a_deeper, a_address, a_order));
 }
 
 

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2001, 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -32,11 +32,11 @@ class srec_input_file_dec_binary:
 {
 public:
     /**
-      * The default constructor.  The input is read from the
-      * standard input.
+      * The destructor.
       */
-    srec_input_file_dec_binary();
+    virtual ~srec_input_file_dec_binary();
 
+private:
     /**
       * A constructor.  The input is read from the named file (or
       * the standard input if the file anme is "-").
@@ -46,11 +46,19 @@ public:
       */
     srec_input_file_dec_binary(const string &file_name);
 
+public:
     /**
-      * The destructor.
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param file_name
+      *     The name of the file to be read.
+      * @returns
+      *     smart pointer to new instance
       */
-    virtual ~srec_input_file_dec_binary();
+    static pointer create(const string &file_name);
 
+protected:
     // See base class for documentation.
     int read(srec_record &);
 
@@ -58,7 +66,7 @@ public:
     const char *get_file_format_name() const;
 
     // See base class for documentation.
-    const char *mode () const;
+    const char *mode() const;
 
 private:
     /**

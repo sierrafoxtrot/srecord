@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000, 2002, 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2000, 2002, 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 
 #ifndef INCLUDE_QUIT_H
 #define INCLUDE_QUIT_H
-
 
 #include <stdarg.h>
 #include <lib/format_printf.h>

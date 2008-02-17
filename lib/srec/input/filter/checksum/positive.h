@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2002, 2005-2007 Peter Miller
+//      Copyright (C) 2000-2002, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #ifndef INCLUDE_SREC_INPUT_FILTER_CHECKSUM_POSITIVE_H
 #define INCLUDE_SREC_INPUT_FILTER_CHECKSUM_POSITIVE_H
 
-
 #include <lib/srec/input/filter/checksum.h>
 
 /**
@@ -36,6 +35,7 @@ public:
       */
     virtual ~srec_input_filter_checksum_positive();
 
+private:
     /**
       * The constructor.
       *
@@ -53,8 +53,30 @@ public:
       *     wider, it is assumed that they are alligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    srec_input_filter_checksum_positive(srec_input *deeper, int address,
-            int length, int order, int width = 1);
+    srec_input_filter_checksum_positive(const srec_input::pointer &deeper,
+        int address, int length, int order, int width = 1);
+
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param deeper
+      *     The incoming data source to be filtered
+      * @param address
+      *     The address to place the checksum.
+      * @param length
+      *     The number of bytes of checksum to be placed into the result.
+      * @param order
+      *     The byte order: false => bigendian, true => little endian.
+      * @param width
+      *     The width of the values being summed.  Usually 1 byte, but
+      *     wider combinations are possible.  If you use something
+      *     wider, it is assumed that they are alligned on multiples of
+      *     that width, no provision for an offset is provided.
+      */
+    static pointer create(const srec_input::pointer &deeper, int address,
+        int length, int order, int width = 1);
 
 protected:
     // See base class for documentation.

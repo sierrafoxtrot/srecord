@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2004, 2006, 2007 Peter Miller
+//      Copyright (C) 2004, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -32,25 +32,34 @@ class srec_input_file_aomf:
 {
 public:
     /**
-      * The default constructor.  The input is read from the
-      * standard input.
+      * The destructor.
       */
-    srec_input_file_aomf();
+    virtual ~srec_input_file_aomf();
 
+private:
     /**
-      * A constructor.  The input is read from the named file (or
-      * the standard input if the file name is "-").
+      * The constructor.  The input is read from the named file (or
+      * the standard input if the file name is "-"). It is private on
+      * purpose, use the "create" class method instead.
       *
       * @param file_name
       *     The name of the file to be read.
       */
     srec_input_file_aomf(const string &file_name);
 
+public:
     /**
-      * The destructor.
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param file_name
+      *     The name of the file to be read.
+      * @returns
+      *     smart pointer to new instance
       */
-    virtual ~srec_input_file_aomf();
+    static pointer create(const string &file_name);
 
+protected:
     // See base class for documentation.
     int read(srec_record &);
 

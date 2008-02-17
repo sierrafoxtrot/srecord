@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000, 2002, 2006, 2007 Peter Miller
+//      Copyright (C) 2000, 2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,12 +17,17 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
-#include <errno.h>
-#include <lib/quit.h>
+#include <cerrno>
 #include <cstdarg>
 #include <cstdio>
 #include <cstring>
+
+#include <lib/quit.h>
+
+
+quit::~quit()
+{
+}
 
 
 quit::quit()
@@ -39,11 +44,6 @@ quit &
 quit::operator=(const quit &)
 {
     return *this;
-}
-
-
-quit::~quit()
-{
 }
 
 

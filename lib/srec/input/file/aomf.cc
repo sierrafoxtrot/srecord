@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2004-2007 Peter Miller
+//      Copyright (C) 2004-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -128,6 +128,13 @@ srec_input_file_aomf::srec_input_file_aomf(const string &a_filename) :
     current_address(0),
     state(expecting_header)
 {
+}
+
+
+srec_input::pointer
+srec_input_file_aomf::create(const string &a_filename)
+{
+    return pointer(new srec_input_file_aomf(a_filename));
 }
 
 

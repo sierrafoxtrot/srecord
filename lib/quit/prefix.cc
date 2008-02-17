@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000, 2002, 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2000, 2002, 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,10 +17,15 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <cstdio>
 #include <cstdarg>
+
 #include <lib/quit/prefix.h>
+
+
+quit_prefix::~quit_prefix()
+{
+}
 
 
 quit_prefix::quit_prefix(quit &a1, const char *a2) :
@@ -33,11 +38,6 @@ quit_prefix::quit_prefix(quit &a1, const char *a2) :
 quit_prefix::quit_prefix(quit &a1, const string &a2) :
     prefix(a2),
     deeper(a1)
-{
-}
-
-
-quit_prefix::~quit_prefix()
 {
 }
 

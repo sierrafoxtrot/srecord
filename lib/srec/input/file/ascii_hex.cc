@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000, 2002, 2003, 2005-2007 Peter Miller
+//      Copyright (C) 2000, 2002, 2003, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,11 +17,16 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <cctype>
 
 #include <lib/srec/input/file/ascii_hex.h>
 #include <lib/srec/record.h>
+
+
+srec_input_file_ascii_hex::~srec_input_file_ascii_hex()
+{
+    // check termination?
+}
 
 
 srec_input_file_ascii_hex::srec_input_file_ascii_hex(const string &a_filename) :
@@ -34,9 +39,10 @@ srec_input_file_ascii_hex::srec_input_file_ascii_hex(const string &a_filename) :
 }
 
 
-srec_input_file_ascii_hex::~srec_input_file_ascii_hex()
+srec_input::pointer
+srec_input_file_ascii_hex::create(const string &a_filename)
 {
-    // check termination?
+    return pointer(new srec_input_file_ascii_hex(a_filename));
 }
 
 

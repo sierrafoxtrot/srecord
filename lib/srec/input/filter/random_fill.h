@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001, 2002, 2004, 2006, 2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2001, 2002, 2004, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #ifndef INCLUDE_SREC_INPUT_FILTER_RANDOM_FILL_H
 #define INCLUDE_SREC_INPUT_FILTER_RANDOM_FILL_H
 
-
 #include <lib/interval.h>
 #include <lib/srec/input/filter.h>
 #include <lib/srec/record.h>
@@ -38,11 +37,25 @@ public:
       */
     virtual ~srec_input_filter_random_fill();
 
+private:
     /**
       * The constructor.
       */
-    srec_input_filter_random_fill(srec_input *, const interval &);
+    srec_input_filter_random_fill(const srec_input::pointer &deeper,
+        const interval &range);
 
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param deeper
+      *     The incoming data source to be filtered
+      */
+    static pointer create(const srec_input::pointer &deeper,
+        const interval &range);
+
+protected:
     // See base class for documentation.
     virtual int read(srec_record &);
 

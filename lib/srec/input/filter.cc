@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2000, 2002, 2003, 2005-2007 Peter Miller
+//      Copyright (C) 1998-2000, 2002, 2003, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,19 +17,17 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <lib/srec/input/filter.h>
-
-
-srec_input_filter::srec_input_filter(srec_input *arg) :
-    ifp(arg)
-{
-}
 
 
 srec_input_filter::~srec_input_filter()
 {
-    delete ifp;
+}
+
+
+srec_input_filter::srec_input_filter(srec_input::pointer arg) :
+    ifp(arg)
+{
 }
 
 
