@@ -28,7 +28,7 @@ while read f
 do
         echo ".br"
         echo ".ne 3i"
-        echo ".so etc/$f"
+        echo ".so $f"
 done
 exit 0
 # vim:ts=8:sw=4:et

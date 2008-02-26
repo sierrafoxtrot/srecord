@@ -134,11 +134,7 @@ etc/ref-parts.so: [match_mask man/man%1/%2.%1 [source_files]]
 #if [count [match_mask etc/new.%.so [source_files]]]
 etc/new.so: : etc/new.sh [match_mask etc/new.%.so [source_files]]
 {
-        sh [resolve etc/new.sh] -r
-                [fromto etc/new.%.so new.%.so
-                        [match_mask etc/new.%.so [need]]
-                ]
-        > [target];
+    sh [resolve etc/new.sh] -r [match_mask etc/new.%.so [need]] > [target];
 }
 #include-cooked-nowarn etc/new.so.d
 #endif
