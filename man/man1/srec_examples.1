@@ -533,6 +533,7 @@ srec_cat \f[I]infile\fP \e
 Notice how the generator's address range once again avoids the address
 ranges occupied by the \f[I]infile\fP's data.
 You have to get the endian-ness right yourself.
+.\" ------------------------------------------------------------------------
 .SH DATA ABOUT THE DATA
 It is possible to add a variety of data about the data to the output.
 .SS Checksums
@@ -641,6 +642,25 @@ if (sum != *end)
 .RE
 In the 8-bit case, it doesn't matter whether you use the big-endian or
 little-endian filter.
+.PP
+You can look at the checksum of your data, by using the
+\[lq]hex-dump\[rq] output format.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP \e
+        --crop 0 0x10000 \e
+        --fill 0xFF 0x0000 0x10000 \e
+        --b-e-checksum-neg 0x10000 4 \e
+        --crop 0x10000 0x10004 \e
+    -o - --hex-dump
+.fi
+.ft R
+.RE
+This command reads in the file, checksums the data and places the
+checksum at 0x10000, crops the result to contain only the checksum,
+and then prints the checksum on the standard output in a classical
+hexadecimal dump format.
 .SS Cyclic Redundancy Checks
 The simple additive checksums have a number of theoretical limitations,
 to do with errors they can and can't detect.  The CRC methods have fewer
@@ -688,6 +708,25 @@ Because SRecord is open source, you can always read the source code
 to see how it works.  There are many non-GPL version of this code
 available on the Internet, and suitable for embedding in proprietary
 firmware.
+.PP
+You can look at the CRC of your data, by using the
+\[lq]hex-dump\[rq] output format.
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP \e
+        --crop 0 0x10000 \e
+        --fill 0xFF 0x0000 0x10000 \e
+        --b-e-crc16 0x10000 \e
+        --crop 0x10000 0x10002 \e
+    -o - --hex-dump
+.fi
+.ft R
+.RE
+This command reads in the file, calculates the CRC of the data and
+places the CRC at 0x10000, crops the result to contain only the CRC,
+and then prints the checksum on the standard output in a classical
+hexadecimal dump format.
 .SS Where Am I?
 There are several properties of you EPROM image that you may wish to
 insert into the data.
@@ -773,6 +812,7 @@ The above example guesses the EPROM load file format.
 It isn't infallible but it usually gets it right.
 You can use \fB\-guess\fP anywhere you would give an explicit format,
 but it tends to be slower and not recommended.
+.\" ------------------------------------------------------------------------
 .SH MANGLING THE DATA
 It is possible to change the values of the data bytes in several ways.
 .RS
