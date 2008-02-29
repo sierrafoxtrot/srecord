@@ -19,12 +19,47 @@ AC_INIT(install-sh)
 AC_CONFIG_HEADER(lib/config.h)
 AC_PROG_CXX
 AC_PROG_CPP
+AC_LANG(C++)
+AC_GNU_SOURCE
 AC_PROG_INSTALL
 AC_PROG_YACC
 AC_PROG_RANLIB
 AC_CHECK_PROGS(GROFF, groff roff)
 AC_CHECK_PROGS(SOELIM, gsoelim soelim roffpp)
 AC_CHECK_FUNCS(snprintf vsnprintf)
+
+dnl
+dnl Make sure Boost is installed.
+dnl
+AC_CHECK_HEADERS(boost/shared_ptr.hpp)
+if test "$ac_cv_header_boost_shared_ptr_hpp" != "yes"
+then
+    AC_MSG_RESULT([
+        You need to install the Boost C++ library to be able to compile SRecord.
+        http://boost.org/])
+    OK=no
+    if apt-get --version > /dev/null 2> /dev/null; then
+      AC_MSG_RESULT([
+        The following command may be used to install it:
+        sudo apt-get install libboost-dev
+      ])
+      OK=yes
+    fi
+    if yum --version > /dev/null 2> /dev/null; then
+      AC_MSG_RESULT([
+        The following command may be used to install it:
+        sudo yum install libboost-devel
+      ])
+      OK=yes
+    fi
+    if test "$OK" != "yes"; then
+      AC_MSG_RESULT([
+        If you have a package based system, the package you need to
+        install will be called libboost-devel or something similar.
+      ])
+    fi
+    exit 1
+fi
 
 dnl
 dnl     Test to find a Bourne shell which understands functions

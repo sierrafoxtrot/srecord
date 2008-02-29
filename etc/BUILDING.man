@@ -35,6 +35,13 @@ Your milage may vary.
 There are a few pieces of software you may want to
 fetch and install before you proceed with your installation of SRecord.
 .TP 8n
+Boost Library
+You will need the C++ Boost Library.
+If you are using a package based system, you will need the
+libboost-devel package, or one named something very similar.
+.br
+http://boost.org/
+.TP 8n
 GNU Groff
 The documentation for the
 .I SRecord
