@@ -26,8 +26,6 @@
 
 srec_input_filter_crc16::~srec_input_filter_crc16()
 {
-    delete buffer;
-    buffer = 0;
 }
 
 
@@ -39,7 +37,6 @@ srec_input_filter_crc16::srec_input_filter_crc16(
     order(order_arg),
     seed_mode(crc16::seed_mode_ccitt),
     augment_flag(true),
-    buffer(0),
     buffer_pos(0),
     have_forwarded_header(false),
     have_given_crc(false),
@@ -102,12 +99,11 @@ srec_input_filter_crc16::read(srec_record &record)
     // If we haven't read the deeper input yet, read all of it into
     // a memory buffer, then crc16 the bytes.
     //
-    if (!buffer)
+    if (buffer.empty())
     {
-        buffer = new srec_memory();
-        buffer->reader(ifp, true);
+        buffer.reader(ifp, true);
 
-        if (buffer->has_holes())
+        if (buffer.has_holes())
         {
             warning
             (
@@ -129,7 +125,7 @@ srec_input_filter_crc16::read(srec_record &record)
     if (!have_forwarded_header)
     {
         have_forwarded_header = true;
-        srec_record *rp = buffer->get_header();
+        srec_record *rp = buffer.get_header();
         if (rp)
         {
             record = *rp;
@@ -147,7 +143,7 @@ srec_input_filter_crc16::read(srec_record &record)
         //
         srec_memory_walker_crc16::pointer w =
             srec_memory_walker_crc16::create(seed_mode, augment_flag);
-        buffer->walk(w);
+        buffer.walk(w);
         unsigned crc = w->get();
 
         //
@@ -169,7 +165,7 @@ srec_input_filter_crc16::read(srec_record &record)
     unsigned long ret_address = buffer_pos;
     unsigned char data[64];
     size_t nbytes = sizeof(data);
-    if (buffer->find_next_data(ret_address, data, nbytes))
+    if (buffer.find_next_data(ret_address, data, nbytes))
     {
         record = srec_record(srec_record::type_data, ret_address, data, nbytes);
         buffer_pos = ret_address + nbytes;
@@ -182,7 +178,7 @@ srec_input_filter_crc16::read(srec_record &record)
     if (!have_forwarded_start_address)
     {
         have_forwarded_start_address = true;
-        srec_record *rp = buffer->get_start_address();
+        srec_record *rp = buffer.get_start_address();
         if (rp)
         {
             record = *rp;

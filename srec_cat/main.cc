@@ -139,27 +139,22 @@ main(int argc, char **argv)
     // eproms which are usually smaller than the available virtual
     // memory of the development system.
     //
-    srec_memory *mp = new srec_memory();
+    srec_memory m;
     if (header_set)
-        mp->set_header(header.c_str());
+        m.set_header(header.c_str());
     for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
     {
         srec_input::pointer ifp = *it;
-        mp->reader(ifp, true);
+        m.reader(ifp, true);
     }
     if (start_address_set)
-        mp->set_start_address(start_address);
+        m.set_start_address(start_address);
 
     //
     // Open the output file and write the remembered data out to it.
     //
     srec_memory_walker::pointer w = srec_memory_walker_writer::create(outfile);
-    mp->walk(w);
-
-    //
-    // Dispose of the memory image of the data.
-    //
-    delete mp;
+    m.walk(w);
 
     //
     // success

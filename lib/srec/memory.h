@@ -184,6 +184,17 @@ public:
       */
     bool has_holes() const;
 
+    /**
+      * The empty method is used to determine whether or not this memory
+      * image has no data in it.
+      */
+    bool
+    empty()
+        const
+    {
+        return (nchunks == 0);
+    }
+
 private:
     /**
       * The overwrite static variable is used to remember whether
@@ -206,7 +217,7 @@ private:
 
     /**
       * The chunk instance variable is used to hold the pointer to
-      * the base of the chunk array.  These chuinks remember the
+      * the base of the chunk array.  These chunks remember the
       * settings of the various bytes.  By using a sparse array,
       * we can cope with arbitrary memory usages.
       */

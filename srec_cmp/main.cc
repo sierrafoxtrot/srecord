@@ -82,33 +82,33 @@ main(int argc, char **argv)
     //
     // Read the first file into memory.
     //
-    srec_memory *mp1 = new srec_memory();
-    mp1->reader(if1);
+    srec_memory m1;
+    m1.reader(if1);
 
     //
     // Read the second file into memory.
     //
-    srec_memory *mp2 = new srec_memory();
-    mp2->reader(if2);
+    srec_memory m2;
+    m2.reader(if2);
 
     //
     // Error message and non-zero exit status if the files differ.
     //
     if (verbose)
     {
-        bool different = srec_memory::compare(*mp1, *mp2);
+        bool different = srec_memory::compare(m1, m2);
         if
         (
             start_addresses_differ
             (
-                mp1->get_start_address(),
-                mp2->get_start_address()
+                m1.get_start_address(),
+                m2.get_start_address()
             )
         )
         {
             cout << hex << "Start address "
-                << mp1->get_start_address()->get_address()
-                << " not equal to " << mp2->get_start_address()->get_address()
+                << m1.get_start_address()->get_address()
+                << " not equal to " << m2.get_start_address()->get_address()
                 << "." << dec << endl;
             different = true;
         }
@@ -121,12 +121,12 @@ main(int argc, char **argv)
     {
         if
         (
-            *mp1 != *mp2
+            m1 != m2
         ||
             start_addresses_differ
             (
-                mp1->get_start_address(),
-                mp2->get_start_address()
+                m1.get_start_address(),
+                m2.get_start_address()
             )
         )
         {

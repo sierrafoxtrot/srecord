@@ -22,6 +22,7 @@
 
 #include <lib/crc32.h>
 #include <lib/srec/input/filter.h>
+#include <lib/srec/memory.h>
 
 /**
   * The srec_input_filter_crc32 class is used to represent the state of
@@ -80,7 +81,7 @@ private:
       * order to calculate the CRC, and the input may be out of address
       * order, necessitating this buffer.
       */
-    class srec_memory *buffer;
+    srec_memory buffer;
 
     /**
       * The buffer_pos instance variable is used to remember where we
