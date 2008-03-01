@@ -26,9 +26,6 @@
 // See test/01/t0150a.sh for test vectors.
 //
 
-#include <cstdio> // HACK
-#include <cstdlib> // HACK
-
 #include <lib/crc16.h>
 
 //
@@ -147,7 +144,7 @@ updcrc(unsigned char c, unsigned short state)
 //
 // This version of updcrc doesn't augment automagically, you must
 // do it explicitly in the get() method.  It is a more intuitave
-// implementation and the "augmentation included" implementation below.
+// implementation than the "augmentation included" implementation below.
 //
 // See "A painless guide to CRC error detection algorithms",
 // chapter 10, http://www.repairfaq.org/filipg/LINK/F_crc_v33.html#CRCV_002
