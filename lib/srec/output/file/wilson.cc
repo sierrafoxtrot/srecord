@@ -23,10 +23,9 @@
 #include <lib/srec/record.h>
 
 
-srec_output_file_wilson::srec_output_file_wilson() :
-    srec_output_file(),
-    pref_block_size(32)
+srec_output_file_wilson::~srec_output_file_wilson()
 {
+    // check for termination record
 }
 
 
@@ -38,9 +37,10 @@ srec_output_file_wilson::srec_output_file_wilson(
 }
 
 
-srec_output_file_wilson::~srec_output_file_wilson()
+srec_output::pointer
+srec_output_file_wilson::create(const std::string &a_file_name)
 {
-    // check for termination record
+    return pointer(new srec_output_file_wilson(a_file_name));
 }
 
 

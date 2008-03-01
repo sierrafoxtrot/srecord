@@ -1,7 +1,7 @@
 //
 //      srecord - manipulate eprom load files
 //      Copyright (C) 2000 Hendrik De Vloed - hendrik.devloed@rug.ac.be
-//      Copyright (C) 2006, 2007 Peter Miller
+//      Copyright (C) 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -25,12 +25,30 @@
 #include <lib/progname.h>
 
 
+srec_output_file_vhdl::~srec_output_file_vhdl()
+{
+    emit_header();
+    put_stringf("  others => %s_dont_care\n" " );\n", prefix.c_str());
+    if (!data_only_flag)
+    {
+        put_stringf("end package body %s_pack;\n", prefix.c_str());
+    }
+}
+
+
 srec_output_file_vhdl::srec_output_file_vhdl(const string &a_file_name) :
     srec_output_file(a_file_name),
     bytes_per_word(1),
     prefix("eprom"),
     header_done(false)
 {
+}
+
+
+srec_output::pointer
+srec_output_file_vhdl::create(const std::string &a_file_name)
+{
+    return pointer(new srec_output_file_vhdl(a_file_name));
 }
 
 
@@ -97,17 +115,6 @@ srec_output_file_vhdl::emit_header()
         prefix.c_str()
     );
     header_done = true;
-}
-
-
-srec_output_file_vhdl::~srec_output_file_vhdl()
-{
-    emit_header();
-    put_stringf("  others => %s_dont_care\n" " );\n", prefix.c_str());
-    if (!data_only_flag)
-    {
-        put_stringf("end package body %s_pack;\n", prefix.c_str());
-    }
 }
 
 

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2002, 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2002, 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -22,7 +22,8 @@
 #include <lib/srec/output.h>
 
 
-srec_memory_walker_writer::srec_memory_walker_writer(srec_output *arg) :
+srec_memory_walker_writer::srec_memory_walker_writer(
+        const srec_output::pointer &arg) :
     op(arg)
 {
 }

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2002, 2006, 2007 Peter Miller
+//      Copyright (C) 2001, 2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -23,9 +23,8 @@
 #define BLOCK_SIZE 512
 #define BLOCK_SIZE_MASK (BLOCK_SIZE - 1)
 
-srec_output_file_dec_binary::srec_output_file_dec_binary() :
-    srec_output_file(),
-    pref_block_size(preferred_block_size_calculate())
+
+srec_output_file_dec_binary::~srec_output_file_dec_binary()
 {
 }
 
@@ -38,8 +37,10 @@ srec_output_file_dec_binary::srec_output_file_dec_binary(
 }
 
 
-srec_output_file_dec_binary::~srec_output_file_dec_binary()
+srec_output::pointer
+srec_output_file_dec_binary::create(const std::string &a_file_name)
 {
+    return pointer(new srec_output_file_dec_binary(a_file_name));
 }
 
 

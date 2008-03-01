@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2002, 2005-2007 Peter Miller
+//      Copyright (C) 2001, 2002, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_DEC_BINARY_H
 #define INCLUDE_SREC_OUTPUT_FILE_DEC_BINARY_H
 
-
 #include <lib/srec/output/file.h>
 
 /**
@@ -36,20 +35,27 @@ public:
       */
     virtual ~srec_output_file_dec_binary();
 
+private:
     /**
-      * The default constructor.  The input will be read from the
-      * standard input.
-      */
-    srec_output_file_dec_binary();
-
-    /**
-      * A constructor.  The input will be read from the named file
-      * (or the standard input if the file name is "-").
+      * A constructor.  The input will be read from the named file (or
+      * the standard input if the file name is "-"). It is private on
+      * purpose, use the create class method intead.
       *
       * @param file_name
       *     The name of the file to be written.
       */
     srec_output_file_dec_binary(const std::string &file_name);
+
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.  The input will be read from
+      * the named file (or the standard input if the file name is "-").
+      *
+      * @param file_name
+      *     The name of the file to be written.
+      */
+    static pointer create(const std::string &file_name);
 
 protected:
     // See base class for documentation.
@@ -104,6 +110,11 @@ private:
       * the best block size to pack into 512 byte blocks.
       */
     static int preferred_block_size_calculate();
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_output_file_dec_binary();
 
     /**
       * The copy constructor.  Do not use.

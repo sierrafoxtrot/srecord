@@ -24,6 +24,24 @@
 #include <lib/srec/record.h>
 
 
+srec_output_file_basic::~srec_output_file_basic()
+{
+    if (range.empty())
+        emit_byte(0xFF);
+    if (column)
+        put_char('\n');
+
+    if (!data_only_flag)
+    {
+        put_stringf("REM termination = %lu\n", taddr);
+        put_stringf("REM start = %lu\n", range.get_lowest());
+        put_stringf("REM finish = %lu\n", range.get_highest());
+    }
+    unsigned long len = range.get_highest() - range.get_lowest();
+    put_stringf("REM length = %lu\n", len);
+}
+
+
 srec_output_file_basic::srec_output_file_basic(const string &a_file_name) :
     srec_output_file(a_file_name),
     taddr(0),
@@ -31,6 +49,13 @@ srec_output_file_basic::srec_output_file_basic(const string &a_file_name) :
     current_address(0),
     line_length(75)
 {
+}
+
+
+srec_output::pointer
+srec_output_file_basic::create(const std::string &a_file_name)
+{
+    return pointer(new srec_output_file_basic(a_file_name));
 }
 
 
@@ -58,24 +83,6 @@ srec_output_file_basic::emit_byte(int n)
     put_string(buffer);
     column += len;
     ++current_address;
-}
-
-
-srec_output_file_basic::~srec_output_file_basic()
-{
-    if (range.empty())
-        emit_byte(0xFF);
-    if (column)
-        put_char('\n');
-
-    if (!data_only_flag)
-    {
-        put_stringf("REM termination = %lu\n", taddr);
-        put_stringf("REM start = %lu\n", range.get_lowest());
-        put_stringf("REM finish = %lu\n", range.get_highest());
-    }
-    unsigned long len = range.get_highest() - range.get_lowest();
-    put_stringf("REM length = %lu\n", len);
 }
 
 

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001-2003, 2006, 2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2001-2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -21,10 +21,9 @@
 #include <lib/srec/record.h>
 
 
-srec_output_file_tektronix::srec_output_file_tektronix() :
-    srec_output_file("-"),
-    pref_block_size(32)
+srec_output_file_tektronix::~srec_output_file_tektronix()
 {
+    // make sure terminator is written
 }
 
 
@@ -36,9 +35,10 @@ srec_output_file_tektronix::srec_output_file_tektronix(
 }
 
 
-srec_output_file_tektronix::~srec_output_file_tektronix()
+srec_output::pointer
+srec_output_file_tektronix::create(const std::string &a_file_name)
 {
-    // make sure terminator is written
+    return pointer(new srec_output_file_tektronix(a_file_name));
 }
 
 

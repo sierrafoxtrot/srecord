@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2002, 2006, 2007 Peter Miller
+//      Copyright (C) 2001, 2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,16 +17,16 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <lib/srec/output/file/signetics.h>
 #include <lib/srec/record.h>
 
 
-srec_output_file_signetics::srec_output_file_signetics() :
-    srec_output_file(),
-    pref_block_size(32),
-    last_address(0)
+srec_output_file_signetics::~srec_output_file_signetics()
 {
+    put_char(':');
+    put_word(last_address);
+    put_byte(0);
+    put_char('\n');
 }
 
 
@@ -39,30 +39,10 @@ srec_output_file_signetics::srec_output_file_signetics(
 }
 
 
-srec_output_file_signetics::srec_output_file_signetics(
-        const srec_output_file_signetics &) :
-    srec_output_file(),
-    pref_block_size(32),
-    last_address(0)
+srec_output::pointer
+srec_output_file_signetics::create(const std::string &a_file_name)
 {
-    fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-}
-
-
-srec_output_file_signetics &
-srec_output_file_signetics::operator=(const srec_output_file_signetics &)
-{
-    fatal_error("bug (%s, %d)", __FILE__, __LINE__);
-    return *this;
-}
-
-
-srec_output_file_signetics::~srec_output_file_signetics()
-{
-    put_char(':');
-    put_word(last_address);
-    put_byte(0);
-    put_char('\n');
+    return pointer(new srec_output_file_signetics(a_file_name));
 }
 
 

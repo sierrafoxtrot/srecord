@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -21,6 +21,16 @@
 #include <lib/srec/record.h>
 
 
+srec_output_file_needham::~srec_output_file_needham()
+{
+    if (column)
+    {
+        put_char('\n');
+        column = 0;
+    }
+}
+
+
 srec_output_file_needham::srec_output_file_needham(
         const std::string &a_file_name) :
     srec_output_file(a_file_name),
@@ -32,13 +42,10 @@ srec_output_file_needham::srec_output_file_needham(
 }
 
 
-srec_output_file_needham::~srec_output_file_needham()
+srec_output::pointer
+srec_output_file_needham::create(const std::string &a_file_name)
 {
-    if (column)
-    {
-        put_char('\n');
-        column = 0;
-    }
+    return pointer(new srec_output_file_needham(a_file_name));
 }
 
 

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001-2003, 2006, 2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2001-2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,9 +17,15 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <lib/srec/output/file/intel.h>
 #include <lib/srec/record.h>
+
+
+srec_output_file_intel::~srec_output_file_intel()
+{
+    if (!data_only_flag)
+        write_inner(1, 0L, 0, 0);
+}
 
 
 srec_output_file_intel::srec_output_file_intel(const std::string &a_file_name) :
@@ -34,10 +40,10 @@ srec_output_file_intel::srec_output_file_intel(const std::string &a_file_name) :
 }
 
 
-srec_output_file_intel::~srec_output_file_intel()
+srec_output::pointer
+srec_output_file_intel::create(const std::string &a_file_name)
 {
-    if (!data_only_flag)
-        write_inner(1, 0L, 0, 0);
+    return pointer(new srec_output_file_intel(a_file_name));
 }
 
 

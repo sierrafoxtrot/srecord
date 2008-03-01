@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2000-2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_ASCII_HEX_H
 #define INCLUDE_SREC_OUTPUT_FILE_ASCII_HEX_H
 
-
 #include <lib/srec/output/file.h>
 
 /**
@@ -36,6 +35,7 @@ public:
       */
     virtual ~srec_output_file_ascii_hex();
 
+private:
     /**
       * The constructor.
       *
@@ -43,6 +43,17 @@ public:
       *     The name of the file to be written.
       */
     srec_output_file_ascii_hex(const std::string &file_name);
+
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param file_name
+      *     The file name to open to write data to.  The name "-" is
+      *     understood to mean the standard output.
+      */
+    static pointer create(const std::string &file_name);
 
 protected:
     // See base class for documentation.

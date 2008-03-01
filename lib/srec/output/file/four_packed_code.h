@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2002, 2006, 2007 Peter Miller
+//      Copyright (C) 2001, 2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_FOUR_PACKED_CODE_H
 #define INCLUDE_SREC_OUTPUT_FILE_FOUR_PACKED_CODE_H
 
-
 #include <lib/srec/output/file.h>
 
 /**
@@ -36,20 +35,26 @@ public:
       */
     virtual ~srec_output_file_four_packed_code();
 
+private:
     /**
-      * The default constructor.  Output will be sent to the standard
-      * output.
+      * The constructor.  It is private on purpose, use the #create
+      * class method instead.
+      *
+      * @param file_name
+      *     The name of the file to be written.  The special name "-"
+      *     indicates the standard output is to be used.
       */
-    srec_output_file_four_packed_code();
+    srec_output_file_four_packed_code(const std::string &file_name);
 
+public:
     /**
-      * The constructor.  Output will be sent to the named file
-      * (or the standard output if the file name is "-").
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
       *
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_four_packed_code(const std::string &file_name);
+    static pointer create(const std::string &file_name);
 
 protected:
     // See base class for documentation.
@@ -103,6 +108,11 @@ private:
       * so that we can do the base85 encoding of each 4-byte chunk.
       */
     void put_byte(unsigned char);
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_output_file_four_packed_code();
 
     /**
       * The copy constructor.  Do not use.

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2002, 2006, 2007 Peter Miller
+//      Copyright (C) 2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -34,6 +34,13 @@ srec_output_file_os65v::srec_output_file_os65v(const std::string &a_file_name) :
     state(0),
     seen_start_address(false)
 {
+}
+
+
+srec_output::pointer
+srec_output_file_os65v::create(const std::string &a_file_name)
+{
+    return pointer(new srec_output_file_os65v(a_file_name));
 }
 
 

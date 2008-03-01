@@ -44,6 +44,13 @@ srec_output_file_hexdump::srec_output_file_hexdump(
 }
 
 
+srec_output::pointer
+srec_output_file_hexdump::create(const std::string &a_file_name)
+{
+    return pointer(new srec_output_file_hexdump(a_file_name));
+}
+
+
 void
 srec_output_file_hexdump::command_line(srec_arglex *)
 {

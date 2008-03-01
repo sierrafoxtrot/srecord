@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -41,6 +41,13 @@ srec_output_file_formatted_binary::srec_output_file_formatted_binary(
     address(0),
     check_sum(0)
 {
+}
+
+
+srec_output::pointer
+srec_output_file_formatted_binary::create(const std::string &a_file_name)
+{
+    return pointer(new srec_output_file_formatted_binary(a_file_name));
 }
 
 

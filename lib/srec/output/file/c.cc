@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2003, 2006, 2007 Peter Miller
+//      Copyright (C) 1998-2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -24,207 +24,6 @@
 #include <lib/srec/arglex.h>
 #include <lib/srec/output/file/c.h>
 #include <lib/srec/record.h>
-
-
-static const char *
-memrchr(const char *data, char c, size_t len)
-{
-    if (!data)
-        return 0;
-    const char *result = 0;
-    while (len > 0)
-    {
-        const char *p = (const char *)memchr(data, c, len);
-        if (!p)
-            break;
-        result = p;
-        size_t chunk = p - data + 1;
-        data += chunk;
-        len -= chunk;
-    }
-    return result;
-}
-
-
-static string
-build_include_file_name(const string &filename)
-{
-    const char *fn = filename.c_str();
-    // Watch out for out base class adding a line number.
-    const char *colon = strstr(fn, ": ");
-    if (!colon)
-        colon = fn + strlen(fn);
-    const char *slash = memrchr(fn, '/', colon - fn);
-    if (!slash)
-        slash = memrchr(fn, '\\', colon - fn);
-    if (slash)
-        slash++;
-    else
-        slash = fn;
-    const char *ep = memrchr(slash, '.', colon - slash);
-    if (!ep)
-        ep = colon;
-    return (string(fn, ep - fn) + ".h");
-}
-
-
-srec_output_file_c::srec_output_file_c(const string &a_file_name) :
-    srec_output_file(a_file_name),
-    prefix("eprom"),
-    taddr(0),
-    header_done(false),
-    column(0),
-    current_address(0),
-    line_length(75),
-    address_length(4),
-    constant(true),
-    include(false),
-    include_file_name(build_include_file_name(a_file_name)),
-    output_word(false),
-    hex_style(true),
-    section_style(false)
-{
-}
-
-
-void
-srec_output_file_c::command_line(srec_arglex *cmdln)
-{
-    if (cmdln->token_cur() == arglex::token_string)
-    {
-        prefix = cmdln->value_string();
-        cmdln->token_next();
-    }
-    for (;;)
-    {
-        switch (cmdln->token_cur())
-        {
-        case srec_arglex::token_constant:
-            cmdln->token_next();
-            constant = true;
-            break;
-
-        case srec_arglex::token_constant_not:
-            cmdln->token_next();
-            constant = false;
-            break;
-
-        case srec_arglex::token_include:
-            cmdln->token_next();
-            include = true;
-            break;
-
-        case srec_arglex::token_include_not:
-            cmdln->token_next();
-            include = false;
-            break;
-
-        case srec_arglex::token_c_compressed:
-            cmdln->token_next();
-            hex_style = true;
-            section_style = true;
-            break;
-
-        case srec_arglex::token_output_word:
-            cmdln->token_next();
-            output_word = true;
-            break;
-
-        case srec_arglex::token_style_hexadecimal:
-            cmdln->token_next();
-            hex_style = true;
-            break;
-
-        case srec_arglex::token_style_hexadecimal_not:
-            cmdln->token_next();
-            hex_style = false;
-            break;
-
-        case srec_arglex::token_style_section:
-        case srec_arglex::token_a430:
-        case srec_arglex::token_cl430:
-            cmdln->token_next();
-            section_style = true;
-            break;
-
-        default:
-            return;
-        }
-    }
-}
-
-
-void
-srec_output_file_c::emit_header()
-{
-    if (header_done)
-        return;
-    if (constant)
-        put_stringf("const ");
-    if (output_word)
-        put_string("unsigned short");
-    else
-        put_string("unsigned char");
-    put_char(' ');
-    put_string(prefix.c_str());
-    put_string("[] =\n{\n");
-    header_done = true;
-    column = 0;
-}
-
-
-void
-srec_output_file_c::emit_byte(int n)
-{
-    char buffer[30];
-    if (hex_style)
-        snprintf(buffer, sizeof(buffer), "0x%2.2X", (unsigned char)n);
-    else
-        snprintf(buffer, sizeof(buffer), "%u", (unsigned char)n);
-    int len = strlen(buffer);
-
-    if (column && column + 2 + len > line_length)
-    {
-        put_char('\n');
-        column = 0;
-    }
-    if (column)
-    {
-        put_char(' ');
-        ++column;
-    }
-    put_string(buffer);
-    column += len;
-    put_char(',');
-    ++column;
-}
-
-
-void
-srec_output_file_c::emit_word(unsigned int n)
-{
-    char buffer[30];
-    if (hex_style)
-        snprintf(buffer, sizeof(buffer), "0x%4.4X", (unsigned short)n);
-    else
-        snprintf(buffer, sizeof(buffer), "%u", (unsigned short)n);
-    int len = strlen(buffer);
-
-    if (column && column + 2 + len > line_length)
-    {
-        put_char('\n');
-        column = 0;
-    }
-    if (column)
-    {
-        put_char(' ');
-        ++column;
-    }
-    put_string(buffer);
-    column += len;
-    put_char(',');
-    ++column;
-}
 
 
 static string
@@ -266,18 +65,6 @@ identifier(const string &s)
     string result(buffer, bp - buffer);
     delete [] buffer;
     return result;
-}
-
-
-string
-srec_output_file_c::format_address(unsigned long addr)
-{
-    char buffer[30];
-    if (hex_style)
-        snprintf(buffer, sizeof(buffer), "0x%0*lX", address_length * 2, addr);
-    else
-        snprintf(buffer, sizeof(buffer), "%lu", addr);
-    return buffer;
 }
 
 
@@ -523,6 +310,226 @@ srec_output_file_c::~srec_output_file_c()
         if (fclose(fp))
             fatal_error_errno("write %s", include_file_name.c_str());
     }
+}
+
+
+static const char *
+memrchr(const char *data, char c, size_t len)
+{
+    if (!data)
+        return 0;
+    const char *result = 0;
+    while (len > 0)
+    {
+        const char *p = (const char *)memchr(data, c, len);
+        if (!p)
+            break;
+        result = p;
+        size_t chunk = p - data + 1;
+        data += chunk;
+        len -= chunk;
+    }
+    return result;
+}
+
+
+static string
+build_include_file_name(const string &filename)
+{
+    const char *fn = filename.c_str();
+    // Watch out for out base class adding a line number.
+    const char *colon = strstr(fn, ": ");
+    if (!colon)
+        colon = fn + strlen(fn);
+    const char *slash = memrchr(fn, '/', colon - fn);
+    if (!slash)
+        slash = memrchr(fn, '\\', colon - fn);
+    if (slash)
+        slash++;
+    else
+        slash = fn;
+    const char *ep = memrchr(slash, '.', colon - slash);
+    if (!ep)
+        ep = colon;
+    return (string(fn, ep - fn) + ".h");
+}
+
+
+srec_output_file_c::srec_output_file_c(const string &a_file_name) :
+    srec_output_file(a_file_name),
+    prefix("eprom"),
+    taddr(0),
+    header_done(false),
+    column(0),
+    current_address(0),
+    line_length(75),
+    address_length(4),
+    constant(true),
+    include(false),
+    include_file_name(build_include_file_name(a_file_name)),
+    output_word(false),
+    hex_style(true),
+    section_style(false)
+{
+}
+
+
+srec_output::pointer
+srec_output_file_c::create(const std::string &a_file_name)
+{
+    return pointer(new srec_output_file_c(a_file_name));
+}
+
+
+void
+srec_output_file_c::command_line(srec_arglex *cmdln)
+{
+    if (cmdln->token_cur() == arglex::token_string)
+    {
+        prefix = cmdln->value_string();
+        cmdln->token_next();
+    }
+    for (;;)
+    {
+        switch (cmdln->token_cur())
+        {
+        case srec_arglex::token_constant:
+            cmdln->token_next();
+            constant = true;
+            break;
+
+        case srec_arglex::token_constant_not:
+            cmdln->token_next();
+            constant = false;
+            break;
+
+        case srec_arglex::token_include:
+            cmdln->token_next();
+            include = true;
+            break;
+
+        case srec_arglex::token_include_not:
+            cmdln->token_next();
+            include = false;
+            break;
+
+        case srec_arglex::token_c_compressed:
+            cmdln->token_next();
+            hex_style = true;
+            section_style = true;
+            break;
+
+        case srec_arglex::token_output_word:
+            cmdln->token_next();
+            output_word = true;
+            break;
+
+        case srec_arglex::token_style_hexadecimal:
+            cmdln->token_next();
+            hex_style = true;
+            break;
+
+        case srec_arglex::token_style_hexadecimal_not:
+            cmdln->token_next();
+            hex_style = false;
+            break;
+
+        case srec_arglex::token_style_section:
+        case srec_arglex::token_a430:
+        case srec_arglex::token_cl430:
+            cmdln->token_next();
+            section_style = true;
+            break;
+
+        default:
+            return;
+        }
+    }
+}
+
+
+void
+srec_output_file_c::emit_header()
+{
+    if (header_done)
+        return;
+    if (constant)
+        put_stringf("const ");
+    if (output_word)
+        put_string("unsigned short");
+    else
+        put_string("unsigned char");
+    put_char(' ');
+    put_string(prefix.c_str());
+    put_string("[] =\n{\n");
+    header_done = true;
+    column = 0;
+}
+
+
+void
+srec_output_file_c::emit_byte(int n)
+{
+    char buffer[30];
+    if (hex_style)
+        snprintf(buffer, sizeof(buffer), "0x%2.2X", (unsigned char)n);
+    else
+        snprintf(buffer, sizeof(buffer), "%u", (unsigned char)n);
+    int len = strlen(buffer);
+
+    if (column && column + 2 + len > line_length)
+    {
+        put_char('\n');
+        column = 0;
+    }
+    if (column)
+    {
+        put_char(' ');
+        ++column;
+    }
+    put_string(buffer);
+    column += len;
+    put_char(',');
+    ++column;
+}
+
+
+void
+srec_output_file_c::emit_word(unsigned int n)
+{
+    char buffer[30];
+    if (hex_style)
+        snprintf(buffer, sizeof(buffer), "0x%4.4X", (unsigned short)n);
+    else
+        snprintf(buffer, sizeof(buffer), "%u", (unsigned short)n);
+    int len = strlen(buffer);
+
+    if (column && column + 2 + len > line_length)
+    {
+        put_char('\n');
+        column = 0;
+    }
+    if (column)
+    {
+        put_char(' ');
+        ++column;
+    }
+    put_string(buffer);
+    column += len;
+    put_char(',');
+    ++column;
+}
+
+
+string
+srec_output_file_c::format_address(unsigned long addr)
+{
+    char buffer[30];
+    if (hex_style)
+        snprintf(buffer, sizeof(buffer), "0x%0*lX", address_length * 2, addr);
+    else
+        snprintf(buffer, sizeof(buffer), "%lu", addr);
+    return buffer;
 }
 
 

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2002, 2006, 2007 Peter Miller
+//      Copyright (C) 2001, 2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -21,16 +21,8 @@
 #include <lib/srec/record.h>
 
 
-srec_output_file_fastload::srec_output_file_fastload() :
-    srec_output_file(),
-    line_length(0),
-    address(~0uL),
-    column(0),
-    bytes_since_checksum(0),
-    max_since_checksum(0),
-    prev_was_command(false)
+srec_output_file_fastload::~srec_output_file_fastload()
 {
-    line_length_set(80);
 }
 
 
@@ -48,8 +40,10 @@ srec_output_file_fastload::srec_output_file_fastload(
 }
 
 
-srec_output_file_fastload::~srec_output_file_fastload()
+srec_output::pointer
+srec_output_file_fastload::create(const std::string &a_filename)
 {
+    return pointer(new srec_output_file_fastload(a_filename));
 }
 
 

@@ -38,7 +38,7 @@ main(int argc, char **argv)
     cmdline.token_first();
     typedef vector<srec_input::pointer> infile_t;
     infile_t infile;
-    srec_output *outfile = 0;
+    srec_output::pointer outfile;
     int line_length = 0;
     int address_length = 0;
     std::string header;
@@ -155,17 +155,15 @@ main(int argc, char **argv)
     //
     srec_memory_walker *w = new srec_memory_walker_writer(outfile);
     mp->walk(w);
-    delete outfile;
 
     //
     // Dispose of the memory image of the data.
-    // (Probably not necessary.)
     //
+    delete w;
     delete mp;
 
     //
     // success
     //
-    exit(0);
     return 0;
 }

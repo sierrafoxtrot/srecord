@@ -25,157 +25,6 @@
 #include <lib/srec/record.h>
 
 
-srec_output_file_asm::srec_output_file_asm(const string &filename) :
-    srec_output_file(filename),
-    prefix("eprom"),
-    taddr(0),
-    column(0),
-    current_address(0),
-    line_length(75),
-    org_warn(false),
-    output_word(false),
-    dot_style(false),
-    section_style(false),
-    hex_style(false)
-{
-}
-
-
-void
-srec_output_file_asm::command_line(srec_arglex *cmdln)
-{
-    if (cmdln->token_cur() == arglex::token_string)
-    {
-        prefix = cmdln->value_string();
-        cmdln->token_next();
-    }
-    for (;;)
-    {
-        switch (cmdln->token_cur())
-        {
-        case srec_arglex::token_a430:
-            cmdln->token_next();
-            // Generate "IAR assembler compiler compliant" output.
-            section_style = true;
-            hex_style = true;
-            break;
-
-        case srec_arglex::token_cl430:
-            cmdln->token_next();
-            // Generate "Code Composer Essential compliant" output.
-            dot_style = true;
-            section_style = true;
-            hex_style = true;
-            break;
-
-        case srec_arglex::token_style_dot:
-            cmdln->token_next();
-            dot_style = true;
-            break;
-
-        case srec_arglex::token_style_hexadecimal:
-            cmdln->token_next();
-            hex_style = true;
-            break;
-
-        case srec_arglex::token_style_hexadecimal_not:
-            cmdln->token_next();
-            hex_style = false;
-            break;
-
-        case srec_arglex::token_style_section:
-            cmdln->token_next();
-            section_style = true;
-            break;
-
-        case srec_arglex::token_output_word:
-            cmdln->token_next();
-            output_word = true;
-            break;
-
-        default:
-            return;
-        }
-    }
-}
-
-
-void
-srec_output_file_asm::emit_byte(int n)
-{
-    char buffer[8];
-    if (hex_style)
-        sprintf(buffer, "0x%2.2X", (unsigned char)n);
-    else
-        sprintf(buffer, "%u", (unsigned char)n);
-    int len = strlen(buffer);
-    if (column && (column + 1 + len) > line_length)
-    {
-        put_char('\n');
-        column = 0;
-    }
-    if (!column)
-    {
-        if (dot_style)
-        {
-            put_string("        .byte   ");
-            column = 16;
-        }
-        else
-        {
-            put_string("        DB      ");
-            column = 16;
-        }
-    }
-    else
-    {
-        put_char(',');
-        ++column;
-    }
-    put_string(buffer);
-    column += len;
-    ++current_address;
-}
-
-
-void
-srec_output_file_asm::emit_word(unsigned int n)
-{
-    char buffer[16];
-    if (hex_style)
-        snprintf(buffer, sizeof(buffer), "0x%4.4X", (unsigned short)n);
-    else
-        snprintf(buffer, sizeof(buffer), "%u", (unsigned short)n);
-    int len = strlen(buffer);
-    if (column && (column + 1 + len) > line_length)
-    {
-        put_char('\n');
-        column = 0;
-    }
-    if (!column)
-    {
-        if (dot_style)
-        {
-            put_string("        .short      ");
-            column = 20;
-        }
-        else
-        {
-            put_string("        DW      ");
-            column = 16;
-        }
-    }
-    else
-    {
-        put_char(',');
-        ++column;
-    }
-    put_string(buffer);
-    column += len;
-    current_address += 2;
-}
-
-
 srec_output_file_asm::~srec_output_file_asm()
 {
     if (!section_style && range.empty())
@@ -341,6 +190,164 @@ srec_output_file_asm::~srec_output_file_asm()
         else
             put_stringf("        END\n");
     }
+}
+
+
+srec_output_file_asm::srec_output_file_asm(const string &filename) :
+    srec_output_file(filename),
+    prefix("eprom"),
+    taddr(0),
+    column(0),
+    current_address(0),
+    line_length(75),
+    org_warn(false),
+    output_word(false),
+    dot_style(false),
+    section_style(false),
+    hex_style(false)
+{
+}
+
+
+srec_output::pointer
+srec_output_file_asm::create(const std::string &a_file_name)
+{
+    return pointer(new srec_output_file_asm(a_file_name));
+}
+
+
+void
+srec_output_file_asm::command_line(srec_arglex *cmdln)
+{
+    if (cmdln->token_cur() == arglex::token_string)
+    {
+        prefix = cmdln->value_string();
+        cmdln->token_next();
+    }
+    for (;;)
+    {
+        switch (cmdln->token_cur())
+        {
+        case srec_arglex::token_a430:
+            cmdln->token_next();
+            // Generate "IAR assembler compiler compliant" output.
+            section_style = true;
+            hex_style = true;
+            break;
+
+        case srec_arglex::token_cl430:
+            cmdln->token_next();
+            // Generate "Code Composer Essential compliant" output.
+            dot_style = true;
+            section_style = true;
+            hex_style = true;
+            break;
+
+        case srec_arglex::token_style_dot:
+            cmdln->token_next();
+            dot_style = true;
+            break;
+
+        case srec_arglex::token_style_hexadecimal:
+            cmdln->token_next();
+            hex_style = true;
+            break;
+
+        case srec_arglex::token_style_hexadecimal_not:
+            cmdln->token_next();
+            hex_style = false;
+            break;
+
+        case srec_arglex::token_style_section:
+            cmdln->token_next();
+            section_style = true;
+            break;
+
+        case srec_arglex::token_output_word:
+            cmdln->token_next();
+            output_word = true;
+            break;
+
+        default:
+            return;
+        }
+    }
+}
+
+
+void
+srec_output_file_asm::emit_byte(int n)
+{
+    char buffer[8];
+    if (hex_style)
+        sprintf(buffer, "0x%2.2X", (unsigned char)n);
+    else
+        sprintf(buffer, "%u", (unsigned char)n);
+    int len = strlen(buffer);
+    if (column && (column + 1 + len) > line_length)
+    {
+        put_char('\n');
+        column = 0;
+    }
+    if (!column)
+    {
+        if (dot_style)
+        {
+            put_string("        .byte   ");
+            column = 16;
+        }
+        else
+        {
+            put_string("        DB      ");
+            column = 16;
+        }
+    }
+    else
+    {
+        put_char(',');
+        ++column;
+    }
+    put_string(buffer);
+    column += len;
+    ++current_address;
+}
+
+
+void
+srec_output_file_asm::emit_word(unsigned int n)
+{
+    char buffer[16];
+    if (hex_style)
+        snprintf(buffer, sizeof(buffer), "0x%4.4X", (unsigned short)n);
+    else
+        snprintf(buffer, sizeof(buffer), "%u", (unsigned short)n);
+    int len = strlen(buffer);
+    if (column && (column + 1 + len) > line_length)
+    {
+        put_char('\n');
+        column = 0;
+    }
+    if (!column)
+    {
+        if (dot_style)
+        {
+            put_string("        .short      ");
+            column = 20;
+        }
+        else
+        {
+            put_string("        DW      ");
+            column = 16;
+        }
+    }
+    else
+    {
+        put_char(',');
+        ++column;
+    }
+    put_string(buffer);
+    column += len;
+    current_address += 2;
 }
 
 

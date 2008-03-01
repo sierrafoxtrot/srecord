@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2002, 2006, 2007 Peter Miller
+//      Copyright (C) 2000-2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,15 +17,13 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <lib/srec/output/file/mos_tech.h>
 #include <lib/srec/record.h>
 
 
-srec_output_file_mos_tech::srec_output_file_mos_tech() :
-    srec_output_file(),
-    pref_block_size(32)
+srec_output_file_mos_tech::~srec_output_file_mos_tech()
 {
+    // check for termination record
 }
 
 
@@ -37,9 +35,10 @@ srec_output_file_mos_tech::srec_output_file_mos_tech(
 }
 
 
-srec_output_file_mos_tech::~srec_output_file_mos_tech()
+srec_output::pointer
+srec_output_file_mos_tech::create(const std::string &a_file_name)
 {
-    // check for termination record
+    return pointer(new srec_output_file_mos_tech(a_file_name));
 }
 
 

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -30,6 +30,13 @@ srec_output_file_spectrum::srec_output_file_spectrum(
         const std::string &a_filename) :
     srec_output_file(a_filename)
 {
+}
+
+
+srec_output::pointer
+srec_output_file_spectrum::create(const std::string &a_file_name)
+{
+    return pointer(new srec_output_file_spectrum(a_file_name));
 }
 
 

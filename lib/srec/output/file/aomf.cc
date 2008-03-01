@@ -28,15 +28,16 @@ srec_output_file_aomf::~srec_output_file_aomf()
 }
 
 
-srec_output_file_aomf::srec_output_file_aomf() :
-    srec_output_file()
+srec_output_file_aomf::srec_output_file_aomf(const std::string &a_file_name) :
+    srec_output_file(a_file_name)
 {
 }
 
 
-srec_output_file_aomf::srec_output_file_aomf(const std::string &a_file_name) :
-    srec_output_file(a_file_name)
+srec_output::pointer
+srec_output_file_aomf::create(const std::string &a_file_name)
 {
+    return pointer(new srec_output_file_aomf(a_file_name));
 }
 
 

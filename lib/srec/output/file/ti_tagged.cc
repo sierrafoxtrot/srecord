@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2003, 2006, 2007 Peter Miller
+//      Copyright (C) 2000-2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -23,6 +23,13 @@
 #include <cctype>
 
 
+srec_output_file_ti_tagged::~srec_output_file_ti_tagged()
+{
+    if (column)
+        put_eoln();
+}
+
+
 srec_output_file_ti_tagged::srec_output_file_ti_tagged(
         const std::string &a_file_name) :
     srec_output_file(a_file_name),
@@ -34,10 +41,10 @@ srec_output_file_ti_tagged::srec_output_file_ti_tagged(
 }
 
 
-srec_output_file_ti_tagged::~srec_output_file_ti_tagged()
+srec_output::pointer
+srec_output_file_ti_tagged::create(const std::string &a_file_name)
 {
-    if (column)
-        put_eoln();
+    return pointer(new srec_output_file_ti_tagged(a_file_name));
 }
 
 

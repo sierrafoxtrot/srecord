@@ -1,6 +1,6 @@
 //
 //      srecord - The "srecord" program.
-//      Copyright (C) 2007 Peter Miller
+//      Copyright (C) 2007, 2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -21,6 +21,12 @@
 #include <lib/srec/record.h>
 
 
+srec_output_file_brecord::~srec_output_file_brecord()
+{
+    flush();
+}
+
+
 srec_output_file_brecord::srec_output_file_brecord(
         const std::string &a_file_name) :
     srec_output_file(a_file_name),
@@ -31,9 +37,10 @@ srec_output_file_brecord::srec_output_file_brecord(
 }
 
 
-srec_output_file_brecord::~srec_output_file_brecord()
+srec_output::pointer
+srec_output_file_brecord::create(const std::string &a_file_name)
 {
-    flush();
+    return pointer(new srec_output_file_brecord(a_file_name));
 }
 
 

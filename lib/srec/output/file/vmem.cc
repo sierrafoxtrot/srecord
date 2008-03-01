@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2007 Peter Miller
+//      Copyright (C) 2000-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -18,9 +18,17 @@
 //
 
 #include <cctype>
+
 #include <lib/srec/arglex.h>
 #include <lib/srec/output/file/vmem.h>
 #include <lib/srec/record.h>
+
+
+srec_output_file_vmem::~srec_output_file_vmem()
+{
+    if (column)
+        put_char('\n');
+}
 
 
 //
@@ -103,6 +111,13 @@ srec_output_file_vmem::srec_output_file_vmem(const std::string &a_file_name) :
 }
 
 
+srec_output::pointer
+srec_output_file_vmem::create(const std::string &a_file_name)
+{
+    return pointer(new srec_output_file_vmem(a_file_name));
+}
+
+
 void
 srec_output_file_vmem::command_line(srec_arglex *cmdln)
 {
@@ -121,13 +136,6 @@ srec_output_file_vmem::command_line(srec_arglex *cmdln)
         //
         line_length_set(80);
     }
-}
-
-
-srec_output_file_vmem::~srec_output_file_vmem()
-{
-    if (column)
-        put_char('\n');
 }
 
 

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2002, 2005-2007 Peter Miller
+//      Copyright (C) 2000-2002, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_MOS_TECH_H
 #define INCLUDE_SREC_OUTPUT_FILE_MOS_TECH_H
 
-
 #include <lib/srec/output/file.h>
 
 /**
@@ -36,20 +35,26 @@ public:
       */
     virtual ~srec_output_file_mos_tech();
 
+private:
     /**
-      * The default constructor.  The input will be read from the
-      * standard input.
+      * The constructor.  It is private on purpose, use the #create
+      * class method instead.
+      *
+      * @param file_name
+      *     The name of the file to be written.  The special name "-"
+      *     indicates the standard output is to be used.
       */
-    srec_output_file_mos_tech();
+    srec_output_file_mos_tech(const std::string &file_name);
 
+public:
     /**
-      * A constructor.  The input will be read from the named file
-      * (or the standard input if the file name is "-").
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
       *
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_mos_tech(const std::string &file_name);
+    static pointer create(const std::string &file_name);
 
 protected:
     // See base class for documentation.
@@ -81,6 +86,11 @@ private:
       */
     void write_inner(int type, unsigned long addr, int addr_len,
         const void *data, int data_len);
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_output_file_mos_tech();
 
     /**
       * The copy constructor.  Do not use.

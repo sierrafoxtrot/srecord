@@ -22,9 +22,9 @@
 
 #include <lib/arglex.h>
 #include <lib/srec/input.h>
+#include <lib/srec/output.h>
 
 class interval; // forward
-class srec_output; // forward
 
 /**
   * The srec_arglex is used to parse command line with srec-specific
@@ -175,7 +175,7 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    srec_output *get_output();
+    srec_output::pointer get_output();
 
     /**
       * The get_number method is used to parse a numeric value from the

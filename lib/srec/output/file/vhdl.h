@@ -1,7 +1,7 @@
 //
 //      srecord - manipulate eprom load files
 //      Copyright (C) 2000 Hendrik De Vloed - hendrik.devloed@rug.ac.be
-//      Copyright (C) 2006, 2007 Peter Miller
+//      Copyright (C) 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_VHDL_H
 #define INCLUDE_SREC_OUTPUT_FILE_VHDL_H
 
-
 #include <lib/srec/output/file.h>
 
 /**
@@ -37,13 +36,26 @@ public:
       */
     virtual ~srec_output_file_vhdl();
 
+private:
     /**
-      * The constructor.
+      * The constructor.  It is private on purpose, use the #create
+      * class method instead.
+      *
+      * @param file_name
+      *     The name of the file to be written.  The special name "-"
+      *     indicates the standard output is to be used.
+      */
+    srec_output_file_vhdl(const std::string &file_name);
+
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
       *
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_vhdl(const string &file_name);
+    static pointer create(const std::string &file_name);
 
 protected:
     // See base class for documentation
@@ -79,8 +91,8 @@ private:
     string prefix;
 
     /**
-      * The fubar instance variable is used to remember whether the
-      * emit_header method has already been called.
+      * The header_done instance variable is used to remember whether
+      * the emit_header method has already been called.
       */
     bool header_done;
 

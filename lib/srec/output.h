@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001-2003, 2006, 2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2001-2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,8 +20,10 @@
 #ifndef INCLUDE_SREC_OUTPUT_H
 #define INCLUDE_SREC_OUTPUT_H
 
-#include <stdarg.h>
+#include <cstdarg>
 #include <string>
+#include <boost/shared_ptr.hpp>
+
 #include <lib/format_printf.h>
 
 class srec_arglex; // forward
@@ -35,6 +37,8 @@ class srec_record; // forward
 class srec_output
 {
 public:
+    typedef boost::shared_ptr<srec_output> pointer;
+
     /**
       * The destructor.
       */

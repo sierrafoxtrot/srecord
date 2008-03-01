@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001, 2002, 2005-2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2001, 2002, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_TEKTRONIX_H
 #define INCLUDE_SREC_OUTPUT_FILE_TEKTRONIX_H
 
-
 #include <lib/srec/output/file.h>
 
 /**
@@ -36,20 +35,26 @@ public:
       */
     virtual ~srec_output_file_tektronix();
 
+private:
     /**
-      * The default constructor.
-      * Output will be written to the standard output.
-      */
-    srec_output_file_tektronix();
-
-    /**
-      * The constructor.
+      * The constructor.  It is private on purpose, use the #create
+      * class method instead.
       *
       * @param file_name
-      *     The file name to open to write data to.  The file name "-"
-      *     is understood to mean the standard output.
+      *     The name of the file to be written.  The special name "-"
+      *     indicates the standard output is to be used.
       */
     srec_output_file_tektronix(const std::string &file_name);
+
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param file_name
+      *     The name of the file to be written.
+      */
+    static pointer create(const std::string &file_name);
 
 protected:
     // See base class for documentation.
@@ -92,6 +97,11 @@ private:
       *     The number of bytes of payload.
       */
     void write_inner(unsigned long address, const void *data, int data_nbytes);
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    srec_output_file_tektronix();
 
     /**
       * The copy constructor.  Do not use.
