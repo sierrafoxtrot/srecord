@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2006, 2007 Peter Miller
+//      Copyright (C) 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -31,6 +31,13 @@ srec_memory_walker_continuity::srec_memory_walker_continuity() :
     data_seen(false),
     nholes(0)
 {
+}
+
+
+srec_memory_walker_continuity::pointer
+srec_memory_walker_continuity::create()
+{
+    return pointer(new srec_memory_walker_continuity());
 }
 
 

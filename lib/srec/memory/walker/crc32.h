@@ -31,24 +31,42 @@ class srec_memory_walker_crc32:
     public srec_memory_walker
 {
 public:
+    typedef boost::shared_ptr<srec_memory_walker_crc32> pointer;
+
     /**
       * The destructor.
       */
     virtual ~srec_memory_walker_crc32();
 
+private:
     /**
-      * The default constructor.
+      * The default constructor.  It is private on putpose, use the
+      * #create method instead.
+      *
+      * @param seed_mode
+      *     How to calculate the initial seed.
       */
     srec_memory_walker_crc32(crc32::seed_mode_t seed_mode);
 
-    // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param seed_mode
+      *     How to calculate the initial seed.
+      */
+    static pointer create(crc32::seed_mode_t seed_mode);
 
     /**
       * The get method is used to get the CRC32 checksum once all memory
       * chunks have been processed by calls to our observe method.
       */
     unsigned get() const;
+
+protected:
+    // See base class for documentation.
+    void observe(unsigned long, const void *, int);
 
 private:
     /**

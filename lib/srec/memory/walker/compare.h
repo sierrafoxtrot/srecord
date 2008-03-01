@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000, 2002, 2005-2007 Peter Miller
+//      Copyright (C) 2000, 2002, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 
 #ifndef INCLUDE_SREC_MEMORY_WALKER_COMPARE_H
 #define INCLUDE_SREC_MEMORY_WALKER_COMPARE_H
-
 
 #include <lib/interval.h>
 #include <lib/srec/memory/walker.h>
@@ -41,13 +40,17 @@ class srec_memory_walker_compare:
     public srec_memory_walker
 {
 public:
+    typedef boost::shared_ptr<srec_memory_walker_compare> pointer;
+
     /**
       * The destructor.
       */
     virtual ~srec_memory_walker_compare();
 
+private:
     /**
-      * The constructor.
+      * The constructor.  It is private on purpose, use thr #create
+      * class method instead.
       *
       * @param other
       *     The other memory instance to be checked against this one.
@@ -56,6 +59,19 @@ public:
       *     address ranges.
       */
     srec_memory_walker_compare(const srec_memory &other, bool check_wrong);
+
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param other
+      *     The other memory instance to be checked against this one.
+      * @param check_wrong
+      *     Whether or not to check that the data agrees as well as the
+      *     address ranges.
+      */
+    static pointer create(const srec_memory &other, bool check_wrong);
 
     // See base class for documentation.
     virtual void observe(unsigned long, const void *, int);

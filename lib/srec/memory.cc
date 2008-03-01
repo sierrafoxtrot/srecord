@@ -222,13 +222,15 @@ srec_memory::equal(const srec_memory &lhs, const srec_memory &rhs)
 bool
 srec_memory::compare(const srec_memory &lhs, const srec_memory &rhs)
 {
-    srec_memory_walker_compare wlhs(rhs, true);
-    lhs.walk(&wlhs);
-    wlhs.print("Left");
-    srec_memory_walker_compare wrhs(lhs, false);
-    rhs.walk(&wrhs);
-    wrhs.print("Right");
-    return (!wlhs.same() || !wrhs.same());
+    srec_memory_walker_compare::pointer wlhs =
+        srec_memory_walker_compare::create(rhs, true);
+    lhs.walk(wlhs);
+    wlhs->print("Left");
+    srec_memory_walker_compare::pointer wrhs =
+        srec_memory_walker_compare::create(lhs, false);
+    rhs.walk(wrhs);
+    wrhs->print("Right");
+    return (!wlhs->same() || !wrhs->same());
 }
 
 
@@ -243,7 +245,7 @@ srec_memory::get_upper_bound()
 
 
 void
-srec_memory::walk(srec_memory_walker *w)
+srec_memory::walk(srec_memory_walker::pointer w)
     const
 {
     w->notify_upper_bound(get_upper_bound());
@@ -443,7 +445,8 @@ bool
 srec_memory::has_holes()
     const
 {
-    srec_memory_walker_continuity sniffer;
-    walk(&sniffer);
-    return (!sniffer.is_continuous());
+    srec_memory_walker_continuity::pointer sniffer =
+        srec_memory_walker_continuity::create();
+    walk(sniffer);
+    return (!sniffer->is_continuous());
 }

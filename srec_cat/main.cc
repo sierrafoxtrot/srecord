@@ -153,13 +153,12 @@ main(int argc, char **argv)
     //
     // Open the output file and write the remembered data out to it.
     //
-    srec_memory_walker *w = new srec_memory_walker_writer(outfile);
+    srec_memory_walker::pointer w = srec_memory_walker_writer::create(outfile);
     mp->walk(w);
 
     //
     // Dispose of the memory image of the data.
     //
-    delete w;
     delete mp;
 
     //

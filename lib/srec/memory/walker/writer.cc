@@ -22,6 +22,11 @@
 #include <lib/srec/output.h>
 
 
+srec_memory_walker_writer::~srec_memory_walker_writer()
+{
+}
+
+
 srec_memory_walker_writer::srec_memory_walker_writer(
         const srec_output::pointer &arg) :
     op(arg)
@@ -29,8 +34,10 @@ srec_memory_walker_writer::srec_memory_walker_writer(
 }
 
 
-srec_memory_walker_writer::~srec_memory_walker_writer()
+srec_memory_walker::pointer
+srec_memory_walker_writer::create(const srec_output::pointer &arg)
 {
+    return pointer(new srec_memory_walker_writer(arg));
 }
 
 

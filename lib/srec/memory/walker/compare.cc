@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000, 2002, 2005-2007 Peter Miller
+//      Copyright (C) 2000, 2002, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 
 
 #include <iostream>
-using namespace std;
+
 #include <lib/srec/memory.h>
 #include <lib/srec/memory/walker/compare.h>
 
@@ -34,6 +34,13 @@ srec_memory_walker_compare::srec_memory_walker_compare(const srec_memory &a1,
     other(a1),
     check_wrong(a2)
 {
+}
+
+
+srec_memory_walker_compare::pointer
+srec_memory_walker_compare::create(const srec_memory &a1, bool a2)
+{
+    return pointer(new srec_memory_walker_compare(a1, a2));
 }
 
 

@@ -145,9 +145,10 @@ srec_input_filter_crc16::read(srec_record &record)
         // Now CRC16 the bytes in order from lowest address to
         // highest.  (Holes are ignored, not filled.)
         //
-        srec_memory_walker_crc16 walker(seed_mode, augment_flag);
-        buffer->walk(&walker);
-        unsigned crc = walker.get();
+        srec_memory_walker_crc16::pointer w =
+            srec_memory_walker_crc16::create(seed_mode, augment_flag);
+        buffer->walk(w);
+        unsigned crc = w->get();
 
         //
         // Turn the CRC into the first data record.

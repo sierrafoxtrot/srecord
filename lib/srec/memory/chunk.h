@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2000, 2002, 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 1998-2000, 2002, 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,8 +20,9 @@
 #ifndef INCLUDE_SREC_MEMORY_CHUNK_H
 #define INCLUDE_SREC_MEMORY_CHUNK_H
 
-
 #include <stddef.h>
+
+#include <lib/srec/memory/walker.h>
 
 /**
   * The srec_memory_chunk class is used to represent portion of memory.
@@ -79,7 +80,7 @@ public:
       * The walk method is used to iterate across all of the bytes which
       * are set within the chunk, calling the walker's observe method.
       */
-    void walk(class srec_memory_walker *) const;
+    void walk(srec_memory_walker::pointer) const;
 
     /**
       * The get_address method is used to get the address of the memory

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2006, 2007 Peter Miller
+//      Copyright (C) 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #ifndef INCLUDE_SREC_MEMORY_WALKER_CONTINUITY_H
 #define INCLUDE_SREC_MEMORY_WALKER_CONTINUITY_H
 
-
 #include <lib/srec/memory/walker.h>
 
 /**
@@ -32,18 +31,26 @@ class srec_memory_walker_continuity:
     public srec_memory_walker
 {
 public:
+    typedef boost::shared_ptr<srec_memory_walker_continuity> pointer;
+
     /**
       * The destructror.
       */
     virtual ~srec_memory_walker_continuity();
 
+private:
     /**
-      * The default constructor.
+      * The default constructor.  It is private on purpose, use the
+      * #create class method instead.
       */
     srec_memory_walker_continuity();
 
-    // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of class.
+      */
+    static pointer create();
 
     /**
       * The is_continuous method is used to get the results of the
@@ -53,6 +60,10 @@ public:
       *     true if the data has no holes, false if there are holes
       */
     bool is_continuous() const;
+
+protected:
+    // See base class for documentation.
+    void observe(unsigned long, const void *, int);
 
 private:
     unsigned long current_address;

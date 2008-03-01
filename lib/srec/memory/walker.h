@@ -20,6 +20,8 @@
 #ifndef INCLUDE_SREC_MEMORY_WALKER_H
 #define INCLUDE_SREC_MEMORY_WALKER_H
 
+#include <boost/shared_ptr.hpp>
+
 class srec_record; // forward
 
 /**
@@ -29,6 +31,8 @@ class srec_record; // forward
 class srec_memory_walker
 {
 public:
+    typedef boost::shared_ptr<srec_memory_walker> pointer;
+
     /**
       * The destructor.
       */

@@ -31,13 +31,17 @@ class srec_memory_walker_crc16:
     public srec_memory_walker
 {
 public:
+    typedef boost::shared_ptr<srec_memory_walker_crc16> pointer;
+
     /**
       * The destructror.
       */
     virtual ~srec_memory_walker_crc16();
 
+private:
     /**
-      * The default constructor.
+      * The default constructor.  It is private on purpose, use the
+      * #create class method instead.
       *
       * @param seed_mode
       *     The selector for the initial seed for the calculation
@@ -45,6 +49,18 @@ public:
       *     Whether or not to augment the calculation
       */
     srec_memory_walker_crc16(crc16::seed_mode_t seed_mode, bool augment_flag);
+
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param seed_mode
+      *     The selector for the initial seed for the calculation
+      * @param augment_flag
+      *     Whether or not to augment the calculation
+      */
+    static pointer create(crc16::seed_mode_t seed_mode, bool augment_flag);
 
     /**
       * The get method is used to get the CRC16 checksum once all memory

@@ -22,6 +22,7 @@
 
 #include <lib/srec/input.h>
 #include <lib/srec/memory/chunk.h>
+#include <lib/srec/memory/walker.h>
 
 class srec_record; // forward
 
@@ -90,7 +91,7 @@ public:
       * The walk method is used to apply a srec_memory_walker derived
       * class to every byte of memory.
       */
-    void walk(class srec_memory_walker *) const;
+    void walk(srec_memory_walker::pointer) const;
 
     /**
       * The reader method is used to read the given `input' source

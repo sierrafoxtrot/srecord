@@ -17,9 +17,14 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <lib/srec/memory/walker/crc16.h>
 #include <lib/srec/output.h>
+
+
+srec_memory_walker_crc16::~srec_memory_walker_crc16()
+{
+    delete checksum;
+}
 
 
 srec_memory_walker_crc16::srec_memory_walker_crc16(crc16::seed_mode_t seed_mode,
@@ -29,9 +34,10 @@ srec_memory_walker_crc16::srec_memory_walker_crc16(crc16::seed_mode_t seed_mode,
 }
 
 
-srec_memory_walker_crc16::~srec_memory_walker_crc16()
+srec_memory_walker_crc16::pointer
+srec_memory_walker_crc16::create(crc16::seed_mode_t arg1, bool arg2)
 {
-    delete checksum;
+    return pointer(new srec_memory_walker_crc16(arg1, arg2));
 }
 
 

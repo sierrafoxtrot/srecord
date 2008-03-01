@@ -36,11 +36,27 @@ public:
       */
     virtual ~srec_memory_walker_writer();
 
+private:
     /**
-      * The constructor.
+      * The constructor.  It is private on purpose, use the #create
+      * class method instead.
+      *
+      * @param deeper
+      *     where to write the output
       */
     srec_memory_walker_writer(const srec_output::pointer &deeper);
 
+public:
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class.
+      *
+      * @param deeper
+      *     where to write the output
+      */
+    static pointer create(const srec_output::pointer &deeper);
+
+protected:
     // See base class for documentation.
     virtual void observe(unsigned long, const void *, int);
 
