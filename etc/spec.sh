@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - manipulate eprom load files
-#       Copyright (C) 1998, 2001, 2003, 2005-2007 Peter Miller
+#       Copyright (C) 1998, 2001, 2003, 2005-2008 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+make install
 
 
 %check || :
@@ -115,7 +115,7 @@ for file in $*
 do
         case $file in
 
-        prog/*/main.cc)
+        */main.cc)
                 dir=`echo $file | sed 's|prog/\([^/]*\)/.*|\1|'`
                 remember_prog $dir
                 ;;
