@@ -16,40 +16,18 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" Change 31
-An RPM build problem has been fixed.
-.PP
-.if n *
-.if t \(bu
-.\" Change 25
-The dependency on the Boost library is now documented in the BUILDING file.
-.PP
-.if n *
-.if t \(bu
-.\" Change 21, 16
-Some build problems with g++ 4.3 have been fixed
-.PP
-.if n *
-.if t \(bu
-.\" Change 15
-A bug has been fixed in the calculation of ranges on the command
-line, it no longer goes into an infinite loop for "--fill 0xFF
--over { foo.hex -exclude -within foo.hex }" construct, which
-should have been calculating an empty fill set, but was instead
-calculating a 4GB fill set.
-.PP
-.if n *
-.if t \(bu
-.\" srecord.1.39.D002
-.\" Change 12
-.\" pmiller, Thu Feb  7 12:02:21 2008, CRC32 -xmodem
-The CRC32 filters now take an -xmodem option, to use an
-xmodem-like (all bit zero) initial state, rather than the
-default CCITT (all bits on) initial state.
+.\"
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 40 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.39 (2008-Feb-04)
+.SS Version 1.40 (2008-Mar-13)
 .\" vim:ts=8:sw=4:et
