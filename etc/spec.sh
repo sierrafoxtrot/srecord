@@ -34,7 +34,7 @@ echo "Source: http://srecord.sourceforge.net/%{name}-%{version}.tar.gz"
 echo 'URL: http://srecord.sourceforge.net/'
 echo 'BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)'
 echo
-echo 'BuildRequires:  diffutils, sharutils, groff'
+echo 'BuildRequires:  diffutils, sharutils, groff, gcc-c++, boost-devel'
 
 prefix=/usr
 #
@@ -115,8 +115,11 @@ for file in $*
 do
         case $file in
 
+        test_*)
+            ;;
+
         */main.cc)
-                dir=`echo $file | sed 's|prog/\([^/]*\)/.*|\1|'`
+                dir=`echo $file | sed 's|\([^/]*\)/.*|\1|'`
                 remember_prog $dir
                 ;;
 
