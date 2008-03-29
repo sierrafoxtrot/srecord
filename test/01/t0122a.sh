@@ -148,6 +148,66 @@ if test $? -ne 0; then fail; fi
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
+# ---------- one more time, with words and a generated include file -----------
+
+cat > test.ok << 'fubar'
+/* HDR */
+const unsigned short eprom[] =
+{
+0x48FF, 0x6C65, 0x6F6C, 0x202C, 0x6F57, 0x6C72, 0x2164, 0xFF0A, 0x6548,
+0x6C6C, 0x2C6F, 0x5720, 0x726F, 0x646C, 0x0A21, 0x6548, 0x6C6C, 0x2C6F,
+0x5720, 0x726F, 0x646C, 0x0A21,
+};
+
+const unsigned long eprom_address[] =
+{
+0x00000006, 0x00000020, 0x00000042,
+};
+const unsigned long eprom_length_of_sections[] =
+{
+0x00000008, 0x00000007, 0x00000007,
+};
+const unsigned long eprom_sections    = 0x00000003;
+const unsigned long eprom_termination = 0x00000007;
+const unsigned long eprom_start       = 0x00000006;
+const unsigned long eprom_finish      = 0x00000050;
+const unsigned long eprom_length      = 0x0000004A;
+
+#define EPROM_TERMINATION 0x00000007
+#define EPROM_START       0x00000006
+#define EPROM_FINISH      0x00000050
+#define EPROM_LENGTH      0x0000004A
+#define EPROM_SECTIONS    0x00000003
+fubar
+if test $? -ne 0; then no_result; fi
+
+cat > test.ok.h << 'fubar'
+#ifndef TEST_H
+#define TEST_H
+
+const extern unsigned long eprom_termination;
+const extern unsigned long eprom_start;
+const extern unsigned long eprom_finish;
+const extern unsigned long eprom_length;
+const extern unsigned long eprom_sections;
+const extern unsigned short eprom[];
+const extern unsigned long eprom_address[];
+const extern unsigned long eprom_length_of_sections[];
+
+#endif /* TEST_H */
+fubar
+if test $? -ne 0; then no_result; fi
+
+srec_cat test.in -fill 0xFF -within test.in -range-padding=2 \
+    -o test.out -c-array -section-style -ow -include
+if test $? -ne 0; then fail; fi
+
+diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
+diff test.ok.h test.h
+if test $? -ne 0; then fail; fi
+
 #
 # The things tested here, worked.
 # No other guarantees are made.

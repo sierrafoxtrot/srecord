@@ -304,11 +304,22 @@ srec_output_file_c::~srec_output_file_c()
         if (constant)
             fprintf(fp, "const ");
         fprintf(fp, "extern unsigned ");
-	if (output_word)
-	    fprintf(fp, "short");
-	else
-	    fprintf(fp, "char");
+        if (output_word)
+            fprintf(fp, "short");
+        else
+            fprintf(fp, "char");
         fprintf(fp, " %s[];\n", prefix.c_str());
+        if (section_style)
+        {
+            if (constant)
+                fprintf(fp, "const ");
+            fprintf(fp, "extern unsigned long");
+            fprintf(fp, " %s_address[];\n", prefix.c_str());
+            if (constant)
+                fprintf(fp, "const ");
+            fprintf(fp, "extern unsigned long");
+            fprintf(fp, " %s_length_of_sections[];\n", prefix.c_str());
+        }
         fprintf(fp, "\n");
         fprintf(fp, "#endif /* %s */\n", insulation.c_str());
 
