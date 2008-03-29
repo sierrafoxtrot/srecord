@@ -303,7 +303,12 @@ srec_output_file_c::~srec_output_file_c()
         }
         if (constant)
             fprintf(fp, "const ");
-        fprintf(fp, "extern unsigned char %s[];\n", prefix.c_str());
+        fprintf(fp, "extern unsigned ");
+	if (output_word)
+	    fprintf(fp, "short");
+	else
+	    fprintf(fp, "char");
+        fprintf(fp, " %s[];\n", prefix.c_str());
         fprintf(fp, "\n");
         fprintf(fp, "#endif /* %s */\n", insulation.c_str());
 

@@ -53,11 +53,28 @@ const unsigned long eprom_length      = 0x0000004A;
 fubar
 if test $? -ne 0; then no_result; fi
 
+cat > test.h.ok << 'fubar'
+#ifndef TEST_H
+#define TEST_H
+
+const extern unsigned long eprom_termination;
+const extern unsigned long eprom_start;
+const extern unsigned long eprom_finish;
+const extern unsigned long eprom_length;
+const extern unsigned short eprom[];
+
+#endif /* TEST_H */
+fubar
+if test $? -ne 0; then no_result; fi
+
 srec_cat test.in -fill 0xFF -within test.in -range-padding=2 \
-    -o test.out -c-array -ow
+    -o test.out -c-array -ow -include
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
+diff test.h.ok test.h
 if test $? -ne 0; then fail; fi
 
 #
