@@ -84,6 +84,10 @@ const unsigned long eprom_address[] =
 {
 0x00000006, 0x00000020, 0x00000042,
 };
+const unsigned long eprom_word_address[] =
+{
+0x00000003, 0x00000010, 0x00000021,
+};
 const unsigned long eprom_length_of_sections[] =
 {
 0x00000008, 0x00000007, 0x00000007,
@@ -122,6 +126,10 @@ const unsigned short eprom[] =
 const unsigned long eprom_address[] =
 {
 6, 32, 66,
+};
+const unsigned long eprom_word_address[] =
+{
+3, 16, 33,
 };
 const unsigned long eprom_length_of_sections[] =
 {
@@ -163,6 +171,10 @@ const unsigned long eprom_address[] =
 {
 0x00000006, 0x00000020, 0x00000042,
 };
+const unsigned long eprom_word_address[] =
+{
+0x00000003, 0x00000010, 0x00000021,
+};
 const unsigned long eprom_length_of_sections[] =
 {
 0x00000008, 0x00000007, 0x00000007,
@@ -192,6 +204,7 @@ const extern unsigned long eprom_length;
 const extern unsigned long eprom_sections;
 const extern unsigned short eprom[];
 const extern unsigned long eprom_address[];
+const extern unsigned long eprom_word_address[];
 const extern unsigned long eprom_length_of_sections[];
 
 #endif /* TEST_H */
