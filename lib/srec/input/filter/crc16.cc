@@ -150,10 +150,7 @@ srec_input_filter_crc16::read(srec_record &record)
         // Turn the CRC into the first data record.
         //
         unsigned char chunk[2];
-        if (end == endian_little)
-            srec_record::encode_little_endian(chunk, crc, sizeof(chunk));
-        else
-            srec_record::encode_big_endian(chunk, crc, sizeof(chunk));
+        srec_record::encode(chunk, crc, sizeof(chunk), end);
         record =
             srec_record(srec_record::type_data, address, chunk, sizeof(chunk));
         return true;

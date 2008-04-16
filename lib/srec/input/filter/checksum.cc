@@ -54,10 +54,7 @@ srec_input_filter_checksum::generate(srec_record &record)
         return false;
     unsigned char chunk[sizeof(sum_t)];
     sum_t value = calculate();
-    if (end == endian_little)
-        srec_record::encode_little_endian(chunk, value, length);
-    else
-        srec_record::encode_big_endian(chunk, value, length);
+    srec_record::encode(chunk, value, length, end);
     record =
         srec_record
         (

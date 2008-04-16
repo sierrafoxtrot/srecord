@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001, 2002, 2006, 2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2001, 2002, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -97,11 +97,26 @@ srec_record::maximum_data_length(address_t address)
 
 
 srec_record::address_t
-srec_record::decode_big_endian(data_t *buffer, int length)
+srec_record::decode_big_endian(const data_t *buffer, int length)
 {
     address_t result = 0;
     while (length-- > 0)
         result = (result << 8) | *buffer++;
+    return result;
+}
+
+
+srec_record::address_t
+srec_record::decode_little_endian(const data_t *buffer, int length)
+{
+    address_t result = 0;
+    buffer += length;
+    while (length > 0)
+    {
+        --length;
+        --buffer;
+        result = (result << 8) | *buffer;
+    }
     return result;
 }
 
@@ -111,7 +126,8 @@ srec_record::encode_big_endian(data_t *buffer, address_t value, int length)
 {
     while (length > 0)
     {
-        buffer[--length] = value;
+        --length;
+        buffer[length] = value;
         value >>= 8;
     }
 }

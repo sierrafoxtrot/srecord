@@ -60,10 +60,7 @@ srec_input_filter_minimum::generate(srec_record &record)
     if (minimum_length > 8)
         minimum_length = 8;
     unsigned char chunk[8];
-    if (end == endian_little)
-        srec_record::encode_little_endian(chunk, minimum, minimum_length);
-    else
-        srec_record::encode_big_endian(chunk, minimum, minimum_length);
+    srec_record::encode(chunk, minimum, minimum_length, end);
     record =
         srec_record
         (

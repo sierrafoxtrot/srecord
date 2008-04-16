@@ -64,10 +64,7 @@ srec_input_filter_length::generate(srec_record &record)
         length_length = 8;
     unsigned char chunk[8];
     int length = maximum - minimum;
-    if (end == endian_little)
-        srec_record::encode_little_endian(chunk, length, length_length);
-    else
-        srec_record::encode_big_endian(chunk, length, length_length);
+    srec_record::encode(chunk, length, length_length, end);
     record =
         srec_record
         (

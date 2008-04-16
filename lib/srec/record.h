@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001-2003, 2005-2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2001-2003, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #ifndef INCLUDE_SREC_RECORD_H
 #define INCLUDE_SREC_RECORD_H
 
+#include <lib/endian.h>
 
 /**
   * The srec_record class is used to represent a data record read
@@ -189,13 +190,68 @@ public:
       * The decode_big_endian method is used to extract 'len'
       * bytes from the given 'data' and assemble a big-endian value
       * (most significant byte first).
+      *
+      * @param data
+      *     The data to be decodes
+      * @param len
+      *     Length of the data, in bytes
+      * @returns
+      *     the decoded value
       */
-    static address_t decode_big_endian(data_t *data, int len);
+    static address_t decode_big_endian(const data_t *data, int len);
+
+    /**
+      * The decode_little_endian method is used to extract 'len' bytes
+      * from the given 'data' and assemble a little-endian value (least
+      * significant byte first).
+      *
+      * @param data
+      *     The data to be decodes
+      * @param len
+      *     Length of the data, in bytes
+      * @returns
+      *     the decoded value
+      */
+    static address_t decode_little_endian(const data_t *data, int len);
+
+    /**
+      * The decode method is used to extract 'len' bytes
+      * from the given 'data' and assemble a valu
+      *
+      * @param data
+      *     The data to be decodes
+      * @param len
+      *     Length of the data, in bytes
+      * @param end
+      *     The byte order of the data.
+      * @returns
+      *     the decoded value
+      */
+    static address_t
+    decode(const data_t *data, int len, endian_t end)
+    {
+        return
+            (
+                end == endian_big
+            ?
+                decode_big_endian(data, len)
+            :
+                decode_little_endian(data, len)
+            );
+    }
 
     /**
       * The encode_big_endian method is used to break down 'val' into
       * 'len' bytes of 'data' orderdd big-endian (most significan
       * byte first).
+      *
+      * @param data
+      *     Where to place the encoded data
+      * @param val
+      *     The value to be encoded
+      * @param len
+      *     The number of bytes to use to encode the data.
+      *     Bits above the 8*len resolution will be discarded.
       */
     static void encode_big_endian(data_t *data, address_t val, int len);
 
@@ -203,8 +259,39 @@ public:
       * The encode_little_endian method is used to break down
       * 'val' into 'len' bytes of 'data' orderdd big-endian (least
       * significan byte first).
+      *
+      * @param data
+      *     Where to place the encoded data
+      * @param val
+      *     The value to be encoded
+      * @param len
+      *     The number of bytes to use to encode the data.
+      *     Bits above the 8*len resolution will be discarded.
       */
     static void encode_little_endian(data_t *data, address_t val, int len);
+
+    /**
+      * The encode method is used to break down 'val' into 'len' bytes
+      * of 'data'
+      *
+      * @param data
+      *     Where to place the encoded data
+      * @param val
+      *     The value to be encoded
+      * @param len
+      *     The number of bytes to use to encode the data.
+      *     Bits above the 8*len resolution will be discarded.
+      * @param end
+      *     The byte order
+      */
+    static void
+    encode(data_t *data, address_t val, int len, endian_t end)
+    {
+        if (end == endian_big)
+            encode_big_endian(data, val, len);
+        else
+            encode_little_endian(data, val, len);
+    }
 
     enum {
     /**
