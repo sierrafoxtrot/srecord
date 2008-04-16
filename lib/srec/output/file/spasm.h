@@ -20,6 +20,7 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_SPASM_H
 #define INCLUDE_SREC_OUTPUT_FILE_SPASM_H
 
+#include <lib/endian.h>
 #include <lib/srec/output/file.h>
 
 /**
@@ -43,11 +44,10 @@ private:
       * @param file_name
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
-      * @param bigendian
-      *     Whether to output big endian data (true) or little endian
-      *     data (false).
+      * @param end
+      *     The byte order of the file
       */
-    srec_output_file_spasm(const std::string &file_name, bool bigendian);
+    srec_output_file_spasm(const std::string &file_name, endian_t end);
 
 public:
     /**
@@ -56,11 +56,11 @@ public:
       *
       * @param file_name
       *     The name of the file to be written.
-      * @param bigendian
-      *     Whether to output big endian data (true) or little endian
-      *     data (false).
+      * @param end
+      *     The byte order of the file
       */
-    static pointer create(const std::string &file_name, bool bigendian = true);
+    static pointer create(const std::string &file_name,
+        endian_t end = endian_big);
 
 protected:
     // See base class for documentation.
@@ -80,10 +80,10 @@ protected:
 
 private:
     /**
-      * The bigend instance variable is used to remember whether to
-      * output big endian data (true) or little endian data (false).
+      * The end instance variable is used to remember the byte order of
+      * the file.
       */
-    bool bigend;
+    endian_t end;
 
     /**
       * The default constructor.  Do not use.

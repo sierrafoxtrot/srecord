@@ -27,20 +27,20 @@ srec_input_filter_checksum_bitnot::~srec_input_filter_checksum_bitnot()
 
 
 srec_input_filter_checksum_bitnot::srec_input_filter_checksum_bitnot(
-        srec_input::pointer a1, int a2, int a3, int a4, int a5) :
-    srec_input_filter_checksum(a1, a2, a3, a4, a5)
+        srec_input::pointer a1, int a2, int a3, endian_t a_end, int a5) :
+    srec_input_filter_checksum(a1, a2, a3, a_end, a5)
 {
 }
 
 
 srec_input::pointer
 srec_input_filter_checksum_bitnot::create(const srec_input::pointer &a_deeper,
-    int a2, int a3, int a4, int a5)
+    int a2, int a3, endian_t a_end, int a5)
 {
     return
         pointer
         (
-            new srec_input_filter_checksum_bitnot(a_deeper, a2, a3, a4, a5)
+            new srec_input_filter_checksum_bitnot(a_deeper, a2, a3, a_end, a5)
         );
 }
 

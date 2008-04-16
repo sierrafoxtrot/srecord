@@ -45,8 +45,8 @@ private:
       *     The address to place the checksum.
       * @param length
       *     The number of bytes of checksum to be placed into the result.
-      * @param order
-      *     The byte order: false => bigendian, true => little endian.
+      * @param end
+      *     The byte order.
       * @param width
       *     The width of the values being summed.  Usually 1 byte, but
       *     wider combinations are possible.  If you use something
@@ -54,7 +54,7 @@ private:
       *     that width, no provision for an offset is provided.
       */
     srec_input_filter_checksum_bitnot(srec_input::pointer deeper, int address,
-        int length, int order, int width = 1);
+        int length, endian_t end, int width = 1);
 
 public:
     /**
@@ -67,8 +67,8 @@ public:
       *     The address to place the checksum.
       * @param length
       *     The number of bytes of checksum to be placed into the result.
-      * @param order
-      *     The byte order: false => bigendian, true => little endian.
+      * @param end
+      *     The byte order.
       * @param width
       *     The width of the values being summed.  Usually 1 byte, but
       *     wider combinations are possible.  If you use something
@@ -76,7 +76,7 @@ public:
       *     that width, no provision for an offset is provided.
       */
     static pointer create(const srec_input::pointer &deeper, int address,
-        int length, int order, int width = 1);
+        int length, endian_t end, int width = 1);
 
 protected:
     // See base class for documentation.
@@ -93,7 +93,7 @@ private:
       * The copy constructor.  Do not use.
       */
     srec_input_filter_checksum_bitnot(
-            const srec_input_filter_checksum_bitnot &);
+        const srec_input_filter_checksum_bitnot &);
 
     /**
       * The assignment operator.  Do not use.

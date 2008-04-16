@@ -20,6 +20,7 @@
 #ifndef INCLUDE_SREC_INPUT_FILE_ATMEL_GENERIC_H
 #define INCLUDE_SREC_INPUT_FILE_ATMEL_GENERIC_H
 
+#include <lib/endian.h>
 #include <lib/srec/input/file.h>
 
 /**
@@ -41,9 +42,10 @@ private:
       *
       * @param file_name
       *     The name of the file to be read.
+      * @param end
+      *     The byte order.
       */
-    srec_input_file_atmel_generic(const string &file_name,
-        bool bigendian = true);
+    srec_input_file_atmel_generic(const string &file_name, endian_t end);
 
 public:
     /**
@@ -52,6 +54,8 @@ public:
       *
       * @param file_name
       *     The name of the file to be read.
+      * @param end
+      *     The byte order.
       * @returns
       *     smart pointer to new instance
       */
@@ -63,10 +67,12 @@ public:
       *
       * @param file_name
       *     The name of the file to be read.
+      * @param end
+      *     The endian-ness of the file
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const string &file_name, bool bigendian = true);
+    static pointer create(const string &file_name, endian_t end = endian_big);
 
 protected:
     // See base class for documentation.
@@ -89,10 +95,10 @@ private:
     bool seen_some_input;
 
     /**
-      * The bigend instance variable is used to remember whether the
-      * input is bigendian (true) or little endian (false).
+      * The end instance variable is used to remember whether the
+      * input is big endian or little endian.
       */
-    bool bigend;
+    endian_t end;
 
     /**
       * The deafult constructor.  Do not use.

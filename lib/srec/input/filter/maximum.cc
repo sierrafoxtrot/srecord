@@ -28,11 +28,11 @@ srec_input_filter_maximum::~srec_input_filter_maximum()
 
 
 srec_input_filter_maximum::srec_input_filter_maximum(
-        const srec_input::pointer &a1, int a2, int a3, int a4) :
+        const srec_input::pointer &a1, int a2, int a3, endian_t a_end) :
     srec_input_filter(a1),
     maximum_address(a2),
     maximum_length(a3),
-    maximum_order(a4),
+    end(a_end),
     maximum(0),
     maximum_set(false)
 {
@@ -47,9 +47,9 @@ srec_input_filter_maximum::srec_input_filter_maximum(
 
 srec_input::pointer
 srec_input_filter_maximum::create(const srec_input::pointer &a_deeper, int a2,
-    int a3, int a4)
+    int a3, endian_t a_end)
 {
-    return pointer(new srec_input_filter_maximum(a_deeper, a2, a3, a4));
+    return pointer(new srec_input_filter_maximum(a_deeper, a2, a3, a_end));
 }
 
 
@@ -61,7 +61,7 @@ srec_input_filter_maximum::generate(srec_record &record)
     if (maximum_length > 8)
         maximum_length = 8;
     unsigned char chunk[8];
-    if (maximum_order)
+    if (end == endian_little)
         srec_record::encode_little_endian(chunk, maximum, maximum_length);
     else
         srec_record::encode_big_endian(chunk, maximum, maximum_length);

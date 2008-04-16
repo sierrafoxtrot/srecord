@@ -27,17 +27,17 @@ srec_output_file_spasm::~srec_output_file_spasm()
 
 
 srec_output_file_spasm::srec_output_file_spasm(const std::string &a_file_name,
-        bool endianness) :
+        endian_t a_end) :
     srec_output_file(a_file_name),
-    bigend(endianness)
+    end(a_end)
 {
 }
 
 
 srec_output::pointer
-srec_output_file_spasm::create(const std::string &a_file_name, bool end)
+srec_output_file_spasm::create(const std::string &a_file_name, endian_t a_end)
 {
-    return pointer(new srec_output_file_spasm(a_file_name, end));
+    return pointer(new srec_output_file_spasm(a_file_name, a_end));
 }
 
 
@@ -66,7 +66,7 @@ srec_output_file_spasm::write(const srec_record &record)
     {
         put_word(address / 2);
         put_char(' ');
-        if (bigend)
+        if (end == endian_big)
         {
             put_byte(record.get_data(j + 1));
             put_byte(record.get_data(j));

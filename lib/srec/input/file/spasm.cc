@@ -28,10 +28,10 @@ srec_input_file_spasm::~srec_input_file_spasm()
 
 
 srec_input_file_spasm::srec_input_file_spasm(const string &a_file_name,
-        bool arg2) :
+        endian_t a_end) :
     srec_input_file(a_file_name),
     seen_some_input(false),
-    bigend(arg2)
+    end(a_end)
 {
 }
 
@@ -39,14 +39,14 @@ srec_input_file_spasm::srec_input_file_spasm(const string &a_file_name,
 srec_input::pointer
 srec_input_file_spasm::create_be(const string &a_file_name)
 {
-    return pointer(new srec_input_file_spasm(a_file_name));
+    return create(a_file_name, endian_big);
 }
 
 
 srec_input::pointer
-srec_input_file_spasm::create(const string &a_file_name, bool bigend)
+srec_input_file_spasm::create(const string &a_file_name, endian_t a_end)
 {
-    return pointer(new srec_input_file_spasm(a_file_name, bigend));
+    return pointer(new srec_input_file_spasm(a_file_name, a_end));
 }
 
 
@@ -60,8 +60,16 @@ srec_input_file_spasm::read_inner(srec_record &record)
     if (get_char() != ' ')
         fatal_error("space expected");
     unsigned char data[2];
-    data[bigend] = get_byte();
-    data[!bigend] = get_byte();
+    if (end == endian_big)
+    {
+        data[1] = get_byte();
+        data[0] = get_byte();
+    }
+    else
+    {
+        data[0] = get_byte();
+        data[1] = get_byte();
+    }
     if (get_char() != '\n')
         fatal_error("end of line expected");
 
@@ -95,5 +103,12 @@ const char *
 srec_input_file_spasm::get_file_format_name()
     const
 {
-    return (bigend ? "SPASM (big-endian)" : "SPASM (little-endian)");
+    return
+        (
+            end == endian_big
+        ?
+            "SPASM (big-endian)"
+        :
+            "SPASM (little-endian)"
+        );
 }

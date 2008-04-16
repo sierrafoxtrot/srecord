@@ -122,12 +122,12 @@ srec_arglex::get_output()
 
     case token_atmel_generic_be:
         token_next();
-        ofp = srec_output_file_atmel_generic::create(fn, true);
+        ofp = srec_output_file_atmel_generic::create(fn, endian_big);
         break;
 
     case token_atmel_generic_le:
         token_next();
-        ofp = srec_output_file_atmel_generic::create(fn, false);
+        ofp = srec_output_file_atmel_generic::create(fn, endian_little);
         break;
 
     case token_basic_data:
@@ -222,12 +222,12 @@ srec_arglex::get_output()
 
     case token_spasm_be:
         token_next();
-        ofp = srec_output_file_spasm::create(fn, true);
+        ofp = srec_output_file_spasm::create(fn, endian_big);
         break;
 
     case token_spasm_le:
         token_next();
-        ofp = srec_output_file_spasm::create(fn, false);
+        ofp = srec_output_file_spasm::create(fn, endian_little);
         break;
 
     case token_spectrum:

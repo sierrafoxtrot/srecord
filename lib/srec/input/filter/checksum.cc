@@ -17,18 +17,17 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
 #include <lib/interval.h>
 #include <lib/srec/input/filter/checksum.h>
 #include <lib/srec/record.h>
 
 
 srec_input_filter_checksum::srec_input_filter_checksum(srec_input::pointer a1,
-        int a2, int a3, int a4, int a5) :
+        int a2, int a3, endian_t a_end, int a5) :
     srec_input_filter(a1),
     checksum_address(a2),
     length(a3),
-    checksum_order(!!a4),
+    end(a_end),
     sum(0),
     width(a5)
 {
@@ -55,7 +54,7 @@ srec_input_filter_checksum::generate(srec_record &record)
         return false;
     unsigned char chunk[sizeof(sum_t)];
     sum_t value = calculate();
-    if (checksum_order)
+    if (end == endian_little)
         srec_record::encode_little_endian(chunk, value, length);
     else
         srec_record::encode_big_endian(chunk, value, length);
@@ -86,7 +85,7 @@ srec_input_filter_checksum::read(srec_record &record)
                 sum += record.get_data(j);
             }
         }
-        else if (checksum_order)
+        else if (end == endian_little)
         {
             // Little endian
             for (int j = 0; j < record.get_length(); ++j)

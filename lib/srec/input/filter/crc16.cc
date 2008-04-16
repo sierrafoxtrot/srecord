@@ -31,10 +31,10 @@ srec_input_filter_crc16::~srec_input_filter_crc16()
 
 srec_input_filter_crc16::srec_input_filter_crc16(
         const srec_input::pointer &deeper_arg, unsigned long address_arg,
-        int order_arg) :
+        endian_t a_end) :
     srec_input_filter(deeper_arg),
     address(address_arg),
-    order(order_arg),
+    end(a_end),
     seed_mode(crc16::seed_mode_ccitt),
     augment_flag(true),
     buffer_pos(0),
@@ -47,9 +47,9 @@ srec_input_filter_crc16::srec_input_filter_crc16(
 
 srec_input::pointer
 srec_input_filter_crc16::create(const srec_input::pointer &a_deeper,
-    unsigned long a_address, int a_order)
+    unsigned long a_address, endian_t a_end)
 {
-    return pointer(new srec_input_filter_crc16(a_deeper, a_address, a_order));
+    return pointer(new srec_input_filter_crc16(a_deeper, a_address, a_end));
 }
 
 
@@ -150,7 +150,7 @@ srec_input_filter_crc16::read(srec_record &record)
         // Turn the CRC into the first data record.
         //
         unsigned char chunk[2];
-        if (order)
+        if (end == endian_little)
             srec_record::encode_little_endian(chunk, crc, sizeof(chunk));
         else
             srec_record::encode_big_endian(chunk, crc, sizeof(chunk));

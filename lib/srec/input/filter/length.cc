@@ -28,11 +28,11 @@ srec_input_filter_length::~srec_input_filter_length()
 
 
 srec_input_filter_length::srec_input_filter_length(
-        const srec_input::pointer &a1, int a2, int a3, int a4) :
+        const srec_input::pointer &a1, int a2, int a3, endian_t a_end) :
     srec_input_filter(a1),
     length_address(a2),
     length_length(a3),
-    length_order(a4),
+    end(a_end),
     minimum(0),
     maximum(0),
     limits_set(false)
@@ -49,9 +49,9 @@ srec_input_filter_length::srec_input_filter_length(
 
 srec_input::pointer
 srec_input_filter_length::create(const srec_input::pointer &a_deeper, int a2,
-    int a3, int a4)
+    int a3, endian_t a_end)
 {
-    return pointer(new srec_input_filter_length(a_deeper, a2, a3, a4));
+    return pointer(new srec_input_filter_length(a_deeper, a2, a3, a_end));
 }
 
 
@@ -64,7 +64,7 @@ srec_input_filter_length::generate(srec_record &record)
         length_length = 8;
     unsigned char chunk[8];
     int length = maximum - minimum;
-    if (length_order)
+    if (end == endian_little)
         srec_record::encode_little_endian(chunk, length, length_length);
     else
         srec_record::encode_big_endian(chunk, length, length_length);

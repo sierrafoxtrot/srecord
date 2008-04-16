@@ -20,6 +20,7 @@
 #ifndef INCLUDE_SREC_OUTPUT_FILE_ATMEL_GENERIC_H
 #define INCLUDE_SREC_OUTPUT_FILE_ATMEL_GENERIC_H
 
+#include <lib/endian.h>
 #include <lib/srec/output/file.h>
 
 /**
@@ -42,11 +43,10 @@ private:
       * @param file_name
       *     The file to write the data to, or "-" to mean the standard
       *     output.
-      * @param bigend
-      *     The byte order of the output, true means big endian, and
-      *     false means little endian.
+      * @param end
+      *     The byte order of the output.
       */
-    srec_output_file_atmel_generic(const std::string &file_name, bool bigend);
+    srec_output_file_atmel_generic(const std::string &file_name, endian_t end);
 
 public:
     /**
@@ -56,11 +56,10 @@ public:
       * @param file_name
       *     The file name to open to write data to.  The name "-" is
       *     understood to mean the standard output.
-      * @param bigend
-      *     The byte order of the output, true means big endian, and
-      *     false means little endian.
+      * @param end
+      *     The byte order of the output.
       */
-    static pointer create(const std::string &file_name, bool bigend);
+    static pointer create(const std::string &file_name, endian_t end);
 
 protected:
     // See base class for documentation.
@@ -80,11 +79,10 @@ protected:
 
 private:
     /**
-      * The bugend instance variable is used to remember the byte order
-      * of the output, true means big endian, and false means little
-      * endian.
+      * The end instance variable is used to remember the byte order
+      * of the output, big-endian or little-endian.
       */
-    bool bigend;
+    endian_t end;
 
     /**
       * The default constructor.  Do not use.

@@ -25,7 +25,7 @@
 /**
   * The srec_input_filter_sequence class is used to represent an input
   * filter which does not change the data in any way, but issues
-  * warnings of the data is not instrictky ascending address order.
+  * warnings if the data is not instrictly ascending address order.
   */
 class srec_input_filter_sequence:
     public srec_input_filter

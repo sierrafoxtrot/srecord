@@ -20,6 +20,7 @@
 #ifndef INCLUDE_SREC_INPUT_FILTER_LENGTH_H
 #define INCLUDE_SREC_INPUT_FILTER_LENGTH_H
 
+#include <lib/endian.h>
 #include <lib/srec/input/filter.h>
 
 /**
@@ -45,11 +46,11 @@ private:
       *     The address at which to place the length.
       * @param length
       *     The number of bytes of checksum to be inserted.
-      * @param order
-      *     The byte order: false => bigendian, true => little endian.
+      * @param end
+      *     The byte order.
       */
     srec_input_filter_length(const srec_input::pointer &deeper, int address,
-        int length, int order);
+        int length, endian_t end);
 
 public:
     /**
@@ -62,11 +63,11 @@ public:
       *     The address at which to place the length.
       * @param length
       *     The number of bytes of checksum to be inserted.
-      * @param order
-      *     The byte order: false => bigendian, true => little endian.
+      * @param end
+      *     The byte order.
       */
     static pointer create(const srec_input::pointer &deeper, int address,
-        int length, int order);
+        int length, endian_t end);
 
 protected:
     // See base class for documentation.
@@ -86,11 +87,10 @@ private:
     int length_length;
 
     /**
-      * The length_order instance variable is used to remember the byte
-      * order of the inserted length, false => big endian, true => little
-      * endian.
+      * The end instance variable is used to remember the byte order of
+      * the inserted length.
       */
-    int length_order;
+    endian_t end;
 
     /**
       * The minimum instance variable is used to remember the minimum

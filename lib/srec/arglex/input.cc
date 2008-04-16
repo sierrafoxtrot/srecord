@@ -152,12 +152,12 @@ srec_arglex::get_simple_input()
 
     case token_atmel_generic_be:
         token_next();
-        ifp = srec_input_file_atmel_generic::create(fn, true);
+        ifp = srec_input_file_atmel_generic::create(fn, endian_big);
         break;
 
     case token_atmel_generic_le:
         token_next();
-        ifp = srec_input_file_atmel_generic::create(fn, false);
+        ifp = srec_input_file_atmel_generic::create(fn, endian_little);
         break;
 
     case token_binary:
@@ -247,12 +247,12 @@ srec_arglex::get_simple_input()
 
     case token_spasm_be:
         token_next();
-        ifp = srec_input_file_spasm::create(fn, true);
+        ifp = srec_input_file_spasm::create(fn, endian_big);
         break;
 
     case token_spasm_le:
         token_next();
-        ifp = srec_input_file_spasm::create(fn, false);
+        ifp = srec_input_file_spasm::create(fn, endian_little);
         break;
 
     case token_spectrum:
@@ -356,7 +356,7 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address("-Big_Endian_CRC16", address);
-                ifp = srec_input_filter_crc16::create(ifp, address, 0);
+                ifp = srec_input_filter_crc16::create(ifp, address, endian_big);
             }
             break;
 
@@ -365,7 +365,13 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address("-Little_Endian_CRC16", address);
-                ifp = srec_input_filter_crc16::create(ifp, address, 1);
+                ifp =
+                    srec_input_filter_crc16::create
+                    (
+                        ifp,
+                        address,
+                        endian_little
+                    );
             }
             break;
 
@@ -374,7 +380,7 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address("-Big_Endian_CRC32", address);
-                ifp = srec_input_filter_crc32::create(ifp, address, 0);
+                ifp = srec_input_filter_crc32::create(ifp, address, endian_big);
             }
             break;
 
@@ -383,7 +389,13 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address("-Little_Endian_CRC32", address);
-                ifp = srec_input_filter_crc32::create(ifp, address, 1);
+                ifp =
+                    srec_input_filter_crc32::create
+                    (
+                        ifp,
+                        address,
+                        endian_little
+                    );
             }
             break;
 
@@ -454,7 +466,14 @@ srec_arglex::get_input()
                 unsigned long address;
                 int nbytes;
                 get_address_and_nbytes("-Big_Endian_Length", address, nbytes);
-                ifp = srec_input_filter_length::create(ifp, address, nbytes, 0);
+                ifp =
+                    srec_input_filter_length::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        endian_big
+                    );
             }
             break;
 
@@ -469,7 +488,14 @@ srec_arglex::get_input()
                     address,
                     nbytes
                 );
-                ifp = srec_input_filter_length::create(ifp, address, nbytes, 1);
+                ifp =
+                    srec_input_filter_length::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        endian_little
+                    );
             }
             break;
 
@@ -484,7 +510,13 @@ srec_arglex::get_input()
                 int nbytes;
                 get_address_and_nbytes("-Big_Endian_MAximum", address, nbytes);
                 ifp =
-                    srec_input_filter_maximum::create(ifp, address, nbytes, 0);
+                    srec_input_filter_maximum::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        endian_big
+                    );
             }
             break;
 
@@ -500,7 +532,13 @@ srec_arglex::get_input()
                     nbytes
                 );
                 ifp =
-                    srec_input_filter_maximum::create(ifp, address, nbytes, 1);
+                    srec_input_filter_maximum::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        endian_little
+                    );
             }
             break;
 
@@ -515,7 +553,13 @@ srec_arglex::get_input()
                 int nbytes;
                 get_address_and_nbytes("-Big_Endian_MInimum", address, nbytes);
                 ifp =
-                    srec_input_filter_minimum::create(ifp, address, nbytes, 0);
+                    srec_input_filter_minimum::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        endian_big
+                    );
             }
             break;
 
@@ -531,7 +575,13 @@ srec_arglex::get_input()
                     nbytes
                 );
                 ifp =
-                    srec_input_filter_minimum::create(ifp, address, nbytes, 1);
+                    srec_input_filter_minimum::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        endian_little
+                    );
             }
             break;
 
@@ -553,7 +603,7 @@ srec_arglex::get_input()
                         ifp,
                         address,
                         nbytes,
-                        0,
+                        endian_big,
                         width
                     );
             }
@@ -577,7 +627,7 @@ srec_arglex::get_input()
                         ifp,
                         address,
                         nbytes,
-                        1,
+                        endian_little,
                         width
                     );
             }
@@ -601,7 +651,7 @@ srec_arglex::get_input()
                         ifp,
                         address,
                         nbytes,
-                        0,
+                        endian_big,
                         width
                     );
             }
@@ -625,7 +675,7 @@ srec_arglex::get_input()
                         ifp,
                         address,
                         nbytes,
-                        1,
+                        endian_little,
                         width
                     );
             }
@@ -649,7 +699,7 @@ srec_arglex::get_input()
                         ifp,
                         address,
                         nbytes,
-                        0,
+                        endian_big,
                         width
                     );
             }
@@ -673,7 +723,7 @@ srec_arglex::get_input()
                         ifp,
                         address,
                         nbytes,
-                        1,
+                        endian_little,
                         width
                     );
             }

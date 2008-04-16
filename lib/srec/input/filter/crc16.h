@@ -21,6 +21,7 @@
 #define INCLUDE_SREC_INPUT_FILTER_CRC16_H
 
 #include <lib/crc16.h>
+#include <lib/endian.h>
 #include <lib/srec/input/filter.h>
 #include <lib/srec/memory.h>
 
@@ -40,9 +41,12 @@ public:
 private:
     /**
       * The constructor.
+      *
+      * @param end
+      *     The byte order.
       */
     srec_input_filter_crc16(const srec_input::pointer &deeper,
-        unsigned long address, int order);
+        unsigned long address, endian_t end);
 
 public:
     /**
@@ -51,9 +55,11 @@ public:
       *
       * @param deeper
       *     The incoming data source to be filtered
+      * @param end
+      *     The byte order.
       */
     static pointer create(const srec_input::pointer &deeper,
-        unsigned long address, int order);
+        unsigned long address, endian_t end);
 
 protected:
     // See base class for documentation.
@@ -70,10 +76,10 @@ private:
     unsigned long address;
 
     /**
-      * The order instance variable is used to remember whether the byte
-      * order is big-endian (0) or little-endian (1).
+      * The end instance variable is used to remember whether the byte
+      * order is big-endian or little-endian.
       */
-    int order;
+    endian_t end;
 
     /**
       * The seed_mode instance variable is used to remember the desired
