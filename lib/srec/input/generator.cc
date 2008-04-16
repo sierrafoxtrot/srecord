@@ -38,7 +38,7 @@ srec_input_generator::srec_input_generator(const interval &a_range) :
 }
 
 
-int
+bool
 srec_input_generator::read(srec_record &result)
 {
     //
@@ -46,7 +46,7 @@ srec_input_generator::read(srec_record &result)
     // signal end-of-file
     //
     if (range.empty())
-        return 0;
+        return false;
 
     //
     // Calculate the address range for this chunk of data.  Use the
@@ -82,7 +82,7 @@ srec_input_generator::read(srec_record &result)
     //
     // Report that another record is available.
     //
-    return 1;
+    return true;
 }
 
 

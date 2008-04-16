@@ -53,7 +53,7 @@ srec_input_file_emon52::skip_white_space()
 }
 
 
-int
+bool
 srec_input_file_emon52::read(srec_record &record)
 {
     //
@@ -61,7 +61,7 @@ srec_input_file_emon52::read(srec_record &record)
     // character.  So look ahead to see if there is anything more.
     //
     if (peek_char() < 0)
-        return 0;
+        return false;
 
     //
     // Looks like there should be a record.  Read it all in.
@@ -90,7 +90,7 @@ srec_input_file_emon52::read(srec_record &record)
 
     srec_record::type_t type = srec_record::type_data;
     record = srec_record(type, address, buffer, length);
-    return 1;
+    return true;
 }
 
 

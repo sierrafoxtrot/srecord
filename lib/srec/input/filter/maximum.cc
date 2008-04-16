@@ -53,11 +53,11 @@ srec_input_filter_maximum::create(const srec_input::pointer &a_deeper, int a2,
 }
 
 
-int
+bool
 srec_input_filter_maximum::generate(srec_record &record)
 {
     if (maximum_length <= 0)
-        return 0;
+        return false;
     if (maximum_length > 8)
         maximum_length = 8;
     unsigned char chunk[8];
@@ -74,11 +74,11 @@ srec_input_filter_maximum::generate(srec_record &record)
             maximum_length
         );
     maximum_length = 0;
-    return 1;
+    return true;
 }
 
 
-int
+bool
 srec_input_filter_maximum::read(srec_record &record)
 {
     if (!srec_input_filter::read(record))
@@ -91,5 +91,5 @@ srec_input_filter_maximum::read(srec_record &record)
             maximum_set = true;
         }
     }
-    return 1;
+    return true;
 }

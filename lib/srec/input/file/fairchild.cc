@@ -62,7 +62,7 @@ srec_input_file_fairchild::get_byte()
 }
 
 
-int
+bool
 srec_input_file_fairchild::read(srec_record &record)
 {
     if (!header_seen)
@@ -98,7 +98,7 @@ srec_input_file_fairchild::read(srec_record &record)
             if (!file_contains_data)
                 fatal_error("file contains no data");
             get_char_undo(c);
-            return 0;
+            return false;
 
         case 'S':
             address = get_word();
@@ -122,7 +122,7 @@ srec_input_file_fairchild::read(srec_record &record)
                 if (use_checksums() && sum1 != sum2)
                     fatal_error("checksum error (%d != %d)", sum1, sum2);
             }
-            return 1;
+            return true;
 
         default:
             //
@@ -131,7 +131,6 @@ srec_input_file_fairchild::read(srec_record &record)
             //
             break;
         }
-
     }
 }
 

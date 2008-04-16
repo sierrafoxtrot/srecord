@@ -38,10 +38,10 @@ public:
       */
     virtual ~srec_input_filter_checksum();
 
-    // See bas class for documentation.
-    virtual int read(srec_record &);
-
 protected:
+    // See bas class for documentation.
+    bool read(srec_record &record);
+
     /**
       * The constructor.
       * May only be called by derived classes.
@@ -106,8 +106,13 @@ protected:
       * The generate method is used to generate the final data record,
       * once all of the deeper input has been passed through, based on
       * the calculated checksum.
+      *
+      * @param record
+      *     Where to place the returned data.
+      * @returns
+      *     bool; false if end-of-file, true if data available
       */
-    int generate(srec_record &);
+    bool generate(srec_record &record);
 
 private:
     /**

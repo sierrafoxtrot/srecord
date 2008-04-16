@@ -47,7 +47,7 @@ srec_input_filter::filename_and_line()
 }
 
 
-int
+bool
 srec_input_filter::read(srec_record &record)
 {
     return ifp->read(record);

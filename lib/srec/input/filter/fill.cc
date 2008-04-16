@@ -48,11 +48,11 @@ srec_input_filter_fill::create(const srec_input::pointer &a_deeper,
 }
 
 
-int
+bool
 srec_input_filter_fill::generate(srec_record &record)
 {
     if (range.empty())
-        return 0;
+        return false;
     interval chunk(range.get_lowest(), range.get_lowest() + 256);
     chunk *= range;
     chunk.first_interval_only();
@@ -70,11 +70,11 @@ srec_input_filter_fill::generate(srec_record &record)
             chunk.get_highest() - chunk.get_lowest()
         );
     range -= chunk;
-    return 1;
+    return true;
 }
 
 
-int
+bool
 srec_input_filter_fill::read(srec_record &record)
 {
     if (!srec_input_filter::read(record))
@@ -88,5 +88,5 @@ srec_input_filter_fill::read(srec_record &record)
                 record.get_address() + record.get_length()
             );
     }
-    return 1;
+    return true;
 }

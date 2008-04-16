@@ -225,7 +225,7 @@ srec_input_file_srecord::read_inner(srec_record &record)
 }
 
 
-int
+bool
 srec_input_file_srecord::read(srec_record &record)
 {
     for (;;)
@@ -246,7 +246,7 @@ srec_input_file_srecord::read(srec_record &record)
                 warning("no start address record");
                 termination_seen = true;
             }
-            return 0;
+            return false;
         }
         seen_some_input = true;
         if (record.get_type() != srec_record::type_header && !header_seen)
@@ -322,7 +322,7 @@ srec_input_file_srecord::read(srec_record &record)
         }
         break;
     }
-    return 1;
+    return true;
 }
 
 

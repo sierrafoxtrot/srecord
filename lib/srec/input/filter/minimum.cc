@@ -52,11 +52,11 @@ srec_input_filter_minimum::create(const srec_input::pointer &a_deeper, int a2,
 }
 
 
-int
+bool
 srec_input_filter_minimum::generate(srec_record &record)
 {
     if (minimum_length <= 0)
-        return 0;
+        return false;
     if (minimum_length > 8)
         minimum_length = 8;
     unsigned char chunk[8];
@@ -73,11 +73,11 @@ srec_input_filter_minimum::generate(srec_record &record)
             minimum_length
         );
     minimum_length = 0;
-    return 1;
+    return true;
 }
 
 
-int
+bool
 srec_input_filter_minimum::read(srec_record &record)
 {
     if (!srec_input_filter::read(record))
@@ -90,5 +90,5 @@ srec_input_filter_minimum::read(srec_record &record)
             minimum_set = true;
         }
     }
-    return 1;
+    return true;
 }

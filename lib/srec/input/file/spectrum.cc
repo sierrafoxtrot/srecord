@@ -119,7 +119,7 @@ srec_input_file_spectrum::get_binary()
 }
 
 
-int
+bool
 srec_input_file_spectrum::read(srec_record &record)
 {
     //
@@ -150,7 +150,7 @@ srec_input_file_spectrum::read(srec_record &record)
     // Check for the file trailer.
     //
     if (trailer_seen)
-        return 0;
+        return false;
     for (;;)
     {
         int c = get_char();
@@ -159,7 +159,7 @@ srec_input_file_spectrum::read(srec_record &record)
             if (!file_contains_data)
                 fatal_error("file contains no data");
             trailer_seen = true;
-            return 0;
+            return false;
         }
         if (isspace((unsigned char)c))
             continue;
@@ -171,7 +171,7 @@ srec_input_file_spectrum::read(srec_record &record)
     unsigned char data = get_binary();
     record = srec_record(srec_record::type_data, address, &data, 1);
     file_contains_data = true;
-    return 1;
+    return true;
 }
 
 const char *

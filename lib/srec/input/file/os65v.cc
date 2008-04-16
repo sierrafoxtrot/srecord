@@ -146,17 +146,17 @@ srec_input_file_os65v::read_inner(srec_record &record)
 }
 
 
-int
+bool
 srec_input_file_os65v::read(srec_record &record)
 {
     if (!read_inner(record))
     {
         if (!seen_some_input)
             fatal_error("file contains no data");
-        return 0;
+        return false;
     }
     seen_some_input = true;
-    return 1;
+    return true;
 }
 
 

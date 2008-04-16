@@ -191,7 +191,7 @@ srec_input_file_aomf::slurp()
 }
 
 
-int
+bool
 srec_input_file_aomf::read(srec_record &record)
 {
     for (;;)
@@ -221,12 +221,12 @@ srec_input_file_aomf::read(srec_record &record)
             else
                 record = srec_record(srec_record::type_header, 0, 0, 0);
             current_length = 0;
-            return 1;
+            return true;
 
         case expecting_eof:
             if (slurp() >= 0)
                 fatal_error("end-of-file expected");
-            return 0;
+            return false;
 
         case expecting_data:
             if (current_pos < current_length)
@@ -244,7 +244,7 @@ srec_input_file_aomf::read(srec_record &record)
                     );
                 current_pos += nbytes;
                 current_address += nbytes;
-                return 1;
+                return true;
             }
             c = slurp();
             switch (c)
@@ -255,7 +255,7 @@ srec_input_file_aomf::read(srec_record &record)
             case O96_Mod_End:
                 state = expecting_eof;
                 record = srec_record(srec_record::type_start_address, 0, 0, 0);
-                return 1;
+                return true;
 
             case O96_Content:
                 if (current_length < 3)

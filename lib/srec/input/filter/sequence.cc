@@ -42,11 +42,11 @@ srec_input_filter_sequence::create(srec_input::pointer arg)
 }
 
 
-int
+bool
 srec_input_filter_sequence::read(srec_record &record)
 {
     if (!srec_input_filter::read(record))
-        return 0;
+        return false;
     if (record.get_type() == srec_record::type_data)
     {
 #if 0
@@ -76,5 +76,5 @@ srec_input_filter_sequence::read(srec_record &record)
         }
         last_address = record.get_address() + record.get_length();
     }
-    return 1;
+    return true;
 }

@@ -80,7 +80,7 @@ srec_input_file_dec_binary::get_word()
 }
 
 
-int
+bool
 srec_input_file_dec_binary::read(srec_record &record)
 {
     //
@@ -109,7 +109,7 @@ srec_input_file_dec_binary::read(srec_record &record)
         // byte boundardies and/or whole block boundaries.
         //
         if (!skip_nul())
-            return 0;
+            return false;
 
         checksum_reset();
         int tag = get_word();
@@ -130,7 +130,7 @@ srec_input_file_dec_binary::read(srec_record &record)
             srec_record::type_t type = srec_record::type_start_address;
             record = srec_record(type, current_address, 0, 0);
             seek_to_end();
-            return 1;
+            return true;
         }
         current_length = length;
     }
@@ -152,7 +152,7 @@ srec_input_file_dec_binary::read(srec_record &record)
     record = srec_record(type, current_address, buffer, nbytes);
     current_address += nbytes;
     current_pos += nbytes;
-    return 1;
+    return true;
 }
 
 

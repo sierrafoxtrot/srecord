@@ -48,11 +48,11 @@ srec_input_filter_checksum::~srec_input_filter_checksum()
 }
 
 
-int
+bool
 srec_input_filter_checksum::generate(srec_record &record)
 {
     if (length <= 0)
-        return 0;
+        return false;
     unsigned char chunk[sizeof(sum_t)];
     sum_t value = calculate();
     if (checksum_order)
@@ -68,11 +68,11 @@ srec_input_filter_checksum::generate(srec_record &record)
             length
         );
     length = 0;
-    return 1;
+    return true;
 }
 
 
-int
+bool
 srec_input_filter_checksum::read(srec_record &record)
 {
     if (!srec_input_filter::read(record))
@@ -106,5 +106,5 @@ srec_input_filter_checksum::read(srec_record &record)
             }
         }
     }
-    return 1;
+    return true;
 }

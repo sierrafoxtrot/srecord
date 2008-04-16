@@ -40,16 +40,16 @@ public:
     virtual ~srec_input_filter();
 
     // See base class for documentation.
-    virtual int read(class srec_record &);
+    bool read(class srec_record &record);
 
     // See base class for documentation.
-    virtual string filename() const;
+    string filename() const;
 
     // See base class for documentation.
-    virtual string filename_and_line() const;
+    string filename_and_line() const;
 
     // See base class for documentation.
-    virtual const char *get_file_format_name() const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
     void disable_checksum_validation();

@@ -44,7 +44,7 @@ srec_input_filter_byte_swap::create(const srec_input::pointer &a_deeper)
 }
 
 
-int
+bool
 srec_input_filter_byte_swap::read(srec_record &record)
 {
     for (;;)
@@ -57,12 +57,12 @@ srec_input_filter_byte_swap::read(srec_record &record)
         )
         {
             if (!srec_input_filter::read(buffer))
-                return 0;
+                return false;
             if (buffer.get_type() != srec_record::type_data)
             {
                 record = buffer;
                 record.set_address(record.get_address() ^ mask);
-                return 1;
+                return true;
             }
             buffer_pos = 0;
         }
@@ -70,7 +70,7 @@ srec_input_filter_byte_swap::read(srec_record &record)
         unsigned long addr = (buffer.get_address() + buffer_pos) ^ mask;
         unsigned char c = buffer.get_data(buffer_pos++);
         record = srec_record(srec_record::type_data, addr, &c, 1);
-        return 1;
+        return true;
     }
 }
 

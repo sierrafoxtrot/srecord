@@ -42,7 +42,7 @@ srec_input_file_vmem::create(const string &a_file_name)
 }
 
 
-int
+bool
 srec_input_file_vmem::read(srec_record &record)
 {
     for (;;)
@@ -52,7 +52,7 @@ srec_input_file_vmem::read(srec_record &record)
         {
             if (!seen_some_input)
                 fatal_error("file contains no data");
-            return 0;
+            return false;
         }
         if (c == '@')
         {
@@ -147,7 +147,7 @@ srec_input_file_vmem::read(srec_record &record)
         // This is not a byte address, it's a chunk address.
         ++address;
         seen_some_input = true;
-        return 1;
+        return true;
     }
 }
 

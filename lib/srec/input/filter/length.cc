@@ -55,11 +55,11 @@ srec_input_filter_length::create(const srec_input::pointer &a_deeper, int a2,
 }
 
 
-int
+bool
 srec_input_filter_length::generate(srec_record &record)
 {
     if (length_length <= 0)
-            return 0;
+            return false;
     if (length_length > 8)
         length_length = 8;
     unsigned char chunk[8];
@@ -77,11 +77,11 @@ srec_input_filter_length::generate(srec_record &record)
             length_length
         );
     length_length = 0;
-    return 1;
+    return true;
 }
 
 
-int
+bool
 srec_input_filter_length::read(srec_record &record)
 {
     if (!srec_input_filter::read(record))
@@ -102,5 +102,5 @@ srec_input_filter_length::read(srec_record &record)
                 maximum = record.get_address_end();
         }
     }
-    return 1;
+    return true;
 }

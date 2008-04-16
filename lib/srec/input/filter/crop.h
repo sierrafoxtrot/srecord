@@ -62,9 +62,8 @@ public:
         const interval &range);
 
 protected:
-
     // See base class for documentation.
-    virtual int read(srec_record &);
+    bool read(srec_record &record);
 
 private:
     /**

@@ -118,7 +118,7 @@ srec_input_file_ti_txt::get_next_token()
 }
 
 
-int
+bool
 srec_input_file_ti_txt::read(srec_record &record)
 {
     for (;;)
@@ -177,14 +177,14 @@ srec_input_file_ti_txt::read(srec_record &record)
                 record =
                     srec_record(srec_record::type_data, address, buffer, n);
                 address += n;
-                return 1;
+                return true;
             }
 
         case token_q:
         case token_end_of_file:
             if (!seen_some_input)
                 fatal_error("file contains no data");
-            return 0;
+            return false;
 
         case token_junk:
             fatal_error("illegal character");

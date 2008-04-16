@@ -42,11 +42,11 @@ srec_input_filter_offset::create(const srec_input::pointer &a_deeper,
 }
 
 
-int
+bool
 srec_input_filter_offset::read(srec_record &record)
 {
     if (!srec_input_filter::read(record))
-        return 0;
+        return false;
     long addr = record.get_address() + nbytes;
 
     //
@@ -58,5 +58,5 @@ srec_input_filter_offset::read(srec_record &record)
     addr &= 0xFFFFFFFF;
 
     record.set_address(addr);
-    return 1;
+    return true;
 }

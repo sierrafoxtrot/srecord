@@ -45,7 +45,7 @@ srec_input_filter_unfill::create(const srec_input::pointer &a_deeper, int a2,
 }
 
 
-int
+bool
 srec_input_filter_unfill::read(srec_record &record)
 {
     for (;;)
@@ -58,11 +58,11 @@ srec_input_filter_unfill::read(srec_record &record)
         )
         {
             if (!srec_input_filter::read(buffer))
-                return 0;
+                return false;
             if (buffer.get_type() != srec_record::type_data)
             {
                 record = buffer;
-                return 1;
+                return true;
             }
             buffer_pos = 0;
         }
@@ -95,7 +95,7 @@ srec_input_filter_unfill::read(srec_record &record)
                         buffer.get_data() + first_pos,
                         buffer_pos - first_pos
                     );
-                return 1;
+                return true;
             }
         }
         else
@@ -118,7 +118,7 @@ srec_input_filter_unfill::read(srec_record &record)
                     buffer.get_data() + first_pos,
                     buffer_pos - first_pos
                 );
-            return 1;
+            return true;
         }
     }
 }

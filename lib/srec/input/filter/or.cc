@@ -41,15 +41,15 @@ srec_input_filter_or::create(const srec_input::pointer &a_deeper, int a_value)
 }
 
 
-int
+bool
 srec_input_filter_or::read(srec_record &record)
 {
     if (!srec_input_filter::read(record))
-        return 0;
+        return false;
     if (record.get_type() == srec_record::type_data)
     {
         for (int j = 0; j < record.get_length(); ++j)
             record.set_data(j, record.get_data(j) | value);
     }
-    return 1;
+    return true;
 }

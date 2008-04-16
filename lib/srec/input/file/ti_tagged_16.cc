@@ -55,7 +55,7 @@ srec_input_file_ti_tagged_16::get_char()
 }
 
 
-int
+bool
 srec_input_file_ti_tagged_16::read(srec_record &record)
 {
     for (;;)
@@ -71,7 +71,7 @@ srec_input_file_ti_tagged_16::read(srec_record &record)
             );
 
         case -1:
-            return 0;
+            return false;
 
         case '*':
             {
@@ -80,14 +80,14 @@ srec_input_file_ti_tagged_16::read(srec_record &record)
                 data[0] = get_byte();
                 record = srec_record(srec_record::type_data, address, data, 1);
                 ++address;
-                return 1;
+                return true;
             }
 
         case ':':
             // end of file
             while (get_char() >= 0)
                 ;
-            return 0;
+            return false;
 
         case '0':
             {
@@ -135,7 +135,7 @@ srec_input_file_ti_tagged_16::read(srec_record &record)
                 data[1] = get_byte();
                 record = srec_record(srec_record::type_data, address, data, 2);
                 address += 2;
-                return 1;
+                return true;
             }
 
         case 'F':
@@ -169,7 +169,7 @@ srec_input_file_ti_tagged_16::read(srec_record &record)
                 record = srec_record(srec_record::type_header, 0, buffer, n);
                 delete buffer;
             }
-            return 1;
+            return true;
         }
     }
 }

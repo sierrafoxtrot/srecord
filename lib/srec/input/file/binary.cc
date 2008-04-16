@@ -40,7 +40,7 @@ srec_input_file_binary::create(const string &a_file_name)
 }
 
 
-int
+bool
 srec_input_file_binary::read(srec_record &record)
 {
 #ifdef HAVE_SPARSE_LSEEK
@@ -59,7 +59,7 @@ srec_input_file_binary::read(srec_record &record)
 
     int c = get_char();
     if (c < 0)
-        return 0;
+        return false;
     int length = 0;
     unsigned char data[srec_record::max_data_length];
     for (;;)
@@ -73,7 +73,7 @@ srec_input_file_binary::read(srec_record &record)
     }
     record = srec_record(srec_record::type_data, address, data, length);
     address += length;
-    return 1;
+    return true;
 }
 
 

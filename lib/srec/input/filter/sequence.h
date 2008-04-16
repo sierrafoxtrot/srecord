@@ -51,7 +51,7 @@ public:
 
 protected:
     // See base class for documentation.
-    int read(srec_record &record);
+    bool read(srec_record &record);
 
 private:
     /**

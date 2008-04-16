@@ -43,7 +43,7 @@ srec_input_file_needham::create(const string &a_file_name)
 }
 
 
-int
+bool
 srec_input_file_needham::read(srec_record &record)
 {
     for (;;)
@@ -53,7 +53,7 @@ srec_input_file_needham::read(srec_record &record)
         {
             if (!seen_some_input)
                 fatal_error("file contains no data");
-            return 0;
+            return false;
         }
         if (isxdigit(c))
         {
@@ -68,7 +68,7 @@ srec_input_file_needham::read(srec_record &record)
                 );
             seen_some_input = true;
             ++address;
-            return 1;
+            return true;
         }
         c = get_char();
         switch (c)

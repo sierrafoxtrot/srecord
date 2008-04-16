@@ -45,7 +45,7 @@ srec_input_file_formatted_binary::create(const string &a_file_name)
 }
 
 
-int
+bool
 srec_input_file_formatted_binary::read(srec_record &record)
 {
     if (!header_seen)
@@ -140,7 +140,7 @@ srec_input_file_formatted_binary::read(srec_record &record)
             }
             trailer_seen = true;
         }
-        return 0;
+        return false;
     }
 
     long datalen = upper_bound - address;
@@ -157,7 +157,7 @@ srec_input_file_formatted_binary::read(srec_record &record)
     }
     record = srec_record(srec_record::type_data, address, data, datalen);
     address += datalen;
-    return 1;
+    return true;
 }
 
 

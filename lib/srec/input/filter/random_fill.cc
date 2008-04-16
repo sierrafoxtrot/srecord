@@ -44,11 +44,11 @@ srec_input_filter_random_fill::create(const srec_input::pointer &a_deeper,
 }
 
 
-int
+bool
 srec_input_filter_random_fill::generate(srec_record &record)
 {
     if (range.empty())
-        return 0;
+        return false;
     unsigned char buffer[srec_record::max_data_length];
     interval chunk(range.get_lowest(), range.get_lowest() + sizeof(buffer));
     chunk *= range;
@@ -65,11 +65,11 @@ srec_input_filter_random_fill::generate(srec_record &record)
             nbytes
         );
     range -= chunk;
-    return 1;
+    return true;
 }
 
 
-int
+bool
 srec_input_filter_random_fill::read(srec_record &record)
 {
     if (!srec_input_filter::read(record))
@@ -83,5 +83,5 @@ srec_input_filter_random_fill::read(srec_record &record)
                 record.get_address() + record.get_length()
             );
     }
-    return 1;
+    return true;
 }

@@ -56,8 +56,13 @@ public:
       *
       * Note: there is no guarantee that a header record will appear
       * first, or that a start address record will appear last.
+      *
+      * @param record
+      *     Where to put the returned data.
+      * @returns
+      *     bool; true if data was read, false if at end-of-file
       */
-    virtual int read(class srec_record &) = 0;
+    virtual bool read(class srec_record &record) = 0;
 
     /**
       * The fatal_error method is used to report problems parsing

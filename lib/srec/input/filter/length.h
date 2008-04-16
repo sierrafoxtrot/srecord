@@ -70,7 +70,7 @@ public:
 
 protected:
     // See base class for documentation.
-    virtual int read(srec_record &);
+    bool read(srec_record &record);
 
 private:
     /**
@@ -116,7 +116,7 @@ private:
       * The generator method is used to generate the data record holding
       * the generated length to be inserted at the end of the data stream.
       */
-    int generate(srec_record &);
+    bool generate(srec_record &record);
 
     /**
       * The default constructor.  Do not use.

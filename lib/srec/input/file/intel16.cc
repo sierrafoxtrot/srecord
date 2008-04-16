@@ -298,7 +298,7 @@ srec_input_file_intel16::read_inner(srec_record &record)
 }
 
 
-int
+bool
 srec_input_file_intel16::read(srec_record &record)
 {
     for (;;)
@@ -314,7 +314,7 @@ srec_input_file_intel16::read(srec_record &record)
                 warning("no end-of-file record");
                 termination_seen = true;
             }
-            return 0;
+            return false;
         }
         seen_some_input = true;
         switch (record.get_type())
@@ -344,7 +344,7 @@ srec_input_file_intel16::read(srec_record &record)
         }
         break;
     }
-    return 1;
+    return true;
 }
 
 

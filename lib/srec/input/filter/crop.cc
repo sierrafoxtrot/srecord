@@ -45,7 +45,7 @@ srec_input_filter_crop::create(const srec_input::pointer &a_deeper,
 }
 
 
-int
+bool
 srec_input_filter_crop::read(srec_record &record)
 {
     for (;;)
@@ -61,7 +61,7 @@ srec_input_filter_crop::read(srec_record &record)
             //
             if (!srec_input_filter::read(data))
             {
-                return 0;
+                return false;
             }
             switch (data.get_type())
             {
@@ -71,7 +71,7 @@ srec_input_filter_crop::read(srec_record &record)
                 // care about, pass it through.
                 //
                 record = data;
-                return 1;
+                return true;
 
             case srec_record::type_data:
                 //
@@ -95,7 +95,7 @@ srec_input_filter_crop::read(srec_record &record)
                 if (!range.member(data.get_address()))
                     continue;
                 record = data;
-                return 1;
+                return true;
             }
         }
 
@@ -137,6 +137,6 @@ srec_input_filter_crop::read(srec_record &record)
         //
         // Success
         //
-        return 1;
+        return true;
     }
 }

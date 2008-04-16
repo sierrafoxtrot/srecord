@@ -55,7 +55,7 @@ public:
 
 protected:
     // See base class for documentation
-    int read(srec_record &);
+    bool read(srec_record &record);
 
     // See base class for documentation
     void disable_checksum_validation();

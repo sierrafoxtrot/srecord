@@ -76,7 +76,7 @@ srec_input_filter_crc32::command_line(srec_arglex *cmdln)
 }
 
 
-int
+bool
 srec_input_filter_crc32::read(srec_record &record)
 {
     //
@@ -113,7 +113,7 @@ srec_input_filter_crc32::read(srec_record &record)
         if (rp)
         {
             record = *rp;
-            return 1;
+            return true;
         }
     }
 
@@ -140,7 +140,7 @@ srec_input_filter_crc32::read(srec_record &record)
             srec_record::encode_big_endian(chunk, crc, sizeof(chunk));
         record =
             srec_record(srec_record::type_data, address, chunk, sizeof(chunk));
-        return 1;
+        return true;
     }
 
     //
@@ -153,7 +153,7 @@ srec_input_filter_crc32::read(srec_record &record)
     {
         record = srec_record(srec_record::type_data, ret_address, data, nbytes);
         buffer_pos = ret_address + nbytes;
-        return 1;
+        return true;
     }
 
     //
@@ -166,12 +166,12 @@ srec_input_filter_crc32::read(srec_record &record)
         if (rp)
         {
             record = *rp;
-            return 1;
+            return true;
         }
     }
 
     //
     // All done.
     //
-    return 0;
+    return false;
 }

@@ -51,7 +51,7 @@ srec_input_filter_split::create(const srec_input::pointer &a_deeper,
 }
 
 
-int
+bool
 srec_input_filter_split::read(srec_record &record)
 {
     for (;;)
@@ -64,11 +64,11 @@ srec_input_filter_split::read(srec_record &record)
         )
         {
             if (!srec_input_filter::read(buffer))
-                return 0;
+                return false;
             if (buffer.get_type() != srec_record::type_data)
             {
                 record = buffer;
-                return 1;
+                return true;
             }
             buffer_pos = 0;
         }
@@ -89,7 +89,7 @@ srec_input_filter_split::read(srec_record &record)
             //
             addr = (addr / modulus - 1) * width + phase;
             record = srec_record(srec_record::type_data, addr, &c, 1);
-            return 1;
+            return true;
         }
         ++buffer_pos;
     }

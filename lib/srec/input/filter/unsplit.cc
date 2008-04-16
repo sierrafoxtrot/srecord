@@ -46,7 +46,7 @@ srec_input_filter_unsplit::create(const srec_input::pointer &a_deeper, int a2,
 }
 
 
-int
+bool
 srec_input_filter_unsplit::read(srec_record &record)
 {
     for (;;)
@@ -59,11 +59,11 @@ srec_input_filter_unsplit::read(srec_record &record)
         )
         {
             if (!srec_input_filter::read(buffer))
-                return 0;
+                return false;
             if (buffer.get_type() != srec_record::type_data)
             {
                 record = buffer;
-                return 1;
+                return true;
             }
             buffer_pos = 0;
         }
@@ -73,6 +73,6 @@ srec_input_filter_unsplit::read(srec_record &record)
         int phase = addr % width;
         addr = (addr / width) * modulus + phase + offset;
         record = srec_record(srec_record::type_data, addr, &c, 1);
-        return 1;
+        return true;
     }
 }
