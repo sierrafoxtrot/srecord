@@ -34,8 +34,8 @@ man/cat%1/%2.%1: man/man%1/%2.%1
 {
     sh [resolve etc/groff.sh]
         [addprefix "-I" [search_list]]
-        [resolve man/man%1/%2.%1]
         -Tascii -t -P-c -man
+        [resolve man/man%1/%2.%1]
     > [target];
 }
 
@@ -99,8 +99,9 @@ etc/%.pdf: etc/%.man etc/page-list.awk
 {
     sh [resolve etc/groff.sh]
         [addprefix "-I" [search_list]]
+        -t -man
         [resolve etc/%.man]
-        -t -man etc/%.man > %.ps.tmp;
+        > %.ps.tmp;
     psselect -p`awk -f [resolve etc/page-list.awk] %.ps.tmp`
         %.ps.tmp > %.ps;
     rm %.ps.tmp
