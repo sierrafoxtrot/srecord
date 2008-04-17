@@ -473,9 +473,14 @@ you need to use an exclude filter, or this will generate errors.
 The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
 .TP 8n
+\fB\-Big_Endian_Exclusive_Length\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+As above, except that the result does \f[B]not\fP include the length itself.
+.TP 8n
 \fB\-Little_Endian_Length\fP \f[I]address\fP [ \f[I]nbytes\fP ]
 As above, however
 the value will be written with the least significant byte first.
+\fB\-Little_Endian_Exclusive_Length\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+As above, except that the result does \f[B]not\fP include the length itself.
 .TP 8n
 \fB\-Big_Endian_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
 This filter may be used to insert the maximum address of the data (high water
@@ -485,9 +490,15 @@ you need to use an exclude filter, or this will generate errors.
 The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
 .TP 8n
+\fB\-Big_Endian_Exclusive_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+As above, except that the result does \f[B]not\fP include the length itself.
+.TP 8n
 \fB\-Little_Endian_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
 As above, however
 the value will be written with the least significant byte first.
+.TP 8n
+\fB\-Little_Endian_Exclusive_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+As above, except that the result does \f[B]not\fP include the length itself.
 .TP 8n
 \fB\-Big_Endian_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
 This filter may be used to insert the minimum address of the data (low
@@ -497,9 +508,15 @@ you need to use an exclude filter, or this will generate errors.
 The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
 .TP 8n
+\fB\-Big_Endian_Exclusive_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+As above, except that the result does \f[B]not\fP include the length itself.
+.TP 8n
 \fB\-Little_Endian_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
 As above, however
 the value will be written with the least significant byte first.
+.TP 8n
+\fB\-Little_Endian_Exclusive_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+As above, except that the result does \f[B]not\fP include the length itself.
 .TP 8n
 \fB\-OFfset\fP \f[I]nbytes\fP
 This filter may be used to

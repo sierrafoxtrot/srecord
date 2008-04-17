@@ -59,6 +59,9 @@ using namespace std;
 #include <lib/srec/input/filter/crc32.h>
 #include <lib/srec/input/filter/crop.h>
 #include <lib/srec/input/filter/fill.h>
+#include <lib/srec/input/filter/interval/length.h>
+#include <lib/srec/input/filter/interval/maximum.h>
+#include <lib/srec/input/filter/interval/minimum.h>
 #include <lib/srec/input/filter/length.h>
 #include <lib/srec/input/filter/maximum.h>
 #include <lib/srec/input/filter/minimum.h>
@@ -460,6 +463,14 @@ srec_arglex::get_input()
             fatal_error("Use --big-endian-length or --little-endian-length");
             // NOTREACHED
 
+        case token_exclusive_length:
+            fatal_error
+            (
+                "Use --big-endian-exclusive-length or "
+                    "--little-endian-exclusive-length"
+            );
+            // NOTREACHED
+
         case token_length_be:
             {
                 token_next();
@@ -473,6 +484,28 @@ srec_arglex::get_input()
                         address,
                         nbytes,
                         endian_big
+                    );
+            }
+            break;
+
+        case token_exclusive_length_be:
+            {
+                token_next();
+                unsigned long address;
+                int nbytes;
+                get_address_and_nbytes
+                (
+                    "-Big_Endian_Exclusive_Length",
+                    address,
+                    nbytes
+                );
+                ifp =
+                    srec_input_filter_interval_length::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        0
                     );
             }
             break;
@@ -499,8 +532,38 @@ srec_arglex::get_input()
             }
             break;
 
+        case token_exclusive_length_le:
+            {
+                token_next();
+                unsigned long address;
+                int nbytes;
+                get_address_and_nbytes
+                (
+                    "-Little_Endian_Exclusive_Length",
+                    address,
+                    nbytes
+                );
+                ifp =
+                    srec_input_filter_interval_length::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        1
+                    );
+            }
+            break;
+
         case token_maximum:
             fatal_error("Use --big-endian-maximum or --little-endian-maximum");
+            // NOTREACHED
+
+        case token_exclusive_maximum:
+            fatal_error
+            (
+                "Use --big-endian-exclusive-maximum or "
+                    "--little-endian-exclusive-maximum"
+            );
             // NOTREACHED
 
         case token_maximum_be:
@@ -516,6 +579,28 @@ srec_arglex::get_input()
                         address,
                         nbytes,
                         endian_big
+                    );
+            }
+            break;
+
+        case token_exclusive_maximum_be:
+            {
+                token_next();
+                unsigned long address;
+                int nbytes;
+                get_address_and_nbytes
+                (
+                    "-Big_Endian_Exclusive_MAximum",
+                    address,
+                    nbytes
+                );
+                ifp =
+                    srec_input_filter_interval_maximum::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        0
                     );
             }
             break;
@@ -542,8 +627,38 @@ srec_arglex::get_input()
             }
             break;
 
+        case token_exclusive_maximum_le:
+            {
+                token_next();
+                unsigned long address;
+                int nbytes;
+                get_address_and_nbytes
+                (
+                    "-Little_Endian_Exclusive_MAximum",
+                    address,
+                    nbytes
+                );
+                ifp =
+                    srec_input_filter_interval_maximum::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        1
+                    );
+            }
+            break;
+
         case token_minimum:
             fatal_error("Use --big-endian-minimum or --little-endian-minimum");
+            // NOTREACHED
+
+        case token_exclusive_minimum:
+            fatal_error
+            (
+                "Use --big-endian-exclusive-minimum or "
+                    "--little-endian-exclusive-minimum"
+            );
             // NOTREACHED
 
         case token_minimum_be:
@@ -559,6 +674,28 @@ srec_arglex::get_input()
                         address,
                         nbytes,
                         endian_big
+                    );
+            }
+            break;
+
+        case token_exclusive_minimum_be:
+            {
+                token_next();
+                unsigned long address;
+                int nbytes;
+                get_address_and_nbytes
+                (
+                    "-Big_Endian_Exclusive_MInimum",
+                    address,
+                    nbytes
+                );
+                ifp =
+                    srec_input_filter_interval_minimum::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        0
                     );
             }
             break;
@@ -581,6 +718,28 @@ srec_arglex::get_input()
                         address,
                         nbytes,
                         endian_little
+                    );
+            }
+            break;
+
+        case token_exclusive_minimum_le:
+            {
+                token_next();
+                unsigned long address;
+                int nbytes;
+                get_address_and_nbytes
+                (
+                    "-Little_Endian_Exclusive_MInimum",
+                    address,
+                    nbytes
+                );
+                ifp =
+                    srec_input_filter_interval_minimum::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        1
                     );
             }
             break;
