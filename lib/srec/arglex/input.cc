@@ -62,9 +62,6 @@ using namespace std;
 #include <lib/srec/input/filter/interval/length.h>
 #include <lib/srec/input/filter/interval/maximum.h>
 #include <lib/srec/input/filter/interval/minimum.h>
-#include <lib/srec/input/filter/length.h>
-#include <lib/srec/input/filter/maximum.h>
-#include <lib/srec/input/filter/minimum.h>
 #include <lib/srec/input/filter/not.h>
 #include <lib/srec/input/filter/offset.h>
 #include <lib/srec/input/filter/or.h>
@@ -478,12 +475,13 @@ srec_arglex::get_input()
                 int nbytes;
                 get_address_and_nbytes("-Big_Endian_Length", address, nbytes);
                 ifp =
-                    srec_input_filter_length::create
+                    srec_input_filter_interval_length::create
                     (
                         ifp,
                         address,
                         nbytes,
-                        endian_big
+                        endian_big,
+                        true
                     );
             }
             break;
@@ -505,7 +503,8 @@ srec_arglex::get_input()
                         ifp,
                         address,
                         nbytes,
-                        0
+                        endian_big,
+                        false
                     );
             }
             break;
@@ -522,12 +521,13 @@ srec_arglex::get_input()
                     nbytes
                 );
                 ifp =
-                    srec_input_filter_length::create
+                    srec_input_filter_interval_length::create
                     (
                         ifp,
                         address,
                         nbytes,
-                        endian_little
+                        endian_little,
+                        true
                     );
             }
             break;
@@ -549,7 +549,8 @@ srec_arglex::get_input()
                         ifp,
                         address,
                         nbytes,
-                        1
+                        endian_little,
+                        false
                     );
             }
             break;
@@ -573,12 +574,13 @@ srec_arglex::get_input()
                 int nbytes;
                 get_address_and_nbytes("-Big_Endian_MAximum", address, nbytes);
                 ifp =
-                    srec_input_filter_maximum::create
+                    srec_input_filter_interval_maximum::create
                     (
                         ifp,
                         address,
                         nbytes,
-                        endian_big
+                        endian_big,
+                        true
                     );
             }
             break;
@@ -600,7 +602,8 @@ srec_arglex::get_input()
                         ifp,
                         address,
                         nbytes,
-                        0
+                        endian_big,
+                        false
                     );
             }
             break;
@@ -617,12 +620,13 @@ srec_arglex::get_input()
                     nbytes
                 );
                 ifp =
-                    srec_input_filter_maximum::create
+                    srec_input_filter_interval_maximum::create
                     (
                         ifp,
                         address,
                         nbytes,
-                        endian_little
+                        endian_little,
+                        true
                     );
             }
             break;
@@ -644,7 +648,8 @@ srec_arglex::get_input()
                         ifp,
                         address,
                         nbytes,
-                        1
+                        endian_little,
+                        false
                     );
             }
             break;
@@ -668,12 +673,13 @@ srec_arglex::get_input()
                 int nbytes;
                 get_address_and_nbytes("-Big_Endian_MInimum", address, nbytes);
                 ifp =
-                    srec_input_filter_minimum::create
+                    srec_input_filter_interval_minimum::create
                     (
                         ifp,
                         address,
                         nbytes,
-                        endian_big
+                        endian_big,
+                        true
                     );
             }
             break;
@@ -695,7 +701,8 @@ srec_arglex::get_input()
                         ifp,
                         address,
                         nbytes,
-                        0
+                        endian_big,
+                        false
                     );
             }
             break;
@@ -712,12 +719,13 @@ srec_arglex::get_input()
                     nbytes
                 );
                 ifp =
-                    srec_input_filter_minimum::create
+                    srec_input_filter_interval_minimum::create
                     (
                         ifp,
                         address,
                         nbytes,
-                        endian_little
+                        endian_little,
+                        true
                     );
             }
             break;
@@ -739,7 +747,8 @@ srec_arglex::get_input()
                         ifp,
                         address,
                         nbytes,
-                        1
+                        endian_little,
+                        false
                     );
             }
             break;

@@ -26,15 +26,16 @@ srec_input_filter_interval_minimum::~srec_input_filter_interval_minimum()
 
 
 srec_input_filter_interval_minimum::srec_input_filter_interval_minimum(
-        const pointer &a_deeper, long a_address, int a_length, bool a_order) :
-    srec_input_filter_interval(a_deeper, a_address, a_length, a_order)
+        const pointer &a_deeper, long a_address, int a_length, endian_t a_end,
+        bool inclusive) :
+    srec_input_filter_interval(a_deeper, a_address, a_length, a_end, inclusive)
 {
 }
 
 
 srec_input::pointer
 srec_input_filter_interval_minimum::create(const pointer &a_deeper,
-    long a_address, int a_length, bool a_order)
+    long a_address, int a_length, endian_t a_end, bool inclusive)
 {
     return
         pointer
@@ -44,7 +45,8 @@ srec_input_filter_interval_minimum::create(const pointer &a_deeper,
                 a_deeper,
                 a_address,
                 a_length,
-                a_order
+                a_end,
+                inclusive
             )
         );
 }

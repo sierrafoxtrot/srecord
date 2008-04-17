@@ -19,6 +19,7 @@
 #ifndef LIB_SREC_INPUT_FILTER_INTERVAL_H
 #define LIB_SREC_INPUT_FILTER_INTERVAL_H
 
+#include <lib/endian.h>
 #include <lib/interval.h>
 #include <lib/srec/input/filter.h>
 
@@ -46,11 +47,14 @@ protected:
       *     The address at which to place the length.
       * @param length
       *     The number of bytes of checksum to be inserted.
-      * @param order
-      *     The byte order: false => bigendian, true => little endian.
+      * @param end
+      *     The byte order.
+      * @param inclusive
+      *     true if the output location is included in the address
+      *     range, false if not
       */
     srec_input_filter_interval(const srec_input::pointer &deeper, long address,
-        int length, bool order);
+        int length, endian_t end, bool inclusive);
 
     /**
       * The calculate_result method is used to calculate the final value
@@ -84,10 +88,10 @@ private:
     int length;
 
     /**
-      * The order instance variable is used to remember whether to use
-      * big endian(false) order or little endian (true) order.
+      * The end instance variable is used to remember whether to use
+      * big endian order or little endian byte order.
       */
-    bool order;
+    endian_t end;
 
     /**
       * The range instance variable is used to remember the address

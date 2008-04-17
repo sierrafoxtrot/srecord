@@ -28,12 +28,14 @@ srec_input_filter_interval::~srec_input_filter_interval()
 
 srec_input_filter_interval::srec_input_filter_interval(
         const srec_input::pointer &a_deeper, long a_address, int a_length,
-        bool a_order) :
+        endian_t a_end, bool inclusive) :
     srec_input_filter(a_deeper),
     address(a_address),
     length(a_length <= 1 ? 1 : a_length >= 8 ? 8 : a_length),
-    order(a_order)
+    end(a_end)
 {
+    if (inclusive)
+        range = interval(address, address + length);
 }
 
 
@@ -44,10 +46,7 @@ srec_input_filter_interval::generate(srec_record &record)
         return false;
     long value = calculate_result();
     unsigned char chunk[8];
-    if (order)
-        srec_record::encode_little_endian(chunk, value, length);
-    else
-        srec_record::encode_big_endian(chunk, value, length);
+    srec_record::encode(chunk, value, length, end);
     record = srec_record(srec_record::type_data, address, chunk, length);
     length = 0;
     return true;

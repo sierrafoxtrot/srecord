@@ -46,11 +46,14 @@ private:
       *     The address at which to place the length.
       * @param length
       *     The number of bytes of checksum to be inserted.
-      * @param order
-      *     The byte order: false => bigendian, true => little endian.
+      * @param end
+      *     The byte order.
+      * @param inclusive
+      *     true if the output location is included in the address
+      *     range, false if not
       */
     srec_input_filter_interval_maximum(const srec_input::pointer &deeper,
-        long address, int length, bool order);
+        long address, int length, endian_t end, bool inclusive);
 
 public:
     /**
@@ -62,11 +65,14 @@ public:
       *     The address at which to place the length.
       * @param length
       *     The number of bytes of checksum to be inserted.
-      * @param order
-      *     The byte order: false => bigendian, true => little endian.
+      * @param end
+      *     The byte order.
+      * @param inclusive
+      *     true if the output location is included in the address
+      *     range, false if not
       */
     static pointer create(const srec_input::pointer &deeper, long address,
-        int length, bool order);
+        int length, endian_t end, bool inclusive);
 
 protected:
     // See base class for documentation.
