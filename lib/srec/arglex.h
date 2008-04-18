@@ -21,6 +21,7 @@
 #define INCLUDE_SREC_ARGLEX_H
 
 #include <lib/arglex.h>
+#include <lib/endian.h>
 #include <lib/srec/input.h>
 #include <lib/srec/output.h>
 
@@ -341,6 +342,48 @@ private:
       * not return.
       */
     srec_input::pointer get_simple_input();
+
+    /**
+      * The get_endian_by_token method is sued to obtain the endian-ness
+      * of a given token.  This is for when there are big-endian and
+      * little-endian variants of filters and file formats.
+      *
+      * @param tok
+      *     the noken the endien-ness is required for.
+      */
+    endian_t get_endian_by_token(int tok) const;
+
+    /**
+      * The get_endian_by_token method is sued to obtain the endian-ness
+      * of the current token.
+      */
+    endian_t
+    get_endian_by_token()
+        const
+    {
+        return get_endian_by_token(token_cur());
+    }
+
+    /**
+      * The get_inclusive_by_token method is used to determine whether
+      * or not a token is inclusive (e.g. token_length_be) or exclusive
+      * (e.g. token_exclusive_length_be).
+      *
+      * @param tok
+      *     The token to examine.
+      */
+    bool get_inclusive_by_token(int tok) const;
+
+    /**
+      * The get_inclusive_by_token method is used to determine whether
+      * or not the current token is inclusive or exclusive.
+      */
+    bool
+    get_inclusive_by_token()
+        const
+    {
+        return get_inclusive_by_token(token_cur());
+    }
 
     /**
       * The default constructor.  Do not use.

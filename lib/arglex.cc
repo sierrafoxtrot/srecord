@@ -519,6 +519,7 @@ arglex::token_next()
 
 const char *
 arglex::token_name(int n)
+    const
 {
     switch (n)
     {
@@ -542,7 +543,7 @@ arglex::token_name(int n)
     }
     for
     (
-        table_ptr_vec_t::iterator it = tables.begin();
+        table_ptr_vec_t::const_iterator it = tables.begin();
         it != tables.end();
         ++it
     )

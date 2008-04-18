@@ -252,8 +252,17 @@ public:
     /**
       * The token_name method is used to turn a token type number
       * into an equivalent string.  Useful for some error messages.
+      *
+      * @param tok
+      *     The ID of the token to be named.
       */
-    const char *token_name(int);
+    const char *token_name(int tok) const;
+
+    /**
+      * The token_name method is used to obtain the name of the current
+      * token.
+      */
+    const char *token_name() const { return token_name(token_cur()); }
 
     /**
       * The usage method is used to print a usage summary.

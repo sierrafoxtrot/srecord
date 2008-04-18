@@ -20,6 +20,7 @@
 #include <iostream>
 using namespace std;
 
+#include <lib/quit.h>
 #include <lib/srec/arglex.h>
 #include <lib/srec/input/file/aomf.h>
 #include <lib/srec/input/file/ascii_hex.h>
@@ -73,6 +74,96 @@ using namespace std;
 #include <lib/srec/input/filter/xor.h>
 #include <lib/srec/input/generator.h>
 #include <lib/srec/input/interval.h>
+
+
+endian_t
+srec_arglex::get_endian_by_token(int tok)
+    const
+{
+    switch (tok)
+    {
+    case token_atmel_generic_be:
+    case token_checksum_be_bitnot:
+    case token_checksum_be_negative:
+    case token_checksum_be_positive:
+    case token_crc16_be:
+    case token_crc32_be:
+    case token_exclusive_length_be:
+    case token_exclusive_maximum_be:
+    case token_exclusive_minimum_be:
+    case token_length_be:
+    case token_maximum_be:
+    case token_minimum_be:
+    case token_spasm_be:
+        return endian_big;
+
+    case token_atmel_generic_le:
+    case token_checksum_le_bitnot:
+    case token_checksum_le_negative:
+    case token_checksum_le_positive:
+    case token_crc16_le:
+    case token_crc32_le:
+    case token_exclusive_length_le:
+    case token_exclusive_maximum_le:
+    case token_exclusive_minimum_le:
+    case token_length_le:
+    case token_maximum_le:
+    case token_minimum_le:
+    case token_spasm_le:
+        return endian_little;
+
+    default:
+        quit_default.fatal_error
+        (
+            "%s: %d: add %s to switch (bug)",
+            __FILE__,
+            __LINE__,
+            token_name(tok)
+        );
+        return endian_big;
+    }
+}
+
+
+bool
+srec_arglex::get_inclusive_by_token(int tok)
+    const
+{
+    switch (tok)
+    {
+    case token_exclusive_length:
+    case token_exclusive_length_be:
+    case token_exclusive_length_le:
+    case token_exclusive_maximum:
+    case token_exclusive_maximum_be:
+    case token_exclusive_maximum_le:
+    case token_exclusive_minimum:
+    case token_exclusive_minimum_be:
+    case token_exclusive_minimum_le:
+        return false;
+
+    case token_length:
+    case token_length_be:
+    case token_length_le:
+    case token_maximum:
+    case token_maximum_be:
+    case token_maximum_le:
+    case token_minimum:
+    case token_minimum_be:
+    case token_minimum_le:
+        return true;
+
+    default:
+        quit_default.fatal_error
+        (
+            "%s: %d: add %s to switch (bug)",
+            __FILE__,
+            __LINE__,
+            token_name(tok)
+        );
+        return true;
+    }
+}
 
 
 srec_input::pointer
@@ -151,13 +242,12 @@ srec_arglex::get_simple_input()
         break;
 
     case token_atmel_generic_be:
-        token_next();
-        ifp = srec_input_file_atmel_generic::create(fn, endian_big);
-        break;
-
     case token_atmel_generic_le:
-        token_next();
-        ifp = srec_input_file_atmel_generic::create(fn, endian_little);
+        {
+            endian_t end = get_endian_by_token();
+            token_next();
+            ifp = srec_input_file_atmel_generic::create(fn, end);
+        }
         break;
 
     case token_binary:
@@ -246,13 +336,12 @@ srec_arglex::get_simple_input()
         break;
 
     case token_spasm_be:
-        token_next();
-        ifp = srec_input_file_spasm::create(fn, endian_big);
-        break;
-
     case token_spasm_le:
-        token_next();
-        ifp = srec_input_file_spasm::create(fn, endian_little);
+        {
+            endian_t end = get_endian_by_token();
+            token_next();
+            ifp = srec_input_file_spasm::create(fn, end);
+        }
         break;
 
     case token_spectrum:
@@ -352,50 +441,26 @@ srec_arglex::get_input()
             break;
 
         case token_crc16_be:
-            {
-                token_next();
-                unsigned long address;
-                get_address("-Big_Endian_CRC16", address);
-                ifp = srec_input_filter_crc16::create(ifp, address, endian_big);
-            }
-            break;
-
         case token_crc16_le:
             {
+                endian_t end = get_endian_by_token();
+                const char *name = token_name();
                 token_next();
                 unsigned long address;
-                get_address("-Little_Endian_CRC16", address);
-                ifp =
-                    srec_input_filter_crc16::create
-                    (
-                        ifp,
-                        address,
-                        endian_little
-                    );
+                get_address(name, address);
+                ifp = srec_input_filter_crc16::create(ifp, address, end);
             }
             break;
 
         case token_crc32_be:
-            {
-                token_next();
-                unsigned long address;
-                get_address("-Big_Endian_CRC32", address);
-                ifp = srec_input_filter_crc32::create(ifp, address, endian_big);
-            }
-            break;
-
         case token_crc32_le:
             {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
                 token_next();
                 unsigned long address;
-                get_address("-Little_Endian_CRC32", address);
-                ifp =
-                    srec_input_filter_crc32::create
-                    (
-                        ifp,
-                        address,
-                        endian_little
-                    );
+                get_address(name, address);
+                ifp = srec_input_filter_crc32::create(ifp, address, end);
             }
             break;
 
@@ -469,88 +534,25 @@ srec_arglex::get_input()
             // NOTREACHED
 
         case token_length_be:
-            {
-                token_next();
-                unsigned long address;
-                int nbytes;
-                get_address_and_nbytes("-Big_Endian_Length", address, nbytes);
-                ifp =
-                    srec_input_filter_interval_length::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        endian_big,
-                        true
-                    );
-            }
-            break;
-
-        case token_exclusive_length_be:
-            {
-                token_next();
-                unsigned long address;
-                int nbytes;
-                get_address_and_nbytes
-                (
-                    "-Big_Endian_Exclusive_Length",
-                    address,
-                    nbytes
-                );
-                ifp =
-                    srec_input_filter_interval_length::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        endian_big,
-                        false
-                    );
-            }
-            break;
-
         case token_length_le:
-            {
-                token_next();
-                unsigned long address;
-                int nbytes;
-                get_address_and_nbytes
-                (
-                    "-Little_Endian_Length",
-                    address,
-                    nbytes
-                );
-                ifp =
-                    srec_input_filter_interval_length::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        endian_little,
-                        true
-                    );
-            }
-            break;
-
+        case token_exclusive_length_be:
         case token_exclusive_length_le:
             {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
+                bool inclusive = get_inclusive_by_token();
                 token_next();
                 unsigned long address;
                 int nbytes;
-                get_address_and_nbytes
-                (
-                    "-Little_Endian_Exclusive_Length",
-                    address,
-                    nbytes
-                );
+                get_address_and_nbytes(name, address, nbytes);
                 ifp =
                     srec_input_filter_interval_length::create
                     (
                         ifp,
                         address,
                         nbytes,
-                        endian_little,
-                        false
+                        end,
+                        inclusive
                     );
             }
             break;
@@ -568,88 +570,25 @@ srec_arglex::get_input()
             // NOTREACHED
 
         case token_maximum_be:
-            {
-                token_next();
-                unsigned long address;
-                int nbytes;
-                get_address_and_nbytes("-Big_Endian_MAximum", address, nbytes);
-                ifp =
-                    srec_input_filter_interval_maximum::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        endian_big,
-                        true
-                    );
-            }
-            break;
-
-        case token_exclusive_maximum_be:
-            {
-                token_next();
-                unsigned long address;
-                int nbytes;
-                get_address_and_nbytes
-                (
-                    "-Big_Endian_Exclusive_MAximum",
-                    address,
-                    nbytes
-                );
-                ifp =
-                    srec_input_filter_interval_maximum::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        endian_big,
-                        false
-                    );
-            }
-            break;
-
         case token_maximum_le:
-            {
-                token_next();
-                unsigned long address;
-                int nbytes;
-                get_address_and_nbytes
-                (
-                    "-Little_Endian_MAximum",
-                    address,
-                    nbytes
-                );
-                ifp =
-                    srec_input_filter_interval_maximum::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        endian_little,
-                        true
-                    );
-            }
-            break;
-
+        case token_exclusive_maximum_be:
         case token_exclusive_maximum_le:
             {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
+                bool inclusive = get_inclusive_by_token();
                 token_next();
                 unsigned long address;
                 int nbytes;
-                get_address_and_nbytes
-                (
-                    "-Little_Endian_Exclusive_MAximum",
-                    address,
-                    nbytes
-                );
+                get_address_and_nbytes(name, address, nbytes);
                 ifp =
                     srec_input_filter_interval_maximum::create
                     (
                         ifp,
                         address,
                         nbytes,
-                        endian_little,
-                        false
+                        end,
+                        inclusive
                     );
             }
             break;
@@ -667,231 +606,87 @@ srec_arglex::get_input()
             // NOTREACHED
 
         case token_minimum_be:
-            {
-                token_next();
-                unsigned long address;
-                int nbytes;
-                get_address_and_nbytes("-Big_Endian_MInimum", address, nbytes);
-                ifp =
-                    srec_input_filter_interval_minimum::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        endian_big,
-                        true
-                    );
-            }
-            break;
-
-        case token_exclusive_minimum_be:
-            {
-                token_next();
-                unsigned long address;
-                int nbytes;
-                get_address_and_nbytes
-                (
-                    "-Big_Endian_Exclusive_MInimum",
-                    address,
-                    nbytes
-                );
-                ifp =
-                    srec_input_filter_interval_minimum::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        endian_big,
-                        false
-                    );
-            }
-            break;
-
         case token_minimum_le:
-            {
-                token_next();
-                unsigned long address;
-                int nbytes;
-                get_address_and_nbytes
-                (
-                    "-Little_Endian_MInimum",
-                    address,
-                    nbytes
-                );
-                ifp =
-                    srec_input_filter_interval_minimum::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        endian_little,
-                        true
-                    );
-            }
-            break;
-
+        case token_exclusive_minimum_be:
         case token_exclusive_minimum_le:
             {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
+                bool inclusive = get_inclusive_by_token();
                 token_next();
                 unsigned long address;
                 int nbytes;
-                get_address_and_nbytes
-                (
-                    "-Little_Endian_Exclusive_MInimum",
-                    address,
-                    nbytes
-                );
+                get_address_and_nbytes(name, address, nbytes);
                 ifp =
                     srec_input_filter_interval_minimum::create
                     (
                         ifp,
                         address,
                         nbytes,
-                        endian_little,
-                        false
+                        end,
+                        inclusive
                     );
             }
             break;
 
         case token_checksum_be_bitnot:
-            {
-                token_next();
-                unsigned long address;
-                int nbytes, width;
-                get_address_nbytes_width
-                (
-                    "-Big_Endian_Checksum_BitNot",
-                    address,
-                    nbytes,
-                    width
-                );
-                ifp =
-                    srec_input_filter_checksum_bitnot::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        endian_big,
-                        width
-                    );
-            }
-            break;
-
         case token_checksum_le_bitnot:
             {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
                 token_next();
                 unsigned long address;
                 int nbytes, width;
-                get_address_nbytes_width
-                (
-                    "-Little_Endian_Checksum_BitNot",
-                    address,
-                    nbytes,
-                    width
-                );
+                get_address_nbytes_width(name, address, nbytes, width);
                 ifp =
                     srec_input_filter_checksum_bitnot::create
                     (
                         ifp,
                         address,
                         nbytes,
-                        endian_little,
+                        end,
                         width
                     );
             }
             break;
 
         case token_checksum_be_negative:
-            {
-                token_next();
-                unsigned long address;
-                int nbytes, width;
-                get_address_nbytes_width
-                (
-                    "-Big_Endian_Checksum_Negative",
-                    address,
-                    nbytes,
-                    width
-                );
-                ifp =
-                    srec_input_filter_checksum_negative::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        endian_big,
-                        width
-                    );
-            }
-            break;
-
         case token_checksum_le_negative:
             {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
                 token_next();
                 unsigned long address;
                 int nbytes, width;
-                get_address_nbytes_width
-                (
-                    "-Little_Endian_Checksum_Negative",
-                    address,
-                    nbytes,
-                    width
-                );
+                get_address_nbytes_width(name, address, nbytes, width);
                 ifp =
                     srec_input_filter_checksum_negative::create
                     (
                         ifp,
                         address,
                         nbytes,
-                        endian_little,
+                        end,
                         width
                     );
             }
             break;
 
         case token_checksum_be_positive:
-            {
-                token_next();
-                unsigned long address;
-                int nbytes, width;
-                get_address_nbytes_width
-                (
-                    "-Big_Endian_Checksum_Positive",
-                    address,
-                    nbytes,
-                    width
-                );
-                ifp =
-                    srec_input_filter_checksum_positive::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        endian_big,
-                        width
-                    );
-            }
-            break;
-
         case token_checksum_le_positive:
             {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
                 token_next();
                 unsigned long address;
                 int nbytes, width;
-                get_address_nbytes_width
-                (
-                    "-Little_Endian_Checksum_Positive",
-                    address,
-                    nbytes,
-                    width
-                );
+                get_address_nbytes_width(name, address, nbytes, width);
                 ifp =
                     srec_input_filter_checksum_positive::create
                     (
                         ifp,
                         address,
                         nbytes,
-                        endian_little,
+                        end,
                         width
                     );
             }
