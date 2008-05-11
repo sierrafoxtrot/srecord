@@ -102,3 +102,14 @@ mkdir $testdir
 test $? -eq 0 || exit 2
 cd $testdir
 test $? -eq 0 || no_result
+
+# On cygwin, we need to have diff ignore the CR in CRLF sequences
+# otherwise we see diff output which looks to be identical but which
+# diff things differs.  And it does, by a carriage return.
+if diff --strip-trailing-cr /dev/null /dev/null > /dev/null 2>&1
+then
+    diffpath=`which diff`
+    diff() {
+        $diffpath --strip-trailing-cr "$@"
+    }
+fi
