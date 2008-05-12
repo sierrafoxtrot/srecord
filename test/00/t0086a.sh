@@ -48,7 +48,7 @@ if test $? -ne 0; then no_result; fi
 srec_cat test.in -o test.out -spectrum
 if test $? -ne 0; then fail; fi
 
-cmp test.ok test.out
+diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
 srec_cmp test.out -spectrum test.in

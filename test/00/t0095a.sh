@@ -55,7 +55,7 @@ if test $? -ne 0; then fail; fi
 srec_cat test.out -stewie -o test.out2 -header HDR
 if test $? -ne 0; then fail; fi
 
-cmp test.in test.out2
+diff test.in test.out2
 if test $? -ne 0; then fail; fi
 
 #

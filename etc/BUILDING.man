@@ -359,15 +359,20 @@ using a newer version of
 It is possible to build SRecord on MS Windows platforms, using the Cygwin
 (see \f[CW]www.cygwin.com\fP) or DJGPP (see
 \f[CW]www.delorie.com/djgpp\fP) environments.  This provides the
-\&``porting layer'' necessary to run Unix programs on Windows.  The build
+\&\[lq]porting layer\[rq] necessary to run Unix programs on Windows.  The build
 process is exactly as described above.
 .PP
-\f[B]Note:\fP if you are using GCC 3.\f[I]x\fP where \f[I]x\fP < 4, you
-may need to edit the
-\f[I]Makefile\fP to change \f[CW]CXX = g++\fP to read \f[CW]CXX = g++-2\fP
-to fix some weird undefined symbols.
-This appears to be a bug in these versions of GCC.
-The bug has apparently been fixed in GCC 3.4 and above.
+You may need to pass in the include path to the Boost library.
+This is most simply done as
+.RS
+.ft CW
+.nf
+CC='gcc -no-cygwin' \e
+CXX='g++ -mno-cygwin -I/usr/include/boost-1_33_1' \e
+./configure
+.fi
+.ft R
+.RE
 .PP
 DJGPP always produces native binaries, however
 if you want to make native binaries with Cygwin (\f[I]i.e.\fP ones which
