@@ -44,7 +44,7 @@ or the special name \(lq-\(rq which is understood to mean the standard input.
 There are some cases where operator precedence of the filters can
 be ambiguous.  Input specifications may also be enclosed by \fB(\fP
 parentheses \fB)\fP to make grouping explicit.  Remember that the
-presenthese must be separate words, \f[I]i.e.\fP surrounded by
+parentheses must be separate words, \f[I]i.e.\fP surrounded by
 spaces, and they will need to be quoted to get them past the shell's
 interpretation of parentheses.
 .SS File Formats
@@ -92,7 +92,7 @@ See \f[I]srec_dec_binary\fP(5) for a description of this file format.
 This option says to use the EMON52 format to read the file.
 See \f[I]srec_emon52\fP(5) for a description of this file format.
 .TP 8n
-\fB\-Ff[I]rchild\fP
+\fB\-FAIrchild\fP
 This option says to use the Fairchild Fairbug format to read the file.
 See \f[I]srec_fairchild\fP(5) for a description of this file format.
 .TP 8n
@@ -557,7 +557,7 @@ includes all the places the specified input has data, and holes where
 it has holes.  The input specification need not be just a file name,
 it may be anything any other input specification can be.
 .PP
-See also the \fB\-over\fP option for a discusson on operator precedence.
+See also the \fB\-over\fP option for a discussion on operator precedence.
 .RE
 .TP 8n
 \fB\-OVER\fP \f[I]input-specification\fP
@@ -570,7 +570,7 @@ it may be anything any other input specification can be.
 You may need to enclose \f[I]input-specification\fP in parentheses
 to make sure it can't misinterpret which arguments go with which input
 specification.
-This is particularly inportant when a filter
+This is particularly important when a filter
 is to follow.  For example
 .RS
 \f[I]filename\fP -fill 0 -over \f[I]filename2\fP \-swap-bytes
@@ -607,7 +607,7 @@ You can intersect two address ranges to produce a smaller address range.
 The intersection operator has higher precedence than the implicit union
 operator (evaluated left to right).
 .TP 8n
-\f[I]address-range\fP \fB\-Uf[I]on\fP \f[I]address-range\fP
+\f[I]address-range\fP \fB\-UNIon\fP \f[I]address-range\fP
 You can union two address ranges to produce a larger address range.  The
 union operator has lower precedence than the intersection operator
 (evaluated left to right).
@@ -653,7 +653,7 @@ This inserts the minimum address of the specified input file.
 The input specification need not be just a file name,
 it may be anything any other input specification can be.
 .PP
-See also the \fB\-over\fP option for a discusson on operator precedence.
+See also the \fB\-over\fP option for a discussion on operator precedence.
 .RE
 .TP 8n
 \fB\-MAXimum\fP \f[I]input-specification\fP
@@ -662,7 +662,7 @@ This inserts the maximum address of the specified input file, plus one.
 The input specification need not be just a file name,
 it may be anything any other input specification can be.
 .PP
-See also the \fB\-over\fP option for a discusson on operator precedence.
+See also the \fB\-over\fP option for a discussion on operator precedence.
 .RE
 .TP 8n
 \fB\-Length\fP \f[I]input-specification\fP
@@ -671,7 +671,7 @@ This inserts the length of the address range in the specified input file,
 ignoring any holes.  The input specification need not be just a file name,
 it may be anything any other input specification can be.
 .PP
-See also the \fB\-over\fP option for a discusson on operator precedence.
+See also the \fB\-over\fP option for a discussion on operator precedence.
 .RE
 .PP
 For example, the \fB-OVER\fP \f[I]input-specification\fP

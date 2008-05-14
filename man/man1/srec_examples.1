@@ -114,7 +114,7 @@ It even tries preserve them across file format changes,
 to the limit the file formats are capable of.
 .PP
 If there is no file header record and you would like to add one,
-or you which to override an existing file header record, use the
+or you wish to override an existing file header record, use the
 \fB\-header\fP=\f[I]string\fP option.  You will need to quote the
 string (to insulate it from the shell) if it contains spaces or shell
 meta-characters.
@@ -147,10 +147,13 @@ resulting \f[I]fixed.srec\fP file has correct checksums.  The
 .PP
 This option may be used on any file format which has checksums,
 including Intel hex.
+.SS Discovering Mystery Formats
+See the \f[B]What Format Is This?\fP section, below,
+for how to discover and convert mysery EPROM load file formats.
 .\" ------------------------------------------------------------------------
 .SH JOINING FILES TOGETHER
 The \f[I]srec_cat\fP command takes its name from the UNIX \f[I]cat\fP(1)
-command, which is short for 'catenate' or 'to join'.
+command, which is short for \[lq]catenate\[rq] or \[lq]to join\[rq].
 The \f[I]srec_cat\fP command joins EPROM load files together.
 .SS All In One
 Joining EPROM load files together into a single file is simple, just
@@ -499,6 +502,19 @@ Notice how the address range for the data generation: it takes the
 address range of your EPROM, in this case 1MB starting from 0, and
 subtracts from it the address ranges used by the input file.
 .PP
+If you want to script this with the current year (because 1812 is a bit
+out of date) use the shell's output substitution (back ticks) ability:
+.RS
+.nf
+.ft CW
+srec_cat \f[I]infile\fP \e
+    -generate '(' 0 0x100000 -minus -within \f[I]infile\fP ')' \e
+        -repeat-string "Copyright (C) `date +%Y` Tchaikovsky.  " \e
+    -o \f[I]outfile\fP
+.ft R
+.fi
+.RE
+.PP
 The string specified is repeated over and over again, until it has
 filled all the holes.
 .SS Obfuscating with Noise
@@ -533,6 +549,62 @@ srec_cat \f[I]infile\fP \e
 Notice how the generator's address range once again avoids the address
 ranges occupied by the \f[I]infile\fP's data.
 You have to get the endian-ness right yourself.
+.\" ------------------------------------------------------------------------
+.SH INSERTING CONSTANT DATA
+From time to time you will want to insert constant data,
+or data not produced by your compiler or assembler,
+into your EPROM load images.
+.SS Binary Means Literal
+One simple way is to have the desired information in a file.
+To insert the file's contents literally, with no format interpretation,
+use the \f[I]binary\fP input format:
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP --binary -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+It will probably be necessary to use and \f[I]offset\fP filter to move
+the data to where you actually want it within the image:
+.RS
+.ft CW
+.nf
+srec_cat \f[I]infile\fP --binary --offset 0x1234 -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+It is also possible to use the standard input as a data source,
+which lends itself to being scripted.
+For example, to insert the current data and time into an EPROM load file,
+you could use a pipe:
+.RS
+.ft CW
+.nf
+date | srec_cat - -bin --offset 0xFFE3 -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+The special file name \[lq]\f[CW]-\fP\[rq] means to read from the
+standard input.
+The output of the \f[I]date\fP command is always 29 characters long,
+and the offset shown will place it at the top of a 64KB EPROM image.
+.SS Repeating Once
+The \f[B]Fill with Copyright\fP section, above, shows how to
+repeat a string over and over.
+We can use a single repeat to insert a string just once.
+.RS
+.nf
+.ft CW
+srec_cat -generate 0xFFE3 0x10000 -repeat-string "`date`" \e
+    -o \f[I]outfile\fP
+.ft R
+.fi
+.RE
+Notice how the address range for the data generation
+exactly matches the length of the \f[I]date\fP(1) output size.
+You can, of course, add your input file to the above \f[I]srec_cat\fP(1)
+command to catenate your EPROM image together with the date and time.
 .\" ------------------------------------------------------------------------
 .SH DATA ABOUT THE DATA
 It is possible to add a variety of data about the data to the output.
