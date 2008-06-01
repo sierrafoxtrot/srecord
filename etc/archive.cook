@@ -216,7 +216,7 @@ etc/%.html.d: etc/%.html
 
 #include-cooked [addsuffix ".d" [match_mask etc/%.html [source_files]]]
 
-archive/%.html: etc/%.html etc/ssp.awk
+archive/%.html: etc/%.html: etc/ssp.awk etc/version.so
         set shallow
 {
         roffpp
