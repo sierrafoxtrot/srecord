@@ -16,20 +16,18 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" Change 12
-The MOS Technology format was not reading and writing end
-records correctly, this has been fixed.
-The name of the company has been corrected.
-.PP
-.if n *
-.if t \(bu
-.\" Change 11
-Some examples of how to insert constant or scripted data into your EPROM
-load files have been added to the \f[I]srec_examples\fP(1) man page.
+.\"
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 42 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.41 (2008-May-12)
+.SS Version 1.42 (2008-Jun-01)
 .\" vim:ts=8:sw=4:et
