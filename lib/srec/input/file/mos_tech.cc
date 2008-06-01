@@ -29,7 +29,8 @@ srec_input_file_mos_tech::~srec_input_file_mos_tech()
 srec_input_file_mos_tech::srec_input_file_mos_tech(const string &a_file_name) :
     srec_input_file(a_file_name),
     garbage_warning(false),
-    seen_some_input(false)
+    seen_some_input(false),
+    data_record_count(0)
 {
 }
 
@@ -41,14 +42,23 @@ srec_input_file_mos_tech::create(const string &a_file_name)
 }
 
 
-int
+bool
 srec_input_file_mos_tech::read_inner(srec_record &record)
 {
     for (;;)
     {
         int c = get_char();
         if (c < 0)
-            return 0;
+            return false;
+        if (c == 0x11)
+        {
+            // XOFF in the file also indicates end-of-file
+            while (get_char() >= 0)
+                ;
+            return false;
+        }
+        if (c == '\0')
+            continue;
         if (c == ';')
             break;
         if (c == '\n')
@@ -62,7 +72,7 @@ srec_input_file_mos_tech::read_inner(srec_record &record)
         {
             c = get_char();
             if (c < 0)
-                return 0;
+                return false;
             if (c == '\n')
                 break;
         }
@@ -71,11 +81,39 @@ srec_input_file_mos_tech::read_inner(srec_record &record)
     int length = get_byte();
     if (length == 0)
     {
+        //
+        // This is a data count record,
+        // and also the end-of-file record.
+        //
+        if (peek_char() != '\n' && peek_char() != '\r')
+        {
+            //
+            // Only check the data count if it is present.
+            //
+            int nrecs = get_word();
+            int csumX = checksum_get16();
+            int csum = get_word();
+            // In the only file example I have, the count is repeated
+            // in the checksum, which would you make you think that the
+            // address field is added as a 16-bit value, except that
+            // only the data count line is wrong.  Sheesh.
+            if (use_checksums() && csumX != csum && csum != nrecs)
+                fatal_error("checksum mismatch (%04X != %04X)", csumX, csum);
+            if (nrecs != data_record_count)
+            {
+                fatal_error
+                (
+                    "data record count mismatch (%d != %d)",
+                    nrecs,
+                    data_record_count
+                );
+            }
+        }
         if (get_char() != '\n')
             fatal_error("end-of-line expected");
         while (get_char() >= 0)
             ;
-        return 0;
+        return false;
     }
 
     unsigned long address = get_word();
@@ -91,7 +129,8 @@ srec_input_file_mos_tech::read_inner(srec_record &record)
 
     srec_record::type_t type = srec_record::type_data;
     record = srec_record(type, address, buffer, length);
-    return 1;
+    ++data_record_count;
+    return true;
 }
 
 
@@ -113,5 +152,5 @@ const char *
 srec_input_file_mos_tech::get_file_format_name()
     const
 {
-    return "MOS Technologies";
+    return "MOS Technology";
 }

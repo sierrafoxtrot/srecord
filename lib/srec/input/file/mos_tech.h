@@ -23,7 +23,7 @@
 #include <lib/srec/input/file.h>
 
 /**
-  * The mos_tech class is used to parse a Mos Technologies format file.
+  * The mos_tech class is used to parse a MOS Technology format file.
   */
 class srec_input_file_mos_tech:
     public srec_input_file
@@ -68,7 +68,7 @@ private:
       * Read one line (record) of input.  Called by the read() method.
       * Returns false at end of file.
       */
-    int read_inner(srec_record &);
+    bool read_inner(srec_record &);
 
     /**
       * The garbage_warning instance variable is used to remember
@@ -82,6 +82,12 @@ private:
       * remember whether any input has been seen.
       */
     bool seen_some_input;
+
+    /**
+      * The data_record_count instance variable is used to remember the
+      * number of data records seen to date.
+      */
+    int data_record_count;
 
     /**
       * The default constructor.  Do not use.

@@ -23,15 +23,17 @@
 
 srec_output_file_mos_tech::~srec_output_file_mos_tech()
 {
-    // check for termination record
 }
 
 
 srec_output_file_mos_tech::srec_output_file_mos_tech(
         const std::string &a_filename) :
     srec_output_file(a_filename),
-    pref_block_size(32)
+    pref_block_size(24),
+    data_record_count(0)
 {
+    // The block size of 24 comes from the sole example I have seen of a
+    // valid MOS Tech file.
 }
 
 
@@ -71,6 +73,7 @@ srec_output_file_mos_tech::write(const srec_record &record)
             put_byte(record.get_data(j));
         put_word(checksum_get16());
         put_char('\n');
+        ++data_record_count;
         break;
 
     case srec_record::type_data_count:
@@ -80,7 +83,17 @@ srec_output_file_mos_tech::write(const srec_record &record)
     case srec_record::type_start_address:
         if (data_only_flag)
             break;
-        put_string(";00\n");
+        put_char(';');
+        checksum_reset();
+        put_byte(0);
+        put_word(data_record_count);
+        // In the only file example I have, the count is repeated
+        // in the checksum, which would you make you think that the
+        // address field is added as a 16-bit value, except that
+        // only the data count line is wrong.  Sheesh.
+        put_word(data_record_count);
+        //put_word(checksum_get16());
+        put_char('\n');
         break;
 
     case srec_record::type_unknown:

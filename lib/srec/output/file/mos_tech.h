@@ -23,7 +23,7 @@
 #include <lib/srec/output/file.h>
 
 /**
-  * The srec_output_file_mos_tech class is used to write a Mos Technologies
+  * The srec_output_file_mos_tech class is used to write a MOS Technology
   * formatted file.
   */
 class srec_output_file_mos_tech:
@@ -79,6 +79,13 @@ private:
       * preferred_block_size_get() method.
       */
     int pref_block_size;
+
+    /**
+      * The data_record_count instance variable is used to remember the
+      * number of data records priesent in the output.  This is used
+      * when writing the end-of-file record.
+      */
+    int data_record_count;
 
     /**
       * The write_inner method is used to write a single line (record)

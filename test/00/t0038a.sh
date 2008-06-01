@@ -35,7 +35,7 @@ if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
 ;0E000048656C6C6F2C20576F726C64210A0481
-;00
+;0000010001
 fubar
 if test $? -ne 0; then no_result; fi
 
@@ -52,7 +52,7 @@ if test $? -ne 0; then fail; fi
 #
 cat > test.in << 'fubar'
 ;0E000048656C6C6F2C20576F726C64210A0481
-;00
+;0000010001
 fubar
 if test $? -ne 0; then no_result; fi
 
