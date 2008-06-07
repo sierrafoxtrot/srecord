@@ -23,6 +23,20 @@
 
 srec_output_file_mos_tech::~srec_output_file_mos_tech()
 {
+    if (data_record_count && !data_only_flag)
+    {
+        put_char(';');
+        checksum_reset();
+        put_byte(0);
+        put_word(data_record_count);
+        // In the only file example I have, the count is repeated
+        // in the checksum, which would you make you think that the
+        // address field is added as a 16-bit value, except that
+        // only the data count line is wrong.  Sheesh.
+        put_word(data_record_count);
+        //put_word(checksum_get16());
+        put_char('\n');
+    }
 }
 
 
@@ -77,23 +91,11 @@ srec_output_file_mos_tech::write(const srec_record &record)
         break;
 
     case srec_record::type_data_count:
-        // ignore
+        // ignore, this is the input count, not the output count
         break;
 
     case srec_record::type_start_address:
-        if (data_only_flag)
-            break;
-        put_char(';');
-        checksum_reset();
-        put_byte(0);
-        put_word(data_record_count);
-        // In the only file example I have, the count is repeated
-        // in the checksum, which would you make you think that the
-        // address field is added as a 16-bit value, except that
-        // only the data count line is wrong.  Sheesh.
-        put_word(data_record_count);
-        //put_word(checksum_get16());
-        put_char('\n');
+        // ignore, this format doesn't have it
         break;
 
     case srec_record::type_unknown:
