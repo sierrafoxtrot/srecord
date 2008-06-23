@@ -151,6 +151,70 @@ including Intel hex.
 See the \f[B]What Format Is This?\fP section, below,
 for how to discover and convert mysery EPROM load file formats.
 .\" ------------------------------------------------------------------------
+.SH BINARY FILES
+It is possible to convert to and from binary files.  You can even mix
+binary files and other formats together in the same \f[I]srec_cat\fP(1)
+command.
+.SS Writing Binary Files
+The simplest way of reading a hex file and converting it to a binary
+file looks like this:
+.RS
+.ft CW
+srec_cat fred.hex -o fred.bin -binary
+.ft R
+.RE
+This reads the Mororola hex file \f[I]fred.srec\fP and writes it out to
+the \f[I]fred.bin\fP as raw binary.
+.PP
+Note that the data is placed into the binary file at the byte offset
+specified by the addresses in the hex file.
+If there are holes in the data they are filled with zero.
+This is, of course, common with linker output where the code is placed
+starting at a particular place in memory.
+For example, when you have an image that starts at
+0x100000, the first 1MB of the output binary file will be zero.
+.PP
+You can automatically cancel this offset using a command like
+.RS
+.ft CW
+srec_cat fred.hex -offset - -minimum fred.hex -o fred.bin
+.ft R
+.RE
+The above command works by offseting the \f[I]fred.hex\fP file lower in
+memory by the least address in the \f[I]fred.hex\fP file's data.
+.PP
+See also the \f[I]srec_binary\fP(5) man page for additional detail.
+.SS Reading Binary Files
+The simplest way of reading a binary file and converting it
+looks like this
+.RS
+.ft CW
+srec_cat fred.bin -binary -o fred.srec
+.ft R
+.RE
+This reads the binary file \f[I]fred.bin\fP and writes all of its data
+back out again as a Motorola S-Record file.
+.PP
+Often, this binary isn't exactly where you want it in the address space,
+because it is assumed to reside at address zero.
+If you need to move it around use the \f[B]\-offset\fP filter.
+.RS
+.ft CW
+srec_cat fred.bin -binary -offset 0x10000 -o fred.srec
+.ft R
+.RE
+You also need to avoid file \[lq]holes\[rq] which are filled with zero.
+You can use the \f[B]\-crop\fP filter, of you could use the
+\f[B]\-unfill\fP filter if you done't know exactly where the data is.
+.RS
+.ft CW
+srec_cat fred.bin -binary -unfill 0x00 512 -o fred.srec
+.ft R
+.RE
+The above command removes runs of zero bytes that are 512 bytes long or longer.
+If your file contains 1GB of leading zero bytes, this is going to be slow,
+it may be better to use the \f[I]dd\fP(1) command to slice and dice first.
+.\" ------------------------------------------------------------------------
 .SH JOINING FILES TOGETHER
 The \f[I]srec_cat\fP command takes its name from the UNIX \f[I]cat\fP(1)
 command, which is short for \[lq]catenate\[rq] or \[lq]to join\[rq].
@@ -341,7 +405,7 @@ bytes) may be useful one day.
 .SS Binary Output
 You need to watch out for binary files on output, because the holes are
 filled with zeros.  You 100kB program at the top of 32-bit addressed
-memory will make a 4GB file.  See \f[I]srec_binary\fP(1) for how
+memory will make a 4GB file.  See \f[I]srec_binary\fP(5) for how
 understand and avoid this problem, usually with the \-offset filter.
 .SS Splitting an Image
 If you have a 16-bit data bus, but you are using two 8-bit EPROMs to
