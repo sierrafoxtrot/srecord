@@ -94,7 +94,7 @@ srec_output_file_mos_tech::write(const srec_record &record)
         // ignore, this is the input count, not the output count
         break;
 
-    case srec_record::type_start_address:
+    case srec_record::type_execution_start_address:
         // ignore, this format doesn't have it
         break;
 

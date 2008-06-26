@@ -330,12 +330,12 @@ for a description of this file format.)
 This option many be used to specify the minimum number of bytes to be
 used in the output to represent an address (padding with leading zeros
 if necessary).
-This helps when talking to brain-dead EPROM programmers which do not
+This helps when talking to brain-dead EPROM programmer devices which do not
 fully implement the format specification.
 .TP 8n
 .B \-Data_Only
 This option may be used to suppress all output except data fields.
-This helps when talking to brain-dead EPROM programmers which do not
+This helps when talking to brain-dead EPROM programmer devices which do not
 fully implement the format specification.
 .TP 8n
 \fB\-IGnore_Checksums\fP
@@ -344,7 +344,7 @@ fully implement the format specification.
 .TP 8n
 .B \-CRLF
 This option may be used to specify CRLF line termination for text
-output.  For use with brain-dead EPROM programmers which assume all the
+output.  For use with brain-dead EPROM programmer devices which assume all the
 world uses Evil Bill's operating system's line termination.  The default
 is to use the current operating system's default line termination.
 Use this option with caution, because it will also introduce extra (i.e.
@@ -359,9 +359,19 @@ Defaults to something less than 80 characters, depending on the format.
 This option may be used to set the header comment,
 in those formats which support it.
 .TP 8n
-\fB\-Start_Address\fP \fInumber\fP
-This option may be used to set the start address,
+\fB\-Execution_Start_Address\fP \fInumber\fP
+.RS
+This option may be used to set the execution start address,
 in those formats which support it.
+The execution start address is where the monitor will jump to and start
+executing code once the hex file has finished loading,
+think of it as a \[lq]goto\[rq] address.
+Usually ignored by EPROM programmer devices.
+.PP
+Please note: the execution start address is a different concept than the
+first address in memory of your data.  If you want to change where your
+data starts in memory, use the \fB\-offset\fP filter.
+.RE
 .so man/man1/o_multiple.so
 .PP
 All other options will produce a diagnostic error.

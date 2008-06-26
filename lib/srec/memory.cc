@@ -36,7 +36,7 @@ srec_memory::srec_memory() :
     cache(0),
     find_next_chunk_index(0),
     header(0),
-    start_address(0)
+    execution_start_address(0)
 {
 }
 
@@ -48,7 +48,7 @@ srec_memory::srec_memory(const srec_memory &arg) :
     cache(0),
     find_next_chunk_index(0),
     header(0),
-    start_address(0)
+    execution_start_address(0)
 {
     copy(arg);
 }
@@ -77,8 +77,8 @@ srec_memory::clear()
 {
     delete header;
     header = 0;
-    delete start_address;
-    start_address = 0;
+    delete execution_start_address;
+    execution_start_address = 0;
     for (int j = 0; j < nchunks; ++j)
         delete chunk[j];
     if (chunk)
@@ -98,10 +98,10 @@ srec_memory::copy(const srec_memory &arg)
     if (arg.header)
         header = new srec_record(*arg.header);
 
-    delete start_address;
-    start_address = 0;
-    if (arg.start_address)
-        start_address = new srec_record(*arg.start_address);
+    delete execution_start_address;
+    execution_start_address = 0;
+    if (arg.execution_start_address)
+        execution_start_address = new srec_record(*arg.execution_start_address);
 
     nchunks = arg.nchunks;
     while (nchunks_max < nchunks)
@@ -253,9 +253,9 @@ srec_memory::walk(srec_memory_walker::pointer w)
     for (int j = 0; j < nchunks; ++j)
         chunk[j]->walk(w);
 
-    // Only write a start address record if we were given one.
-    if (start_address)
-        w->observe_start_address(get_start_address());
+    // Only write an execution start address record if we were given one.
+    if (execution_start_address)
+        w->observe_start_address(get_execution_start_address());
 }
 
 
@@ -322,10 +322,10 @@ srec_memory::reader(const srec_input::pointer &ifp, bool barf)
             }
             break;
 
-        case srec_record::type_start_address:
-            if (!start_address)
+        case srec_record::type_execution_start_address:
+            if (!execution_start_address)
             {
-                start_address = new srec_record(record);
+                execution_start_address = new srec_record(record);
             }
             break;
         }
@@ -425,19 +425,19 @@ srec_memory::set_header(const char *s)
 
 
 srec_record *
-srec_memory::get_start_address()
+srec_memory::get_execution_start_address()
     const
 {
-    return start_address;
+    return execution_start_address;
 }
 
 
 void
-srec_memory::set_start_address(unsigned long addr)
+srec_memory::set_execution_start_address(unsigned long addr)
 {
-    delete start_address;
-    start_address =
-        new srec_record(srec_record::type_start_address, addr, 0, 0);
+    delete execution_start_address;
+    execution_start_address =
+        new srec_record(srec_record::type_execution_start_address, addr, 0, 0);
 }
 
 

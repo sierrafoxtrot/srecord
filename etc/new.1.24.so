@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2006, 2007 Peter Miller
+.\"     Copyright (C) 2006-2008 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -27,8 +27,9 @@ directives, if necessary, to change the data address.
 .if n *
 .if t \(bu
 .\" Change 15
-The \fIsrec_cat\fP(1) command now only writes a start address into the
-output if there was a start address present in the input.
+The \fIsrec_cat\fP(1) command now only writes an execution start address
+into the output if there was an execution start address present in the
+input.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.24 (2006-Mar-08)

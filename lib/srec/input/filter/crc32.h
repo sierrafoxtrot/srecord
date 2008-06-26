@@ -108,9 +108,9 @@ private:
     bool have_given_crc;
 
     /**
-      * The have_forwarded_start_address instance variable is used
-      * to remember whether we have returned the start address to our
-      * reader yet.
+      * The have_forwarded_start_address instance variable is used to
+      * remember whether we have returned the execution start address to
+      * our reader yet.
       */
     bool have_forwarded_start_address;
 

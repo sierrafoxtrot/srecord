@@ -120,7 +120,7 @@ srec_input_file_os65v::read_inner(srec_record &record)
             record =
                 srec_record
                 (
-                    srec_record::type_start_address,
+                    srec_record::type_execution_start_address,
                     address,
                     0,
                     0

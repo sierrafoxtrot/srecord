@@ -156,7 +156,7 @@ srec_output_file_ascii_hex::write(const srec_record &record)
         // ignore
         break;
 
-    case srec_record::type_start_address:
+    case srec_record::type_execution_start_address:
         emit_end_of_file();
         break;
 

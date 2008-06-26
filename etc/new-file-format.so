@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2001, 2002, 2004, 2006, 2007 Peter Miller
+.\"     Copyright (C) 2001, 2002, 2004, 2006-2008 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -100,9 +100,9 @@ issues which affect technical decissions:
 Be liberal in what you accept
 Where ever possible, consume the widest possible interpretation of
 valid data.  This includes treating mandatory input fields as optional
-(\f[I]e.g.\fP file headers and start addresses), and coping with input
-definitions to their logical extremes (\f[I]e.g.\fP 255 byte data
-records in Motorola format).
+(\f[I]e.g.\fP file headers and execution start addresses), and coping
+with input definitions to their logical extremes (\f[I]e.g.\fP 255 byte
+data records in Motorola format).
 Checksums should always be checked on input, only ignore them if the
 \-ignore-checksums command line option has been given.
 Absurd line lengths must be tolerated.
@@ -138,10 +138,10 @@ record if the output file code sees data as the first method call.
 (The \-data-only flag affects this, too.)
 .TP 3n
 \(bu
-If the input has no start address record, the output should not have one
-either (if at all possible).  This means not automagically inserting a
-start address record if the output file code does not see one by the
-time the destructor is called.
+If the input has no execution start address record, the output should
+not have one either (if at all possible).  This means not automagically
+inserting an execution start address record if the output file code does
+not see one by the time the destructor is called.
 (The \-data-only flag affects this, too.)
 .RE
 .TP 8n
@@ -161,7 +161,7 @@ format has a choice about how many bytes of address it produces.
 .TP 8n
 \fB\-data-only\fP
 If this flag is set, only data records should be produced.  No headers,
-no start addresses, nothing, even if the format specifications
+no execution start addresses, nothing, even if the format specifications
 considers these mandatory.  Do what the user said.  This is available
 as the \f[CW]data_only_flag\fP instance variable in the methods of your
 derived class.

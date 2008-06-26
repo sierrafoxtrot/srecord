@@ -58,8 +58,8 @@ public:
 
     /**
       * Call this method if you want the output to contain only data
-      * records.  No header records or start address records (or any
-      * other records) will be emitted.
+      * records.  No header records or execution start address records
+      * (or any other records) will be emitted.
       */
     static void data_only();
 
@@ -193,8 +193,8 @@ protected:
     /**
       * The data_only_flag class variable is set by the data_only()
       * method, to remember that only data records are to be sent to the
-      * output.  Header records, start address records, etc, are all
-      * suppressed.
+      * output.  Header records, execution start address records, etc,
+      * are all suppressed.
       */
     static bool data_only_flag;
 

@@ -110,7 +110,7 @@ srec_output_file_ti_txt::write(const srec_record &record)
         // ignore
         break;
 
-    case srec_record::type_start_address:
+    case srec_record::type_execution_start_address:
         // ignore
         break;
 

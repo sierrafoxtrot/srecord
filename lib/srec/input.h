@@ -55,7 +55,7 @@ public:
       * of the various record types.
       *
       * Note: there is no guarantee that a header record will appear
-      * first, or that a start address record will appear last.
+      * first, or that a execution start address record will appear last.
       *
       * @param record
       *     Where to put the returned data.

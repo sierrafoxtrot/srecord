@@ -142,7 +142,7 @@ srec_input_file_tektronix::read_inner(srec_record &record)
             (
                 buffer[2] == 0
             ?
-                srec_record::type_start_address
+                srec_record::type_execution_start_address
             :
                 srec_record::type_data
             ),
@@ -167,7 +167,7 @@ srec_input_file_tektronix::read(srec_record &record)
                 fatal_error("file contains no data");
             if (!termination_seen)
             {
-                warning("no start address record");
+                warning("no execution start address record");
                 termination_seen = true;
             }
             return false;
@@ -175,7 +175,7 @@ srec_input_file_tektronix::read(srec_record &record)
         seen_some_input = true;
         if
         (
-            record.get_type() != srec_record::type_start_address
+            record.get_type() != srec_record::type_execution_start_address
         &&
             termination_seen
         )
@@ -193,9 +193,9 @@ srec_input_file_tektronix::read(srec_record &record)
             ++data_record_count;
             break;
 
-        case srec_record::type_start_address:
+        case srec_record::type_execution_start_address:
             if (termination_seen)
-                warning("redundant termination record");
+                warning("redundant execution start address record");
             termination_seen = true;
             break;
         }

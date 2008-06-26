@@ -153,22 +153,22 @@ srec_output::write_data(unsigned long address, const void *data, size_t length)
 
 
 void
-srec_output::write_start_address(const srec_record *rp)
+srec_output::write_execution_start_address(const srec_record *rp)
 {
     if (rp)
     {
-        // Make sure we are writing a start address record
+        // Make sure we are writing an execution start address record
         srec_record record(*rp);
-        record.set_type(srec_record::type_start_address);
+        record.set_type(srec_record::type_execution_start_address);
         write(record);
     }
     else
     {
         //
-        // This is the default start address record.
+        // This is the default execution start address record.
         // If you want to change it, this is the place.
         //
-        srec_record record(srec_record::type_start_address, 0, 0, 0);
+        srec_record record(srec_record::type_execution_start_address, 0, 0, 0);
         write(record);
     }
 }

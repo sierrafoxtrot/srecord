@@ -49,7 +49,7 @@ srec_output_file_brecord::write(const srec_record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_start_address:
+    case srec_record::type_execution_start_address:
         flush();
         put_4bytes(record.get_address());
         put_byte(0);

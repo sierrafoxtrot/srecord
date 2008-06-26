@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2007 Peter Miller
+//      Copyright (C) 2000-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -26,11 +26,19 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv) :
     static const table_ty table[] =
     {
         { "-Address_Length", token_address_length, },
-        { "-Data_Only", token_data_only, },
-        { "-Line_Length", token_line_length, },
-        { "-HEAder", token_header, },
-        { "-Start_Address", token_start_address, },
         { "-Carriage_Return_Life_Feed", token_crlf, },
+        { "-Data_Only", token_data_only, },
+        { "-Execution_Start_Address", token_execution_start_address, },
+        { "-GOTO", token_execution_start_address, },
+        { "-HEAder", token_header, },
+        { "-Line_Length", token_line_length, },
+
+        //
+        // This option is intentionally undocumented.  It is preserved
+        // for backwards compatibility.
+        //
+        { "-Start_Address", token_execution_start_address, },
+
         ARGLEX_END_MARKER
     };
 

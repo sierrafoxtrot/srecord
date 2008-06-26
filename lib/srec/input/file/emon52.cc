@@ -57,8 +57,9 @@ bool
 srec_input_file_emon52::read(srec_record &record)
 {
     //
-    // This format has no start address record type, and no magic start
-    // character.  So look ahead to see if there is anything more.
+    // This format has no execution start address record type, and no
+    // magic start character.  So look ahead to see if there is anything
+    // more.
     //
     if (peek_char() < 0)
         return false;

@@ -139,8 +139,8 @@ srec_input_file_ti_txt::read(srec_record &record)
 #if 0
             //
             // Despite // http://www.ti.com/lit/pdf/slau101 section A.2
-            // stating that "the start address must be even", it doesn't
-            // have to be.
+            // stating that "the execution start address must be even",
+            // it doesn't have to be.
             //
             if (address & 1)
                 warning("addresses should be even");

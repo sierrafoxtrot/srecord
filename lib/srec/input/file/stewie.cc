@@ -82,7 +82,8 @@ srec_input_file_stewie::read_inner(srec_record &record)
     case 7:
     case 8:
     case 9:
-        record = srec_record(srec_record::type_start_address, 0, 0, 0);
+        record =
+            srec_record(srec_record::type_execution_start_address, 0, 0, 0);
         return 1;
     }
     checksum_reset();
@@ -184,7 +185,7 @@ srec_input_file_stewie::read(srec_record &record)
                 warning("file contains no data");
             if (!termination_seen)
             {
-                warning("no start_address record");
+                warning("no execution start address record");
                 termination_seen = true;
             }
             return false;
@@ -240,7 +241,7 @@ srec_input_file_stewie::read(srec_record &record)
             }
             continue;
 
-        case srec_record::type_start_address:
+        case srec_record::type_execution_start_address:
             if (record.get_length() > 0)
             {
                 warning("data in termination record ignored");

@@ -175,7 +175,7 @@ srec_input_filter_crc16::read(srec_record &record)
     if (!have_forwarded_start_address)
     {
         have_forwarded_start_address = true;
-        srec_record *rp = buffer.get_start_address();
+        srec_record *rp = buffer.get_execution_start_address();
         if (rp)
         {
             record = *rp;

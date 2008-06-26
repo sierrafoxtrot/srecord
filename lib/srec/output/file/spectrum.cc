@@ -81,7 +81,7 @@ srec_output_file_spectrum::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_start_address:
+    case srec_record::type_execution_start_address:
         if (!data_only_flag)
             put_char(3);
         break;

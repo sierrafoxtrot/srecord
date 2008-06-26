@@ -63,7 +63,7 @@ if test $? -ne 0; then no_result; fi
 cat > ok << 'fubar'
 Format: Intel Absolute Object Module Format (AOMF)
 Header: "HDR"
-Start:  00000000
+Execution Start Address: 00000000
 Data:   4321 - 432E
 fubar
 if test $? -ne 0; then no_result; fi

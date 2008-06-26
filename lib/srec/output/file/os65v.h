@@ -90,10 +90,10 @@ private:
 
     /**
       * The seen_start_address instance variable is used to remember
-      * whether or not a start address has been seen.  Normally this
-      * is only given at the end of data.  This variable is used to
-      * determine whether to emit thre "return to monitor" sequence,
-      * if a "GO" command has not been issued.
+      * whether or not an execution start address has been seen.
+      * Normally this is only given at the end of data.  This variable
+      * is used to determine whether to emit thre "return to monitor"
+      * sequence, if a "GO" command has not been issued.
       */
     bool seen_start_address;
 

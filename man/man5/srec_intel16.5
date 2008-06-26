@@ -111,7 +111,7 @@ Data Record
 End of File Record
 .TP 3n
 5
-Start Address Record
+Execution Start Address Record
 .RE
 .TP 8n
 Data
@@ -174,7 +174,7 @@ each 16-bit data word, most significant digit first.
 Checksum
 This field contains the check sum on the Record Length, Load Offset,
 Record Type, and Data fields.
-.SS Start Address Record
+.SS Execution Start Address Record
 .TS
 allbox,tab(;);
 lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) l l.
@@ -197,12 +197,14 @@ EIP
 (4 bytes)
 T};Checksum
 .TE
-The Start Address Record is used to specify the execution start
+The Execution Start Address Record is used to specify the execution start
 address for the object file.
+This is where the loader is to jump to begin execution once the hex load
+is complete.
 .PP
-The Start Address Record can appear anywhere in a
+The Execution Start Address Record can appear anywhere in a
 hexadecimal object file.  If such a record is not present in a hexadecimal
-object file, a loader is free to assign a default start address.
+object file, a loader is free to assign a default execution start address.
 .PP
 The contents of the individual fields within the record are:
 .TP 8n

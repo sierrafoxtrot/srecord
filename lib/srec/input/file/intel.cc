@@ -233,7 +233,7 @@ srec_input_file_intel::read_inner(srec_record &record)
             record =
                 srec_record
                 (
-                    srec_record::type_start_address,
+                    srec_record::type_execution_start_address,
                     address_field,
                     0,
                     0
@@ -270,7 +270,7 @@ srec_input_file_intel::read_inner(srec_record &record)
             record =
                 srec_record
                 (
-                    srec_record::type_start_address,
+                    srec_record::type_execution_start_address,
                     address_field,
                     0,
                     0
@@ -319,11 +319,18 @@ srec_input_file_intel::read(srec_record &record)
                 termination_seen = true;
 #if 0
                 //
-                // We could synthesize a start address, but that means
-                // the input and output don't agree when a round-trip
-                // occurs.
+                // We could synthesize an execution start address, but
+                // that means the input and output don't agree when a
+                // round-trip occurs.
                 //
-                record = srec_record(srec_record::type_start_address, 0, 0, 0);
+                record =
+                    srec_record
+                    (
+                        srec_record::type_execution_start_address,
+                        0,
+                        0,
+                        0
+                    );
                 return true;
 #endif
             }
@@ -354,9 +361,9 @@ srec_input_file_intel::read(srec_record &record)
             }
             break;
 
-        case srec_record::type_start_address:
+        case srec_record::type_execution_start_address:
             if (termination_seen)
-                warning("redundant start address record");
+                warning("redundant execution start address record");
             termination_seen = true;
             break;
         }

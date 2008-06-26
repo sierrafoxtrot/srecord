@@ -171,7 +171,7 @@ srec_output_file_aomf::write(const srec_record &record)
         // ignore
         break;
 
-    case srec_record::type_start_address:
+    case srec_record::type_execution_start_address:
         module_end_record(module_name.c_str());
         break;
 

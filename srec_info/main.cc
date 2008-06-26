@@ -106,9 +106,9 @@ main(int argc, char **argv)
                     );
                 break;
 
-            case srec_record::type_start_address:
+            case srec_record::type_execution_start_address:
                 {
-                    cout << "Start:  ";
+                    cout << "Execution Start Address: ";
                     char buf[16];
                     snprintf(buf, sizeof(buf), "%08lX", record.get_address());
                     cout << buf << endl;

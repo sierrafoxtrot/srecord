@@ -168,7 +168,7 @@ srec_output_file_fastload::write(const srec_record &record)
         // ignore
         break;
 
-    case srec_record::type_start_address:
+    case srec_record::type_execution_start_address:
         if (data_only_flag)
             break;
         if (bytes_since_checksum)

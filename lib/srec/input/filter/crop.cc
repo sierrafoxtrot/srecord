@@ -87,10 +87,10 @@ srec_input_filter_crop::read(srec_record &record)
                     );
                 break;
 
-            case srec_record::type_start_address:
+            case srec_record::type_execution_start_address:
                 //
-                // Discard start address records which do
-                // not fall into the clip region.
+                // Discard execution start address records which do not
+                // fall into the clip region.
                 //
                 if (!range.member(data.get_address()))
                     continue;

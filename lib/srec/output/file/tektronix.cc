@@ -126,14 +126,14 @@ srec_output_file_tektronix::write(const srec_record &record)
         // ignore
         break;
 
-    case srec_record::type_start_address:
+    case srec_record::type_execution_start_address:
         if (data_only_flag)
             break;
         if (record.get_address() >= (1UL << 16))
         {
             fatal_error
             (
-                "start address (%08lX) too large",
+                "execution start address (%08lX) too large",
                 record.get_address()
             );
         }

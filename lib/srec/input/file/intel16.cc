@@ -237,7 +237,7 @@ srec_input_file_intel16::read_inner(srec_record &record)
             record =
                 srec_record
                 (
-                    srec_record::type_start_address,
+                    srec_record::type_execution_start_address,
                     address_field << 1,
                     0,
                     0
@@ -274,7 +274,7 @@ srec_input_file_intel16::read_inner(srec_record &record)
             record =
                 srec_record
                 (
-                    srec_record::type_start_address,
+                    srec_record::type_execution_start_address,
                     address_field << 1,
                     0,
                     0
@@ -336,9 +336,9 @@ srec_input_file_intel16::read(srec_record &record)
             }
             break;
 
-        case srec_record::type_start_address:
+        case srec_record::type_execution_start_address:
             if (termination_seen)
-                warning("redundant start address record");
+                warning("redundant execution start address record");
             termination_seen = true;
             break;
         }

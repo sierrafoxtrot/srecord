@@ -58,9 +58,20 @@ srec_input_file_brecord::read_inner(srec_record &record)
         fatal_error("end of line expected");
 
     if (length == 0)
-        record = srec_record(srec_record::type_start_address, address, 0, 0);
+    {
+        record =
+            srec_record
+            (
+                srec_record::type_execution_start_address,
+                address,
+                0,
+                0
+            );
+    }
     else
+    {
         record = srec_record(srec_record::type_data, address, data, length);
+    }
     return 1;
 }
 

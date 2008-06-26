@@ -66,5 +66,5 @@ srec_memory_walker_writer::observe_header(const srec_record *rp)
 void
 srec_memory_walker_writer::observe_start_address(const srec_record *rp)
 {
-    op->write_start_address(rp);
+    op->write_execution_start_address(rp);
 }

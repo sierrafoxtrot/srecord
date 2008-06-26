@@ -26,7 +26,7 @@ TEST_SUBJECT="interval arithmetic"
 cat > test.ok << 'fubar'
 Format: Motorola S-Record
 Header: "HDR"
-Start:  00000000
+Execution Start Address: 00000000
 Data:   0000 - 00FF
         0E00 - 0FFF
 fubar
@@ -47,7 +47,7 @@ if test $? -ne 0; then fail; fi
 cat > test.ok << 'fubar'
 Format: Motorola S-Record
 Header: "HDR"
-Start:  00000000
+Execution Start Address: 00000000
 Data:   0100 - 0FFF
 fubar
 if test $? -ne 0; then no_result; fi
@@ -67,7 +67,7 @@ if test $? -ne 0; then fail; fi
 cat > test.ok << 'fubar'
 Format: Motorola S-Record
 Header: "HDR"
-Start:  00000000
+Execution Start Address: 00000000
 Data:   0080 - 00C7
         0190 - 0257
         0320 - 03E7

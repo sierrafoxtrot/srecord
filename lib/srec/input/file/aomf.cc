@@ -254,7 +254,14 @@ srec_input_file_aomf::read(srec_record &record)
 
             case O96_Mod_End:
                 state = expecting_eof;
-                record = srec_record(srec_record::type_start_address, 0, 0, 0);
+                record =
+                    srec_record
+                    (
+                        srec_record::type_execution_start_address,
+                        0,
+                        0,
+                        0
+                    );
                 return true;
 
             case O96_Content:

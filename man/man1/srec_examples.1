@@ -102,11 +102,11 @@ The line length option interacts with the address length option, so some
 tinkering to optimize for your particular situation many be necessary.
 .SS Just the Data, Please
 There are some bonehead EPROM programmers which can only cope with data
-records, and are unable to cope with header records or start address
-records.  If you have this problem, the \fB\-data-only\fP option can be
-used to suppress just about everything except the data.  The actual
-effect depends on the format, of course, because some don't have these
-features anyway.
+records, and are unable to cope with header records or execution start
+address records.  If you have this problem, the \fB\-data-only\fP option
+can be used to suppress just about everything except the data.  The
+actual effect depends on the format, of course, because some don't have
+these features anyway.
 .SS Data Headers
 The \f[I]srec_cat\fP(1) command always tries to pass through header
 records unchanged, whenever they are present.
@@ -118,16 +118,22 @@ or you wish to override an existing file header record, use the
 \fB\-header\fP=\f[I]string\fP option.  You will need to quote the
 string (to insulate it from the shell) if it contains spaces or shell
 meta-characters.
-.SS Start Addresses
-The \f[I]srec_cat\fP(1) command always tries to pass through start
-addresses (typically occurring at the end of the file), whenever they
-are present.  They are adjusted along with the data records by the
+.SS Execution Start Addresses
+The \f[I]srec_cat\fP(1) command always tries to pass through execution
+start addresses (typically occurring at the end of the file), whenever
+they are present.  They are adjusted along with the data records by the
 \fB\-offset\fP filter.  It even tries preserve them across file format
 changes, to the limit the file formats are capable of.
 .PP
-If there is no start address record and you would like to add one,
-or you which to override an existing start address record, use the
-\fB\-start-address\fP=\f[I]number\fP option.
+If there is no execution start address record and you would like to add one,
+or you which to override an existing execution start address record, use the
+\fB\-execution-start-address\fP=\f[I]number\fP option.
+.PP
+Please note: the execution start address is a different concept than the
+first address in memory of your data.  Think of it as a \[lq]goto\[rq]
+address to be jumped to by the monitor when the hex load is complete.
+If you want to change where your data starts in memory, use the
+\fB\-offset\fP filter.
 .SS Fixing Checksums
 Some embedded firmware developers are saddled with featherbrained tools
 which produce incorrect checksums, which the more vigilant models of
@@ -928,11 +934,11 @@ $
 .fi
 .ft R
 .RE
-This example show that the file is a Motorola S-Record.  The text in the
-file header is printed, along with the start address.  The final section
-shows the address ranges containing data (the upper bound of each
-subrange is \f[I]in\f[P]clusive, rather than the \f[I]ex\f[P]clusive form
-used on the command line.
+This example show that the file is a Motorola S-Record.  The text in
+the file header is printed, along with the execution start address.
+The final section shows the address ranges containing data (the
+upper bound of each subrange is \f[I]in\f[P]clusive, rather than the
+\f[I]ex\f[P]clusive form used on the command line.
 .RS
 .ft CW
 .nf

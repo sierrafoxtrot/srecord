@@ -45,7 +45,7 @@ public:
         type_header,
         type_data,
         type_data_count,
-        type_start_address
+        type_execution_start_address
     };
 
     /**

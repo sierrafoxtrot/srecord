@@ -127,7 +127,8 @@ srec_input_file_dec_binary::read(srec_record &record)
             {
                 fatal_error("checksum mismatch (%02X)", checksum_get());
             }
-            srec_record::type_t type = srec_record::type_start_address;
+            srec_record::type_t type =
+                srec_record::type_execution_start_address;
             record = srec_record(type, current_address, 0, 0);
             seek_to_end();
             return true;

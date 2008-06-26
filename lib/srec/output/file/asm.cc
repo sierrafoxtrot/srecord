@@ -478,7 +478,7 @@ srec_output_file_asm::write(const srec_record & record)
         }
         break;
 
-    case srec_record::type_start_address:
+    case srec_record::type_execution_start_address:
         taddr = record.get_address();
         if (!data_only_flag)
         {
@@ -487,7 +487,7 @@ srec_output_file_asm::write(const srec_record & record)
                 put_char('\n');
                 column = 0;
             }
-            put_stringf("; start addr =  0x%4.4lX\n", taddr);
+            put_stringf("; execution start address = 0x%4.4lX\n", taddr);
         }
         break;
     }

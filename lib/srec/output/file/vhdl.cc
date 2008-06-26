@@ -192,7 +192,7 @@ srec_output_file_vhdl::write(const srec_record &record)
         // Ignore.
         break;
 
-    case srec_record::type_start_address:
+    case srec_record::type_execution_start_address:
         // Ignore.
         break;
     }

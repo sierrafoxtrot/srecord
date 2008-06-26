@@ -43,8 +43,8 @@ main(int argc, char **argv)
     int address_length = 0;
     std::string header;
     bool header_set = false;
-    unsigned long start_address = 0;
-    bool start_address_set = false;
+    unsigned long execution_start_address = 0;
+    bool execution_start_address_set = false;
     while (cmdline.token_cur() != arglex::token_eoln)
     {
         switch (cmdline.token_cur())
@@ -112,10 +112,17 @@ main(int argc, char **argv)
             header_set = true;
             break;
 
-        case srec_cat_arglex3::token_start_address:
+        case srec_cat_arglex3::token_execution_start_address:
+            if (execution_start_address_set)
+            {
+                cerr << "too many -execution-strt-address options specified"
+                     << endl;
+                exit(1);
+            }
             cmdline.token_next();
-            start_address = cmdline.get_number("-Start_Address");
-            start_address_set = true;
+            execution_start_address =
+                cmdline.get_number("-Execution_Start_Address");
+            execution_start_address_set = true;
             continue;
         }
         cmdline.token_next();
@@ -147,8 +154,8 @@ main(int argc, char **argv)
         srec_input::pointer ifp = *it;
         m.reader(ifp, true);
     }
-    if (start_address_set)
-        m.set_start_address(start_address);
+    if (execution_start_address_set)
+        m.set_execution_start_address(execution_start_address);
 
     //
     // Open the output file and write the remembered data out to it.

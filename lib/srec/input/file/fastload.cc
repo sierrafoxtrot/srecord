@@ -232,7 +232,7 @@ srec_input_file_fastload::read_inner(srec_record &record)
             case 'E':
                 get_number(1, 6);
                 seek_to_end();
-                type = srec_record::type_start_address;
+                type = srec_record::type_execution_start_address;
                 record = srec_record(type, address, 0, 0);
                 return 1;
 

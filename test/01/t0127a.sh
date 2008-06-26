@@ -24,7 +24,7 @@ TEST_SUBJECT="-generate -random"
 cat > test.ok << 'fubar'
 Format: Motorola S-Record
 Header: "HDR"
-Start:  00000000
+Execution Start Address: 00000000
 Data:   0123 - 0455
 fubar
 if test $? -ne 0; then no_result; fi

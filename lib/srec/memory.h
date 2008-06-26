@@ -160,18 +160,18 @@ public:
     void set_header(const char *value);
 
     /**
-      * The get_start_address method is used to determine the value
-      * of the start address record set by either the reader()
-      * or set_start_address() methods.  If neither has set a
-      * start_address, NULL is returned.
+      * The get_execution_start_address method is used to determine the
+      * value of the execution start address record set by either the
+      * reader() or set_execution_start_address() methods.  If neither
+      * has set an execution start address, NULL is returned.
       */
-    srec_record *get_start_address() const;
+    srec_record *get_execution_start_address() const;
 
     /**
-      * The set_start_address method may be used to set the start
-      * address record.
+      * The set_execution_start_address method may be used to set the
+      * execution start address record.
       */
-    void set_start_address(unsigned long value);
+    void set_execution_start_address(unsigned long value);
 
     /**
       * The has_holes method may be used to determine whether or not the
@@ -261,11 +261,12 @@ private:
     srec_record *header;
 
     /**
-      * The start_address instance variable is used to track the start
-      * address.  It is set by the reader() and set_start_address()
-      * methods.  It is read by the get_start_address() method.
+      * The execution_start_address instance variable is used to track
+      * the execution start address.  It is set by the reader() and
+      * set_execution_start_address() methods.  It is read by the
+      * get_execution_start_address() method.
       */
-    srec_record *start_address;
+    srec_record *execution_start_address;
 
     /**
       * The clear method is used to discard all data, as if when

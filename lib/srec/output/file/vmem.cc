@@ -244,7 +244,7 @@ srec_output_file_vmem::write(const srec_record &record)
         break;
 
     case srec_record::type_data_count:
-    case srec_record::type_start_address:
+    case srec_record::type_execution_start_address:
         // ignore
         break;
 

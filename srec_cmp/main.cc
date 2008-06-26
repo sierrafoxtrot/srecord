@@ -29,7 +29,7 @@ using namespace std;
 
 
 static bool
-start_addresses_differ(srec_record *rp1, srec_record *rp2)
+execution_start_addresses_differ(srec_record *rp1, srec_record *rp2)
 {
     return (rp1 && rp2 && rp1->get_address() != rp2->get_address());
 }
@@ -99,16 +99,17 @@ main(int argc, char **argv)
         bool different = srec_memory::compare(m1, m2);
         if
         (
-            start_addresses_differ
+            execution_start_addresses_differ
             (
-                m1.get_start_address(),
-                m2.get_start_address()
+                m1.get_execution_start_address(),
+                m2.get_execution_start_address()
             )
         )
         {
-            cout << hex << "Start address "
-                << m1.get_start_address()->get_address()
-                << " not equal to " << m2.get_start_address()->get_address()
+            cout << hex << "Execution start address "
+                << m1.get_execution_start_address()->get_address()
+                << " not equal to "
+                << m2.get_execution_start_address()->get_address()
                 << "." << dec << endl;
             different = true;
         }
@@ -123,10 +124,10 @@ main(int argc, char **argv)
         (
             m1 != m2
         ||
-            start_addresses_differ
+            execution_start_addresses_differ
             (
-                m1.get_start_address(),
-                m2.get_start_address()
+                m1.get_execution_start_address(),
+                m2.get_execution_start_address()
             )
         )
         {

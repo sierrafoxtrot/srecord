@@ -34,7 +34,7 @@ if test $? -ne 0; then no_result; fi
 cat > test.ok << 'fubar'
 Format: Motorola S-Record
 Header: "http://srecord.sourceforge.net/"
-Start:  00000000
+Execution Start Address: 00000000
 Data:   0000 - 0043
 fubar
 if test $? -ne 0; then no_result; fi

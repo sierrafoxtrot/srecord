@@ -141,7 +141,7 @@ srec_output_file_ti_tagged::write(const srec_record &record)
         // ignore
         break;
 
-    case srec_record::type_start_address:
+    case srec_record::type_execution_start_address:
         if (column)
             put_eoln();
         if (data_only_flag)

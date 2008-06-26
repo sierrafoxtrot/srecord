@@ -238,8 +238,8 @@ srec_output_file_four_packed_code::write(const srec_record & record)
         // ignore
         break;
 
-    case srec_record::type_start_address:
-        // This format can't do start addresses.
+    case srec_record::type_execution_start_address:
+        // This format can't do execution start addresses.
         break;
 
     case srec_record::type_unknown:

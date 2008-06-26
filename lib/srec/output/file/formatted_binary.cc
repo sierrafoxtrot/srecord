@@ -124,8 +124,8 @@ srec_output_file_formatted_binary::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_start_address:
-        // This format can't do start address records
+    case srec_record::type_execution_start_address:
+        // This format can't do execution start address records
         break;
 
     case srec_record::type_unknown:

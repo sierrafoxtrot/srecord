@@ -519,11 +519,18 @@ the value will be written with the least significant byte first.
 As above, except that the result does \f[B]not\fP include the length itself.
 .TP 8n
 \fB\-OFfset\fP \f[I]nbytes\fP
+.RS
 This filter may be used to
 offset the addresses by the given number of bytes.
 No data is lost, the addresses will wrap around in 32 bits, if necessary.
 You may use negative numbers for the offset,
 if you wish to move data lower in memory.
+.PP
+Please note: the execution start address is a different concept than the
+first address in memory of your data.  If you want to change where your
+monitor will start executing, use the \fB\-execution-start-address\fP
+option (\f[I]srec_cat\fP(1) only).
+.RE
 .TP 8n
 \fB\-SPlit\fP \f[I]multiple\fP [ \f[I]offset\fP [ \f[I]width\fP ] ]
 This filter may be used to split the input into a subset of the data,

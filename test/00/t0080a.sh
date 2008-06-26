@@ -38,7 +38,7 @@ cat > test.ok << 'fubar'
         DB      32,116,111,32,99,111,109,101,32,116,111,32,116,104,101,32
         DB      97,105,100,32,111,102,32,116,104,101,105,114,32,112,97,114
         DB      116,121,46,10
-; start addr =  0x0000
+; execution start address = 0x0000
 ; upper bound = 0x0044
 ; lower bound = 0x0000
 ; length =      0x0044

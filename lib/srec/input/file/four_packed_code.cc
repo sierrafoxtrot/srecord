@@ -240,7 +240,7 @@ srec_input_file_four_packed_code::read_inner(srec_record &record)
 
     srec_record::type_t type = srec_record::type_data;
     if (length == 0)
-        type = srec_record::type_start_address;
+        type = srec_record::type_execution_start_address;
     record = srec_record(type, address, buffer, length);
     running_address = address + length;
     return 1;

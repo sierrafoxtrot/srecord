@@ -61,7 +61,7 @@ public:
 
     /**
       * The observe_start_address method is used to inform the walker
-      * of the start address record.  The default does nothing.
+      * of the execution start address record.  The default does nothing.
       */
     virtual void observe_start_address(const srec_record * = 0);
 

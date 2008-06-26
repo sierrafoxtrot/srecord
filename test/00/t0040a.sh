@@ -41,7 +41,7 @@ cat > test.ok1 << 'fubar'
 Different:      (0x1, 0x2, 0x4 - 0xd)
 Left only:      0xe
 Right only:     0x0
-Start address 1 not equal to 0.
+Execution start address 1 not equal to 0.
 fubar
 if test $? -ne 0; then no_result; fi
 
@@ -49,7 +49,7 @@ cat > test.ok2 << 'fubar'
 Different:      (0x1, 0x2, 0x4 - 0xd)
 Left only:      0xe
 Right only:     0
-Start address 1 not equal to 0.
+Execution start address 1 not equal to 0.
 fubar
 if test $? -ne 0; then no_result; fi
 

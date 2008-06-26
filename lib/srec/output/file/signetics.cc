@@ -92,8 +92,8 @@ srec_output_file_signetics::write(const srec_record &record)
         // ignore
         break;
 
-    case srec_record::type_start_address:
-        // This format can't do start address records
+    case srec_record::type_execution_start_address:
+        // This format can't do execution start address records
         if (data_only_flag)
             break;
         break;
