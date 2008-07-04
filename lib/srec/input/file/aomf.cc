@@ -119,7 +119,7 @@ srec_input_file_aomf::~srec_input_file_aomf()
 }
 
 
-srec_input_file_aomf::srec_input_file_aomf(const string &a_filename) :
+srec_input_file_aomf::srec_input_file_aomf(const std::string &a_filename) :
     srec_input_file(a_filename),
     current_buffer(0),
     current_length(0),
@@ -132,7 +132,7 @@ srec_input_file_aomf::srec_input_file_aomf(const string &a_filename) :
 
 
 srec_input::pointer
-srec_input_file_aomf::create(const string &a_filename)
+srec_input_file_aomf::create(const std::string &a_filename)
 {
     return pointer(new srec_input_file_aomf(a_filename));
 }

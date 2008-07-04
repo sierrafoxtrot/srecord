@@ -26,7 +26,7 @@ srec_input_file_binary::~srec_input_file_binary()
 }
 
 
-srec_input_file_binary::srec_input_file_binary(const string &a_file_name) :
+srec_input_file_binary::srec_input_file_binary(const std::string &a_file_name) :
     srec_input_file(a_file_name),
     address(0)
 {
@@ -34,7 +34,7 @@ srec_input_file_binary::srec_input_file_binary(const string &a_file_name) :
 
 
 srec_input::pointer
-srec_input_file_binary::create(const string &a_file_name)
+srec_input_file_binary::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_binary(a_file_name));
 }

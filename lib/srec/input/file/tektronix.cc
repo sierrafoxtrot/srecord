@@ -27,7 +27,8 @@ srec_input_file_tektronix::~srec_input_file_tektronix()
 }
 
 
-srec_input_file_tektronix::srec_input_file_tektronix(const string &a_filename) :
+srec_input_file_tektronix::srec_input_file_tektronix(
+        const std::string &a_filename) :
     srec_input_file(a_filename),
     data_record_count(0),
     garbage_warning(false),
@@ -38,7 +39,7 @@ srec_input_file_tektronix::srec_input_file_tektronix(const string &a_filename) :
 
 
 srec_input::pointer
-srec_input_file_tektronix::create(const string &a_file_name)
+srec_input_file_tektronix::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_tektronix(a_file_name));
 }

@@ -23,7 +23,6 @@
 #include <lib/srec/record.h>
 
 #include <iostream>
-using namespace std;
 #include <cstdlib>
 #include <vector>
 
@@ -62,7 +61,8 @@ main(int argc, char **argv)
                 if2 = cmdline.get_input();
             else
             {
-                cerr << argv[0] << ": too many input files specified" << endl;
+                std::cerr << argv[0] << ": too many input files specified"
+                    << std::endl;
                 cmdline.usage();
             }
             continue;
@@ -75,7 +75,7 @@ main(int argc, char **argv)
     }
     if (!if1 || !if2)
     {
-        cerr << argv[0] << ": two input files required" << endl;
+        std::cerr << argv[0] << ": two input files required" << std::endl;
         cmdline.usage();
     }
 
@@ -106,17 +106,17 @@ main(int argc, char **argv)
             )
         )
         {
-            cout << hex << "Execution start address "
+            std::cout << std::hex << "Execution start address "
                 << m1.get_execution_start_address()->get_address()
                 << " not equal to "
                 << m2.get_execution_start_address()->get_address()
-                << "." << dec << endl;
+                << "." << std::dec << std::endl;
             different = true;
         }
         if (different)
             exit(2);
-        cerr << argv[0] << ": files \"" << if1->filename() << "\" and \""
-            << if2->filename() << "\" are the same." << endl;
+        std::cerr << argv[0] << ": files \"" << if1->filename() << "\" and \""
+            << if2->filename() << "\" are the same." << std::endl;
     }
     else
     {
@@ -131,8 +131,8 @@ main(int argc, char **argv)
             )
         )
         {
-            cerr << argv[0] << ": files \"" << if1->filename() << "\" and \""
-                << if2->filename() << "\" differ" << endl;
+            std::cerr << argv[0] << ": files \"" << if1->filename()
+                << "\" and \"" << if2->filename() << "\" differ" << std::endl;
             exit(2);
         }
     }

@@ -175,7 +175,7 @@ srec_input_generator::create(srec_arglex *cmdln)
     case srec_arglex::token_repeat_string:
         {
             cmdln->token_next();
-            string s = cmdln->get_string("--repeat-string");
+            std::string s = cmdln->get_string("--repeat-string");
             size_t len = s.size();
             switch (len)
             {

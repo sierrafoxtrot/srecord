@@ -18,7 +18,6 @@
 //
 
 #include <iostream>
-using namespace std;
 
 #include <lib/srec/arglex.h>
 #include <lib/srec/input/file.h>

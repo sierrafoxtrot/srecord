@@ -26,7 +26,8 @@ srec_input_file_signetics::~srec_input_file_signetics()
 }
 
 
-srec_input_file_signetics::srec_input_file_signetics(const string &a_filename) :
+srec_input_file_signetics::srec_input_file_signetics(
+        const std::string &a_filename) :
     srec_input_file(a_filename),
     garbage_warning(false),
     seen_some_input(false)
@@ -35,7 +36,7 @@ srec_input_file_signetics::srec_input_file_signetics(const string &a_filename) :
 
 
 srec_input::pointer
-srec_input_file_signetics::create(const string &a_file_name)
+srec_input_file_signetics::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_signetics(a_file_name));
 }

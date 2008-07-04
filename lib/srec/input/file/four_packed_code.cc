@@ -27,7 +27,7 @@ srec_input_file_four_packed_code::~srec_input_file_four_packed_code()
 
 
 srec_input_file_four_packed_code::srec_input_file_four_packed_code(
-        const string &a_file_name) :
+        const std::string &a_file_name) :
     srec_input_file(a_file_name),
     garbage_warning(false),
     seen_some_input(false),
@@ -37,7 +37,7 @@ srec_input_file_four_packed_code::srec_input_file_four_packed_code(
 
 
 srec_input::pointer
-srec_input_file_four_packed_code::create(const string &a_file_name)
+srec_input_file_four_packed_code::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_four_packed_code(a_file_name));
 }

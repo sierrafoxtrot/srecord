@@ -69,7 +69,7 @@ protected:
     unsigned char generate_data(unsigned long address);
 
     // See base class for documentation.
-    string filename() const;
+    std::string filename() const;
 
     // See base class for documentation.
     const char *get_file_format_name() const;

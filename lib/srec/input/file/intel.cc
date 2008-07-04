@@ -28,7 +28,7 @@ srec_input_file_intel::~srec_input_file_intel()
 }
 
 
-srec_input_file_intel::srec_input_file_intel(const string &a_file_name) :
+srec_input_file_intel::srec_input_file_intel(const std::string &a_file_name) :
     srec_input_file(a_file_name),
     data_record_count(0),
     garbage_warning(false),
@@ -43,7 +43,7 @@ srec_input_file_intel::srec_input_file_intel(const string &a_file_name) :
 
 
 srec_input::pointer
-srec_input_file_intel::create(const string &a_file_name)
+srec_input_file_intel::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_intel(a_file_name));
 }

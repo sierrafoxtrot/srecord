@@ -21,7 +21,7 @@
 #define INCLUDE_SREC_INPUT_FILE_H
 
 #include <string>
-using namespace std;
+
 #include <lib/srec/input.h>
 
 /**
@@ -45,7 +45,7 @@ public:
       * @param file_name
       *     The name of the file to be opened.
       */
-    static pointer guess(const string &file_name);
+    static pointer guess(const std::string &file_name);
 
     /**
       * The ignore_all_checksums method is used to set the global
@@ -56,10 +56,10 @@ public:
 
 protected:
     // See base class for documentation.
-    virtual string filename() const;
+    virtual std::string filename() const;
 
     // See base class for documentation.
-    virtual string filename_and_line() const;
+    virtual std::string filename_and_line() const;
 
     // See base class for documentation.
     void disable_checksum_validation();
@@ -74,7 +74,7 @@ protected:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file(const string &file_name);
+    srec_input_file(const std::string &file_name);
 
     /**
       * The get_char method is used to fetch a character from
@@ -210,7 +210,7 @@ private:
       * and filename_and_line methods to report the name of the
       * input file.  This makes for informative error messages.
       */
-    string file_name;
+    std::string file_name;
 
     /**
       * The line_number instance variable is used by the get_char

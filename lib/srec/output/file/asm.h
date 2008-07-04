@@ -43,7 +43,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_asm(const string &file_name);
+    srec_output_file_asm(const std::string &file_name);
 
 public:
     /**
@@ -80,7 +80,7 @@ private:
       * The prefix instance variable is used to remember the variable
       * name prefix to be used in the output.
       */
-    string prefix;
+    std::string prefix;
 
     /**
       * The taddr instance variabel is used to remember the

@@ -18,7 +18,6 @@
 //
 
 #include <iostream>
-using namespace std;
 
 #include <lib/quit.h>
 #include <lib/srec/arglex.h>

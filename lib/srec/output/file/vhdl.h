@@ -88,7 +88,7 @@ private:
       * The prefix instance variable is used to remember the prefix of
       * the various names emitted into the output.
       */
-    string prefix;
+    std::string prefix;
 
     /**
       * The header_done instance variable is used to remember whether

@@ -45,7 +45,7 @@ private:
       * @param end
       *     The byte order.
       */
-    srec_input_file_atmel_generic(const string &file_name, endian_t end);
+    srec_input_file_atmel_generic(const std::string &file_name, endian_t end);
 
 public:
     /**
@@ -59,7 +59,7 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create_be(const string &file_name);
+    static pointer create_be(const std::string &file_name);
 
     /**
       * The create class method is used to create new dynamically
@@ -72,7 +72,8 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const string &file_name, endian_t end = endian_big);
+    static pointer create(const std::string &file_name,
+        endian_t end = endian_big);
 
 protected:
     // See base class for documentation.

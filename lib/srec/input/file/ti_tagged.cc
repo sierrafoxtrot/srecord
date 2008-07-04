@@ -27,7 +27,8 @@ srec_input_file_ti_tagged::~srec_input_file_ti_tagged()
 }
 
 
-srec_input_file_ti_tagged::srec_input_file_ti_tagged(const string &a_filename) :
+srec_input_file_ti_tagged::srec_input_file_ti_tagged(
+        const std::string &a_filename) :
     srec_input_file(a_filename),
     address(0),
     csum(0)
@@ -36,7 +37,7 @@ srec_input_file_ti_tagged::srec_input_file_ti_tagged(const string &a_filename) :
 
 
 srec_input::pointer
-srec_input_file_ti_tagged::create(const string &a_file_name)
+srec_input_file_ti_tagged::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_ti_tagged(a_file_name));
 }

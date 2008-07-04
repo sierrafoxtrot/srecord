@@ -27,7 +27,7 @@ srec_input_file_vmem::~srec_input_file_vmem()
 }
 
 
-srec_input_file_vmem::srec_input_file_vmem(const string &a_file_name) :
+srec_input_file_vmem::srec_input_file_vmem(const std::string &a_file_name) :
     srec_input_file(a_file_name),
     seen_some_input(false),
     address(0)
@@ -36,7 +36,7 @@ srec_input_file_vmem::srec_input_file_vmem(const string &a_file_name) :
 
 
 srec_input::pointer
-srec_input_file_vmem::create(const string &a_file_name)
+srec_input_file_vmem::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_vmem(a_file_name));
 }

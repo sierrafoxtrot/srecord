@@ -21,7 +21,6 @@
 #define INCLUDE_QUIT_PREFIX_H
 
 #include <string>
-using namespace std;
 #include <lib/quit.h>
 
 /**
@@ -49,7 +48,7 @@ public:
       * messages, once prefixed.  The given string is used as the
       * line prefix.
       */
-    quit_prefix(quit &deeper, const string &prefix);
+    quit_prefix(quit &deeper, const std::string &prefix);
 
     // See base class for documentation.
     virtual void exit(int);
@@ -62,7 +61,7 @@ private:
       * The prefix instance variable is used to remember the line
       * prefix to use.
       */
-    string prefix;
+    std::string prefix;
 
     /**
       * The deepr instance variable is used to remember which handler

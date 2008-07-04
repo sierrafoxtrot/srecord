@@ -36,7 +36,7 @@ srec_output_file_vhdl::~srec_output_file_vhdl()
 }
 
 
-srec_output_file_vhdl::srec_output_file_vhdl(const string &a_file_name) :
+srec_output_file_vhdl::srec_output_file_vhdl(const std::string &a_file_name) :
     srec_output_file(a_file_name),
     bytes_per_word(1),
     prefix("eprom"),

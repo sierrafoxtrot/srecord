@@ -20,13 +20,11 @@
 #ifndef INCLUDE_SREC_INPUT_H
 #define INCLUDE_SREC_INPUT_H
 
-
 #include <string>
-using namespace std;
 #include <stdarg.h>
 #include <boost/shared_ptr.hpp>
-#include <lib/format_printf.h>
 
+#include <lib/format_printf.h>
 
 class quit; // forward
 class srec_arglex; // forward
@@ -104,7 +102,7 @@ public:
       * The filename method is used to get the name of the input file
       * being processed.  Derived classes must supply this method.
       */
-    virtual string filename() const = 0;
+    virtual std::string filename() const = 0;
 
     /**
       * The filename_and_line method is used to get the name
@@ -112,7 +110,7 @@ public:
       * implementation simply calls the filename method and returns
       * that.  Text formats should be cleverer.
       */
-    virtual string filename_and_line() const;
+    virtual std::string filename_and_line() const;
 
     /**
       * The get_file_format_name method is used to find out the name

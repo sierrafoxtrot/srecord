@@ -47,7 +47,7 @@ srec_input_generator_random::generate_data(unsigned long)
 }
 
 
-string
+std::string
 srec_input_generator_random::filename()
     const
 {

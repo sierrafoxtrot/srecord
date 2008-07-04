@@ -17,10 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
-#include <errno.h>
+#include <cerrno>
 #include <iostream>
-using namespace std;
 #include <cstring>
 
 #include <lib/srec/input/file.h>
@@ -48,7 +46,7 @@ srec_input_file::mode()
 }
 
 
-srec_input_file::srec_input_file(const string &a_file_name) :
+srec_input_file::srec_input_file(const std::string &a_file_name) :
     file_name(a_file_name),
     line_number(1),
     prev_was_newline(false),
@@ -57,7 +55,7 @@ srec_input_file::srec_input_file(const string &a_file_name) :
     is_text(0),
     ignore_checksums(ignore_checksums_default)
 {
-    if (file_name == string("-"))
+    if (file_name == "-")
     {
         file_name = "standard input";
         vfp = stdin;
@@ -103,7 +101,7 @@ srec_input_file::~srec_input_file()
 }
 
 
-string
+std::string
 srec_input_file::filename()
     const
 {
@@ -111,7 +109,7 @@ srec_input_file::filename()
 }
 
 
-string
+std::string
 srec_input_file::filename_and_line()
     const
 {

@@ -20,11 +20,9 @@
 #ifndef INCLUDE_INTERVAL_H
 #define INCLUDE_INTERVAL_H
 
-
 #include <stddef.h>
 
 #include <iostream>
-using namespace std;
 
 /**
   * The interval class is used to represent a set of integer values,
@@ -166,7 +164,7 @@ public:
     /**
       * The print method is used to print an interval on an output stream.
       */
-    void print(ostream &) const;
+    void print(std::ostream &) const;
 
     /**
       * The pad method is used to expand an interval by padding each
@@ -185,7 +183,7 @@ public:
       * The representation method is used to manufacture a textural
       * representation of this interval.
       */
-    string representation() const;
+    std::string representation() const;
 
     /**
       * The flatten method is used to convert an interval with holes
@@ -342,8 +340,8 @@ operator - (const interval &arg)
   * The binary left-shift operator is used to print an interval on an
   * output stream.
   */
-inline ostream &
-operator << (ostream &os, const interval &val)
+inline std::ostream &
+operator << (std::ostream &os, const interval &val)
 {
     val.print(os);
     return os;

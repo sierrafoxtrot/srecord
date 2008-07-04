@@ -18,7 +18,6 @@
 //
 
 #include <iostream>
-using namespace std;
 #include <cstdlib>
 #include <vector>
 
@@ -36,7 +35,7 @@ main(int argc, char **argv)
 {
     srec_cat_arglex3 cmdline(argc, argv);
     cmdline.token_first();
-    typedef vector<srec_input::pointer> infile_t;
+    typedef std::vector<srec_input::pointer> infile_t;
     infile_t infile;
     srec_output::pointer outfile;
     int line_length = 0;
@@ -74,8 +73,8 @@ main(int argc, char **argv)
             line_length = cmdline.value_number();
             if (line_length <= 0)
             {
-                cerr << "the line length " << line_length << " is invalid"
-                    << endl;
+                std::cerr << "the line length " << line_length << " is invalid"
+                    << std::endl;
                 exit(1);
             }
             break;
@@ -88,8 +87,8 @@ main(int argc, char **argv)
             address_length = cmdline.value_number();
             if (address_length <= 0 || address_length > (int)sizeof(long))
             {
-                cerr << "the address length " << address_length
-                    << " is invalid" << endl;
+                std::cerr << "the address length " << address_length
+                    << " is invalid" << std::endl;
                 exit(1);
             }
             break;
@@ -105,7 +104,8 @@ main(int argc, char **argv)
         case srec_cat_arglex3::token_header:
             if (cmdline.token_next() != arglex::token_string)
             {
-                cerr << "the header option requires a string argument" << endl;
+                std::cerr << "the header option requires a string argument"
+                    << std::endl;
                 exit(1);
             }
             header = cmdline.value_string();
@@ -115,8 +115,8 @@ main(int argc, char **argv)
         case srec_cat_arglex3::token_execution_start_address:
             if (execution_start_address_set)
             {
-                cerr << "too many -execution-strt-address options specified"
-                     << endl;
+                std::cerr << "too many -execution-start-address options "
+                    "specified" << std::endl;
                 exit(1);
             }
             cmdline.token_next();

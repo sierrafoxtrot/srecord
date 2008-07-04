@@ -43,7 +43,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_basic(const string &file_name);
+    srec_output_file_basic(const std::string &file_name);
 
 public:
     /**

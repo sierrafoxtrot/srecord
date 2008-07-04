@@ -28,7 +28,8 @@ srec_input_file_spectrum::~srec_input_file_spectrum()
 }
 
 
-srec_input_file_spectrum::srec_input_file_spectrum(const string &a_file_name) :
+srec_input_file_spectrum::srec_input_file_spectrum(
+        const std::string &a_file_name) :
     srec_input_file(a_file_name),
     header_seen(false),
     trailer_seen(false),
@@ -38,7 +39,7 @@ srec_input_file_spectrum::srec_input_file_spectrum(const string &a_file_name) :
 
 
 srec_input::pointer
-srec_input_file_spectrum::create(const string &a_file_name)
+srec_input_file_spectrum::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_spectrum(a_file_name));
 }

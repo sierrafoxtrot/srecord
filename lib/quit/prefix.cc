@@ -35,7 +35,7 @@ quit_prefix::quit_prefix(quit &a1, const char *a2) :
 }
 
 
-quit_prefix::quit_prefix(quit &a1, const string &a2) :
+quit_prefix::quit_prefix(quit &a1, const std::string &a2) :
     prefix(a2),
     deeper(a1)
 {
@@ -52,7 +52,7 @@ quit_prefix::exit(int n)
 void
 quit_prefix::message_v(const char *fmt, va_list ap)
 {
-    if (prefix != string(""))
+    if (prefix != "")
     {
         char buf[1024];
         vsnprintf(buf, sizeof(buf), fmt, ap);

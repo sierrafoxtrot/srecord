@@ -48,7 +48,7 @@
 #include <lib/srec/record.h>
 
 
-typedef srec_input::pointer (*func_p)(const string &file_name);
+typedef srec_input::pointer (*func_p)(const std::string &file_name);
 
 static func_p table[] =
 {
@@ -85,7 +85,7 @@ static func_p table[] =
 
 
 srec_input::pointer
-srec_input_file::guess(const string &fn)
+srec_input_file::guess(const std::string &fn)
 {
     if (fn.empty() || fn == "-")
     {

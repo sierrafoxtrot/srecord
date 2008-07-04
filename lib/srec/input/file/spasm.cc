@@ -27,7 +27,7 @@ srec_input_file_spasm::~srec_input_file_spasm()
 }
 
 
-srec_input_file_spasm::srec_input_file_spasm(const string &a_file_name,
+srec_input_file_spasm::srec_input_file_spasm(const std::string &a_file_name,
         endian_t a_end) :
     srec_input_file(a_file_name),
     seen_some_input(false),
@@ -37,14 +37,14 @@ srec_input_file_spasm::srec_input_file_spasm(const string &a_file_name,
 
 
 srec_input::pointer
-srec_input_file_spasm::create_be(const string &a_file_name)
+srec_input_file_spasm::create_be(const std::string &a_file_name)
 {
     return create(a_file_name, endian_big);
 }
 
 
 srec_input::pointer
-srec_input_file_spasm::create(const string &a_file_name, endian_t a_end)
+srec_input_file_spasm::create(const std::string &a_file_name, endian_t a_end)
 {
     return pointer(new srec_input_file_spasm(a_file_name, a_end));
 }

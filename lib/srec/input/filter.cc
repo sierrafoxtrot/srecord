@@ -31,7 +31,7 @@ srec_input_filter::srec_input_filter(srec_input::pointer arg) :
 }
 
 
-string
+std::string
 srec_input_filter::filename()
     const
 {
@@ -39,7 +39,7 @@ srec_input_filter::filename()
 }
 
 
-string
+std::string
 srec_input_filter::filename_and_line()
     const
 {

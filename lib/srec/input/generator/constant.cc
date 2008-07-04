@@ -48,7 +48,7 @@ srec_input_generator_constant::generate_data(unsigned long)
 }
 
 
-string
+std::string
 srec_input_generator_constant::filename()
     const
 {

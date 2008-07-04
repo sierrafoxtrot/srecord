@@ -193,7 +193,7 @@ srec_output_file_asm::~srec_output_file_asm()
 }
 
 
-srec_output_file_asm::srec_output_file_asm(const string &filename) :
+srec_output_file_asm::srec_output_file_asm(const std::string &filename) :
     srec_output_file(filename),
     prefix("eprom"),
     taddr(0),

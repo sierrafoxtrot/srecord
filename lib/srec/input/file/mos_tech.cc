@@ -26,7 +26,8 @@ srec_input_file_mos_tech::~srec_input_file_mos_tech()
 }
 
 
-srec_input_file_mos_tech::srec_input_file_mos_tech(const string &a_file_name) :
+srec_input_file_mos_tech::srec_input_file_mos_tech(
+        const std::string &a_file_name) :
     srec_input_file(a_file_name),
     garbage_warning(false),
     seen_some_input(false),
@@ -36,7 +37,7 @@ srec_input_file_mos_tech::srec_input_file_mos_tech(const string &a_file_name) :
 
 
 srec_input::pointer
-srec_input_file_mos_tech::create(const string &a_file_name)
+srec_input_file_mos_tech::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_mos_tech(a_file_name));
 }

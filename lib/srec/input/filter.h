@@ -43,10 +43,10 @@ public:
     bool read(class srec_record &record);
 
     // See base class for documentation.
-    string filename() const;
+    std::string filename() const;
 
     // See base class for documentation.
-    string filename_and_line() const;
+    std::string filename_and_line() const;
 
     // See base class for documentation.
     const char *get_file_format_name() const;

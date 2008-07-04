@@ -55,7 +55,7 @@ srec_input_generator_repeat::generate_data(unsigned long addr)
 }
 
 
-string
+std::string
 srec_input_generator_repeat::filename()
     const
 {

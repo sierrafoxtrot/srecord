@@ -17,10 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-
-#include <errno.h>
+#include <cerrno>
 #include <iostream>
-using namespace std;
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -52,7 +50,7 @@ srec_output_file::mode()
 }
 
 
-srec_output_file::srec_output_file(const string &a_file_name) :
+srec_output_file::srec_output_file(const std::string &a_file_name) :
     file_name(a_file_name),
     line_number(1),
     vfp(0),
@@ -106,7 +104,7 @@ srec_output_file::~srec_output_file()
 }
 
 
-const string
+const std::string
 srec_output_file::filename()
     const
 {
@@ -256,7 +254,7 @@ srec_output_file::put_string(const char *s)
 
 
 void
-srec_output_file::put_string(const string &s)
+srec_output_file::put_string(const std::string &s)
 {
     const char *cp = s.c_str();
     const char *ep = cp + s.size();

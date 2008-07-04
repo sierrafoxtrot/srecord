@@ -26,7 +26,8 @@ srec_input_file_fairchild::~srec_input_file_fairchild()
 }
 
 
-srec_input_file_fairchild::srec_input_file_fairchild(const string &a_filename) :
+srec_input_file_fairchild::srec_input_file_fairchild(
+        const std::string &a_filename) :
     srec_input_file(a_filename),
     header_seen(false),
     address(0),
@@ -36,7 +37,7 @@ srec_input_file_fairchild::srec_input_file_fairchild(const string &a_filename) :
 
 
 srec_input::pointer
-srec_input_file_fairchild::create(const string &a_file_name)
+srec_input_file_fairchild::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_fairchild(a_file_name));
 }

@@ -27,7 +27,7 @@ srec_input_file_formatted_binary::~srec_input_file_formatted_binary()
 
 
 srec_input_file_formatted_binary::srec_input_file_formatted_binary(
-        const string &a_file_name) :
+        const std::string &a_file_name) :
     srec_input_file(a_file_name),
     header_seen(false),
     upper_bound(0),
@@ -39,7 +39,7 @@ srec_input_file_formatted_binary::srec_input_file_formatted_binary(
 
 
 srec_input::pointer
-srec_input_file_formatted_binary::create(const string &a_file_name)
+srec_input_file_formatted_binary::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_formatted_binary(a_file_name));
 }

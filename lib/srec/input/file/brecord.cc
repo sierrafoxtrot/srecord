@@ -26,7 +26,8 @@ srec_input_file_brecord::~srec_input_file_brecord()
 }
 
 
-srec_input_file_brecord::srec_input_file_brecord(const string &a_file_name) :
+srec_input_file_brecord::srec_input_file_brecord(
+        const std::string &a_file_name) :
     srec_input_file(a_file_name),
     seen_some_input(false)
 {
@@ -34,7 +35,7 @@ srec_input_file_brecord::srec_input_file_brecord(const string &a_file_name) :
 
 
 srec_input::pointer
-srec_input_file_brecord::create(const string &a_file_name)
+srec_input_file_brecord::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_brecord(a_file_name));
 }

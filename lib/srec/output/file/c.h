@@ -44,7 +44,7 @@ private:
       *     The file name to open to write data to.  The name "-" is
       *     understood to mean the standard output.
       */
-    srec_output_file_c(const string &file_name);
+    srec_output_file_c(const std::string &file_name);
 
 public:
     /**
@@ -81,7 +81,7 @@ private:
       * The prefix instance variable is used to remember the variable
       * name prefix to be used in the output.
       */
-    string prefix;
+    std::string prefix;
 
     /**
       * The taddr instance variable is used to remember the
@@ -142,7 +142,7 @@ private:
       * The include_file_name instance variable is used to remember the
       * name of the include file to be generated.
       */
-    string include_file_name;
+    std::string include_file_name;
 
     /**
       * The output_word instance variable is used to remember whether or not
@@ -194,7 +194,7 @@ private:
       * @param addr
       *     The adress to be formatted
       */
-    string format_address(unsigned long addr);
+    std::string format_address(unsigned long addr);
 
     /**
       * The default constructor.  Do not use.

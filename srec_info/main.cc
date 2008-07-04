@@ -25,7 +25,6 @@
 
 #include <cctype>
 #include <iostream>
-using namespace std;
 #include <cstdlib>
 #include <cstdio>
 #include <vector>
@@ -36,7 +35,7 @@ main(int argc, char **argv)
 {
     srec_arglex cmdline(argc, argv);
     cmdline.token_first();
-    typedef vector<srec_input::pointer> infile_t;
+    typedef std::vector<srec_input::pointer> infile_t;
     infile_t infile;
     while (cmdline.token_cur() != arglex::token_eoln)
     {
@@ -66,10 +65,10 @@ main(int argc, char **argv)
         srec_input::pointer ifp = *it;
         if (infile.size() > 1)
         {
-            cout << endl;
-            cout << ifp->filename() << ":" << endl;
+            std::cout << std::endl;
+            std::cout << ifp->filename() << ":" << std::endl;
         }
-        cout << "Format: " << ifp->get_file_format_name() << endl;
+        std::cout << "Format: " << ifp->get_file_format_name() << std::endl;
         srec_record record;
         interval range;
         while (ifp->read(record))
@@ -79,22 +78,22 @@ main(int argc, char **argv)
             case srec_record::type_header:
                 if (record.get_length() < 1)
                     break;
-                cout << "Header: \"";
+                std::cout << "Header: \"";
                 for (int j = 0; j < record.get_length(); ++j)
                 {
                     int c = record.get_data(j) & 127;
                     if (c == '\\' || c == '"')
-                        cout << '\\' << (char)c;
+                        std::cout << '\\' << (char)c;
                     else if (isprint(c))
-                        cout << (char)c;
+                        std::cout << (char)c;
                     else
                     {
                         char buf[16];
                         snprintf(buf, sizeof(buf), "\\%03o", c);
-                        cout << buf;
+                        std::cout << buf;
                     }
                 }
-                cout << "\"" << endl;
+                std::cout << "\"" << std::endl;
                 break;
 
             case srec_record::type_data:
@@ -108,10 +107,10 @@ main(int argc, char **argv)
 
             case srec_record::type_execution_start_address:
                 {
-                    cout << "Execution Start Address: ";
+                    std::cout << "Execution Start Address: ";
                     char buf[16];
                     snprintf(buf, sizeof(buf), "%08lX", record.get_address());
-                    cout << buf << endl;
+                    std::cout << buf << std::endl;
                 }
                 break;
 
@@ -122,7 +121,7 @@ main(int argc, char **argv)
         }
         if (range.empty())
         {
-            cout << "Data:   none" << endl;
+            std::cout << "Data:   none" << std::endl;
             continue;
         }
         int prec = 4;
@@ -137,16 +136,16 @@ main(int argc, char **argv)
             tmp.first_interval_only();
             if (first_line)
             {
-                cout << "Data:   ";
+                std::cout << "Data:   ";
                 first_line = false;
             }
             else
-                cout << "        ";
+                std::cout << "        ";
             char buf[32];
             snprintf(buf, sizeof(buf), "%0*lX", prec, tmp.get_lowest());
-            cout << buf << " - ";
+            std::cout << buf << " - ";
             snprintf(buf, sizeof(buf), "%0*lX", prec, tmp.get_highest() - 1);
-            cout << buf << endl;
+            std::cout << buf << std::endl;
             range -= tmp;
             if (range.empty())
                 break;

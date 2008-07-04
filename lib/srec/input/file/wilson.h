@@ -44,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_wilson(const string &file_name);
+    srec_input_file_wilson(const std::string &file_name);
 
 public:
     /**
@@ -56,7 +56,7 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const string &file_name);
+    static pointer create(const std::string &file_name);
 
 protected:
     // See base class for documentation.

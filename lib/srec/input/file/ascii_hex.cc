@@ -29,7 +29,8 @@ srec_input_file_ascii_hex::~srec_input_file_ascii_hex()
 }
 
 
-srec_input_file_ascii_hex::srec_input_file_ascii_hex(const string &a_filename) :
+srec_input_file_ascii_hex::srec_input_file_ascii_hex(
+        const std::string &a_filename) :
     srec_input_file(a_filename),
     garbage_warning(false),
     seen_some_input(false),
@@ -40,7 +41,7 @@ srec_input_file_ascii_hex::srec_input_file_ascii_hex(const string &a_filename) :
 
 
 srec_input::pointer
-srec_input_file_ascii_hex::create(const string &a_filename)
+srec_input_file_ascii_hex::create(const std::string &a_filename)
 {
     return pointer(new srec_input_file_ascii_hex(a_filename));
 }

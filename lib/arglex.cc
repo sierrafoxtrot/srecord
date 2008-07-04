@@ -21,7 +21,6 @@
 #include <cstdlib>
 #include <errno.h>
 #include <iostream>
-using namespace std;
 #include <unistd.h>
 
 #include <lib/arglex.h>
@@ -482,7 +481,7 @@ arglex::token_next()
         //
         {
             bool all_same = true;
-            string possibilities = hit[0]->name;
+            std::string possibilities = hit[0]->name;
             for (int k = 1; k < nhit; ++k)
             {
                 if (hit[0]->token != hit[k]->token)
@@ -566,7 +565,7 @@ arglex::help(const char *name)
         name = progname_get();
     const char *cmd[3] = { "man", name, 0 };
     execvp(cmd[0], (char *const *)cmd);
-    cerr << cmd[0] << ": " << strerror(errno) << endl;
+    std::cerr << cmd[0] << ": " << strerror(errno) << std::endl;
     exit(1);
 }
 
@@ -575,18 +574,20 @@ void
 arglex::version()
     const
 {
-    cout << progname_get() << " version " << version_stamp() << endl;
-    cout << "Copyright (C) " << copyright_years() << " Peter Miller" << endl;
-    cout << endl;
-    cout << "The " << progname_get()
-        << " program comes with ABSOLUTELY NO WARRANTY;" << endl;
-    cout << "for details use the '" << progname_get()
-        << " -LICense' command." << endl;
-    cout << "The " << progname_get()
-        << " program is free software, and you are welcome" << endl;
-    cout << "to redistribute it under certain conditions; for" << endl;
-    cout << "details use the '" << progname_get() << " -LICense' command."
-        << endl;
+    std::cout << progname_get() << " version " << version_stamp() << std::endl;
+    std::cout << "Copyright (C) " << copyright_years() << " Peter Miller"
+        << std::endl;
+    std::cout << std::endl;
+    std::cout << "The " << progname_get()
+        << " program comes with ABSOLUTELY NO WARRANTY;" << std::endl;
+    std::cout << "for details use the '" << progname_get()
+        << " -LICense' command." << std::endl;
+    std::cout << "The " << progname_get()
+        << " program is free software, and you are welcome" << std::endl;
+    std::cout << "to redistribute it under certain conditions; for"
+        << std::endl;
+    std::cout << "details use the '" << progname_get() << " -LICense' command."
+        << std::endl;
     exit(0);
 }
 
@@ -606,25 +607,26 @@ arglex::bad_argument()
     switch (token_cur())
     {
     case token_string:
-        cerr << "misplaced file name (\"" << value_string()
-            << "\") on command line" << endl;
+        std::cerr << "misplaced file name (\"" << value_string()
+            << "\") on command line" << std::endl;
         break;
 
     case token_number:
-        cerr << "misplaced number (" << value_string()
-            << ") on command line" << endl;
+        std::cerr << "misplaced number (" << value_string()
+            << ") on command line" << std::endl;
         break;
 
     case token_option:
-        cerr << "unknown \"" << value_string() << "\" option" << endl;
+        std::cerr << "unknown \"" << value_string() << "\" option" << std::endl;
         break;
 
     case token_eoln:
-        cerr << "command line too short" << endl;
+        std::cerr << "command line too short" << std::endl;
         break;
 
     default:
-        cerr << "misplaced \"" << value_string() << "\" option" << endl;
+        std::cerr << "misplaced \"" << value_string() << "\" option"
+            << std::endl;
         break;
     }
     usage();
@@ -683,11 +685,11 @@ void
 arglex::usage()
     const
 {
-    cerr << "Usage: " << progname_get() << " [ <option>... ] "
-        << usage_tail_get() << endl;
-    cerr << "       " << progname_get() << " -Help" << endl;
-    cerr << "       " << progname_get() << " -VERSion" << endl;
-    cerr << "       " << progname_get() << " -LICense" << endl;
+    std::cerr << "Usage: " << progname_get() << " [ <option>... ] "
+        << usage_tail_get() << std::endl;
+    std::cerr << "       " << progname_get() << " -Help" << std::endl;
+    std::cerr << "       " << progname_get() << " -VERSion" << std::endl;
+    std::cerr << "       " << progname_get() << " -LICense" << std::endl;
     exit(1);
     // NOTREACHED
 }

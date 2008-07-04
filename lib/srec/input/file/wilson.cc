@@ -26,7 +26,7 @@ srec_input_file_wilson::~srec_input_file_wilson()
 }
 
 
-srec_input_file_wilson::srec_input_file_wilson(const string &a_file_name) :
+srec_input_file_wilson::srec_input_file_wilson(const std::string &a_file_name) :
     srec_input_file(a_file_name),
     garbage_warning(false),
     seen_some_input(false),
@@ -36,7 +36,7 @@ srec_input_file_wilson::srec_input_file_wilson(const string &a_file_name) :
 
 
 srec_input::pointer
-srec_input_file_wilson::create(const string &a_file_name)
+srec_input_file_wilson::create(const std::string &a_file_name)
 {
     return pointer(new srec_input_file_wilson(a_file_name));
 }

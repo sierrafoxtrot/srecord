@@ -42,7 +42,7 @@ srec_output_file_basic::~srec_output_file_basic()
 }
 
 
-srec_output_file_basic::srec_output_file_basic(const string &a_file_name) :
+srec_output_file_basic::srec_output_file_basic(const std::string &a_file_name) :
     srec_output_file(a_file_name),
     taddr(0),
     column(0),

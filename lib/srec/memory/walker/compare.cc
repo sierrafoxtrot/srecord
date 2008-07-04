@@ -86,21 +86,30 @@ void
 srec_memory_walker_compare::print(const char *caption)
     const
 {
-    ios::fmtflags old =
-        cout.setf
+    std::ios::fmtflags old =
+        std::cout.setf
         (
-            static_cast<ios::fmtflags>(ios::showbase + ios::hex),
-            static_cast<ios::fmtflags>(ios::showbase + ios::hex + ios::dec +
-                ios::oct)
+            static_cast<std::ios::fmtflags>(std::ios::showbase + std::ios::hex),
+            static_cast<std::ios::fmtflags>
+            (
+                    std::ios::showbase
+                +
+                    std::ios::hex
+                +
+                    std::ios::dec
+                +
+                    std::ios::oct
+            )
         );
     if (!wrong.empty())
-        cout << "Different:      " << wrong << endl;
+        std::cout << "Different:      " << wrong << std::endl;
     if (!unset.empty())
     {
         std::string s(caption);
-        cout << s << " only:" << spaces(10 - s.size()) << unset << endl;
+        std::cout << s << " only:" << spaces(10 - s.size()) << unset
+            << std::endl;
     }
-    cout.flags(old);
+    std::cout.flags(old);
 }
 
 

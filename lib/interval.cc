@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2000, 2002, 2004-2007 Peter Miller
+//      Copyright (C) 1998-2000, 2002, 2004-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,10 +17,9 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
+#include <iostream>
 
 #include <lib/interval.h>
-#include <iostream>
-using namespace std;
 
 
 //
@@ -746,7 +745,7 @@ interval::get_highest()
 
 
 void
-interval::print(ostream &os)
+interval::print(std::ostream &os)
     const
 {
     if (length != 2)
@@ -766,7 +765,7 @@ interval::print(ostream &os)
 }
 
 
-static string
+static std::string
 to_string(interval::data_t x)
 {
     int width = 4;
@@ -780,11 +779,11 @@ to_string(interval::data_t x)
 }
 
 
-string
+std::string
 interval::representation()
     const
 {
-    string result;
+    std::string result;
     result += '(';
     for (size_t j = 0; j < length; j += 2)
     {
