@@ -57,11 +57,60 @@ public:
     virtual const std::string filename() const;
 
     /**
-      * Call this method if you want the output to contain only data
-      * records.  No header records or execution start address records
-      * (or any other records) will be emitted.
+      * The enable_header class method is used to enable or disable
+      * the writing of header records into output file, if the format
+      * supports optional header records.
+      *
+      * @param yesno
+      *     true if header records should be written, false if not
       */
-    static void data_only();
+    static void enable_header(bool yesno);
+
+    /**
+      * The enable_data_count class method is used to enable or disable
+      * the writing of data record count records into output file, if
+      * the format supports optional data record count records.
+      *
+      * @param yesno
+      *     true if data record count records should be written, false
+      *     if not
+      */
+    static void enable_data_count(bool yesno);
+
+    /**
+      * The enable_goto_addr class method is used to enable or disable
+      * the writing of execution start address records into output file,
+      * if the format supports optional excution start address records.
+      *
+      * @param yesno
+      *     true if execution start address records should be written,
+      *     false if not
+      */
+    static void enable_goto_addr(bool yesno);
+
+    /**
+      * The enable_footer class method is used to enable or disable
+      * the writing of footer records into output file, if the format
+      * supports optional footer records.
+      *
+      * @param yesno
+      *     true if footer records should be written, false if not
+      */
+    static void enable_footer(bool yesno);
+
+    /**
+      * The enable_by_name class method is used to enable or disable
+      * the writing of various records into output file.
+      *
+      * @param name
+      *     the name of the record type to enable or disable
+      * @param yesno
+      *     true if should be enable, false if sjould be disabled
+      * @returns
+      *     true if name understood, false if not (to trigger diagnostic
+      *     error message)
+      */
+    static bool enable_by_name(const std::string &name, bool yesno);
 
     /**
       * The crlf method is used to force CRLF line termination, event if
@@ -191,12 +240,36 @@ protected:
     virtual const char *mode() const;
 
     /**
-      * The data_only_flag class variable is set by the data_only()
-      * method, to remember that only data records are to be sent to the
-      * output.  Header records, execution start address records, etc,
-      * are all suppressed.
+      * The enable_header_flag class variable is set by the
+      * enable_header() method, to remember whether or not header
+      * records are to be emitted (if the format supports optional
+      * header records).
       */
-    static bool data_only_flag;
+    static bool enable_header_flag;
+
+    /**
+      * The enable_data_count_flag class variable is set by the
+      * enable_data_count() method, to remember whether or not data
+      * record count records are to be emitted (if the format supports
+      * optional data record count records).
+      */
+    static bool enable_data_count_flag;
+
+    /**
+      * The enable_exec_goto_flag class variable is set by the
+      * enable_exec_goto() method, to remember whether or not execution
+      * start address records are to be emitted (if the format supports
+      * optional execution start address records).
+      */
+    static bool enable_goto_addr_flag;
+
+    /**
+      * The enable_footer_flag class variable is set by the
+      * enable_footer() method, to remember whether or not footer
+      * records (end-of-file record) are to be emitted (if the format
+      * supports optional footer records).
+      */
+    static bool enable_footer_flag;
 
     /**
       * The crlf_flag class variable is used to remember whether or not

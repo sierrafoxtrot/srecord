@@ -127,17 +127,18 @@ srec_output_file_tektronix::write(const srec_record &record)
         break;
 
     case srec_record::type_execution_start_address:
-        if (data_only_flag)
-            break;
-        if (record.get_address() >= (1UL << 16))
+        if (enable_goto_addr_flag)
         {
-            fatal_error
-            (
-                "execution start address (%08lX) too large",
-                record.get_address()
-            );
+            if (record.get_address() >= (1UL << 16))
+            {
+                fatal_error
+                (
+                    "execution start address (%08lX) too large",
+                    record.get_address()
+                );
+            }
+            write_inner(record.get_address(), 0, 0);
         }
-        write_inner(record.get_address(), 0, 0);
         break;
 
     case srec_record::type_unknown:

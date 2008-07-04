@@ -20,7 +20,6 @@
 #ifndef PROG_SREC_CAT_ARGLEX3_H
 #define PROG_SREC_CAT_ARGLEX3_H
 
-
 #include <lib/srec/arglex.h>
 
 class srec_cat_arglex3:
@@ -35,6 +34,8 @@ public:
         token_crlf,
         token_header,
         token_execution_start_address,
+        token_enable,
+        token_disable,
         token_MAX
     };
 

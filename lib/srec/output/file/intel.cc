@@ -23,7 +23,7 @@
 
 srec_output_file_intel::~srec_output_file_intel()
 {
-    if (!data_only_flag)
+    if (enable_footer_flag)
         write_inner(1, 0L, 0, 0);
 }
 
@@ -126,10 +126,11 @@ srec_output_file_intel::write(const srec_record &record)
         break;
 
     case srec_record::type_execution_start_address:
-        if (data_only_flag)
-            break;
-        srec_record::encode_big_endian(tmp, record.get_address(), 4);
-        write_inner((mode == linear ? 5 : 3), 0L, tmp, 4);
+        if (enable_goto_addr_flag)
+        {
+            srec_record::encode_big_endian(tmp, record.get_address(), 4);
+            write_inner((mode == linear ? 5 : 3), 0L, tmp, 4);
+        }
         break;
 
     case srec_record::type_unknown:

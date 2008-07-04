@@ -23,7 +23,7 @@
 
 srec_output_file_mos_tech::~srec_output_file_mos_tech()
 {
-    if (data_record_count && !data_only_flag)
+    if (data_record_count && enable_data_count_flag)
     {
         put_char(';');
         checksum_reset();
@@ -36,6 +36,7 @@ srec_output_file_mos_tech::~srec_output_file_mos_tech()
         put_word(data_record_count);
         //put_word(checksum_get16());
         put_char('\n');
+        data_record_count = 0;
     }
 }
 

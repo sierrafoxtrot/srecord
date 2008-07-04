@@ -140,7 +140,7 @@ srec_output_file_srecord::write_data_count()
     if (data_count_written)
         return;
 
-    if (!data_only_flag)
+    if (enable_data_count_flag)
     {
         if (data_count < (1L << 16))
             write_inner(5, data_count, 2, 0, 0);
@@ -183,9 +183,8 @@ srec_output_file_srecord::write(const srec_record &record)
     switch (record.get_type())
     {
     case srec_record::type_header:
-        if (data_only_flag)
-            break;
-        write_inner(0, 0, 2, record.get_data(), record.get_length());
+        if (enable_header_flag)
+            write_inner(0, 0, 2, record.get_data(), record.get_length());
         break;
 
     case srec_record::type_data:
@@ -231,16 +230,17 @@ srec_output_file_srecord::write(const srec_record &record)
         break;
 
     case srec_record::type_execution_start_address:
-        if (data_only_flag)
-            break;
-        write_data_count();
+        if (enable_goto_addr_flag)
+        {
+            write_data_count();
 
-        if (shifted_address < (1UL << 16) && address_length <= 2)
-            write_inner(9, shifted_address, 2, 0, 0);
-        else if (shifted_address < (1UL << 24) && address_length <= 3)
-            write_inner(8, shifted_address, 3, 0, 0);
-        else
-            write_inner(7, shifted_address, 4, 0, 0);
+            if (shifted_address < (1UL << 16) && address_length <= 2)
+                write_inner(9, shifted_address, 2, 0, 0);
+            else if (shifted_address < (1UL << 24) && address_length <= 3)
+                write_inner(8, shifted_address, 3, 0, 0);
+            else
+                write_inner(7, shifted_address, 4, 0, 0);
+        }
         break;
 
     case srec_record::type_unknown:

@@ -28,6 +28,8 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv) :
         { "-Address_Length", token_address_length, },
         { "-Carriage_Return_Life_Feed", token_crlf, },
         { "-Data_Only", token_data_only, },
+        { "-DISable", token_disable, },
+        { "-ENable", token_enable, },
         { "-Execution_Start_Address", token_execution_start_address, },
         { "-GOTO", token_execution_start_address, },
         { "-HEAder", token_header, },

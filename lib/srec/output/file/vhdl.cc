@@ -29,7 +29,7 @@ srec_output_file_vhdl::~srec_output_file_vhdl()
 {
     emit_header();
     put_stringf("  others => %s_dont_care\n" " );\n", prefix.c_str());
-    if (!data_only_flag)
+    if (enable_footer_flag)
     {
         put_stringf("end package body %s_pack;\n", prefix.c_str());
     }
@@ -81,7 +81,7 @@ srec_output_file_vhdl::emit_header()
 {
     if (header_done)
         return;
-    if (!data_only_flag)
+    if (enable_header_flag)
     {
         put_stringf
         (
@@ -128,7 +128,7 @@ srec_output_file_vhdl::write(const srec_record &record)
         break;
 
     case srec_record::type_header:
-        if (!data_only_flag && record.get_length() > 0)
+        if (enable_header_flag && record.get_length() > 0)
         {
             //
             // Output the header record as a comment.

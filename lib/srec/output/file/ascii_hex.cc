@@ -66,14 +66,14 @@ srec_output_file_ascii_hex::emit_end_of_file()
     column = 0;
     end_code_emitted = true;
 
-    if (data_only_flag)
-        return;
-
-    //
-    // According to the documentation we emit the checksum after
-    // the ETX, which should mean that it is ignored (?!?)
-    //
-    put_stringf("$S%4.4X,\n", checksum_get16());
+    if (enable_footer_flag)
+    {
+        //
+        // According to the documentation we emit the checksum after
+        // the ETX, which should mean that it is ignored (?!?)
+        //
+        put_stringf("$S%4.4X,\n", checksum_get16());
+    }
 }
 
 

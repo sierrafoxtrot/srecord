@@ -131,6 +131,13 @@ srec_input_file_os65v::read_inner(srec_record &record)
         case '\r':
             if (state == '/')
                 ++address;
+            if (peek_char() == '\n')
+                get_char();
+            continue;
+
+        case '\n':
+            if (state == '/')
+                ++address;
             continue;
 
         case '.':

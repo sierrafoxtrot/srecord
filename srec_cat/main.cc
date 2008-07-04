@@ -94,7 +94,26 @@ main(int argc, char **argv)
             break;
 
         case srec_cat_arglex3::token_data_only:
-            srec_output_file::data_only();
+            srec_output_file::enable_header(false);
+            srec_output_file::enable_data_count(false);
+            srec_output_file::enable_goto_addr(false);
+            srec_output_file::enable_footer(false);
+            break;
+
+        case srec_cat_arglex3::token_enable:
+        case srec_cat_arglex3::token_disable:
+            {
+                int tok = cmdline.token_cur();
+                bool yesno = (tok == srec_cat_arglex3::token_enable);
+                cmdline.token_next();
+                std::string name = cmdline.get_string(cmdline.token_name(tok));
+                if (!srec_output_file::enable_by_name(name, yesno))
+                {
+                    std::cerr << "argument of " << cmdline.token_name(tok)
+                        << "=" << name << " unknown" << std::endl;
+                    cmdline.usage();
+                }
+            }
             break;
 
         case srec_cat_arglex3::token_crlf:
@@ -110,6 +129,7 @@ main(int argc, char **argv)
             }
             header = cmdline.value_string();
             header_set = true;
+            srec_output_file::enable_header(true);
             break;
 
         case srec_cat_arglex3::token_execution_start_address:
@@ -123,6 +143,7 @@ main(int argc, char **argv)
             execution_start_address =
                 cmdline.get_number("-Execution_Start_Address");
             execution_start_address_set = true;
+            srec_output_file::enable_goto_addr(true);
             continue;
         }
         cmdline.token_next();

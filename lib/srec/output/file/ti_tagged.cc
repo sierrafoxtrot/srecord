@@ -27,6 +27,11 @@ srec_output_file_ti_tagged::~srec_output_file_ti_tagged()
 {
     if (column)
         put_eoln();
+    if (enable_footer_flag)
+    {
+        put_char(':');
+        put_char('\n');
+    }
 }
 
 
@@ -81,7 +86,7 @@ srec_output_file_ti_tagged::write(const srec_record &record)
     switch (record.get_type())
     {
     case srec_record::type_header:
-        if (!data_only_flag)
+        if (enable_header_flag)
         {
             put_stringf("K%4.4X", 5 + record.get_length());
             const unsigned char *cp = record.get_data();
@@ -138,16 +143,8 @@ srec_output_file_ti_tagged::write(const srec_record &record)
         break;
 
     case srec_record::type_data_count:
-        // ignore
-        break;
-
     case srec_record::type_execution_start_address:
-        if (column)
-            put_eoln();
-        if (data_only_flag)
-            break;
-        put_char(':');
-        put_char('\n');
+        // ignore
         break;
 
     case srec_record::type_unknown:

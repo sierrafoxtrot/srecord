@@ -233,7 +233,7 @@ srec_output_file_c::~srec_output_file_c()
         put_string(";\n");
     }
 
-    if (!data_only_flag)
+    if (enable_goto_addr_flag)
     {
         if (constant)
             put_string("const ");
@@ -243,6 +243,9 @@ srec_output_file_c::~srec_output_file_c()
             prefix.c_str(),
             format_address(taddr).c_str()
         );
+    }
+    if (enable_footer_flag)
+    {
         if (constant)
             put_string("const ");
         put_stringf
@@ -319,7 +322,7 @@ srec_output_file_c::~srec_output_file_c()
         fprintf(fp, "#ifndef %s\n", insulation.c_str());
         fprintf(fp, "#define %s\n", insulation.c_str());
         fprintf(fp, "\n");
-        if (!data_only_flag)
+        if (enable_goto_addr_flag)
         {
             if (constant)
                 fprintf(fp, "const ");
@@ -329,6 +332,9 @@ srec_output_file_c::~srec_output_file_c()
                 "extern unsigned long %s_termination;\n",
                 prefix.c_str()
             );
+        }
+        if (enable_footer_flag)
+        {
             if (constant)
                 fprintf(fp, "const ");
             fprintf(fp, "extern unsigned long %s_start;\n", prefix.c_str());

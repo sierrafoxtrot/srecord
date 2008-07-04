@@ -25,7 +25,6 @@
 
 srec_output_file_wilson::~srec_output_file_wilson()
 {
-    // check for termination record
 }
 
 
@@ -143,9 +142,8 @@ srec_output_file_wilson::write(const srec_record &record)
         break;
 
     case srec_record::type_execution_start_address:
-        if (data_only_flag)
-            break;
-        write_inner('\'', record.get_address(), 0, 0);
+        if (enable_goto_addr_flag)
+            write_inner('\'', record.get_address(), 0, 0);
         break;
 
     case srec_record::type_unknown:

@@ -175,7 +175,7 @@ srec_output_file_asm::~srec_output_file_asm()
     }
 
 
-    if (!data_only_flag)
+    if (enable_footer_flag)
     {
         put_stringf("; upper bound = 0x%4.4lX\n", range.get_highest());
         put_stringf("; lower bound = 0x%4.4lX\n", range.get_lowest());
@@ -480,7 +480,7 @@ srec_output_file_asm::write(const srec_record & record)
 
     case srec_record::type_execution_start_address:
         taddr = record.get_address();
-        if (!data_only_flag)
+        if (enable_goto_addr_flag)
         {
             if (column)
             {

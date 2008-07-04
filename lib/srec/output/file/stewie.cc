@@ -25,6 +25,15 @@
 
 srec_output_file_stewie::~srec_output_file_stewie()
 {
+    if (enable_footer_flag)
+    {
+        //
+        // Even though struct Motorola compatibility would seem to
+        // indicate the S7, S8 or S9 could terminate the file, only
+        // S8 seems to work.
+        //
+        write_inner(8, 0, 0, 0, 0);
+    }
 }
 
 
@@ -113,13 +122,14 @@ srec_output_file_stewie::write(const srec_record &record)
     switch (record.get_type())
     {
     case srec_record::type_header:
-        if (data_only_flag)
-            break;
-        //
-        // Even though it starts with S0, the header record has a fixed
-        // format, so we don't bother passing it any data.
-        //
-        write_inner(0, 0, 0, 0, 0);
+        if (enable_header_flag)
+        {
+            //
+            // Even though it starts with S0, the header record has a
+            // fixed format, so we don't bother passing it any data.
+            //
+            write_inner(0, 0, 0, 0, 0);
+        }
         break;
 
     case srec_record::type_data:
@@ -170,18 +180,8 @@ srec_output_file_stewie::write(const srec_record &record)
         break;
 
     case srec_record::type_data_count:
-        // ignore
-        break;
-
     case srec_record::type_execution_start_address:
-        if (data_only_flag)
-            break;
-        //
-        // Even though struct Motorola compatibility would seem to
-        // indicate the S7, S8 or S9 could terminate the file, only S8
-        // seems to work.
-        //
-        write_inner(8, 0, 0, 0, 0);
+        // ignore
         break;
 
     case srec_record::type_unknown:

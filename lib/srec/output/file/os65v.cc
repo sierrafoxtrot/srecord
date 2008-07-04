@@ -23,7 +23,7 @@
 
 srec_output_file_os65v::~srec_output_file_os65v()
 {
-    if (!data_only_flag && !seen_start_address)
+    if (enable_footer_flag)
         put_string(".00FD/00\r");
 }
 
@@ -78,7 +78,7 @@ srec_output_file_os65v::write(const srec_record &record)
         break;
 
     case srec_record::type_execution_start_address:
-        if (!data_only_flag)
+        if (enable_goto_addr_flag)
         {
             if (address != record.get_address() || state == 0)
             {

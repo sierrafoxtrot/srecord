@@ -23,6 +23,8 @@
 
 srec_output_file_spectrum::~srec_output_file_spectrum()
 {
+    if (enable_footer_flag)
+        put_char(3);
 }
 
 
@@ -63,7 +65,7 @@ srec_output_file_spectrum::write(const srec_record &record)
     switch (record.get_type())
     {
     case srec_record::type_header:
-        if (!data_only_flag)
+        if (enable_header_flag)
             put_char(2);
         break;
 
@@ -82,10 +84,6 @@ srec_output_file_spectrum::write(const srec_record &record)
         break;
 
     case srec_record::type_execution_start_address:
-        if (!data_only_flag)
-            put_char(3);
-        break;
-
     case srec_record::type_unknown:
     case srec_record::type_data_count:
         // ignore

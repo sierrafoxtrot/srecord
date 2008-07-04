@@ -31,7 +31,7 @@ srec_output_file_basic::~srec_output_file_basic()
     if (column)
         put_char('\n');
 
-    if (!data_only_flag)
+    if (enable_footer_flag)
     {
         put_stringf("REM termination = %lu\n", taddr);
         put_stringf("REM start = %lu\n", range.get_lowest());

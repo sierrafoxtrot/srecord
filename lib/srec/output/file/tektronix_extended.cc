@@ -119,17 +119,18 @@ srec_output_file_tektronix_extended::write(const srec_record &record)
         break;
 
     case srec_record::type_execution_start_address:
-        if (data_only_flag)
-            break;
-        write_inner
-        (
-            8,
-            record.get_address(),
-            addr_width(record.get_address()),
-            0,
-            0
-        );
-            break;
+        if (enable_goto_addr_flag)
+        {
+            write_inner
+            (
+                8,
+                record.get_address(),
+                addr_width(record.get_address()),
+                0,
+                0
+            );
+        }
+        break;
 
     case srec_record::type_unknown:
         fatal_error("can't write unknown record type");
