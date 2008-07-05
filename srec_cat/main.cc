@@ -114,7 +114,7 @@ main(int argc, char **argv)
                     cmdline.usage();
                 }
             }
-            break;
+            continue;
 
         case srec_cat_arglex3::token_crlf:
             srec_output_file::crlf();
