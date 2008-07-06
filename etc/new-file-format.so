@@ -48,8 +48,25 @@ lib/srec/input/file/\fIname\fP.h
 This is the class declaration for the above file.
 .TP 8n
 man/man5/srec_\fIname\fP.5
+.RS
 This file describes the format.  Take a look at the other files in the
 same directory for examples.
+.PP
+If you need to describe something as \[lq]stupid\[rq],
+as is all too often the case,
+use \f[CW]thesaurus.com\fP to find a synonym.
+Use the following command
+.RS
+\f[CW]find man/. -type f | xargs grep -i \fP\f[I]synonym\fP
+.RE
+to make sure it hasn't been used yet.
+.RE
+.TP 8n
+test/\f[I]nn\fP/t\f[I]nnmm\fPa.sh
+You may have noticed that SRecord comes with a lot of tests.  You are
+more likely to get the patch for your new format accepted rapidly if it
+comes with at least one test for its output class, and at least one test
+for its input class.
 .SS Modified Files
 The following files need to be updated to mention the new format.
 .TP 8n
@@ -130,6 +147,7 @@ The data may be re-arranged in order, the line lengths may change, but
 the same data should go out as came in.
 (The data should be unchanged even if the format changed,
 assuming equally capable formats.)
+The \f[I]srec_cmp\fP(1) command may be used to verify this.
 .TP 3n
 \(bu
 If the input has no header record, the output should not have one either
@@ -152,7 +170,7 @@ a 16-bit format is faced with an 8-bit byte of data for one or other
 half of a 16-bit word.  If there is no other way around it, fill the
 hole with 0xFF.  This is because most erased EPROMs have 0xFF data, and
 so the 0xFF won't change anything.
-.PP
+.SH OPTIONS
 There are also some command line arguments you will need to take into account:
 .TP 8n
 \fB\-address-length\fP

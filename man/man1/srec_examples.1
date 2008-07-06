@@ -29,11 +29,30 @@ This manual page describes a few of them.
 This manual page describes how to use the various input files, input
 filters and input generators.  But these are only examples, for more
 complete details, see the \f[I]srec_input\fP(1) manual page.
+.SS The Commands Lines Are Too Long
+If you are marooned on an operating system with absurdly short command
+line length limits, some of the commands which follow may be too long.
+You can get around this handicap by placing your command line in a file,
+say \f[I]fred.txt\fP, and then tell \f[I]srec_cat\fP(1) to read this
+file for the rest of its command line, like this
+.RS
+.ft CW
+srec_cat @fred.txt
+.ft R
+.RE
+This also has the advantage of allowing comments, several lines and even
+indenting to make it more clear.  Comments start at a \[lq]\fB#\fP\[rq]
+and extend to the end of the line.  Blank lines are ignored.
+.PP
+.nr y4 \n[yr]+1900
+.nr yd \n[y4]-1992
+Of course, you could always upgrade to Linux, which has been sucking
+less for over \n[yd] years now.
 .SS Your Examples Wanted
-If you have a clever way of using SRecord, or have solves a difficult
+If you have a clever way of using SRecord, or have solved a difficult
 problem with SRecord, you could contribute to this manual page, making
-it more useful for everyone.  Send an email to the email address at the
-end of this manual page.
+it more useful for everyone.  Send your contribution in an email to the
+email address at the end of this manual page.
 .SH CONVERTING FILE FORMATS
 The simplest of the things \f[I]srec_cat\fP(1) can do is convert from
 one EPROM file format to another.  Please keep in mind, as you read this
@@ -107,6 +126,19 @@ address records.  If you have this problem, the \fB\-data-only\fP option
 can be used to suppress just about everything except the data.  The
 actual effect depends on the format, of course, because some don't have
 these features anyway.
+.PP
+The \f[B]\-data-only\fP option is short hand.  There are four properties
+which may be \fB\-disabled\fP or \fB\-enabled\fP separately.  See the
+\f[I]srec_cat\fP(1) man page for a description of the \fB\-disabled\fP
+and \f[B]\-enabled\fP options.
+.PP
+For example, your neanderthal EPROM programmer requires Motorola hex
+with header records (S0), but without data count (S5) records.  Not
+using the \fB\-data-only\fP option has it barf on the data count
+record, but using the \fB\-data-only\fP option has it barf on the
+missing header record.  Using the \fB\-disable=data-count\fP option
+would leave the header record intact while supressing the data count
+record.
 .SS Data Headers
 The \f[I]srec_cat\fP(1) command always tries to pass through header
 records unchanged, whenever they are present.
@@ -155,7 +187,7 @@ This option may be used on any file format which has checksums,
 including Intel hex.
 .SS Discovering Mystery Formats
 See the \f[B]What Format Is This?\fP section, below,
-for how to discover and convert mysery EPROM load file formats.
+for how to discover and convert mystery EPROM load file formats.
 .\" ------------------------------------------------------------------------
 .SH BINARY FILES
 It is possible to convert to and from binary files.  You can even mix
@@ -305,7 +337,7 @@ use the \f[I]srec_inf\fP(1) command:
 $ \f[CB]srec_info example.srec\fP
 Format: Motorola S-Record
 Header: extra-whizz tool chain linker
-Start:  0x00200000
+Execution Start Address: 0x00200000
 Data:   0x200000 - 0x32AAEF
 $
 .fi
@@ -927,7 +959,7 @@ For example:
 $ \f[CB]srec_info example.srec\fP
 Format: Motorola S-Record
 Header: "http://srecord.sourceforge.net/"
-Start:  00000000
+Execution Start Address: 00000000
 Data:   0000 - 0122
         0456 - 0FFF
 $
