@@ -36,6 +36,7 @@ public:
         token_execution_start_address,
         token_enable,
         token_disable,
+        token_line_termination,
         token_MAX
     };
 

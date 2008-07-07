@@ -41,6 +41,8 @@ srec_output_file_formatted_binary::srec_output_file_formatted_binary(
     address(0),
     check_sum(0)
 {
+    if (line_termination == line_termination_native)
+        line_termination = line_termination_binary;
 }
 
 
@@ -133,14 +135,6 @@ srec_output_file_formatted_binary::write(const srec_record &record)
         // ignore
         break;
     }
-}
-
-
-const char *
-srec_output_file_formatted_binary::mode()
-    const
-{
-    return "wb";
 }
 
 

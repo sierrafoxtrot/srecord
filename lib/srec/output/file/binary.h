@@ -69,9 +69,6 @@ protected:
     int preferred_block_size_get() const;
 
     // See base class for documentation.
-    const char *mode() const;
-
-    // See base class for documentation.
     const char *format_name() const;
 
 private:

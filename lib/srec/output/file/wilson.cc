@@ -33,6 +33,8 @@ srec_output_file_wilson::srec_output_file_wilson(
     srec_output_file(a_file_name),
     pref_block_size(32)
 {
+    if (line_termination == line_termination_native)
+        line_termination = line_termination_binary;
 }
 
 
@@ -200,14 +202,6 @@ srec_output_file_wilson::preferred_block_size_get()
     const
 {
     return pref_block_size;
-}
-
-
-const char *
-srec_output_file_wilson::mode()
-    const
-{
-    return "wb";
 }
 
 

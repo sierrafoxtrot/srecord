@@ -34,6 +34,8 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv) :
         { "-GOTO", token_execution_start_address, },
         { "-HEAder", token_header, },
         { "-Line_Length", token_line_length, },
+        { "-Line_Termination", token_line_termination, },
+        { "-End_Of_Line", token_line_termination, },
 
         //
         // This option is intentionally undocumented.  It is preserved

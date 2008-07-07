@@ -70,9 +70,6 @@ protected:
     int preferred_block_size_get() const;
 
     // See base class for documentation.
-    const char *mode() const;
-
-    // See base class for documentation.
     void put_byte(unsigned char);
 
     // See base class for documentation.

@@ -30,6 +30,8 @@ srec_output_file_binary::srec_output_file_binary(
         const std::string &a_file_name) :
     srec_output_file(a_file_name)
 {
+    if (line_termination == line_termination_native)
+        line_termination = line_termination_binary;
 }
 
 
@@ -51,14 +53,6 @@ srec_output_file_binary::write(const srec_record &record)
     int length = record.get_length();
     while (length-- > 0)
         put_char(*data++);
-}
-
-
-const char *
-srec_output_file_binary::mode()
-    const
-{
-    return "wb";
 }
 
 

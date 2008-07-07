@@ -37,6 +37,8 @@ srec_output_file_dec_binary::srec_output_file_dec_binary(
     srec_output_file(a_file_name),
     pref_block_size(preferred_block_size_calculate())
 {
+    if (line_termination == line_termination_native)
+        line_termination = line_termination_binary;
 }
 
 
@@ -182,14 +184,6 @@ srec_output_file_dec_binary::preferred_block_size_calculate()
 #else
     return srec_record::max_data_length;
 #endif
-}
-
-
-const char *
-srec_output_file_dec_binary::mode()
-    const
-{
-    return "wb";
 }
 
 

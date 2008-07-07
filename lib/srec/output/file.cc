@@ -31,7 +31,6 @@ bool srec_output_file::enable_header_flag = true;
 bool srec_output_file::enable_data_count_flag = true;
 bool srec_output_file::enable_goto_addr_flag = true;
 bool srec_output_file::enable_footer_flag = true;
-bool srec_output_file::crlf_flag = false;
 
 
 srec_output_file::srec_output_file() :
@@ -44,14 +43,7 @@ srec_output_file::srec_output_file() :
 {
     vfp = stdout;
     set_is_regular();
-}
-
-
-const char *
-srec_output_file::mode()
-    const
-{
-    return (crlf_flag ? "wb" : "w");
+    line_termination = line_termination_binary;
 }
 
 
@@ -68,13 +60,14 @@ srec_output_file::srec_output_file(const std::string &a_file_name) :
         file_name = "standard output";
         vfp = stdout;
         set_is_regular();
+        line_termination = line_termination_binary;
     }
     else
     {
         //
         // The call to fopen is deferred until the constructor has
-        // completed.  This is so that the virtual mode() method
-        // is available (it isn't in the base class constructor).
+        // completed.  This is so that the line_termination can be set
+        // correctly.
         //
     }
 }
@@ -87,12 +80,24 @@ srec_output_file::get_fp()
     {
         //
         // The call to fopen is deferred until the constructor has
-        // completed.  This is so that the virtual mode() method
-        // is available (it isn't in the base class constructor).
+        // completed.  This is so that the line_termination can be set
+        // correctly.
         //
-        vfp = fopen(file_name.c_str(), mode());
-        if (!vfp)
-            fatal_error_errno("open");
+#ifdef __CYGWIN__
+        if (line_termination == line_termination_native)
+        {
+            vfp = fopen(file_name.c_str(), "w");
+            if (!vfp)
+                fatal_error_errno("open");
+            line_termination = line_termination_binary;
+        }
+        else
+#endif
+        {
+            vfp = fopen(file_name.c_str(), "wb");
+            if (!vfp)
+                fatal_error_errno("open");
+        }
         set_is_regular();
     }
     return vfp;
@@ -123,17 +128,54 @@ void
 srec_output_file::put_char(int c)
 {
     FILE *fp = (FILE *)get_fp();
-    if (crlf_flag && c == '\n')
+    if (c == '\n')
     {
-        putc('\r', fp);
+        ++line_number;
+        for (;;)
+        {
+            switch (line_termination)
+            {
+            case line_termination_native:
+                line_termination = line_termination_guess();
+                continue;
+
+            case line_termination_primos:
+                putc('\n', fp);
+                ++position;
+                if (position & 1)
+                {
+                    putc(0, fp);
+                    ++position;
+                }
+                break;
+
+            case line_termination_nl:
+                putc('\n', fp);
+                ++position;
+                break;
+
+            case line_termination_cr:
+                putc('\r', fp);
+                ++position;
+                break;
+
+            case line_termination_crlf:
+                putc('\r', fp);
+                ++position;
+                putc('\n', fp);
+                ++position;
+                break;
+            }
+            break;
+        }
+    }
+    else
+    {
+        putc(c, fp);
         ++position;
     }
-    putc(c, fp);
     if (ferror(fp))
         fatal_error_errno("write");
-    if (c == '\n')
-        ++line_number;
-    ++position;
 }
 
 
@@ -334,13 +376,6 @@ srec_output_file::enable_by_name(const std::string &name, bool yesno)
         }
     }
     return false;
-}
-
-
-void
-srec_output_file::crlf()
-{
-    crlf_flag = true;
 }
 
 

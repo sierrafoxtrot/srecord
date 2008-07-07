@@ -27,22 +27,56 @@ S9031000EC
 fubar
 if test $? -ne 0; then no_result; fi
 
-# this is a binary format, so we have to encode the results,
-# which is annoying because it obfuscates them.
-cat > test.ok.mot << 'fubar'
-S12300002E303030302F34380D36350D36430D36430D36460D32430D32300D35370D364653
-S12200200D37320D36430D36340D32310D30410D2E31303030472E303046442F30300D65
+cat > test.ok << 'fubar'
+.0000/48
+65
+6C
+6C
+6F
+2C
+20
+57
+6F
+72
+6C
+64
+21
+0A
+.00FD/00
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.ok.mot -o test.ok -bin > LOG 2>&1
-if test $? -ne 0; then cat LOG; no_result; fi
-
 # This is the actual test
-srec_cat test.in -o test.out -os65v > LOG 2>&1
+srec_cat test.in -o test.out -os65v -eol=nl -disable=esa > LOG 2>&1
 if test $? -ne 0; then cat LOG; fail; fi
 
-cmp test.ok test.out
+diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
+cat > test.ok << 'fubar'
+.0000/48
+65
+6C
+6C
+6F
+2C
+20
+57
+6F
+72
+6C
+64
+21
+0A
+.1000G
+fubar
+if test $? -ne 0; then no_result; fi
+
+# This is the actual test
+srec_cat test.in -o test.out -os65v -eol=nl > LOG 2>&1
+if test $? -ne 0; then cat LOG; fail; fi
+
+diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
 mv test.out test.in

@@ -113,11 +113,17 @@ public:
     static bool enable_by_name(const std::string &name, bool yesno);
 
     /**
-      * The crlf method is used to force CRLF line termination, event if
-      * the current operating system's native text files use something
-      * else.
+      * The line_termination_by_name method is used to force line
+      * termination to a particular style, rather than the current
+      * operating system's native text format.
+      *
+      * @param name
+      *     The name of the line termination style to be used,
+      *     e.g. "crlf" or "nl".
+      * @returns
+      *     true if successful, false if name unknown
       */
-    static void crlf();
+    static bool line_termination_by_name(const std::string &name);
 
 protected:
     /**
@@ -233,13 +239,6 @@ protected:
     void put_stringf(const char *, ...)             FORMAT_PRINTF(2, 3);
 
     /**
-      * The mode method returns a suitable mode for passing to fopen.
-      * The default implementation returns "w+" but derived classes may
-      * over-ride it (e.g. "wb" for binary).
-      */
-    virtual const char *mode() const;
-
-    /**
       * The enable_header_flag class variable is set by the
       * enable_header() method, to remember whether or not header
       * records are to be emitted (if the format supports optional
@@ -271,12 +270,28 @@ protected:
       */
     static bool enable_footer_flag;
 
+    enum line_termination_t
+    {
+        line_termination_native,
+        line_termination_crlf,
+        line_termination_nl,
+        line_termination_binary = line_termination_nl,
+        line_termination_cr,
+        line_termination_primos
+    };
+
     /**
-      * The crlf_flag class variable is used to remember whether or not
-      * to force CRLF line termination, event if the current operating
-      * system's native text files use something else.
+      * The line_termination class variable is used to remember the
+      * desired line termination style.  Defaults to the native style of
+      * the current operating system.
       */
-    static bool crlf_flag;
+    static line_termination_t line_termination;
+
+    /**
+      * The line_termination_guess class method i sused to figure out
+      * the line termination style of the host environment.
+      */
+    static line_termination_t line_termination_guess();
 
 private:
     /**

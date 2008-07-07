@@ -375,12 +375,30 @@ See the \fB\-enable\fP option for a description of the available features.
 .so man/man1/o_sequence.so
 .TP 8n
 .B \-CRLF
-This option may be used to specify CRLF line termination for text
-output.  For use with harebrained EPROM programmer devices which assume all the
-world uses Evil Bill's operating system's line termination.  The default
-is to use the current operating system's default line termination.
-Use this option with caution, because it will also introduce extra (i.e.
-wrong) CR bytes into binary formats.
+This option is short-hand for the \fB\-line-termination=crlf\fP option.
+For use with harebrained EPROM programmer devices which assume all the
+world uses Evil Bill's operating system's line termination.
+.TP
+\fB\-Line_Termination \f[I]style-name\fP
+.RS
+This option may be used to specify line termination style for text
+output.  The default is to use the host operating system's default line
+termination style (but Cygwin behaves as if it's Unix).  Use this option with
+caution, because it will also introduce extra (i.e. wrong) CR bytes into
+binary formats.
+.TP 4n
+Carriage_Return_Line_Feed
+Use the CRLF line termination style, typical of DOS and M$ Windows.
+.TP 4n
+NewLine
+Use the NL line termination style, typical of Unix and Linux.
+.TP 4n
+Carriage_Return
+Use the CR line termination style, typical of Apple Macintosh.
+.PP
+All other line termination style names will produce a fatal error.
+Style names may be abbreviated like command line option names.
+.RE
 .TP 8n
 \fB-Line_Length\fP \fInumber\fP
 This option may be used to limit the length of the output lines to at

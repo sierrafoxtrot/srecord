@@ -31,6 +31,8 @@ srec_output_file_aomf::~srec_output_file_aomf()
 srec_output_file_aomf::srec_output_file_aomf(const std::string &a_file_name) :
     srec_output_file(a_file_name)
 {
+    if (line_termination == line_termination_native)
+        line_termination = line_termination_binary;
 }
 
 
@@ -200,14 +202,6 @@ srec_output_file_aomf::preferred_block_size_get()
     const
 {
     return srec_record::max_data_length;
-}
-
-
-const char *
-srec_output_file_aomf::mode()
-    const
-{
-    return "wb";
 }
 
 

@@ -44,6 +44,8 @@ srec_output_file_stewie::srec_output_file_stewie(
     address_length(2),
     preferred_block_size(128)
 {
+    if (line_termination == line_termination_native)
+        line_termination = line_termination_binary;
 }
 
 
@@ -217,15 +219,6 @@ srec_output_file_stewie::preferred_block_size_get()
     const
 {
     return preferred_block_size;
-}
-
-
-
-const char *
-srec_output_file_stewie::mode()
-    const
-{
-    return "wb";
 }
 
 

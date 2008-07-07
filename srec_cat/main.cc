@@ -117,8 +117,22 @@ main(int argc, char **argv)
             continue;
 
         case srec_cat_arglex3::token_crlf:
-            srec_output_file::crlf();
+            srec_output_file::line_termination_by_name("crlf");
             break;
+
+        case srec_cat_arglex3::token_line_termination:
+            {
+                int tok = cmdline.token_cur();
+                cmdline.token_next();
+                std::string name = cmdline.get_string(cmdline.token_name(tok));
+                if (!srec_output_file::line_termination_by_name(name))
+                {
+                    std::cerr << "line termination \"" << name << "\" unknown"
+                        << std::endl;
+                    cmdline.usage();
+                }
+            }
+            continue;
 
         case srec_cat_arglex3::token_header:
             if (cmdline.token_next() != arglex::token_string)

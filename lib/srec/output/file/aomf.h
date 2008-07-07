@@ -70,9 +70,6 @@ protected:
     void address_length_set(int);
 
     // See base class for documentation.
-    const char *mode() const;
-
-    // See base class for documentation.
     const char *format_name() const;
 
 private:
