@@ -87,7 +87,7 @@ srec_output_file_srecord::command_line(srec_arglex *cmdln)
             break;
 
         default:
-            fatal_error("address multiple %d not understood", n);
+            fatal_error("-motorola address multiple %d not understood", n);
             // NOTREACHED
         }
     }

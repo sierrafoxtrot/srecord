@@ -89,7 +89,7 @@ srec_input_generator::read(srec_record &result)
 srec_input::pointer
 srec_input_generator::create(srec_arglex *cmdln)
 {
-    interval range = cmdln->get_interval("--generate");
+    interval range = cmdln->get_interval_small("--generate");
     srec_input::pointer result;
     switch (cmdln->token_cur())
     {

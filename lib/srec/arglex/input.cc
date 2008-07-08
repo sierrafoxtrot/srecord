@@ -478,7 +478,7 @@ srec_arglex::get_input()
             {
                 token_next();
                 int filler = get_number("--Fill", 0, 255);
-                interval range = get_interval("--Fill");
+                interval range = get_interval_small("--Fill");
                 ifp = srec_input_filter_fill::create(ifp, filler, range);
             }
             break;
@@ -486,7 +486,7 @@ srec_arglex::get_input()
         case token_random_fill:
             {
                 token_next();
-                interval range = get_interval("-Random_Fill");
+                interval range = get_interval_small("-Random_Fill");
                 ifp = srec_input_filter_random_fill::create(ifp, range);
             }
             break;

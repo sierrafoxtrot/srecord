@@ -52,13 +52,13 @@ To suppress this behavior, use an \fB\-exclude \-within\fP filter.
 The following options are understood:
 .so man/man1/o_at.so
 .TP 8n
-\fB\-Output\fP \fIfilename\fP [ \fIformat\fP ]
+\fB\-Output\fP \f[I]filename\fP [ \f[I]format\fP ]
 .RS
 This option may be used to specify the output file to be used.
 The special file name ``\-'' is understood to mean the standard output.
 Output defaults to the standard output if this option is not used.
 .PP
-The \fIformat\fP may be specified as:
+The \f[I]format\fP may be specified as:
 .TP 8n
 \fB\-Absolute_Object_Module_Format\fP
 An Intel Absolute Object Module Format file will be written.
@@ -76,7 +76,7 @@ for a description of this file format.)
 .RS
 A series of assembler DB statements will be written.
 .PP
-The optional \fIprefix\fP may be specified to change the names of the
+The optional \f[I]prefix\fP may be specified to change the names of the
 symbols generated.  The defaults to "\f[CW]eprom\fP" if not set.
 .PP
 Several options are available to modify the style of output:
@@ -142,7 +142,7 @@ If you get unexpected results \f[B]please\fP see the
 .RS
 A C array defintion will be written.
 .PP
-The optional \fIidentifier\fP is the name of the variable to be defined,
+The optional \f[I]identifier\fP is the name of the variable to be defined,
 or \f[CW]bugus\fP if not specified.
 .TP 8n
 \fB\-INClude\fP
@@ -170,7 +170,7 @@ than the default hexadecimal constants.
 .TP 8n
 \fB\-COsmac\fP
 An RCA Cosmac Elf format file will be written.
-(See \fIsrec_cosmac\fP(5) for a description of this file format.)
+(See \f[I]srec_cosmac\fP(5) for a description of this file format.)
 .TP 8n
 \fB\-Dec_Binary\fP
 A DEC Binary (XXDP) format file will be written.
@@ -186,16 +186,16 @@ for a description of this file format.)
 .TP 8n
 \fB\-FAIrchild\fP
 This option says to use the Fairchild Fairbug format file when writing the file.
-(See \fIsrec_fairchild\fP(5) for a description of this file format.)
+(See \f[I]srec_fairchild\fP(5) for a description of this file format.)
 .TP 8n
 \fB\-Fast_Load\fP
 This option says to use the LSI Logic Fast Load format file when writing
 the file.
-(See \fIsrec_fastload\fP(5) for a description of this file format.)
+(See \f[I]srec_fastload\fP(5) for a description of this file format.)
 .TP 8n
 \fB\-Formatted_Binary\fP
 A Formatted Binary format file will be written.
-(See \fIsrec_formatted_binary\fP(5) for a description of this file format.)
+(See \f[I]srec_formatted_binary\fP(5) for a description of this file format.)
 .TP 8n
 \fB\-Four_Packed_Code\fP
 This option says to use the PFC format file when writing the file.
@@ -222,7 +222,7 @@ An Mos Technologies format file will be written.
 .IR srec_mos_tech (5)
 for a description of this file format.)
 .TP 8n
-\fB\-Motorola\fP [ \fIwidth\fP ]
+\fB\-Motorola\fP [ \f[I]width\fP ]
 .RS
 A Motorola S-Record file will be written.
 (See
@@ -234,7 +234,7 @@ this will be S19 for data in the first 64KB;
 if you wish to force S28 use the \fB--address-length=3\fP option;
 if you wish to force S37 use the \fB--address-length=4\fP option
 .PP
-The optional \fIwidth\fP argument describes the number of bytes which
+The optional \f[I]width\fP argument describes the number of bytes which
 form each address multiple.  For normal uses the default of one (1) byte
 is appropriate.  Some systems with 16-bit or 32-bit targets mutilate the
 addresses in the file; this option will imitate that behavior.
@@ -243,21 +243,21 @@ Unlike most other parameters, this one cannot be guessed.
 .TP 8n
 \fB\-Needham_Hexadecimal\fP
 This option says to use the Needham Electronics ASCII file format to
-write the file.  See \fIsrec_needham\fP(5) for a description of this
+write the file.  See \f[I]srec_needham\fP(5) for a description of this
 file format.
 .TP 8n
 \fB\-Ohio_Scientific\fP
 This option says to use the Ohio Scientific hexadecimal format.
-See \fIsrec_os65v\fP(5) for a description of this format.
+See \f[I]srec_os65v\fP(5) for a description of this format.
 .TP 8n
 \fB\-SIGnetics\fP
 This option says to use the Signetics hex format.
-See \fIsrec_signetics\fP(5) for a description of this format.
+See \f[I]srec_signetics\fP(5) for a description of this format.
 .TP 8n
 \fB\-SPAsm\fP
 This option says to use the SPASM assembler output format (commonly used
 by PIC programmers).
-See \fIsrec_spasm\fP(5) for a description of this format.
+See \f[I]srec_spasm\fP(5) for a description of this format.
 .TP 8n
 \fB\-SPAsm_LittleEndian\fP
 This option says to use the SPASM assembler output format (commonly used
@@ -298,17 +298,17 @@ This option says to use the Texas Instruments TXT (MSP430) format to
 write the file.  See \f[I]srec_ti_txt\fP(5) for a description of this
 file format.
 .TP 8n
-\fB\-VHdl\fP [ \fIbytes-per-word\fP [ \fIname\fP ]]
+\fB\-VHdl\fP [ \f[I]bytes-per-word\fP [ \f[I]name\fP ]]
 A VHDL format file will be written.
-The \fIbytes-per-word\fP defaults to one,
-the \fIname\fP defaults to \f[CW]eprom\fP.
-The \fIetc/x_defs_pack.vhd\fP file in the source distribution contains an
+The \f[I]bytes-per-word\fP defaults to one,
+the \f[I]name\fP defaults to \f[CW]eprom\fP.
+The \f[I]etc/x_defs_pack.vhd\fP file in the source distribution contains an
 example ROM definitions pack for the type-independent output.
 You may need to use the \-byte-swap filter to get the byte order you want.
 .TP 8n
-\fB\-VMem\fP [ \fImemory-width\fP ]
+\fB\-VMem\fP [ \f[I]memory-width\fP ]
 A Verilog VMEM format file will be written.
-The \fImemory-width\fP may be 8, 16, 32, 64 or 128 bits;
+The \f[I]memory-width\fP may be 8, 16, 32, 64 or 128 bits;
 .\"
 .\" The default number of bits is 32.
 .\" If you change this, you must also change the following files:
@@ -316,7 +316,7 @@ The \fImemory-width\fP may be 8, 16, 32, 64 or 128 bits;
 .\"     lib/srec/output/file/vmem.cc
 .\"
 defaults to 32 if unspecified.
-(See \fIsrec_vmem\fP(5) for a description of this file format.)
+(See \f[I]srec_vmem\fP(5) for a description of this file format.)
 You may need to use the \-byte-swap filter to get the byte order you want.
 .TP 8n
 \fB\-WILson\fP
@@ -326,7 +326,7 @@ A wilson format file will be written.
 for a description of this file format.)
 .RE
 .TP 8n
-\fB\-Address_Length\fP \fInumber\fP
+\fB\-Address_Length\fP \f[I]number\fP
 This option many be used to specify the minimum number of bytes to be
 used in the output to represent an address (padding with leading zeros
 if necessary).
@@ -400,17 +400,17 @@ All other line termination style names will produce a fatal error.
 Style names may be abbreviated like command line option names.
 .RE
 .TP 8n
-\fB-Line_Length\fP \fInumber\fP
+\fB-Line_Length\fP \f[I]number\fP
 This option may be used to limit the length of the output lines to at
-most \fInumber\fP characters.  (Not meaningful for binary file format.)
+most \f[I]number\fP characters.  (Not meaningful for binary file format.)
 Defaults to something less than 80 characters, depending on the format.
 .TP 8n
-\fB\-HEAder\fP \fIstring\fP
+\fB\-HEAder\fP \f[I]string\fP
 This option may be used to set the header comment,
 in those formats which support it.
 This option implies the \fB\-enable=header\fP option.
 .TP 8n
-\fB\-Execution_Start_Address\fP \fInumber\fP
+\fB\-Execution_Start_Address\fP \f[I]number\fP
 .RS
 This option may be used to set the execution start address,
 in those formats which support it.

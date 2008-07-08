@@ -45,6 +45,7 @@ public:
         token_atmel_generic_be,
         token_atmel_generic_le,
         token_basic_data,
+        token_big,
         token_binary,
         token_brecord,
         token_byte_swap,
@@ -227,6 +228,14 @@ public:
       * not return.
       */
     interval get_interval(const char *err_msg_caption);
+
+    /**
+      * The get_interval_small method may be used to parse an interval
+      * set form the command line.  It checks that the interval is
+      * <=1GB, and errors if it is not, with a --big override.  Commonly
+      * used to sanity check things like --fill.
+      */
+    interval get_interval_small(const char *err_msg_caption);
 
     /**
       * The get_string method may be used to get a string from the

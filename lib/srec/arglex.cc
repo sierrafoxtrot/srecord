@@ -51,6 +51,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-AUGment", token_crc16_augment },
         { "-Not_AUGment", token_crc16_augment_not },
         { "-BAsic", token_basic_data, },
+        { "-BIG", token_big, },
         { "-Big_Endian_Checksum", token_checksum_be_bitnot, },
         { "-Big_Endian_Checksum_BitNot", token_checksum_be_bitnot, },
         { "-Big_Endian_Checksum_Negative", token_checksum_be_negative, },

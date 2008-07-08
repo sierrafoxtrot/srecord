@@ -84,7 +84,13 @@ srec_input_file_srecord::command_line(srec_arglex *cmdln)
             break;
 
         default:
-            fatal_error("address multiple %d not understood", n);
+            fatal_error
+            (
+                "-motorola address multiple %d not understood (do "
+                    "you need parentheses to group the expressions "
+                    "differently?)",
+                n
+            );
             // NOTREACHED
         }
     }

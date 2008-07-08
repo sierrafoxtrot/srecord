@@ -192,6 +192,17 @@ public:
       */
     interval flatten() const;
 
+    /**
+      * The coverage method is used to obtain the size of the interval
+      * in bytes.
+      *
+      * @returns
+      *     The number of bytes cobered by the interval, NOT including
+      *     holes.  Because the result could be 2**32, the 64-bit result
+      *     is used so that this is representable.
+      */
+    long long coverage() const;
+
 private:
     /**
       * The length instance variable is used to remember the length of
