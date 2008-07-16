@@ -19,8 +19,8 @@
 .ds n) srec_cat
 .TH \*(n) 1 SRecord "Reference Manual"
 .SH NAME
-srec_cat \- manipulate eprom load files
-.XX "srec_cat(1)" "manipulate eprom load files"
+srec_cat \- manipulate EPROM load files
+.XX "srec_cat(1)" "Manipulate EPROM load files"
 .SH SYNOPSIS
 .B \*(n)
 [
@@ -40,11 +40,45 @@ program is used to assemble the given input files into a single output
 file.
 The use of filters (see below) allows significant manipulations to be
 performed by this command.
-.PP
-A warning will be emitted for each address which is redundantly set to the
-same value.  A fatal error will be issued if any address is set with
+.SS Data Order
+The data from the input files is not immediately written to the output,
+but is stored in memory until the complete EPROM image has been
+assembled.  Data is then written to the output file in ascending address
+order.  The original ordering of the data (in those formats capable of
+random record ordering) is \f[I]not\fP preserved.
+.SS Data Comparison
+Because input record order is not preserved, textual comparison of input
+and output (such as the \f[I]diff\fP(1) or \f[I]tkdiff\fP(1) commands)
+can be misleading.
+Not only can lines appear in different address orders, but line lengths
+and line termination can differ as well.
+Use the \f[I]srec_cmp\fP(1) program to compare two EPROM load files.
+If a text comparison is essential, run both files through the
+\f[I]srec_cat\fP(1) program to ensure both files to be compared have
+identical record ordering and line lengths.
+.SS Data Conflicts
+The storing of data in memory enables the detection of data conflicts,
+typically caused by linker sections unintentionally overlapping.
+.TP 2n
+\[bu]
+A warning will be issued for each address which is redundantly set to the
+same value.
+.TP 2n
+\[bu]
+A fatal error will be issued if any address is set with
 contradictory values.
-To suppress this behavior, use an \fB\-exclude \-within\fP filter.
+To avoid this error use an \fB\-exclude \-within\fP filter
+(see \f[I]srec_input\fP(1)) or, to make it a warning, use the
+\fB\-multiple\fP option (see below).
+.TP 2n
+\[bu]
+A warning will be issued for input files where the data records are not
+in strictly ascending address order.  To suppress this warning, use the
+\fB\-disable-sequence-warning\fP option (see below).
+.PP
+These features are designed to detect problems which are difficult to
+debug, and detects them \f[I]before\fP the data is written to an EPROM
+and run in your embedded system.
 .so man/man1/o_input.so
 .br
 .ne 1i
@@ -214,7 +248,7 @@ An Intel hex format file will be written.
 for a description of this file format.)
 The default is to emit 32-bit linear addressing;
 if you want 16-bit extended segment addressing
-use the \fB--address-length=2\fP option.
+use the \fB\-address-length=2\fP option.
 .TP 8n
 \fB\-MOS_Technologies\fP
 An Mos Technologies format file will be written.
@@ -231,8 +265,8 @@ for a description of this file format.)
 This is the default output format.
 By default, the smallest possible address length is emitted,
 this will be S19 for data in the first 64KB;
-if you wish to force S28 use the \fB--address-length=3\fP option;
-if you wish to force S37 use the \fB--address-length=4\fP option
+if you wish to force S28 use the \fB\-address-length=3\fP option;
+if you wish to force S37 use the \fB\-address-length=4\fP option
 .PP
 The optional \f[I]width\fP argument describes the number of bytes which
 form each address multiple.  For normal uses the default of one (1) byte
@@ -400,7 +434,7 @@ All other line termination style names will produce a fatal error.
 Style names may be abbreviated like command line option names.
 .RE
 .TP 8n
-\fB-Line_Length\fP \f[I]number\fP
+\fB\-Line_Length\fP \f[I]number\fP
 This option may be used to limit the length of the output lines to at
 most \f[I]number\fP characters.  (Not meaningful for binary file format.)
 Defaults to something less than 80 characters, depending on the format.
