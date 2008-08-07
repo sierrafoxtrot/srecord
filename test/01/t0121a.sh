@@ -57,11 +57,11 @@ cat > test.h.ok << 'fubar'
 #ifndef TEST_H
 #define TEST_H
 
-const extern unsigned long eprom_termination;
-const extern unsigned long eprom_start;
-const extern unsigned long eprom_finish;
-const extern unsigned long eprom_length;
-const extern unsigned short eprom[];
+extern const unsigned long eprom_termination;
+extern const unsigned long eprom_start;
+extern const unsigned long eprom_finish;
+extern const unsigned long eprom_length;
+extern const unsigned short eprom[];
 
 #endif /* TEST_H */
 fubar

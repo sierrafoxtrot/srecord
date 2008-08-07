@@ -197,15 +197,15 @@ cat > test.ok.h << 'fubar'
 #ifndef TEST_H
 #define TEST_H
 
-const extern unsigned long eprom_termination;
-const extern unsigned long eprom_start;
-const extern unsigned long eprom_finish;
-const extern unsigned long eprom_length;
-const extern unsigned long eprom_sections;
-const extern unsigned short eprom[];
-const extern unsigned long eprom_address[];
-const extern unsigned long eprom_word_address[];
-const extern unsigned long eprom_length_of_sections[];
+extern const unsigned long eprom_termination;
+extern const unsigned long eprom_start;
+extern const unsigned long eprom_finish;
+extern const unsigned long eprom_length;
+extern const unsigned long eprom_sections;
+extern const unsigned short eprom[];
+extern const unsigned long eprom_address[];
+extern const unsigned long eprom_word_address[];
+extern const unsigned long eprom_length_of_sections[];
 
 #endif /* TEST_H */
 fubar

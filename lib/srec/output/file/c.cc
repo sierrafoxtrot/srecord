@@ -324,36 +324,42 @@ srec_output_file_c::~srec_output_file_c()
         fprintf(fp, "\n");
         if (enable_goto_addr_flag)
         {
+            fprintf(fp, "extern ");
             if (constant)
                 fprintf(fp, "const ");
             fprintf
             (
                 fp,
-                "extern unsigned long %s_termination;\n",
+                "unsigned long %s_termination;\n",
                 prefix.c_str()
             );
         }
         if (enable_footer_flag)
         {
+            fprintf(fp, "extern ");
             if (constant)
                 fprintf(fp, "const ");
-            fprintf(fp, "extern unsigned long %s_start;\n", prefix.c_str());
+            fprintf(fp, "unsigned long %s_start;\n", prefix.c_str());
+            fprintf(fp, "extern ");
             if (constant)
                 fprintf(fp, "const ");
-            fprintf(fp, "extern unsigned long %s_finish;\n", prefix.c_str());
+            fprintf(fp, "unsigned long %s_finish;\n", prefix.c_str());
         }
+        fprintf(fp, "extern ");
         if (constant)
             fprintf(fp, "const ");
-        fprintf(fp, "extern unsigned long %s_length;\n", prefix.c_str());
+        fprintf(fp, "unsigned long %s_length;\n", prefix.c_str());
         if (section_style)
         {
+            fprintf(fp, "extern ");
             if (constant)
                 fprintf(fp, "const ");
-            fprintf(fp, "extern unsigned long %s_sections;\n", prefix.c_str());
+            fprintf(fp, "unsigned long %s_sections;\n", prefix.c_str());
         }
+        fprintf(fp, "extern ");
         if (constant)
             fprintf(fp, "const ");
-        fprintf(fp, "extern unsigned ");
+        fprintf(fp, "unsigned ");
         if (output_word)
             fprintf(fp, "short");
         else
@@ -361,20 +367,23 @@ srec_output_file_c::~srec_output_file_c()
         fprintf(fp, " %s[];\n", prefix.c_str());
         if (section_style)
         {
+            fprintf(fp, "extern ");
             if (constant)
                 fprintf(fp, "const ");
-            fprintf(fp, "extern unsigned long");
+            fprintf(fp, "unsigned long");
             fprintf(fp, " %s_address[];\n", prefix.c_str());
             if (output_word)
             {
+                fprintf(fp, "extern ");
                 if (constant)
                     fprintf(fp, "const ");
-                fprintf(fp, "extern unsigned long");
+                fprintf(fp, "unsigned long");
                 fprintf(fp, " %s_word_address[];\n", prefix.c_str());
             }
+            fprintf(fp, "extern ");
             if (constant)
                 fprintf(fp, "const ");
-            fprintf(fp, "extern unsigned long");
+            fprintf(fp, "unsigned long");
             fprintf(fp, " %s_length_of_sections[];\n", prefix.c_str());
         }
         fprintf(fp, "\n");
