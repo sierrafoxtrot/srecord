@@ -16,17 +16,44 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.\"
-.\" you can create the initial cut of this file using the
-.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
-.\"             -p srecord.1 -c 43 -unf
-.\" command, and then editing it to be more appropriate.
-.\"
-.\" ------------------------------------------------------------------------
-.\" .PP
-.\" .if n *
-.\" .if t \(bu
-.\" .\" Change N
+.PP
+.if n *
+.if t \(bu
+.\" Change 18
+Some compilers issue a warning when const appears before extern.
+"warning: storage class is not first".  The C output has been
+updated to conform to this expectation.
+.PP
+.if n *
+.if t \(bu
+.\" Change 17
+The manual page for \f[I]srec_cat\fP(1) has been enhanced to describe
+the in-memory data model, and the resulting output data order.
+.PP
+.if n *
+.if t \(bu
+.\" Change 15
+The \fB\-motorola\fP optional width argument now produces a better
+error message when it is out of range.
+.PP
+.if n *
+.if t \(bu
+.\" Change 15
+The \fB\-fill\fP filter now checks the size, and fails for absurdly
+large fills, with a \fB\-big\fP override if they really want >1GB
+fills.
+.PP
+.if n *
+.if t \(bu
+.\" Change 16
+A bug in the .spec file for rpmbuild has been fixed, it now
+takes notice of $RPM_BUILD_ROOT
+.PP
+.if n *
+.if t \(bu
+.\" Change 11
+There is a new \fB\-line-termination\fP option, which may be
+used to select the desired line termination of output text files.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.43 (2008-Jul-06)
