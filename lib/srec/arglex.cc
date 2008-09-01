@@ -1,20 +1,19 @@
 //
-//        srecord - manipulate eprom load files
-//        Copyright (C) 1998-2008 Peter Miller
+// srecord - manipulate eprom load files
+// Copyright (C) 1998-2008 Peter Miller
 //
-//        This program is free software; you can redistribute it and/or modify
-//        it under the terms of the GNU General Public License as published by
-//        the Free Software Foundation; either version 3 of the License, or
-//        (at your option) any later version.
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or (at
+// your option) any later version.
 //
-//        This program is distributed in the hope that it will be useful,
-//        but WITHOUT ANY WARRANTY; without even the implied warranty of
-//        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//        GNU General Public License for more details.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
 //
-//        You should have received a copy of the GNU General Public License
-//        along with this program. If not, see
-//        <http://www.gnu.org/licenses/>.
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
 #include <iostream>
@@ -83,6 +82,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-DIFference", token_minus, },
         { "-Disable_Sequence_Warnings", token_sequence_warnings_disable, },
         { "-Dot_STyle", token_style_dot, },
+        { "-EEPROM", token_eeprom, },
         { "-Elektor_Monitor52", token_emon52, },
         { "-Enable_Sequence_Warnings", token_sequence_warnings_enable, },
         { "-Exclude", token_exclude, },
@@ -93,6 +93,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Fast_Load", token_fast_load, },
         { "-Fill", token_fill, },
         { "-Formatted_Binary", token_formatted_binary, },
+        { "-FORTH", token_forth, },
         { "-Four_Packed_Code", token_four_packed_code, },
         { "-GENerate", token_generator },
         { "-GENerator", token_generator },
@@ -134,6 +135,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Output", token_output, },
         { "-Output_Words", token_output_word, },
         { "-OVer", token_over, },
+        { "-RAM", token_ram, },
         { "-RANDom", token_random, },
         { "-Random_Fill", token_random_fill, },
         { "-RAnge_PADding", token_range_padding, },

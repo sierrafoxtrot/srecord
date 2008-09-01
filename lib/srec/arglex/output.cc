@@ -1,20 +1,19 @@
 //
-//      srecord - manipulate eprom load files
-//      Copyright (C) 2001-2004, 2006-2008 Peter Miller
+// srecord - manipulate eprom load files
+// Copyright (C) 2001-2004, 2006-2008 Peter Miller
 //
-//      This program is free software; you can redistribute it and/or modify
-//      it under the terms of the GNU General Public License as published by
-//      the Free Software Foundation; either version 3 of the License, or
-//      (at your option) any later version.
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or (at
+// your option) any later version.
 //
-//      This program is distributed in the hope that it will be useful,
-//      but WITHOUT ANY WARRANTY; without even the implied warranty of
-//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//      GNU General Public License for more details.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
 //
-//      You should have received a copy of the GNU General Public License
-//      along with this program. If not, see
-//      <http://www.gnu.org/licenses/>.
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
 #include <lib/srec/arglex.h>
@@ -32,6 +31,7 @@
 #include <lib/srec/output/file/fairchild.h>
 #include <lib/srec/output/file/fastload.h>
 #include <lib/srec/output/file/formatted_binary.h>
+#include <lib/srec/output/file/forth.h>
 #include <lib/srec/output/file/four_packed_code.h>
 #include <lib/srec/output/file/hexdump.h>
 #include <lib/srec/output/file/intel.h>
@@ -178,6 +178,11 @@ srec_arglex::get_output()
     case token_formatted_binary:
         token_next();
         ofp = srec_output_file_formatted_binary::create(fn);
+        break;
+
+    case token_forth:
+        token_next();
+        ofp = srec_output_file_forth::create(fn);
         break;
 
     case token_four_packed_code:

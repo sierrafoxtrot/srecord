@@ -1,20 +1,19 @@
 '\" t
-.\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2000-2008 Peter Miller
+.\" srecord - manipulate eprom load files
+.\" Copyright (C) 1998, 2000-2008 Peter Miller
 .\"
-.\"     This program is free software; you can redistribute it and/or modify
-.\"     it under the terms of the GNU General Public License as published by
-.\"     the Free Software Foundation; either version 3 of the License, or
-.\"     (at your option) any later version.
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 3 of the License, or
+.\" (at your option) any later version.
 .\"
-.\"     This program is distributed in the hope that it will be useful,
-.\"     but WITHOUT ANY WARRANTY; without even the implied warranty of
-.\"     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-.\"     GNU General Public License for more details.
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
 .\"
-.\"     You should have received a copy of the GNU General Public License
-.\"     along with this program. If not, see
-.\"     <http://www.gnu.org/licenses/>.
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .ds n) srec_cat
 .TH \*(n) 1 SRecord "Reference Manual"
@@ -194,12 +193,26 @@ gaps will not be filled.
 \fB\-Output_Word\fP
 This option asks for an output which is in words not in
 bytes.  This is little endian, so you may need to
-use the \-Swap-bytes filter.  Filler bytes of 0xFF may be inserted
-if necessary; use \-fill \-range-pad for a different value.
+A Formatted Binary format file will be written.
+(See \fIsrec_formatted_binary\fP(5) for a description of this file format.)
 .TP 8n
-\fB\-DECimal_STyle\fP
-This option may be used to get decimal constants in the output, rather
-than the default hexadecimal constants.
+\fB\-FORTH\fP [ \-\f[I]option\fP ]
+.RS
+A FORTH input file will be written.
+Each line of output includes a byte value, an address, and a command.
+.PP
+.TP 8n
+\fB\-RAM\fP
+The store command is C!
+This is the default.
+.TP 8n
+\fB\-EEPROM
+The store command is EEC!
+.RE
+.TP 8n
+\fB\-Four_Packed_Code\fP
+This option says to use the PFC format file when writing the file.
+(See
 .RE
 .TP 8n
 \fB\-COsmac\fP

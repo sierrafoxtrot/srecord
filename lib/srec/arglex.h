@@ -1,24 +1,23 @@
 //
-//        srecord - manipulate eprom load files
-//        Copyright (C) 1998-2008 Peter Miller
+// srecord - manipulate eprom load files
+// Copyright (C) 1998-2008 Peter Miller
 //
-//        This program is free software; you can redistribute it and/or modify
-//        it under the terms of the GNU General Public License as published by
-//        the Free Software Foundation; either version 3 of the License, or
-//        (at your option) any later version.
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or (at
+// your option) any later version.
 //
-//        This program is distributed in the hope that it will be useful,
-//        but WITHOUT ANY WARRANTY; without even the implied warranty of
-//        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//        GNU General Public License for more details.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
 //
-//        You should have received a copy of the GNU General Public License
-//        along with this program. If not, see
-//        <http://www.gnu.org/licenses/>.
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_ARGLEX_H
-#define INCLUDE_SREC_ARGLEX_H
+#ifndef LIB_SREC_ARGLEX_H
+#define LIB_SREC_ARGLEX_H
 
 #include <lib/arglex.h>
 #include <lib/endian.h>
@@ -72,6 +71,7 @@ public:
         token_crc32_le,
         token_crop,
         token_dec_binary,
+        token_eeprom,
         token_emon52,
         token_exclude,
         token_exclusive_length,
@@ -87,6 +87,7 @@ public:
         token_fast_load,
         token_fill,
         token_formatted_binary,
+        token_forth,
         token_four_packed_code,
         token_generator,
         token_guess,
@@ -120,6 +121,7 @@ public:
         token_over,
         token_paren_begin,
         token_paren_end,
+        token_ram,
         token_random,
         token_random_fill,
         token_range_padding,
@@ -410,4 +412,4 @@ private:
     srec_arglex &operator=(const srec_arglex &);
 };
 
-#endif // INCLUDE_SREC_ARGLEX_H
+#endif // LIB_SREC_ARGLEX_H
