@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_H
-#define INCLUDE_SREC_OUTPUT_H
+#ifndef LIB_SREC_OUTPUT_H
+#define LIB_SREC_OUTPUT_H
 
 #include <cstdarg>
 #include <string>
@@ -193,4 +193,4 @@ private:
     srec_output &operator=(const srec_output &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_H
+#endif // LIB_SREC_OUTPUT_H

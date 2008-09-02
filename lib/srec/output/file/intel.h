@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_INTEL_H
-#define INCLUDE_SREC_OUTPUT_FILE_INTEL_H
+#ifndef LIB_SREC_OUTPUT_FILE_INTEL_H
+#define LIB_SREC_OUTPUT_FILE_INTEL_H
 
 #include <lib/srec/output/file.h>
 
@@ -117,4 +117,4 @@ private:
     srec_output_file_intel &operator=(const srec_output_file_intel &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_FILE_INTEL_H
+#endif // LIB_SREC_OUTPUT_FILE_INTEL_H

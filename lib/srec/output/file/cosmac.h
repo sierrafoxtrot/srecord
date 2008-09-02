@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_COSMAC_H
-#define INCLUDE_SREC_OUTPUT_FILE_COSMAC_H
+#ifndef LIB_SREC_OUTPUT_FILE_COSMAC_H
+#define LIB_SREC_OUTPUT_FILE_COSMAC_H
 
 #include <lib/srec/output/file.h>
 
@@ -119,4 +119,4 @@ private:
     srec_output_file_cosmac &operator=(const srec_output_file_cosmac &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_FILE_COSMAC_H
+#endif // LIB_SREC_OUTPUT_FILE_COSMAC_H

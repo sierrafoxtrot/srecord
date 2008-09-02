@@ -20,8 +20,8 @@
 // write-up on the CRC16 calculation.
 //
 
-#ifndef INCLUDE_CRC16_H
-#define INCLUDE_CRC16_H
+#ifndef LIB_CRC16_H
+#define LIB_CRC16_H
 
 
 #include <stddef.h>
@@ -97,4 +97,4 @@ private:
     bool augment;
 };
 
-#endif // INCLUDE_CRC16_H
+#endif // LIB_CRC16_H

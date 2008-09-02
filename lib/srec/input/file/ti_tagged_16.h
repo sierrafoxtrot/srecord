@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILE_TI_TAGGED_16_H
-#define INCLUDE_SREC_INPUT_FILE_TI_TAGGED_16_H
+#ifndef LIB_SREC_INPUT_FILE_TI_TAGGED_16_H
+#define LIB_SREC_INPUT_FILE_TI_TAGGED_16_H
 
 #include <lib/srec/input/file.h>
 
@@ -108,4 +108,4 @@ private:
         const srec_input_file_ti_tagged_16 &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILE_TI_TAGGED_16_H
+#endif // LIB_SREC_INPUT_FILE_TI_TAGGED_16_H

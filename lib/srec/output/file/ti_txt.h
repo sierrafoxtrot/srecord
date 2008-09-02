@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_ti_txt_H
-#define INCLUDE_SREC_OUTPUT_FILE_ti_txt_H
+#ifndef LIB_SREC_OUTPUT_FILE_ti_txt_H
+#define LIB_SREC_OUTPUT_FILE_ti_txt_H
 
 #include <lib/srec/output/file.h>
 
@@ -143,4 +143,4 @@ private:
     srec_output_file_ti_txt &operator=(const srec_output_file_ti_txt &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_FILE_ti_txt_H
+#endif // LIB_SREC_OUTPUT_FILE_ti_txt_H

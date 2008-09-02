@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILE_ATMEL_GENERIC_H
-#define INCLUDE_SREC_INPUT_FILE_ATMEL_GENERIC_H
+#ifndef LIB_SREC_INPUT_FILE_ATMEL_GENERIC_H
+#define LIB_SREC_INPUT_FILE_ATMEL_GENERIC_H
 
 #include <lib/endian.h>
 #include <lib/srec/input/file.h>
@@ -118,4 +118,4 @@ private:
         const srec_input_file_atmel_generic &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILE_ATMEL_GENERIC_H
+#endif // LIB_SREC_INPUT_FILE_ATMEL_GENERIC_H

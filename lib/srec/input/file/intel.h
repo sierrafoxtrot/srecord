@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILE_INTEL_H
-#define INCLUDE_SREC_INPUT_FILE_INTEL_H
+#ifndef LIB_SREC_INPUT_FILE_INTEL_H
+#define LIB_SREC_INPUT_FILE_INTEL_H
 
 #include <lib/srec/input/file.h>
 
@@ -135,4 +135,4 @@ private:
     srec_input_file_intel &operator=(const srec_input_file_intel &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILE_INTEL_H
+#endif // LIB_SREC_INPUT_FILE_INTEL_H

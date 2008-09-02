@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_ATMEL_GENERIC_H
-#define INCLUDE_SREC_OUTPUT_FILE_ATMEL_GENERIC_H
+#ifndef LIB_SREC_OUTPUT_FILE_ATMEL_GENERIC_H
+#define LIB_SREC_OUTPUT_FILE_ATMEL_GENERIC_H
 
 #include <lib/endian.h>
 #include <lib/srec/output/file.h>
@@ -101,4 +101,4 @@ private:
         const srec_output_file_atmel_generic &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_FILE_ATMEL_GENERIC_H
+#endif // LIB_SREC_OUTPUT_FILE_ATMEL_GENERIC_H

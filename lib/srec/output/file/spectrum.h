@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_SPECTRUM_H
-#define INCLUDE_SREC_OUTPUT_FILE_SPECTRUM_H
+#ifndef LIB_SREC_OUTPUT_FILE_SPECTRUM_H
+#define LIB_SREC_OUTPUT_FILE_SPECTRUM_H
 
 #include <lib/srec/output/file.h>
 
@@ -103,4 +103,4 @@ private:
     srec_output_file_spectrum &operator=(const srec_output_file_spectrum &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_FILE_SPECTRUM_H
+#endif // LIB_SREC_OUTPUT_FILE_SPECTRUM_H

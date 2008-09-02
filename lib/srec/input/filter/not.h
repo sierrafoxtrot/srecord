@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILTER_NOT_H
-#define INCLUDE_SREC_INPUT_FILTER_NOT_H
+#ifndef LIB_SREC_INPUT_FILTER_NOT_H
+#define LIB_SREC_INPUT_FILTER_NOT_H
 
 #include <lib/srec/input/filter.h>
 
@@ -75,4 +75,4 @@ private:
     srec_input_filter_not &operator=(const srec_input_filter_not &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILTER_NOT_H
+#endif // LIB_SREC_INPUT_FILTER_NOT_H

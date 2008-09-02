@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2002, 2005-2007 Peter Miller
+//      Copyright (C) 2001, 2002, 2005-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_FORMAT_PRINTF_H
-#define INCLUDE_FORMAT_PRINTF_H
+#ifndef LIB_FORMAT_PRINTF_H
+#define LIB_FORMAT_PRINTF_H
 
 #ifdef __GNUC__
 #define FORMAT_PRINTF(x, y) __attribute__((__format__(printf, x, y)))
@@ -30,4 +30,4 @@
 #define NORETURN
 #endif
 
-#endif // INCLUDE_FORMAT_PRINTF_H
+#endif // LIB_FORMAT_PRINTF_H

@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_MEMORY_H
-#define INCLUDE_SREC_MEMORY_H
+#ifndef LIB_SREC_MEMORY_H
+#define LIB_SREC_MEMORY_H
 
 #include <lib/srec/input.h>
 #include <lib/srec/memory/chunk.h>
@@ -299,4 +299,4 @@ bool operator == (const srec_memory &, const srec_memory &);
   */
 bool operator != (const srec_memory &, const srec_memory &);
 
-#endif // INCLUDE_SREC_MEMORY_H
+#endif // LIB_SREC_MEMORY_H

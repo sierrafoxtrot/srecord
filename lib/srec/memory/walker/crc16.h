@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_MEMORY_WALKER_CRC16_H
-#define INCLUDE_SREC_MEMORY_WALKER_CRC16_H
+#ifndef LIB_SREC_MEMORY_WALKER_CRC16_H
+#define LIB_SREC_MEMORY_WALKER_CRC16_H
 
 #include <lib/crc16.h>
 #include <lib/srec/memory/walker.h>
@@ -90,4 +90,4 @@ private:
     srec_memory_walker_crc16 &operator=(const srec_memory_walker_crc16 &);
 };
 
-#endif // INCLUDE_SREC_MEMORY_WALKER_CRC16_H
+#endif // LIB_SREC_MEMORY_WALKER_CRC16_H

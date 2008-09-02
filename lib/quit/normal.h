@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_QUIT_NORMAL_H
-#define INCLUDE_QUIT_NORMAL_H
+#ifndef LIB_QUIT_NORMAL_H
+#define LIB_QUIT_NORMAL_H
 
 #include <lib/quit.h>
 
@@ -60,4 +60,4 @@ private:
     quit_normal &operator=(const quit_normal &);
 };
 
-#endif // INCLUDE_QUIT_NORMAL_H
+#endif // LIB_QUIT_NORMAL_H

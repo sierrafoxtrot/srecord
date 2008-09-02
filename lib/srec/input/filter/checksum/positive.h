@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILTER_CHECKSUM_POSITIVE_H
-#define INCLUDE_SREC_INPUT_FILTER_CHECKSUM_POSITIVE_H
+#ifndef LIB_SREC_INPUT_FILTER_CHECKSUM_POSITIVE_H
+#define LIB_SREC_INPUT_FILTER_CHECKSUM_POSITIVE_H
 
 #include <lib/srec/input/filter/checksum.h>
 
@@ -101,4 +101,4 @@ private:
         const srec_input_filter_checksum_positive &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILTER_CHECKSUM_POSITIVE_H
+#endif // LIB_SREC_INPUT_FILTER_CHECKSUM_POSITIVE_H

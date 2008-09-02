@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_MEMORY_WALKER_H
-#define INCLUDE_SREC_MEMORY_WALKER_H
+#ifndef LIB_SREC_MEMORY_WALKER_H
+#define LIB_SREC_MEMORY_WALKER_H
 
 #include <boost/shared_ptr.hpp>
 
@@ -83,4 +83,4 @@ private:
     srec_memory_walker &operator=(const srec_memory_walker &);
 };
 
-#endif // INCLUDE_SREC_MEMORY_WALKER_H
+#endif // LIB_SREC_MEMORY_WALKER_H

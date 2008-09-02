@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILE_OS65V_H
-#define INCLUDE_SREC_INPUT_FILE_OS65V_H
+#ifndef LIB_SREC_INPUT_FILE_OS65V_H
+#define LIB_SREC_INPUT_FILE_OS65V_H
 
 
 #include <lib/srec/input/file.h>
@@ -112,4 +112,4 @@ private:
     bool ignore_the_rest;
 };
 
-#endif // INCLUDE_SREC_INPUT_FILE_OS65V_H
+#endif // LIB_SREC_INPUT_FILE_OS65V_H

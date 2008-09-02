@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILTER_SPLIT_H
-#define INCLUDE_SREC_INPUT_FILTER_SPLIT_H
+#ifndef LIB_SREC_INPUT_FILTER_SPLIT_H
+#define LIB_SREC_INPUT_FILTER_SPLIT_H
 
 #include <lib/srec/input/filter.h>
 #include <lib/srec/record.h>
@@ -147,4 +147,4 @@ private:
     srec_input_filter_split &operator=(const srec_input_filter_split &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILTER_SPLIT_H
+#endif // LIB_SREC_INPUT_FILTER_SPLIT_H

@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILTER_CRC16_H
-#define INCLUDE_SREC_INPUT_FILTER_CRC16_H
+#ifndef LIB_SREC_INPUT_FILTER_CRC16_H
+#define LIB_SREC_INPUT_FILTER_CRC16_H
 
 #include <lib/crc16.h>
 #include <lib/endian.h>
@@ -143,4 +143,4 @@ private:
     srec_input_filter_crc16 &operator=(const srec_input_filter_crc16 &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILTER_CRC16_H
+#endif // LIB_SREC_INPUT_FILTER_CRC16_H

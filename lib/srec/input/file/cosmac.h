@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILE_COSMAC_H
-#define INCLUDE_SREC_INPUT_FILE_COSMAC_H
+#ifndef LIB_SREC_INPUT_FILE_COSMAC_H
+#define LIB_SREC_INPUT_FILE_COSMAC_H
 
 #include <lib/srec/input/file.h>
 
@@ -105,4 +105,4 @@ private:
     srec_input_file_cosmac &operator=(const srec_input_file_cosmac &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILE_COSMAC_H
+#endif // LIB_SREC_INPUT_FILE_COSMAC_H

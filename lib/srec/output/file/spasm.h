@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_SPASM_H
-#define INCLUDE_SREC_OUTPUT_FILE_SPASM_H
+#ifndef LIB_SREC_OUTPUT_FILE_SPASM_H
+#define LIB_SREC_OUTPUT_FILE_SPASM_H
 
 #include <lib/endian.h>
 #include <lib/srec/output/file.h>
@@ -101,4 +101,4 @@ private:
     srec_output_file_spasm &operator=(const srec_output_file_spasm &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_FILE_SPASM_H
+#endif // LIB_SREC_OUTPUT_FILE_SPASM_H

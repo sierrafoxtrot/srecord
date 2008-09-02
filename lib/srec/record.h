@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_RECORD_H
-#define INCLUDE_SREC_RECORD_H
+#ifndef LIB_SREC_RECORD_H
+#define LIB_SREC_RECORD_H
 
 #include <lib/endian.h>
 
@@ -327,4 +327,4 @@ private:
     data_t data[max_data_length];
 };
 
-#endif // INCLUDE_SREC_RECORD_H
+#endif // LIB_SREC_RECORD_H

@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILTER_CROP_H
-#define INCLUDE_SREC_INPUT_FILTER_CROP_H
+#ifndef LIB_SREC_INPUT_FILTER_CROP_H
+#define LIB_SREC_INPUT_FILTER_CROP_H
 
 #include <lib/interval.h>
 #include <lib/srec/input/filter.h>
@@ -100,4 +100,4 @@ private:
     srec_input_filter_crop &operator=(const srec_input_filter_crop &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILTER_CROP_H
+#endif // LIB_SREC_INPUT_FILTER_CROP_H

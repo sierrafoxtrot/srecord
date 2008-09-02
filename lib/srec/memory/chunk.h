@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_MEMORY_CHUNK_H
-#define INCLUDE_SREC_MEMORY_CHUNK_H
+#ifndef LIB_SREC_MEMORY_CHUNK_H
+#define LIB_SREC_MEMORY_CHUNK_H
 
 #include <stddef.h>
 
@@ -137,4 +137,4 @@ private:
 bool operator == (const srec_memory_chunk &, const srec_memory_chunk &);
 bool operator != (const srec_memory_chunk &, const srec_memory_chunk &);
 
-#endif // INCLUDE_SREC_MEMORY_CHUNK_H
+#endif // LIB_SREC_MEMORY_CHUNK_H

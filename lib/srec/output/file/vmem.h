@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_VMEM_H
-#define INCLUDE_SREC_OUTPUT_FILE_VMEM_H
+#ifndef LIB_SREC_OUTPUT_FILE_VMEM_H
+#define LIB_SREC_OUTPUT_FILE_VMEM_H
 
 #include <lib/srec/output/file.h>
 
@@ -132,4 +132,4 @@ private:
     srec_output_file_vmem &operator=(const srec_output_file_vmem &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_FILE_VMEM_H
+#endif // LIB_SREC_OUTPUT_FILE_VMEM_H

@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILE_MOS_TECH_H
-#define INCLUDE_SREC_INPUT_FILE_MOS_TECH_H
+#ifndef LIB_SREC_INPUT_FILE_MOS_TECH_H
+#define LIB_SREC_INPUT_FILE_MOS_TECH_H
 
 #include <lib/srec/input/file.h>
 
@@ -105,4 +105,4 @@ private:
     srec_input_file_mos_tech &operator=(const srec_input_file_mos_tech &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILE_MOS_TECH_H
+#endif // LIB_SREC_INPUT_FILE_MOS_TECH_H

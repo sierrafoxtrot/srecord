@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_MEMORY_WALKER_COMPARE_H
-#define INCLUDE_SREC_MEMORY_WALKER_COMPARE_H
+#ifndef LIB_SREC_MEMORY_WALKER_COMPARE_H
+#define LIB_SREC_MEMORY_WALKER_COMPARE_H
 
 #include <lib/interval.h>
 #include <lib/srec/memory/walker.h>
@@ -134,4 +134,4 @@ private:
     srec_memory_walker_compare &operator=(const srec_memory_walker_compare &);
 };
 
-#endif // INCLUDE_SREC_MEMORY_WALKER_COMPARE_H
+#endif // LIB_SREC_MEMORY_WALKER_COMPARE_H

@@ -172,8 +172,8 @@ AH_TOP([/*
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INCLUDE_CONFIG_H
-#define INCLUDE_CONFIG_H
+#ifndef LIB_CONFIG_H
+#define LIB_CONFIG_H
 ])
 
 AH_BOTTOM([
@@ -185,6 +185,6 @@ AH_BOTTOM([
  */
 #include <lib/config.messy.h>
 
-#endif /* INCLUDE_CONFIG_H */])
+#endif /* LIB_CONFIG_H */])
 
 AC_OUTPUT(Makefile)

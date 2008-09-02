@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILE_TEKTRONIX_EXTENDED_H
-#define INCLUDE_SREC_INPUT_FILE_TEKTRONIX_EXTENDED_H
+#ifndef LIB_SREC_INPUT_FILE_TEKTRONIX_EXTENDED_H
+#define LIB_SREC_INPUT_FILE_TEKTRONIX_EXTENDED_H
 
 #include <lib/srec/input/file.h>
 
@@ -119,4 +119,4 @@ private:
         const srec_input_file_tektronix_extended &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILE_TEKTRONIX_EXTENDED_H
+#endif // LIB_SREC_INPUT_FILE_TEKTRONIX_EXTENDED_H

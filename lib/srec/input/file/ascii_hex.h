@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILE_ASCII_HEX_H
-#define INCLUDE_SREC_INPUT_FILE_ASCII_HEX_H
+#ifndef LIB_SREC_INPUT_FILE_ASCII_HEX_H
+#define LIB_SREC_INPUT_FILE_ASCII_HEX_H
 
 #include <lib/srec/input/file.h>
 
@@ -110,4 +110,4 @@ private:
     srec_input_file_ascii_hex &operator=(const srec_input_file_ascii_hex &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILE_ASCII_HEX_H
+#endif // LIB_SREC_INPUT_FILE_ASCII_HEX_H

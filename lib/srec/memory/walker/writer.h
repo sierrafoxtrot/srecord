@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_MEMORY_WALKER_WRITER_H
-#define INCLUDE_SREC_MEMORY_WALKER_WRITER_H
+#ifndef LIB_SREC_MEMORY_WALKER_WRITER_H
+#define LIB_SREC_MEMORY_WALKER_WRITER_H
 
 #include <lib/srec/memory/walker.h>
 #include <lib/srec/output.h>
@@ -92,4 +92,4 @@ private:
     srec_memory_walker_writer &operator=(const srec_memory_walker_writer &);
 };
 
-#endif // INCLUDE_SREC_MEMORY_WALKER_WRITER_H
+#endif // LIB_SREC_MEMORY_WALKER_WRITER_H

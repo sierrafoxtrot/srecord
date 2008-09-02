@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_ARGLEX_H
-#define INCLUDE_ARGLEX_H
+#ifndef LIB_ARGLEX_H
+#define LIB_ARGLEX_H
 
 #include <lib/format_printf.h>
 
@@ -334,4 +334,4 @@ private:
     void read_arguments_file(const char *filename);
 };
 
-#endif // INCLUDE_ARGLEX_H
+#endif // LIB_ARGLEX_H

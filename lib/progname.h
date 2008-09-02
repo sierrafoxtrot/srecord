@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2002, 2003, 2006, 2007 Peter Miller
+//      Copyright (C) 1998, 1999, 2002, 2003, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_PROGNAME_H
-#define INCLUDE_PROGNAME_H
+#ifndef LIB_PROGNAME_H
+#define LIB_PROGNAME_H
 
 /**
   * The progname_set function is used by main() to set the name of the
@@ -32,4 +32,4 @@ void progname_set(char *);
   */
 const char *progname_get();
 
-#endif // INCLUDE_PROGNAME_H
+#endif // LIB_PROGNAME_H

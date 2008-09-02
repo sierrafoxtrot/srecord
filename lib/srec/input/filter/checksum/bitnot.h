@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILTER_CHECKSUM_BITNOT_H
-#define INCLUDE_SREC_INPUT_FILTER_CHECKSUM_BITNOT_H
+#ifndef LIB_SREC_INPUT_FILTER_CHECKSUM_BITNOT_H
+#define LIB_SREC_INPUT_FILTER_CHECKSUM_BITNOT_H
 
 #include <lib/srec/input/filter/checksum.h>
 
@@ -102,4 +102,4 @@ private:
             const srec_input_filter_checksum_bitnot &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILTER_CHECKSUM_BITNOT_H
+#endif // LIB_SREC_INPUT_FILTER_CHECKSUM_BITNOT_H

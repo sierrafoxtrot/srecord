@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_MOS_TECH_H
-#define INCLUDE_SREC_OUTPUT_FILE_MOS_TECH_H
+#ifndef LIB_SREC_OUTPUT_FILE_MOS_TECH_H
+#define LIB_SREC_OUTPUT_FILE_MOS_TECH_H
 
 #include <lib/srec/output/file.h>
 
@@ -110,4 +110,4 @@ private:
     srec_output_file_mos_tech &operator=(const srec_output_file_mos_tech &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_FILE_MOS_TECH_H
+#endif // LIB_SREC_OUTPUT_FILE_MOS_TECH_H

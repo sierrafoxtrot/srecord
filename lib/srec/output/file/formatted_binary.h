@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_FORMATTED_BINARY_H
-#define INCLUDE_SREC_OUTPUT_FILE_FORMATTED_BINARY_H
+#ifndef LIB_SREC_OUTPUT_FILE_FORMATTED_BINARY_H
+#define LIB_SREC_OUTPUT_FILE_FORMATTED_BINARY_H
 
 #include <lib/srec/output/file.h>
 
@@ -111,4 +111,4 @@ private:
         const srec_output_file_formatted_binary &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_FILE_FORMATTED_BINARY_H
+#endif // LIB_SREC_OUTPUT_FILE_FORMATTED_BINARY_H

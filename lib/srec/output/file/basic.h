@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_OUTPUT_FILE_BASIC_H
-#define INCLUDE_SREC_OUTPUT_FILE_BASIC_H
+#ifndef LIB_SREC_OUTPUT_FILE_BASIC_H
+#define LIB_SREC_OUTPUT_FILE_BASIC_H
 
 #include <lib/srec/output/file.h>
 #include <lib/interval.h>
@@ -126,4 +126,4 @@ private:
     srec_output_file_basic &operator=(const srec_output_file_basic &);
 };
 
-#endif // INCLUDE_SREC_OUTPUT_FILE_BASIC_H
+#endif // LIB_SREC_OUTPUT_FILE_BASIC_H

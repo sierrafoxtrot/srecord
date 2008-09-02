@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILTER_RANDOM_FILL_H
-#define INCLUDE_SREC_INPUT_FILTER_RANDOM_FILL_H
+#ifndef LIB_SREC_INPUT_FILTER_RANDOM_FILL_H
+#define LIB_SREC_INPUT_FILTER_RANDOM_FILL_H
 
 #include <lib/interval.h>
 #include <lib/srec/input/filter.h>
@@ -89,4 +89,4 @@ private:
         const srec_input_filter_random_fill &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILTER_RANDOM_FILL_H
+#endif // LIB_SREC_INPUT_FILTER_RANDOM_FILL_H

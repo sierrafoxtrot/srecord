@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_INPUT_FILE_STEWIE_H
-#define INCLUDE_INPUT_FILE_STEWIE_H
+#ifndef LIB_INPUT_FILE_STEWIE_H
+#define LIB_INPUT_FILE_STEWIE_H
 
 #include <lib/srec/input/file.h>
 
@@ -123,4 +123,4 @@ private:
     srec_input_file_stewie &operator=(const srec_input_file_stewie &);
 };
 
-#endif // INCLUDE_INPUT_FILE_STEWIE_H
+#endif // LIB_INPUT_FILE_STEWIE_H

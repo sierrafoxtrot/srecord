@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_INTERVAL_H
-#define INCLUDE_INTERVAL_H
+#ifndef LIB_INTERVAL_H
+#define LIB_INTERVAL_H
 
 #include <stddef.h>
 
@@ -358,4 +358,4 @@ operator << (std::ostream &os, const interval &val)
     return os;
 }
 
-#endif // INCLUDE_INTERVAL_H
+#endif // LIB_INTERVAL_H

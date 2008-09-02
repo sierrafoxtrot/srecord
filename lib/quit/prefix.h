@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_QUIT_PREFIX_H
-#define INCLUDE_QUIT_PREFIX_H
+#ifndef LIB_QUIT_PREFIX_H
+#define LIB_QUIT_PREFIX_H
 
 #include <string>
 #include <lib/quit.h>
@@ -86,4 +86,4 @@ private:
     quit_prefix &operator=(const quit_prefix &);
 };
 
-#endif // INCLUDE_QUIT_PREFIX_H
+#endif // LIB_QUIT_PREFIX_H

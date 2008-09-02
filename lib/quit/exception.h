@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_QUIT_EXCEPTION_H
-#define INCLUDE_QUIT_EXCEPTION_H
+#ifndef LIB_QUIT_EXCEPTION_H
+#define LIB_QUIT_EXCEPTION_H
 
 #include <lib/quit.h>
 
@@ -64,4 +64,4 @@ private:
     quit_exception &operator=(const quit_exception &);
 };
 
-#endif // INCLUDE_QUIT_EXCEPTION_H
+#endif // LIB_QUIT_EXCEPTION_H

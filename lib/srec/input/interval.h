@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_INTERVAL_H
-#define INCLUDE_SREC_INPUT_INTERVAL_H
+#ifndef LIB_SREC_INPUT_INTERVAL_H
+#define LIB_SREC_INPUT_INTERVAL_H
 
 #include <lib/interval.h>
 #include <lib/srec/input.h>
@@ -30,4 +30,4 @@
   */
 interval srec_input_interval(srec_input::pointer);
 
-#endif // INCLUDE_SREC_INPUT_INTERVAL_H
+#endif // LIB_SREC_INPUT_INTERVAL_H

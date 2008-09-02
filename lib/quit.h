@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_QUIT_H
-#define INCLUDE_QUIT_H
+#ifndef LIB_QUIT_H
+#define LIB_QUIT_H
 
 #include <stdarg.h>
 #include <lib/format_printf.h>
@@ -126,4 +126,4 @@ public:
   */
 extern quit &quit_default;
 
-#endif // INCLUDE_QUIT_H
+#endif // LIB_QUIT_H

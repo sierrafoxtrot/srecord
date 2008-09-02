@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_CRC32_H
-#define INCLUDE_CRC32_H
+#ifndef LIB_CRC32_H
+#define LIB_CRC32_H
 
 
 #include <stddef.h>
@@ -80,4 +80,4 @@ private:
     unsigned long state;
 };
 
-#endif // INCLUDE_CRC32_H
+#endif // LIB_CRC32_H

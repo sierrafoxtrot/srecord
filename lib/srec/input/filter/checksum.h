@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILTER_CHECKSUM_H
-#define INCLUDE_SREC_INPUT_FILTER_CHECKSUM_H
+#ifndef LIB_SREC_INPUT_FILTER_CHECKSUM_H
+#define LIB_SREC_INPUT_FILTER_CHECKSUM_H
 
 
 #include <lib/endian.h>
@@ -131,4 +131,4 @@ private:
     srec_input_filter_checksum &operator=(const srec_input_filter_checksum &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILTER_CHECKSUM_H
+#endif // LIB_SREC_INPUT_FILTER_CHECKSUM_H

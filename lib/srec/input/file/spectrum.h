@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_SREC_INPUT_FILE_SPECTRUM_H
-#define INCLUDE_SREC_INPUT_FILE_SPECTRUM_H
+#ifndef LIB_SREC_INPUT_FILE_SPECTRUM_H
+#define LIB_SREC_INPUT_FILE_SPECTRUM_H
 
 #include <lib/srec/input/file.h>
 
@@ -110,4 +110,4 @@ private:
     srec_input_file_spectrum &operator=(const srec_input_file_spectrum &);
 };
 
-#endif // INCLUDE_SREC_INPUT_FILE_SPECTRUM_H
+#endif // LIB_SREC_INPUT_FILE_SPECTRUM_H

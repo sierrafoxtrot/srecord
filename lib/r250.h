@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2004, 2006, 2007 Peter Miller
+//      Copyright (C) 2004, 2006-2008 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef INCLUDE_R250_H
-#define INCLUDE_R250_H
+#ifndef LIB_R250_H
+#define LIB_R250_H
 
 /**
   * The r250 function is used to produce a 32-bit random number.
@@ -26,4 +26,4 @@
   */
 unsigned long r250(void);
 
-#endif // INCLUDE_R250_H
+#endif // LIB_R250_H
