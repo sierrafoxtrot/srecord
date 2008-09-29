@@ -92,6 +92,7 @@ The special file name ``\-'' is understood to mean the standard output.
 Output defaults to the standard output if this option is not used.
 .PP
 The \f[I]format\fP may be specified as:
+.\" -----   --output -A* ---------------------------------------------------
 .TP 8n
 \fB\-Absolute_Object_Module_Format\fP
 An Intel Absolute Object Module Format file will be written.
@@ -156,6 +157,7 @@ An Atmel Generic file will be written.
 (See
 .IR srec_atmel_generic (5)
 for a description of this file format.)
+.\" -----   --output -B*   -------------------------------------------------
 .TP 8n
 \fB\-BASic\fP
 A series of BASIC DATA statements will be written.
@@ -170,6 +172,7 @@ for a description of this file format.)
 A raw binary file will be written.
 If you get unexpected results \f[B]please\fP see the
 \f[I]srec_binary\fP(5) manual for more information.
+.\" -----   --output -C*   -------------------------------------------------
 .TP 8n
 \fB\-C-Array\fP [ \f[I]identifier\fP ][ \-\f[I]option\fP... ]
 .RS
@@ -193,43 +196,26 @@ gaps will not be filled.
 \fB\-Output_Word\fP
 This option asks for an output which is in words not in
 bytes.  This is little endian, so you may need to
-A Formatted Binary format file will be written.
-(See \fIsrec_formatted_binary\fP(5) for a description of this file format.)
-.TP 8n
-\fB\-FORTH\fP [ \-\f[I]option\fP ]
-.RS
-A FORTH input file will be written.
-Each line of output includes a byte value, an address, and a command.
-.PP
-.TP 8n
-\fB\-RAM\fP
-The store command is C!
-This is the default.
-.TP 8n
-\fB\-EEPROM
-The store command is EEC!
-.RE
-.TP 8n
-\fB\-Four_Packed_Code\fP
-This option says to use the PFC format file when writing the file.
-(See
 .RE
 .TP 8n
 \fB\-COsmac\fP
 An RCA Cosmac Elf format file will be written.
 (See \f[I]srec_cosmac\fP(5) for a description of this file format.)
+.\" -----   --output -D*   -------------------------------------------------
 .TP 8n
 \fB\-Dec_Binary\fP
 A DEC Binary (XXDP) format file will be written.
 (See
 .IR srec_dec_binary (5)
 for a description of this file format.)
+.\" -----   --output -E*   -------------------------------------------------
 .TP 8n
 \fB\-Elektor_Monitor52\fP
 This option says to use the EMON52 format file when writing the file.
 (See
 .IR srec_emon52 (5)
 for a description of this file format.)
+.\" -----   --output -F*   -------------------------------------------------
 .TP 8n
 \fB\-FAIrchild\fP
 This option says to use the Fairchild Fairbug format file when writing the file.
@@ -244,15 +230,31 @@ the file.
 A Formatted Binary format file will be written.
 (See \f[I]srec_formatted_binary\fP(5) for a description of this file format.)
 .TP 8n
+\fB\-FORTH\fP [ \-\f[I]option\fP ]
+.RS
+A FORTH input file will be written.
+Each line of output includes a byte value, an address, and a command.
+.TP 8n
+\fB\-RAM\fP
+The store command is C!
+This is the default.
+.TP 8n
+\fB\-EEPROM
+The store command is EEC!
+.RE
+.TP 8n
 \fB\-Four_Packed_Code\fP
 This option says to use the PFC format file when writing the file.
 (See
 .IR srec_fpd (5)
 for a description of this file format.)
+.\" -----   --output -G*   -------------------------------------------------
+.\" -----   --output -H*   -------------------------------------------------
 .TP 8n
 \fB\-HEX_Dump
 A human readable hexadecimal dump (including ASCII)
 will be printed.
+.\" -----   --output -I*   -------------------------------------------------
 .TP 8n
 \fB\-Intel\fP
 An Intel hex format file will be written.
@@ -262,6 +264,16 @@ for a description of this file format.)
 The default is to emit 32-bit linear addressing;
 if you want 16-bit extended segment addressing
 use the \fB\-address-length=2\fP option.
+.TP 8n
+\fB\-Intel_16\fP
+An Intel-16 hex format file will be written.
+(See
+.IR srec_intel16 (5)
+for a description of this file format.)
+.\" -----   --output -J*   -------------------------------------------------
+.\" -----   --output -K*   -------------------------------------------------
+.\" -----   --output -L*   -------------------------------------------------
+.\" -----   --output -M*   -------------------------------------------------
 .TP 8n
 \fB\-MOS_Technologies\fP
 An Mos Technologies format file will be written.
@@ -286,16 +298,22 @@ form each address multiple.  For normal uses the default of one (1) byte
 is appropriate.  Some systems with 16-bit or 32-bit targets mutilate the
 addresses in the file; this option will imitate that behavior.
 Unlike most other parameters, this one cannot be guessed.
+.\" -----   --output -N*   -------------------------------------------------
 .RE
 .TP 8n
 \fB\-Needham_Hexadecimal\fP
 This option says to use the Needham Electronics ASCII file format to
 write the file.  See \f[I]srec_needham\fP(5) for a description of this
 file format.
+.\" -----   --output -O*   -------------------------------------------------
 .TP 8n
 \fB\-Ohio_Scientific\fP
 This option says to use the Ohio Scientific hexadecimal format.
 See \f[I]srec_os65v\fP(5) for a description of this format.
+.\" -----   --output -P*   -------------------------------------------------
+.\" -----   --output -Q*   -------------------------------------------------
+.\" -----   --output -R*   -------------------------------------------------
+.\" -----   --output -S*   -------------------------------------------------
 .TP 8n
 \fB\-SIGnetics\fP
 This option says to use the Signetics hex format.
@@ -315,6 +333,7 @@ A Stewie binary format file will be written.
 (See
 .IR srec_stewie (5)
 for a description of this file format.)
+.\" -----   --output -T*   -------------------------------------------------
 .TP 8n
 \fB\-Tektronix\fP
 A Tektronix hex format file will be written.
@@ -344,6 +363,8 @@ for a description of this file format.)
 This option says to use the Texas Instruments TXT (MSP430) format to
 write the file.  See \f[I]srec_ti_txt\fP(5) for a description of this
 file format.
+.\" -----   --output -U*   -------------------------------------------------
+.\" -----   --output -V*   -------------------------------------------------
 .TP 8n
 \fB\-VHdl\fP [ \f[I]bytes-per-word\fP [ \f[I]name\fP ]]
 A VHDL format file will be written.
@@ -365,12 +386,16 @@ The \f[I]memory-width\fP may be 8, 16, 32, 64 or 128 bits;
 defaults to 32 if unspecified.
 (See \f[I]srec_vmem\fP(5) for a description of this file format.)
 You may need to use the \-byte-swap filter to get the byte order you want.
+.\" -----   --output -W*   -------------------------------------------------
 .TP 8n
 \fB\-WILson\fP
 A wilson format file will be written.
 (See
 .IR srec_wilson (5)
 for a description of this file format.)
+.\" -----   --output -X*   -------------------------------------------------
+.\" -----   --output -Y*   -------------------------------------------------
+.\" -----   --output -Z*   -------------------------------------------------
 .RE
 .TP 8n
 \fB\-Address_Length\fP \f[I]number\fP
