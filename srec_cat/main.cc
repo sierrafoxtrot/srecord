@@ -19,8 +19,8 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <vector>
 
+#include <lib/srec/input/catenate.h>
 #include <lib/srec/input/file.h>
 #include <lib/srec/memory.h>
 #include <lib/srec/memory/walker/writer.h>
@@ -35,8 +35,7 @@ main(int argc, char **argv)
 {
     srec_cat_arglex3 cmdline(argc, argv);
     cmdline.token_first();
-    typedef std::vector<srec_input::pointer> infile_t;
-    infile_t infile;
+    srec_input::pointer infile;
     srec_output::pointer outfile;
     int line_length = 0;
     int address_length = 0;
@@ -56,7 +55,13 @@ main(int argc, char **argv)
         case srec_arglex::token_string:
         case srec_arglex::token_stdio:
         case srec_arglex::token_generator:
-            infile.push_back(cmdline.get_input());
+            {
+                srec_input::pointer ip = cmdline.get_input();
+                if (infile)
+                    infile = srec_input_catenate::create(infile, ip);
+                else
+                    infile = ip;
+            }
             continue;
 
         case srec_arglex::token_output:
@@ -162,8 +167,8 @@ main(int argc, char **argv)
         }
         cmdline.token_next();
     }
-    if (infile.size() == 0)
-        infile.push_back(cmdline.get_input());
+    if (!infile)
+        infile = cmdline.get_input();
     if (!outfile)
         outfile = cmdline.get_output();
     if (address_length > 0)
@@ -178,17 +183,13 @@ main(int argc, char **argv)
     //
     // It is assumed the data will all fit into memory.  This is
     // usually reasonable, because these utilities are used for
-    // eproms which are usually smaller than the available virtual
+    // EPROMs which are usually smaller than the available virtual
     // memory of the development system.
     //
     srec_memory m;
     if (header_set)
         m.set_header(header.c_str());
-    for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
-    {
-        srec_input::pointer ifp = *it;
-        m.reader(ifp, true);
-    }
+    m.reader(infile, true);
     if (execution_start_address_set)
         m.set_execution_start_address(execution_start_address);
 

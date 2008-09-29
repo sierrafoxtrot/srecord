@@ -279,6 +279,27 @@ srec_cat \f[I]infile1\fP -spectrum \f[I]infile2\fP -needham \e
 .RE
 These are all ancient formats, however it isn't uncommon to have to mix
 and match Intel and Motorola formats in the one project.
+.SS Filtering After Joining
+There are times when you want to join two sets of data together,
+and then apply a filter to the joined result.  To do this you use
+parentheses.
+.RS
+.ft CW
+.nf
+srec_cat                                                    \e
+    '('                                                     \e
+        \f[I]infile\fP --exclude 0xFFF0 0x10000                     \e
+        --generate 0xFFF0 0xFFF8 --repeat-string 'Bananas ' \e
+    ')'                                                     \e
+    --b-e-length 0xFFF8 4                                   \e
+    --b-e-checksum-neg 0xFFFC 4 4                           \e
+    -o \f[I]outfile\fP
+.fi
+.ft R
+.RE
+The above example command catenates an input file (with the generated
+data area excluded) with a constant string.  This catenated input is
+then filtered to add a 4-byte length, and a 4-byte checksum.
 .SS Joining End-to-End
 All too often the address ranges in the EPROM load files will overlap.
 You will get an error if they do.

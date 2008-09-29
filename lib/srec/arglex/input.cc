@@ -21,6 +21,7 @@
 
 #include <lib/quit.h>
 #include <lib/srec/arglex.h>
+#include <lib/srec/input/catenate.h>
 #include <lib/srec/input/file/aomf.h>
 #include <lib/srec/input/file/ascii_hex.h>
 #include <lib/srec/input/file/atmel_generic.h>
@@ -175,17 +176,30 @@ srec_arglex::get_simple_input()
         {
             token_next();
             srec_input::pointer ifp = get_input();
-            if (token_cur() != token_paren_end)
+            for (;;)
             {
-                fatal_error
-                (
-                    "closing parenthesis expected before %s",
-                    token_name(token_cur())
-                );
-                // NOTREACHED
+                switch (token_cur())
+                {
+                case srec_arglex::token_paren_begin:
+                case srec_arglex::token_string:
+                case srec_arglex::token_stdio:
+                case srec_arglex::token_generator:
+                    ifp = srec_input_catenate::create(ifp, get_input());
+                    break;
+
+                case token_paren_end:
+                    token_next();
+                    return ifp;
+
+                default:
+                    fatal_error
+                    (
+                        "closing parenthesis expected before %s",
+                        token_name(token_cur())
+                    );
+                    // NOTREACHED
+                }
             }
-            token_next();
-            return ifp;
         }
 
     case token_generator:
