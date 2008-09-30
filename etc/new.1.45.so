@@ -16,20 +16,18 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" Change 17
-A bug has been fixed in the \f[I]srec_cat\fP(1) command.  You are now
-able to specify several inputs within parentheses, instead of just
-one.  This allows filters to be applied to the concatenation of several
-inputs.
-.PP
-.if n *
-.if t \(bu
-.\" Change 11
-The \f[I]srec_cat\fP(1) command is now able to write FORTH output.
+.\"
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 45 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.44 (2008-Aug-29)
+.SS Version 1.45 (2008-Sep-30)
 .\" vim:ts=8:sw=4:et
