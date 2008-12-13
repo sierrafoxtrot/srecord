@@ -118,8 +118,10 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Little_Endian_Length", token_length_le, },
         { "-Little_Endian_MAximum", token_maximum_le, },
         { "-Little_Endian_MInimum", token_minimum_le, },
-        { "-MAximum", token_maximum, },
-        { "-MInimum", token_minimum, },
+        { "-MAximum-Address", token_maximum_address, },
+        { "-MAximum", token_maximum_address, },        // deprecated, put second
+        { "-MInimum-Address", token_minimum_address, },
+        { "-MInimum", token_minimum_address, },        // deprecated, put second
         { "-MINUs", token_minus, },
         { "-MOS_Technologies", token_mos_tech, },
         { "-Motorola", token_motorola, },
@@ -175,6 +177,8 @@ srec_arglex::srec_arglex(int argc, char **argv) :
     };
 
     table_set(table);
+    deprecated_option("-MAximum");
+    deprecated_option("-MInimum");
 }
 
 
@@ -189,9 +193,10 @@ srec_arglex::can_get_number()
 {
     switch (token_cur())
     {
+    case token_paren_begin:
     case token_number:
-    case token_minimum:
-    case token_maximum:
+    case token_minimum_address:
+    case token_maximum_address:
     case token_length:
         return true;
 

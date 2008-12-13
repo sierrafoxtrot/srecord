@@ -642,7 +642,7 @@ Note the \f[B]space\fP between the minus sign and its argument:
 this space is mandatory.
 .RS
 .ft CW
-srec_cat in.srec -offset - -minimum in.srec -o out.srec
+srec_cat in.srec -offset - -minimum-addr in.srec -o out.srec
 .ft P
 .RE
 This example shows how to move data to the base of memory.
@@ -656,7 +656,7 @@ they can't be within the text of the preceding or following option,
 and you will need to quote them to get them past the shell,
 such as \f[CW]'('\fP and \f[CW]')'\fP.
 .TP 8n
-\fB\-MINimum\fP \f[I]input-specification\fP
+\fB\-MINimum-Address\fP \f[I]input-specification\fP
 .RS
 This inserts the minimum address of the specified input file.
 The input specification need not be just a file name,
@@ -665,7 +665,7 @@ it may be anything any other input specification can be.
 See also the \fB\-over\fP option for a discussion on operator precedence.
 .RE
 .TP 8n
-\fB\-MAXimum\fP \f[I]input-specification\fP
+\fB\-MAXimum-Address\fP \f[I]input-specification\fP
 .RS
 This inserts the maximum address of the specified input file, plus one.
 The input specification need not be just a file name,

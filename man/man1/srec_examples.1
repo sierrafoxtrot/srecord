@@ -215,7 +215,7 @@ For example, when you have an image that starts at
 You can automatically cancel this offset using a command like
 .RS
 .ft CW
-srec_cat fred.hex -offset - -minimum fred.hex -o fred.bin
+srec_cat fred.hex -offset - -minimum-addr fred.hex -o fred.bin
 .ft R
 .RE
 The above command works by offseting the \f[I]fred.hex\fP file lower in
@@ -320,14 +320,14 @@ but you don't know the offset in advance:
 .ft CW
 .nf
 srec_cat \f[I]infile1\fP \e
-    \f[I]infile2\fP -offset -maximum \f[I]infile1\fP \e
+    \f[I]infile2\fP -offset -maximum-addr \f[I]infile1\fP \e
     -o \f[I]outfile\fP
 .fi
 .ft R
 .RE
 Notice that where the was a number (0x80000) before, there is now a
-calculation (\-maximum \f[I]infile1\fP).  This is possible most places
-a number may be used (also \-minimum and \-range).
+calculation (\-maximum-addr \f[I]infile1\fP).  This is possible most places
+a number may be used (also \-minimum-addr and \-range).
 .\" ------------------------------------------------------------------------
 .SH CROPPING THE DATA
 It is possible to copy an EPROM load file,

@@ -61,7 +61,9 @@ srec_arglex::get_interval_factor(const char *name)
             unsigned long n1 = get_number("address range minimum");
             unsigned long n2 = 0;
             if (can_get_number())
-                    n2 = get_number("address range maximum");
+            {
+                n2 = get_number("address range maximum");
+            }
             if (n2 && n1 >= n2)
             {
                 fatal_error

@@ -332,6 +332,37 @@ private:
       *     The name of the file (not including the @) to be read.
       */
     void read_arguments_file(const char *filename);
+
+private:
+    typedef std::list<std::string> deprecated_options_t;
+
+    /**
+      * The deprecated_options instance variable is used to remember the
+      * options that are not to be used any more, so that a warning may
+      * be issued, recommending an appropriate replacement.
+      */
+    deprecated_options_t deprecated_options;
+
+    /**
+      * The check_deprecated method is used to check an actual command
+      * line option agans the list of deprectaed options, and issue a
+      * suitable warning of necessary.
+      *
+      * @param actual_use
+      *     The text given on the command line
+      */
+    void check_deprecated(const std::string &actual_use) const;
+
+protected:
+    /**
+      * The deprecated_option method is used to nominate option patterns
+      * that are deprected.
+      *
+      * @param formal_name
+      *     The pattern that is deprected.  Must be an entry in one of
+      *     the tables, otherwise users are going to be VERY confused.
+      */
+    void deprecated_option(const std::string &formal_name);
 };
 
 #endif // LIB_ARGLEX_H

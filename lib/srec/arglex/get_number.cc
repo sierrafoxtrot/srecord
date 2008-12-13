@@ -52,7 +52,7 @@ srec_arglex::get_number(const char *caption)
         token_next();
         return value;
 
-    case token_minimum:
+    case token_minimum_address:
         {
             token_next();
             srec_input::pointer ifp = get_input();
@@ -61,7 +61,7 @@ srec_arglex::get_number(const char *caption)
         }
         break;
 
-    case token_maximum:
+    case token_maximum_address:
         {
             token_next();
             srec_input::pointer ifp = get_input();

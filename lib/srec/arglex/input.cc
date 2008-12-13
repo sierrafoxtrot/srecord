@@ -145,10 +145,8 @@ srec_arglex::get_inclusive_by_token(int tok)
     case token_length:
     case token_length_be:
     case token_length_le:
-    case token_maximum:
     case token_maximum_be:
     case token_maximum_le:
-    case token_minimum:
     case token_minimum_be:
     case token_minimum_le:
         return true;
@@ -570,10 +568,6 @@ srec_arglex::get_input()
             }
             break;
 
-        case token_maximum:
-            fatal_error("Use --big-endian-maximum or --little-endian-maximum");
-            // NOTREACHED
-
         case token_exclusive_maximum:
             fatal_error
             (
@@ -605,10 +599,6 @@ srec_arglex::get_input()
                     );
             }
             break;
-
-        case token_minimum:
-            fatal_error("Use --big-endian-minimum or --little-endian-minimum");
-            // NOTREACHED
 
         case token_exclusive_minimum:
             fatal_error

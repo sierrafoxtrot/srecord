@@ -510,9 +510,42 @@ arglex::token_next()
         }
         value_string_ = hit[0]->name;
         token = hit[0]->token;
+        check_deprecated(arg);
         break;
     }
     return token;
+}
+
+
+void
+arglex::deprecated_option(const std::string &old_fashioned)
+{
+    deprecated_options.push_back(old_fashioned);
+}
+
+
+void
+arglex::check_deprecated(const std::string &actual)
+    const
+{
+    for
+    (
+        deprecated_options_t::const_iterator it = deprecated_options.begin();
+        it != deprecated_options.end();
+        ++it
+    )
+    {
+        std::string formal = *it;
+        if (compare(formal.c_str(), actual.c_str()))
+        {
+            quit_default.warning
+            (
+                "option \"%s\" is deprecated, use \"%s\" instead",
+                formal.c_str(),
+                token_name(token)
+            );
+        }
+    }
 }
 
 
