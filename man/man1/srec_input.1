@@ -571,10 +571,11 @@ See also the \fB\-over\fP option for a discussion on operator precedence.
 .TP 8n
 \fB\-OVER\fP \f[I]input-specification\fP
 .RS
-This says to use the specified input file as a mask.  The range
-extends from the minimum to the maximum address used by the input, and
-ignores any holes.  The input specification need not be just a file name,
-it may be anything any other input specification can be.
+This says to use the specified input file as a mask.  The range extends
+from the minimum to the maximum address used by the input, without any
+holes, even if the input has holes.  The input specification need not be
+just a file name, it may be anything any other input specification can
+be.
 .PP
 You may need to enclose \f[I]input-specification\fP in parentheses
 to make sure it can't misinterpret which arguments go with which input
