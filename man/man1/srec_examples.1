@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - The "srecord" program.
-.\"     Copyright (C) 2007, 2008 Peter Miller
+.\"     Copyright (C) 2007-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -158,7 +158,7 @@ they are present.  They are adjusted along with the data records by the
 changes, to the limit the file formats are capable of.
 .PP
 If there is no execution start address record and you would like to add one,
-or you which to override an existing execution start address record, use the
+or you wish to override an existing execution start address record, use the
 \fB\-execution-start-address\fP=\f[I]number\fP option.
 .PP
 Please note: the execution start address is a different concept than the
@@ -463,7 +463,7 @@ You can actually use any weird value you like, although 64 bits (8
 bytes) may be useful one day.
 .SS Binary Output
 You need to watch out for binary files on output, because the holes are
-filled with zeros.  You 100kB program at the top of 32-bit addressed
+filled with zeros.  Your 100kB program at the top of 32-bit addressed
 memory will make a 4GB file.  See \f[I]srec_binary\fP(5) for how
 understand and avoid this problem, usually with the \-offset filter.
 .SS Splitting an Image
@@ -939,7 +939,8 @@ If the data already contains bytes at the given address,
 you need to use an exclude filter.
 The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
-There is also a little-endian variant.
+There is also a little-endian variant, and two variants called
+\[lq]exclusive\[rq] that do not include the minimum itself.
 .RS
 .ft CW
 .nf
@@ -954,11 +955,12 @@ If the data already contains bytes at the given address,
 you need to use an exclude filter.
 The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
-There is also a little-endian variant.
+There is also a little-endian variant, and two variants called
+\[lq]exclusive\[rq] that do not include the maximum itself.
 .RS
 .ft CW
 .nf
-srec_cat \f[I]infile\fP --b-e-maximum 0xFFFFFE 2 -o \f[I]outfile\fP
+srec_cat \f[I]infile\fP --b-e-length 0xFFFFFE 2 -o \f[I]outfile\fP
 .fi
 .ft R
 .RE
@@ -969,7 +971,8 @@ If the data already contains bytes at the length location,
 you need to use an exclude filter.
 The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
-There is also a little-endian variant.
+There is also a little-endian variant, and two variants called
+\[lq]exclusive\[rq] that do not include the length itself.
 .SS What Format Is This?
 You can obtain a variety of information about an EPROM load file
 by using the \f[I]srec_info\fP(1) command.
