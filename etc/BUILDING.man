@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2001, 2003, 2006-2008 Peter Miller
+.\"     Copyright (C) 1998, 2001, 2003, 2006-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -467,7 +467,7 @@ package,
 please do not hesitate to contact the author at
 .RS
 .ft CW
-Peter Miller <millerp@canb.auug.org.au>
+Peter Miller <pmiller@opensource.org.au>
 .ft R
 .RE
 Any and all feedback is welcome.
@@ -517,6 +517,6 @@ file included with this distribution.
 .TS
 tab(;);
 l r l.
-Peter Miller;E-Mail:;millerp@canb.auug.org.au
-\f[CW]/\e/\e*\fP;WWW:;http://www.canb.auug.org.au/~millerp/
+Peter Miller;E-Mail:;pmiller@opensource.org.au
+\f[CW]/\e/\e*\fP;WWW:;http://miller.emu.id.au/pmiller/
 .TE
