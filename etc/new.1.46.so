@@ -1,6 +1,6 @@
 .\"
 .\" srecord - Manipulate EPROM load files
-.\" Copyright (C) 2008, 2009 Peter Miller
+.\" Copyright (C) 2009 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -16,25 +16,18 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" Change 17
-There is a new option for the --\f[I]x\fP-e-length filters, they can now
-accept a width, and this is divided into the byte lenght, so
-that you can insert the length in units of words (2) or longs (4).
-.PP
-.if n *
-.if t \(bu
-.\" Change 12, 15
-Some small corrections have been made to the documentation.
-.PP
-.if n *
-.if t \(bu
-.\" Change 11
-The \-minimum and \-maximum options have been renamed \-minimum-address
-and \-maximum-address, to avoid a command line grammar syntax problem.
+.\"
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 46 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.45 (2008-Sep-30)
+.SS Version 1.46 (2009-Jan-13)
 .\" vim:ts=8:sw=4:et
