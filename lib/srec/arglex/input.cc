@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2008 Peter Miller
+//      Copyright (C) 1998-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -554,8 +554,8 @@ srec_arglex::get_input()
                 bool inclusive = get_inclusive_by_token();
                 token_next();
                 unsigned long address;
-                int nbytes;
-                get_address_and_nbytes(name, address, nbytes);
+                int nbytes, width;
+                get_address_nbytes_width(name, address, nbytes, width);
                 ifp =
                     srec_input_filter_interval_length::create
                     (
@@ -563,6 +563,7 @@ srec_arglex::get_input()
                         address,
                         nbytes,
                         end,
+                        width,
                         inclusive
                     );
             }

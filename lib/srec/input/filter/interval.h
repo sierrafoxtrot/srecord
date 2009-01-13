@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2008 Peter Miller
+// Copyright (C) 2008, 2009 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -44,9 +44,9 @@ protected:
       * @param deeper
       *     The input source to be filtered.
       * @param address
-      *     The address at which to place the length.
+      *     The address at which to place the interval.
       * @param length
-      *     The number of bytes of checksum to be inserted.
+      *     The number of bytes of interval to be inserted.
       * @param end
       *     The byte order.
       * @param inclusive
@@ -83,7 +83,7 @@ private:
       * are to be placed at the above address.
       *
       * 0 < length && length <= 8
-      * (a length of zer means we have alreday emitted the results)
+      * (a length of zero means we have already emitted the results)
       */
     int length;
 

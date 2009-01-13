@@ -1,6 +1,6 @@
 //
 //      srecord - Manipulate EPROM load files
-//      Copyright (C) 2008 Peter Miller
+//      Copyright (C) 2008, 2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -45,15 +45,17 @@ private:
       * @param address
       *     The address at which to place the length.
       * @param length
-      *     The number of bytes of checksum to be inserted.
+      *     The number of bytes of length to be inserted.
       * @param end
       *     The byte order.
+      * @param width
+      *     The number of bytes per unit of length.
       * @param inclusive
       *     true if the output location is included in the address
       *     range, false if not
       */
     srec_input_filter_interval_length(const srec_input::pointer &deeper,
-        long address, int length, endian_t end, bool inclusive);
+        long address, int length, endian_t end, int width, bool inclusive);
 
 public:
     /**
@@ -65,21 +67,28 @@ public:
       * @param address
       *     The address at which to place the length.
       * @param length
-      *     The number of bytes of checksum to be inserted.
+      *     The number of bytes of length to be inserted.
       * @param end
       *     The byte order.
+      * @param width
+      *     The number of bytes per unit of length.
       * @param inclusive
       *     true if the output location is included in the address
       *     range, false if not
       */
     static pointer create(const srec_input::pointer &deeper, long address,
-        int length, endian_t end, bool inclusive);
+        int length, endian_t end, int width, bool inclusive);
 
 protected:
     // See base class for documentation.
     long calculate_result() const;
 
 private:
+    /**
+      * The number of bytes per unit of length.
+      */
+    int width;
+
     /**
       * The default constructor.
       */

@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - The "srecord" program.
-.\"     Copyright (C) 1998-2008 Peter Miller
+.\"     Copyright (C) 1998-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -467,21 +467,25 @@ This filter may be used to bit-wise NOT the value of every data byte.
 This is useful if you need to invert the data.
 Only existing data is altered, no holes are filled.
 .TP 8n
-\fB\-Big_Endian_Length\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+\fB\-Big_Endian_Length\fP \f[I]address\fP [ \f[I]nbytes\fP [ \f[I]width\fP ]]
 This filter may be used to insert the length of the data (high water
 minus low water) into the data.  This includes the length itself.
 If the data already contains bytes at the length location,
 you need to use an exclude filter, or this will generate errors.
 The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
+The width defaults to 1, and is divided into the actual lenght,
+thus you can insert the width in units of words (2) or longs (4).
 .TP 8n
-\fB\-Big_Endian_Exclusive_Length\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+\fB\-Big_Endian_Exclusive_Length\fP \f[I]address\fP [ \f[I]nbytes\fP \
+[ \f[I]width\fP ]]
 As above, except that the result does \f[B]not\fP include the length itself.
 .TP 8n
-\fB\-Little_Endian_Length\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+\fB\-Little_Endian_Length\fP \f[I]address\fP [ \f[I]nbytes\fP [ \f[I]width\fP ]]
 As above, however
 the value will be written with the least significant byte first.
-\fB\-Little_Endian_Exclusive_Length\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+\fB\-Little_Endian_Exclusive_Length\fP \f[I]address\fP [ \f[I]nbytes\fP \
+[ \f[I]width\fP ]]
 As above, except that the result does \f[B]not\fP include the length itself.
 .TP 8n
 \fB\-Big_Endian_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]

@@ -1,6 +1,6 @@
 //
 //      srecord - Manipulate EPROM load files
-//      Copyright (C) 2008 Peter Miller
+//      Copyright (C) 2008, 2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -27,15 +27,17 @@ srec_input_filter_interval_length::~srec_input_filter_interval_length()
 
 srec_input_filter_interval_length::srec_input_filter_interval_length(
         const pointer &a_deeper, long a_address, int a_length, endian_t a_end,
-        bool inclusive) :
-    srec_input_filter_interval(a_deeper, a_address, a_length, a_end, inclusive)
+        int a_width, bool inclusive) :
+    srec_input_filter_interval(a_deeper, a_address, a_length, a_end, inclusive),
+    width(a_width < 1 ? 1 : a_width)
 {
+
 }
 
 
 srec_input::pointer
 srec_input_filter_interval_length::create(const pointer &a_deeper,
-    long a_address, int a_length, endian_t a_end, bool inclusive)
+    long a_address, int a_length, endian_t a_end, int a_width, bool inclusive)
 {
     return
         pointer
@@ -46,6 +48,7 @@ srec_input_filter_interval_length::create(const pointer &a_deeper,
                 a_address,
                 a_length,
                 a_end,
+                a_width,
                 inclusive
             )
         );
@@ -57,5 +60,5 @@ srec_input_filter_interval_length::calculate_result()
     const
 {
     const interval &r = get_range();
-    return (r.get_highest() - r.get_lowest());
+    return ((r.get_highest() - r.get_lowest()) / width);
 }

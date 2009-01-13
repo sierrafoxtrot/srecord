@@ -1,6 +1,6 @@
 //
 //      srecord - Manipulate EPROM load files
-//      Copyright (C) 2008 Peter Miller
+//      Copyright (C) 2008, 2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -43,9 +43,9 @@ private:
       * @param deeper
       *     The input source to be filtered.
       * @param address
-      *     The address at which to place the length.
+      *     The address at which to place the maximum address.
       * @param length
-      *     The number of bytes of checksum to be inserted.
+      *     The number of bytes of the maximum address to be inserted.
       * @param end
       *     The byte order.
       * @param inclusive
@@ -62,9 +62,9 @@ public:
       * @param deeper
       *     The input source to be filtered.
       * @param address
-      *     The address at which to place the length.
+      *     The address at which to place the maximum address.
       * @param length
-      *     The number of bytes of checksum to be inserted.
+      *     The number of bytes of the maximum address to be inserted.
       * @param end
       *     The byte order.
       * @param inclusive
