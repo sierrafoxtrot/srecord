@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2008 Peter Miller
+// Copyright (C) 1998-2009 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -120,6 +120,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Little_Endian_MInimum", token_minimum_le, },
         { "-MAximum-Address", token_maximum_address, },
         { "-MAximum", token_maximum_address, },        // deprecated, put second
+        { "-Memory_Initialization_File", token_memory_initialization_file },
         { "-MInimum-Address", token_minimum_address, },
         { "-MInimum", token_minimum_address, },        // deprecated, put second
         { "-MINUs", token_minus, },

@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001-2004, 2006-2008 Peter Miller
+// Copyright (C) 2001-2004, 2006-2009 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@
 #include <lib/srec/output/file/hexdump.h>
 #include <lib/srec/output/file/intel.h>
 #include <lib/srec/output/file/intel16.h>
+#include <lib/srec/output/file/mif.h>
 #include <lib/srec/output/file/mos_tech.h>
 #include <lib/srec/output/file/needham.h>
 #include <lib/srec/output/file/os65v.h>
@@ -203,6 +204,11 @@ srec_arglex::get_output()
     case token_intel16:
         token_next();
         ofp = srec_output_file_intel16::create(fn);
+        break;
+
+    case token_memory_initialization_file:
+        token_next();
+        ofp = srec_output_file_mif::create(fn);
         break;
 
     case token_mos_tech:
