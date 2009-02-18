@@ -17,10 +17,21 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-TEST_SUBJECT="write MIF"
+TEST_SUBJECT="read MIF"
 . test_prelude
 
 cat > test.in << 'fubar'
+DEPTH = 14;
+WIDTH = 8;
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+CONTENT BEGIN
+0000: 48 65 6C 6C 6F 2C 20 57 6F 72 6C 64 21 0A;
+END;
+fubar
+if test $? -ne 0; then no_result; fi
+
+cat > test.ok << 'fubar'
 S00600004844521B
 S111000048656C6C6F2C20576F726C64210A7B
 S5030001FB
@@ -28,24 +39,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-cat > test.ok << 'fubar'
--- HDR
---
--- Generated automatically by srec_cat -o --mif
---
-DEPTH = 65536; -- see comment at end of file for the actual size
-WIDTH = 8;
-ADDRESS_RADIX = HEX;
-DATA_RADIX = HEX;
-CONTENT BEGIN
-0000: 48 65 6C 6C 6F 2C 20 57 6F 72 6C 64 21 0A;
--- start address = 0000
-END;
--- DEPTH = 14;
-fubar
-if test $? -ne 0; then no_result; fi
-
-srec_cat test.in -o test.out -mif
+srec_cat test.in -mif -o test.out -header=HDR -start-address=0
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

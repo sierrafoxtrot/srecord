@@ -104,7 +104,8 @@ The Intel hexadecimal 16 format is understood for both reading and writing.
 (Also known as the INHX16 file format.)
 .TP 8n
 MIF
-The Memory Initialization File format (Altera) is supported for writing.
+The Memory Initialization File format by Altera is supported for both
+reading and writing.
 .TP 8n
 MOS Technology
 The MOS Technology hexadecimal format is understood for both reading

@@ -102,6 +102,8 @@ Data:    00400000
 T}
 T{
 [A0..A1] : D;
+.br
+\f[I](See note below.)\fP
 T};T{
 Addr[A0] to [A1] contain data D
 T};T{
@@ -113,6 +115,8 @@ Data:    66666666
 T}
 T{
 [A0..A1] : D0 D1;
+.br
+\f[I](See note below.)\fP
 T};T{
 .nf
 Addr[A0] = D0,
@@ -144,6 +148,10 @@ Data:    00456000
 .fi
 T}
 .TE
+.PP
+\f[B]Note:\fP
+The address range forms are \f[B]not\fP understood by SRecord.
+Only the simple address form is understood.
 .PP
 .\" http://www.mil.ufl.edu/4712/docs/mif_help.pdf
 An ASCII text file (with the extension .mif) that specifies the initial

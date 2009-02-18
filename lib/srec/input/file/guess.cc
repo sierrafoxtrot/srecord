@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2008 Peter Miller
+//      Copyright (C) 2000-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@
 #include <lib/srec/input/file/four_packed_code.h>
 #include <lib/srec/input/file/intel.h>
 #include <lib/srec/input/file/intel16.h>
+#include <lib/srec/input/file/mif.h>
 #include <lib/srec/input/file/mos_tech.h>
 #include <lib/srec/input/file/needham.h>
 #include <lib/srec/input/file/os65v.h>
@@ -64,6 +65,7 @@ static func_p table[] =
     srec_input_file_four_packed_code::create,
     srec_input_file_intel::create,
     srec_input_file_intel16::create,
+    srec_input_file_mif::create,
     srec_input_file_mos_tech::create,
     srec_input_file_needham::create,
     srec_input_file_os65v::create,

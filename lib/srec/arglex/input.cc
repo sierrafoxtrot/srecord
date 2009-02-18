@@ -36,6 +36,7 @@
 #include <lib/srec/input/file/four_packed_code.h>
 #include <lib/srec/input/file/intel.h>
 #include <lib/srec/input/file/intel16.h>
+#include <lib/srec/input/file/mif.h>
 #include <lib/srec/input/file/mos_tech.h>
 #include <lib/srec/input/file/needham.h>
 #include <lib/srec/input/file/os65v.h>
@@ -324,6 +325,11 @@ srec_arglex::get_simple_input()
     case token_intel16:
         token_next();
         ifp = srec_input_file_intel16::create(fn);
+        break;
+
+    case token_memory_initialization_file:
+        token_next();
+        ifp = srec_input_file_mif::create(fn);
         break;
 
     case token_mos_tech:

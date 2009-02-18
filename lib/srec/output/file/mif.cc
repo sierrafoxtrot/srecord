@@ -27,7 +27,7 @@ srec_output_file_mif::~srec_output_file_mif()
     emit_header();
     put_stringf("END;\n");
     if (enable_header_flag)
-        put_stringf("-- DEPTH %lu;\n", actual_depth / width_in_bytes);
+        put_stringf("-- DEPTH = %lu;\n", actual_depth / width_in_bytes);
 }
 
 
@@ -107,14 +107,14 @@ srec_output_file_mif::emit_header()
         );
         put_stringf
         (
-            "DEPTH %d; -- see comment at end of file for the actual size\n",
+            "DEPTH = %d; -- see comment at end of file for the actual size\n",
             depth / width_in_bytes
         );
-        put_stringf("WIDTH %d;\n", width);
+        put_stringf("WIDTH = %d;\n", width);
         put_stringf("ADDRESS_RADIX = HEX;\n");
         put_stringf("DATA_RADIX = HEX;\n");
     }
-    put_stringf("CONTENT BEGIN;\n");
+    put_stringf("CONTENT BEGIN\n");
     header_done = true;
 }
 
