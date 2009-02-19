@@ -1,6 +1,6 @@
 /*
  *      srecord - manipulate eprom load files
- *      Copyright (C) 1998-2000, 2003, 2004, 2006-2008 Peter Miller
+ *      Copyright (C) 1998-2000, 2003, 2004, 2006-2009 Peter Miller
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -32,6 +32,9 @@ integration-build-targets:
         archive/[project_short]-16.png
         [fromto etc/%.html archive/%.html
             [match_mask etc/%.html [source_files]]
+        ]
+        [fromto etc/%.png.uue archive/%.png
+            [match_mask etc/%.png.uue [source_files]]
         ]
         ;
 
