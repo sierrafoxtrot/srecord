@@ -26,7 +26,7 @@ srec_output_file_mif::~srec_output_file_mif()
 {
     emit_header();
     put_stringf("END;\n");
-    if (enable_header_flag)
+    if (enable_header_flag && actual_depth != depth)
         put_stringf("-- DEPTH = %lu;\n", actual_depth / width_in_bytes);
 }
 
@@ -92,6 +92,14 @@ srec_output_file_mif::command_line(srec_arglex *cmdln)
 
 
 void
+srec_output_file_mif::notify_upper_bound(unsigned long addr)
+{
+    depth = addr;
+    actual_depth = addr;
+}
+
+
+void
 srec_output_file_mif::emit_header()
 {
     if (header_done)
@@ -105,11 +113,19 @@ srec_output_file_mif::emit_header()
             "--\n",
             progname_get()
         );
-        put_stringf
-        (
-            "DEPTH = %d; -- see comment at end of file for the actual size\n",
-            depth / width_in_bytes
-        );
+        if (actual_depth != 0)
+        {
+            put_stringf("DEPTH = %lu;\n", actual_depth / width_in_bytes);
+        }
+        else
+        {
+            put_stringf
+            (
+                "DEPTH = %lu; "
+                    "-- see comment at end of file for the actual size\n",
+                depth / width_in_bytes
+            );
+        }
         put_stringf("WIDTH = %d;\n", width);
         put_stringf("ADDRESS_RADIX = HEX;\n");
         put_stringf("DATA_RADIX = HEX;\n");

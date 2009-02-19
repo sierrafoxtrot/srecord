@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001-2003, 2006-2008 Peter Miller
+//      Copyright (C) 1998, 1999, 2001-2003, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -160,6 +160,9 @@ public:
       * of the upper bound (highest address plus one) of the output
       * to come.  Shall be called before the hread or any data records
       * are written.
+      *
+      * @param addr
+      *     One past the highest used memory byte.
       */
     virtual void notify_upper_bound(unsigned long addr);
 

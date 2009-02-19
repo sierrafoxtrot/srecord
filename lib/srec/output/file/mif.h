@@ -74,13 +74,16 @@ protected:
     // See base class for documentation.
     const char *format_name() const;
 
+    // See base class for documentation.
+    void notify_upper_bound(unsigned long addr);
+
 private:
     /**
       * The depth instance variable is used to remember how many bytes
       * of data there is.  Kind of broken, because we don't know this
       * when the header is actually printed.
       */
-    unsigned depth;
+    unsigned long depth;
 
     /**
       * The width instance variable is used to remember how many bits

@@ -33,7 +33,7 @@ cat > test.ok << 'fubar'
 --
 -- Generated automatically by srec_cat -o --mif
 --
-DEPTH = 65536; -- see comment at end of file for the actual size
+DEPTH = 14;
 WIDTH = 8;
 ADDRESS_RADIX = HEX;
 DATA_RADIX = HEX;
@@ -41,7 +41,6 @@ CONTENT BEGIN
 0000: 48 65 6C 6C 6F 2C 20 57 6F 72 6C 64 21 0A;
 -- start address = 0000
 END;
--- DEPTH = 14;
 fubar
 if test $? -ne 0; then no_result; fi
 
