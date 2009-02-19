@@ -150,8 +150,14 @@ T}
 .TE
 .PP
 \f[B]Note:\fP
-The address range forms are \f[B]not\fP understood by SRecord.
-Only the simple address form is understood.
+The address range forms are limited in SRecord,
+the range must be less than 255 bytes.
+SRecord will never write an address range.
+.PP
+\f[B]Note:\fP
+When reading MIF file, SRecord will round up the number of bits in the
+WIDTH to be a multiple of 8.  Multi-byte values will be laid down in
+memory as big-endian.
 .PP
 .\" http://www.mil.ufl.edu/4712/docs/mif_help.pdf
 An ASCII text file (with the extension .mif) that specifies the initial

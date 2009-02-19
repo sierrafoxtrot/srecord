@@ -81,6 +81,14 @@ srec_input_file_mif::lex()
         case '\n':
             continue;
 
+        case '.':
+            c = get_char();
+            if (c == '.')
+                return token_dotdot;
+            if (c >= 0)
+                get_char_undo(c);
+            return token_dot;
+
         case '=':
             return token_equals;
 
@@ -111,6 +119,12 @@ srec_input_file_mif::lex()
                 continue;
             }
             return token_minus;
+
+        case '[':
+            return token_bracket_left;
+
+        case ']':
+            return token_bracket_right;
 
         case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G':
         case 'H': case 'I': case 'J': case 'K': case 'L': case 'M': case 'N':
@@ -156,6 +170,21 @@ srec_input_file_mif::lex()
                 }
 
                 //
+                // See if we are looking at a number.
+                //
+                // The only place there is the possibility of ambiguity
+                // is the "DEC" keyword, that could also be the 0xDEC
+                // number.  However, this only ever occurs in the
+                // radix-10 header portion, and will not be a problem
+                // (because strtol will reject it).
+                //
+                const char *cp = id.c_str();
+                char *ep = 0;
+                token_value = strtol(cp, &ep, lex_radix);
+                if (ep != cp && !*ep)
+                    return token_number;
+
+                //
                 // See if it is a known identifier.
                 //
                 if (id == "ADDRESS_RADIX")
@@ -182,19 +211,6 @@ srec_input_file_mif::lex()
                     return token_dec;
                 if (id == "WIDTH")
                     return token_width;
-
-                //
-                // See if we are looking at a number.
-                // (We look for a number second, so that we don't
-                // interpret "DEC" as 0xDEC.)
-                //
-                const char *cp = id.c_str();
-                char *ep = 0;
-                token_value = strtol(cp, &ep, lex_radix);
-                if (ep != cp && !*ep)
-                {
-                    return token_number;
-                }
             }
             return token_junk;
 
@@ -275,6 +291,7 @@ srec_input_file_mif::read(srec_record &record)
 {
     unsigned char buffer[srec_record::max_data_length];
     size_t bufpos = 0;
+    unsigned address_range = 0;
 
     for (;;)
     {
@@ -325,6 +342,7 @@ srec_input_file_mif::read(srec_record &record)
             break;
 
         case state_address:
+            address_range = 0;
             switch (lex_addr())
             {
             default:
@@ -339,6 +357,31 @@ srec_input_file_mif::read(srec_record &record)
 
             case token_end:
                 state = state_eof;
+                break;
+
+            case token_bracket_left:
+                {
+                    if (lex_addr() != token_number)
+                        syntax_error("start of address range expected");
+                    unsigned long address_lo = token_value;
+                    if (lex_addr() != token_dotdot)
+                        syntax_error("dot dot (..) expected");
+                    if (lex_addr() != token_number)
+                        syntax_error("end of address range expected");
+                    unsigned long address_hi = token_value;
+                    if (address_hi < address_lo)
+                        syntax_error("address range backwards");
+                    address_range = address_hi + 1 - address_lo;
+                    address_range *= width_in_bytes;
+                    if (address_range > sizeof(buffer))
+                        syntax_error("address range too large");
+                    if (lex_addr() != token_bracket_right)
+                        syntax_error("right bracket ']' expected");
+                    get_colon();
+                    address = address_lo;
+                    state = state_data;
+                }
+                break;
             }
             break;
 
@@ -359,6 +402,8 @@ srec_input_file_mif::read(srec_record &record)
                 address += width_in_bytes;
                 if (bufpos + width_in_bytes > sizeof(buffer))
                 {
+                    if (address_range != 0)
+                        syntax_error("data too large for address range");
                     record =
                         srec_record
                         (
@@ -375,6 +420,24 @@ srec_input_file_mif::read(srec_record &record)
                 state = state_address;
                 if (bufpos > 0)
                 {
+                    if (address_range != 0)
+                    {
+                        if (bufpos > address_range)
+                            syntax_error("too much data for address range");
+                        if (bufpos > 0 && bufpos < address_range)
+                        {
+                            // deliberately memcpy onto self
+                            // to repeat the data in the buffer
+                            size_t nbytes = address_range - bufpos;
+                            const unsigned char *end = buffer + address_range;
+                            const unsigned char *in = buffer;
+                            unsigned char *out = buffer + bufpos;
+                            while (out < end)
+                                *out++ = *in++;
+                            bufpos += nbytes;
+                            address += nbytes;
+                        }
+                    }
                     record =
                         srec_record
                         (
