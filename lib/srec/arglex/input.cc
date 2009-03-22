@@ -52,6 +52,7 @@
 #include <lib/srec/input/file/ti_txt.h>
 #include <lib/srec/input/file/vmem.h>
 #include <lib/srec/input/file/wilson.h>
+#include <lib/srec/input/filter/adler16.h>
 #include <lib/srec/input/filter/adler32.h>
 #include <lib/srec/input/filter/and.h>
 #include <lib/srec/input/filter/byte_swap.h>
@@ -84,6 +85,7 @@ srec_arglex::get_endian_by_token(int tok)
 {
     switch (tok)
     {
+    case token_adler16_be:
     case token_adler32_be:
     case token_atmel_generic_be:
     case token_checksum_be_bitnot:
@@ -100,6 +102,7 @@ srec_arglex::get_endian_by_token(int tok)
     case token_spasm_be:
         return endian_big;
 
+    case token_adler16_le:
     case token_adler32_le:
     case token_atmel_generic_le:
     case token_checksum_le_bitnot:
@@ -450,6 +453,18 @@ srec_arglex::get_input()
     {
         switch (token_cur())
         {
+        case token_adler16_be:
+        case token_adler16_le:
+            {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
+                token_next();
+                unsigned long address;
+                get_address(name, address);
+                ifp = srec_input_filter_adler16::create(ifp, address, end);
+            }
+            break;
+
         case token_adler32_be:
         case token_adler32_le:
             {

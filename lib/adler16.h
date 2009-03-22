@@ -16,46 +16,43 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_ADLER32_H
-#define LIB_ADLER32_H
+#ifndef LIB_ADLER16_H
+#define LIB_ADLER16_H
 
 #include <stddef.h>
 
 /**
-  * The adler32 class is used to represent the running value of a 32-bit
-  * Adler checksum of series of bytes.
-  *
-  * See wikipedia for a description
-  * http://en.wikipedia.org/wiki/Adler-32
+  * The adler16 class is used to represent the running value of a 16-bit
+  * Adler checksum of series of bytes.  (Using an algorith analogous to
+  * Adler-32, but using mod 251 instead of 65521).
   */
-class adler32
+class adler16
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~adler32();
+    virtual ~adler16();
 
     /**
       * The default constructor.
       */
-    adler32();
+    adler16();
 
     /**
       * The copy constructor.
       */
-    adler32(const adler32 &);
+    adler16(const adler16 &);
 
     /**
       * The assignment operator.
       */
-    adler32 &operator=(const adler32 &);
+    adler16 &operator=(const adler16 &);
 
     /**
-      * The get method is used to obtain the running value of the
-      * checksum.
+      * The get method is used to obtain the running value of the checksum.
       */
-    unsigned long get() const;
+    unsigned short get() const;
 
     /**
       * The next method is used to advance the state by one byte.
@@ -72,14 +69,14 @@ private:
       * The sum_a instance variable is used to remember the sum of bytes
       * scanned.
       */
-    unsigned short sum_a;
+    unsigned char sum_a;
 
     /**
       * The sum_b instance variable is used to remember the sum of the
       * sum of bytes scanned.
       */
-    unsigned short sum_b;
+    unsigned char sum_b;
 };
 
 // vim:ts=8:sw=4:et
-#endif // LIB_ADLER32_H
+#endif // LIB_ADLER16_H

@@ -18,18 +18,18 @@
 //
 
 #include <lib/srec/arglex.h>
-#include <lib/srec/input/filter/adler32.h>
+#include <lib/srec/input/filter/adler16.h>
 #include <lib/srec/memory.h>
-#include <lib/srec/memory/walker/adler32.h>
+#include <lib/srec/memory/walker/adler16.h>
 #include <lib/srec/record.h>
 
 
-srec_input_filter_adler32::~srec_input_filter_adler32()
+srec_input_filter_adler16::~srec_input_filter_adler16()
 {
 }
 
 
-srec_input_filter_adler32::srec_input_filter_adler32(
+srec_input_filter_adler16::srec_input_filter_adler16(
         const srec_input::pointer &deeper_arg, unsigned long address_arg,
         endian_t a_end) :
     srec_input_filter(deeper_arg),
@@ -44,19 +44,19 @@ srec_input_filter_adler32::srec_input_filter_adler32(
 
 
 srec_input::pointer
-srec_input_filter_adler32::create(const srec_input::pointer &a_deeper,
+srec_input_filter_adler16::create(const srec_input::pointer &a_deeper,
     unsigned long a_address, endian_t a_end)
 {
-    return pointer(new srec_input_filter_adler32(a_deeper, a_address, a_end));
+    return pointer(new srec_input_filter_adler16(a_deeper, a_address, a_end));
 }
 
 
 bool
-srec_input_filter_adler32::read(srec_record &record)
+srec_input_filter_adler16::read(srec_record &record)
 {
     //
     // If we haven't read the deeper input yet, read all of it into
-    // a memory buffer, then adler32 the bytes.
+    // a memory buffer, then adler16 the bytes.
     //
     if (buffer.empty())
     {
@@ -66,12 +66,12 @@ srec_input_filter_adler32::read(srec_record &record)
         {
             warning
             (
-                "The data presented for Adler-32 checksum has at "
+                "The data presented for Adler-16 checksum has at "
                 "least one hole in it.  This is bad.  It means that "
                 "the in-memory calculation performed by your embedded "
                 "system will be different than the calculation "
                 "performed here.  You are strongly advised to use the "
-                "--fill 0xFF filter *before* this Adler-32 filter to "
+                "--fill 0xFF filter *before* this Adler-16 filter to "
                 "ensure both calculations are using the same byte "
                 "values.  See srec_info(1) for how to see the holes."
             );
@@ -97,18 +97,18 @@ srec_input_filter_adler32::read(srec_record &record)
         have_given_checksum = true;
 
         //
-        // Now calculate the Adler 32 checksum the bytes in order from
+        // Now calculate the Adler 16 checksum the bytes in order from
         // lowest address to highest.  (Holes are ignored, not filled.)
         //
-        srec_memory_walker_adler32::pointer w =
-            srec_memory_walker_adler32::create();
+        srec_memory_walker_adler16::pointer w =
+            srec_memory_walker_adler16::create();
         buffer.walk(w);
-        unsigned long adler = w->get();
+        unsigned short adler = w->get();
 
         //
-        // Turn the CRC into the first data record.
+        // Turn the Adler-16 checksum into the first data record.
         //
-        unsigned char chunk[4];
+        unsigned char chunk[2];
         srec_record::encode(chunk, adler, sizeof(chunk), end);
         record =
             srec_record(srec_record::type_data, address, chunk, sizeof(chunk));
