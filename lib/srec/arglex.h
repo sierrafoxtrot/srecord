@@ -37,6 +37,8 @@ public:
     enum
     {
         token_a430 = arglex::token_MAX,
+        token_adler32_be,
+        token_adler32_le,
         token_and,
         token_aomf,
         token_ascii_hex,

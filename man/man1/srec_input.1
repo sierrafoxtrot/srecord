@@ -298,6 +298,28 @@ Anything else will result in an error.
 .SS Input Filters
 You may specify zero or more \f[I]filters\fP to be applied.
 Filters are applied in the order the user specifies.
+.\" ............................................................................
+.TP 8n
+\fB\-Big_Endian_Adler_32\fP \f[I]address\fP \
+.RS
+This filter may be used to insert a Adler 32-bit checksum
+of the data into the data.  Four bytes, big-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\f[I]not\fP in the order they appear
+in the input).
+.PP
+\fBNote:\fP If you have holes in your data, you will get a different CRC
+than if there were no holes.  This is important because the in-memory
+EPROM image will not have holes.  You almost always want to use the
+\fB\-fill\fP filter before any of the CRC filters.
+You will receive a warning if the data presented for CRC has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EPROM address range.
+.RE
+.\" ............................................................................
 .TP 8n
 \fB\-Big_Endian_Checksum_BitNot\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
 \f[I]width\fP ]]
@@ -322,6 +344,28 @@ checksum of the data into the data.  Otherwise similar to the above.
 \f[I]width\fP ]]
 This filter may be used to insert the simple checksum of the data into
 the data.  Otherwise similar to the above.
+.\" ............................................................................
+.TP 8n
+\fB\-Little_Endian_Adler_32\fP \f[I]address\fP \
+.RS
+This filter may be used to insert a Adler 32-bit checksum
+of the data into the data.  Four bytes, in little-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\f[I]not\fP in the order they appear
+in the input).
+.PP
+\fBNote:\fP If you have holes in your data, you will get a different CRC
+than if there were no holes.  This is important because the in-memory
+EPROM image will not have holes.  You almost always want to use the
+\fB\-fill\fP filter before any of the CRC filters.
+You will receive a warning if the data presented for CRC has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EPROM address range.
+.RE
+.\" ............................................................................
 .TP 8n
 \fB\-Little_Endian_Checksum_BitNot\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
 \f[I]width\fP ]]
