@@ -318,6 +318,8 @@ You should also be aware that the lower and upper bounds of your data
 may not be the same as the lower and upper bounds of your EPROM.  This
 is another reason to use the \fB\-fill\fP filter, because it will
 establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Adler-32
 .RE
 .\" ............................................................................
 .TP 8n
@@ -340,6 +342,57 @@ You should also be aware that the lower and upper bounds of your data
 may not be the same as the lower and upper bounds of your EPROM.  This
 is another reason to use the \fB\-fill\fP filter, because it will
 establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Adler-32
+.RE
+.\" ............................................................................
+.TP 8n
+\fB\-Big_Endian_Fletcher_32\fP \f[I]address\fP \
+.RS
+This filter may be used to insert a Fletcher 32-bit checksum
+of the data into the data.  Four bytes, big-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\f[I]not\fP in the order they appear
+in the input).
+.PP
+\fBNote:\fP If you have holes in your data, you will get a different
+Fletcher checksum than if there were no holes.  This is important because
+the in-memory EPROM image will not have holes.  You almost always want
+to use the \fB\-fill\fP filter before any of the Fletcher checksum filters.
+You will receive a warning if the data presented for Fletcher checksum
+has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Fletcher%27s_checksum
+.RE
+.\" ............................................................................
+.TP 8n
+\fB\-Big_Endian_Fletcher_16\fP \f[I]address\fP \
+.RS
+This filter may be used to insert an Fletcher 16-bit checksum
+of the data into the data.
+Two bytes, big-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\f[I]not\fP in the order they appear
+in the input).
+.PP
+\fBNote:\fP If you have holes in your data, you will get a different
+Fletcher checksum than if there were no holes.  This is important because
+the in-memory EPROM image will not have holes.  You almost always want
+to use the \fB\-fill\fP filter before any of the Fletcher checksum filters.
+You will receive a warning if the data presented for Fletcher checksum
+has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Fletcher%27s_checksum
 .RE
 .\" ............................................................................
 .TP 8n
@@ -386,6 +439,8 @@ You should also be aware that the lower and upper bounds of your data
 may not be the same as the lower and upper bounds of your EPROM.  This
 is another reason to use the \fB\-fill\fP filter, because it will
 establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Adler-32
 .RE
 .\" ............................................................................
 .TP 8n
@@ -407,6 +462,56 @@ You should also be aware that the lower and upper bounds of your data
 may not be the same as the lower and upper bounds of your EPROM.  This
 is another reason to use the \fB\-fill\fP filter, because it will
 establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Adler-32
+.RE
+.\" ............................................................................
+.TP 8n
+\fB\-Little_Endian_Fletcher_32\fP \f[I]address\fP \
+.RS
+This filter may be used to insert a Fletcher 32-bit checksum
+of the data into the data.  Four bytes, in little-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\f[I]not\fP in the order they appear
+in the input).
+.PP
+\f[B]Note:\fP If you have holes in your data, you will get a different
+Fletcher checksum than if there were no holes.  This is important because
+the in-memory EPROM image will not have holes.  You almost always want
+to use the \fB\-fill\fP filter before any of the Fletcher checksum filters.
+You will receive a warning if the data presented for Fletcher checksum
+has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Fletcher%27s_checksum
+.RE
+.\" ............................................................................
+.TP 8n
+\fB\-Little_Endian_Fletcher_16\fP \f[I]address\fP \
+.RS
+This filter may be used to insert an Fletcher 16-bit checksum
+of the data into the data.  Two bytes, in little-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\f[I]not\fP in the order they appear
+in the input).
+.PP
+\f[B]Note:\fP If you have holes in your data, you will get a different
+Fletcher checksum than if there were no holes.  This is important because
+the in-memory EPROM image will not have holes.  You almost always want
+to use the \fB\-fill\fP filter before any of the Fletcher filters.
+You will receive a warning if the data presented for Fletcher checksum
+has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Fletcher%27s_checksum
 .RE
 .\" ............................................................................
 .TP 8n

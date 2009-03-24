@@ -45,8 +45,8 @@
 #include <lib/srec/input/file/spectrum.h>
 #include <lib/srec/input/file/srecord.h>
 #include <lib/srec/input/file/stewie.h>
-#include <lib/srec/input/file/tektronix_extended.h>
 #include <lib/srec/input/file/tektronix.h>
+#include <lib/srec/input/file/tektronix_extended.h>
 #include <lib/srec/input/file/ti_tagged.h>
 #include <lib/srec/input/file/ti_tagged_16.h>
 #include <lib/srec/input/file/ti_txt.h>
@@ -63,6 +63,8 @@
 #include <lib/srec/input/filter/crc32.h>
 #include <lib/srec/input/filter/crop.h>
 #include <lib/srec/input/filter/fill.h>
+#include <lib/srec/input/filter/fletcher16.h>
+#include <lib/srec/input/filter/fletcher32.h>
 #include <lib/srec/input/filter/interval/length.h>
 #include <lib/srec/input/filter/interval/maximum.h>
 #include <lib/srec/input/filter/interval/minimum.h>
@@ -96,6 +98,8 @@ srec_arglex::get_endian_by_token(int tok)
     case token_exclusive_length_be:
     case token_exclusive_maximum_be:
     case token_exclusive_minimum_be:
+    case token_fletcher16_be:
+    case token_fletcher32_be:
     case token_length_be:
     case token_maximum_be:
     case token_minimum_be:
@@ -113,6 +117,8 @@ srec_arglex::get_endian_by_token(int tok)
     case token_exclusive_length_le:
     case token_exclusive_maximum_le:
     case token_exclusive_minimum_le:
+    case token_fletcher16_le:
+    case token_fletcher32_le:
     case token_length_le:
     case token_maximum_le:
     case token_minimum_le:
@@ -528,6 +534,30 @@ srec_arglex::get_input()
                 int filler = get_number("--Fill", 0, 255);
                 interval range = get_interval_small("--Fill");
                 ifp = srec_input_filter_fill::create(ifp, filler, range);
+            }
+            break;
+
+        case token_fletcher16_be:
+        case token_fletcher16_le:
+            {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
+                token_next();
+                unsigned long address;
+                get_address(name, address);
+                ifp = srec_input_filter_fletcher16::create(ifp, address, end);
+            }
+            break;
+
+        case token_fletcher32_be:
+        case token_fletcher32_le:
+            {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
+                token_next();
+                unsigned long address;
+                get_address(name, address);
+                ifp = srec_input_filter_fletcher32::create(ifp, address, end);
             }
             break;
 
