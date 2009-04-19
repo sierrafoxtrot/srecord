@@ -16,19 +16,18 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" Change 16
-There are new Fletcher Checksum filters, both 32-bits and
-16-bits, both little-endian and big-endian.
-.PP
-.if n *
-.if t \(bu
-.\" Change 12, 15
-There are new Fletcher Checksum filters, both 32-bits and
-16-bits, both little-endian and big-endian.
+.\"
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 48 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.47 (2009-Feb-19)
+.SS Version 1.48 (2009-Apr-19)
 .\" vim: set ts=8 sw=4 et
