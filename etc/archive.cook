@@ -269,9 +269,9 @@ archive/%1-%2.png: archive/%1.png
 {
     if [find_command pngcrush] then
     {
-        convert [resolve archive/%1.png] -scale %2 [target].tmp;
-        pngcrush -bkgd 255 255 255 -brute -q [target].tmp [target];
-        rm [target].tmp;
+        convert [resolve archive/%1.png] -scale %2 archive/%1-%2.tmp.png;
+        pngcrush -bkgd 255 255 255 -brute -q archive/%1-%2.tmp.png [target];
+        rm archive/%1-%2.tmp.png;
     }
     else
     {
