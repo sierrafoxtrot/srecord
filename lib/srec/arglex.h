@@ -112,6 +112,7 @@ public:
         token_maximum_address,
         token_maximum_be,
         token_maximum_le,
+        token_md5,
         token_memory_initialization_file,
         token_minimum_address,
         token_minimum_be,

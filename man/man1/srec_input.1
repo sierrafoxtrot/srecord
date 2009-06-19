@@ -298,32 +298,17 @@ Anything else will result in an error.
 .SS Input Filters
 You may specify zero or more \f[I]filters\fP to be applied.
 Filters are applied in the order the user specifies.
-.\" ............................................................................
+.\" ----------  A  ---------------------------------------------------------
+.\"             and
 .TP 8n
-\fB\-Big_Endian_Adler_32\fP \f[I]address\fP \
-.RS
-This filter may be used to insert a Adler 32-bit checksum
-of the data into the data.  Four bytes, big-endian order, are inserted
-at the address given.  Holes in the input data are ignored.  Bytes are
-processed in ascending address order (\f[I]not\fP in the order they appear
-in the input).
-.PP
-\fBNote:\fP If you have holes in your data, you will get a different
-Adler checksum than if there were no holes.  This is important because
-the in-memory EPROM image will not have holes.  You almost always want
-to use the \fB\-fill\fP filter before any of the Adler checksum filters.
-You will receive a warning if the data presented for Adler checksum has holes.
-.PP
-You should also be aware that the lower and upper bounds of your data
-may not be the same as the lower and upper bounds of your EPROM.  This
-is another reason to use the \fB\-fill\fP filter, because it will
-establish the data across the full EPROM address range.
-.PP
-http://en.wikipedia.org/wiki/Adler-32
-.RE
-.\" ............................................................................
+\fB\-AND\fP \f[I]value\fP
+This filter may be used to bit-wise AND a \f[I]value\fP to every data byte.
+This is useful if you need to clear bits.
+Only existing data is altered, no holes are filled.
+.\" ----------  B  ---------------------------------------------------------
+.\"             big endian adler 16
 .TP 8n
-\fB\-Big_Endian_Adler_16\fP \f[I]address\fP \
+\fB\-Big_Endian_Adler_16\fP \f[I]address\fP
 .RS
 This filter may be used to insert an \[lq]Adler\[rq] 16-bit checksum
 of the data into the data.
@@ -345,56 +330,30 @@ establish the data across the full EPROM address range.
 .PP
 http://en.wikipedia.org/wiki/Adler-32
 .RE
-.\" ............................................................................
+.\"             big endian adler 32
 .TP 8n
-\fB\-Big_Endian_Fletcher_32\fP \f[I]address\fP \
+\fB\-Big_Endian_Adler_32\fP \f[I]address\fP
 .RS
-This filter may be used to insert a Fletcher 32-bit checksum
+This filter may be used to insert a Adler 32-bit checksum
 of the data into the data.  Four bytes, big-endian order, are inserted
 at the address given.  Holes in the input data are ignored.  Bytes are
 processed in ascending address order (\f[I]not\fP in the order they appear
 in the input).
 .PP
 \fBNote:\fP If you have holes in your data, you will get a different
-Fletcher checksum than if there were no holes.  This is important because
+Adler checksum than if there were no holes.  This is important because
 the in-memory EPROM image will not have holes.  You almost always want
-to use the \fB\-fill\fP filter before any of the Fletcher checksum filters.
-You will receive a warning if the data presented for Fletcher checksum
-has holes.
+to use the \fB\-fill\fP filter before any of the Adler checksum filters.
+You will receive a warning if the data presented for Adler checksum has holes.
 .PP
 You should also be aware that the lower and upper bounds of your data
 may not be the same as the lower and upper bounds of your EPROM.  This
 is another reason to use the \fB\-fill\fP filter, because it will
 establish the data across the full EPROM address range.
 .PP
-http://en.wikipedia.org/wiki/Fletcher%27s_checksum
+http://en.wikipedia.org/wiki/Adler-32
 .RE
-.\" ............................................................................
-.TP 8n
-\fB\-Big_Endian_Fletcher_16\fP \f[I]address\fP \
-.RS
-This filter may be used to insert an Fletcher 16-bit checksum
-of the data into the data.
-Two bytes, big-endian order, are inserted
-at the address given.  Holes in the input data are ignored.  Bytes are
-processed in ascending address order (\f[I]not\fP in the order they appear
-in the input).
-.PP
-\fBNote:\fP If you have holes in your data, you will get a different
-Fletcher checksum than if there were no holes.  This is important because
-the in-memory EPROM image will not have holes.  You almost always want
-to use the \fB\-fill\fP filter before any of the Fletcher checksum filters.
-You will receive a warning if the data presented for Fletcher checksum
-has holes.
-.PP
-You should also be aware that the lower and upper bounds of your data
-may not be the same as the lower and upper bounds of your EPROM.  This
-is another reason to use the \fB\-fill\fP filter, because it will
-establish the data across the full EPROM address range.
-.PP
-http://en.wikipedia.org/wiki/Fletcher%27s_checksum
-.RE
-.\" ............................................................................
+.\"             big endian checksum bitnot
 .TP 8n
 \fB\-Big_Endian_Checksum_BitNot\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
 \f[I]width\fP ]]
@@ -409,135 +368,19 @@ You need to apply and crop or fill filters before this filter.
 The value will be written with the most significant byte first.
 The number of bytes of resulting checksum defaults to 4.
 The width (the width in bytes of the values being summed) defaults to 1.
+.\"             big endian checksum negative
 .TP 8n
 \fB\-Big_Endian_Checksum_Negative\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
 \f[I]width\fP ]]
 This filter may be used to insert the two's complement (negative)
 checksum of the data into the data.  Otherwise similar to the above.
+.\"             big endian checksum positive
 .TP 8n
 \fB\-Big_Endian_Checksum_Positive\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
 \f[I]width\fP ]]
 This filter may be used to insert the simple checksum of the data into
 the data.  Otherwise similar to the above.
-.\" ............................................................................
-.TP 8n
-\fB\-Little_Endian_Adler_32\fP \f[I]address\fP \
-.RS
-This filter may be used to insert a Adler 32-bit checksum
-of the data into the data.  Four bytes, in little-endian order, are inserted
-at the address given.  Holes in the input data are ignored.  Bytes are
-processed in ascending address order (\f[I]not\fP in the order they appear
-in the input).
-.PP
-\f[B]Note:\fP If you have holes in your data, you will get a different
-Adler checksum than if there were no holes.  This is important because
-the in-memory EPROM image will not have holes.  You almost always want
-to use the \fB\-fill\fP filter before any of the Adler checksum filters.
-You will receive a warning if the data presented for Adler checksum has holes.
-.PP
-You should also be aware that the lower and upper bounds of your data
-may not be the same as the lower and upper bounds of your EPROM.  This
-is another reason to use the \fB\-fill\fP filter, because it will
-establish the data across the full EPROM address range.
-.PP
-http://en.wikipedia.org/wiki/Adler-32
-.RE
-.\" ............................................................................
-.TP 8n
-\fB\-Little_Endian_Adler_16\fP \f[I]address\fP \
-.RS
-This filter may be used to insert an Adler 16-bit checksum
-of the data into the data.  Two bytes, in little-endian order, are inserted
-at the address given.  Holes in the input data are ignored.  Bytes are
-processed in ascending address order (\f[I]not\fP in the order they appear
-in the input).
-.PP
-\f[B]Note:\fP If you have holes in your data, you will get a different
-Adler checksum than if there were no holes.  This is important because
-the in-memory EPROM image will not have holes.  You almost always want
-to use the \fB\-fill\fP filter before any of the Adler filters.
-You will receive a warning if the data presented for Adler checksum has holes.
-.PP
-You should also be aware that the lower and upper bounds of your data
-may not be the same as the lower and upper bounds of your EPROM.  This
-is another reason to use the \fB\-fill\fP filter, because it will
-establish the data across the full EPROM address range.
-.PP
-http://en.wikipedia.org/wiki/Adler-32
-.RE
-.\" ............................................................................
-.TP 8n
-\fB\-Little_Endian_Fletcher_32\fP \f[I]address\fP \
-.RS
-This filter may be used to insert a Fletcher 32-bit checksum
-of the data into the data.  Four bytes, in little-endian order, are inserted
-at the address given.  Holes in the input data are ignored.  Bytes are
-processed in ascending address order (\f[I]not\fP in the order they appear
-in the input).
-.PP
-\f[B]Note:\fP If you have holes in your data, you will get a different
-Fletcher checksum than if there were no holes.  This is important because
-the in-memory EPROM image will not have holes.  You almost always want
-to use the \fB\-fill\fP filter before any of the Fletcher checksum filters.
-You will receive a warning if the data presented for Fletcher checksum
-has holes.
-.PP
-You should also be aware that the lower and upper bounds of your data
-may not be the same as the lower and upper bounds of your EPROM.  This
-is another reason to use the \fB\-fill\fP filter, because it will
-establish the data across the full EPROM address range.
-.PP
-http://en.wikipedia.org/wiki/Fletcher%27s_checksum
-.RE
-.\" ............................................................................
-.TP 8n
-\fB\-Little_Endian_Fletcher_16\fP \f[I]address\fP \
-.RS
-This filter may be used to insert an Fletcher 16-bit checksum
-of the data into the data.  Two bytes, in little-endian order, are inserted
-at the address given.  Holes in the input data are ignored.  Bytes are
-processed in ascending address order (\f[I]not\fP in the order they appear
-in the input).
-.PP
-\f[B]Note:\fP If you have holes in your data, you will get a different
-Fletcher checksum than if there were no holes.  This is important because
-the in-memory EPROM image will not have holes.  You almost always want
-to use the \fB\-fill\fP filter before any of the Fletcher filters.
-You will receive a warning if the data presented for Fletcher checksum
-has holes.
-.PP
-You should also be aware that the lower and upper bounds of your data
-may not be the same as the lower and upper bounds of your EPROM.  This
-is another reason to use the \fB\-fill\fP filter, because it will
-establish the data across the full EPROM address range.
-.PP
-http://en.wikipedia.org/wiki/Fletcher%27s_checksum
-.RE
-.\" ............................................................................
-.TP 8n
-\fB\-Little_Endian_Checksum_BitNot\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
-\f[I]width\fP ]]
-This filter may be used to insert the one's complement (bitnot)
-checksum of the data into the data, least significant byte first.
-Otherwise similar to the above.
-.TP 8n
-\fB\-Little_Endian_Checksum_Negative\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
-\f[I]width\fP ]]
-This filter may be used to insert the two's complement (negative)
-checksum of the data into the data.  Otherwise similar to the above.
-.TP 8n
-\fB\-Little_Endian_Checksum_Negative\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
-\f[I]width\fP ]]
-This filter may be used to insert the simple checksum of the data into
-the data.  Otherwise similar to the above.
-.TP 8n
-\fB\-Byte_Swap\fP [ \f[I]width\fP ]
-This filter may be used to swap pairs of odd and even bytes.
-By specifying a width (in bytes) it is possible to reverse the order
-of 4 and 8 bytes, the default is 2 bytes.  (Widths in excess of 8 are
-assumed to be number of bits.)
-It is not possible to swap non-power-of-two addresses.
-To change the alignment, use the offset filter before and after.
+.\"             big endian crc16
 .TP 8n
 \fB\-Big_Endian_CRC16\fP \f[I]address\fP \
 [ \-CCITT | \-XMODEM | \-BROKEN ]\
@@ -593,9 +436,7 @@ explanatory comments.
 Please try all six combinations of the above options before reporting a
 bug in the CRC16 calculation.
 .RE
-.TP 8n
-\fB\-Little_Endian_CRC16\fP \f[I]address\fP
-As above, except little-endian order.
+.\"             big endian crc32
 .TP 8n
 \fB\-Big_Endian_CRC32\fP \f[I]address\fP
 .RS
@@ -617,51 +458,69 @@ This is the default.
 An alternate XMODEM-style calculation is performed.
 The initial seed is all zero bits.
 .RE
+.\"             big endian exclusive length
 .TP 8n
-\fB\-Little_Endian_CRC32\fP \f[I]address\fP
-As above, except little-endian order.
+\fB\-Big_Endian_Exclusive_Length\fP \f[I]address\fP [ \f[I]nbytes\fP \
+[ \f[I]width\fP ]]
+As above, except that the result does \f[B]not\fP include the length itself.
+.\"             big endian exclusive maximum
 .TP 8n
-\fB\-Crop\fP \f[I]address-range\fP
-This filter may be used to isolate a section of data, and discard the
-rest.
+\fB\-Big_Endian_Exclusive_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+As above, except that the result does \f[B]not\fP include the length itself.
+.\"             big endian exclusive minimum
 .TP 8n
-\fB\-Exclude\fP \f[I]address-range\fP
-This filter may be used to exclude a section of data, and keep the rest.
-The is the logical complement of the \fB\-Crop\fP filter.
+\fB\-Big_Endian_Exclusive_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+As above, except that the result does \f[B]not\fP include the length itself.
+.\"             big endian fletcher 16
 .TP 8n
-\fB\-Fill\fP \f[I]value\fP \f[I]address-range\fP
-This filter may be used to fill any gaps in the data with bytes equal
-to \f[I]value\fP.  The fill will only occur in the address range given.
+\fB\-Big_Endian_Fletcher_16\fP \f[I]address\fP
+.RS
+This filter may be used to insert an Fletcher 16-bit checksum
+of the data into the data.
+Two bytes, big-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\f[I]not\fP in the order they appear
+in the input).
+.PP
+\fBNote:\fP If you have holes in your data, you will get a different
+Fletcher checksum than if there were no holes.  This is important because
+the in-memory EPROM image will not have holes.  You almost always want
+to use the \fB\-fill\fP filter before any of the Fletcher checksum filters.
+You will receive a warning if the data presented for Fletcher checksum
+has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Fletcher%27s_checksum
+.RE
+.\"             big endian fletcher 32
 .TP 8n
-\fB\-UnFill\fP \f[I]value\fP [ \f[I]min-run-length\fP ]
-This filter may be used to create gaps in the data with bytes equal
-to \f[I]value\fP.  You can think of it as reversing the effects of the
-\fB\-Fill\fP filter.  The gaps will only be created if the are at least
-\f[I]min-run-length\fP bytes in a row (defaults to 1).
-.TP 8n
-\fB\-Random_Fill\fP \f[I]address-range\fP
-This filter may be used to fill any gaps in the data with random bytes.
-The fill will only occur in the address range given.
-.TP 8n
-\fB\-AND\fP \f[I]value\fP
-This filter may be used to bit-wise AND a \f[I]value\fP to every data byte.
-This is useful if you need to clear bits.
-Only existing data is altered, no holes are filled.
-.TP 8n
-\fB\-eXclusive-OR\fP \f[I]value\fP
-This filter may be used to bit-wise XOR a \f[I]value\fP to every data byte.
-This is useful if you need to invert bits.
-Only existing data is altered, no holes are filled.
-.TP 8n
-\fB\-OR\fP \f[I]value\fP
-This filter may be used to bit-wise OR a \f[I]value\fP to every data byte.
-This is useful if you need to set bits.
-Only existing data is altered, no holes are filled.
-.TP 8n
-\fB\-NOT\fP
-This filter may be used to bit-wise NOT the value of every data byte.
-This is useful if you need to invert the data.
-Only existing data is altered, no holes are filled.
+\fB\-Big_Endian_Fletcher_32\fP \f[I]address\fP
+.RS
+This filter may be used to insert a Fletcher 32-bit checksum
+of the data into the data.  Four bytes, big-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\f[I]not\fP in the order they appear
+in the input).
+.PP
+\fBNote:\fP If you have holes in your data, you will get a different
+Fletcher checksum than if there were no holes.  This is important because
+the in-memory EPROM image will not have holes.  You almost always want
+to use the \fB\-fill\fP filter before any of the Fletcher checksum filters.
+You will receive a warning if the data presented for Fletcher checksum
+has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Fletcher%27s_checksum
+.RE
+.\"             big endian length
 .TP 8n
 \fB\-Big_Endian_Length\fP \f[I]address\fP [ \f[I]nbytes\fP [ \f[I]width\fP ]]
 This filter may be used to insert the length of the data (high water
@@ -672,17 +531,7 @@ The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
 The width defaults to 1, and is divided into the actual lenght,
 thus you can insert the width in units of words (2) or longs (4).
-.TP 8n
-\fB\-Big_Endian_Exclusive_Length\fP \f[I]address\fP [ \f[I]nbytes\fP \
-[ \f[I]width\fP ]]
-As above, except that the result does \f[B]not\fP include the length itself.
-.TP 8n
-\fB\-Little_Endian_Length\fP \f[I]address\fP [ \f[I]nbytes\fP [ \f[I]width\fP ]]
-As above, however
-the value will be written with the least significant byte first.
-\fB\-Little_Endian_Exclusive_Length\fP \f[I]address\fP [ \f[I]nbytes\fP \
-[ \f[I]width\fP ]]
-As above, except that the result does \f[B]not\fP include the length itself.
+.\"             big endian maximum
 .TP 8n
 \fB\-Big_Endian_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
 This filter may be used to insert the maximum address of the data (high water
@@ -691,16 +540,7 @@ If the data already contains bytes at the given address,
 you need to use an exclude filter, or this will generate errors.
 The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
-.TP 8n
-\fB\-Big_Endian_Exclusive_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
-As above, except that the result does \f[B]not\fP include the length itself.
-.TP 8n
-\fB\-Little_Endian_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
-As above, however
-the value will be written with the least significant byte first.
-.TP 8n
-\fB\-Little_Endian_Exclusive_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
-As above, except that the result does \f[B]not\fP include the length itself.
+.\"             big endian minimum
 .TP 8n
 \fB\-Big_Endian_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
 This filter may be used to insert the minimum address of the data (low
@@ -709,16 +549,208 @@ If the data already contains bytes at the given address,
 you need to use an exclude filter, or this will generate errors.
 The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
+.\"             byte swap
 .TP 8n
-\fB\-Big_Endian_Exclusive_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+\fB\-Byte_Swap\fP [ \f[I]width\fP ]
+This filter may be used to swap pairs of odd and even bytes.
+By specifying a width (in bytes) it is possible to reverse the order
+of 4 and 8 bytes, the default is 2 bytes.  (Widths in excess of 8 are
+assumed to be number of bits.)
+It is not possible to swap non-power-of-two addresses.
+To change the alignment, use the offset filter before and after.
+.\" ----------  C  ---------------------------------------------------------
+.\"             crop
+.TP 8n
+\fB\-Crop\fP \f[I]address-range\fP
+This filter may be used to isolate a section of data, and discard the
+rest.
+.\" ----------  D  ---------------------------------------------------------
+.\" ----------  E  ---------------------------------------------------------
+.\"             exclude
+.TP 8n
+\fB\-Exclude\fP \f[I]address-range\fP
+This filter may be used to exclude a section of data, and keep the rest.
+The is the logical complement of the \fB\-Crop\fP filter.
+.\"             exclusive or
+.TP 8n
+\fB\-eXclusive-OR\fP \f[I]value\fP
+This filter may be used to bit-wise XOR a \f[I]value\fP to every data byte.
+This is useful if you need to invert bits.
+Only existing data is altered, no holes are filled.
+.\" ----------  F  ---------------------------------------------------------
+.\"             fill
+.TP 8n
+\fB\-Fill\fP \f[I]value\fP \f[I]address-range\fP
+This filter may be used to fill any gaps in the data with bytes equal
+to \f[I]value\fP.  The fill will only occur in the address range given.
+.\" ----------  G  ---------------------------------------------------------
+.\" ----------  H  ---------------------------------------------------------
+.\" ----------  I  ---------------------------------------------------------
+.\" ----------  J  ---------------------------------------------------------
+.\" ----------  K  ---------------------------------------------------------
+.\" ----------  L  ---------------------------------------------------------
+.\"             little endian adler 16
+.TP 8n
+\fB\-Little_Endian_Adler_16\fP \f[I]address\fP
+.RS
+This filter may be used to insert an Adler 16-bit checksum
+of the data into the data.  Two bytes, in little-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\f[I]not\fP in the order they appear
+in the input).
+.PP
+\f[B]Note:\fP If you have holes in your data, you will get a different
+Adler checksum than if there were no holes.  This is important because
+the in-memory EPROM image will not have holes.  You almost always want
+to use the \fB\-fill\fP filter before any of the Adler filters.
+You will receive a warning if the data presented for Adler checksum has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Adler-32
+.RE
+.\"             little endian adler 32
+.TP 8n
+\fB\-Little_Endian_Adler_32\fP \f[I]address\fP
+.RS
+This filter may be used to insert a Adler 32-bit checksum
+of the data into the data.  Four bytes, in little-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\f[I]not\fP in the order they appear
+in the input).
+.PP
+\f[B]Note:\fP If you have holes in your data, you will get a different
+Adler checksum than if there were no holes.  This is important because
+the in-memory EPROM image will not have holes.  You almost always want
+to use the \fB\-fill\fP filter before any of the Adler checksum filters.
+You will receive a warning if the data presented for Adler checksum has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Adler-32
+.RE
+.\"             little endian checksum bitnot
+.TP 8n
+\fB\-Little_Endian_Checksum_BitNot\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
+\f[I]width\fP ]]
+This filter may be used to insert the one's complement (bitnot)
+checksum of the data into the data, least significant byte first.
+Otherwise similar to the above.
+.\"             little endian checksum negative
+.TP 8n
+\fB\-Little_Endian_Checksum_Negative\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
+\f[I]width\fP ]]
+This filter may be used to insert the two's complement (negative)
+checksum of the data into the data.  Otherwise similar to the above.
+.\"             little endian checksum positive
+.TP 8n
+\fB\-Little_Endian_Checksum_Positive\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
+\f[I]width\fP ]]
+This filter may be used to insert the simple checksum of the data into
+the data.  Otherwise similar to the above.
+.\"             little endian crc16
+.TP 8n
+\fB\-Little_Endian_CRC16\fP \f[I]address\fP
+As above, except little-endian order.
+.\"             little endian crc32
+.TP 8n
+\fB\-Little_Endian_CRC32\fP \f[I]address\fP
+As above, except little-endian order.
+.\"             little endian exclusive length
+.TP 8n
+\fB\-Little_Endian_Exclusive_Length\fP \f[I]address\fP [ \f[I]nbytes\fP \
+[ \f[I]width\fP ]]
 As above, except that the result does \f[B]not\fP include the length itself.
+.\"             little endian exclusive maximum
+.TP 8n
+\fB\-Little_Endian_Exclusive_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+As above, except that the result does \f[B]not\fP include the length itself.
+.\"             little endian exclusive minimum
+.TP 8n
+\fB\-Little_Endian_Exclusive_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+As above, except that the result does \f[B]not\fP include the length itself.
+.\"             little endian fletcher 16
+.TP 8n
+\fB\-Little_Endian_Fletcher_16\fP \f[I]address\fP
+.RS
+This filter may be used to insert an Fletcher 16-bit checksum
+of the data into the data.  Two bytes, in little-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\f[I]not\fP in the order they appear
+in the input).
+.PP
+\f[B]Note:\fP If you have holes in your data, you will get a different
+Fletcher checksum than if there were no holes.  This is important because
+the in-memory EPROM image will not have holes.  You almost always want
+to use the \fB\-fill\fP filter before any of the Fletcher filters.
+You will receive a warning if the data presented for Fletcher checksum
+has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Fletcher%27s_checksum
+.RE
+.\"             little endian fletcher 32
+.TP 8n
+\fB\-Little_Endian_Fletcher_32\fP \f[I]address\fP
+.RS
+This filter may be used to insert a Fletcher 32-bit checksum
+of the data into the data.  Four bytes, in little-endian order, are inserted
+at the address given.  Holes in the input data are ignored.  Bytes are
+processed in ascending address order (\f[I]not\fP in the order they appear
+in the input).
+.PP
+\f[B]Note:\fP If you have holes in your data, you will get a different
+Fletcher checksum than if there were no holes.  This is important because
+the in-memory EPROM image will not have holes.  You almost always want
+to use the \fB\-fill\fP filter before any of the Fletcher checksum filters.
+You will receive a warning if the data presented for Fletcher checksum
+has holes.
+.PP
+You should also be aware that the lower and upper bounds of your data
+may not be the same as the lower and upper bounds of your EPROM.  This
+is another reason to use the \fB\-fill\fP filter, because it will
+establish the data across the full EPROM address range.
+.PP
+http://en.wikipedia.org/wiki/Fletcher%27s_checksum
+.RE
+.\"             little endian length
+.TP 8n
+\fB\-Little_Endian_Length\fP \f[I]address\fP [ \f[I]nbytes\fP [ \f[I]width\fP ]]
+As above, however
+the value will be written with the least significant byte first.
+.\"             little endian maximum
+.TP 8n
+\fB\-Little_Endian_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+As above, however
+the value will be written with the least significant byte first.
+.\"             little endian minimum
 .TP 8n
 \fB\-Little_Endian_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
 As above, however
 the value will be written with the least significant byte first.
+.\" ----------  M  ---------------------------------------------------------
 .TP 8n
-\fB\-Little_Endian_Exclusive_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
-As above, except that the result does \f[B]not\fP include the length itself.
+\fB\-Message_Digest_5 \f[I]address\fP
+This filter may be used to insert an MD5 checksum into the data.
+.\" ----------  N  ---------------------------------------------------------
+.\"             not
+.TP 8n
+\fB\-NOT\fP
+This filter may be used to bit-wise NOT the value of every data byte.
+This is useful if you need to invert the data.
+Only existing data is altered, no holes are filled.
+.\" ----------  O  ---------------------------------------------------------
+.\"             offset
 .TP 8n
 \fB\-OFfset\fP \f[I]nbytes\fP
 .RS
@@ -733,6 +765,22 @@ first address in memory of your data.  If you want to change where your
 monitor will start executing, use the \fB\-execution-start-address\fP
 option (\f[I]srec_cat\fP(1) only).
 .RE
+.\"             or
+.TP 8n
+\fB\-OR\fP \f[I]value\fP
+This filter may be used to bit-wise OR a \f[I]value\fP to every data byte.
+This is useful if you need to set bits.
+Only existing data is altered, no holes are filled.
+.\" ----------  P  ---------------------------------------------------------
+.\" ----------  Q  ---------------------------------------------------------
+.\" ----------  R  ---------------------------------------------------------
+.\"             random fill
+.TP 8n
+\fB\-Random_Fill\fP \f[I]address-range\fP
+This filter may be used to fill any gaps in the data with random bytes.
+The fill will only occur in the address range given.
+.\" ----------  S  ---------------------------------------------------------
+.\"             split
 .TP 8n
 \fB\-SPlit\fP \f[I]multiple\fP [ \f[I]offset\fP [ \f[I]width\fP ] ]
 This filter may be used to split the input into a subset of the data,
@@ -743,12 +791,26 @@ range (defaults to 0), the \f[I]width\fP is the number of bytes to extract
 (defaults to 1) within the multiple.  In order to leave no gaps, the
 output addresses are (\f[I]width\fP / \f[I]multiple\fP) times the input
 addresses.
+.\" ----------  T  ---------------------------------------------------------
+.\" ----------  U  ---------------------------------------------------------
+.\"             unfill
+.TP 8n
+\fB\-UnFill\fP \f[I]value\fP [ \f[I]min-run-length\fP ]
+This filter may be used to create gaps in the data with bytes equal
+to \f[I]value\fP.  You can think of it as reversing the effects of the
+\fB\-Fill\fP filter.  The gaps will only be created if the are at least
+\f[I]min-run-length\fP bytes in a row (defaults to 1).
+.\"             unsplit
 .TP 8n
 \fB\-Un_SPlit\fP \f[I]multiple\fP [ \f[I]offset\fP [ \f[I]width\fP ] ]
 This filter may be used to reverse the effects of the split filter.
 The arguments are identical.
 Note that the address range is expanded (\f[I]multiple\fP / \f[I]width\fP)
 times, leaving holes between the stripes.
+.\" ----------  W  -------------------------------------------------------------
+.\" ----------  X  -------------------------------------------------------------
+.\" ----------  Y  -------------------------------------------------------------
+.\" ----------  Z  -------------------------------------------------------------
 .SS Address Ranges
 There are three ways to specify an address range:
 .TP 8n

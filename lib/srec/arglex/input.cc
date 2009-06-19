@@ -68,6 +68,7 @@
 #include <lib/srec/input/filter/message/crc32.h>
 #include <lib/srec/input/filter/message/fletcher16.h>
 #include <lib/srec/input/filter/message/fletcher32.h>
+#include <lib/srec/input/filter/message/gcrypt.h>
 #include <lib/srec/input/filter/not.h>
 #include <lib/srec/input/filter/offset.h>
 #include <lib/srec/input/filter/or.h>
@@ -690,6 +691,17 @@ srec_arglex::get_input()
                         end,
                         inclusive
                     );
+            }
+            break;
+
+        case token_md5:
+            {
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_md5(ifp, address);
             }
             break;
 

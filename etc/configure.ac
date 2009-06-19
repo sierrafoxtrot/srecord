@@ -1,6 +1,6 @@
 dnl
 dnl  srecord - manipulate eprom load files
-dnl  Copyright (C) 1998, 1999, 2002, 2006-2008 Peter Miller
+dnl  Copyright (C) 1998, 1999, 2002, 2006-2009 Peter Miller
 dnl
 dnl  This program is free software; you can redistribute it and/or modify
 dnl  it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ AC_PROG_RANLIB
 AC_CHECK_PROGS(GROFF, groff roff)
 AC_CHECK_PROGS(SOELIM, gsoelim soelim roffpp)
 AC_CHECK_FUNCS(snprintf vsnprintf)
+AC_CHECK_LIB(gcrypt, gcry_md_open)
 
 dnl
 dnl Make sure Boost is installed.
@@ -156,7 +157,7 @@ esac
 
 AH_TOP([/*
  * srecord - manipulate eprom load files
- * Copyright (C) 1998-2002, 2006-2008 Peter Miller
+ * Copyright (C) 1998-2002, 2006-2009 Peter Miller
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

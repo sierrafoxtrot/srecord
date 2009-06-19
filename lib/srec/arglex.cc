@@ -131,6 +131,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Little_Endian_MInimum", token_minimum_le, },
         { "-MAximum", token_maximum_address, },        // deprecated, put second
         { "-MAximum-Address", token_maximum_address, },
+        { "-Message_Digest_5", token_md5 },
         { "-MINUs", token_minus, },
         { "-MInimum", token_minimum_address, },        // deprecated, put second
         { "-MInimum-Address", token_minimum_address, },
