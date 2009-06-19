@@ -52,22 +52,22 @@
 #include <lib/srec/input/file/ti_txt.h>
 #include <lib/srec/input/file/vmem.h>
 #include <lib/srec/input/file/wilson.h>
-#include <lib/srec/input/filter/adler16.h>
-#include <lib/srec/input/filter/adler32.h>
 #include <lib/srec/input/filter/and.h>
 #include <lib/srec/input/filter/byte_swap.h>
 #include <lib/srec/input/filter/checksum/bitnot.h>
 #include <lib/srec/input/filter/checksum/negative.h>
 #include <lib/srec/input/filter/checksum/positive.h>
-#include <lib/srec/input/filter/crc16.h>
-#include <lib/srec/input/filter/crc32.h>
 #include <lib/srec/input/filter/crop.h>
 #include <lib/srec/input/filter/fill.h>
-#include <lib/srec/input/filter/fletcher16.h>
-#include <lib/srec/input/filter/fletcher32.h>
 #include <lib/srec/input/filter/interval/length.h>
 #include <lib/srec/input/filter/interval/maximum.h>
 #include <lib/srec/input/filter/interval/minimum.h>
+#include <lib/srec/input/filter/message/adler16.h>
+#include <lib/srec/input/filter/message/adler32.h>
+#include <lib/srec/input/filter/message/crc16.h>
+#include <lib/srec/input/filter/message/crc32.h>
+#include <lib/srec/input/filter/message/fletcher16.h>
+#include <lib/srec/input/filter/message/fletcher32.h>
 #include <lib/srec/input/filter/not.h>
 #include <lib/srec/input/filter/offset.h>
 #include <lib/srec/input/filter/or.h>
@@ -467,7 +467,13 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address(name, address);
-                ifp = srec_input_filter_adler16::create(ifp, address, end);
+                ifp =
+                    srec_input_filter_message_adler16::create
+                    (
+                        ifp,
+                        address,
+                        end
+                    );
             }
             break;
 
@@ -479,7 +485,13 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address(name, address);
-                ifp = srec_input_filter_adler32::create(ifp, address, end);
+                ifp =
+                    srec_input_filter_message_adler32::create
+                    (
+                        ifp,
+                        address,
+                        end
+                    );
             }
             break;
 
@@ -501,7 +513,8 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address(name, address);
-                ifp = srec_input_filter_crc16::create(ifp, address, end);
+                ifp =
+                    srec_input_filter_message_crc16::create(ifp, address, end);
             }
             break;
 
@@ -513,7 +526,8 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address(name, address);
-                ifp = srec_input_filter_crc32::create(ifp, address, end);
+                ifp =
+                    srec_input_filter_message_crc32::create(ifp, address, end);
             }
             break;
 
@@ -545,7 +559,13 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address(name, address);
-                ifp = srec_input_filter_fletcher16::create(ifp, address, end);
+                ifp =
+                    srec_input_filter_message_fletcher16::create
+                    (
+                        ifp,
+                        address,
+                        end
+                    );
             }
             break;
 
@@ -557,7 +577,13 @@ srec_arglex::get_input()
                 token_next();
                 unsigned long address;
                 get_address(name, address);
-                ifp = srec_input_filter_fletcher32::create(ifp, address, end);
+                ifp =
+                    srec_input_filter_message_fletcher32::create
+                    (
+                        ifp,
+                        address,
+                        end
+                    );
             }
             break;
 

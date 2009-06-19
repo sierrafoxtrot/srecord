@@ -16,26 +16,26 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_SREC_INPUT_FILTER_FLETCHER32_H
-#define LIB_SREC_INPUT_FILTER_FLETCHER32_H
+#ifndef LIB_SREC_INPUT_FILTER_MESSAGE_FLETCHER32_H
+#define LIB_SREC_INPUT_FILTER_MESSAGE_FLETCHER32_H
 
 #include <lib/fletcher32.h>
 #include <lib/endian.h>
-#include <lib/srec/input/filter.h>
-#include <lib/srec/memory.h>
+#include <lib/srec/input/filter/message.h>
 
 /**
-  * The srec_input_filter_fletcher32 class is used to represent the state of
-  * a checksum filter that inserts an Fletcher 32 checksum into the data.
+  * The srec_input_filter_message_fletcher32 class is used to represent
+  * the state of a checksum filter that inserts an Fletcher 32 checksum
+  * into the data.
   */
-class srec_input_filter_fletcher32:
-    public srec_input_filter
+class srec_input_filter_message_fletcher32:
+    public srec_input_filter_message
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_fletcher32();
+    virtual ~srec_input_filter_message_fletcher32();
 
 private:
     /**
@@ -44,7 +44,7 @@ private:
       * @param end
       *     The byte order.
       */
-    srec_input_filter_fletcher32(const srec_input::pointer &deeper,
+    srec_input_filter_message_fletcher32(const srec_input::pointer &deeper,
         unsigned long address, endian_t end);
 
 public:
@@ -62,7 +62,10 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    void process(const srec_memory &input, srec_record &output);
+
+    // See base class for documentation.
+    const char *get_algorithm_name() const;
 
 private:
     /**
@@ -78,54 +81,22 @@ private:
     endian_t end;
 
     /**
-      * The buffer instance variable is used to remember the contents
-      * of the deeper file.  The deeper file must be read completely in
-      * order to calculate the Fletcher 32 checksum, and the input may be
-      * out of address order, necessitating this buffer.
-      */
-    srec_memory buffer;
-
-    /**
-      * The buffer_pos instance variable is used to remember where we
-      * are up to in processing 'buffer'.
-      */
-    unsigned long buffer_pos;
-
-    /**
-      * The have_forwarded_header instance variable is used to remember
-      * whether we have returned the file header to our reader yet.
-      */
-    bool have_forwarded_header;
-
-    /**
-      * The have_given_checksum instance variable is used to remember
-      * whether we have returned the Fletcher 32 checksum to our reader yet.
-      */
-    bool have_given_checksum;
-
-    /**
-      * The have_forwarded_start_address instance variable is used to
-      * remember whether we have returned the execution start address to
-      * our reader yet.
-      */
-    bool have_forwarded_start_address;
-
-    /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_fletcher32();
+    srec_input_filter_message_fletcher32();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_fletcher32(const srec_input_filter_fletcher32 &);
+    srec_input_filter_message_fletcher32(
+        const srec_input_filter_message_fletcher32 &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_fletcher32 &operator=(
-        const srec_input_filter_fletcher32 &);
+    srec_input_filter_message_fletcher32 &operator=(
+        const srec_input_filter_message_fletcher32 &);
 };
 
 // vim:ts=8:sw=4:et
-#endif // LIB_SREC_INPUT_FILTER_FLETCHER32_H
+#endif // LIB_SREC_INPUT_FILTER_MESSAGE_FLETCHER32_H
