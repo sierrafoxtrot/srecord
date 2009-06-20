@@ -741,7 +741,7 @@ the value will be written with the least significant byte first.
 .\" ----------  M  ---------------------------------------------------------
 .TP 8n
 \fB\-Message_Digest_5 \f[I]address\fP
-This filter may be used to insert an MD5 checksum into the data.
+This filter may be used to insert an MD5 hash into the data.
 .\" ----------  N  ---------------------------------------------------------
 .\"             not
 .TP 8n
@@ -780,6 +780,10 @@ Only existing data is altered, no holes are filled.
 This filter may be used to fill any gaps in the data with random bytes.
 The fill will only occur in the address range given.
 .\" ----------  S  ---------------------------------------------------------
+.\"             secure hash algorithm 1
+.TP 8n
+\fB\-Secure_Hash_Algorithm_1 \f[I]address\fP
+This filter may be used to insert a SHA1 hash into the data.
 .\"             split
 .TP 8n
 \fB\-SPlit\fP \f[I]multiple\fP [ \f[I]offset\fP [ \f[I]width\fP ] ]

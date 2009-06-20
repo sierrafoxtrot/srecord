@@ -53,9 +53,53 @@ private:
       *     Where to place the hash in memory.
       */
     srec_input_filter_message_gcrypt(const srec_input::pointer &deeper,
-        int algo, bool hmac, unsigned long address);
+        unsigned long address, int algo, bool hmac);
+
+private:
+    /**
+      * The create class method is used to create a new dynamically
+      * allocated instance of this class.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param algo
+      *     The algorithm to be used.  This is for debug.
+      *     The actual algorithm numbers are private to the class.
+      *     Choose a random number, it will likely segfault.  Seriously.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create(const srec_input::pointer &deeper,
+        unsigned long address, int algo, bool hmac = false);
+
+    /**
+      * The algorithm_from_name class method is used to translate an
+      * algorithm name into an algorithm number.
+      *
+      * @param name
+      *     The name of the algorithm.
+      * @return
+      *     an algorithm number.  It does not return if the name is
+      *     unknown, it exits with a fatal error message instead.
+      */
+    static int algorithm_from_name(const char *name);
 
 public:
+    /**
+      * The create class method is used to create a new dynamically
+      * allocated instance of this class.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param algo
+      *     The algorithm to be used.  This is for debug.
+      *     The actual algorithm numbers are private to the class.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create(const srec_input::pointer &deeper,
+        unsigned long address, const char *algo, bool hmac = false);
+
     /**
       * The create_md5 class method is used to create a new dynamically
       * allocated instance of this class, that calculates MD5 hashes.
@@ -66,6 +110,18 @@ public:
       *     Where to place the hash in memory.
       */
     static pointer create_md5(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
+      * The create_sha1 class method is used to create a new dynamically
+      * allocated instance of this class, that calculates SHA1 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_sha1(const srec_input::pointer &deeper,
         unsigned long address);
 
 protected:

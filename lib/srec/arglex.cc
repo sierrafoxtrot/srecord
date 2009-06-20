@@ -99,6 +99,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Four_Packed_Code", token_four_packed_code, },
         { "-GENerate", token_generator },
         { "-GENerator", token_generator },
+        { "-Gnu_CRypt", token_gcrypt }, // undocumented
         { "-GUess", token_guess, },
         { "-HEXadecimal_Dump", token_hexdump, },
         { "-HEXadecimal_STyle", token_style_hexadecimal, },
@@ -163,6 +164,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Round_Nearest", token_round_nearest, },
         { "-Round_Off", token_round_nearest, },
         { "-Round_Up", token_round_up, },
+        { "-Secure_Hash_Algorithm_1", token_sha1 },
         { "-SIGnetics", token_signetics, },
         { "-SPAsm", token_spasm_be, }, // is this right?
         { "-SPAsm_BigEndian", token_spasm_be, },

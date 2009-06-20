@@ -16,6 +16,8 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
+#include <lib/quit.h>
+#include <lib/sizeof.h>
 #include <lib/srec/input/filter/message/gcrypt.h>
 #include <lib/srec/memory/walker/gcrypt.h>
 #include <lib/srec/record.h>
@@ -28,9 +30,9 @@ srec_input_filter_message_gcrypt::~srec_input_filter_message_gcrypt()
 
 srec_input_filter_message_gcrypt::srec_input_filter_message_gcrypt(
     const srec_input::pointer &a_deeper,
+    unsigned long a_address,
     int a_algo,
-    bool a_hmac,
-    unsigned long a_address
+    bool a_hmac
 ) :
     srec_input_filter_message(a_deeper),
     algo(a_algo),
@@ -41,8 +43,8 @@ srec_input_filter_message_gcrypt::srec_input_filter_message_gcrypt(
 
 
 srec_input::pointer
-srec_input_filter_message_gcrypt::create_md5(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srec_input_filter_message_gcrypt::create(const srec_input::pointer &a_deeper,
+    unsigned long a_address, int algo, bool hmac)
 {
     return
         pointer
@@ -50,11 +52,68 @@ srec_input_filter_message_gcrypt::create_md5(
             new srec_input_filter_message_gcrypt
             (
                 a_deeper,
-                GCRY_MD_MD5,
-                false,
-                a_address
+                a_address,
+                algo,
+                hmac
             )
         );
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create(const srec_input::pointer &a_deeper,
+    unsigned long a_address, const char *name, bool a_hmac)
+{
+    return create(a_deeper, a_address, algorithm_from_name(name), a_hmac);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_md5(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_MD5);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_sha1(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_SHA1);
+}
+
+
+int
+srec_input_filter_message_gcrypt::algorithm_from_name(const char *name)
+{
+    static int table[] =
+    {
+        GCRY_MD_MD5,
+        GCRY_MD_SHA1,
+        GCRY_MD_RMD160,
+        GCRY_MD_MD2,
+        GCRY_MD_TIGER,
+        GCRY_MD_HAVAL,
+        GCRY_MD_SHA256,
+        GCRY_MD_SHA384,
+        GCRY_MD_SHA512,
+        GCRY_MD_SHA224,
+        GCRY_MD_MD4,
+        GCRY_MD_CRC32,
+        GCRY_MD_CRC32_RFC1510,
+        GCRY_MD_CRC24_RFC2440,
+        GCRY_MD_WHIRLPOOL,
+    };
+
+    for (const int *tp = table; tp < ENDOF(table); ++tp)
+    {
+        int algo = *tp;
+        if (0 == strcasecmp(name, gcry_md_algo_name(algo)))
+            return algo;
+    }
+    quit_default.fatal_error("gcrypt algorithm \"%s\" unknown", name);
+    return -1;
 }
 
 

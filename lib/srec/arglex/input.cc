@@ -694,6 +694,25 @@ srec_arglex::get_input()
             }
             break;
 
+        case token_gcrypt:
+            {
+                const char *name = token_name();
+                token_next();
+                std::string algo = get_string(name);
+                unsigned long address = 0;
+                get_address(name, address);
+                bool hmac = false;
+                ifp =
+                    srec_input_filter_message_gcrypt::create
+                    (
+                        ifp,
+                        address,
+                        algo.c_str(),
+                        hmac
+                    );
+            }
+            break;
+
         case token_md5:
             {
                 const char *name = token_name();
@@ -702,6 +721,17 @@ srec_arglex::get_input()
                 get_address(name, address);
                 ifp =
                     srec_input_filter_message_gcrypt::create_md5(ifp, address);
+            }
+            break;
+
+        case token_sha1:
+            {
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_sha1(ifp, address);
             }
             break;
 
