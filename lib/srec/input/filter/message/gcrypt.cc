@@ -77,6 +77,14 @@ srec_input_filter_message_gcrypt::create_md5(
 
 
 srec_input::pointer
+srec_input_filter_message_gcrypt::create_rmd160(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_RMD160);
+}
+
+
+srec_input::pointer
 srec_input_filter_message_gcrypt::create_sha1(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {

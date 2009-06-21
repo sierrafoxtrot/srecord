@@ -139,6 +139,7 @@ public:
         token_range_padding,
         token_repeat_data,
         token_repeat_string,
+        token_rmd160,
         token_round_down,
         token_round_nearest,
         token_round_up,

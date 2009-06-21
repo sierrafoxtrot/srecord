@@ -159,6 +159,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-RAw", token_binary, },
         { "-REPeat_Data", token_repeat_data, },
         { "-REPeat_String", token_repeat_string, },
+        { "-Ripe_Message_Digest_160", token_rmd160 },
         { "-Random_Fill", token_random_fill, },
         { "-Round", token_round_nearest, },
         { "-Round_Down", token_round_down, },

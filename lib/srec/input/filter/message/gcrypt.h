@@ -113,6 +113,18 @@ public:
         unsigned long address);
 
     /**
+      * The create_rmd160 class method is used to create a new dynamically
+      * allocated instance of this class, that calculates RMD160 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_rmd160(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
       * The create_sha1 class method is used to create a new dynamically
       * allocated instance of this class, that calculates SHA1 hashes.
       *

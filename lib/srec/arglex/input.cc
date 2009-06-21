@@ -459,6 +459,7 @@ srec_arglex::get_input()
     //
     for (;;)
     {
+        // Keep this switch sorted in alphabetical order.
         switch (token_cur())
         {
         case token_adler16_be:
@@ -497,106 +498,6 @@ srec_arglex::get_input()
             }
             break;
 
-        case token_byte_swap:
-            token_next();
-            ifp = srec_input_filter_byte_swap::create(ifp);
-            break;
-
-        case token_not:
-            token_next();
-            ifp = srec_input_filter_not::create(ifp);
-            break;
-
-        case token_crc16_be:
-        case token_crc16_le:
-            {
-                endian_t end = get_endian_by_token();
-                const char *name = token_name();
-                token_next();
-                unsigned long address;
-                get_address(name, address);
-                ifp =
-                    srec_input_filter_message_crc16::create(ifp, address, end);
-            }
-            break;
-
-        case token_crc32_be:
-        case token_crc32_le:
-            {
-                const char *name = token_name();
-                endian_t end = get_endian_by_token();
-                token_next();
-                unsigned long address;
-                get_address(name, address);
-                ifp =
-                    srec_input_filter_message_crc32::create(ifp, address, end);
-            }
-            break;
-
-        case token_crop:
-            token_next();
-            ifp = srec_input_filter_crop::create(ifp, get_interval("-Crop"));
-            break;
-
-        case token_exclude:
-            token_next();
-            ifp =
-                srec_input_filter_crop::create(ifp, -get_interval("-Exclude"));
-            break;
-
-        case token_fill:
-            {
-                token_next();
-                int filler = get_number("--Fill", 0, 255);
-                interval range = get_interval_small("--Fill");
-                ifp = srec_input_filter_fill::create(ifp, filler, range);
-            }
-            break;
-
-        case token_fletcher16_be:
-        case token_fletcher16_le:
-            {
-                const char *name = token_name();
-                endian_t end = get_endian_by_token();
-                token_next();
-                unsigned long address;
-                get_address(name, address);
-                ifp =
-                    srec_input_filter_message_fletcher16::create
-                    (
-                        ifp,
-                        address,
-                        end
-                    );
-            }
-            break;
-
-        case token_fletcher32_be:
-        case token_fletcher32_le:
-            {
-                const char *name = token_name();
-                endian_t end = get_endian_by_token();
-                token_next();
-                unsigned long address;
-                get_address(name, address);
-                ifp =
-                    srec_input_filter_message_fletcher32::create
-                    (
-                        ifp,
-                        address,
-                        end
-                    );
-            }
-            break;
-
-        case token_random_fill:
-            {
-                token_next();
-                interval range = get_interval_small("-Random_Fill");
-                ifp = srec_input_filter_random_fill::create(ifp, range);
-            }
-            break;
-
         case token_and:
             {
                 token_next();
@@ -621,162 +522,9 @@ srec_arglex::get_input()
             ifp = srec_input_filter_bitrev::create(ifp);
             break;
 
-        case token_xor:
-            {
-                token_next();
-                int filler = get_number("--xor", 0, 255);
-                ifp = srec_input_filter_xor::create(ifp, filler);
-            }
-            break;
-
-        case token_or:
-            {
-                token_next();
-                int filler = get_number("--or value", 0, 255);
-                ifp = srec_input_filter_or::create(ifp, filler);
-            }
-            break;
-
-        case token_length:
-            fatal_error("Use --big-endian-length or --little-endian-length");
-            // NOTREACHED
-
-        case token_exclusive_length:
-            fatal_error
-            (
-                "Use --big-endian-exclusive-length or "
-                    "--little-endian-exclusive-length"
-            );
-            // NOTREACHED
-
-        case token_length_be:
-        case token_length_le:
-        case token_exclusive_length_be:
-        case token_exclusive_length_le:
-            {
-                const char *name = token_name();
-                endian_t end = get_endian_by_token();
-                bool inclusive = get_inclusive_by_token();
-                token_next();
-                unsigned long address;
-                int nbytes, width;
-                get_address_nbytes_width(name, address, nbytes, width);
-                ifp =
-                    srec_input_filter_interval_length::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        end,
-                        width,
-                        inclusive
-                    );
-            }
-            break;
-
-        case token_exclusive_maximum:
-            fatal_error
-            (
-                "Use --big-endian-exclusive-maximum or "
-                    "--little-endian-exclusive-maximum"
-            );
-            // NOTREACHED
-
-        case token_maximum_be:
-        case token_maximum_le:
-        case token_exclusive_maximum_be:
-        case token_exclusive_maximum_le:
-            {
-                const char *name = token_name();
-                endian_t end = get_endian_by_token();
-                bool inclusive = get_inclusive_by_token();
-                token_next();
-                unsigned long address;
-                int nbytes;
-                get_address_and_nbytes(name, address, nbytes);
-                ifp =
-                    srec_input_filter_interval_maximum::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        end,
-                        inclusive
-                    );
-            }
-            break;
-
-        case token_gcrypt:
-            {
-                const char *name = token_name();
-                token_next();
-                std::string algo = get_string(name);
-                unsigned long address = 0;
-                get_address(name, address);
-                bool hmac = false;
-                ifp =
-                    srec_input_filter_message_gcrypt::create
-                    (
-                        ifp,
-                        address,
-                        algo.c_str(),
-                        hmac
-                    );
-            }
-            break;
-
-        case token_md5:
-            {
-                const char *name = token_name();
-                token_next();
-                unsigned long address = 0;
-                get_address(name, address);
-                ifp =
-                    srec_input_filter_message_gcrypt::create_md5(ifp, address);
-            }
-            break;
-
-        case token_sha1:
-            {
-                const char *name = token_name();
-                token_next();
-                unsigned long address = 0;
-                get_address(name, address);
-                ifp =
-                    srec_input_filter_message_gcrypt::create_sha1(ifp, address);
-            }
-            break;
-
-        case token_exclusive_minimum:
-            fatal_error
-            (
-                "Use --big-endian-exclusive-minimum or "
-                    "--little-endian-exclusive-minimum"
-            );
-            // NOTREACHED
-
-        case token_minimum_be:
-        case token_minimum_le:
-        case token_exclusive_minimum_be:
-        case token_exclusive_minimum_le:
-            {
-                const char *name = token_name();
-                endian_t end = get_endian_by_token();
-                bool inclusive = get_inclusive_by_token();
-                token_next();
-                unsigned long address;
-                int nbytes;
-                get_address_and_nbytes(name, address, nbytes);
-                ifp =
-                    srec_input_filter_interval_minimum::create
-                    (
-                        ifp,
-                        address,
-                        nbytes,
-                        end,
-                        inclusive
-                    );
-            }
+        case token_byte_swap:
+            token_next();
+            ifp = srec_input_filter_byte_swap::create(ifp);
             break;
 
         case token_checksum_be_bitnot:
@@ -842,11 +590,271 @@ srec_arglex::get_input()
             }
             break;
 
+        case token_crc16_be:
+        case token_crc16_le:
+            {
+                endian_t end = get_endian_by_token();
+                const char *name = token_name();
+                token_next();
+                unsigned long address;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_crc16::create(ifp, address, end);
+            }
+            break;
+
+        case token_crc32_be:
+        case token_crc32_le:
+            {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
+                token_next();
+                unsigned long address;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_crc32::create(ifp, address, end);
+            }
+            break;
+
+        case token_crop:
+            token_next();
+            ifp = srec_input_filter_crop::create(ifp, get_interval("-Crop"));
+            break;
+
+        case token_exclude:
+            token_next();
+            ifp =
+                srec_input_filter_crop::create(ifp, -get_interval("-Exclude"));
+            break;
+
+        case token_exclusive_length:
+            fatal_error
+            (
+                "Use --big-endian-exclusive-length or "
+                    "--little-endian-exclusive-length"
+            );
+            // NOTREACHED
+
+        case token_exclusive_maximum:
+            fatal_error
+            (
+                "Use --big-endian-exclusive-maximum or "
+                    "--little-endian-exclusive-maximum"
+            );
+            // NOTREACHED
+
+        case token_exclusive_minimum:
+            fatal_error
+            (
+                "Use --big-endian-exclusive-minimum or "
+                    "--little-endian-exclusive-minimum"
+            );
+            // NOTREACHED
+
+        case token_fill:
+            {
+                token_next();
+                int filler = get_number("--Fill", 0, 255);
+                interval range = get_interval_small("--Fill");
+                ifp = srec_input_filter_fill::create(ifp, filler, range);
+            }
+            break;
+
+        case token_fletcher16_be:
+        case token_fletcher16_le:
+            {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
+                token_next();
+                unsigned long address;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_fletcher16::create
+                    (
+                        ifp,
+                        address,
+                        end
+                    );
+            }
+            break;
+
+        case token_fletcher32_be:
+        case token_fletcher32_le:
+            {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
+                token_next();
+                unsigned long address;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_fletcher32::create
+                    (
+                        ifp,
+                        address,
+                        end
+                    );
+            }
+            break;
+
+        case token_gcrypt:
+            {
+                const char *name = token_name();
+                token_next();
+                std::string algo = get_string(name);
+                unsigned long address = 0;
+                get_address(name, address);
+                bool hmac = false;
+                ifp =
+                    srec_input_filter_message_gcrypt::create
+                    (
+                        ifp,
+                        address,
+                        algo.c_str(),
+                        hmac
+                    );
+            }
+            break;
+
+        case token_length:
+            fatal_error("Use --big-endian-length or --little-endian-length");
+            // NOTREACHED
+
+        case token_length_be:
+        case token_length_le:
+        case token_exclusive_length_be:
+        case token_exclusive_length_le:
+            {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
+                bool inclusive = get_inclusive_by_token();
+                token_next();
+                unsigned long address;
+                int nbytes, width;
+                get_address_nbytes_width(name, address, nbytes, width);
+                ifp =
+                    srec_input_filter_interval_length::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        end,
+                        width,
+                        inclusive
+                    );
+            }
+            break;
+
+        case token_maximum_be:
+        case token_maximum_le:
+        case token_exclusive_maximum_be:
+        case token_exclusive_maximum_le:
+            {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
+                bool inclusive = get_inclusive_by_token();
+                token_next();
+                unsigned long address;
+                int nbytes;
+                get_address_and_nbytes(name, address, nbytes);
+                ifp =
+                    srec_input_filter_interval_maximum::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        end,
+                        inclusive
+                    );
+            }
+            break;
+
+        case token_minimum_be:
+        case token_minimum_le:
+        case token_exclusive_minimum_be:
+        case token_exclusive_minimum_le:
+            {
+                const char *name = token_name();
+                endian_t end = get_endian_by_token();
+                bool inclusive = get_inclusive_by_token();
+                token_next();
+                unsigned long address;
+                int nbytes;
+                get_address_and_nbytes(name, address, nbytes);
+                ifp =
+                    srec_input_filter_interval_minimum::create
+                    (
+                        ifp,
+                        address,
+                        nbytes,
+                        end,
+                        inclusive
+                    );
+            }
+            break;
+
+        case token_md5:
+            {
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_md5(ifp, address);
+            }
+            break;
+
+        case token_not:
+            token_next();
+            ifp = srec_input_filter_not::create(ifp);
+            break;
+
         case token_offset:
             {
                 token_next();
                 unsigned long amount = get_number("--offset");
                 ifp = srec_input_filter_offset::create(ifp, amount);
+            }
+            break;
+
+        case token_or:
+            {
+                token_next();
+                int filler = get_number("--or value", 0, 255);
+                ifp = srec_input_filter_or::create(ifp, filler);
+            }
+            break;
+
+        case token_random_fill:
+            {
+                token_next();
+                interval range = get_interval_small("-Random_Fill");
+                ifp = srec_input_filter_random_fill::create(ifp, range);
+            }
+            break;
+
+        case token_rmd160:
+            {
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_rmd160
+                    (
+                        ifp,
+                        address
+                    );
+            }
+            break;
+
+        case token_sha1:
+            {
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_sha1(ifp, address);
             }
             break;
 
@@ -930,6 +938,14 @@ srec_arglex::get_input()
                         split_offset,
                         split_width
                     );
+            }
+            break;
+
+        case token_xor:
+            {
+                token_next();
+                int filler = get_number("--xor", 0, 255);
+                ifp = srec_input_filter_xor::create(ifp, filler);
             }
             break;
 
