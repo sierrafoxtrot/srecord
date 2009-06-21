@@ -102,6 +102,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-GENerator", token_generator },
         { "-Gnu_CRypt", token_gcrypt }, // undocumented
         { "-GUess", token_guess, },
+        { "-HAVal", token_haval, },
         { "-HEXadecimal_Dump", token_hexdump, },
         { "-HEXadecimal_STyle", token_style_hexadecimal, },
         { "-IGnore_Checksums", token_ignore_checksums, },
@@ -133,6 +134,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Little_Endian_MInimum", token_minimum_le, },
         { "-MAximum", token_maximum_address, },        // deprecated, put second
         { "-MAximum-Address", token_maximum_address, },
+        { "-Message_Digest_2", token_md2 },
         { "-Message_Digest_5", token_md5 },
         { "-MINUs", token_minus, },
         { "-MInimum", token_minimum_address, },        // deprecated, put second
@@ -167,6 +169,10 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Round_Off", token_round_nearest, },
         { "-Round_Up", token_round_up, },
         { "-Secure_Hash_Algorithm_1", token_sha1 },
+        { "-Secure_Hash_Algorithm_224", token_sha224 },
+        { "-Secure_Hash_Algorithm_256", token_sha256 },
+        { "-Secure_Hash_Algorithm_384", token_sha384 },
+        { "-Secure_Hash_Algorithm_512", token_sha512 },
         { "-SIGnetics", token_signetics, },
         { "-SPAsm", token_spasm_be, }, // is this right?
         { "-SPAsm_BigEndian", token_spasm_be, },
@@ -182,11 +188,13 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Texas_Instruments_Tagged", token_ti_tagged, },
         { "-Texas_Instruments_Tagged_16", token_ti_tagged_16, },
         { "-Texas_Instruments_TeXT", token_ti_txt, },
+        { "-TIGer", token_tiger },
         { "-UNIon", token_union, },
         { "-Un_Fill", token_unfill, },
         { "-Un_SPlit", token_unsplit, },
         { "-VHdl", token_vhdl, },
         { "-VMem", token_vmem, },
+        { "-WHIrlpool", token_whirlpool },
         { "-WILson", token_wilson, },
         { "-Within", token_within, },
         { "-XOR", token_xor, },

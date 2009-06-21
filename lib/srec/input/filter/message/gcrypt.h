@@ -113,6 +113,18 @@ public:
         unsigned long address);
 
     /**
+      * The create_sha1 class method is used to create a new dynamically
+      * allocated instance of this class, that calculates SHA1 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_sha1(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
       * The create_rmd160 class method is used to create a new dynamically
       * allocated instance of this class, that calculates RMD160 hashes.
       *
@@ -125,15 +137,150 @@ public:
         unsigned long address);
 
     /**
-      * The create_sha1 class method is used to create a new dynamically
-      * allocated instance of this class, that calculates SHA1 hashes.
+      * The create_md2 class method is used to create a new dynamically
+      * allocated instance of this class, that calculates MD2 hashes.
       *
       * @param deeper
       *     The source of data to be filtered.
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_sha1(const srec_input::pointer &deeper,
+    static pointer create_md2(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
+      * The create_tiger class method is used to create a new dynamically
+      * allocated instance of this class, that calculates TIGER/192 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_tiger(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
+      * The create_haval class method is used to create a new dynamically
+      * allocated instance of this class, that calculates HAVAL/160 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_haval(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
+      * The create_sha256 class method is used to create a new dynamically
+      * allocated instance of this class, that calculates SHA-256 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_sha256(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
+      * The create_sha384 class method is used to create a new dynamically
+      * allocated instance of this class, that calculates SHA-384 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_sha384(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
+      * The create_sha512 class method is used to create a new dynamically
+      * allocated instance of this class, that calculates SHA-512 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_sha512(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
+      * The create_sha224 class method is used to create a new dynamically
+      * allocated instance of this class, that calculates SHA-224 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_sha224(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
+      * The create_md4 class method is used to create a new dynamically
+      * allocated instance of this class, that calculates MD4 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_md4(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
+      * The create_crc32 class method is used to create a new dynamically
+      * allocated instance of this class, that calculates CRC-32 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_crc32(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
+      * The create_crc32_rfc1510 class method is used to create a new
+      * dynamically allocated instance of this class, that calculates
+      * CRC32 RFC1510 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_crc32_rfc1510(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
+      * The create_crc24_rfc2440 class method is used to create a new
+      * dynamically allocated instance of this class, that calculates
+      * CRC24 RFC2440 hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_crc24_rfc2440(const srec_input::pointer &deeper,
+        unsigned long address);
+
+    /**
+      * The create_whirlpool class method is used to create a new
+      * dynamically allocated instance of this class, that calculates
+      * WHIRLPOOL hashes.
+      *
+      * @param deeper
+      *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
+      */
+    static pointer create_whirlpool(const srec_input::pointer &deeper,
         unsigned long address);
 
 protected:

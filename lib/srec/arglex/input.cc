@@ -696,6 +696,22 @@ srec_arglex::get_input()
             }
             break;
 
+        case token_haval:
+            {
+                // Undocumented, no gcrypt implementation, yet.
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_haval
+                    (
+                        ifp,
+                        address
+                    );
+            }
+            break;
+
         case token_gcrypt:
             {
                 const char *name = token_name();
@@ -792,6 +808,18 @@ srec_arglex::get_input()
             }
             break;
 
+        case token_md2:
+            {
+                // Undocumented, no gcrypt implementation, yet.
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_md2(ifp, address);
+            }
+            break;
+
         case token_md5:
             {
                 const char *name = token_name();
@@ -858,6 +886,66 @@ srec_arglex::get_input()
             }
             break;
 
+        case token_sha224:
+            {
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_sha224
+                    (
+                        ifp,
+                        address
+                    );
+            }
+            break;
+
+        case token_sha256:
+            {
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_sha256
+                    (
+                        ifp,
+                        address
+                    );
+            }
+            break;
+
+        case token_sha384:
+            {
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_sha384
+                    (
+                        ifp,
+                        address
+                    );
+            }
+            break;
+
+        case token_sha512:
+            {
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_sha512
+                    (
+                        ifp,
+                        address
+                    );
+            }
+            break;
+
         case token_split:
             {
                 token_next();
@@ -886,6 +974,21 @@ srec_arglex::get_input()
                         split_modulus,
                         split_offset,
                         split_width
+                    );
+            }
+            break;
+
+        case token_tiger:
+            {
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_tiger
+                    (
+                        ifp,
+                        address
                     );
             }
             break;
@@ -937,6 +1040,21 @@ srec_arglex::get_input()
                         split_modulus,
                         split_offset,
                         split_width
+                    );
+            }
+            break;
+
+        case token_whirlpool:
+            {
+                const char *name = token_name();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp =
+                    srec_input_filter_message_gcrypt::create_whirlpool
+                    (
+                        ifp,
+                        address
                     );
             }
             break;

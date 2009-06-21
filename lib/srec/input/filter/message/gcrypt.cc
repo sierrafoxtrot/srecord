@@ -77,6 +77,14 @@ srec_input_filter_message_gcrypt::create_md5(
 
 
 srec_input::pointer
+srec_input_filter_message_gcrypt::create_sha1(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_SHA1);
+}
+
+
+srec_input::pointer
 srec_input_filter_message_gcrypt::create_rmd160(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
@@ -85,10 +93,98 @@ srec_input_filter_message_gcrypt::create_rmd160(
 
 
 srec_input::pointer
-srec_input_filter_message_gcrypt::create_sha1(
+srec_input_filter_message_gcrypt::create_md2(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
-    return create(a_deeper, a_address, GCRY_MD_SHA1);
+    return create(a_deeper, a_address, GCRY_MD_MD2);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_tiger(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_TIGER);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_haval(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_HAVAL);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_sha256(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_SHA256);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_sha384(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_SHA384);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_sha512(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_SHA512);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_sha224(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_SHA224);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_md4(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_MD4);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_crc32(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_CRC32);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_crc32_rfc1510(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_CRC32_RFC1510);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_crc24_rfc2440(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_CRC24_RFC2440);
+}
+
+
+srec_input::pointer
+srec_input_filter_message_gcrypt::create_whirlpool(
+    const srec_input::pointer &a_deeper, unsigned long a_address)
+{
+    return create(a_deeper, a_address, GCRY_MD_WHIRLPOOL);
 }
 
 

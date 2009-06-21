@@ -42,6 +42,13 @@ libboost-devel package, or one named something very similar.
 .br
 http://boost.org/
 .TP 8n
+Libgcrypt Library
+You will need thr GNU Crypt library.
+If you are using a package based system, you will need the
+libgcrypt-devel package, or one named something very similar.
+.br
+http://directory.fsf.org/project/libgcrypt/
+.TP 8n
 GNU Groff
 The documentation for the
 .I SRecord

@@ -745,9 +745,12 @@ the value will be written with the least significant byte first.
 As above, however
 the value will be written with the least significant byte first.
 .\" ----------  M  ---------------------------------------------------------
+.\"             message digest 2 -- place holder, gcrypt does not implement yet
+.\"             message digest 5
 .TP 8n
 \fB\-Message_Digest_5 \f[I]address\fP
-This filter may be used to insert an MD5 hash into the data.
+This filter may be used to insert a 16 byte MD5 hash into the data,
+at the address given.
 .\" ----------  N  ---------------------------------------------------------
 .\"             not
 .TP 8n
@@ -785,11 +788,40 @@ Only existing data is altered, no holes are filled.
 \fB\-Random_Fill\fP \f[I]address-range\fP
 This filter may be used to fill any gaps in the data with random bytes.
 The fill will only occur in the address range given.
+.\"             ripe message digest 160
+.TP 8n
+\fB\-Ripe_Message_Digest_160 \f[I]address\fP
+This filter may be used to insert an RMD160 hash into the data.
 .\" ----------  S  ---------------------------------------------------------
 .\"             secure hash algorithm 1
 .TP 8n
 \fB\-Secure_Hash_Algorithm_1 \f[I]address\fP
-This filter may be used to insert a SHA1 hash into the data.
+This filter may be used to insert a 20 byte SHA1 hash into the data,
+at the address given.
+.\"             secure hash algorithm 224
+.TP 8n
+\fB\-Secure_Hash_Algorithm_224 \f[I]address\fP
+This filter may be used to insert a 28 byte SHA224 hash into the data,
+at the address given.
+See Change Notice 1 for FIPS 180-2 for the specification.
+.\"             secure hash algorithm 256
+.TP 8n
+\fB\-Secure_Hash_Algorithm_256 \f[I]address\fP
+This filter may be used to insert a 32 byte SHA256 hash into the data,
+at the address given.
+See FIPS 180-2 for the specification.
+.\"             secure hash algorithm 384
+.TP 8n
+\fB\-Secure_Hash_Algorithm_384 \f[I]address\fP
+This filter may be used to insert a 48 byte SHA384 hash into the data,
+at the address given.
+See FIPS 180-2 for the specification.
+.\"             secure hash algorithm 512
+.TP 8n
+\fB\-Secure_Hash_Algorithm_512 \f[I]address\fP
+This filter may be used to insert a 64 byte SHA512 hash into the data,
+at the address given.
+See FIPS 180-2 for the specification.
 .\"             split
 .TP 8n
 \fB\-SPlit\fP \f[I]multiple\fP [ \f[I]offset\fP [ \f[I]width\fP ] ]
@@ -802,6 +834,11 @@ range (defaults to 0), the \f[I]width\fP is the number of bytes to extract
 output addresses are (\f[I]width\fP / \f[I]multiple\fP) times the input
 addresses.
 .\" ----------  T  ---------------------------------------------------------
+.\"             tiger
+.TP 8n
+\fB\-TIGer\fP \f[I]address\fP
+This filter may be used to insert a 24 byte TIGER/192 hash into the data
+at the address given.
 .\" ----------  U  ---------------------------------------------------------
 .\"             unfill
 .TP 8n
@@ -818,6 +855,11 @@ The arguments are identical.
 Note that the address range is expanded (\f[I]multiple\fP / \f[I]width\fP)
 times, leaving holes between the stripes.
 .\" ----------  W  -------------------------------------------------------------
+.\"             whirlpool
+.TP 8n
+\fB\-WHIrlpool \f[I]address\fP
+This filter may be used to insert a 64 byte WHIRLPOOL hash into the data,
+at the address given.
 .\" ----------  X  -------------------------------------------------------------
 .\" ----------  Y  -------------------------------------------------------------
 .\" ----------  Z  -------------------------------------------------------------
