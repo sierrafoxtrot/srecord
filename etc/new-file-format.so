@@ -22,12 +22,19 @@ How to add a new file format
 .XX "" "How to add a new file format"
 .SH DESCRIPTION
 This section describes how to add a new file format.  It's mostly a
-set of reminders for the maintainer.  If you want a format added
-to the distribution, use this method and e-mail the maintainer a patch
-(generated with \f[CW]diff -u -r\fP, usually) and it can be added to the sources
-if appropriate.
+set of reminders for the maintainer.  If you want a format added to
+the distribution, use this method and e-mail the maintainer a patch
+(generated with \f[CW]diff -u -r\fP, usually) and it can be added to the
+sources if appropriate.
 .SS New Files
-The following files need to be create for a new format.
+The directory hierarchy is an echo of the class hierarchy, making it
+easy to guess the filename of a class, and to work out the appropriate
+file name of a new class.  You get used to it.  It is suggested that you
+simply work in the root of the source tree (exploiting tab-completion in
+your shell and your editor) rather than continually changing directories
+up and down the source tree.  All of the file names below assume this.
+.PP
+The following files need to be creates for a new format.
 .TP 8n
 lib/srec/output/file/\fIname\fP.cc
 This file is how to write the new format.

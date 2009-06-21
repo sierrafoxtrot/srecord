@@ -53,6 +53,7 @@
 #include <lib/srec/input/file/vmem.h>
 #include <lib/srec/input/file/wilson.h>
 #include <lib/srec/input/filter/and.h>
+#include <lib/srec/input/filter/bitrev.h>
 #include <lib/srec/input/filter/byte_swap.h>
 #include <lib/srec/input/filter/checksum/bitnot.h>
 #include <lib/srec/input/filter/checksum/negative.h>
@@ -607,6 +608,11 @@ srec_arglex::get_input()
                 }
                 ifp = srec_input_filter_and::create(ifp, filler);
             }
+            break;
+
+        case token_bitrev:
+            token_next();
+            ifp = srec_input_filter_bitrev::create(ifp);
             break;
 
         case token_xor:

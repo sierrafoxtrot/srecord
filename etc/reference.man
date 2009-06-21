@@ -107,6 +107,7 @@ with this program. If not, see <http://www.gnu.org/licenses/>.
 .so etc/README.man
 .so etc/BUILDING.man
 .so etc/new-file-format.so
+.so etc/new-filter.so
 .\"
 .\" ----------  Include the Manual Pages  -------------------------------------
 .\"

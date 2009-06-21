@@ -184,6 +184,10 @@ checksum
 The \fIchecksum\fP filter may be used to insert the checksum of the data
 (bitnot, negative or positive) into the data.
 .TP 8n
+bit reverse
+The \f[I]bit-reverse\fP filter may be used to
+reverse the order of bits in each data byte.
+.TP 8n
 byte swap
 The \fIbyte swap\fP filter may be used to swap pairs of add and even bytes.
 .TP 8n

@@ -50,6 +50,7 @@ public:
         token_basic_data,
         token_big,
         token_binary,
+        token_bitrev,
         token_brecord,
         token_byte_swap,
         token_c_array,

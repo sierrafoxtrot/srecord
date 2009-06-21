@@ -69,6 +69,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-Big_Endian_Length", token_length_be, },
         { "-Big_Endian_MAximum", token_maximum_be, },
         { "-Big_Endian_MInimum",token_minimum_be, },
+        { "-Bit_Reverse", token_bitrev },
         { "-Byte_Swap", token_byte_swap, },
         { "-CL430", token_cl430, },
         { "-CONSTant", token_constant, },

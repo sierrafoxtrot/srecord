@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001, 2002, 2005-2008 Peter Miller
+//      Copyright (C) 1998, 1999, 2001, 2002, 2005-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #include <lib/srec/input/filter.h>
 
 /**
-  * The srec_input_filter_and clas sis used to represent the input state
+  * The srec_input_filter_xor clas sis used to represent the input state
   * of a filter which bit-wise XORs all incoming data bytes with a fixed
   * value.
   */
