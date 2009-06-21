@@ -551,8 +551,10 @@ The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
 .\"             bit reverse
 .TP 8n
-\fB\-bit_reverse\fP
+\fB\-bit_reverse\fP [ \f[I]width\fP ]
 This filter maye be used to reverse the order of the bits in each data byte.
+By specifying a width (in bytes) it is possible to reverse the order
+multi-byte values; this is implemented using the byte-swap filter.
 .\"             byte swap
 .TP 8n
 \fB\-Byte_Swap\fP [ \f[I]width\fP ]

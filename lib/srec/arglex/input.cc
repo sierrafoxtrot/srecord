@@ -612,6 +612,12 @@ srec_arglex::get_input()
 
         case token_bitrev:
             token_next();
+            if (can_get_number())
+            {
+                // Let the byte swap filter re-arrange the bytes.
+                ifp = srec_input_filter_byte_swap::create(ifp);
+                ifp->command_line(this);
+            }
             ifp = srec_input_filter_bitrev::create(ifp);
             break;
 
