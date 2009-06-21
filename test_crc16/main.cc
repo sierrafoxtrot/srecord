@@ -1,6 +1,6 @@
 //
 // srecord - The "srecord" program.
-// Copyright (C) 2007, 2008 Peter Miller
+// Copyright (C) 2007-2009 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -39,9 +39,11 @@ main(int argc, char **argv)
     progname_set(argv[0]);
     crc16::seed_mode_t seed_mode = crc16::seed_mode_ccitt;
     bool augment = true;
+    unsigned short polynomial = crc16::polynomial_ccitt;
+    bool print_table = false;
     for (;;)
     {
-        int c = getopt(argc, argv, "abcx");
+        int c = getopt(argc, argv, "abcp:tx");
         if (c == EOF)
             break;
         switch (c)
@@ -58,6 +60,14 @@ main(int argc, char **argv)
             seed_mode = crc16::seed_mode_ccitt;
             break;
 
+        case 'p':
+            polynomial = strtol(optarg, 0, 0);
+            break;
+
+        case 't':
+            print_table = true;
+            break;
+
         case 'x':
             seed_mode = crc16::seed_mode_xmodem;
             break;
@@ -70,7 +80,12 @@ main(int argc, char **argv)
     if (optind != argc)
         usage();
 
-    crc16 check(seed_mode, augment);
+    crc16 check(seed_mode, augment, polynomial);
+    if (print_table)
+    {
+        check.print_table();
+        return 0;
+    }
     for (;;)
     {
         char buffer[1024];

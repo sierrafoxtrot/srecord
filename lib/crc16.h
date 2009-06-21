@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2003, 2006-2008 Peter Miller
+// Copyright (C) 2000-2003, 2006-2009 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -29,10 +29,22 @@
 /**
   * The crc16 class is used to represent the running value of a 16-bit
   * cyclic redundancy check of series of bytes.
+  *
+  * Note: this CRC16 works for systems that process the leaast
+  * significant bit of each byte first, and working to wards the most
+  * significant bit.
+  *
+  * If you were expecting MSB first (you may not even know it) this
+  * code will give you "wrong" answers.  Try using the bitrev filter.
   */
 class crc16
 {
 public:
+    enum
+    {
+        polynomial_ccitt = 0x1021 // also xmodem
+    };
+
     enum seed_mode_t
     {
         seed_mode_ccitt,
@@ -54,7 +66,8 @@ public:
       *     This is true if the 16-zero-bit augmentation is desired.
       *     This is the default.  False if no augmentation is desired.
       */
-    crc16(seed_mode_t seed_mode = seed_mode_ccitt, bool augment = true);
+    crc16(seed_mode_t seed_mode = seed_mode_ccitt, bool augment = true,
+        unsigned short polynomial = polynomial_ccitt);
 
     /**
       * The copy constructor.
@@ -82,6 +95,12 @@ public:
       */
     void nextbuf(const void *, size_t);
 
+    /**
+      * The print_table method may be used to print the table being used.
+      * This is principally for debugging the table generation process.
+      */
+    void print_table(void) const;
+
 private:
     /**
       * The state instance variable is used to remember the running
@@ -95,6 +114,17 @@ private:
       * reporting the result.
       */
     bool augment;
+
+    /**
+      * The table instance variable i sused to remember the results of 8
+      * shift-and-process operations for each byte value.  Thsi is used
+      * to improve efficiency.
+      */
+    unsigned short table[256];
+
+    void calculate_table(unsigned short polynomial);
+
+    inline unsigned short updcrc(unsigned char c, unsigned short state) const;
 };
 
 #endif // LIB_CRC16_H
