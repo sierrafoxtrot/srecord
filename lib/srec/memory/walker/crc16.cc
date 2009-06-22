@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2002, 2006-2008 Peter Miller
+//      Copyright (C) 2000-2002, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -28,16 +28,21 @@ srec_memory_walker_crc16::~srec_memory_walker_crc16()
 
 
 srec_memory_walker_crc16::srec_memory_walker_crc16(crc16::seed_mode_t seed_mode,
-    bool augment_flag)
+    bool augment_flag, unsigned short polynomial, crc16::bit_direction_t bitdir)
 {
-    checksum = new crc16(seed_mode, augment_flag);
+    checksum = new crc16(seed_mode, augment_flag, polynomial, bitdir);
 }
 
 
 srec_memory_walker_crc16::pointer
-srec_memory_walker_crc16::create(crc16::seed_mode_t arg1, bool arg2)
+srec_memory_walker_crc16::create(crc16::seed_mode_t arg1, bool a_augment,
+    unsigned short polynomial, crc16::bit_direction_t a_bitdir)
 {
-    return pointer(new srec_memory_walker_crc16(arg1, arg2));
+    return
+        pointer
+        (
+            new srec_memory_walker_crc16(arg1, a_augment, polynomial, a_bitdir)
+        );
 }
 
 

@@ -41,9 +41,10 @@ main(int argc, char **argv)
     bool augment = true;
     unsigned short polynomial = crc16::polynomial_ccitt;
     bool print_table = false;
+    crc16::bit_direction_t bitdir = crc16::bit_direction_most_to_least;
     for (;;)
     {
-        int c = getopt(argc, argv, "abcp:tx");
+        int c = getopt(argc, argv, "abcp:rtx");
         if (c == EOF)
             break;
         switch (c)
@@ -64,6 +65,10 @@ main(int argc, char **argv)
             polynomial = strtol(optarg, 0, 0);
             break;
 
+        case 'r':
+            bitdir = crc16::bit_direction_least_to_most;
+            break;
+
         case 't':
             print_table = true;
             break;
@@ -80,7 +85,7 @@ main(int argc, char **argv)
     if (optind != argc)
         usage();
 
-    crc16 check(seed_mode, augment, polynomial);
+    crc16 check(seed_mode, augment, polynomial, bitdir);
     if (print_table)
     {
         check.print_table();

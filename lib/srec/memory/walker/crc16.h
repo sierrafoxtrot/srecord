@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000, 2002, 2006-2008 Peter Miller
+//      Copyright (C) 2000, 2002, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -47,8 +47,13 @@ private:
       *     The selector for the initial seed for the calculation
       * @param augment_flag
       *     Whether or not to augment the calculation
+      * @param polynomial
+      *     The CRC polynomial to be used.
+      * @param bitdir
+      *     the bit direction of the CRC.
       */
-    srec_memory_walker_crc16(crc16::seed_mode_t seed_mode, bool augment_flag);
+    srec_memory_walker_crc16(crc16::seed_mode_t seed_mode, bool augment_flag,
+        unsigned short polynomial, crc16::bit_direction_t bitdir);
 
 public:
     /**
@@ -59,8 +64,13 @@ public:
       *     The selector for the initial seed for the calculation
       * @param augment_flag
       *     Whether or not to augment the calculation
+      * @param polynomial
+      *     The CRC polynomial to be used.
+      * @param bitdir
+      *     the bit direction of the CRC
       */
-    static pointer create(crc16::seed_mode_t seed_mode, bool augment_flag);
+    static pointer create(crc16::seed_mode_t seed_mode, bool augment_flag,
+        unsigned short polynomial, crc16::bit_direction_t bitdir);
 
     /**
       * The get method is used to get the CRC16 checksum once all memory

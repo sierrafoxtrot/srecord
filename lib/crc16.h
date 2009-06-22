@@ -57,6 +57,12 @@ public:
       */
     virtual ~crc16();
 
+    enum bit_direction_t
+    {
+        bit_direction_most_to_least,
+        bit_direction_least_to_most,
+    };
+
     /**
       * The default constructor.
       *
@@ -65,9 +71,13 @@ public:
       * @param augment
       *     This is true if the 16-zero-bit augmentation is desired.
       *     This is the default.  False if no augmentation is desired.
+      * @param bitdir
+      *     The direction of bits in a characters as they pass through
+      *     the algorithm.
       */
     crc16(seed_mode_t seed_mode = seed_mode_ccitt, bool augment = true,
-        unsigned short polynomial = polynomial_ccitt);
+        unsigned short polynomial = polynomial_ccitt,
+        bit_direction_t bitdir = bit_direction_most_to_least);
 
     /**
       * The copy constructor.
@@ -114,6 +124,12 @@ private:
       * reporting the result.
       */
     bool augment;
+
+    /**
+      * The bitdir instance variable is sued to remember the direction
+      * of bits in a characters as they pass through the algorithm.
+      */
+    bit_direction_t bitdir;
 
     /**
       * The table instance variable i sused to remember the results of 8

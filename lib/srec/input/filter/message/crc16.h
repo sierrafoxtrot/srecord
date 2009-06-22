@@ -96,6 +96,14 @@ private:
       */
     bool augment_flag;
 
+    unsigned short polynomial;
+
+    /**
+      * The bitdir instance variable is used to rememebr the bit
+      * direction of the CRC.
+      */
+    crc16::bit_direction_t bitdir;
+
     /**
       * The default constructor.  Do not use.
       */

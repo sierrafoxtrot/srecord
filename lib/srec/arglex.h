@@ -71,6 +71,8 @@ public:
         token_crc16_broken,
         token_crc16_ccitt,
         token_crc16_le,
+        token_crc16_least_to_most,
+        token_crc16_most_to_least,
         token_crc16_xmodem,
         token_crc32_be,
         token_crc32_le,

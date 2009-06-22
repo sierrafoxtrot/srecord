@@ -36,7 +36,9 @@ srec_input_filter_message_crc16::srec_input_filter_message_crc16(
     address(address_arg),
     end(a_end),
     seed_mode(crc16::seed_mode_ccitt),
-    augment_flag(true)
+    augment_flag(true),
+    polynomial(crc16::polynomial_ccitt),
+    bitdir(crc16::bit_direction_most_to_least)
 {
 }
 
@@ -60,6 +62,21 @@ srec_input_filter_message_crc16::command_line(srec_arglex *cmdln)
     {
         switch (cmdln->token_cur())
         {
+        case arglex::token_number:
+            polynomial = cmdln->value_number();
+            cmdln->token_next();
+            break;
+
+        case srec_arglex::token_crc16_most_to_least:
+            bitdir = crc16::bit_direction_most_to_least;
+            cmdln->token_next();
+            break;
+
+        case srec_arglex::token_crc16_least_to_most:
+            bitdir = crc16::bit_direction_least_to_most;
+            cmdln->token_next();
+            break;
+
         case srec_arglex::token_crc16_xmodem:
             seed_mode = crc16::seed_mode_xmodem;
             cmdln->token_next();
@@ -67,6 +84,7 @@ srec_input_filter_message_crc16::command_line(srec_arglex *cmdln)
 
         case srec_arglex::token_crc16_ccitt:
             seed_mode = crc16::seed_mode_ccitt;
+            polynomial = crc16::polynomial_ccitt;
             cmdln->token_next();
             break;
 
@@ -101,7 +119,13 @@ srec_input_filter_message_crc16::process(const srec_memory &buffer,
     // (Holes are ignored, not filled, warning already issued.)
     //
     srec_memory_walker_crc16::pointer w =
-        srec_memory_walker_crc16::create(seed_mode, augment_flag);
+        srec_memory_walker_crc16::create
+        (
+            seed_mode,
+            augment_flag,
+            polynomial,
+            bitdir
+        );
     buffer.walk(w);
     unsigned crc = w->get();
 
