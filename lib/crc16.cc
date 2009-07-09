@@ -45,7 +45,7 @@ static unsigned short const xmodem_seed = 0;
 
 
 void
-crc16::calculate_table(unsigned short polynomial)
+crc16::calculate_table()
 {
     if (polynomial == 0)
         polynomial = polynomial_ccitt;
@@ -94,20 +94,23 @@ state_from_seed_mode(crc16::seed_mode_t seed_mode)
 crc16::crc16(
     seed_mode_t seed_mode,
     bool a_augment,
-    unsigned short polynomial,
+    unsigned short a_polynomial,
     bit_direction_t a_bitdir
 ) :
     state(state_from_seed_mode(seed_mode)),
     augment(a_augment),
+    polynomial(a_polynomial),
     bitdir(a_bitdir)
 {
-    calculate_table(polynomial);
+    calculate_table();
 }
 
 
 crc16::crc16(const crc16 &rhs) :
     state(rhs.state),
-    augment(rhs.augment)
+    augment(rhs.augment),
+    polynomial(rhs.polynomial),
+    bitdir(rhs.bitdir)
 {
     for (size_t j = 0; j < 256; ++j)
         table[j] = rhs.table[j];
@@ -121,6 +124,8 @@ crc16::operator=(const crc16 &rhs)
     {
         state = rhs.state;
         augment = rhs.augment;
+        polynomial = rhs.polynomial;
+        bitdir = rhs.bitdir;
         for (size_t j = 0; j < 256; ++j)
             table[j] = rhs.table[j];
     }
@@ -144,21 +149,38 @@ inline unsigned short
 crc16::updcrc(unsigned char c, unsigned short state)
     const
 {
-    for (unsigned i = 0; i < 8; ++i)
+    if (bitdir == bit_direction_most_to_least)
     {
-        bool xor_flag = !!(state & 0x8000);
-        state <<= 1;
-        if (c & 0x80)
-            state |= 1;
-        if (xor_flag)
-            state ^= POLYNOMIAL;
-        c <<= 1;
+        for (unsigned i = 0; i < 8; ++i)
+        {
+            bool xor_flag = !!(state & 0x8000);
+            state <<= 1;
+            if (c & 0x80)
+                state |= 1;
+            if (xor_flag)
+                state ^= polynomial;
+            c <<= 1;
+        }
+    }
+    else
+    {
+        // note: calculate_table() already reversed the bits in the polynomial
+        for (unsigned i = 0; i < 8; ++i)
+        {
+            bool xor_flag = !!(state & 1);
+            state >>= 1;
+            if (c & 1)
+                state |= 0x8000;
+            if (xor_flag)
+                state ^= polynomial;
+            c >>= 1;
+        }
     }
     return state;
 }
 
 #endif
-
+#if 1
 
 //
 // This version of updcrc doesn't augment automagically, you must
@@ -176,9 +198,7 @@ crc16::updcrc(unsigned char c, unsigned short state)
 {
     if (bitdir == bit_direction_least_to_most)
     {
-        // FIXME: This looks like it is the pre-augmented calculation.
-        //        If it is, I can't figure out the unagumented equivalent.
-        return (state >> 8) ^ table[(state ^ c) & 0xff];
+        return (((state >> 8) & 0xFF) | (c << 8)) ^ table[state & 0xFF];
     }
     else
     {
@@ -186,7 +206,7 @@ crc16::updcrc(unsigned char c, unsigned short state)
     }
 }
 
-
+#endif
 #if 0
 
 //
@@ -204,7 +224,10 @@ inline unsigned short
 crc16::updcrc(unsigned char c, unsigned short state)
     const
 {
-    return (state << 8) ^ table[(state >> 8) ^ c];
+    if (bitdir == bit_direction_least_to_most)
+        return (state >> 8) ^ table[(state ^ c) & 0xFF];
+    else
+        return (state << 8) ^ table[(state >> 8) ^ c];
 }
 
 #endif
@@ -260,12 +283,12 @@ crc16::print_table()
             "least to most"
         )
     );
-    printf
-    (
-        " * Polynomial: 0x%04X\n",
-        bitdir == bit_direction_most_to_least ? table[1] : bitrev16(table[128])
-    );
-    printf(" */\n");
+    printf(" * Polynomial: 0x");
+    if (bitdir == bit_direction_most_to_least)
+        printf("%04X", polynomial);
+    else
+        printf("%04X", bitrev16(polynomial));
+    printf("\n */\n");
     printf("const unsigned short table[256] =\n{\n");
     for (size_t j = 0; j < 256; ++j)
     {

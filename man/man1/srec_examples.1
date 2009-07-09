@@ -922,13 +922,13 @@ This command reads in the file, calculates the CRC of the data and
 places the CRC at 0x10000, crops the result to contain only the CRC,
 and then prints the checksum on the standard output in a classical
 hexadecimal dump format.
-.PP
-\f[B]Note:\fP
-To get the same CRC-16 as used by the linux kernel in the
-\f[CW]lib/crc-ccitt.c\fP file, use the \fB\-least-to-most\fP modifier.
-To get the same CRC-16 as used by the linux kernel in the
-\f[CW]lib/crc16.c\fP file, use the \f[B]0x8005 -least-to-most\fP modifiers.
-For both of these, augment or not as required.
+.\" .PP
+.\" \f[B]Note:\fP
+.\" To get the same CRC-16 as used by the linux kernel in the
+.\" \f[CW]lib/crc-ccitt.c\fP file, use the \fB\-least-to-most\fP modifier.
+.\" To get the same CRC-16 as used by the linux kernel in the
+.\" \f[CW]lib/crc16.c\fP file, use the \f[B]0x8005 -least-to-most\fP modifiers.
+.\" For both of these, augment or not, as required.
 .SS Where Am I?
 There are several properties of you EPROM image that you may wish to
 insert into the data.

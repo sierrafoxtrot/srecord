@@ -126,20 +126,36 @@ private:
     bool augment;
 
     /**
+      * The polynomial instance variable is used to remember the CRC
+      * polynomial being calculated with.  Note that if the bitdir is
+      * low-to-high then the bits in the polynomial will be reversed.
+      */
+    unsigned short polynomial;
+
+    /**
       * The bitdir instance variable is sued to remember the direction
       * of bits in a characters as they pass through the algorithm.
       */
     bit_direction_t bitdir;
 
     /**
-      * The table instance variable i sused to remember the results of 8
-      * shift-and-process operations for each byte value.  Thsi is used
-      * to improve efficiency.
+      * The table instance variable is used to remember the results of 8
+      * shift-and-process operations for each byte value.  This is used
+      * to improve efficiency.  It is filled in the the #calculate_table
+      * method, called from the constructor.
       */
     unsigned short table[256];
 
-    void calculate_table(unsigned short polynomial);
+    /**
+      * The calculate_table method is called by the constructor to fill
+      * in the #table instance variable.
+      */
+    void calculate_table(void);
 
+    /**
+      * The updcrc method is to add another byte of data to the running
+      * CRC state.  It is called by the #next and #next_buf methods.
+      */
     inline unsigned short updcrc(unsigned char c, unsigned short state) const;
 };
 

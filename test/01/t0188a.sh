@@ -23,12 +23,51 @@ TEST_SUBJECT="l2h-crc-16"
 echo -n "123456789" > test.in
 if test $? -ne 0; then no_result; fi
 
+# augmented
+
 cat > test.ok << 'fubar'
-0x6F91
+0xD1A2
 fubar
 if test $? -ne 0; then no_result; fi
 
+# This uses the low-to-high flag, reversing the order of the bits within
+# each byte as they flow through the algorithm.  This is done *inside*
+# the crc16 table and updcrc code.
+test_crc16 -r < test.in > test.out
+if test $? -ne 0; then fail; fi
+
+diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
+# Now we double check.  We use the old high-to-low code, but we bitrev
+# each byte before we feed it to the algorithm, and then bitrev the
+# resulting CRC.  This should give identical answers to the above.
+test_crc16 -h < test.in > test.out
+if test $? -ne 0; then fail; fi
+
+diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
+# un-augmented
+
+cat > test.ok << 'fubar'
+0x1E67
+fubar
+if test $? -ne 0; then no_result; fi
+
+# This uses the low-to-high flag, reversing the order of the bits within
+# each byte as they flow through the algorithm.  This is done *inside*
+# the crc16 table and updcrc code.
 test_crc16 -a -r < test.in > test.out
+if test $? -ne 0; then fail; fi
+
+diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
+# Now we double check.  We use the old high-to-low code, but we bitrev
+# each byte before we feed it to the algorithm, and then bitrev the
+# resulting CRC.  This should give identical answers to the above.
+test_crc16 -a -h < test.in > test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

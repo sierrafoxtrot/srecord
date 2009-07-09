@@ -20,6 +20,7 @@
 #include <cstdlib>
 #include <unistd.h>
 
+#include <lib/bitrev.h>
 #include <lib/crc16.h>
 #include <lib/progname.h>
 #include <lib/quit.h>
@@ -42,9 +43,10 @@ main(int argc, char **argv)
     unsigned short polynomial = crc16::polynomial_ccitt;
     bool print_table = false;
     crc16::bit_direction_t bitdir = crc16::bit_direction_most_to_least;
+    bool h_flag = false;
     for (;;)
     {
-        int c = getopt(argc, argv, "abcp:rtx");
+        int c = getopt(argc, argv, "abchp:rtx");
         if (c == EOF)
             break;
         switch (c)
@@ -59,6 +61,10 @@ main(int argc, char **argv)
 
         case 'c':
             seed_mode = crc16::seed_mode_ccitt;
+            break;
+
+        case 'h':
+            h_flag = true;
             break;
 
         case 'p':
@@ -99,8 +105,20 @@ main(int argc, char **argv)
             quit_default.fatal_error_errno("read stdin");
         if (!n)
             break;
+        if (h_flag)
+        {
+            for (int j = 0; j < n; ++j)
+                buffer[j] = bitrev8(buffer[j]);
+        }
         check.nextbuf(buffer, n);
     }
-    printf("0x%04X\n", check.get());
+
+    // The h_flags is use to validate the crc16 least-to-most code.
+    // Because that code calculate the CRC bit reversed, we bit reverse
+    // here so that we can test for identical-ness.
+    if (h_flag)
+        printf("0x%04X\n", bitrev16(check.get()));
+    else
+        printf("0x%04X\n", check.get());
     return 0;
 }
