@@ -19,18 +19,15 @@
 .\"
 .\" you can create the initial cut of this file using the
 .\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
-.\"             -p srecord.1 -c 48 -unf
+.\"             -p srecord.1 -c 50 -unf
 .\" command, and then editing it to be more appropriate.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" srecord.1.48.D002
-.\" Change 11
-.\" pmiller, Wed Apr 22 14:26:33 2009, man page typo
-A typo in the srec_input(1) man page has been fixed.
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.48 (2009-Apr-19)
+.SS Version 1.50 (2009-Jul-09)
 .\" vim: set ts=8 sw=4 et

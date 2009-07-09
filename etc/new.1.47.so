@@ -26,7 +26,7 @@ There are new Fletcher Checksum filters, both 32-bits and
 .if n *
 .if t \(bu
 .\" Change 12, 15
-There are new Fletcher Checksum filters, both 32-bits and
+There are new Adler Checksum filters, both 32-bits and
 16-bits, both little-endian and big-endian.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
