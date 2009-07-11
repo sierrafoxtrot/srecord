@@ -1,6 +1,6 @@
 //
 //      srecord - Manipulate EPROM load files
-//      Copyright (C) 2008 Peter Miller
+//      Copyright (C) 2008, 2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 //
 
 #include <lib/pretty_size.h>
-
+#include <cstdio>
 
 std::string
 pretty_size(long long x, int width)
