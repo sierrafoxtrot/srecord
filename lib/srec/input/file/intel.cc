@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2003, 2005-2008 Peter Miller
+//      Copyright (C) 1998-2003, 2005-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -174,6 +174,12 @@ srec_input_file_intel::read_inner(srec_record &record)
                 //
                 if (address_field + buffer[0] > (1L << 16))
                 {
+                    //
+                    // If the record would cross a segment boundary,
+                    // wrap around to the beginning of the segment.  We
+                    // do this by using "pushback" to remember additonal
+                    // data.
+                    //
                     int split = (1L << 16) - address_field;
                     pushback =
                         new srec_record

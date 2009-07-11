@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001-2003, 2006-2008 Peter Miller
+//      Copyright (C) 1998, 1999, 2001-2003, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -89,6 +89,42 @@ srec_output_file_intel::write(const srec_record &record)
         break;
 
     case srec_record::type_data:
+        //
+        // Segmented mode has an ugly boundary condition.
+        //
+        if (mode != linear)
+        {
+            //
+            // If the record would cross a segment boundary, split the
+            // record across the boundary.  This avoids an ambiguity in
+            // the Intel spec.
+            //
+            srec_record::address_t begin_segment = record.get_address() >> 16;
+            srec_record::address_t end_segment =
+                (record.get_address() + record.get_length() - 1) >> 16;
+            if (begin_segment != end_segment)
+            {
+                int split = (1L << 16) - (record.get_address() & 0xFFFF);
+                srec_record part1
+                (
+                    srec_record::type_data,
+                    record.get_address(),
+                    record.get_data(),
+                    split
+                );
+                write(part1);
+                srec_record part2
+                (
+                    srec_record::type_data,
+                    record.get_address() + split,
+                    record.get_data() + split,
+                    record.get_length() - split
+                );
+                write(part2);
+                return;
+            }
+        }
+
         if ((record.get_address() & 0xFFFF0000) != address_base)
         {
             address_base = record.get_address() & 0xFFFF0000;
