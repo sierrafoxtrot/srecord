@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2000, 2006-2008 Peter Miller
+.\"     Copyright (C) 2000, 2006-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ If you know the true name of this format, please let me know!
 It bears a remarkable similarity to the Motorola S-Record format,
 however I can find no reference to a "compressed" Motorola format.
 .SS The Lines
-Each line contains normal ASCII characters, and ``high bit on''
+Each line contains normal ASCII characters, and \[lq]high bit on[rq]
 characters, but the ASCII control characters are avoided (the high-bit-on
 con characters are not avoided).  Normal line termination characters
 (CRLF or LF, depending on your system) are used.
@@ -52,7 +52,7 @@ Byte Value;Encoding (1 or 2 chars)
 0xD0 .. 0xDF;0x3D 0x30 .. 0x3D 0x3F
 oxE0 .. 0xFF;0xE0 .. 0xFF
 .TE
-The rest of this description, when refering to ``bytes'' means byte
+The rest of this description, when refering to \[lq]bytes[rq] means byte
 values encoded using the above table.
 .br
 .ne 2i

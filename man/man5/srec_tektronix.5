@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2000, 2001, 2006-2008 Peter Miller
+.\"     Copyright (C) 1998, 2000, 2001, 2006-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -28,14 +28,14 @@ It serves a similar purpose to the Motorola and Intel formats,
 usually used to transfer data into EPROM programmers.
 .SS The Lines
 Most Tektronix hex files contain only Tektronix hex lines (see
-the next section), which always start with a slash (``/'') character.
+the next section), which always start with a slash (\[lq]/[rq]) character.
 There are only two types of lines \- data lines and a termination line.
 .br
 .ne 2i
 .SS Data Lines
 Data lines have five fields:
 address, length, checksum 1, data and checksum 2.
-The lines always start with a slash (``/'') character.
+The lines always start with a slash (\[lq]/[rq]) character.
 .TS
 allbox,center,tab(;);
 lf(CW) l l l l l.
@@ -69,7 +69,7 @@ the data field.
 .SS Termination Line
 Termination lines have three fields:
 address, zero and checksum.
-The lines always start with a slash (``/'') character.
+The lines always start with a slash (\[lq]/[rq]) character.
 .TS
 allbox,center,tab(;);
 lf(CW) l l l.
@@ -95,7 +95,7 @@ when represented with this format.
 .ne 2i
 .SH EXAMPLE
 Here is an example Tektronix hex file.
-It contains the data ``Hello, World'' to be loaded at address 0.
+It contains the data \[lq]Hello, World[rq] to be loaded at address 0.
 .RS
 .nf
 .ft CW

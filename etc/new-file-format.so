@@ -119,7 +119,7 @@ comes with at least one test for its output class, and at least one test
 for its input class.
 .SH IMPLEMENTATION ISSUES
 In implementing a new file format, there are a couple of philosophical
-issues which affect technical decissions:
+issues which affect technical decisions:
 .TP 8n
 Be liberal in what you accept
 Where ever possible, consume the widest possible interpretation of
@@ -158,16 +158,22 @@ The \f[I]srec_cmp\fP(1) command may be used to verify this.
 .TP 3n
 \(bu
 If the input has no header record, the output should not have one either
-(if at all possible).  This means not automagically inserting a header
+(if at all possible).  This means not automatically inserting a header
 record if the output file code sees data as the first method call.
 (The \-disable=header option affects this, too.)
 .TP 3n
 \(bu
 If the input has no execution start address record, the output should
-not have one either (if at all possible).  This means not automagically
+not have one either (if at all possible).  This means not automatically
 inserting an execution start address record if the output file code does
 not see one by the time the destructor is called.
 (The \-disable=exec-start-addr flag affects this, too.)
+.TP 3n
+\(bu
+Write at least one \f[B]test\fP that does a \[lq]round trip\[rq] of
+data through the new format and back again, exercising any interesting
+boundary conditions along the way (\f[I]e.g.\fP data records spanning
+segment boundaries).
 .RE
 .TP 8n
 Holes
@@ -218,10 +224,10 @@ class.  This only applies to input; output must always produce correct
 checksums.
 .TP 8n
 \fB\-line-length\fP
-Where your ouput format is text, and there exists the possibility of
+Where your output format is text, and there exists the possibility of
 putting more or less text on each line (\f[I]e.g.\fP the Motorola format
 allows a variable number of data bytes per record) then this should be
-controlable.  This manifests in the \f[CW]address_length_set\fP and
+controllable.  This manifests in the \f[CW]address_length_set\fP and
 \f[CW]preferred_block_size_get\fP methods you must implement in your
 derived class.
 .SH AUTHOR

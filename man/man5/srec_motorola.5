@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2000-2002, 2006-2008 Peter Miller
+.\"     Copyright (C) 1998, 2000-2002, 2006-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -35,8 +35,8 @@ for Motorola microcontrollers and microprocessors.
 .SS The Lines
 Most S-Record file contain only S-Record lines (see the next section),
 which always start with a capital S character.  Some systems generate
-various ``extensions'' which usually manifest as lines which start with
-something else.  These ``extension'' lines may or may not break other
+various \[lq]extensions[rq] which usually manifest as lines which start with
+something else.  These \[lq]extension[rq] lines may or may not break other
 systems made by other vendors.  Caveat emptor.
 .br
 .ne 2i
@@ -79,7 +79,7 @@ data fields.
 S0
 This type of record is the header record for each block of S-records.
 The data field may contain any descriptive information identifying the
-following block of S-records.  (It is commonly ``HDR'' on many systems.)
+following block of S-records.  (It is commonly \[lq]HDR[rq] on many systems.)
 The address field is normally zero.
 .TP 8n
 S1
@@ -130,7 +130,7 @@ when represented with this format.
 .ne 2i
 .SH EXAMPLE
 Here is an example S-Record file.
-It contains the data ``Hello, World'' to be loaded at address 0.
+It contains the data \[lq]Hello, World[rq] to be loaded at address 0.
 .RS
 .nf
 .ft CW

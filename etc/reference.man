@@ -121,7 +121,7 @@ with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\"     -----
 .\" This next section redefines the page footer to use roman numbering
-.\" from ``iii'' onwards.  It is overly GNU Groff specific.
+.\" from "iii" onwards.  It is overly GNU Groff specific.
 .\" Fortunately, the page number does not appear in the page header.
 .\"
 .nr an-page-origin \n%-3

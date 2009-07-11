@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2003, 2006-2008 Peter Miller
+.\"     Copyright (C) 2003, 2006-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ T};Data;Checksum
 .TP 8n
 Record Mark.
 Each record begins with a Record Mark field containing 0x3A, the ASCII
-code for the colon (``:'') character.
+code for the colon (\[lq]:[rq]) character.
 .TP 8n
 Record Length
 Each record has a Record Length field which specifies the number of 16-bit words
@@ -93,7 +93,7 @@ Each record has a Load Offset field which specifies the 16-bit starting
 load offset of the data words, therefore this field is only used for
 Data Records (if the words are loaded as bytes, the address needs
 to be doubled).  In other records where this field is not used, it
-should be coded as four ASCII zero characters (``0000'' or 0x30303030).
+should be coded as four ASCII zero characters (\[lq]0000[rq] or 0x30303030).
 This field one 16-bit word, represented as four hexadecimal characters.
 .TP 8n
 Record Type
@@ -136,7 +136,7 @@ lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) l l.
 T{
 Record Mark
 .br
-(``:'')
+(\[lq]:[rq])
 T};T{
 Record Length
 T};T{
@@ -152,7 +152,7 @@ The contents of the individual fields within the record are:
 .TP 8n
 Record Mark
 This field contains 0x3A, the hexadecimal encoding of the ASCII colon
-(``:'') character.
+(\[lq]:[rq]) character.
 .TP 8n
 Record Length
 The field contains two ASCII hexadecimal digits that specify the number
@@ -165,7 +165,7 @@ address at which the first word of the data is to be placed.
 .TP 8n
 Record Type
 This field contains 0x3030, the hexadecimal encoding of the ASCII
-character ``00'', which specifies the record type to be a Data Record.
+character \[lq]00[rq], which specifies the record type to be a Data Record.
 .TP 8n
 Data
 This field contains sets of four ASCII hexadecimal digits, one set for
@@ -181,7 +181,7 @@ lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) l l.
 T{
 Record Mark
 .br
-(``:'')
+(\[lq]:[rq])
 T};T{
 Record Length
 (4)
@@ -210,20 +210,20 @@ The contents of the individual fields within the record are:
 .TP 8n
 Record mark
 This field contains 0x3A, the hexadecimal encoding of the ASCII colon
-(``:'') character.
+(\[lq]:[rq]) character.
 .TP 8n
 Record length
 The field contains 0x3032, the hexadecimal encoding of the ASCII
-characters ``02'', which is the length, in bytes, of the EIP register
+characters \[lq]02[rq], which is the length, in bytes, of the EIP register
 content within this record.
 .TP 8n
 Load Offset
 This field contains 0x30303030, the hexadecimal encoding of the ASCII
-characters ``0000'', since this field is not used for this record.
+characters \[lq]0000[rq], since this field is not used for this record.
 .TP 8n
 Record Type
 This field contains 0x3035, the hexadecimal encoding of the ASCII
-character ``05'', which specifies the record type to be a Start
+character \[lq]05[rq], which specifies the record type to be a Start
 Address Record.
 .TP 8n
 EIP
@@ -240,7 +240,7 @@ allbox,tab(;);
 lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) l.
 T{
 Record Mark
-(``:'')
+(\[lq]:[rq])
 T};T{
 Record Length
 (0)
@@ -261,27 +261,27 @@ The contents of the individual fields within the record are:
 .TP 8n
 Record mark
 This field contains 0x3A, the hexadecimal encoding of the ASCII colon
-(``:'') character.
+(\[lq]:[rq]) character.
 .TP 8n
 Record Length
 The field contains 0x3030, the hexadecimal encoding of the ASCII
-characters ``00''.  Since this record does not contain any Data bytes,
+characters \[lq]00[rq].  Since this record does not contain any Data bytes,
 the length is zero.
 .TP 8n
 Load Offset
 This field contains 0x30303030, the hexadecimal encoding of the ASCII
-characters ``0000'', since this field is not used for this record.
+characters \[lq]0000[rq], since this field is not used for this record.
 .TP 8n
 Record Type
 This field contains 0x3031, the hexadecimal encoding of the ASCII
-character ``01'', which specifies the record type to be an End of File
+character \[lq]01[rq], which specifies the record type to be an End of File
 Record.
 .TP 8n
 Checksum
 This field contains the check sum an the Record Length, Load Offset,
 and Record Type fields.  Since all the fields are static, the check
 sum can also be calculated statically, and the value is 0x4646, the
-hexadecimal encoding of the ASCII characters ``FF''.
+hexadecimal encoding of the ASCII characters \[lq]FF[rq].
 .SS Size Multiplier
 In general, binary data will expand in sized by approximately 2.3 times
 when represented with this format.
@@ -290,7 +290,7 @@ when represented with this format.
 .ne 2i
 .SH EXAMPLE
 Here is an example INHX16 file.
-It contains the data ``Hello, World'' to be loaded at address 0.
+It contains the data \[lq]Hello, World[rq] to be loaded at address 0.
 .RS
 .nf
 .ft CW

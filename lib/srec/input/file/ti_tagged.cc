@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000, 2002, 2003, 2006-2008 Peter Miller
+//      Copyright (C) 2000, 2002, 2003, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ srec_input_file_ti_tagged::read(srec_record &record)
         default:
             fatal_error
             (
-                (isprint(c) ? "unknown tag ``%c''" : "unknown tag (%02X)"),
+                (isprint(c) ? "unknown tag '%c'" : "unknown tag (%02X)"),
                 c
             );
 

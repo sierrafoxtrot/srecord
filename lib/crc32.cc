@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2002, 2006-2008 Peter Miller
+//      Copyright (C) 2000-2002, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -47,8 +47,8 @@ static unsigned long xmodem_seed = 0;
 
 //
 // Portions of the code in the file are derived from code which is
-// ``Copyright (C) 1986 Gary S. Brown.  You may use this program, or
-// code or tables extracted from it, as desired without restriction.''
+// "Copyright (C) 1986 Gary S. Brown.  You may use this program, or
+// code or tables extracted from it, as desired without restriction."
 //
 // First, the polynomial itself and its table of feedback terms.  The
 // polynomial is

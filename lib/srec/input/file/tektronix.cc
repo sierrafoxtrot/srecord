@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2003, 2005-2008 Peter Miller
+//      Copyright (C) 1998-2003, 2005-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -95,7 +95,7 @@ srec_input_file_tektronix::read_inner(srec_record &record)
     if (peek_char() == '/')
     {
         //
-        // lines beginning with ``//'' are end-of-file records
+        // lines beginning with "//" are end-of-file records
         //
         seek_to_end();
         return 0;

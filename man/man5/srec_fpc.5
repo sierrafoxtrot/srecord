@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2001, 2006, 2007 Peter Miller
+.\"     Copyright (C) 2001, 2006, 2007, 2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -174,7 +174,7 @@ bytes to obtain a multiple of 4 we use 0x00 as padding bytes at the end
 of the record.  These padding bytes are ignored on the receiving side.
 .SS End of File
 End of file is recognized if the first four bytes of the record all
-contain 0x00.  In base 85 this will be ``\f[CW]$%%%%%\fP''.  This is
+contain 0x00.  In base 85 this will be \[lq]\f[CW]$%%%%%\fP[rq].  This is
 the only decent way to terminate the file.
 .SS Size Multiplier
 In general, binary data will expand in sized by approximately 1.7 times

@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2000, 2003, 2006, 2007 Peter Miller
+.\"     Copyright (C) 2000, 2003, 2006, 2007, 2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -26,20 +26,21 @@ all of the tools understand this option.
 .if n *
 .if t \(bu
 .\" Change 19
-The ``MOS Technologies'' file format is now understood for reading and writing.
+The \[lq]MOS Technologies\[rq] file format is now understood for reading
+and writing.
 See \fIsrec_mos_tech\fP(5) for more information.
 .PP
 .if n *
 .if t \(bu
 .\" Change 18
-The ``Tektronix Extended'' file format is now understood for reading
+The \[lq]Tektronix Extended\[rq] file format is now understood for reading
 and writing.
 See \fIsrec_tektronix_extended\fP(5) for more information.
 .PP
 .if n *
 .if t \(bu
 .\" Change 17
-The ``Texas Instruments Tagged'' file format is now understood for
+The \[lq]Texas Instruments Tagged\[rq] file format is now understood for
 reading and writing.
 (Also known as the TI-Tagged or SDSMAC format.)
 See \fIsrec_ti_tagged\fP(5) for more information.
@@ -47,7 +48,7 @@ See \fIsrec_ti_tagged\fP(5) for more information.
 .if n *
 .if t \(bu
 .\" Change 16
-The ``ascii-hex'' file format is now understood for reading and writing.
+The \[lq]ascii-hex\[rq] file format is now understood for reading and writing.
 (Also known as the ascii-space-hex format.)
 See \fIsrec_ascii_hex\fP(5) for more information.
 .PP
@@ -61,7 +62,7 @@ See \fIsrec_cat\fP(1) for more information.
 .if n *
 .if t \(bu
 .\" Change 14
-The ``wilson'' file format is now understood for reading and writing.
+The \[lq]wilson\[rq] file format is now understood for reading and writing.
 This mystery format was added for a mysterious type of EPROM writer.
 See \fIsrec_wilson\fP(5) for more information.
 .PP
