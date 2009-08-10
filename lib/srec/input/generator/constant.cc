@@ -17,8 +17,10 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <lib/srec/input/generator/constant.h>
 #include <cstdio>
+
+#include <lib/srec/input/generator/constant.h>
+
 
 srec_input_generator_constant::~srec_input_generator_constant()
 {

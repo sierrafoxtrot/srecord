@@ -18,9 +18,9 @@
 //
 
 #include <cerrno>
-#include <iostream>
 #include <cstdio>
 #include <cstring>
+#include <iostream>
 
 #include <lib/srec/input/file.h>
 

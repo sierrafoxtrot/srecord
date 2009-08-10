@@ -17,8 +17,9 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <iostream>
 #include <cstdio>
+#include <iostream>
+
 #include <lib/interval.h>
 
 

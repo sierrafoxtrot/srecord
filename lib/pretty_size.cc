@@ -17,8 +17,10 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <lib/pretty_size.h>
 #include <cstdio>
+
+#include <lib/pretty_size.h>
+
 
 std::string
 pretty_size(long long x, int width)
