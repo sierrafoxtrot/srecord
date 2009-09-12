@@ -16,21 +16,18 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" Change 16, 11
-A number of gcc 4.4 build problems have been fixed.
-.PP
-.if n *
-.if t \(bu
-.\" Change 12
-A bugs has been fixed in the Intel output format. When using the
-segemented format (address-length=2) records that span the end
-of segment boundary are tricky. The code now carefully splits
-such output records, to ensure the two parts are explicitly
-placed into separate segments.
+.\"
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 51 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.50 (2009-Jul-09)
+.SS Version 1.51 (2009-Sep-13)
 .\" vim: set ts=8 sw=4 et
