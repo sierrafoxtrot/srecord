@@ -51,7 +51,7 @@ less for over \n[yd] years now.
 .SS Your Examples Wanted
 If you have a clever way of using SRecord, or have solved a difficult
 problem with SRecord, you could contribute to this manual page, making
-it more useful for everyone.  Send your contribution in an email to the
+it more useful for everyone.  Send your example in an email to the
 email address at the end of this manual page.
 .SH CONVERTING FILE FORMATS
 The simplest of the things \f[I]srec_cat\fP(1) can do is convert from
@@ -288,7 +288,7 @@ parentheses.
 .nf
 srec_cat                                                    \e
     '('                                                     \e
-        \f[I]infile\fP --exclude 0xFFF0 0x10000                     \e
+        \f[I]infile\fP --exclude 0xFFF0 0x10000                       \e
         --generate 0xFFF0 0xFFF8 --repeat-string 'Bananas ' \e
     ')'                                                     \e
     --b-e-length 0xFFF8 4                                   \e
@@ -351,7 +351,7 @@ exclusive.  If you subtract them, you get the number of bytes.
 Just possibly, you have a moronic EPROM programmer, and it barfs if the
 EPROM image doesn't start at zero.
 To find out just where is \f[I]does\fP start in memory,
-use the \f[I]srec_inf\fP(1) command:
+use the \f[I]srec_info\fP(1) command:
 .RS
 .ft CW
 .nf
@@ -688,7 +688,7 @@ srec_cat \f[I]infile\fP --binary -o \f[I]outfile\fP
 .fi
 .ft R
 .RE
-It will probably be necessary to use and \f[I]offset\fP filter to move
+It will probably be necessary to use an \f[I]offset\fP filter to move
 the data to where you actually want it within the image:
 .RS
 .ft CW
@@ -728,6 +728,22 @@ Notice how the address range for the data generation
 exactly matches the length of the \f[I]date\fP(1) output size.
 You can, of course, add your input file to the above \f[I]srec_cat\fP(1)
 command to catenate your EPROM image together with the date and time.
+.SS Inserting A Long
+Another possibility is to add the Subversion commit number to your EPROM image.
+In this example, we are inserting it a a 4-byte little-endian value
+at address 0x0008.  The Subversion commit number is in the \f[I]$version\fP
+shell variable in this exmaple:
+.RS
+.nf
+.ft CW
+srec_cat -generate 0x0008 0x000C -l-e-constant $version 4 \e
+    \f[I]infile\fP -exclude 0x0008 0x000C \e
+    -o \f[I]outfile\fP
+.ft R
+.fi
+.RE
+Note that we use a filter to ensure there is a hole in the input where
+the version number goes, just in case the linker put something there.
 .\" ------------------------------------------------------------------------
 .SH DATA ABOUT THE DATA
 It is possible to add a variety of data about the data to the output.
@@ -837,17 +853,19 @@ if (sum != *end)
 .RE
 In the 8-bit case, it doesn't matter whether you use the big-endian or
 little-endian filter.
-.PP
+.SS Quick Hex-Dump
 You can look at the checksum of your data, by using the
 \[lq]hex-dump\[rq] output format.
+This is useful for looking at calculated values, or for debugging
+an \f[I]srec_cat\fP(1) command before immortalising it in a script.
 .RS
 .ft CW
 .nf
-srec_cat \f[I]infile\fP \e
-        --crop 0 0x10000 \e
-        --fill 0xFF 0x0000 0x10000 \e
+srec_cat \f[I]infile\fP                        \e
+        --crop 0 0x10000             \e
+        --fill 0xFF 0x0000 0x10000   \e
         --b-e-checksum-neg 0x10000 4 \e
-        --crop 0x10000 0x10004 \e
+        --crop 0x10000 0x10004       \e
     -o - --hex-dump
 .fi
 .ft R
@@ -863,10 +881,10 @@ problems.
 .RS
 .ft CW
 .nf
-srec_cat \f[I]infile\fP \e
-        --crop 0 0xFFFFFC \e
+srec_cat \f[I]infile\fP                        \e
+        --crop 0 0xFFFFFC            \e
         --fill 0x00 0x00000 0xFFFFFC \e
-        --b-e-crc32 0xFFFFFC \e
+        --b-e-crc32 0xFFFFFC         \e
     -o \f[I]outfile\fP
 .fi
 .ft R
@@ -889,10 +907,10 @@ There is also a 16-bit CRC available.
 .RS
 .ft CW
 .nf
-srec_cat \f[I]infile\fP \e
-        --crop 0 0xFFFFFE \e
+srec_cat \f[I]infile\fP                        \e
+        --crop 0 0xFFFFFE            \e
         --fill 0x00 0x00000 0xFFFFFE \e
-        --b-e-crc16 0xFFFFFE \e
+        --b-e-crc16 0xFFFFFE         \e
     -o \f[I]outfile\fP
 .fi
 .ft R
@@ -909,11 +927,11 @@ You can look at the CRC of your data, by using the
 .RS
 .ft CW
 .nf
-srec_cat \f[I]infile\fP \e
-        --crop 0 0x10000 \e
+srec_cat \f[I]infile\fP                      \e
+        --crop 0 0x10000           \e
         --fill 0xFF 0x0000 0x10000 \e
-        --b-e-crc16 0x10000 \e
-        --crop 0x10000 0x10002 \e
+        --b-e-crc16 0x10000        \e
+        --crop 0x10000 0x10002     \e
     -o - --hex-dump
 .fi
 .ft R
@@ -1016,7 +1034,7 @@ $
 The above example guesses the EPROM load file format.
 It isn't infallible but it usually gets it right.
 You can use \fB\-guess\fP anywhere you would give an explicit format,
-but it tends to be slower and not recommended.
+but it tends to be slower and for that reason is not recommended.
 .\" ------------------------------------------------------------------------
 .SH MANGLING THE DATA
 It is possible to change the values of the data bytes in several ways.

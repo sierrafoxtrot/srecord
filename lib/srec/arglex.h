@@ -63,6 +63,8 @@ public:
         token_checksum_le_positive,
         token_cl430,
         token_constant,
+        token_constant_be,
+        token_constant_le,
         token_constant_not,
         token_cosmac,
         token_crc16_augment,

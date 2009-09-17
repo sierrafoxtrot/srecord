@@ -1,6 +1,6 @@
 //
 //      srecord - The "srecord" program.
-//      Copyright (C) 2007, 2008 Peter Miller
+//      Copyright (C) 2007-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -93,10 +93,92 @@ srec_input_generator::create(srec_arglex *cmdln)
     srec_input::pointer result;
     switch (cmdln->token_cur())
     {
+    case srec_arglex::token_constant_be:
+        {
+            cmdln->token_next();
+            unsigned long datum =
+                cmdln->get_number("--generate --b-e-constant <datum>");
+            int length =
+                cmdln->get_number("--generate --b-e-constant <length>");
+            if (length <= 0 || length > 4)
+            {
+                cmdln->fatal_error
+                (
+                    "length %d out of range [1..4]",
+                    length
+                );
+            }
+            unsigned long over = (1uL << (8u * length)) - 1;
+            if (length < 4 && datum > over)
+            {
+                cmdln->fatal_error
+                (
+                    "datum %lu out of range [0..%lu]",
+                    datum,
+                    over
+                );
+            }
+            unsigned char data[4];
+            data[3] = datum;
+            data[2] = datum >> 8;
+            data[1] = datum >> 16;
+            data[0] = datum >> 24;
+            result =
+                srec_input_generator_repeat::create
+                (
+                    range,
+                    data + 4 - length,
+                    length
+                );
+        }
+        break;
+
+    case srec_arglex::token_constant_le:
+        {
+            cmdln->token_next();
+            unsigned long datum =
+                cmdln->get_number("--generate --l-e-constant <datum>");
+            int length =
+                cmdln->get_number("--generate --l-e-constant <length>");
+            if (length <= 0 || length > 4)
+            {
+                cmdln->fatal_error
+                (
+                    "length %d out of range [1..4]",
+                    length
+                );
+            }
+            unsigned long over = (1uL << (8u * length)) - 1;
+            if (length < 4 && datum > over)
+            {
+                cmdln->fatal_error
+                (
+                    "datum %lu out of range [0..%lu]",
+                    datum,
+                    over
+                );
+            }
+            unsigned char data[4];
+            data[0] = datum;
+            data[1] = datum >> 8;
+            data[2] = datum >> 16;
+            data[3] = datum >> 24;
+            result = srec_input_generator_repeat::create(range, data, length);
+        }
+        break;
+
     case srec_arglex::token_constant:
         {
             cmdln->token_next();
             int n = cmdln->get_number("--generate --constant");
+            if (n < 0 || n > 255)
+            {
+                cmdln->fatal_error
+                (
+                    "data byte %d out of range [0..255]",
+                    n
+                );
+            }
             result = srec_input_generator_constant::create(range, n);
         }
         break;

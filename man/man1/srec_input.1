@@ -232,10 +232,12 @@ An input generator specification looks like this:
 .PP
 The \fB\-\fP\f[I]data-source\fP may be one of the following:
 .TP 8n
-\fB\-CONSTant\fP \f[I]number\fP
+\fB\-CONSTant\fP \f[I]byte-value\fP
 .RS
 This generator manufactures data with the given byte value of the
 the given address range.
+It is an error if the byte-value is not in the range 0..255.
+.PP
 For example, to fill memory addresses 100..199 with newlines (0x0A),
 you could use a command like
 .PP
@@ -250,10 +252,12 @@ srec_cat \-generate 100 200 \-constant 10 -o newlines.srec
 This can, of course, be combined with data from files.
 .RE
 .TP 8n
-\fB\-REPeat_Data\fP \f[I]number\fP...
+\fB\-REPeat_Data\fP \f[I]byte-value\fP...
 .RS
 This generator manufactures data with the given byte values repeating
 over the the given address range.
+It is an error if any of the the byte-values are not in the range 0..255.
+.PP
 For example, to create a data region with 0xDE in the even bytes and 0xAD
 in the odd bytes, use a generator like this:
 .PP
@@ -273,6 +277,7 @@ modulo the number of bytes.
 .RS
 This generator is almost identical to \-repeat-data except that the data
 to be repeated is the text of the given string.
+.PP
 For example, to fill the holes in an EPROM image \f[I]eprom.srec\fP with the
 text \(lqCopyright (C) 1812 Tchaikovsky\(rq, combine a generator and an
 \-exclude filter, such as the command
@@ -292,6 +297,35 @@ srec_cat eprom.srec \e
 The thing to note is that we have two data sources: the \f[I]eprom.srec\fP
 file, and generated data over an address range which covers first
 megabyte of memory but excluding areas covered by the \f[I]eprom.srec\fP data.
+.RE
+.TP 8n
+\fB\-Litte_Endian_CONSTant\fP \f[I]value\fP \f[I]width\fP
+.RS
+This generator manufactures data with the given numeric value,
+of a given byte width, in little-endian byte order.
+It is an error if the given value does not fit into the given byte width.
+It will repeat over and over within the address range range.
+.PP
+For example, to insert a subversion commit number
+into 4 bytes at 0x0008..0x000B you would use
+a command like
+.PP
+.nf
+.in +0.25i
+.ft CW
+srec_cat \-generate 8 12 \-l-e-constant $VERSION 4 \e
+    -o version.srec
+.ft P
+.in -0.25i
+.fi
+.PP
+This generator is a convenience wrapper around the \fB\-REPeat_Data\fP
+generator.  It can, of course, be combined with data from files.
+.RE
+.TP 8n
+\fB\-Big_Endian_CONSTant\fP \f[I]value\fP \f[I]width\fP
+.RS
+As above, but using big-endian byte ordering.
 .RE
 .PP
 Anything else will result in an error.
@@ -883,7 +917,7 @@ at the address given.
 .\" ----------  Y  -------------------------------------------------------------
 .\" ----------  Z  -------------------------------------------------------------
 .SS Address Ranges
-There are three ways to specify an address range:
+There are eight ways to specify an address range:
 .TP 8n
 \f[I]minimum\fP \f[I]maximum\fP
 If you specify two number on the command line (decimal, octal and
