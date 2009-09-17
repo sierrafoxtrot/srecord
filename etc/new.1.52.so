@@ -16,15 +16,18 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" Change 11
-There is a new \f[I]srec_cat -generator -l-e-constant\fP data generator
-(and also \f[I]-b-e-const\fP) that may be used to insert multi-byte
-constants into your data.
-See \f[I]srec_input\fP(1) for more information.
+.\"
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 52 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.51 (2009-Sep-13)
+.SS Version 1.52 (2009-Sep-17)
 .\" vim: set ts=8 sw=4 et
