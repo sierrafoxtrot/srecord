@@ -72,7 +72,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_md5(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_MD5);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -80,7 +87,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_sha1(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_SHA1);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -88,7 +102,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_rmd160(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_RMD160);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -96,7 +117,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_md2(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_MD2);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -104,7 +132,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_tiger(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_TIGER);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -112,7 +147,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_haval(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_HAVAL);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -120,7 +162,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_sha256(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_SHA256);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -128,7 +177,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_sha384(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_SHA384);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -136,7 +192,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_sha512(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_SHA512);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -144,7 +207,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_sha224(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_SHA224);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -152,7 +222,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_md4(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_MD4);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -160,7 +237,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_crc32(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_CRC32);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -168,7 +252,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_crc32_rfc1510(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_CRC32_RFC1510);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -176,7 +267,14 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_crc24_rfc2440(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_CRC24_RFC2440);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
@@ -184,13 +282,21 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_whirlpool(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
+#ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_WHIRLPOOL);
+#else
+    (void)a_deeper;
+    (void)a_address;
+    quit_default.fatal_error("libgcrypt not available");
+    return pointer();
+#endif
 }
 
 
 int
 srec_input_filter_message_gcrypt::algorithm_from_name(const char *name)
 {
+#ifdef HAVE_LIBGCRYPT
     static int table[] =
     {
         GCRY_MD_MD5,
@@ -216,6 +322,7 @@ srec_input_filter_message_gcrypt::algorithm_from_name(const char *name)
         if (0 == strcasecmp(name, gcry_md_algo_name(algo)))
             return algo;
     }
+#endif
     quit_default.fatal_error("gcrypt algorithm \"%s\" unknown", name);
     return -1;
 }
@@ -265,7 +372,11 @@ const char *
 srec_input_filter_message_gcrypt::get_algorithm_name()
     const
 {
+#ifdef HAVE_LIBGCRYPT
     return gcry_md_algo_name(algo);
+#else
+    return "libgcrypt not available";
+#endif
 }
 
 
