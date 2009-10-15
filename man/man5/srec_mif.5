@@ -19,7 +19,9 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 srec_mif \- Memory Initialization File (MIF) format
+.if require_index \{
 .XX "srec_mif(5)" "Memory Initialization File (MIF) format"
+.\}
 .SH DESCRIPTION
 This format was invented by Altera.
 .PP
@@ -29,12 +31,12 @@ An ASCII text file (with the extension .mif) that specifies the initial
 content of a memory block (CAM, RAM, or ROM), that is, the initial
 values for each address. This file is used during project compilation
 and/or simulation. You can create a Memory Initialization File in the
-Memory Editor, the In-System Memory Content Editor, or the Quartus II
+Memory Editor, the In\[hy]System Memory Content Editor, or the Quartus II
 Text Editor.
 .PP
 A Memory Initialization File serves as an input file for memory
 initialization in the Compiler and Simulator. You can also use a
-Hexadecimal (Intel-Format) File (.hex) to provide memory initialization
+Hexadecimal (Intel\[hy]Format) File (.hex) to provide memory initialization
 data.
 .PP
 A Memory Initialization File contains the initial values for each
@@ -49,23 +51,23 @@ When creating a Memory Initialization File in the Quartus II Text
 Editor, you must start with the DEPTH, WIDTH, ADDRESS_RADIX and
 DATA_RADIX keywords. You can use Tab "\t" and Space " " characters as
 separators, and insert multiple lines of comments with the percent "%"
-character, or a single comment with double dash "--" characters.
+character, or a single comment with double dash "\-\-" characters.
 Address:data pairs represent data contained inside certain memory addresses
 and you must place them between the CONTENT BEGIN and END keywords, as
 shown in the following examples.
 .RS
 .ft CW
 .nf
-%  multiple-line comment
-multiple-line comment  %
--- single-line comment
-DEPTH = 32;                   -- The size of data in bits
-WIDTH = 8;                    -- The size of memory in words
-ADDRESS_RADIX = HEX;          -- The radix for address values
-DATA_RADIX = BIN;             -- The radix for data values
-CONTENT                       -- start of (address : data pairs)
+%  multiple\[hy]line comment
+multiple\[hy]line comment  %
+\-\- single\[hy]line comment
+DEPTH = 32;                   \-\- The size of data in bits
+WIDTH = 8;                    \-\- The size of memory in words
+ADDRESS_RADIX = HEX;          \-\- The radix for address values
+DATA_RADIX = BIN;             \-\- The radix for data values
+CONTENT                       \-\- start of (address : data pairs)
 BEGIN
-00 : 00000000;                -- memory address : data
+00 : 00000000;                \-\- memory address : data
 01 : 00000001;
 02 : 00000010;
 03 : 00000011;
@@ -156,8 +158,8 @@ SRecord will never write an address range.
 .PP
 \f[B]Note:\fP
 When reading MIF file, SRecord will round up the number of bits in the
-WIDTH to be a multiple of 8.  Multi-byte values will be laid down in
-memory as big-endian.
+WIDTH to be a multiple of 8.  Multi\[hy]byte values will be laid down in
+memory as big\[hy]endian.
 .PP
 .\" http://www.mil.ufl.edu/4712/docs/mif_help.pdf
 An ASCII text file (with the extension .mif) that specifies the initial
@@ -169,7 +171,7 @@ depth and width values.  In addition, you can specify the radixes used
 to display and interpret addresses and data values.
 .SH SIZE MULTIPLIER
 In general, binary data will expand in sized by approximately 3.29
-times when 8-bit data is represented with this format
+times when 8\[hy]bit data is represented with this format
 (16 bit = 2.75, 32 bit = 2.47, 64 bit = 2.34).
 .SH EXAMPLE
 Following is a sample MIF:
@@ -183,13 +185,13 @@ WIDTH = 14; % WIDTH is the number of bits of data per word %
 ADDRESS_RADIX = HEX; % Address and value radixes are required %
 DATA_RADIX = HEX; % Enter BIN, DEC, HEX, OCT, or UNS; unless %
                   % otherwise specified, radixes = HEX %
--- Specify values for addresses, which can be single address or range
+ \-\-Specify values for addresses, which can be single address or range
 CONTENT
 BEGIN
-[0..F]: 3FFF;     % Range--Every address from 0 to F = 3FFF %
-6     :    F;     % Single address--Address 6 = F %
+[0..F]: 3FFF;     % Range: Every address from 0 to F = 3FFF %
+6     :    F;     % Single address: Address 6 = F %
 8     :    F E 5; % Range starting from specific address %
---                % Addr[8] = F, Addr[9] = E, Addr[A] = 5 %
+\-\-                % Addr[8] = F, Addr[9] = E, Addr[A] = 5 %
 END;
 .fi
 .ft R
@@ -199,7 +201,8 @@ END;
 .SH REFERENCE
 The above information was gleaned from
 the following sources:
-http://www.altera.com/support/software/nativelink/quartus2/glossary/def_mif.html
+http://www.altera.com/support/software/nativelink/quartus2/\%\
+glossary/def_mif.html
 .br
 http://www.mil.ufl.edu/4712/docs/mif_help.pdf
 .so man/man1/z_copyright.so

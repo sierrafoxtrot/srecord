@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2000, 2006-2008 Peter Miller
+.\"     Copyright (C) 2000, 2006-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -20,7 +20,9 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 srec_mos_tech \- MOS Technology file format
+.if require_index \{
 .XX "srec_mos_tech(5)" "MOS Technology file format"
+.\}
 .SH DESCRIPTION
 .\" ------------------------------------------------------------------------
 The MOS Technology format allows binary files to be uploaded and
@@ -46,18 +48,18 @@ the number of data bytes in the record.
 Typically this is 24 or less.
 .TP 8n
 Address
-This is a 2-byte address that specifies where the data
-in the record is to be loaded into memory, big-endian.
+This is a 2\[hy]byte address that specifies where the data
+in the record is to be loaded into memory, big\[hy]endian.
 .TP 8n
 Data
-The data field contains the executable code, memory-loadable data
+The data field contains the executable code, memory\[hy]loadable data
 or descriptive information to be transferred.
 .TP 8n
 Checksum
-The checksum is an 2-byte field that represents the least significant
+The checksum is an 2\[hy]byte field that represents the least significant
 two bytes of the the sum of the values represented
 by the pairs of characters making up the record's length, address, and
-data fields, big-endian.
+data fields, big\[hy]endian.
 .SS End of File
 The final line should have a data length of zero, and the data line
 count in the address field.  The checksum is not the usual checksum, it
@@ -82,9 +84,9 @@ It contains the data \[lq]Hello, World\[rq] to be loaded at address 0.
 .\" ------------------------------------------------------------------------
 .ds n) srec_cat
 .so man/man1/z_copyright.so
-.SH KIM-1 User Manual \- Appendix F \- Paper Tape Format
+.SH KIM\[hy]1 User Manual \- Appendix F \- Paper Tape Format
 \fI(The following information is reproduced from
-http://users.telenet.be/kim1-6502/6502/usrman.html#F
+http://users.telenet.be/kim1\[hy]6502/6502/usrman.html#F
 just in case it vanishes from the Web.)\fP
 .PP
 The paper tape LOAD and DUMP routines store and retrieve data in a
@@ -98,16 +100,16 @@ mark the start of a valid record.  The next byte transmitted (18HEX)
 or (24 decimal) is the number of data bytes contained in the record.
 The record's starting address High (1 byte, 2 characters), starting
 address Lo (1 byte, 2 characters), and data (24 bytes, 48 characters)
-follow.  Each record is terminated by the record's check-sum (2 bytes, 4
+follow.  Each record is terminated by the record's check\[hy]sum (2 bytes, 4
 characters), a carriage return (ASCII 0D), line feed (ASCII 0A), and six
 \[lq]NULL\[rq] characters (ASCII 00).
 (NULL characters cause a blank area on the paper tape.)
 .PP
-The last record transmitted has zero data bytes (indicated by ;00) The
-starting address field is replaced by a four digit Hex number repre-
-senting the total number of data records contained in the transmission,
-followed by the records usual check-sum digits.  An \[lq]XOFF\[rq]
-character ends the transmission.
+The last record transmitted has zero data bytes (indicated by ;00)
+The starting address field is replaced by a four digit Hex number
+representing the total number of data records contained in the
+transmission, followed by the records usual check\[hy]sum digits.  An
+\[lq]XOFF\[rq] character ends the transmission.
 .RS
 ;180000FFEEDDCCBBAA0099887766554433221122334455667788990AFC
 .br
@@ -115,8 +117,8 @@ character ends the transmission.
 .RE
 During a \[lq]LOAD\[rq] all incoming data is ignored until a \[lq];\[rq]
 character is received.  The receipt of non ASCII data or a mismatch
-between a records calculated check-sum and the check-sum read from tape
-will cause an error condition to be recognized by KIM.  The check-sum
+between a records calculated check\[hy]sum and the check\[hy]sum read from tape
+will cause an error condition to be recognized by KIM.  The check\[hy]sum
 is calculated by adding all data in the record except the \[lq];\[rq]
 character.
 .PP

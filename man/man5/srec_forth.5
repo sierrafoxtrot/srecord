@@ -20,7 +20,9 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 srec_forth \- FORTH file format
+.if require_index \{
 .XX "srec_forth(5)" "FORTH file format"
+.\}
 .SH DESCRIPTION
 This format can be read by FORTH interpreters
 .PP
@@ -32,8 +34,8 @@ C! for RAM or EEC! for EEPROM
 .br
 .ne 2i
 .SH EXAMPLE
-Here is an example ascii-hex file.
-It contains the data \[lq]Hello, World[rq] to be loaded at address 0x1000.
+Here is an example srec[hy]forth file.
+It contains the data \[lq]Hello, World\[rq] to be loaded at address 0x1000.
 .RS
 .nf
 .ft CW

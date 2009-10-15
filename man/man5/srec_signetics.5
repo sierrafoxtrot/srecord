@@ -20,7 +20,9 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 \*(n) \- Signetics file format
+.if require_index \{
 .XX "srec_signetics(5)" "Signetics file format"
+.\}
 .SH DESCRIPTION
 The Signetics file format is not often used.  The major disadvantage in
 modern applications is that the addressing range is limited to only 64kb.
@@ -42,7 +44,7 @@ The address field.  A four digit (2 byte) number representing the first
 address to be used by this record.
 .TP 8n
 cc
-The byte-count.
+The byte\[hy]count.
 A two digit value (1 byte), counting the actual data bytes in the record.
 .TP 8n
 as

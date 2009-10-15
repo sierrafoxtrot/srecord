@@ -20,13 +20,15 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 srec_spectrum \- Spectrum file format
+.if require_index \{
 .XX "srec_spectrum(5)" "Spectrum file format"
+.\}
 .SH DESCRIPTION
 .\" ftp://ftp.dataio.com/main/Manuals/UniFam/Translation%20Formats.pdf
 In this format, bytes are recorded as ASCII code with binary digits
 represented by 1s and 0s.  Each byte is preceeded by a decimal address.
 .PP
-The file ends with a Control-C character (0x03).
+The file ends with a Control\[hy]C character (0x03).
 .SS Size Multiplier
 In general, binary data will expand in sized by approximately 14 times
 when represented with this format (or 15 times on DOS or Windows).

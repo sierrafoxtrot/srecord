@@ -20,11 +20,13 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 srec_fairchild \- Fairchild Fairbug file format
+.if require_index \{
 .XX "srec_fairchild(5)" "Fairchild Fairbug file format"
+.\}
 .SH DESCRIPTION
-The Fairchild Fairbug format has 8-byte records.
+The Fairchild Fairbug format has 8\[hy]byte records.
 A file begins with an address record and ends with an
-end-of-file record.
+end\[hy]of\[hy]file record.
 .PP
 .PP
 There are three record types in this file format.
@@ -47,8 +49,9 @@ Each data record begins with an X and always contains 8 data bytes.
 The \fIff\fP characters are hexadecimal byte values (8 bytes).
 Each data byte is represented by 2
 hexadecimal characters.
-The \fIc\fP character is a hex digit being the the nibble-sum of the data bytes.
-A 1-digit hexadecimal checksum follows the data in each data record.
+The \fIc\fP character is a hex digit being the the nibble\[hy]sum of the
+data bytes.
+A 1\[hy]digit hexadecimal checksum follows the data in each data record.
 The checksum represents, in hexadecimal notation, the sum of the binary
 equivalents of the 16 digits in the record;
 the half carry from the fourth bit is ignored.
@@ -57,7 +60,7 @@ the asterisk character, which terminates the data transfer) between a
 checksum and the start character of the next data record. This space can
 be used for comments.
 .PP
-The end-of-file record has the form
+The end\[hy]of\[hy]file record has the form
 .TS
 allbox,center,tab(;);
 lf(CW).

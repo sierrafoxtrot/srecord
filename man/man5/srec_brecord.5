@@ -20,7 +20,9 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 srec_brecord \- Freescale MC68EZ328 Dragonball bootstrap record format
+.if require_index \{
 .XX "srec_brecord(5)" "Freescale MC68EZ328 Dragonball bootstrap record format"
+.\}
 .\" ------------------------------------------------------------------------
 .SH DESCRIPTION
 This data format is understood by Freescale MC68EZ328 Dragonball series
@@ -32,11 +34,11 @@ larger than 0x30 (e.g. lower case) will be ignored, less than 0x30
 (e.g. CR or LF) are considered record terminators.
 Comments are problematic; don't try this at home.
 .SS Fields
-Each line contains a 4-byte address (big endian), a 1-byte
-length-and-mode, and then data bytes as dictated by the length.
+Each line contains a 4\[hy]byte address (big endian), a 1\[hy]byte
+length\[hy]and\[hy]mode, and then data bytes as dictated by the length.
 There is \f[B]no\fP checksum.
 A zero length record is an execution start address record,
-non-zero length records are data.
+non\[hy]zero length records are data.
 .TS
 allbox,center,tab(/);
 c c c c c c c c c c c c.
@@ -46,7 +48,7 @@ c s s s s s s s c s c s.
 Address/Length/Data
 .TE
 .LP
-The length-and-mode byte is formatted as follows:
+The length\[hy]and\[hy]mode byte is formatted as follows:
 .TS
 allbox,center,tab(/);
 c c c c c c c c.
@@ -78,7 +80,7 @@ when represented with this format.
 .br
 .ne 2i
 .SH EXAMPLE
-Here is an example b-record format file.
+Here is an example b\[hy]record format file.
 It contains the data \[lq]Hello, World[rq] to be loaded at address 0.
 .RS
 .nf

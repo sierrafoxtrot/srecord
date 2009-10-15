@@ -19,7 +19,9 @@
 .TH \*(n) 1 SRecord "Reference Manual"
 .SH NAME
 srec_cat \- manipulate EPROM load files
+.if require_index \{
 .XX "srec_cat(1)" "Manipulate EPROM load files"
+.\}
 .SH SYNOPSIS
 .B \*(n)
 [
@@ -28,10 +30,10 @@ srec_cat \- manipulate EPROM load files
 .IR filename \&...
 .br
 .B \*(n)
-.B -Help
+.B \-Help
 .br
 .B \*(n)
-.B -VERSion
+.B \-VERSion
 .SH DESCRIPTION
 The
 .I \*(n)
@@ -73,7 +75,7 @@ To avoid this error use an \fB\-exclude \-within\fP filter
 \[bu]
 A warning will be issued for input files where the data records are not
 in strictly ascending address order.  To suppress this warning, use the
-\fB\-disable-sequence-warning\fP option (see below).
+\fB\-disable\[hy]sequence\[hy]warning\fP option (see below).
 .PP
 These features are designed to detect problems which are difficult to
 debug, and detects them \f[I]before\fP the data is written to an EPROM
@@ -101,7 +103,7 @@ An Intel Absolute Object Module Format file will be written.
 for a description of this file format.)
 .TP 8n
 \fB\-Ascii_Hex\fP
-An Ascii-Hex file will be written.
+An Ascii\[hy]Hex file will be written.
 (See
 .IR srec_ascii_hex (5)
 for a description of this file format.)
@@ -116,7 +118,7 @@ symbols generated.  The defaults to "\f[CW]eprom\fP" if not set.
 Several options are available to modify the style of output:
 .TP 8n
 \fB\-Dot_STyle\fP
-Use "dot" style pseudo-ops instead of words.
+Use "dot" style pseudo\[hy]ops instead of words.
 For example \f[CW].byte\fP instead of the \f[CW]DB\fP default.
 .TP 8n
 \fB\-HEXadecimal_STyle\fP
@@ -125,28 +127,29 @@ rather than the default decimal numbers.
 .TP 8n
 \fB\-Section_STyle\fP
 By default the generated assemble of placed at the correct address using
-\f[CW]ORG\fP pseudo-ops.  Section style output emits tables of section
+\f[CW]ORG\fP pseudo\[hy]ops.  Section style output emits tables of section
 addresses and lengths, so the data may be related at runtime.
 .TP 8n
 \fB\-A430\fP
 Generate output which is compliant to the \f[CW]a430.exe\fP compiler as
 it is used, \f[I]e.g.\fP in IAR Embedded Workbench.
-This is short-hand for \-section-style \-hex-style
+This is short\[hy]hand for \-section\[hy]style \-hex\[hy]style
 .TP 8n
 \fB\-CL430\fP
 Generate  output which is Code Composer Essentials compliant,
 \f[I]i.e.\fP the compiler of it.
-This is short-hand for \-section-style \-hex-style \-dot-style
+This is short\[hy]hand for \-section\[hy]style \-hex\[hy]style \-dot\[hy]style
 .TP 8n
 \fB\-Output_Word\fP
-Generate output which is in two-byte words rather than bytes.  This
-assumes little-endian words; you will need to use the \-Byte-Swap filter
-if your target is big-endian.
-No attempt is made to align the words onto even address boundaries;
-use and input filter such as
+Generate output which is in two\[hy]byte words rather than bytes.
+This assumes little\[hy]endian words; you will need to use the
+\-Byte\[hy]Swap filter if your target is big\[hy]endian.  No attempt
+is made to align the words onto even address boundaries; use and input
+filter such as
 .nf
 .in +8n
-\f[I]input-file\fP \-fill 0xFF -within \f[I]input-file\fP -range-pad 2
+\f[I]input\[hy]file\fP \-fill 0xFF \-within \f[I]input\[hy]file\fP
+\-range\[hy]pad 2
 .in -8n
 .fi
 to pad the data to whole words first.
@@ -162,8 +165,9 @@ for a description of this file format.)
 \fB\-BASic\fP
 A series of BASIC DATA statements will be written.
 .TP 8n
-\fB\-B-Record\fP
-A Freescale MC68EZ328 Dragonball bootstrap b-record format file will be written.
+\fB\-B\[hy]Record\fP
+A Freescale MC68EZ328 Dragonball bootstrap b\[hy]record format file will
+be written.
 (See
 .IR srec_brecord (5)
 for a description of this file format.)
@@ -174,7 +178,7 @@ If you get unexpected results \f[B]please\fP see the
 \f[I]srec_binary\fP(5) manual for more information.
 .\" -----   --output -C*   -------------------------------------------------
 .TP 8n
-\fB\-C-Array\fP [ \f[I]identifier\fP ][ \-\f[I]option\fP... ]
+\fB\-C\[hy]Array\fP [ \f[I]identifier\fP ][ \-\f[I]option\fP... ]
 .RS
 A C array defintion will be written.
 .PP
@@ -184,13 +188,13 @@ or \f[CW]bugus\fP if not specified.
 \fB\-INClude\fP
 This option asks for an include file to be generated as well.
 .TP 8n
-\fB\-No-CONST
+\fB\-No\[hy]CONST
 This options asks for the variables to not use the const
 keyword (they are declared constant be default, so that they are placed
-into the read-only segment in embedded systems).
+into the read\[hy]only segment in embedded systems).
 .TP 8n
 \fB\-C_COMpressed\fP
-These options ask for an compressed c-array whose memory
+These options ask for an compressed c\[hy]array whose memory
 gaps will not be filled.
 .TP 8n
 \fB\-Output_Word\fP
@@ -261,12 +265,12 @@ An Intel hex format file will be written.
 (See
 .IR srec_intel (5)
 for a description of this file format.)
-The default is to emit 32-bit linear addressing;
-if you want 16-bit extended segment addressing
-use the \fB\-address-length=2\fP option.
+The default is to emit 32\[hy]bit linear addressing;
+if you want 16\[hy]bit extended segment addressing
+use the \fB\-address\[hy]length=2\fP option.
 .TP 8n
 \fB\-Intel_16\fP
-An Intel-16 hex format file will be written.
+An Intel\[hy]16 hex format file will be written.
 (See
 .IR srec_intel16 (5)
 for a description of this file format.)
@@ -288,19 +292,19 @@ for a description of this file format.)
 .TP 8n
 \fB\-Motorola\fP [ \f[I]width\fP ]
 .RS
-A Motorola S-Record file will be written.
+A Motorola S\[hy]Record file will be written.
 (See
 .IR srec_motorola (5)
 for a description of this file format.)
 This is the default output format.
 By default, the smallest possible address length is emitted,
 this will be S19 for data in the first 64KB;
-if you wish to force S28 use the \fB\-address-length=3\fP option;
-if you wish to force S37 use the \fB\-address-length=4\fP option
+if you wish to force S28 use the \fB\-address\[hy]length=3\fP option;
+if you wish to force S37 use the \fB\-address\[hy]length=4\fP option
 .PP
 The optional \f[I]width\fP argument describes the number of bytes which
 form each address multiple.  For normal uses the default of one (1) byte
-is appropriate.  Some systems with 16-bit or 32-bit targets mutilate the
+is appropriate.  Some systems with 16\[hy]bit or 32\[hy]bit targets mutilate the
 addresses in the file; this option will imitate that behavior.
 Unlike most other parameters, this one cannot be guessed.
 .\" -----   --output -N*   -------------------------------------------------
@@ -353,7 +357,7 @@ A Tektronix extended hex format file will be written.
 for a description of this file format.)
 .TP 8n
 \fB\-Texas_Instruments_Tagged\fP
-A TI-Tagged format file will be written.
+A TI\[hy]Tagged format file will be written.
 (See
 .IR srec_ti_tagged (5)
 for a description of this file format.)
@@ -371,17 +375,17 @@ file format.
 .\" -----   --output -U*   -------------------------------------------------
 .\" -----   --output -V*   -------------------------------------------------
 .TP 8n
-\fB\-VHdl\fP [ \f[I]bytes-per-word\fP [ \f[I]name\fP ]]
+\fB\-VHdl\fP [ \f[I]bytes\[hy]per\[hy]word\fP [ \f[I]name\fP ]]
 A VHDL format file will be written.
-The \f[I]bytes-per-word\fP defaults to one,
+The \f[I]bytes\[hy]per\[hy]word\fP defaults to one,
 the \f[I]name\fP defaults to \f[CW]eprom\fP.
 The \f[I]etc/x_defs_pack.vhd\fP file in the source distribution contains an
-example ROM definitions pack for the type-independent output.
-You may need to use the \-byte-swap filter to get the byte order you want.
+example ROM definitions pack for the type\[hy]independent output.
+You may need to use the \-byte\[hy]swap filter to get the byte order you want.
 .TP 8n
-\fB\-VMem\fP [ \f[I]memory-width\fP ]
+\fB\-VMem\fP [ \f[I]memory\[hy]width\fP ]
 A Verilog VMEM format file will be written.
-The \f[I]memory-width\fP may be 8, 16, 32, 64 or 128 bits;
+The \f[I]memory\[hy]width\fP may be 8, 16, 32, 64 or 128 bits;
 .\"
 .\" The default number of bits is 32.
 .\" If you change this, you must also change the following files:
@@ -390,7 +394,7 @@ The \f[I]memory-width\fP may be 8, 16, 32, 64 or 128 bits;
 .\"
 defaults to 32 if unspecified.
 (See \f[I]srec_vmem\fP(5) for a description of this file format.)
-You may need to use the \-byte-swap filter to get the byte order you want.
+You may need to use the \-byte\[hy]swap filter to get the byte order you want.
 .\" -----   --output -W*   -------------------------------------------------
 .TP 8n
 \fB\-WILson\fP
@@ -412,10 +416,10 @@ fully implement the format specification.
 .TP 8n
 .B \-Data_Only
 This option implies the \fB\-disable=header\fP,
-\fB\-disable=data-count\fP, \fB\-disable=exec-start-address\fP and
+\fB\-disable=data\[hy]count\fP, \fB\-disable=exec\[hy]start\[hy]address\fP and
 \fB\-disable=footer\fP options.
 .TP 8n
-.B \-ENable\fP \f[I]feature-name\fP
+.B \-ENable\fP \f[I]feature\[hy]name\fP
 .RS
 This option is used to enable the output of a named feature.
 .TP 8n
@@ -443,7 +447,7 @@ Not all formats are able to optionally omit any or all the above features.
 Feature names may be abbreviated like command line option names.
 .RE
 .TP 8n
-.B \-DISable\fP \f[I]feature-name\fP
+.B \-DISable\fP \f[I]feature\[hy]name\fP
 This option is used to disable the output of a named feature.
 See the \fB\-enable\fP option for a description of the available features.
 .TP 8n
@@ -452,11 +456,11 @@ See the \fB\-enable\fP option for a description of the available features.
 .so man/man1/o_sequence.so
 .TP 8n
 .B \-CRLF
-This option is short-hand for the \fB\-line-termination=crlf\fP option.
+This option is short\[hy]hand for the \fB\-line\[hy]termination=crlf\fP option.
 For use with harebrained EPROM programmer devices which assume all the
 world uses Evil Bill's operating system's line termination.
 .TP
-\fB\-Line_Termination \f[I]style-name\fP
+\fB\-Line_Termination \f[I]style\[hy]name\fP
 .RS
 This option may be used to specify line termination style for text
 output.  The default is to use the host operating system's default line
@@ -495,7 +499,7 @@ The execution start address is where the monitor will jump to and start
 executing code once the hex file has finished loading,
 think of it as a \[lq]goto\[rq] address.
 Usually ignored by EPROM programmer devices.
-This option implies the \fB\-enable=exec-start-addr\fP option.
+This option implies the \fB\-enable=exec\[hy]start\[hy]addr\fP option.
 .PP
 Please note: the execution start address is a different concept than the
 first address in memory of your data.  If you want to change where your

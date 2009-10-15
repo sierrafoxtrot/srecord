@@ -32,16 +32,16 @@ Copyright
 The
 .I \*(n)
 program comes with ABSOLUTELY NO WARRANTY;
-for details use the '\fI\*(n) -VERSion License\fP' command.
+for details use the '\fI\*(n) \-VERSion License\fP' command.
 This is free software
 and you are welcome to redistribute it under certain conditions;
-for details use the '\fI\*(n) -VERSion License\fP' command.
+for details use the '\fI\*(n) \-VERSion License\fP' command.
 .br
 .ne 1i
 .SH AUTHOR
 .TS
 tab(;);
 l r l.
-Peter Miller;E-Mail:;pmiller@opensource.org.au
+Peter Miller;E\[hy]Mail:;pmiller@opensource.org.au
 /\e/\e*;WWW:;http://miller.emu.id.au/pmiller/
 .TE

@@ -1,7 +1,7 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2008 Peter Miller
-// Copyright (C) 2008 Torsten Sadowsk
+// Copyright (C) 2008, 2009 Peter Miller
+// Copyright (C) 2008 Torsten Sadowski
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

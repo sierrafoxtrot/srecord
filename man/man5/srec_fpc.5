@@ -20,7 +20,9 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 \*(n) \- four packed code file format
+.if require_index \{
 .XX "srec_fpc(5)" "Four Packed Code (FPC) file format"
+.\}
 .SH SYNOPSIS
 All ASCII based file formats have one disadvantage in common: they all
 need more than double the amount of characters as opposed to the number
@@ -86,10 +88,10 @@ of base 85.
 .TP 8n
 ss
 The checksum.
-A one byte 2's-complement checksum of all bytes of the record.
+A one byte 2's\[hy]complement checksum of all bytes of the record.
 .TP 8n
 cc
-The byte-count.
+The byte\[hy]count.
 A one byte value, counting all the bytes in the record minus 4.
 .TP 8n
 ffff
@@ -106,12 +108,12 @@ Every record begins with the ASCII character "\fB$\fP".  No spaces or
 tabs are allowed in a record.  All other characters in the record are
 formed by groups of 5 digits of base 85.
 .SS Checksum field
-This field is a one byte 2's-complement checksum of the entire record.
+This field is a one byte 2's\[hy]complement checksum of the entire record.
 To create the checksum make a one byte sum from all of the bytes from
 all of the fields of the record:
 .PP
-Then take the 2's-complement of this sum to create the final checksum.
-The 2's-complement is simply inverting all bits and then increment by 1
+Then take the 2's\[hy]complement of this sum to create the final checksum.
+The 2's\[hy]complement is simply inverting all bits and then increment by 1
 (or using the negative operator).  Checking the checksum at the receivers
 end is done by adding all bytes together including the checksum itself,
 discarding all carries, and the result must be $00.  The padding bytes
@@ -140,7 +142,7 @@ be stored.
 .PP
 Format code 1 means that the address field in this record is missing.
 Simply the last known address of the previous record +1 is used to store
-the first data byte.  As if the FPC format wasn't fast enough already ;-)
+the first data byte.  As if the FPC format wasn't fast enough already ;\[hy])
 .PP
 Format code 2 means that the address field in this record is to be
 treated as a relative address.  Relative to what is not really clear.
@@ -174,7 +176,7 @@ bytes to obtain a multiple of 4 we use 0x00 as padding bytes at the end
 of the record.  These padding bytes are ignored on the receiving side.
 .SS End of File
 End of file is recognized if the first four bytes of the record all
-contain 0x00.  In base 85 this will be \[lq]\f[CW]$%%%%%\fP[rq].  This is
+contain 0x00.  In base 85 this will be \[lq]\f[CW]$%%%%%\fP\[rq].  This is
 the only decent way to terminate the file.
 .SS Size Multiplier
 In general, binary data will expand in sized by approximately 1.7 times
@@ -206,7 +208,7 @@ each record.
 $kL&@h%%,:,B.\e?00EPuX0K3rO0JI))
 $;UPR'%%,:<Hn&FCG:at<GVF(;G9wIw
 $7FD1p%%,:LHmy:>GTV%/KJ7@GE[kYz
-$B[6\e;%%,:\eKIn?GFWY/qKI1G5:;-_e
+$B[6\e;%%,:\eKIn?GFWY/qKI1G5:;\-_e
 $%%%%%
 .ft P
 .fi
@@ -214,7 +216,7 @@ $%%%%%
 As you can see the length of the lines is clearly shorter than the
 original ASCII lines.
 .SH SEE ALSO
-http://sbprojects.fol.nl/knowledge/fileformats/pfc.htm
+http://sbprojects.fol.nl/knowledge/fileformats/fpc.htm
 .SH AUTHOR
 This man page was taken from the above Web page.
 It was written by

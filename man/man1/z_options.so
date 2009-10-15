@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2006-2008 Peter Miller
+.\"     Copyright (C) 1998, 2006-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -27,9 +27,9 @@ you may type them in upper case or lower case or a combination of both,
 case is not important.
 .PP
 For example:
-the arguments \[lq]-help\[rq], \[lq]-HEL\[rq] and \[lq]-h\[rq] are
-all interpreted to mean the \fB-Help\fP option.
-The argument \[lq]-hlp\[rq] will not be understood,
+the arguments \[lq]\-help\[rq], \[lq]\-HEL\[rq] and \[lq]\-h\[rq] are
+all interpreted to mean the \fB\-Help\fP option.
+The argument \[lq]\-hlp\[rq] will not be understood,
 because consecutive optional characters were not supplied.
 .PP
 Options and other command line arguments may be
@@ -41,5 +41,5 @@ The GNU long option names are understood.
 Since all option names for
 .I \*(n)
 are long,
-this means ignoring the extra leading \[lq]-\[rq].
-The \[lq]\fB--\fIoption\fB=\fIvalue\fR\[rq] convention is also understood.
+this means ignoring the extra leading \[lq]\-\[rq].
+The \[lq]\fB\-\-\fIoption\fB=\fIvalue\fR\[rq] convention is also understood.

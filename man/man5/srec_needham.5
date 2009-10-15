@@ -19,12 +19,14 @@
 .ds n) srec_needham
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
-srec_needham \- Needham EMP-series programmer ASCII file format
-.XX "srec_needham(5)" "Needham EMP-series programmer ASCII file format"
+srec_needham \- Needham EMP\[hy]series programmer ASCII file format
+.if require_index \{
+.XX "srec_needham(5)" "Needham EMP\[hy]series programmer ASCII file format"
+.\}
 .SH DESCRIPTION
-This format is understood by Needham Electronics' EMP-series programmers.
+This format is understood by Needham Electronics' EMP\[hy]series programmers.
 See \f[CW]www.needhams.com/winman.pdf\fP for more information.
-(This format is very similar to the ASCII-Hex format, but without the ^B
+(This format is very similar to the ASCII\[hy]Hex format, but without the ^B
 and ^C guard characters.)
 .PP
 Each data byte is represented as 2 hexadecimal characters,
@@ -32,7 +34,7 @@ and is separated by white space from all other data bytes.
 .LP
 The address for data bytes is set by using a sequence of
 \f[CW]$A\fP\f[CI]nnnn\fP\f[CW],\fP characters, where \fInnnn\fP is the
-8-character ascii representation of the address.  The comma is required.
+8\[hy]character ascii representation of the address.  The comma is required.
 There is no need for an address record unless there are gaps.  Implicitly,
 the file starts a address 0 if no address is set before the first
 data byte.
@@ -43,7 +45,7 @@ when represented with this format.
 .br
 .ne 2i
 .SH EXAMPLE
-Here is an example ascii-hex file.
+Here is an example ascii\[hy]hex file.
 It contains the data \[lq]Hello, World[rq] to be loaded at address 0x1000.
 .RS
 .nf

@@ -20,13 +20,15 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 srec_stewie \- Stewie's binary file format
+.if require_index \{
 .XX "srec_stewie(5)" "Stewie's binary file format"
+.\}
 .SH DESCRIPTION
 If you have a URL for documentation of this format, please let me know.
 .PP
-Any resemblance to the Motorola S-Record is superficial, and extends
+Any resemblance to the Motorola S\[hy]Record is superficial, and extends
 only to the data records.  The header records and termination records
-are completely different.  None of the other Motorola S-Records record
+are completely different.  None of the other Motorola S\[hy]Records record
 type are available.
 .SS The Records
 All records start with an ASCII capital S character, value 0x53,
@@ -57,21 +59,21 @@ lf(CW) l l l l l.
 Type
 The type field is a one byte field that specifies whether
 the record has
-a two-byte address field (0x31),
-a three-byte address field (0x32) or
-a four-byte address field (0x33).
-The address is big-endian.
+a two\[hy]byte address field (0x31),
+a three\[hy]byte address field (0x32) or
+a four\[hy]byte address field (0x33).
+The address is big\[hy]endian.
 .TP 8n
 Record Length
 The record length field is a one byte field that specifies the
 number of bytes in the record following this byte.
 .TP 8n
 Address
-This is a 2-, 3- or 4-byte address that specifies where the data
+This is a 2\[hy], 3\[hy] or 4\[hy]byte address that specifies where the data
 in the record is to be loaded into memory.
 .TP 8n
 Data
-The data field contains the executable code, memory-loadable data
+The data field contains the executable code, memory\[hy]loadable data
 or descriptive information to be transferred.
 .TP 8n
 Checksum
@@ -97,7 +99,7 @@ when represented with this format.
 .br
 .ne 2i
 .SH EXAMPLE
-Here is an hex-dump example file.
+Here is an hex\[hy]dump example file.
 It contains the data \[lq]Hello, World[rq] to be loaded at address 0.
 .RS
 .nf

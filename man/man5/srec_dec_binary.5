@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2001, 2004, 2006-2008 Peter Miller
+.\"     Copyright (C) 2001, 2004, 2006-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -20,7 +20,9 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 \*(n) \- DEC Binary (XXDP) file format
+.if require_index \{
 .XX "srec_dec_binary(5)" "DEC Binary (XXDP) file format"
+.\}
 .SH DESCRIPTION
 The DEC Binary (XXDP) format was used on the PDP 11 series machines.
 This is a binary format, and is not readable or editable with a text editor.
@@ -33,20 +35,20 @@ type;length;address;...data...;checksum
 The field are defined as follows:
 .TP 8n
 type
-Two byte little-endian value.
+Two byte little\[hy]endian value.
 Must always be 1.
 .TP 8n
 length
-Two byte little-endian value.
+Two byte little\[hy]endian value.
 This is the number of bytes in the data, plus six.
 .TP 8n
 address
-Two byte little-endian value.
+Two byte little\[hy]endian value.
 This is the load address of the data.
 .TP 8n
 data
 The data is simple raw bytes.
-There are (length-6) of them.
+There are (length\[hy]6) of them.
 .TP 8n
 checksum
 The checcksum is a single byte.

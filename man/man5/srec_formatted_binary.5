@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2003, 2006-2008 Peter Miller
+.\"     Copyright (C) 2003, 2006-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -20,19 +20,22 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 srec_formatted_binary \- Formatted Binary file format
+.if require_index \{
 .XX "srec_formatted_binary(5)" "Formatted Binary file format"
+.\}
 .SH DESCRIPTION
 .\" ftp://ftp.dataio.com/main/Manuals/UniFam/Translation%20Formats.pdf
-This is the PDP-11 paper tape format, described in the
-DEC-11-GGPC-D PDP-11 "Paper Tape Software Programming Handbook" 1972.
+This is the PDP\[hy]11 paper tape format, described in the
+DEC\[hy]11\[hy]GGPC\[hy]D PDP\[hy]11 "Paper Tape Software Programming
+Handbook" 1972.
 .PP
 The file startes with a charcter sequence which appears as an arrow when
-punched on 8-hole paper tape.
+punched on 8\[hy]hole paper tape.
 .RS
 0x08, 0x1C, 0x2A, 0x49, 0x08, 0x00
 .RE
 .PP
-Then follows a byte count, encoded big-endian in the low 4 bits of the
+Then follows a byte count, encoded big\[hy]endian in the low 4 bits of the
 next 4 bytes.  The high bits should be zero.
 .PP
 Then follows a 0xFF byte.
@@ -43,13 +46,13 @@ The trailer consists of the following bytes:
 .RS
 0x00, 0x00,
 .RE
-and then a 2-byte checksum (big-endian).
+and then a 2\[hy]byte checksum (big\[hy]endian).
 .PP
 The alternate header sequence
 .RS
 0x08, 0x1C, 0x3E, 0x6B, 0x08, 0x00
 .RE
-is followed by an 8-nibble big-endian byte count.
+is followed by an 8\[hy]nibble big\[hy]endian byte count.
 .SS Size Multiplier
 In general, binary data will expand in sized very little
 when represented with this format.

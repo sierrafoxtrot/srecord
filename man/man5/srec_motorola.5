@@ -19,21 +19,23 @@
 .ds n) srec_motorola
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
-srec_motorola \- Motorola S-Record hexadecimal file format
-.XX "srec_motorola(5)" "Motorola S-Record hexadecimal file format"
+srec_motorola \- Motorola S\[hy]Record hexadecimal file format
+.if require_index \{
+.XX "srec_motorola(5)" "Motorola S\[hy]Record hexadecimal file format"
+.\}
 .SH DESCRIPTION
 This format is also known as the \fIExorciser\fP, \fIExormacs\fP or
 \fIExormax\fP format.
 .PP
 .\" ------------------------------------------------------------------------
 .\" Derived from http://freeware.mcu.motsps.com/lit/faq/as-80.htm
-Motorola's S-record format allows binary files to be uploaded and
+Motorola's S\[hy]record format allows binary files to be uploaded and
 downloaded between two computer systems.  This type of format is widely
 used when transferring programs and data between a computer system (such
 as a PC, Macintosh, or workstation) and an emulator or evaluation board
 for Motorola microcontrollers and microprocessors.
 .SS The Lines
-Most S-Record file contain only S-Record lines (see the next section),
+Most S\[hy]Record file contain only S\[hy]Record lines (see the next section),
 which always start with a capital S character.  Some systems generate
 various \[lq]extensions[rq] which usually manifest as lines which start with
 something else.  These \[lq]extension[rq] lines may or may not break other
@@ -41,7 +43,7 @@ systems made by other vendors.  Caveat emptor.
 .br
 .ne 2i
 .SS The Fields
-The S-record format consists of 5 fields. These are the type field,
+The S\[hy]Record format consists of 5 fields. These are the type field,
 length field, address field, data field, and the checksum.
 The lines always start with a capital S character.
 .TS
@@ -60,15 +62,15 @@ number of character pairs (bytes) in the record, excluding the type and
 record length fields.
 .TP 8n
 Address
-This is a 2-, 3- or 4-byte address that specifies where the data
-in the S-record is to be loaded into memory.
+This is a 2\[hy], 3\[hy] or 4\[hy]byte address that specifies where the data
+in the S\[hy]Record is to be loaded into memory.
 .TP 8n
 Data
-The data field contains the executable code, memory-loadable data
+The data field contains the executable code, memory\[hy]loadable data
 or descriptive information to be transferred.
 .TP 8n
 Checksum
-The checksum is an 8-bit field that represents the least significant
+The checksum is an 8\[hy]bit field that represents the least significant
 byte of the one's complement of the sum of the values represented
 by the pairs of characters making up the record's length, address, and
 data fields.
@@ -77,48 +79,49 @@ data fields.
 .SS Record Types
 .TP 8n
 S0
-This type of record is the header record for each block of S-records.
+This type of record is the header record for each block of S\[hy]Records.
 The data field may contain any descriptive information identifying the
-following block of S-records.  (It is commonly \[lq]HDR[rq] on many systems.)
+following block of S\[hy]Records.  (It is commonly \[lq]HDR[rq] on many
+systems.)
 The address field is normally zero.
 .TP 8n
 S1
-A record containing data and the 2-byte address at which the data is
+A record containing data and the 2\[hy]byte address at which the data is
 to reside.
 .TP 8n
 S2
-A record containing data and the 3-byte address at which the data is
+A record containing data and the 3\[hy]byte address at which the data is
 to reside.
 .TP 8n
 S3
-A record containing data and the 4-byte address at which the data is
+A record containing data and the 4\[hy]byte address at which the data is
 to reside.
 .TP 8n
 S5
 An optional record containing the number of S1, S2 and S3 records
 transmitted in a particular block.
-The count appears in the two-byte address field.
+The count appears in the two\[hy]byte address field.
 There is no data field.
 .TP 8n
 S6
 An optional record containing the number of S1, S2 and S3 records
 transmitted in a particular block.
-The count appears in the three-byte address field.
+The count appears in the three\[hy]byte address field.
 There is no data field.
 .TP 8n
 S7
 A termination record for a block of S3 records.  The address field may
-contain the 4-byte address of the instruction to which control is passed.
+contain the 4\[hy]byte address of the instruction to which control is passed.
 There is no data field.
 .TP 8n
 S8
 A termination record for a block of S2 records.  The address field may
-optionally contain the 3-byte address of the instruction to which control
+optionally contain the 3\[hy]byte address of the instruction to which control
 is passed.  There is no data field.
 .TP
 S9
 A termination record for a block of S1 records.  The address field
-may optionally contain the 2-byte address of the instruction to
+may optionally contain the 2\[hy]byte address of the instruction to
 which control is passed.  If not specified, the first entry point
 specification encountered in the object module input will be used.
 There is no data field.
@@ -129,7 +132,7 @@ when represented with this format.
 .br
 .ne 2i
 .SH EXAMPLE
-Here is an example S-Record file.
+Here is an example S\[hy]Record file.
 It contains the data \[lq]Hello, World[rq] to be loaded at address 0.
 .RS
 .nf

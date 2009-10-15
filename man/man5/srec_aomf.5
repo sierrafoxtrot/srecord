@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2004, 2006-2008 Peter Miller
+.\"     Copyright (C) 2004, 2006-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -20,7 +20,9 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 \*(n) \- Intel Absolute Object Module Format
+.if require_index \{
 .XX "srec_aomf(5)" "Intel Absolute Object Module Format"
+.\}
 .SH DESCRIPTION
 The Absolute Object Module Format (AOMF) is a subset of the 8051 OMF.
 The structure of an absolute object file (the order of the records in
@@ -40,7 +42,7 @@ the record is zero.
 The record length includes the payload and checksum fields, but excludes
 the type and length fields.
 .PP
-All 16-bit fields are little-endian.
+All 16\[hy]bit fields are little\[hy]endian.
 .TS
 tab(;),center,allbox;
 cw(0.4i) cw(0.8i) cw(1.6i) cw(0.4i).
@@ -125,7 +127,7 @@ The byte identifies the program which has generated this module:
 tab(;),center;
 l l.
 0xFD;ASM51
-0xFE;PL/M-51
+0xFE;PL/M\-51
 0xFF;RL51.
 .TE
 .SS Module End Record
@@ -223,7 +225,7 @@ Gives the absolute address of the first byte of data in the record,
 within the CODE address space.
 .TP 8n
 DATA
-A sequence of data bytes to be loaded from OFFSET to OFFSET+RECORDLENGTH-5.
+A sequence of data bytes to be loaded from OFFSET to OFFSET+RECORDLENGTH\[mi]5.
 .SS Size Multiplier
 In general, raw binary data will expand in sized by approximately 1.02 times
 when represented with this format.

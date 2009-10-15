@@ -20,16 +20,18 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 srec_ti_tagged_16 \- Texas Instruments Tagged (SDSMAC 320) file format
+.if require_index \{
 .XX "srec_ti_tagged_16(5)" "Texas Instruments Tagged (SDSMAC 320) file format"
+.\}
 .SH DESCRIPTION
-This format is also known as the \f[I]TI-Tagged\fP
+This format is also known as the \f[I]TI\[hy]Tagged\fP
 or \f[I]Texas Instruments SDSMAC (320)\fP format.
 .PP
 .\" ------------------------------------------------------------------------
 This format allows binary files to be uploaded and downloaded between
 two computer systems, typically between a computer system (such as a
 PC, Macintosh, or workstation) and an emulator or evaluation board for
-16-bit microcontrollers and microprocessors.
+16\[hy]bit microcontrollers and microprocessors.
 .SS The Lines
 Unlike many other object formats, the lines themselves are not especially
 significant.  The format consits of a number of \fItagged\fP fields,
@@ -67,7 +69,7 @@ K;T{
 Program identifier (optional).
 T}
 .TE
-.\" - - - - - - - - - - - - - - - - -
+.\" ------------------------------------------------------------------------
 .br
 .ne 2i
 .SS Data Byte
@@ -78,8 +80,8 @@ B;n;n
 .TE
 .sp 0.5
 One byte of data.
-The \fInn\fP is 8-bit big-endian hexadecimal.
-.\" - - - - - - - - - - - - - - - - -
+The \fInn\fP is 8\[hy]bit big\[hy]endian hexadecimal.
+.\" ------------------------------------------------------------------------
 .br
 .ne 2i
 .SS End of File
@@ -92,7 +94,7 @@ lf(CW) l.
 The end of data is indicated by this tag.
 The end of line sequence (LF on Unix systems, CRLF on PCs)
 follows this tag.
-.\" - - - - - - - - - - - - - - - - -
+.\" ------------------------------------------------------------------------
 .br
 .ne 2i
 .SS File Header
@@ -102,12 +104,12 @@ lf(CW) lf(I) lf(I).
 0;length;filename
 .TE
 .sp 0.5
-The optional start-of-file record begins with a tag character ('0') and
-a 12-character file header. The first four characters are the count (in
-hex) of the 16-bit data word values (B) which follow, not including data
+The optional start\[hy]of\[hy]file record begins with a tag character ('0') and
+a 12\[hy]character file header. The first four characters are the count (in
+hex) of the 16\[hy]bit data word values (B) which follow, not including data
 byte values (*). The remaining file header characters are the name of
 the file and may be any ASCII characters, blank padded.
-.\" - - - - - - - - - - - - - - - - -
+.\" ------------------------------------------------------------------------
 .br
 .ne 2i
 .SS Checksum
@@ -117,11 +119,11 @@ lf(CW) lf(I) lf(I) lf(I) lf(I).
 7;n;n;n;n
 .TE
 .sp 0.5
-The checksum is the 2s complement sum of the 8-bit ASCII values of
+The checksum is the 2s complement sum of the 8\[hy]bit ASCII values of
 characters, beginning with the first tag character and ending with the
 checksum tag character (7).
-The \fInnnn\fP is 16-bit big-endian hexadecimal.
-.\" - - - - - - - - - - - - - - - - -
+The \fInnnn\fP is 16\[hy]bit big\[hy]endian hexadecimal.
+.\" ------------------------------------------------------------------------
 .br
 .ne 2i
 .SS Dummy Checksum
@@ -131,11 +133,11 @@ lf(CW) lf(I) lf(I) lf(I) lf(I).
 8;n;n;n;n
 .TE
 .sp 0.5
-The checksum is the 2s complement sum of the 8-bit ASCII values of
+The checksum is the 2s complement sum of the 8\[hy]bit ASCII values of
 characters, beginning with the first tag character and ending with the
 checksum tag character (8).
-The \fInnnn\fP is 16-bit big-endian hexadecimal.
-.\" - - - - - - - - - - - - - - - - -
+The \fInnnn\fP is 16\[hy]bit big\[hy]endian hexadecimal.
+.\" ------------------------------------------------------------------------
 .br
 .ne 2i
 .SS Address
@@ -147,8 +149,8 @@ lf(CW) lf(I) lf(I) lf(I) lf(I).
 .sp 0.5
 Addresses may be given for any data byte, but none is mandatory.  The
 file begins at 0000 if no address is given before the first data field.
-The \fInnnn\fP is 16-bit big-endian hexadecimal.
-.\" - - - - - - - - - - - - - - - - -
+The \fInnnn\fP is 16\[hy]bit big\[hy]endian hexadecimal.
+.\" ------------------------------------------------------------------------
 .br
 .ne 2i
 .SS Data Word
@@ -159,8 +161,8 @@ B;a;a;b;b
 .TE
 .sp 0.5
 Two bytes of data.
-The \fIaa\fP and \fIbb\fP are each 8-bit big-endian hexadecimal.
-.\" - - - - - - - - - - - - - - - - -
+The \fIaa\fP and \fIbb\fP are each 8\[hy]bit big\[hy]endian hexadecimal.
+.\" ------------------------------------------------------------------------
 .br
 .ne 2i
 .SS End of Record
@@ -173,7 +175,7 @@ F;CRLF
 The end of line sequence (LF on Unix systems, CRLF on PCs)
 is escaped using this tag.
 The checksum is reset to zero at this point.
-.\" - - - - - - - - - - - - - - - - -
+.\" ------------------------------------------------------------------------
 .br
 .ne 2i
 .SS Program Identifier
@@ -187,7 +189,7 @@ The program identifier can contain a brief description of the program,
 or can be empty (\fIi.e.\fP the text portion is optional).  The
 \fInnnn\fP length (hex) of the field includes the `K', the length and
 the text; it is at least 5.
-.\" - - - - - - - - - - - - - - - - -
+.\" ------------------------------------------------------------------------
 .br
 .ne 21
 .SS Size Multiplier
@@ -197,7 +199,7 @@ when represented with this format.
 .br
 .ne 2i
 .SH EXAMPLE
-Here is an example TI-Tagged file.
+Here is an example TI\[hy]Tagged file.
 It contains the data \[lq]Hello, World[rq] to be loaded at address 0x0100.
 .RS
 .nf
@@ -224,5 +226,6 @@ Here is another example from the reference below
 .\" ------------------------------------------------------------------------
 .ds n) srec_cat
 .SH SEE ALSO
-http://www.dataio.com/pdf/Manuals/Unifamily/981-0014-016.pdf (page 6-7)
+http://www.dataio.com/pdf/Manuals/Unifamily/981\[hy]0014\[hy]016.pdf
+(page 6\[hy]7)
 .so man/man1/z_copyright.so

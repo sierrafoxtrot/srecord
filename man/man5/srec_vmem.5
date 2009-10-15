@@ -20,7 +20,9 @@
 .TH \*(n) 5 SRecord "Reference Manual"
 .SH NAME
 srec_vmem \- vmem file format
+.if require_index \{
 .XX "srec_vmem(5)" "VMEM file format"
+.\}
 .SH DESCRIPTION
 This format is the Verilog VMEM format.
 This is a hex format suitable for loading into Verilog simulations using
@@ -28,7 +30,7 @@ the \f[CW]$readmemh\fP call.
 .LP
 The text file to be read shall contain only the following:
 .br
-White space (spaces, new lines, tabs, and form-feeds)
+White space (spaces, new lines, tabs, and form\[hy]feeds)
 .br
 Comments (both types of C++ comment are allowed)
 .br
@@ -68,16 +70,16 @@ on the word type of the Verilog memory it is being read into.
 SRecord will guess the word size based on the number of digits it sees
 in the numbers, but this is only a guess.
 .LP
-SRecord will also assume that the numbers are to be loaded big-endian;
+SRecord will also assume that the numbers are to be loaded big\[hy]endian;
 that is, most significant byte (first byte seen) into the lowest address
 covered by the word.
 .LP
-You can use the \fB\-byte-swap\fP filter to change the byte order;
+You can use the \fB\-byte\[hy]swap\fP filter to change the byte order;
 it takes an optional width of bytes to swap within.
 .SS Size Multiplier
 In general, binary data will expand in sized by approximately 2.9 times
-(32-bit), 3.1 times (16-bit) or 3.6 times (8-bit) when represented with
-this format.
+(32\[hy]bit), 3.1 times (16\[hy]bit) or 3.6 times (8\[hy]bit) when
+represented with this format.
 .\" ------------------------------------------------------------------------
 .br
 .ne 2i
@@ -93,7 +95,7 @@ It contains the data \[lq]Hello, World[rq] to be loaded at address 0x1000.
 .RE
 .\" ------------------------------------------------------------------------
 .SH REFERENCE
-IEEE P1364-2005/D2,
+IEEE P1364\[hy]2005/D2,
 Standard for Verilog Hardware Description Language (Draft),
 section 17.2.8 "Loading memory data from a file", p. 295.
 .br
@@ -101,6 +103,6 @@ Copyright \(co 2003 IEEE
 .br
 http://www.boyd.com/1364/
 .br
-http://www.boyd.com/1364/1364-2005-d2.pdf.gz
+http://www.boyd.com/1364/1364\[hy]2005\[hy]d2.pdf.gz
 .ds n) srec_cat
 .so man/man1/z_copyright.so
