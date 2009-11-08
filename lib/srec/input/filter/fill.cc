@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001, 2002, 2004, 2006-2008 Peter Miller
+//      Copyright (C) 1998, 1999, 2001, 2002, 2004, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -53,22 +53,21 @@ srec_input_filter_fill::generate(srec_record &record)
 {
     if (range.empty())
         return false;
-    interval chunk(range.get_lowest(), range.get_lowest() + 256);
+    interval::data_t lo = range.get_lowest();
+    size_t rec_len = srec_record::maximum_data_length(lo);
+    interval::data_t hi = lo + rec_len;
+    interval chunk(lo, hi);
     chunk *= range;
     chunk.first_interval_only();
+    size_t fill_block_size = 256;
     if (!filler_block)
     {
-        filler_block = new unsigned char [256];
-        memset(filler_block, filler_value, 256);
+        filler_block = new unsigned char [fill_block_size];
+        memset(filler_block, filler_value, fill_block_size);
     }
-    record =
-        srec_record
-        (
-            srec_record::type_data,
-            chunk.get_lowest(),
-            filler_block,
-            chunk.get_highest() - chunk.get_lowest()
-        );
+    rec_len = chunk.get_highest() - chunk.get_lowest();
+    assert(rec_len <= fill_block_size);
+    record = srec_record(srec_record::type_data, lo, filler_block, rec_len);
     range -= chunk;
     return true;
 }

@@ -152,7 +152,10 @@ srec_output_file_mif::write(const srec_record &record)
             //
             put_string("-- ");
             if (record.get_address() != 0)
-                put_stringf("%04lX: ", record.get_address());
+            {
+                unsigned long addr = record.get_address();
+                put_stringf("%04lX: ", addr);
+            }
             const unsigned char *cp = record.get_data();
             const unsigned char *ep = cp + record.get_length();
             while (cp < ep)
@@ -196,14 +199,16 @@ srec_output_file_mif::write(const srec_record &record)
     case srec_record::type_data_count:
         if (enable_data_count_flag)
         {
-            put_stringf("-- data record count = %lu\n", record.get_address());
+            unsigned long addr = record.get_address();
+            put_stringf("-- data record count = %lu\n", addr);
         }
         break;
 
     case srec_record::type_execution_start_address:
         if (enable_goto_addr_flag)
         {
-            put_stringf("-- start address = %04lX\n", record.get_address());
+            unsigned long addr = record.get_address();
+            put_stringf("-- start address = %04lX\n", addr);
         }
         break;
     }

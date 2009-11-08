@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001, 2002, 2006-2008 Peter Miller
+//      Copyright (C) 1998, 1999, 2001, 2002, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -18,7 +18,9 @@
 //
 
 
+#include <cassert>
 #include <cstring>
+
 #include <lib/srec/record.h>
 
 
@@ -30,7 +32,7 @@ srec_record::srec_record():
 }
 
 
-srec_record::srec_record(const srec_record & arg) :
+srec_record::srec_record(const srec_record &arg) :
     type(arg.type),
     address(arg.address),
     length(arg.length)
@@ -56,17 +58,19 @@ srec_record::srec_record(type_t a1, address_t a2) :
 }
 
 
-srec_record::srec_record(type_t a1, address_t a2, const data_t * a3, int a4) :
+srec_record::srec_record(type_t a1, address_t a2, const data_t *a3, size_t a4) :
     type(a1),
     address(a2),
-    length(a4 > 0 ? a4 : 0)
+    length(a4)
 {
+    assert(length <= max_data_length);
     if (length > 0)
         memcpy(data, a3, length);
 }
 
 
-srec_record & srec_record::operator = (const srec_record & arg)
+srec_record &
+srec_record::operator=(const srec_record &arg)
 {
     if (this != &arg)
     {
@@ -85,20 +89,22 @@ srec_record::~srec_record()
 }
 
 
-int
+size_t
 srec_record::maximum_data_length(address_t address)
 {
-    if (address < (1UL << 16))
+    // FIXME: this is format specific
+    if (address < ((address_t)1 << 16))
         return 252;
-    if (address < (1UL << 24))
+    if (address < ((address_t)1 << 24))
         return 251;
     return 250;
 }
 
 
 srec_record::address_t
-srec_record::decode_big_endian(const data_t *buffer, int length)
+srec_record::decode_big_endian(const data_t *buffer, size_t length)
 {
+    assert(length <= sizeof(address_t));
     address_t result = 0;
     while (length-- > 0)
         result = (result << 8) | *buffer++;
@@ -107,8 +113,9 @@ srec_record::decode_big_endian(const data_t *buffer, int length)
 
 
 srec_record::address_t
-srec_record::decode_little_endian(const data_t *buffer, int length)
+srec_record::decode_little_endian(const data_t *buffer, size_t length)
 {
+    assert(length <= sizeof(address_t));
     address_t result = 0;
     buffer += length;
     while (length > 0)
@@ -122,8 +129,9 @@ srec_record::decode_little_endian(const data_t *buffer, int length)
 
 
 void
-srec_record::encode_big_endian(data_t *buffer, address_t value, int length)
+srec_record::encode_big_endian(data_t *buffer, address_t value, size_t length)
 {
+    assert(length <= sizeof(address_t));
     while (length > 0)
     {
         --length;
@@ -134,8 +142,10 @@ srec_record::encode_big_endian(data_t *buffer, address_t value, int length)
 
 
 void
-srec_record::encode_little_endian(data_t *buffer, address_t value, int length)
+srec_record::encode_little_endian(data_t *buffer, address_t value,
+    size_t length)
 {
+    assert(length <= sizeof(address_t));
     while (length-- > 0)
     {
         *buffer++ = value;
@@ -144,9 +154,11 @@ srec_record::encode_little_endian(data_t *buffer, address_t value, int length)
 }
 
 
-bool srec_record::is_all_zero() const
+bool
+srec_record::is_all_zero()
+    const
 {
-    for (int j = 0; j < length; ++j)
+    for (size_t j = 0; j < length; ++j)
         if (data[j])
             return false;
     return true;
@@ -154,11 +166,10 @@ bool srec_record::is_all_zero() const
 
 
 void
-srec_record::set_data_extend(int n, int d)
+srec_record::set_data_extend(size_t n, data_t d)
 {
-    // assert(n >= 0);
-    // assert(n < max_data_length);
-    if (0 <= n && n < max_data_length)
+    assert(n < max_data_length);
+    if (n < max_data_length)
     {
         data[n] = d;
         if (length <= n)

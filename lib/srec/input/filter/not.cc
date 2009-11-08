@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2002, 2006-2008 Peter Miller
+//      Copyright (C) 2001, 2002, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -43,12 +43,12 @@ srec_input_filter_not::create(const srec_input::pointer &a_deeper)
 bool
 srec_input_filter_not::read(srec_record &record)
 {
-        if (!srec_input_filter::read(record))
-                return false;
-        if (record.get_type() == srec_record::type_data)
-        {
-                for (int j = 0; j < record.get_length(); ++j)
-                        record.set_data(j, ~record.get_data(j));
-        }
-        return true;
+    if (!srec_input_filter::read(record))
+        return false;
+    if (record.get_type() == srec_record::type_data)
+    {
+        for (size_t j = 0; j < record.get_length(); ++j)
+            record.set_data(j, ~record.get_data(j));
+    }
+    return true;
 }

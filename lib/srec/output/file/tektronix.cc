@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001-2003, 2006-2008 Peter Miller
+//      Copyright (C) 1998, 1999, 2001-2003, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -106,14 +106,7 @@ srec_output_file_tektronix::write(const srec_record &record)
         if (record.get_length() == 0)
                 break; // ignore
         if (record.get_address() + record.get_length() > (1UL << 16))
-        {
-            fatal_error
-            (
-                "data address (0x%lX..0x%lX) too large",
-                record.get_address(),
-                record.get_address() + record.get_length() - 1
-            );
-        }
+            data_address_too_large(record);
         write_inner
         (
             record.get_address(),
@@ -131,11 +124,8 @@ srec_output_file_tektronix::write(const srec_record &record)
         {
             if (record.get_address() >= (1UL << 16))
             {
-                fatal_error
-                (
-                    "execution start address (%08lX) too large",
-                    record.get_address()
-                );
+                unsigned long addr = record.get_address();
+                fatal_error("execution start address (%08lX) too large", addr);
             }
             write_inner(record.get_address(), 0, 0);
         }

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2003, 2006-2008 Peter Miller
+//      Copyright (C) 2000-2003, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -82,13 +82,12 @@ srec_output_file_ti_tagged::put_eoln()
 void
 srec_output_file_ti_tagged::write(const srec_record &record)
 {
-    int pos = 0;
     switch (record.get_type())
     {
     case srec_record::type_header:
         if (enable_header_flag)
         {
-            put_stringf("K%4.4X", 5 + record.get_length());
+            put_stringf("K%4.4X", (unsigned)(5 + record.get_length()));
             const unsigned char *cp = record.get_data();
             const unsigned char *ep = cp + record.get_length();
             while (cp < ep)
@@ -102,43 +101,38 @@ srec_output_file_ti_tagged::write(const srec_record &record)
         break;
 
     case srec_record::type_data:
-        if (record.get_address() + record.get_length() > (1UL << 16))
         {
-            fatal_error
-            (
-                "data address (0x%lX..0x%lX) too large",
-                record.get_address(),
-                record.get_address() + record.get_length() - 1
-            );
-        }
-        // assert(record.get_length() > 0);
-        if (record.get_length() == 0)
-            break;
-        if (address != record.get_address())
-        {
-            address = record.get_address();
-            if (column + 5 > line_length)
-                put_eoln();
-            put_char('9');
-            put_word(address);
-        }
-        pos = 0;
-        for (; pos + 2 <= record.get_length(); pos += 2)
-        {
-            if (column + 5 > line_length)
-                put_eoln();
-            put_char('B');
-            put_byte(record.get_data(pos));
-            put_byte(record.get_data(pos + 1));
-            address += 2;
-        }
-        for (; pos < record.get_length(); ++pos)
-        {
-            if (column + 3 > line_length)
-                put_eoln();
-            put_char('*');
-            put_byte(record.get_data(pos));
-            ++address;
+            if (record.get_address() + record.get_length() > (1UL << 16))
+                data_address_too_large(record);
+            assert(record.get_length() > 0);
+            if (record.get_length() == 0)
+                break;
+            if (address != record.get_address())
+            {
+                address = record.get_address();
+                if (column + 5 > line_length)
+                    put_eoln();
+                put_char('9');
+                put_word(address);
+            }
+            size_t pos = 0;
+            for (; pos + 2 <= record.get_length(); pos += 2)
+            {
+                if (column + 5 > line_length)
+                    put_eoln();
+                put_char('B');
+                put_byte(record.get_data(pos));
+                put_byte(record.get_data(pos + 1));
+                address += 2;
+            }
+            for (; pos < record.get_length(); ++pos)
+            {
+                if (column + 3 > line_length)
+                    put_eoln();
+                put_char('*');
+                put_byte(record.get_data(pos));
+                ++address;
+            }
         }
         break;
 

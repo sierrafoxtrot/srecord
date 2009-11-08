@@ -26,6 +26,7 @@
 #include <lib/arglex.h>
 #include <lib/sizeof.h>
 #include <lib/srec/output/file.h>
+#include <lib/srec/record.h>
 
 
 bool srec_output_file::enable_header_flag = true;
@@ -417,4 +418,14 @@ srec_output_file::fatal_alignment_error(int multiple)
             multiple
         );
     }
+}
+
+
+void
+srec_output_file::data_address_too_large(const srec_record &record)
+    const
+{
+    unsigned long lo = record.get_address();
+    unsigned long hi = lo + record.get_length() - 1;
+    fatal_error("data address (0x%lX..0x%lX) too large", lo, hi);
 }

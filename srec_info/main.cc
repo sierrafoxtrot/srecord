@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2002, 2005-2008 Peter Miller
+//      Copyright (C) 1998-2002, 2005-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ main(int argc, char **argv)
                 if (record.get_length() < 1)
                     break;
                 std::cout << "Header: \"";
-                for (int j = 0; j < record.get_length(); ++j)
+                for (size_t j = 0; j < record.get_length(); ++j)
                 {
                     int c = record.get_data(j) & 127;
                     if (c == '\\' || c == '"')
@@ -108,8 +108,9 @@ main(int argc, char **argv)
             case srec_record::type_execution_start_address:
                 {
                     std::cout << "Execution Start Address: ";
+                    unsigned long addr = record.get_address();
                     char buf[16];
-                    snprintf(buf, sizeof(buf), "%08lX", record.get_address());
+                    snprintf(buf, sizeof(buf), "%08lX", addr);
                     std::cout << buf << std::endl;
                 }
                 break;
@@ -142,9 +143,11 @@ main(int argc, char **argv)
             else
                 std::cout << "        ";
             char buf[32];
-            snprintf(buf, sizeof(buf), "%0*lX", prec, tmp.get_lowest());
+            unsigned long lo = tmp.get_lowest();
+            snprintf(buf, sizeof(buf), "%0*lX", prec, lo);
             std::cout << buf << " - ";
-            snprintf(buf, sizeof(buf), "%0*lX", prec, tmp.get_highest() - 1);
+            unsigned long hi = tmp.get_highest() - 1;
+            snprintf(buf, sizeof(buf), "%0*lX", prec, hi);
             std::cout << buf << std::endl;
             range -= tmp;
             if (range.empty())

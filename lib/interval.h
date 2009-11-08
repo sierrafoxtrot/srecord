@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2000, 2002-2008 Peter Miller
+//      Copyright (C) 1998-2000, 2002-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
 #ifndef LIB_INTERVAL_H
 #define LIB_INTERVAL_H
 
-#include <stddef.h>
-
+#include <cstddef>
+#include <stdint.h>
 #include <iostream>
 
 /**
@@ -41,8 +41,8 @@ public:
       * The data_t type is used to parameterize the integr type used in
       * the interval.
       */
-    typedef unsigned long data_t;
-    typedef unsigned long long data64_t;
+    typedef uint32_t data_t;
+    typedef uint64_t long_data_t;
 
     /**
       * The default constructor.  The interval is empty.
@@ -201,7 +201,7 @@ public:
       *     holes.  Because the result could be 2**32, the 64-bit result
       *     is used so that this is representable.
       */
-    long long coverage() const;
+    long_data_t coverage() const;
 
 private:
     /**

@@ -71,7 +71,7 @@ srec_output_file_forth::write(const srec_record &record)
         // Now write out the new address.  It is important not to
         // disturb the checksum, so don't use the put_byte method.
         //
-        for (int j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j)
         {
             put_byte(record.get_data(j));
             put_char(' ');

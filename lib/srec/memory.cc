@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2003, 2006-2008 Peter Miller
+//      Copyright (C) 1998-2003, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -284,7 +284,7 @@ srec_memory::reader(const srec_input::pointer &ifp, bool barf)
             // issue warnings for redundant settings, and we issue error
             // for contradictory settings.
             //
-            for (int j = 0; j < record.get_length(); ++j)
+            for (size_t j = 0; j < record.get_length(); ++j)
             {
                 srec_record::address_t address = record.get_address() + j;
                 int n = record.get_data(j);

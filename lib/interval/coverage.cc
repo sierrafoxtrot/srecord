@@ -1,6 +1,6 @@
 //
 //      srecord - Manipulate EPROM load files
-//      Copyright (C) 2008 Peter Miller
+//      Copyright (C) 2008, 2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -20,15 +20,16 @@
 #include <lib/interval.h>
 
 
-long long
+interval::long_data_t
 interval::coverage()
     const
 {
-    long long total = 0;
+    long_data_t total = 0;
     for (size_t j = 0; j < length; j+= 2)
     {
-        long long lo = data[j];
-        long long hi = (data[j + 1] == 0 ? (1LL << 32) : data[j + 1]);
+        long_data_t lo = data[j];
+        long_data_t hi =
+            (data[j + 1] == 0 ? ((long_data_t)1 << 32) : data[j + 1]);
         total += (hi - lo);
     }
     return total;

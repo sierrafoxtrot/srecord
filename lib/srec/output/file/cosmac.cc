@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2003, 2006-2008 Peter Miller
+//      Copyright (C) 2003, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ srec_output_file_cosmac::write(const srec_record &record)
             put_stringf(";\n%.*lX ", (int)address_length, address);
             column = address_length + 1;
         }
-        for (int j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j)
         {
             if (column + 3 > line_length)
             {

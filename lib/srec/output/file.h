@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2003, 2005-2008 Peter Miller
+//      Copyright (C) 1998-2003, 2005-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -337,6 +337,17 @@ protected:
       *     The necessary byte alignment
       */
     void fatal_alignment_error(int alignment);
+
+    /**
+      * The data_address_too_large method is used to report fatal
+      * problems with data records, in the case where some or all of the
+      * address span of a record falls outside the format's ability to
+      * represent addresses.
+      *
+      * @param record
+      *     The offending data record.
+      */
+    void data_address_too_large(const srec_record &record) const;
 
 private:
     /**

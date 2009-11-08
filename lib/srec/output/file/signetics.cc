@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2002, 2006-2008 Peter Miller
+//      Copyright (C) 2001, 2002, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -67,21 +67,14 @@ srec_output_file_signetics::write(const srec_record &record)
         if (record.get_length() < 1)
             return;
         if (record.get_address() + record.get_length() > (1UL << 16))
-        {
-            fatal_error
-            (
-                "data address (0x%lX..0x%lX) too large",
-                record.get_address(),
-                record.get_address() + record.get_length() - 1
-            );
-        }
+            data_address_too_large(record);
         put_char(':');
         checksum_reset();
         put_word(record.get_address());
         put_byte(record.get_length());
         put_byte(checksum_get());
         checksum_reset();
-        for (int j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j)
             put_byte(record.get_data(j));
         put_byte(checksum_get());
         put_char('\n');

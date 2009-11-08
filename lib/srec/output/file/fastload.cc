@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2002, 2006-2008 Peter Miller
+//      Copyright (C) 2001, 2002, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -118,7 +118,7 @@ srec_output_file_fastload::put_command(int c, unsigned long n, int ndigits)
 void
 srec_output_file_fastload::write(const srec_record &record)
 {
-    int j;
+    size_t j;
 
     switch (record.get_type())
     {

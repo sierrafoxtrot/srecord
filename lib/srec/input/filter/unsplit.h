@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001, 2002, 2005-2008 Peter Miller
+//      Copyright (C) 1998, 1999, 2001, 2002, 2005-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -84,19 +84,19 @@ private:
       * The modulus instance variable is used to remember the number of
       * bytes wide each swathe is.
       */
-    int modulus;
+    srec_record::address_t modulus;
 
     /**
       * The offset instance variable is used to remember the offset
       * within the swathe.
       */
-    int offset;
+    srec_record::address_t offset;
 
     /**
       * The width instance variable is used to remember the width of
       * each stripe within the swathe.
       */
-    int width;
+    srec_record::address_t width;
 
     /**
       * The buffer instance variable is used to remember the last lot
@@ -109,7 +109,7 @@ private:
       * The buffer_pos instance variable is used to remember where we
       * are up to in the "buffer" instance varaible.
       */
-    int buffer_pos;
+    size_t buffer_pos;
 
     /**
       * The default constructor.  Do not use.

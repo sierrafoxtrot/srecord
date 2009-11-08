@@ -48,7 +48,7 @@ srec_input_filter_xor::read(srec_record &record)
         return false;
     if (record.get_type() == srec_record::type_data)
     {
-        for (int j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j)
             record.set_data(j, record.get_data(j) ^ value);
     }
     return true;

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2007, 2008 Peter Miller
+//      Copyright (C) 2007-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -100,7 +100,7 @@ srec_output_file_ti_txt::write(const srec_record &record)
             width *= 2;
             put_stringf("@%0*lX\n", width, address);
         }
-        for (int j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j)
         {
             put_byte_wrap(record.get_data(j));
         }

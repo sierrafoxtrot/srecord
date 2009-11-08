@@ -54,11 +54,11 @@ interval::interval()
 }
 
 
-static inline interval::data64_t
+static inline interval::long_data_t
 promote(interval::data_t datum, size_t pos)
 {
     if (datum == 0 && (pos & 1))
-        return ((interval::data64_t)1 << 32);
+        return ((interval::long_data_t)1 << 32);
     return datum;
 }
 
@@ -358,8 +358,10 @@ interval::union_(const interval &left, const interval &right)
         {
             if (right_pos < right.length)
             {
-                data64_t left_val = promote(left.data[left_pos], left_pos);
-                data64_t right_val = promote(right.data[right_pos], right_pos);
+                long_data_t left_val =
+                    promote(left.data[left_pos], left_pos);
+                long_data_t right_val =
+                    promote(right.data[right_pos], right_pos);
                 if (left_val < right_val)
                 {
                     count += (left_pos & 1 ? -1 : 1);
@@ -439,8 +441,10 @@ interval::intersection(const interval &left, const interval &right)
         {
             if (right_pos < right.length)
             {
-                data64_t left_val = promote(left.data[left_pos], left_pos);
-                data64_t right_val = promote(right.data[right_pos], right_pos);
+                long_data_t left_val =
+                    promote(left.data[left_pos], left_pos);
+                long_data_t right_val =
+                    promote(right.data[right_pos], right_pos);
                 if (left_val < right_val)
                 {
                     count += (left_pos & 1 ? -1 : 1);
@@ -519,8 +523,9 @@ interval::difference(const interval &left, const interval &right)
         {
             if (right_pos < right.length)
             {
-                data64_t left_val = promote(left.data[left_pos], left_pos);
-                data64_t right_val = promote(right.data[right_pos], right_pos);
+                long_data_t left_val = promote(left.data[left_pos], left_pos);
+                long_data_t right_val =
+                    promote(right.data[right_pos], right_pos);
                 if (left_val < right_val)
                 {
                     count += (left_pos & 1 ? -1 : 1);
@@ -591,7 +596,7 @@ interval::member(data_t datum)
     {
         long mid = ((min + max) / 2) & ~1;
         data_t lo = data[mid];
-        data64_t hi = promote(data[mid + 1], mid + 1);
+        long_data_t hi = promote(data[mid + 1], mid + 1);
         if (lo <= datum && datum < hi)
             return true;
         if (lo < datum)

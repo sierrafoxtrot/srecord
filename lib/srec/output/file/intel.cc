@@ -136,14 +136,7 @@ srec_output_file_intel::write(const srec_record &record)
             else
             {
                 if (address_base >= (1UL << 20))
-                {
-                    fatal_error
-                    (
-                        "data address (0x%lX..0x%lX) too large",
-                        record.get_address(),
-                        record.get_address() + record.get_length() - 1
-                    );
-                }
+                    data_address_too_large(record);
                 srec_record::encode_big_endian(tmp, address_base >> 4, 2);
                 write_inner(2, 0L, tmp, 2);
             }

@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2003, 2005-2008 Peter Miller
+//      Copyright (C) 1998-2003, 2005-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -309,8 +309,8 @@ srec_input_file_srecord::read(srec_record &record)
                     fatal_error
                     (
                         "data record count mismatch (file %ld, read %ld)",
-                        addr,
-                        mask
+                        (long)addr,
+                        (long)mask
                     );
                 }
             }

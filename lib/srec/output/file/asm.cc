@@ -60,11 +60,15 @@ srec_output_file_asm::~srec_output_file_asm()
             x2.first_interval_only();
             x -= x2;
 
+            unsigned long val = x2.get_lowest();
             char buffer[20];
+            // We do it this way, rather than just making argument 3 a
+            // (?:) conditional, so that the compiler can tell us when
+            // we get the types wrong.  (Besides, it will optimize.)
             if (hex_style)
-                snprintf(buffer, sizeof(buffer), "0x%8.8lX", x2.get_lowest());
+                snprintf(buffer, sizeof(buffer), "0x%8.8lX", val);
             else
-                snprintf(buffer, sizeof(buffer), "%lu", x2.get_lowest());
+                snprintf(buffer, sizeof(buffer), "%lu", val);
             long len = strlen(buffer);
 
             if (column && column + len + 2 > line_length)
@@ -178,8 +182,10 @@ srec_output_file_asm::~srec_output_file_asm()
 
     if (enable_footer_flag)
     {
-        put_stringf("; upper bound = 0x%4.4lX\n", range.get_highest());
-        put_stringf("; lower bound = 0x%4.4lX\n", range.get_lowest());
+        unsigned long hi = range.get_highest();
+        put_stringf("; upper bound = 0x%4.4lX\n", hi);
+        unsigned long lo = range.get_lowest();
+        put_stringf("; lower bound = 0x%4.4lX\n", lo);
     }
     unsigned long len = range.get_highest() - range.get_lowest();
     put_stringf("; length =      0x%4.4lX\n", len);
@@ -472,7 +478,7 @@ srec_output_file_asm::write(const srec_record & record)
                     record.get_address() + record.get_length()
                 );
 
-            for (int j = 0; j < record.get_length(); ++j)
+            for (size_t j = 0; j < record.get_length(); ++j)
             {
                 emit_byte(record.get_data(j));
             }

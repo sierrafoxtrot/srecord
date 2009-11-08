@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001-2003, 2005-2008 Peter Miller
+//      Copyright (C) 1998, 1999, 2001-2003, 2005-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -19,6 +19,9 @@
 
 #ifndef LIB_SREC_RECORD_H
 #define LIB_SREC_RECORD_H
+
+#include <cstddef>
+#include <stdint.h>
 
 #include <lib/endian.h>
 
@@ -51,12 +54,12 @@ public:
     /**
       * The type of record addresses.
       */
-    typedef unsigned long address_t;
+    typedef uint32_t address_t;
 
     /**
       * The type of record data values.
       */
-    typedef unsigned char data_t;
+    typedef uint8_t data_t;
 
     /**
       * The default constructor.  The record will have an
@@ -84,9 +87,20 @@ public:
     /**
       * A constructor.  The record will have the given type, the
       * given address and a copy of the given data.
+      *
+      * @param the_type
+      *     What kind of record this is
+      * @param the_address
+      *     The memory address of the first byte of data, the rest
+      *     increase by one each.
+      * @param the_data
+      *     The bytes of data for the record.
+      * @param the_data_length
+      *     How long the data is.
+      *     assert(the_data_length < max_data_length);
       */
     srec_record(type_t the_type, address_t the_address, const data_t *the_data,
-        int the_data_length);
+        size_t the_data_length);
 
     /**
       * The assignment operator.
@@ -115,19 +129,19 @@ public:
       * The get_length method is used to get the length (number of
       * bytes) of the record data.
       */
-    int get_length() const { return length; }
+    size_t get_length() const { return length; }
 
     /**
       * The set_length method is used to set the number of data
-      * bytes in the reocrd data.
+      * bytes in the record data.
       *
-      * Note that you can reduce the length, but you can't increase it.
+      * @param arg
+      *      The new record length.  Note that you can reduce the
+      *      length, but you can't increase it.
       */
     void
-    set_length(int arg)
+    set_length(size_t arg)
     {
-        if (arg < 0)
-            arg = 0;
         if (arg < length)
             length = arg;
     }
@@ -147,8 +161,12 @@ public:
       * Note: For perfoemance reasons, no range checking is
       * performed.  Accessing beyond get_length() bytes will give
       * an undefined value.
+      *
+      * @param n
+      *     The index into the data array, zero based.
+      *     Values when #n is in excess of #length are undefined.
       */
-    int get_data(int n) const { return data[n]; }
+    int get_data(size_t n) const { return data[n]; }
 
     /**
       * The is_all_zero method is used to determin if the record
@@ -160,14 +178,27 @@ public:
       * The set_data method is used to set values in the data array.
       * No range checking is performed.  The record length is not
       * consulted or adjusted.
+      *
+      * @param n
+      *     The index into the data array, zero based.
+      *     Results when #n is in excess of #length are undefined.
+      * @param d
+      *     The new data value.
       */
-    void set_data(int n, int d) { data[n] = d; }
+    void set_data(size_t n, data_t d) { data[n] = d; }
 
     /**
       * The set_data_extend method is used to set values in the data array.
       * The record length is adjusted if necessary.
+      *
+      * @param n
+      *     The index into the data array, zero based.
+      *     If this is beyond #length, then #length will be extended.
+      *     assert(n < max_data_length);
+      * @param d
+      *     The new data value.
       */
-    void set_data_extend(int n, int d);
+    void set_data_extend(size_t n, data_t d);
 
     /**
       * The get_type method is used to get the type of the record.
@@ -183,8 +214,12 @@ public:
       * The maximum_data_length method is used to determine the
       * maximum data length possible within a record, for a given
       * address.
+      *
+      * @param addr
+      *     The address of the record.  Some formats trade data size of
+      *     address size, for a constant maximum line length.
       */
-    static int maximum_data_length(address_t);
+    static size_t maximum_data_length(address_t addr);
 
     /**
       * The decode_big_endian method is used to extract 'len'
@@ -198,7 +233,7 @@ public:
       * @returns
       *     the decoded value
       */
-    static address_t decode_big_endian(const data_t *data, int len);
+    static address_t decode_big_endian(const data_t *data, size_t len);
 
     /**
       * The decode_little_endian method is used to extract 'len' bytes
@@ -212,7 +247,7 @@ public:
       * @returns
       *     the decoded value
       */
-    static address_t decode_little_endian(const data_t *data, int len);
+    static address_t decode_little_endian(const data_t *data, size_t len);
 
     /**
       * The decode method is used to extract 'len' bytes
@@ -228,7 +263,7 @@ public:
       *     the decoded value
       */
     static address_t
-    decode(const data_t *data, int len, endian_t end)
+    decode(const data_t *data, size_t len, endian_t end)
     {
         return
             (
@@ -253,7 +288,7 @@ public:
       *     The number of bytes to use to encode the data.
       *     Bits above the 8*len resolution will be discarded.
       */
-    static void encode_big_endian(data_t *data, address_t val, int len);
+    static void encode_big_endian(data_t *data, address_t val, size_t len);
 
     /**
       * The encode_little_endian method is used to break down
@@ -268,7 +303,7 @@ public:
       *     The number of bytes to use to encode the data.
       *     Bits above the 8*len resolution will be discarded.
       */
-    static void encode_little_endian(data_t *data, address_t val, int len);
+    static void encode_little_endian(data_t *data, address_t val, size_t len);
 
     /**
       * The encode method is used to break down 'val' into 'len' bytes
@@ -285,7 +320,7 @@ public:
       *     The byte order
       */
     static void
-    encode(data_t *data, address_t val, int len, endian_t end)
+    encode(data_t *data, address_t val, size_t len, endian_t end)
     {
         if (end == endian_big)
             encode_big_endian(data, val, len);
@@ -315,13 +350,13 @@ private:
 
     /**
       * The length instance variable is used to remember the number
-      * of valid bytes in the 'data' array.
+      * of valid bytes in the #data array.
       */
-    int length;
+    size_t length;
 
     /**
       * The data instance variable is used to remember the data
-      * of the record.  Only the first 'length' bytes are valid,
+      * of the record.  Only the first #length bytes are valid,
       * the rest are undefined.
       */
     data_t data[max_data_length];

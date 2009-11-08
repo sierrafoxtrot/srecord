@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998, 1999, 2001, 2002, 2006-2008 Peter Miller
+//      Copyright (C) 1998, 1999, 2001, 2002, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -73,9 +73,9 @@ srec_input_filter_split::read(srec_record &record)
             buffer_pos = 0;
         }
 
-        unsigned long addr =
+        srec_record::address_t addr =
             (buffer.get_address() + offset + buffer_pos);
-        int phase = addr % modulus;
+        srec_record::address_t phase = addr % modulus;
         if (phase < width)
         {
             unsigned char c = buffer.get_data(buffer_pos++);

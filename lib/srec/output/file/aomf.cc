@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2004, 2006-2008 Peter Miller
+//      Copyright (C) 2004, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -147,16 +147,9 @@ srec_output_file_aomf::write(const srec_record &record)
 
     case srec_record::type_data:
         if (record.get_length() < 1)
-                return;
+            return;
         if (record.get_address() + record.get_length() > (1UL << 24))
-        {
-                fatal_error
-                (
-                        "data address (0x%lX..0x%lX) too large",
-                        record.get_address(),
-                        record.get_address() + record.get_length() - 1
-                );
-        }
+            data_address_too_large(record);
 
         //
         // Write the data out.

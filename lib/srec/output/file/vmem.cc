@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2008 Peter Miller
+//      Copyright (C) 2000-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -150,7 +150,10 @@ srec_output_file_vmem::write(const srec_record &record)
         {
             put_string("/* ");
             if (record.get_address() != 0)
-                put_stringf("%08lX: ", record.get_address());
+            {
+                unsigned long addr = record.get_address();
+                put_stringf("%08lX: ", addr);
+            }
             const unsigned char *cp = record.get_data();
             const unsigned char *ep = cp + record.get_length();
             while (cp < ep)
@@ -199,7 +202,7 @@ srec_output_file_vmem::write(const srec_record &record)
         //
         // emit the data bytes
         //
-        for (int j = 0; j < record.get_length(); j += bytes_per_word)
+        for (size_t j = 0; j < record.get_length(); j += bytes_per_word)
         {
             //
             // Each line starts with an address.

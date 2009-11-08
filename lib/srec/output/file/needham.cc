@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2003, 2006-2008 Peter Miller
+//      Copyright (C) 2003, 2006-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ srec_output_file_needham::write(const srec_record &record)
             put_stringf("$A%0*lX,\n", width * 2, address);
             column = 0;
         }
-        for (int j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j)
         {
             if (column)
                 put_char(' ');

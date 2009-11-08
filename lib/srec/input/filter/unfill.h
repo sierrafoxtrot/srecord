@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2001, 2002, 2005-2008 Peter Miller
+//      Copyright (C) 2001, 2002, 2005-2009 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -82,13 +82,13 @@ private:
       * The fill_value instance variable is used to remember the value
       * of the bytes to be turned into holes.
       */
-    int fill_value;
+    srec_record::data_t fill_value;
 
     /**
       * The fill_minimum instance variable is used to remember the
       * minimum run length to be considered a hole.
       */
-    int fill_minimum;
+    srec_record::address_t fill_minimum;
 
     /**
       * The buffer instance variable is used to remember the data
@@ -101,7 +101,7 @@ private:
       * The fill_value instance variable is used to remember where we
       * are up to in the "bufefr" instance variable.
       */
-    int buffer_pos;
+    size_t buffer_pos;
 
     /**
       * The default constructor.  Do not use.

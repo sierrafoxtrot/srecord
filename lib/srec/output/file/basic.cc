@@ -35,8 +35,10 @@ srec_output_file_basic::~srec_output_file_basic()
     if (enable_footer_flag)
     {
         put_stringf("REM termination = %lu\n", taddr);
-        put_stringf("REM start = %lu\n", range.get_lowest());
-        put_stringf("REM finish = %lu\n", range.get_highest());
+        unsigned long start = range.get_lowest();
+        put_stringf("REM start = %lu\n", start);
+        unsigned long finish = range.get_highest();
+        put_stringf("REM finish = %lu\n", finish);
     }
     unsigned long len = range.get_highest() - range.get_lowest();
     put_stringf("REM length = %lu\n", len);
@@ -133,7 +135,7 @@ srec_output_file_basic::write(const srec_record &record)
             );
         while (current_address < record.get_address())
             emit_byte(0xFF);
-        for (int j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j)
         {
             if (record.get_address() + j < current_address)
                 continue;
