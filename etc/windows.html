@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2003, 2006-2008 Peter Miller
+.\"     Copyright (C) 2003, 2006-2009 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -24,26 +24,32 @@
 <link rel="icon" href="srecord.ico" type="image/x-icon">
 <link rel="shortcut icon" href="srecord.ico" type="image/x-icon">
 <title>SRecord \*(v)</title></head>
-<body bgcolor=white><h1>
+<body bgcolor=white>
 <img src="srecord-64.png" align=left>
 <img src="srecord-64.png" align=right>
-<center>SRecord \*(v)<br>
-using Windows NT
-</center></h1>
-The <a href="http://www.cygwin.com/">Cygwin</a> tools are
-ports of the popular GNU development tools and utilities for Windows 95,
-98, and NT.  They function by using the Cygwin library which provides
-a UNIX-like API on top of the Win32 API.
+<h1 align="center" >
+<center><a href="../index.html" >SRecord</a> \*(v)<br>
+on Windows
+</h1>
+<a href="http://www.cygwin.com/"
+><img src="http://www.cygwin.com/cygwin-icon.gif" align="right" border=0 /></a>
+The <a href="http://www.cygwin.com/">Cygwin</a> tools are ports of the
+popular GNU development tools and utilities for Windows 95, 98, NT, XP,
+Vista, <i>etc</i>.  They function by using the Cygwin library which
+provides a UNIX-like API on top of the Win32 API.
 <p>
-This means that you can compile SRecord for Windows 95, 98 and NT.
-SRecord was tested on Windows NT in this way.  Other tools, such as
-<a href="http://www.scl.com/products/mks/datasheets/nutcracker.html">
-Nutcracker</a>, have not been confirmed.
+This means that you can compile SRecord for Windows
+95, 98, NT, XP, Vista, <i>etc</i>.  SRecord was tested
+on Windows in this way.  Other tools, such as <a
+href="http://www.scl.com/products/mks/datasheets/nutcracker.html">
+Nutcracker</a>, are expected to work but have not been confirmed.
 <p>
 <a href="http://www.delorie.com/djgpp/">DJGPP</a> is a complete 32-bit
 C/C++ development system for Intel 80386 (and higher) PCs running DOS.
 It includes ports of many GNU development utilities.
 <p>
+<a href="http://www.cygwin.com/"
+><img src="http://www.cygwin.com/cygwin-icon.gif" align="right" border=0 /></a>
 Once you have <a href="http://www.cygwin.com/">Cygwin</a> or <a
 href="http://www.delorie.com/djgpp/">DJGPP</a> installed, simply follow
 the instructions in the BUILDING file, as if it were Unix.
@@ -57,9 +63,29 @@ Pre-built windows binaries are available from <a
 .nf
 href="https://sourceforge.net/project/showfiles.php?group_id=72866">
 .fi
-sourceforge.net</a>.
+sourceforge.net</a>, although they tend to lag behind the current release.
+<h2>FAQ</h2>
+<img src="whining-64.png" align="right" />
+<i>Please, <b>please</b>, can you just build it for me?</i>
+<p>
+No.  The author rarely uses Windows for anything.  No.
+<p>
+<a href="http://www.opensource.org/" ><img
+src="http://www.opensource.org/trademarks/opensource/web/opensource-110x95.png"
+align="left" border=0 /></a>
+Besides, SRecord is <a href="http://www.opensource.org/" >open source</a>.
+That means you can get the <a href="srecord-\*(v).tar.gz" >source code</a>.
+That means you can build it youself.
+<p>
+If you let the author know the URL to get your compiled binaries from,
+after some-one else confirms they work, he will upload them to SourceForge.
+<br clear="all" />
+
 <h2>Windows Build</h2>
-building SRecord on window using Cygwin is as easy as doing it for Unix:
+<a href="http://www.cygwin.com/"
+><img src="http://www.cygwin.com/cygwin-icon.gif" align="right" border=0 /></a>
+Building SRecord on Windows using
+<a href="http://www.cygwin.com/" >Cygwin</a> is as easy as doing it for Unix:
 <blockquote>
 .nf
 <pre>$ <b>./configure</b>
