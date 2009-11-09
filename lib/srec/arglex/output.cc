@@ -38,6 +38,7 @@
 #include <lib/srec/output/file/intel16.h>
 #include <lib/srec/output/file/mif.h>
 #include <lib/srec/output/file/mos_tech.h>
+#include <lib/srec/output/file/msbin.h>
 #include <lib/srec/output/file/needham.h>
 #include <lib/srec/output/file/os65v.h>
 #include <lib/srec/output/file/signetics.h>
@@ -214,6 +215,11 @@ srec_arglex::get_output()
     case token_mos_tech:
         token_next();
         ofp = srec_output_file_mos_tech::create(fn);
+        break;
+
+    case token_msbin:
+        token_next();
+        ofp = srec_output_file_msbin::create(fn);
         break;
 
     case token_needham_hex:

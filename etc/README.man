@@ -116,6 +116,10 @@ The Motorola hexadecimal S-Record format is understood for both reading
 and writing.
 (Also known as the Exorciser, Exormacs or Exormax format.)
 .TP 8n
+MsBin
+The Windows CE Binary Image Data Format is supported both for reading
+and writing.
+.TP 8n
 The Needham Electronics ASCII file format is understood for noth reading
 and writing.
 .TP 8n

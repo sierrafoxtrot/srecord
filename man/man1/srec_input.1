@@ -1,20 +1,19 @@
 '\" t
-.\"     srecord - The "srecord" program.
-.\"     Copyright (C) 1998-2009 Peter Miller
+.\" srecord - The "srecord" program.
+.\" Copyright (C) 1998-2009 Peter Miller
 .\"
-.\"     This program is free software; you can redistribute it and/or modify
-.\"     it under the terms of the GNU General Public License as published by
-.\"     the Free Software Foundation; either version 3 of the License, or
-.\"     (at your option) any later version.
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 3 of the License, or
+.\" (at your option) any later version.
 .\"
-.\"     This program is distributed in the hope that it will be useful,
-.\"     but WITHOUT ANY WARRANTY; without even the implied warranty of
-.\"     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-.\"     GNU General Public License for more details.
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
 .\"
-.\"     You should have received a copy of the GNU General Public License
-.\"     along with this program. If not, see
-.\"     <http://www.gnu.org/licenses/>.
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .ds n) srec_input
 .TH \*(n) 1 SRecord "Reference Manual"
@@ -40,7 +39,7 @@ An input file specification looks like this:
 .PP
 The
 .I filename
-The filename may be specified as a file name,
+may be specified as a file name,
 or the special name \(lq\-\(rq which is understood to mean the standard input.
 .SS Grouping with Parentheses
 There are some cases where operator precedence of the filters can
@@ -154,6 +153,11 @@ is appropriate.  Some systems with 16\[hy]bit or 32\[hy]bit targets mutilate the
 addresses in the file; this option will correct for that.
 Unlike most other parameters, this one cannot be guessed.
 .RE
+.TP 8n
+\fB\-MsBin\fP
+This option says to use the Windows CE Binary Image Data Format to
+read the file.  See \f[I]srec_msbin\fP(5) for a description of this
+file format.
 .TP 8n
 \fB\-Needham_Hexadecimal\fP
 This option says to use the Needham Electronics ASCII file format to

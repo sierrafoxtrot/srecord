@@ -146,6 +146,7 @@ srec_arglex::srec_arglex(int argc, char **argv) :
         { "-MOS_Technologies", token_mos_tech, },
         { "-Most_To_Least", token_crc16_most_to_least },
         { "-Motorola", token_motorola, },
+        { "-MsBin", token_msbin, },
         { "-MULTiple", token_multiple, },
         { "-Needham_Hexadecimal", token_needham_hex, },
         { "-Not_AUGment", token_crc16_augment_not },

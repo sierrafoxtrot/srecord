@@ -38,6 +38,7 @@
 #include <lib/srec/input/file/intel16.h>
 #include <lib/srec/input/file/mif.h>
 #include <lib/srec/input/file/mos_tech.h>
+#include <lib/srec/input/file/msbin.h>
 #include <lib/srec/input/file/needham.h>
 #include <lib/srec/input/file/os65v.h>
 #include <lib/srec/input/file/signetics.h>
@@ -124,6 +125,7 @@ srec_arglex::get_endian_by_token(int tok)
     case token_length_le:
     case token_maximum_le:
     case token_minimum_le:
+    case token_msbin:
     case token_spasm_le:
         return endian_little;
 
@@ -349,6 +351,11 @@ srec_arglex::get_simple_input()
     case token_mos_tech:
         token_next();
         ifp = srec_input_file_mos_tech::create(fn);
+        break;
+
+    case token_msbin:
+        token_next();
+        ifp = srec_input_file_msbin::create(fn);
         break;
 
     case token_ohio_scientific:

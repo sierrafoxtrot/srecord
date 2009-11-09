@@ -33,6 +33,7 @@
 #include <lib/srec/input/file/intel16.h>
 #include <lib/srec/input/file/mif.h>
 #include <lib/srec/input/file/mos_tech.h>
+#include <lib/srec/input/file/msbin.h>
 #include <lib/srec/input/file/needham.h>
 #include <lib/srec/input/file/os65v.h>
 #include <lib/srec/input/file/signetics.h>
@@ -67,6 +68,7 @@ static func_p table[] =
     srec_input_file_intel16::create,
     srec_input_file_mif::create,
     srec_input_file_mos_tech::create,
+    srec_input_file_msbin::create,
     srec_input_file_needham::create,
     srec_input_file_os65v::create,
     srec_input_file_signetics::create,

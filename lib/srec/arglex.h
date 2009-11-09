@@ -128,6 +128,7 @@ public:
         token_minus,
         token_mos_tech,
         token_motorola,
+        token_msbin,
         token_multiple,
         token_needham_hex,
         token_not,
