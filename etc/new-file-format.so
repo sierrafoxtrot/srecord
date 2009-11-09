@@ -24,7 +24,7 @@ How to add a new file format
 This section describes how to add a new file format.  It's mostly a
 set of reminders for the maintainer.  If you want a format added to
 the distribution, use this method and e-mail the maintainer a patch
-(generated with \f[CW]diff -u -r\fP, usually) and it can be added to the
+(generated with \f[CW]diff -Nur\fP, usually) and it can be added to the
 sources if appropriate.
 .SS New Files
 The directory hierarchy is an echo of the class hierarchy, making it
@@ -230,6 +230,7 @@ allows a variable number of data bytes per record) then this should be
 controllable.  This manifests in the \f[CW]address_length_set\fP and
 \f[CW]preferred_block_size_get\fP methods you must implement in your
 derived class.
+.so etc/coding-style.so
 .SH AUTHOR
 .TS
 tab(;);

@@ -24,7 +24,7 @@ How to add a new filter
 This section describes how to add a new filter.  It's mostly a set
 of reminders for the maintainer.  If you want a filter added to the
 distribution, use this method and e-mail the maintainer a patch
-(generated with \f[CW]diff -u -r\fP, usually) and it can be added to the
+(generated with \f[CW]diff -Nur\fP, usually) and it can be added to the
 sources if appropriate.
 .SS New Files
 The directory hierarchy is an echo of the class hierarchy, making it
@@ -128,6 +128,7 @@ byte-swap), or a pair of filters are supposed to be inverses
 (\f[I]e.g.\fP split and unsplit) be sure to write a test to confirm
 this.  The tests should exersize all of the boundary conditions
 (\f[I]e.g.\fP around the edges of holes, extremes of data ranges).
+.so etc/coding-style.so
 .SH AUTHOR
 .TS
 tab(;);
