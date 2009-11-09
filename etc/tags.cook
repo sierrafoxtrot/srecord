@@ -1,6 +1,6 @@
 /*
  *      srecord - manipulate eprom load files
- *      Copyright (C) 2006, 2007 Peter Miller
+ *      Copyright (C) 2006, 2007, 2009 Peter Miller
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -81,11 +81,11 @@ if [find_command ctags] then
             -o
             ;
 
-	/*
-	 * Turns out that the emacs version of etags doesn't offer the
-	 * same options as ctags when those options would simply
-	 * confirm the default values. Sigh.
-	 */
+        /*
+         * Turns out that the emacs version of etags doesn't offer the
+         * same options as ctags when those options would simply
+         * confirm the default values. Sigh.
+         */
         etags-opts += --declarations --members
             /* --no-warn (the man page says the --no-warn option exists,
                but is doesn't, really) */
