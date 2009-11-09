@@ -98,16 +98,37 @@ A record containing data and the 4\[hy]byte address at which the data is
 to reside.
 .TP 8n
 S5
+.RS
 An optional record containing the number of S1, S2 and S3 records
 transmitted in a particular block.
 The count appears in the two\[hy]byte address field.
 There is no data field.
+.PP
+This record is optional, you do not have to use it.
+Nobody knows if you can have more than one in a file; and if you do,
+nobody knows whether or not the line count resets after each one.
+.PP
+The \f[I]srec_cat\fP command will only ever use one,
+provided the number of lines fits in 16 bits,
+otherwise it will use S6.
+.RS
 .TP 8n
 S6
+.RS
 An optional record containing the number of S1, S2 and S3 records
 transmitted in a particular block.
 The count appears in the three\[hy]byte address field.
 There is no data field.
+.PP
+This record is optional, you do not have to use it.
+Nobody knows if you can have more than one in a file; and if you do,
+nobody knows whether or not the line count resets after each one.
+.PP
+Nobody knows what happens if you mix S5 and S6 records in a file.
+.PP
+The \f[I]srec_cat\fP command will only ever use one,
+provided the number of lines fits in 24 bits.
+.RE
 .TP 8n
 S7
 A termination record for a block of S3 records.  The address field may
