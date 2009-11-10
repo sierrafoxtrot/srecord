@@ -4,8 +4,8 @@
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
-.\" the Free Software Foundation; either version 3 of the License, or
-.\" (at your option) any later version.
+.\" the Free Software Foundation; either version 3 of the License, or (at
+.\" your option) any later version.
 .\"
 .\" This program is distributed in the hope that it will be useful,
 .\" but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,27 +16,18 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" Change 19, 23
-There is a new MsBin (Windows CE Binary Image Data) file format,
-supported for both reading and writing.
-.PP
-.if n *
-.if t \(bu
-.\" Change 12
-The lintian(1) warning about hyphen in the manual pages has been silenced,
-by careful use of \-, \[hy\ and \[mi] as appropriate. Sure makes
-some of the sources ugly, tho.
-The lintian(1) warning about the undefined .XX macro has been silenced, by
-making it conditional.
-.PP
-.if n *
-.if t \(bu
-.\" Change 11
-The code will build without libgcrypt.
+.\"
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 53 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.52 (2009-Sep-17)
+.SS Version 1.53 (2009-Nov-10)
 .\" vim: set ts=8 sw=4 et
