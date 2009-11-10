@@ -41,7 +41,7 @@ According to specification the record describing the execution start
 address must be always present, and must always be the last record in the file.
 .SS Record Format
 Each record consists of a record start address (four bytes, little endian),
-a record length (for bytes, little endian),
+a record length (four bytes, little endian),
 a record checksum (four bytes, little endian),
 followed by the record data.
 The data part of each record is raw byte values, no encoding.
@@ -61,11 +61,11 @@ of megabytes.
 .SS Commentary
 The MsBin files produced by SRecord are valid and can be
 successfully parsed by the command line utilities \f[CW]viewbin\fP and
-\f[CW]cvrtbin\fP (part of Windows CE platform).  But for a MsBin
-file to be usable in Microsoft WinCE Platform Builder it
-apparently has to contain some (undocumented?) meta-structure.  Still,
-the output could conceivably be used when flashing a device using WinCE
-bootloader directly (without Platform Builder).
+\f[CW]cvrtbin\fP (part of Windows CE platform).
+.PP
+For a MsBin file to be usable in Microsoft WinCE Platform Builder it has
+to contain a TOC meta-structure.  This is data embedded in the file by
+Microsoft WinCE Platform Builder itself.
 .PP
 The opposite conversion \- from MsBin \- comes in handy when analyzing
 a MsBin file (\f[I]i.e.\fP a WinCE image).

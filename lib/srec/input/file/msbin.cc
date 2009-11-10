@@ -31,17 +31,18 @@ srec_input_file_msbin::~srec_input_file_msbin()
         {
             warning
             (
-                "image address header field is wrong (header = 0x%08lx, "
-                    "actual = 0x%08lx)",
+                "image address header field is wrong (header = 0x%08lX, "
+                    "actual = 0x%08lX)",
                 (unsigned long)image_start,
-                (unsigned long)lowest_address);
+                (unsigned long)lowest_address
+            );
         }
         if (highest_address - lowest_address + 1 != image_length)
         {
             warning
             (
-                "image length header field is wrong (header = 0x%08lx, "
-                    "actual = 0x%08lx)",
+                "image length header field is wrong (header = 0x%08lX, "
+                    "actual = 0x%08lX)",
                 (unsigned long)image_length,
                 (unsigned long)(highest_address - lowest_address + 1)
             );
@@ -225,8 +226,8 @@ srec_input_file_msbin::read(srec_record &record)
             fatal_error
             (
                 "checksum of the execution start record is not 0, as "
-                    "required by specification (0x%02X != 0x00)",
-                record_checksum
+                    "required by specification (0x%08lX != 0x00000000)",
+                (unsigned long)record_checksum
             );
         }
 
@@ -288,9 +289,9 @@ srec_input_file_msbin::read(srec_record &record)
         {
             fatal_error
             (
-                "wrong record checksum (0x%08X != 0x%08X)",
-                running_checksum,
-                record_checksum
+                "wrong record checksum (0x%08lX != 0x%08lX)",
+                (unsigned long)running_checksum,
+                (unsigned long)record_checksum
             );
         }
     }

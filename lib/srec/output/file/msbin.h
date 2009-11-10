@@ -24,12 +24,7 @@
 #include <lib/srec/output/file.h>
 #include <lib/srec/record.h>
 
-//#define MSBIN_FIXUP_HEADER
-//#define MSBIN_CONCATENATE_ADJACENT_RECORDS
-
-#ifdef MSBIN_CONCATENATE_ADJACENT_RECORDS
-#define MSBIN_FIXUP_HEADER
-#endif
+#define MSBIN_CONCATENATE_ADJACENT_RECORDS
 
 /**
   * The srec_output_file_msbin class is used to represent an output
@@ -162,19 +157,12 @@ private:
       */
     bool beginning_of_file;
 
-#ifdef MSBIN_FIXUP_HEADER
+#ifdef MSBIN_CONCATENATE_ADJACENT_RECORDS
     /**
       * The current_addr instance variable is used to remember the
-      * current address, used for concatenating adjacent records and for
-      * ex-post file header fixup.
+      * current address, used for concatenating adjacent records.
       */
     srec_record::address_t current_addr;
-
-    /**
-      * The lowest_addr instance variable is used to remember the lowest
-      * address encountered so far, and for ex-post file header fixup.
-      */
-    srec_record::address_t lowest_addr;
 #endif
 
     /**

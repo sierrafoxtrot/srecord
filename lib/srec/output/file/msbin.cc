@@ -23,17 +23,17 @@
 srec_output_file_msbin::~srec_output_file_msbin()
 {
     if (start_address_set && enable_goto_addr_flag)
-        write_record_header(0, start_address, 0);
-    // else: don't generate start address record
-
-#ifdef MSBIN_FIXUP_HEADER
-    if (!beginning_of_file)
     {
-        seek_to(0);
-        assert(upper_bound >= lowest_addr);
-        write_file_header(lowest_addr, upper_bound - lowest_addr);
+        write_record_header(0, start_address, 0);
     }
-#endif
+    else
+    {
+        warning
+        (
+            "no execution start address record present, although "
+            "it's required by format specification"
+        );
+    }
 }
 
 
@@ -43,9 +43,8 @@ srec_output_file_msbin::srec_output_file_msbin(
     start_address_set(false),
     start_address(0),
     beginning_of_file(true)
-#ifdef MSBIN_FIXUP_HEADER
-    ,current_addr(0),
-    lowest_addr(0)
+#ifdef MSBIN_CONCATENATE_ADJACENT_RECORDS
+    ,current_addr(0)
 #endif
 {
     if (line_termination == line_termination_native)
@@ -134,21 +133,11 @@ srec_output_file_msbin::write(const srec_record &record)
             if (beginning_of_file)
             {
                 // Write file header
-                // Here we assume this is the lowest address. :-/
                 const unsigned long start = record.get_address();
                 const unsigned long length = upper_bound - start;
                 write_file_header(start, length);
                 beginning_of_file = false;
-
-#ifdef MSBIN_FIXUP_HEADER
-                lowest_addr = start;
-#endif
             }
-
-#ifdef MSBIN_FIXUP_HEADER
-            else
-                lowest_addr = std::min(lowest_addr, record.get_address());
-#endif
 
             assert(record.get_length() == 0 ||
                 (record.get_address() + record.get_length() <= upper_bound));
@@ -171,7 +160,7 @@ srec_output_file_msbin::write(const srec_record &record)
                     record.get_length(),
                     checksum(record.get_data(), record.get_length())
                 );
-#ifdef MSBIN_FIXUP_HEADER
+#ifdef MSBIN_CONCATENATE_ADJACENT_RECORDS
                 current_addr = record.get_address();
 #endif
             }
@@ -181,7 +170,7 @@ srec_output_file_msbin::write(const srec_record &record)
             while (length-- > 0)
                 put_char(*data++);
 
-#ifdef MSBIN_FIXUP_HEADER
+#ifdef MSBIN_CONCATENATE_ADJACENT_RECORDS
             current_addr += record.get_length();
 #endif
         }
