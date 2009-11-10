@@ -501,7 +501,21 @@ Note how the ability to apply multiple filters simplifies what would
 otherwise be a much longer script.
 .SS Striping
 A second use for the \-SPlit filter is memory striping.
-In this example, the hardware requires that 512\[hy]byte blocks alternate
+.PP
+You don't have to split into byte-wide parts, you can choose other
+sizes.  It is common to want to convert 32-bit wide data into two set of
+16-bit wide data.
+.RS
+.nf
+.ft CW
+srec_cat firmware.hex \-split 4 0 2 \-o firmware.01.hex
+srec_cat firmware.hex \-split 4 2 2 \-o firmware.23.hex
+.ft R
+.fi
+.RE
+This is relatively simple to understand, but you can use even wider stripes.
+.PP
+In this next example, the hardware requires that 512\[hy]byte blocks alternate
 between 4 EPROMs.  Generating the 4 images would be done as follows:
 .RS
 .nf
@@ -513,6 +527,47 @@ srec_cat firmware.hex \-split 0x800 0x600 0x200 \-o firmware.3.hex
 .ft R
 .fi
 .RE
+.SS Asymmetric Striping
+A more peculiar example of striping is the
+Microchip dsPIC33F microcontroller, that
+has a weird memory storage pattern and they are able to store 3 bytes
+in an address that should only contain 2 bytes.
+The result is a hex file that has zero-filled the top byte (little endian),
+and all addresses are doubled from what they are in the chip.
+Here is an example:
+.RS
+.nf
+.ft CW
+S1130000000102000405060008090A000C0D0E0098
+S1130010101112001415160018191A001C1D1E00C8
+S1130020202122002425260028292A002C2D2E00F8
+S1130030303132003435360038393A003C3D3E0028
+.ft R
+.fi
+.RE
+To get rid of the 00 padding bytes, leaving only the 3/4 significant bytes,
+you also use the split filter, with its additional \f[I]width\fP argument,
+like this:
+.RS
+.nf
+.ft CW
+srec_cat example.srec -split 4 0 3 -o no_dross.srec
+.ft R
+.fi
+.RE
+This results in a file with the 00 padding bytes removed.
+It looks like this:
+.RS
+.nf
+.ft CW
+S113000000010204050608090A0C0D0E1011121451
+S1130010151618191A1C1D1E2021222425262829EC
+S11300202A2C2D2E30313234353638393A3C3D3E87
+.ft R
+.fi
+.RE
+Notice how the addresses are 3/4 the size, as well.
+You can reverse this using the \-unsplit and \-fill 0 filters.
 .SS Unspliting Images
 The unsplit filter may be used to reverse the effects of the split filter.
 Note that the address range is expanded leaving holes between the stripes.
@@ -527,7 +582,8 @@ srec_cat \-o firmware.hex \e
 .ft R
 .fi
 .RE
-The above example reverses the previous 16\[hy]bit data bus example,.
+The above example reverses the previous 16\[hy]bit data bus example.
+In general, you unsplit with the same parameters that you split with.
 .\" ------------------------------------------------------------------------
 .SH FILLING THE BLANKS
 Often EPROM load files will have \(lqholes\(rq in them, places where the
