@@ -89,6 +89,26 @@ AC_DEFINE(HAVE_SPARSE_LSEEK, 1, [Define this symbol if your
 operating system has support for sparse file seeking.])
 AC_MSG_RESULT(yes),AC_MSG_RESULT(no))dnl
 
+dnl!
+dnl! Test to see if libgcrypt is sufficiently modern.
+dnl!
+AC_MSG_CHECKING([for gcrypt SHA224 support])
+AC_TRY_COMPILE([#include <gcrypt.h>],
+[return GCRY_MD_SHA224;],
+AC_DEFINE(HAVE_LIBGCRYPT_SHA224, 1, [Define this symbol if your
+operating system has a libgcrypt that supports SHA224.])
+AC_MSG_RESULT(yes),AC_MSG_RESULT(no))dnl
+
+dnl!
+dnl! Test to see if libgcrypt is sufficiently modern.
+dnl!
+AC_MSG_CHECKING([for gcrypt WHIRLPOOL support])
+AC_TRY_COMPILE([#include <gcrypt.h>],
+[return GCRY_MD_WHIRLPOOL;],
+AC_DEFINE(HAVE_LIBGCRYPT_WHIRLPOOL, 1, [Define this symbol if your
+operating system has a libgcrypt that supports WHIRLPOOL.])
+AC_MSG_RESULT(yes),AC_MSG_RESULT(no))dnl
+
 dnl
 dnl     If the soelim program exists, and understands the -I option,
 dnl     arrange for the Makefile to install the .ps files from the

@@ -207,12 +207,12 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_sha224(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
-#ifdef HAVE_LIBGCRYPT
+#ifdef HAVE_LIBGCRYPT_SHA224
     return create(a_deeper, a_address, GCRY_MD_SHA224);
 #else
     (void)a_deeper;
     (void)a_address;
-    quit_default.fatal_error("libgcrypt not available");
+    quit_default.fatal_error("libgcrypt SHA224 not available");
     return pointer();
 #endif
 }
@@ -282,12 +282,12 @@ srec_input::pointer
 srec_input_filter_message_gcrypt::create_whirlpool(
     const srec_input::pointer &a_deeper, unsigned long a_address)
 {
-#ifdef HAVE_LIBGCRYPT
+#ifdef HAVE_LIBGCRYPT_WHIRLPOOL
     return create(a_deeper, a_address, GCRY_MD_WHIRLPOOL);
 #else
     (void)a_deeper;
     (void)a_address;
-    quit_default.fatal_error("libgcrypt not available");
+    quit_default.fatal_error("libgcrypt WHIRLPOOL not available");
     return pointer();
 #endif
 }
@@ -308,12 +308,16 @@ srec_input_filter_message_gcrypt::algorithm_from_name(const char *name)
         GCRY_MD_SHA256,
         GCRY_MD_SHA384,
         GCRY_MD_SHA512,
+#ifdef HAVE_LIBGCRYPT_SHA224
         GCRY_MD_SHA224,
+#endif
         GCRY_MD_MD4,
         GCRY_MD_CRC32,
         GCRY_MD_CRC32_RFC1510,
         GCRY_MD_CRC24_RFC2440,
+#ifdef HAVE_LIBGCRYPT_WHIRLPOOL
         GCRY_MD_WHIRLPOOL,
+#endif
     };
 
     for (const int *tp = table; tp < ENDOF(table); ++tp)
