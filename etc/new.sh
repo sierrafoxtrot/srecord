@@ -1,6 +1,6 @@
 #
 # srecord - manipulate eprom load files
-# Copyright (C) 1998, 2006-2008 Peter Miller
+# Copyright (C) 1998, 2006-2008, 2010 Peter Miller
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,16 +18,14 @@
 
 sortflag=
 if test "$1" = "-r"; then
-        sortflag=r
+        sortflag=-r
         shift
 fi
 echo $* |
 tr ' ' '\12' |
-sort -t. +1n$sortflag -2 +2n$sortflag -3 +3n$sortflag -5 |
+sort $sortflag -V |
 while read f
 do
-        echo ".br"
-        echo ".ne 3i"
         echo ".so $f"
 done
 exit 0
