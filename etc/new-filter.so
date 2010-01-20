@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2009 Peter Miller
+.\"     Copyright (C) 2009, 2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -36,16 +36,16 @@ up and down the source tree.  All of the file names below assume this.
 .PP
 The following files need to be created for a new filter.
 .TP 8n
-lib/srec/input/filter/\f[I]name\fP.cc
+srecord/input/filter/\f[I]name\fP.cc
 This file is how to process the new filter.
 Take a look at the other files in the same directory for examples.
-Also read \f[I]lib/srec/input.h\fP and \f[I]lib/srec/input/filter.h\fP
+Also read \f[I]srecord/input.h\fP and \f[I]srecord/input/filter.h\fP
 for various helper methods.
 .TP 8n
-lib/srec/input/filter/\f[I]name\fP.h
+srecord/input/filter/\f[I]name\fP.h
 This is the class declaration for the above file.
 .TP 8n
-lib/srec/input/filter/message/\f[I]name\fP.cc
+srecord/input/filter/message/\f[I]name\fP.cc
 If your filter needs all of the data to be known before it can proceed,
 or it needs all of the data to appear in ascending address order,
 derive from the \f[CW]srec_input_filter_message\fP class, instead.
@@ -53,7 +53,7 @@ This takes care of all data handling,
 you only have to write the method that computes the result from the data.
 Take a look at the other files in the same directory for examples.
 .TP 8n
-lib/srec/input/filter/message/\f[I]name\fP.h
+srecord/input/filter/message/\f[I]name\fP.h
 This is the class declaration for the above file.
 .TP 8n
 test/\f[I]nn\fP/t\f[I]nnmm\fPa.sh
@@ -71,13 +71,13 @@ etc/index.html
 Mention the new format in the section of this file which describes
 the supported filters.
 .TP 8n
-lib/srec/arglex.h
+srecord/arglex.h
 Add the new filter to the command line argument type enum.
 .TP 8n
-lib/srec/arglex.cc
+srecord/arglex.cc
 Add the new filter to the array of command line arguments types.
 .TP 8n
-lib/srec/arglex/input.cc
+srecord/arglex/input.cc
 Add the new filter to the code which parses input filters.
 .TP 8n
 man/man1/o_input.so
@@ -119,7 +119,7 @@ not have one either.
 \(bu
 Do not to fill in holes in the data, unless you are a writing a
 \[lq]fill\[rq] filter.
-See the \f[CW]lib/srec/input/filter/message.cc\fP file for an example of
+See the \f[CW]srecord/input/filter/message.cc\fP file for an example of
 issuing a warning in the presence of holes.
 .TP 3n
 \(bu

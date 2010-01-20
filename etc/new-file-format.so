@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2001, 2002, 2004, 2006-2009 Peter Miller
+.\"     Copyright (C) 2001, 2002, 2004, 2006-2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -36,25 +36,25 @@ up and down the source tree.  All of the file names below assume this.
 .PP
 The following files need to be creates for a new format.
 .TP 8n
-lib/srec/output/file/\fIname\fP.cc
+srecord/output/file/\f[I]name\fP.cc
 This file is how to write the new format.
 Take a look at the other files in the same directory
-for examples.  Also check out \fIlib/srec/output/file.h\fP and
-\fIlib/srec/output.h\fP for various helper methods.
+for examples.  Also check out \f[I]srecord/output/file.h\fP and
+\f[I]srecord/output.h\fP for various helper methods.
 .TP 8n
-lib/srec/output/file/\fIname\fP.h
+srecord/output/file/\f[I]name\fP.h
 This is the class declaration for the above file.
 .TP 8n
-lib/srec/input/file/\fIname\fP.cc
+srecord/input/file/\f[I]name\fP.cc
 This file is how to read the new format.
 Take a look at the other files in the same directory
-for examples.  Also check out \fIlib/srec/input/file.h\fP and
-\fIlib/srec/input.h\fP for various helper methods.
+for examples.  Also check out \f[I]srecord/input/file.h\fP and
+\f[I]srecord/input.h\fP for various helper methods.
 .TP 8n
-lib/srec/input/file/\fIname\fP.h
+srecord/input/file/\f[I]name\fP.h
 This is the class declaration for the above file.
 .TP 8n
-man/man5/srec_\fIname\fP.5
+man/man5/srec_\f[I]name\fP.5
 .RS
 This file describes the format.  Take a look at the other files in the
 same directory for examples.
@@ -85,19 +85,22 @@ etc/index.html
 Mention the new format in the section of this file which describes
 the supported file formats.
 .TP 8n
-lib/srec/arglex.h
+.\" FIXME: this will change
+srecord/arglex.h
 Add the new format to the command line argument type enum.
 .TP 8n
-lib/srec/arglex.cc
+.\" FIXME: this will change
+srecord/arglex.cc
 Add the new format to the array of command line arguments types.
 .TP 8n
-lib/srec/arglex/input.cc
+.\" FIXME: this will change
+srecord/arglex/input.cc
 Add the new format to the code which parses input formats.
 .TP 8n
-lib/srec/arglex/output.cc
+srecord/arglex/output.cc
 Add the new format to the code which parses output formats.
 .TP 8n
-lib/srec/input/file/guess.cc
+srecord/input/file/guess.cc
 Add the new format to the list of formats which are tested.
 .TP 8n
 man/man1/o_input.so
@@ -186,44 +189,44 @@ so the 0xFF won't change anything.
 .SH OPTIONS
 There are also some command line arguments you will need to take into account:
 .TP 8n
-\fB\-address-length\fP
+\f[B]\-address-length\fP
 This options is used to specify the minimum address length, if your new
 format has a choice about how many bytes of address it produces.
 .TP 8n
-\fB\-data-only\fP
-This option implies all of the \fB\-disable=header\fP,
-\fB\-disable=data-count\fP \fB\-disable=exec-start-addr\fP and
-\fB\-disable=footer\fP options.
+\f[B]\-data-only\fP
+This option implies all of the \f[B]\-disable=header\fP,
+\f[B]\-disable=data-count\fP \f[B]\-disable=exec-start-addr\fP and
+\f[B]\-disable=footer\fP options.
 Only the essential data records are produced.
 .TP 8n
-\fB\-disable=header\fP
+\f[B]\-disable=header\fP
 If this option is used, no header records are to be produced (or minimal
 header records).  This is available as the \f[CW]enable_header_flag\fP
 class variable in the methods of your derived class.
 .TP 8n
-\fB\-disable=data-count\fP
+\f[B]\-disable=data-count\fP
 If this option is used, no data record count records are to be produced.
 This is available as the \f[CW]enable_data_count_flag\fP class variable
 in the methods of your derived class.
 .TP 8n
-\fB\-disable=exec-start-addr\fP
+\f[B]\-disable=exec-start-addr\fP
 If this option is used, no execution start address records are to be
 produced.  This is available as the \f[CW]enable_goto_addr_flag\fP class
 variable in the methods of your derived class.
 .TP 8n
-\fB\-disable=footer\fP
+\f[B]\-disable=footer\fP
 If this option is used, no end-of-file records are to be produced.  This
 is available as the \f[CW]enable_footer_flag\fP class variable in the
 methods of your derived class.
 .TP 8n
-\fB\-ignore-checksums\fP
+\f[B]\-ignore-checksums\fP
 If this flag is set, your file input methods must parse \f[I]but not
 check\fP checksums, if the format has checksums.  This is available in
 the \f[CW]use_checksums()\fP method within the methods of your derived
 class.  This only applies to input; output must always produce correct
 checksums.
 .TP 8n
-\fB\-line-length\fP
+\f[B]\-line-length\fP
 Where your output format is text, and there exists the possibility of
 putting more or less text on each line (\f[I]e.g.\fP the Motorola format
 allows a variable number of data bytes per record) then this should be
