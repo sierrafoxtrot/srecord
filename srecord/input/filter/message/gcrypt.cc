@@ -16,8 +16,8 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include <lib/quit.h>
-#include <lib/sizeof.h>
+#include <srecord/quit.h>
+#include <srecord/sizeof.h>
 #include <srecord/input/filter/message/gcrypt.h>
 #include <srecord/memory/walker/gcrypt.h>
 #include <srecord/record.h>

@@ -19,7 +19,7 @@
 #ifndef SRECORD_MEMORY_WALKER_GCRYPT_H
 #define SRECORD_MEMORY_WALKER_GCRYPT_H
 
-#include <lib/config.h>
+#include <srecord/config.h>
 #ifdef HAVE_LIBGCRYPT
 #include <gcrypt.h>
 #else

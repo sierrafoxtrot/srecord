@@ -24,7 +24,7 @@
 #include <stdarg.h>
 #include <boost/shared_ptr.hpp>
 
-#include <lib/format_printf.h>
+#include <srecord/format_printf.h>
 
 class quit; // forward
 class srec_arglex_tool; // forward

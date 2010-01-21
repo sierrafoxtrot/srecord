@@ -21,7 +21,7 @@
 #define SRECORD_OUTPUT_FILE_BASIC_H
 
 #include <srecord/output/file.h>
-#include <lib/interval.h>
+#include <srecord/interval.h>
 
 /**
   * The srec_output_file_basic class is used to emit record in BASIc

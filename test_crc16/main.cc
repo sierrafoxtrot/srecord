@@ -1,6 +1,6 @@
 //
 // srecord - The "srecord" program.
-// Copyright (C) 2007-2009 Peter Miller
+// Copyright (C) 2007-2010 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@
 #include <cstdlib>
 #include <unistd.h>
 
-#include <lib/bitrev.h>
-#include <lib/crc16.h>
-#include <lib/progname.h>
-#include <lib/quit.h>
+#include <srecord/bitrev.h>
+#include <srecord/crc16.h>
+#include <srecord/progname.h>
+#include <srecord/quit.h>
 
 
 static void

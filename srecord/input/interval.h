@@ -20,7 +20,7 @@
 #ifndef SRECORD_INPUT_INTERVAL_H
 #define SRECORD_INPUT_INTERVAL_H
 
-#include <lib/interval.h>
+#include <srecord/interval.h>
 #include <srecord/input.h>
 
 /**

@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <lib/arglex.h>
-#include <lib/sizeof.h>
+#include <srecord/arglex.h>
+#include <srecord/sizeof.h>
 #include <srecord/output/file.h>
 
 

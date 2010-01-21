@@ -19,10 +19,10 @@
 //
 
 #include <srecord/arglex/tool.h>
-#include <lib/interval.h>
+#include <srecord/interval.h>
 #include <srecord/output/file/vhdl.h>
 #include <srecord/record.h>
-#include <lib/progname.h>
+#include <srecord/progname.h>
 
 
 srec_output_file_vhdl::~srec_output_file_vhdl()

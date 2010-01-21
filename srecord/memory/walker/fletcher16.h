@@ -19,7 +19,7 @@
 #ifndef SRECORD_MEMORY_WALKER_FLETCHER16_H
 #define SRECORD_MEMORY_WALKER_FLETCHER16_H
 
-#include <lib/fletcher16.h>
+#include <srecord/fletcher16.h>
 #include <srecord/memory/walker.h>
 
 /**

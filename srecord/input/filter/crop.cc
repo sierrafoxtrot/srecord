@@ -17,7 +17,7 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <lib/interval.h>
+#include <srecord/interval.h>
 #include <srecord/input/filter/crop.h>
 #include <srecord/record.h>
 

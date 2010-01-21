@@ -20,7 +20,7 @@
 #ifndef SRECORD_OUTPUT_FILE_ATMEL_GENERIC_H
 #define SRECORD_OUTPUT_FILE_ATMEL_GENERIC_H
 
-#include <lib/endian.h>
+#include <srecord/endian.h>
 #include <srecord/output/file.h>
 
 /**

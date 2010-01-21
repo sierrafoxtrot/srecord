@@ -20,7 +20,7 @@
 #ifndef SRECORD_MEMORY_WALKER_CRC16_H
 #define SRECORD_MEMORY_WALKER_CRC16_H
 
-#include <lib/crc16.h>
+#include <srecord/crc16.h>
 #include <srecord/memory/walker.h>
 
 /**

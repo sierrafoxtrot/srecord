@@ -19,7 +19,7 @@
 
 #include <iostream>
 
-#include <lib/quit.h>
+#include <srecord/quit.h>
 #include <srecord/arglex/tool.h>
 #include <srecord/input/catenate.h>
 #include <srecord/input/file/aomf.h>

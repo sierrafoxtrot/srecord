@@ -19,8 +19,8 @@
 #ifndef SRECORD_INPUT_FILTER_MESSAGE_FLETCHER32_H
 #define SRECORD_INPUT_FILTER_MESSAGE_FLETCHER32_H
 
-#include <lib/fletcher32.h>
-#include <lib/endian.h>
+#include <srecord/fletcher32.h>
+#include <srecord/endian.h>
 #include <srecord/input/filter/message.h>
 
 /**

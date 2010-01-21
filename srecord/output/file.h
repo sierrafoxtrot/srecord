@@ -22,7 +22,7 @@
 
 #include <string>
 #include <srecord/output.h>
-#include <lib/format_printf.h>
+#include <srecord/format_printf.h>
 
 
 /**

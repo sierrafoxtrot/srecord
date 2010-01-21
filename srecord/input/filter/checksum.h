@@ -21,8 +21,8 @@
 #define SRECORD_INPUT_FILTER_CHECKSUM_H
 
 
-#include <lib/endian.h>
-#include <lib/interval.h>
+#include <srecord/endian.h>
+#include <srecord/interval.h>
 #include <srecord/input/filter.h>
 #include <srecord/record.h>
 

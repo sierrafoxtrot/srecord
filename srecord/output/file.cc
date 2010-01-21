@@ -23,8 +23,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <lib/arglex.h>
-#include <lib/sizeof.h>
+#include <srecord/arglex.h>
+#include <srecord/sizeof.h>
 #include <srecord/output/file.h>
 #include <srecord/record.h>
 

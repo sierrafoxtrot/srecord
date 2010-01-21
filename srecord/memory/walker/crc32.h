@@ -20,7 +20,7 @@
 #ifndef SRECORD_MEMORY_WALKER_CRC32_H
 #define SRECORD_MEMORY_WALKER_CRC32_H
 
-#include <lib/crc32.h>
+#include <srecord/crc32.h>
 #include <srecord/memory/walker.h>
 
 /**

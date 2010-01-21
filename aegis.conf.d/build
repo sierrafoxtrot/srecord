@@ -1,6 +1,6 @@
 #
 #       srecord - The "srecord" program.
-#       Copyright (C) 2007 Peter Miller
+#       Copyright (C) 2007, 2010 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -21,12 +21,12 @@
 /*
  * The build_command field of the config file is used to invoke the relevant
  * build command.  The following command tells cook where to find the recipes.
- * The ${s Howto.cook} expands to a path into the baseline during development
+ * The ${s howto.cook} expands to a path into the baseline during development
  * if the file is not in the change.  Look in aesub(5) for more information
  * about command substitutions.
  */
 build_command =
-    "cook -b ${s etc/Howto.cook} "
+    "cook -b ${s etc/howto.cook} "
     "project=$p "
     "change=$c "
     "version=$v "

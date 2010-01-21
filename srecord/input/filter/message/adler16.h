@@ -19,8 +19,8 @@
 #ifndef SRECORD_INPUT_FILTER_MESSAGE_ADLER16_H
 #define SRECORD_INPUT_FILTER_MESSAGE_ADLER16_H
 
-#include <lib/adler16.h>
-#include <lib/endian.h>
+#include <srecord/adler16.h>
+#include <srecord/endian.h>
 #include <srecord/input/filter/message.h>
 
 /**

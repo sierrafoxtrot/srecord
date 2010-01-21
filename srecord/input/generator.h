@@ -21,7 +21,7 @@
 #define SRECORD_INPUT_GENERATOR_H
 
 #include <srecord/input.h>
-#include <lib/interval.h>
+#include <srecord/interval.h>
 
 /**
   * The srec_input_generator class is used to represent the state of

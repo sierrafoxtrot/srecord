@@ -17,7 +17,7 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <lib/interval.h>
+#include <srecord/interval.h>
 #include <srecord/arglex/tool.h>
 #include <srecord/input.h>
 #include <srecord/input/interval.h>

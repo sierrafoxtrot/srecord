@@ -20,7 +20,7 @@
 #ifndef SRECORD_MEMORY_WALKER_COMPARE_H
 #define SRECORD_MEMORY_WALKER_COMPARE_H
 
-#include <lib/interval.h>
+#include <srecord/interval.h>
 #include <srecord/memory/walker.h>
 
 class srec_memory; // forward

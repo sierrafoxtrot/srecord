@@ -20,7 +20,7 @@
 #ifndef SRECORD_INPUT_FILTER_RANDOM_FILL_H
 #define SRECORD_INPUT_FILTER_RANDOM_FILL_H
 
-#include <lib/interval.h>
+#include <srecord/interval.h>
 #include <srecord/input/filter.h>
 #include <srecord/record.h>
 

@@ -19,8 +19,8 @@
 #ifndef SRECORD_ARGLEX_TOOL_H
 #define SRECORD_ARGLEX_TOOL_H
 
-#include <lib/arglex.h>
-#include <lib/endian.h>
+#include <srecord/arglex.h>
+#include <srecord/endian.h>
 #include <srecord/input.h>
 #include <srecord/output.h>
 

@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <lib/interval.h>
-#include <lib/pretty_size.h>
+#include <srecord/interval.h>
+#include <srecord/pretty_size.h>
 #include <srecord/arglex/tool.h>
 
 

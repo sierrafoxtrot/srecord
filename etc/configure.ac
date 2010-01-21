@@ -1,6 +1,6 @@
 dnl
 dnl  srecord - manipulate eprom load files
-dnl  Copyright (C) 1998, 1999, 2002, 2006-2009 Peter Miller
+dnl  Copyright (C) 1998, 1999, 2002, 2006-2010 Peter Miller
 dnl
 dnl  This program is free software; you can redistribute it and/or modify
 dnl  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@ dnl  You should have received a copy of the GNU General Public License
 dnl  along with this program. If not, see <http://www.gnu.org/licenses/>.
 dnl
 AC_INIT(install-sh)
-AC_CONFIG_HEADER(lib/config.h)
+AC_CONFIG_HEADER(srecord/config.h)
 AC_PROG_CXX
 AC_PROG_CPP
 AC_LANG(C++)
@@ -177,7 +177,7 @@ esac
 
 AH_TOP([/*
  * srecord - manipulate eprom load files
- * Copyright (C) 1998-2002, 2006-2009 Peter Miller
+ * Copyright (C) 1998-2002, 2006-2010 Peter Miller
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -204,7 +204,7 @@ AH_BOTTOM([
  * the above information, so there is no need for you to edit the file,
  * if you are configuring Aegis manually.
  */
-#include <lib/config.messy.h>
+#include <srecord/config.messy.h>
 
 #endif /* LIB_CONFIG_H */])
 

@@ -23,7 +23,7 @@
 #include <cstddef>
 #include <stdint.h>
 
-#include <lib/endian.h>
+#include <srecord/endian.h>
 
 /**
   * The srec_record class is used to represent a data record read

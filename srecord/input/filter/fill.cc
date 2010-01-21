@@ -19,7 +19,7 @@
 
 #include <cstring>
 
-#include <lib/interval.h>
+#include <srecord/interval.h>
 #include <srecord/input/filter/fill.h>
 #include <srecord/record.h>
 

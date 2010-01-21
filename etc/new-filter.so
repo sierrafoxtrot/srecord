@@ -71,13 +71,13 @@ etc/index.html
 Mention the new format in the section of this file which describes
 the supported filters.
 .TP 8n
-srecord/arglex.h
+srecord/arglex/tool.h
 Add the new filter to the command line argument type enum.
 .TP 8n
-srecord/arglex.cc
+srecord/arglex/tool.cc
 Add the new filter to the array of command line arguments types.
 .TP 8n
-srecord/arglex/input.cc
+srecord/arglex/tool/input.cc
 Add the new filter to the code which parses input filters.
 .TP 8n
 man/man1/o_input.so

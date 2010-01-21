@@ -20,7 +20,7 @@
 #ifndef SRECORD_INPUT_FILE_SPASM_H
 #define SRECORD_INPUT_FILE_SPASM_H
 
-#include <lib/endian.h>
+#include <srecord/endian.h>
 #include <srecord/input/file.h>
 
 /**

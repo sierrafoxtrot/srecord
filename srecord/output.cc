@@ -21,7 +21,7 @@
 #include <cstdio>
 #include <cstring>
 
-#include <lib/quit.h>
+#include <srecord/quit.h>
 #include <srecord/output.h>
 #include <srecord/record.h>
 

@@ -23,7 +23,7 @@
 
 #include <srecord/input.h>
 #include <srecord/record.h>
-#include <lib/quit/prefix.h>
+#include <srecord/quit/prefix.h>
 
 
 srec_input::srec_input() :

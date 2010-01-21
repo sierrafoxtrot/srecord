@@ -20,7 +20,7 @@
 #include <cstdio>
 #include <cstring>
 
-#include <lib/interval.h>
+#include <srecord/interval.h>
 #include <srecord/arglex/tool.h>
 #include <srecord/output/file/asm.h>
 #include <srecord/record.h>

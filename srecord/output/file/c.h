@@ -21,7 +21,7 @@
 #define SRECORD_OUTPUT_FILE_C_H
 
 #include <srecord/output/file.h>
-#include <lib/interval.h>
+#include <srecord/interval.h>
 
 /**
   * The srec_output_file_c class is used to represent an output file

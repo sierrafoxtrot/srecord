@@ -20,7 +20,7 @@
 #ifndef SRECORD_MEMORY_WALKER_ADLER32_H
 #define SRECORD_MEMORY_WALKER_ADLER32_H
 
-#include <lib/adler32.h>
+#include <srecord/adler32.h>
 #include <srecord/memory/walker.h>
 
 /**

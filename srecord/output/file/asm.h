@@ -21,7 +21,7 @@
 #define SRECORD_OUTPUT_FILE_ASM_H
 
 #include <srecord/output/file.h>
-#include <lib/interval.h>
+#include <srecord/interval.h>
 
 /**
   * The srec_output_file_asm class is used to represent an output file
