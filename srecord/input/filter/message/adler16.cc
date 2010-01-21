@@ -17,7 +17,7 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/input/filter/message/adler16.h>
 #include <srecord/memory/walker/adler16.h>
 #include <srecord/record.h>

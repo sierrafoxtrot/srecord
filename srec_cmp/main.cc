@@ -17,7 +17,7 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/input/file.h>
 #include <srecord/memory.h>
 #include <srecord/record.h>
@@ -37,13 +37,13 @@ execution_start_addresses_differ(srec_record *rp1, srec_record *rp2)
 int
 main(int argc, char **argv)
 {
-    srec_arglex cmdline(argc, argv);
+    srec_arglex_tool cmdline(argc, argv);
     cmdline.usage_tail_set("<file1> <file2>");
     cmdline.token_first();
     srec_input::pointer if1;
     srec_input::pointer if2;
     bool verbose = false;
-    while (cmdline.token_cur() != srec_arglex::token_eoln)
+    while (cmdline.token_cur() != srec_arglex_tool::token_eoln)
     {
         switch (cmdline.token_cur())
         {
@@ -51,10 +51,10 @@ main(int argc, char **argv)
             cmdline.default_command_line_processing();
             continue;
 
-        case srec_arglex::token_paren_begin:
-        case srec_arglex::token_string:
-        case srec_arglex::token_stdio:
-        case srec_arglex::token_generator:
+        case srec_arglex_tool::token_paren_begin:
+        case srec_arglex_tool::token_string:
+        case srec_arglex_tool::token_stdio:
+        case srec_arglex_tool::token_generator:
             if (!if1)
                 if1 = cmdline.get_input();
             else if (!if2)

@@ -18,12 +18,12 @@
 
 #include <iostream>
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/input/file.h>
 #include <srecord/memory.h>
 
 
-srec_arglex::srec_arglex(int argc, char **argv) :
+srec_arglex_tool::srec_arglex_tool(int argc, char **argv) :
     arglex(argc, argv),
     stdin_used(false),
     stdout_used(false),
@@ -217,13 +217,13 @@ srec_arglex::srec_arglex(int argc, char **argv) :
 }
 
 
-srec_arglex::~srec_arglex()
+srec_arglex_tool::~srec_arglex_tool()
 {
 }
 
 
 bool
-srec_arglex::can_get_number()
+srec_arglex_tool::can_get_number()
     const
 {
     switch (token_cur())
@@ -242,7 +242,7 @@ srec_arglex::can_get_number()
 
 
 void
-srec_arglex::get_address(const char *name, unsigned long &address)
+srec_arglex_tool::get_address(const char *name, unsigned long &address)
 {
     if (!can_get_number())
     {
@@ -254,8 +254,8 @@ srec_arglex::get_address(const char *name, unsigned long &address)
 
 
 void
-srec_arglex::get_address_and_nbytes(const char *name, unsigned long &address,
-    int &nbytes)
+srec_arglex_tool::get_address_and_nbytes(const char *name,
+    unsigned long &address, int &nbytes)
 {
     if (!can_get_number())
     {
@@ -284,8 +284,8 @@ srec_arglex::get_address_and_nbytes(const char *name, unsigned long &address,
 
 
 void
-srec_arglex::get_address_nbytes_width(const char *name, unsigned long &address,
-    int &nbytes, int &width)
+srec_arglex_tool::get_address_nbytes_width(const char *name,
+    unsigned long &address, int &nbytes, int &width)
 {
     address = get_number("address");
     nbytes = 4;
@@ -314,7 +314,7 @@ srec_arglex::get_address_nbytes_width(const char *name, unsigned long &address,
 
 
 void
-srec_arglex::default_command_line_processing()
+srec_arglex_tool::default_command_line_processing()
 {
     switch (token_cur())
     {
@@ -322,22 +322,22 @@ srec_arglex::default_command_line_processing()
         arglex::default_command_line_processing();
         break;
 
-    case srec_arglex::token_ignore_checksums:
+    case srec_arglex_tool::token_ignore_checksums:
         srec_input_file::ignore_all_checksums();
         token_next();
         break;
 
-    case srec_arglex::token_sequence_warnings_enable:
+    case srec_arglex_tool::token_sequence_warnings_enable:
         issue_sequence_warnings = 1;
         token_next();
         break;
 
-    case srec_arglex::token_sequence_warnings_disable:
+    case srec_arglex_tool::token_sequence_warnings_disable:
         issue_sequence_warnings = 0;
         token_next();
         break;
 
-    case srec_arglex::token_multiple:
+    case srec_arglex_tool::token_multiple:
         srec_memory::allow_overwriting();
         token_next();
         break;

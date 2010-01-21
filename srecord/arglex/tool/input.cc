@@ -20,7 +20,7 @@
 #include <iostream>
 
 #include <lib/quit.h>
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/input/catenate.h>
 #include <srecord/input/file/aomf.h>
 #include <srecord/input/file/ascii_hex.h>
@@ -85,7 +85,7 @@
 
 
 endian_t
-srec_arglex::get_endian_by_token(int tok)
+srec_arglex_tool::get_endian_by_token(int tok)
     const
 {
     switch (tok)
@@ -143,7 +143,7 @@ srec_arglex::get_endian_by_token(int tok)
 
 
 bool
-srec_arglex::get_inclusive_by_token(int tok)
+srec_arglex_tool::get_inclusive_by_token(int tok)
     const
 {
     switch (tok)
@@ -182,7 +182,7 @@ srec_arglex::get_inclusive_by_token(int tok)
 
 
 srec_input::pointer
-srec_arglex::get_simple_input()
+srec_arglex_tool::get_simple_input()
 {
     std::string fn = "-";
     switch (token_cur())
@@ -195,10 +195,10 @@ srec_arglex::get_simple_input()
             {
                 switch (token_cur())
                 {
-                case srec_arglex::token_paren_begin:
-                case srec_arglex::token_string:
-                case srec_arglex::token_stdio:
-                case srec_arglex::token_generator:
+                case srec_arglex_tool::token_paren_begin:
+                case srec_arglex_tool::token_string:
+                case srec_arglex_tool::token_stdio:
+                case srec_arglex_tool::token_generator:
                     ifp = srec_input_catenate::create(ifp, get_input());
                     break;
 
@@ -457,7 +457,7 @@ srec_arglex::get_simple_input()
 
 
 srec_input::pointer
-srec_arglex::get_input()
+srec_arglex_tool::get_input()
 {
     srec_input::pointer ifp = get_simple_input();
 

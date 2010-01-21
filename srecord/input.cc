@@ -96,6 +96,7 @@ srec_input::reset_quit()
 
 
 void
-srec_input::command_line(srec_arglex *)
+srec_input::command_line(srec_arglex_tool *)
 {
+    // Do nothing.
 }

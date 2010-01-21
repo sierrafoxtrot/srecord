@@ -17,7 +17,7 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/input/filter/byte_swap.h>
 #include <srecord/record.h>
 
@@ -76,7 +76,7 @@ srec_input_filter_byte_swap::read(srec_record &record)
 
 
 void
-srec_input_filter_byte_swap::command_line(srec_arglex *cmdln)
+srec_input_filter_byte_swap::command_line(srec_arglex_tool *cmdln)
 {
     if (cmdln->can_get_number())
     {

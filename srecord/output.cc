@@ -182,7 +182,7 @@ srec_output::notify_upper_bound(unsigned long)
 
 
 void
-srec_output::command_line(srec_arglex *)
+srec_output::command_line(srec_arglex_tool *)
 {
     // Do nothing.
 }

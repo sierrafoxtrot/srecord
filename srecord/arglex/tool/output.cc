@@ -16,7 +16,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/output/file/aomf.h>
 #include <srecord/output/file/ascii_hex.h>
 #include <srecord/output/file/asm.h>
@@ -57,7 +57,7 @@
 
 
 srec_output::pointer
-srec_arglex::get_output()
+srec_arglex_tool::get_output()
 {
     //
     // skip the -output token

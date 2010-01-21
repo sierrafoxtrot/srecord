@@ -51,10 +51,10 @@ main(int argc, char **argv)
             cmdline.default_command_line_processing();
             continue;
 
-        case srec_arglex::token_paren_begin:
-        case srec_arglex::token_string:
-        case srec_arglex::token_stdio:
-        case srec_arglex::token_generator:
+        case srec_arglex_tool::token_paren_begin:
+        case srec_arglex_tool::token_string:
+        case srec_arglex_tool::token_stdio:
+        case srec_arglex_tool::token_generator:
             {
                 srec_input::pointer ip = cmdline.get_input();
                 if (infile)
@@ -64,7 +64,7 @@ main(int argc, char **argv)
             }
             continue;
 
-        case srec_arglex::token_output:
+        case srec_arglex_tool::token_output:
             if (outfile)
                 cmdline.usage();
             outfile = cmdline.get_output();

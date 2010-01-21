@@ -19,7 +19,7 @@
 
 #include <cstring>
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/output/file/srecord.h>
 #include <srecord/record.h>
 
@@ -51,7 +51,7 @@ srec_output_file_srecord::create(const std::string &a_file_name)
 
 
 void
-srec_output_file_srecord::command_line(srec_arglex *cmdln)
+srec_output_file_srecord::command_line(srec_arglex_tool *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_number)
     {

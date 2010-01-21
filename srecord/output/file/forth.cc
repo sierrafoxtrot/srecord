@@ -19,7 +19,7 @@
 
 #include <srecord/output/file/forth.h>
 #include <srecord/record.h>
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 
 
 srec_output_file_forth::~srec_output_file_forth()
@@ -106,19 +106,19 @@ srec_output_file_forth::format_name()
 }
 
 void
-srec_output_file_forth::command_line(srec_arglex *cmdln)
+srec_output_file_forth::command_line(srec_arglex_tool *cmdln)
 {
     for (;;)
     {
         switch (cmdln->token_cur())
         {
-        case srec_arglex::token_ram:
+        case srec_arglex_tool::token_ram:
             cmdln->token_next();
             // Store into RAM
             store_cmd = "C!";
             break;
 
-        case srec_arglex::token_eeprom:
+        case srec_arglex_tool::token_eeprom:
             cmdln->token_next();
             // Store into EEPROM
             store_cmd = "EEC!";

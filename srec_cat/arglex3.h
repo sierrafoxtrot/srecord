@@ -20,15 +20,15 @@
 #ifndef PROG_SREC_CAT_ARGLEX3_H
 #define PROG_SREC_CAT_ARGLEX3_H
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 
 class srec_cat_arglex3:
-    public srec_arglex
+    public srec_arglex_tool
 {
 public:
     enum
     {
-        token_line_length = srec_arglex::token_MAX,
+        token_line_length = srec_arglex_tool::token_MAX,
         token_address_length,
         token_data_only,
         token_crlf,

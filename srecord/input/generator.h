@@ -51,7 +51,7 @@ public:
       * @param cmdln
       *     The command line arguments, for deciding what to generate.
       */
-    static srec_input::pointer create(srec_arglex *cmdln);
+    static srec_input::pointer create(srec_arglex_tool *cmdln);
 
 protected:
     // See base class for documentation

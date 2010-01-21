@@ -17,11 +17,11 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 
 
 std::string
-srec_arglex::get_string(const char *caption)
+srec_arglex_tool::get_string(const char *caption)
 {
     if (token_cur() != token_string)
     {

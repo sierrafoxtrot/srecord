@@ -62,7 +62,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void command_line(srec_arglex *cmdln);
+    void command_line(srec_arglex_tool *cmdln);
 
     // See base class for documentation.
     void process(const srec_memory &input, srec_record &output);

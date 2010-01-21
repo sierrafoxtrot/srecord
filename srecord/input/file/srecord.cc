@@ -17,7 +17,7 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/input/file/srecord.h>
 #include <srecord/record.h>
 
@@ -48,7 +48,7 @@ srec_input_file_srecord::create(const std::string &a_file_name)
 
 
 void
-srec_input_file_srecord::command_line(srec_arglex *cmdln)
+srec_input_file_srecord::command_line(srec_arglex_tool *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_number)
     {

@@ -20,13 +20,13 @@
 #include <climits>
 
 #include <lib/interval.h>
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/input.h>
 #include <srecord/input/interval.h>
 
 
 interval
-srec_arglex::get_interval_factor(const char *name)
+srec_arglex_tool::get_interval_factor(const char *name)
 {
     switch (token_cur())
     {
@@ -99,7 +99,7 @@ srec_arglex::get_interval_factor(const char *name)
 
 
 interval
-srec_arglex::get_interval_term(const char *name)
+srec_arglex_tool::get_interval_term(const char *name)
 {
     interval result = get_interval_factor(name);
     for (;;)
@@ -121,7 +121,7 @@ srec_arglex::get_interval_term(const char *name)
 
 
 interval
-srec_arglex::get_interval(const char *name)
+srec_arglex_tool::get_interval(const char *name)
 {
     interval result = get_interval_term(name);
     for (;;)

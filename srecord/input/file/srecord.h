@@ -64,7 +64,7 @@ protected:
     const char *get_file_format_name() const;
 
     // See base class for documentation.
-    void command_line(srec_arglex *cmdln);
+    void command_line(srec_arglex_tool *cmdln);
 
 private:
     /**

@@ -16,8 +16,8 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SRECORD_ARGLEX_H
-#define SRECORD_ARGLEX_H
+#ifndef SRECORD_ARGLEX_TOOL_H
+#define SRECORD_ARGLEX_TOOL_H
 
 #include <lib/arglex.h>
 #include <lib/endian.h>
@@ -27,10 +27,10 @@
 class interval; // forward
 
 /**
-  * The srec_arglex is used to parse command line with srec-specific
+  * The srec_arglex_tool is used to parse command line with srec-specific
   * arguments.
   */
-class srec_arglex:
+class srec_arglex_tool:
     public arglex
 {
 public:
@@ -188,13 +188,13 @@ public:
     /**
       * The destructor.
       */
-    virtual ~srec_arglex();
+    virtual ~srec_arglex_tool();
 
     /**
       * The constructor.  Pass the argc and argv as given to main;
       * there is not need to change the values at all.
       */
-    srec_arglex(int argc, char **argv);
+    srec_arglex_tool(int argc, char **argv);
 
     /**
       * The get_input method is used to parse an input specification
@@ -426,17 +426,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_arglex();
+    srec_arglex_tool();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_arglex(const srec_arglex &);
+    srec_arglex_tool(const srec_arglex_tool &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_arglex &operator=(const srec_arglex &);
+    srec_arglex_tool &operator=(const srec_arglex_tool &);
 };
 
-#endif // SRECORD_ARGLEX_H
+#endif // SRECORD_ARGLEX_TOOL_H

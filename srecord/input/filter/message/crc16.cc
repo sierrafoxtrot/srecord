@@ -17,7 +17,7 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/input/filter/message/crc16.h>
 #include <srecord/memory.h>
 #include <srecord/memory/walker/crc16.h>
@@ -56,7 +56,7 @@ srec_input_filter_message_crc16::create(const srec_input::pointer &a_deeper,
 
 
 void
-srec_input_filter_message_crc16::command_line(srec_arglex *cmdln)
+srec_input_filter_message_crc16::command_line(srec_arglex_tool *cmdln)
 {
     for (;;)
     {
@@ -67,38 +67,38 @@ srec_input_filter_message_crc16::command_line(srec_arglex *cmdln)
             cmdln->token_next();
             break;
 
-        case srec_arglex::token_crc16_most_to_least:
+        case srec_arglex_tool::token_crc16_most_to_least:
             bitdir = crc16::bit_direction_most_to_least;
             cmdln->token_next();
             break;
 
-        case srec_arglex::token_crc16_least_to_most:
+        case srec_arglex_tool::token_crc16_least_to_most:
             bitdir = crc16::bit_direction_least_to_most;
             cmdln->token_next();
             break;
 
-        case srec_arglex::token_crc16_xmodem:
+        case srec_arglex_tool::token_crc16_xmodem:
             seed_mode = crc16::seed_mode_xmodem;
             cmdln->token_next();
             break;
 
-        case srec_arglex::token_crc16_ccitt:
+        case srec_arglex_tool::token_crc16_ccitt:
             seed_mode = crc16::seed_mode_ccitt;
             polynomial = crc16::polynomial_ccitt;
             cmdln->token_next();
             break;
 
-        case srec_arglex::token_crc16_broken:
+        case srec_arglex_tool::token_crc16_broken:
             seed_mode = crc16::seed_mode_broken;
             cmdln->token_next();
             break;
 
-        case srec_arglex::token_crc16_augment:
+        case srec_arglex_tool::token_crc16_augment:
             augment_flag = true;
             cmdln->token_next();
             break;
 
-        case srec_arglex::token_crc16_augment_not:
+        case srec_arglex_tool::token_crc16_augment_not:
             augment_flag = false;
             cmdln->token_next();
             break;

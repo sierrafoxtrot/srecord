@@ -27,7 +27,7 @@
 #include <lib/format_printf.h>
 
 class quit; // forward
-class srec_arglex; // forward
+class srec_arglex_tool; // forward
 
 /**
   * The srec_input class is used to represent an abstract EPROM load
@@ -149,7 +149,7 @@ public:
       *     Where to obtain information about the curreent parse state
       *     of the command line.
       */
-    virtual void command_line(srec_arglex *cmdln);
+    virtual void command_line(srec_arglex_tool *cmdln);
 
 private:
     /**

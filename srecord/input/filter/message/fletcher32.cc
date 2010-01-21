@@ -16,7 +16,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/input/filter/message/fletcher32.h>
 #include <srecord/memory/walker/fletcher32.h>
 #include <srecord/record.h>

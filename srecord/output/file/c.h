@@ -71,7 +71,7 @@ protected:
     int preferred_block_size_get() const;
 
     // See base class for documentation.
-    void command_line(srec_arglex *cmdln);
+    void command_line(srec_arglex_tool *cmdln);
 
     // See base class for documentation.
     const char *format_name() const;

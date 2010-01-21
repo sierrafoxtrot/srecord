@@ -19,7 +19,7 @@
 
 #include <cstring>
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/input/generator.h>
 #include <srecord/input/generator/constant.h>
 #include <srecord/input/generator/random.h>
@@ -87,13 +87,13 @@ srec_input_generator::read(srec_record &result)
 
 
 srec_input::pointer
-srec_input_generator::create(srec_arglex *cmdln)
+srec_input_generator::create(srec_arglex_tool *cmdln)
 {
     interval range = cmdln->get_interval_small("--generate");
     srec_input::pointer result;
     switch (cmdln->token_cur())
     {
-    case srec_arglex::token_constant_be:
+    case srec_arglex_tool::token_constant_be:
         {
             cmdln->token_next();
             unsigned long datum =
@@ -133,7 +133,7 @@ srec_input_generator::create(srec_arglex *cmdln)
         }
         break;
 
-    case srec_arglex::token_constant_le:
+    case srec_arglex_tool::token_constant_le:
         {
             cmdln->token_next();
             unsigned long datum =
@@ -167,7 +167,7 @@ srec_input_generator::create(srec_arglex *cmdln)
         }
         break;
 
-    case srec_arglex::token_constant:
+    case srec_arglex_tool::token_constant:
         {
             cmdln->token_next();
             int n = cmdln->get_number("--generate --constant");
@@ -183,14 +183,14 @@ srec_input_generator::create(srec_arglex *cmdln)
         }
         break;
 
-    case srec_arglex::token_random:
+    case srec_arglex_tool::token_random:
         {
             cmdln->token_next();
             result = srec_input_generator_random::create(range);
         }
         break;
 
-    case srec_arglex::token_repeat_data:
+    case srec_arglex_tool::token_repeat_data:
         {
             cmdln->token_next();
             size_t length = 0;
@@ -254,7 +254,7 @@ srec_input_generator::create(srec_arglex *cmdln)
         }
         break;
 
-    case srec_arglex::token_repeat_string:
+    case srec_arglex_tool::token_repeat_string:
         {
             cmdln->token_next();
             std::string s = cmdln->get_string("--repeat-string");

@@ -18,7 +18,7 @@
 //
 
 #include <lib/interval.h>
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/input/file.h>
 #include <srecord/memory.h>
 #include <srecord/record.h>
@@ -33,7 +33,7 @@
 int
 main(int argc, char **argv)
 {
-    srec_arglex cmdline(argc, argv);
+    srec_arglex_tool cmdline(argc, argv);
     cmdline.token_first();
     typedef std::vector<srec_input::pointer> infile_t;
     infile_t infile;
@@ -45,10 +45,10 @@ main(int argc, char **argv)
             cmdline.default_command_line_processing();
             continue;
 
-        case srec_arglex::token_paren_begin:
-        case srec_arglex::token_string:
-        case srec_arglex::token_stdio:
-        case srec_arglex::token_generator:
+        case srec_arglex_tool::token_paren_begin:
+        case srec_arglex_tool::token_string:
+        case srec_arglex_tool::token_stdio:
+        case srec_arglex_tool::token_generator:
             infile.push_back(cmdline.get_input());
             continue;
         }

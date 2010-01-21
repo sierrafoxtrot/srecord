@@ -21,7 +21,7 @@
 #include <cstring>
 
 #include <lib/interval.h>
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/output/file/c.h>
 #include <srecord/record.h>
 
@@ -464,7 +464,7 @@ srec_output_file_c::create(const std::string &a_file_name)
 
 
 void
-srec_output_file_c::command_line(srec_arglex *cmdln)
+srec_output_file_c::command_line(srec_arglex_tool *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_string)
     {
@@ -475,50 +475,50 @@ srec_output_file_c::command_line(srec_arglex *cmdln)
     {
         switch (cmdln->token_cur())
         {
-        case srec_arglex::token_constant:
+        case srec_arglex_tool::token_constant:
             cmdln->token_next();
             constant = true;
             break;
 
-        case srec_arglex::token_constant_not:
+        case srec_arglex_tool::token_constant_not:
             cmdln->token_next();
             constant = false;
             break;
 
-        case srec_arglex::token_include:
+        case srec_arglex_tool::token_include:
             cmdln->token_next();
             include = true;
             break;
 
-        case srec_arglex::token_include_not:
+        case srec_arglex_tool::token_include_not:
             cmdln->token_next();
             include = false;
             break;
 
-        case srec_arglex::token_c_compressed:
+        case srec_arglex_tool::token_c_compressed:
             cmdln->token_next();
             hex_style = true;
             section_style = true;
             break;
 
-        case srec_arglex::token_output_word:
+        case srec_arglex_tool::token_output_word:
             cmdln->token_next();
             output_word = true;
             break;
 
-        case srec_arglex::token_style_hexadecimal:
+        case srec_arglex_tool::token_style_hexadecimal:
             cmdln->token_next();
             hex_style = true;
             break;
 
-        case srec_arglex::token_style_hexadecimal_not:
+        case srec_arglex_tool::token_style_hexadecimal_not:
             cmdln->token_next();
             hex_style = false;
             break;
 
-        case srec_arglex::token_style_section:
-        case srec_arglex::token_a430:
-        case srec_arglex::token_cl430:
+        case srec_arglex_tool::token_style_section:
+        case srec_arglex_tool::token_a430:
+        case srec_arglex_tool::token_cl430:
             cmdln->token_next();
             section_style = true;
             break;

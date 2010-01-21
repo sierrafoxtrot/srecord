@@ -52,7 +52,7 @@ srec_output_file_hexdump::create(const std::string &a_file_name)
 
 
 void
-srec_output_file_hexdump::command_line(srec_arglex *)
+srec_output_file_hexdump::command_line(srec_arglex_tool *)
 {
     // nothing (yet?)
 }

@@ -19,11 +19,11 @@
 
 #include <lib/interval.h>
 #include <lib/pretty_size.h>
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 
 
 interval
-srec_arglex::get_interval_small(const char *caption)
+srec_arglex_tool::get_interval_small(const char *caption)
 {
     interval result = get_interval(caption);
     bool big_range_ok = false;

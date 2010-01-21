@@ -26,7 +26,7 @@
 
 #include <lib/format_printf.h>
 
-class srec_arglex; // forward
+class srec_arglex_tool; // forward
 class srec_record; // forward
 
 /**
@@ -176,7 +176,7 @@ public:
       *     Where to obtain information about the curreent parse stat of
       *     the command line.
       */
-    virtual void command_line(srec_arglex *cmdln);
+    virtual void command_line(srec_arglex_tool *cmdln);
 
 protected:
     /**

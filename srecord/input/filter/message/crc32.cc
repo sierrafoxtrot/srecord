@@ -17,7 +17,7 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#include <srecord/arglex.h>
+#include <srecord/arglex/tool.h>
 #include <srecord/input/filter/message/crc32.h>
 #include <srecord/memory/walker/crc32.h>
 #include <srecord/record.h>
@@ -54,18 +54,18 @@ srec_input_filter_message_crc32::create(const srec_input::pointer &a_deeper,
 
 
 void
-srec_input_filter_message_crc32::command_line(srec_arglex *cmdln)
+srec_input_filter_message_crc32::command_line(srec_arglex_tool *cmdln)
 {
     for (;;)
     {
         switch (cmdln->token_cur())
         {
-        case srec_arglex::token_crc16_xmodem:
+        case srec_arglex_tool::token_crc16_xmodem:
             seed_mode = crc32::seed_mode_xmodem;
             cmdln->token_next();
             break;
 
-        case srec_arglex::token_crc16_ccitt:
+        case srec_arglex_tool::token_crc16_ccitt:
             seed_mode = crc32::seed_mode_ccitt;
             cmdln->token_next();
             break;
