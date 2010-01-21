@@ -63,6 +63,11 @@ comes with at least one test.
 .SS Modified Files
 The following files need to be updated to mention the new filter.
 .TP 8n
+srecord/srecord.h
+Add the new include file to the list.  This file controls what files are
+installed into the \f[CW]/usr/include\fP directory.  Not all of them,
+just the public interface.
+.TP 8n
 etc/README.man
 Mention the new format in the section of this file which describes
 the supported filters.
