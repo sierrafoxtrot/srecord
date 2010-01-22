@@ -20,7 +20,24 @@
 #ifndef LIB_COMMON_VERSN_STAMP_H
 #define LIB_COMMON_VERSN_STAMP_H
 
-const char *version_stamp();
-const char *copyright_years();
+/**
+  * The version_stamp function is used to obtain the version number,
+  * as a string.  This reflects Aegis' idea of the version, so you can
+  * re-create that Aegis version easily.
+  */
+const char *version_stamp(void);
+
+/**
+  * The copyright_years function is used to obtain the range of
+  * copyright years for the copyright notice.  This reflects Aegis'
+  * tracking of the project, and updated automatically.
+  */
+const char *copyright_years(void);
+
+/**
+  * The print_version function is used to print the program version, and
+  * brief copyright notice, to the standard output.
+  */
+void print_version(void);
 
 #endif // LIB_COMMON_VERSN_STAMP_H

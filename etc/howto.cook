@@ -17,6 +17,8 @@
  *      <http://www.gnu.org/licenses/>.
  */
 
+#include "functions"
+
 set mkdir;
 set unlink;
 set time-adjust;
@@ -105,6 +107,22 @@ if [count [change_source_files]] then
 debug = /* -g */ ;      /* g++ takes forever if you say -g for complex
                         template usage */
 
+if [not [defined verbose]] then
+    verbose = 1;
+libtool-quiet = ;
+if [not [verbose]] then
+{
+    set silent;
+    libtool-quiet = --quiet;
+    set no-star;
+}
+else
+{
+    set no-silent;
+    libtool-quiet = ;
+    set star;
+}
+
 all = ;
 
 /* the right hand side is deferred until triggered */
@@ -119,9 +137,11 @@ all: [all];
 /*
  * The files which are linked to form the common library for the programs.
  */
-[project_short]/[project_short]_obj =
-    [fromto %0%.cc [arch]/%0%.o [match_mask srecord/%0%.cc [source_files]]]
+[arch]/[project_short]/lib[project_short].la_obj =
+    [fromto %0%.cc [arch]/%0%.lo [match_mask srecord/%0%.cc [source_files]]]
     ;
+function print [arch]/[project_short]/lib[project_short].la_obj \=
+    [[arch]/[project_short]/lib[project_short].la_obj];
 
 /*
  * Generate lists of object files for programs
@@ -129,11 +149,13 @@ all: [all];
 program_list = [fromto %1/%2 %1 [match_mask %/main.cc [source_files]]];
 loop program = [program_list]
 {
-    [program]_obj =
-        [fromto %0%.cc [arch]/%0%.o
+    [arch]/bin/[program]_obj =
+        [fromto %0%.cc [arch]/%0%.lo
             [match_mask [program]/%0%.cc [source_files]]
         ];
-    [program]_libs = [arch]/[project_short]/lib[project_short].a ;
+    function print [arch]/bin/[program]_obj \= [[arch]/bin/[program]_obj];
+    [arch]/bin/[program]_libs = [arch]/[project_short]/lib[project_short].la ;
+    function print [arch]/bin/[program]_libs \= [[arch]/bin/[program]_libs];
     all += [arch]/bin/[program] ;
 }
 
@@ -151,7 +173,7 @@ else
      * re-build.
      */
     set time-adjust-back;
-    all = [all] integration-build-targets;
+    all += integration-build-targets;
 }
 
 
@@ -169,49 +191,29 @@ if [not [defined c++_flags]] then
 c++_flags = [c++_flags] -Wall -Wextra -Werror;
 if [not [defined ld_flags]] then
     ld_flags = [debug];
+if [not [defined libs]] then
+    libs = ;
 
+cascade %0%.lo = %0%.o %0.libs/%.lo;
 
-[arch]/%0%.o: %0%.c
+[arch]/%0%.lo [arch]/%0%.o [arch]/%0.libs/%.o: %0%.cc [arch]/srecord/config.h
 {
-    [cc] [cc_include_flags] [cc_flags] -c [resolve %0%.c] -o [target];
-}
+    if [not [verbose]] then
+        function print [c++] %0%.cc;
 
-
-[arch]/%0%.o: %0%.cc
-{
-    [c++] [cc_include_flags] [c++_flags] -c [resolve %0%.cc] -o [target]
-        set meter;
+    rm -f [arch]/%0%.lo [arch]/%0.libs/%.o [arch]/%0.libs/%.lo;
+    libtool [libtool-quiet] --mode\=compile
+    [c++] [c++_flags]
+        [defined-or-null %0%.cc_c++_flags]
+        [defined-or-null [dir %0%.cc]_c++_flags]
+        [cc_include_flags]
+        -c [resolve %0%.cc]
+        -o [target];
+    md5sum [arch]/%0%.o [arch]/%0.libs/%.o | sed "'s|^|# |'" >> [target];
 }
 
 
 c_incl = c_incl;
-
-%0%.c.d: %0%.c
-        set no-cascade
-{
-    [c_incl] -nc -ns -nrec
-        [cc_include_flags]
-        [resolve %0%.c]
-        -prefix "'cascade %0%.c ='"
-        -suffix "';'"
-        -nsri
-        [prepost "-rlp=" "" [search_list]]
-        -slp [arch] "'[arch]'"
-        -o [target];
-}
-
-%0%.c,M:: %0%.c,Md;
-
-%0%.c,Md: %0%.c : etc/Makefile.file.sh
-{
-    [c_incl] -nc -ns
-        [cc_include_flags]
-        [resolve %0%.c]
-        -nsri
-        [prepost "-rlp=" "" [search_list]]
-        -slp [arch] "'[arch]'"
-        -o [target];
-}
 
 %0%.h.d: %0%.h
     set no-cascade
@@ -241,19 +243,6 @@ c_incl = c_incl;
         -o [target];
 }
 
-%0%.cc,M:: %0%.cc,Md;
-
-%0%.cc,Md: %0%.cc : etc/Makefile.file.sh
-{
-    [c_incl] -nc -ns
-        [cc_include_flags]
-        [resolve %0%.cc]
-        -nsri
-        [prepost "-rlp=" "" [search_list]]
-        -slp [arch] "'[arch]'"
-        -o [target];
-}
-
 cc_dep_files =
         [fromto %0%.c %0%.c.d [match_mask %1/%0%.c [source_files]]]
         [fromto %0%.h %0%.h.d [match_mask %1/%0%.h [source_files]]]
@@ -263,27 +252,78 @@ cc_dep_files =
 
 #include-cooked-nowarn [cc_dep_files]
 
-[arch]/bin/%: : [%_obj] [%_libs]
-    set gate-first
-    if [defined %_obj]
+[arch]/bin/% [arch]/bin/.libs/%: [[target]_obj] [defined-or-null [target]_libs]
+        [fromto %%0%%.la %%0.libs/%%.a  [defined-or-null [target]_libs]]
+        [fromto %%0%%.la %%0.libs/%%.so [defined-or-null [target]_libs]]
+    set gate-first shallow /* tests need them */
+    if [defined [target]_obj]
 {
-    [c++] [ld_flags] -o [target] [resolve [%_obj] [%_libs]] -lgcrypt -lm;
+    if [not [verbose]] then
+        function print LINK [target];
+
+    rm -f bin/.libs/lt-%;
+    libtool [libtool-quiet] --mode\=link
+    [c++] -o [target]
+        [cc_include_flags]
+        [ld_flags]
+        [resolve [[target]_obj] [defined-or-null [target]_libs]]
+        [libs]
+        ;
+
+    /*
+     * Libtool makes intermediate shell scripts.
+     * Make sure the fingerprint changes when it rebuilds,
+     * otherwise some tests get confused.
+     */
+    date "'+# %%c'" >> [target]
+        set silent;
+
+    /*
+     * libtool creates bin/% as a script, which, when executed, does the
+     * actual link.  But this link puts its results in bin/.libs, and
+     * that directory will not be writable for executables sourced from
+     * the baseline.  So we goose it into linking now, which would seem
+     * to defeat the purpose.
+     */
+    [target] --version > /dev/null;
 }
 
-[arch]/%0lib%.a: : [%0%_obj]
+[arch]/%/lib%.la [arch]/%/.libs/lib%.a [arch]/%/.libs/lib%.so:
+        [[target]_obj]
+    set unlink
 {
-    ar cq [target] [resolve [%0%_obj]];
-    if [find_command ranlib] then
-        ranlib [target];
-}
+    if [not [verbose]] then
+    function print LINK [target];
 
+    /*
+     * We include the "hidden" libtool output files because we need to
+     * fingerprint something that actually changes, and the .la file is
+     * pretty much static.
+     */
+    local version-info =
+        [collect aesub "'${project_specific aemakegen:version-info}'" ];
+    libtool [libtool-quiet] --mode\=link
+    [c++] [c++_flags]
+        -o [target]
+        [resolve [[target]_obj]]
+        [libs]
+        -version-info [version-info]
+
+        /*
+         * If you don't specify -rpath it doesn't make the shared library, even
+         * though the Debian people Really Don't Like Rpath.  We really really
+         * want the .so so we can check out version-info using the aede-policy
+         * soname.
+         */
+        -rpath /usr/local/bin
+        ;
+}
 
 [arch]/bin/%: script/%
 {
     cp script/% [target];
     chmod a+rx [target];
 }
-
 
 [arch]/bin/%: [arch]/script/%
 {

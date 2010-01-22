@@ -1,6 +1,6 @@
 /*
  *      srecord - manipulate eprom load files
- *      Copyright (C) 2006, 2007, 2009 Peter Miller
+ *      Copyright (C) 2006, 2007, 2009, 2010 Peter Miller
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ if [find_command ctags] then
         all += TAGS;
     }
 
-    etags-opts = ctags-opts;
+    etags-opts = [ctags-opts];
 
     /*
      * The (GNU) Emacs variant of ctags (based an Exuberant) use -o

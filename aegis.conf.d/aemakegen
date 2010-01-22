@@ -24,7 +24,7 @@ project_specific =
     },
     {
         name = "aemakegen:version-info";
-        value = "0.0.0";
+        value = "0:0:0";
     },
     {
         name = "aemakegen:library-directory";

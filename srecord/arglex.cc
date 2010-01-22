@@ -608,20 +608,7 @@ void
 arglex::version()
     const
 {
-    std::cout << progname_get() << " version " << version_stamp() << std::endl;
-    std::cout << "Copyright (C) " << copyright_years() << " Peter Miller"
-        << std::endl;
-    std::cout << std::endl;
-    std::cout << "The " << progname_get()
-        << " program comes with ABSOLUTELY NO WARRANTY;" << std::endl;
-    std::cout << "for details use the '" << progname_get()
-        << " -LICense' command." << std::endl;
-    std::cout << "The " << progname_get()
-        << " program is free software, and you are welcome" << std::endl;
-    std::cout << "to redistribute it under certain conditions; for"
-        << std::endl;
-    std::cout << "details use the '" << progname_get() << " -LICense' command."
-        << std::endl;
+    print_version();
     exit(0);
 }
 

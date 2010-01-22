@@ -17,20 +17,42 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
+#include <iostream>
 
 #include <srecord/versn_stamp.h>
 #include <lib/patchlevel.h>
+#include <lib/progname.h>
 
 
 const char *
-version_stamp()
+version_stamp(void)
 {
-        return PATCHLEVEL;
+    return PATCHLEVEL;
 }
 
 
 const char *
-copyright_years()
+copyright_years(void)
 {
-        return COPYRIGHT_YEARS;
+    return COPYRIGHT_YEARS;
+}
+
+
+void
+print_version(void)
+{
+    std::cout << progname_get() << " version " << version_stamp() << std::endl;
+    std::cout << "Copyright (C) " << copyright_years() << " Peter Miller"
+        << std::endl;
+    std::cout << std::endl;
+    std::cout << "The " << progname_get()
+        << " program comes with ABSOLUTELY NO WARRANTY;" << std::endl;
+    std::cout << "for details use the '" << progname_get()
+        << " -LICense' command." << std::endl;
+    std::cout << "The " << progname_get()
+        << " program is free software, and you are welcome" << std::endl;
+    std::cout << "to redistribute it under certain conditions; for"
+        << std::endl;
+    std::cout << "details use the '" << progname_get() << " -LICense' command."
+        << std::endl;
 }

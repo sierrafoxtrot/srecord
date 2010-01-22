@@ -19,11 +19,13 @@
 #include <cstdio>
 #include <cstdlib>
 #include <unistd.h>
+#include <getopt.h>
 
 #include <srecord/bitrev.h>
 #include <srecord/crc16.h>
 #include <srecord/progname.h>
 #include <srecord/quit.h>
+#include <srecord/versn_stamp.h>
 
 
 static void
@@ -32,6 +34,20 @@ usage()
     fprintf(stderr, "Usage: [ -av ] %s\n", progname_get());
     exit(1);
 }
+
+
+static const struct option options[] =
+{
+    { "augment", 0, 0, 'a' },
+    { "broken", 0, 0, 'b' },
+    { "ccitt", 0, 0, 'c' },
+    { "help", 0, 0, 'h' },
+    { "polynomial", 1, 0, 'p' },
+    { "reverse", 0, 0, 'r' },
+    { "table", 0, 0, 't' },
+    { "version", 0, 0, 'V' },
+    { "xmodem", 0, 0, 'x' },
+};
 
 
 int
@@ -46,7 +62,7 @@ main(int argc, char **argv)
     bool h_flag = false;
     for (;;)
     {
-        int c = getopt(argc, argv, "abchp:rtx");
+        int c = getopt_long(argc, argv, "abchp:rtVx", options, 0);
         if (c == EOF)
             break;
         switch (c)
@@ -82,6 +98,10 @@ main(int argc, char **argv)
         case 'x':
             seed_mode = crc16::seed_mode_xmodem;
             break;
+
+        case 'V':
+            print_version();
+            return 0;
 
         default:
             usage();

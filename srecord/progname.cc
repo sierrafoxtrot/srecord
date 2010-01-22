@@ -60,6 +60,9 @@ progname_set(char *s)
         }
 
         progname = (cp1 > cp2 ? cp1 : cp2);
+        // avoid some libtool nonsense
+        if (0 == memcmp(progname, "lt-", 3))
+            progname += 3;
         size_t len = strlen(progname);
         if
         (
