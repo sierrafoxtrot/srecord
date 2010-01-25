@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2000-2004, 2006-2009 Peter Miller
+.\"     Copyright (C) 1998, 2000-2004, 2006-2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ to Linux.
 .br
 <p><br clear="all" />
 .br
-<table><tr><td valign="top" width="60%" rowspan=3 bgcolor="#ccffcc">
+<table><tr><td valign="top" width="60%" rowspan=4 bgcolor="#ccffcc">
 <p align=center>
 <img src="doc_chip.png" align="right" width=98 height=128 />
 <b>The File Formats</b></p>
@@ -452,7 +452,7 @@ There are many more filters available, see the <i>srec_input</i>(1) man
 page for more information.
 </td></tr>
 .br
-<tr><td valign="bottom" bgcolor="#ffccff">
+<tr><td bgcolor="#ffccff">
 <p align=center>
 <img src="doc_gen.png" align="right" width=98 height=128 />
 <b>The Generators</b></p>
@@ -478,6 +478,17 @@ repeats a sequence of byte values over and over again.
 </dl>
 <p>
 Generators and data files can be combined on the same command line.
+</td></tr>
+<tr><td bgcolor="#ccccff">
+<p align=center>
+<img src="doc_chip.png" align="right" width=98 height=128 />
+<b> The Library </b></p>
+<p>
+The project includes a shared library.  The documentation for this
+library is available <a href="srecord/index.html" >here on the web
+site</a>.  The shared library may be used to read and write all of the
+formats, and use all of the filters, in your own projects.
+It also makes the installed executables smaller.
 </td></tr></table>
 
 <h2> See Also </h2>

@@ -1,6 +1,6 @@
 /*
  *      srecord - manipulate eprom load files
- *      Copyright (C) 2001, 2006, 2007 Peter Miller
+ *      Copyright (C) 2001, 2006, 2007, 2010 Peter Miller
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@
 doxygen = [find_command doxygen];
 if [not [doxygen]] then
         doxygen = doxygen;
-all += doc/include/index.html;
+all += archive/srecord/index.html;
 
-doc/%0index.html: [match_mask %0%%0%%.h [source_files]]
+archive/%0index.html: [match_mask %0%%0%%.h [source_files]]
         etc/doxygen.cfg
 {
         cat [resolve etc/doxygen.cfg] - > Doxyfile;
@@ -45,7 +45,7 @@ INPUT = [unsplit " \\\n" [resolve [stringset [need] - etc/Doxygen.cfg]]]
 PROJECT_NUMBER = [version]
 dataend
         [doxygen] Doxyfile
-                -d [reldir doc/%0index.html]
+                -d [reldir archive/%0index.html]
                 [resolve [stringset [need] - etc/doxygen.cfg]]
                                                 /*
                                                  * have Cook tell use how long
@@ -53,9 +53,9 @@ dataend
                                                  */
                                                 set meter
                 ;
-        rm -rf [reldir doc/%0index.html]
+        rm -rf [reldir archive/%0index.html]
                 set silent errok;
-        mv doxygen-tmp/html [reldir doc/%0index.html];
+        mv doxygen-tmp/html [reldir archive/%0index.html];
         rm -rf Doxyfile doxygen-tmp
                 set errok silent;
 }

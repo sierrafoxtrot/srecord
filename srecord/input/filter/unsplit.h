@@ -33,7 +33,7 @@ namespace srecord
   * of thwo parallel EPROM images and create a unified image when they
   * are interleaved rather than consecutive.
   *
-  * @see_also
+  * @sa
   *    srecord::input_filter_split
   */
 class input_filter_unsplit:

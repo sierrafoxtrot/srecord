@@ -166,7 +166,7 @@ public:
       *
       * @param n
       *     The index into the data array, zero based.
-      *     Values when #n is in excess of #length are undefined.
+      *     Values when n is in excess of #length are undefined.
       */
     int get_data(size_t n) const { return data[n]; }
 
@@ -183,7 +183,7 @@ public:
       *
       * @param n
       *     The index into the data array, zero based.
-      *     Results when #n is in excess of #length are undefined.
+      *     Results when n is in excess of #length are undefined.
       * @param d
       *     The new data value.
       */

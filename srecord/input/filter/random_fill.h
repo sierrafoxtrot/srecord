@@ -43,6 +43,11 @@ public:
 private:
     /**
       * The constructor.
+      *
+      * @param deeper
+      *     The incoming data source to be filtered
+      * @param range
+      *     the addres srange to be filled.
       */
     input_filter_random_fill(const input::pointer &deeper,
         const interval &range);
@@ -54,6 +59,8 @@ public:
       *
       * @param deeper
       *     The incoming data source to be filtered
+      * @param range
+      *     the addres srange to be filled.
       */
     static pointer create(const input::pointer &deeper, const interval &range);
 

@@ -58,8 +58,6 @@ public:
       *
       * @param file_name
       *     The name of the file to be read.
-      * @param end
-      *     The byte order.
       * @returns
       *     smart pointer to new instance
       */

@@ -133,10 +133,10 @@ public:
       * must matche excatly here.  This rather ugly feature is to support
       * "-I./dir" type options.
       *
-      * For example: "-project" and "-P' both match "-Project", as does
+      * For example: "-project" and "-P" both match "-Project", as does
       * "-proJ", but "-prj" does not.
       *
-      * For example: "-devDir" and "-d_d' both match "-Development_Directory",
+      * For example: "-devDir" and "-d_d" both match "-Development_Directory",
       * but "-dvlpmnt_drctry" does not.
       *
       * For example: to match include path specifications, use a pattern
@@ -322,7 +322,7 @@ private:
     const char *usage_tail_get() const;
 
     /**
-      * The read_arguments_file method is used to process @filename
+      * The read_arguments_file method is used to process filename
       * command line arguments.  The file is read and separated into
       * space separated words, and each word added to the arguments
       * instance variable in the appropriate sequence.

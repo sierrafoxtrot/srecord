@@ -42,6 +42,13 @@ public:
 private:
     /**
       * The constructor.
+      *
+      * @param deeper
+      *     The incoming data source to be filtered
+      * @param value
+      *     The byte value to fill with.
+      * @param range
+      *     The address range to be filled.
       */
     input_filter_fill(const input::pointer &deeper, int value,
         const interval &range);
@@ -53,6 +60,10 @@ public:
       *
       * @param deeper
       *     The incoming data source to be filtered
+      * @param value
+      *     The byte value to fill with.
+      * @param range
+      *     The address range to be filled.
       */
     static pointer create(const input::pointer &deeper, int value,
         const interval &range);

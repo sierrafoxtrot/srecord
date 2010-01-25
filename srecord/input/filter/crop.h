@@ -58,6 +58,9 @@ public:
       *
       * @param deeper
       *     The incoming data source to be filtered
+      * @param range
+      *     The address range to be preserved.  The rest will be
+      *     ignored.
       */
     static pointer create(const input::pointer &deeper, const interval &range);
 

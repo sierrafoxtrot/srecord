@@ -44,6 +44,10 @@ private:
     /**
       * The constructor.
       *
+      * @param deeper
+      *     The incoming data source to be filtered
+      * @param address
+      *     where to put the checksum
       * @param end
       *     The byte order.
       */
@@ -57,6 +61,8 @@ public:
       *
       * @param deeper
       *     The incoming data source to be filtered
+      * @param address
+      *     where to put the checksum
       * @param end
       *     The byte order.
       */

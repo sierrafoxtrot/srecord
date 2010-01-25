@@ -54,6 +54,8 @@ private:
       *     Turn the hash into a HMAC.
       * @param address
       *     Where to place the hash in memory.
+      * @param hmac
+      *     Add a message authentication code
       */
     input_filter_message_gcrypt(const input::pointer &deeper,
         unsigned long address, int algo, bool hmac);
@@ -71,6 +73,8 @@ private:
       *     Choose a random number, it will likely segfault.  Seriously.
       * @param address
       *     Where to place the hash in memory.
+      * @param hmac
+      *     Add a message authentication code
       */
     static pointer create(const input::pointer &deeper, unsigned long address,
         int algo, bool hmac = false);
@@ -94,11 +98,13 @@ public:
       *
       * @param deeper
       *     The source of data to be filtered.
+      * @param address
+      *     Where to place the hash in memory.
       * @param algo
       *     The algorithm to be used.  This is for debug.
       *     The actual algorithm numbers are private to the class.
-      * @param address
-      *     Where to place the hash in memory.
+      * @param hmac
+      *     Turn the hash into a HMAC.
       */
     static pointer create(const input::pointer &deeper, unsigned long address,
         const char *algo, bool hmac = false);

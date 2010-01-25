@@ -73,6 +73,8 @@ public:
       * @param augment
       *     This is true if the 16-zero-bit augmentation is desired.
       *     This is the default.  False if no augmentation is desired.
+      * @param polynomial
+      *     The checksum polynomial.
       * @param bitdir
       *     The direction of bits in a characters as they pass through
       *     the algorithm.
@@ -156,7 +158,7 @@ private:
 
     /**
       * The updcrc method is to add another byte of data to the running
-      * CRC state.  It is called by the #next and #next_buf methods.
+      * CRC state.  It is called by the #next and next_buf methods.
       */
     inline unsigned short updcrc(unsigned char c, unsigned short state) const;
 };
