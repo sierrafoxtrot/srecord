@@ -38,13 +38,13 @@
 #include <srecord/output/file/intel16.h>
 #include <srecord/output/file/mif.h>
 #include <srecord/output/file/mos_tech.h>
+#include <srecord/output/file/motorola.h>
 #include <srecord/output/file/msbin.h>
 #include <srecord/output/file/needham.h>
 #include <srecord/output/file/os65v.h>
 #include <srecord/output/file/signetics.h>
 #include <srecord/output/file/spasm.h>
 #include <srecord/output/file/spectrum.h>
-#include <srecord/output/file/srecord.h>
 #include <srecord/output/file/stewie.h>
 #include <srecord/output/file/tektronix_extended.h>
 #include <srecord/output/file/tektronix.h>
@@ -104,7 +104,7 @@ srecord::arglex_tool::get_output()
         // fall through...
 
     default:
-        ofp = srecord::output_file_srecord::create(fn);
+        ofp = srecord::output_file_motorola::create(fn);
         break;
 
     case token_aomf:

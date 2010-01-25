@@ -33,13 +33,13 @@
 #include <srecord/input/file/intel16.h>
 #include <srecord/input/file/mif.h>
 #include <srecord/input/file/mos_tech.h>
+#include <srecord/input/file/motorola.h>
 #include <srecord/input/file/msbin.h>
 #include <srecord/input/file/needham.h>
 #include <srecord/input/file/os65v.h>
 #include <srecord/input/file/signetics.h>
 #include <srecord/input/file/spasm.h>
 #include <srecord/input/file/spectrum.h>
-#include <srecord/input/file/srecord.h>
 #include <srecord/input/file/stewie.h>
 #include <srecord/input/file/tektronix.h>
 #include <srecord/input/file/tektronix_extended.h>
@@ -68,13 +68,13 @@ static func_p table[] =
     srecord::input_file_intel16::create,
     srecord::input_file_mif::create,
     srecord::input_file_mos_tech::create,
+    srecord::input_file_motorola::create,
     srecord::input_file_msbin::create,
     srecord::input_file_needham::create,
     srecord::input_file_os65v::create,
     srecord::input_file_signetics::create,
     srecord::input_file_spasm::create_be,
     srecord::input_file_spectrum::create,
-    srecord::input_file_srecord::create,
     srecord::input_file_stewie::create,
     srecord::input_file_tektronix::create,
     srecord::input_file_tektronix_extended::create,

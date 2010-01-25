@@ -18,16 +18,16 @@
 //
 
 #include <srecord/arglex/tool.h>
-#include <srecord/input/file/srecord.h>
+#include <srecord/input/file/motorola.h>
 #include <srecord/record.h>
 
 
-srecord::input_file_srecord::~input_file_srecord()
+srecord::input_file_motorola::~input_file_motorola()
 {
 }
 
 
-srecord::input_file_srecord::input_file_srecord(
+srecord::input_file_motorola::input_file_motorola(
         const std::string &a_file_name) :
     input_file(a_file_name),
     data_count(0),
@@ -41,14 +41,14 @@ srecord::input_file_srecord::input_file_srecord(
 
 
 srecord::input::pointer
-srecord::input_file_srecord::create(const std::string &a_file_name)
+srecord::input_file_motorola::create(const std::string &a_file_name)
 {
-    return pointer(new input_file_srecord(a_file_name));
+    return pointer(new input_file_motorola(a_file_name));
 }
 
 
 void
-srecord::input_file_srecord::command_line(arglex_tool *cmdln)
+srecord::input_file_motorola::command_line(arglex_tool *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_number)
     {
@@ -98,7 +98,7 @@ srecord::input_file_srecord::command_line(arglex_tool *cmdln)
 
 
 int
-srecord::input_file_srecord::read_inner(record &result)
+srecord::input_file_motorola::read_inner(record &result)
 {
     for (;;)
     {
@@ -233,7 +233,7 @@ srecord::input_file_srecord::read_inner(record &result)
 
 
 bool
-srecord::input_file_srecord::read(record &record)
+srecord::input_file_motorola::read(record &record)
 {
     for (;;)
     {
@@ -334,7 +334,7 @@ srecord::input_file_srecord::read(record &record)
 
 
 const char *
-srecord::input_file_srecord::get_file_format_name()
+srecord::input_file_motorola::get_file_format_name()
     const
 {
     return "Motorola S-Record";

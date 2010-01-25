@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SRECORD_OUTPUT_FILE_SRECORD_H
-#define SRECORD_OUTPUT_FILE_SRECORD_H
+#ifndef SRECORD_OUTPUT_FILE_MOTOROLA_H
+#define SRECORD_OUTPUT_FILE_MOTOROLA_H
 
 #include <srecord/output/file.h>
 
@@ -26,17 +26,17 @@ namespace srecord
 {
 
 /**
-  * The srecord::output_file_srecord class is used to represent an output
+  * The srecord::output_file_motorola class is used to represent an output
   * file which emits Motorola S-Record format.
   */
-class output_file_srecord:
+class output_file_motorola:
     public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~output_file_srecord();
+    virtual ~output_file_motorola();
 
 private:
     /**
@@ -46,7 +46,7 @@ private:
       *     The file name to open to write data to.  The name "-" is
       *     understood to mean the standard output.
       */
-    output_file_srecord(const std::string &file_name);
+    output_file_motorola(const std::string &file_name);
 
 public:
     /**
@@ -147,14 +147,14 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_srecord(const output_file_srecord &);
+    output_file_motorola(const output_file_motorola &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_srecord &operator=(const output_file_srecord &);
+    output_file_motorola &operator=(const output_file_motorola &);
 };
 
 };
 
-#endif // SRECORD_OUTPUT_FILE_SRECORD_H
+#endif // SRECORD_OUTPUT_FILE_MOTOROLA_H

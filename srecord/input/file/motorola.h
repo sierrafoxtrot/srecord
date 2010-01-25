@@ -17,25 +17,25 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_INPUT_FILE_SRECORD_H
-#define LIB_INPUT_FILE_SRECORD_H
+#ifndef LIB_INPUT_FILE_MOTOROLA_H
+#define LIB_INPUT_FILE_MOTOROLA_H
 
 #include <srecord/input/file.h>
 
 namespace srecord {
 
 /**
-  * The srecord::input_file_srecord class is used to represent the parse
+  * The srecord::input_file_motorola class is used to represent the parse
   * state of a Motorola S-Record formatted input file.
   */
-class input_file_srecord:
+class input_file_motorola:
     public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~input_file_srecord();
+    virtual ~input_file_motorola();
 
 private:
     /**
@@ -44,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    input_file_srecord(const std::string &file_name);
+    input_file_motorola(const std::string &file_name);
 
 public:
     /**
@@ -122,19 +122,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_srecord();
+    input_file_motorola();
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_srecord(const input_file_srecord &);
+    input_file_motorola(const input_file_motorola &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_srecord &operator=(const input_file_srecord &);
+    input_file_motorola &operator=(const input_file_motorola &);
 };
 
 };
 
-#endif // LIB_INPUT_FILE_SRECORD_H
+#endif // LIB_INPUT_FILE_MOTOROLA_H

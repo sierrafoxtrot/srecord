@@ -20,18 +20,18 @@
 #include <cstring>
 
 #include <srecord/arglex/tool.h>
-#include <srecord/output/file/srecord.h>
+#include <srecord/output/file/motorola.h>
 #include <srecord/record.h>
 
 
-srecord::output_file_srecord::~output_file_srecord()
+srecord::output_file_motorola::~output_file_motorola()
 {
     write_data_count();
     // check for termination record
 }
 
 
-srecord::output_file_srecord::output_file_srecord(
+srecord::output_file_motorola::output_file_motorola(
         const std::string &a_file_name) :
     srecord::output_file(a_file_name),
     data_count(0),
@@ -44,14 +44,14 @@ srecord::output_file_srecord::output_file_srecord(
 
 
 srecord::output::pointer
-srecord::output_file_srecord::create(const std::string &a_file_name)
+srecord::output_file_motorola::create(const std::string &a_file_name)
 {
-    return pointer(new srecord::output_file_srecord(a_file_name));
+    return pointer(new srecord::output_file_motorola(a_file_name));
 }
 
 
 void
-srecord::output_file_srecord::command_line(srecord::arglex_tool *cmdln)
+srecord::output_file_motorola::command_line(srecord::arglex_tool *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_number)
     {
@@ -95,7 +95,7 @@ srecord::output_file_srecord::command_line(srecord::arglex_tool *cmdln)
 
 
 void
-srecord::output_file_srecord::write_inner(int tag, unsigned long address,
+srecord::output_file_motorola::write_inner(int tag, unsigned long address,
     int address_nbytes, const void *data, int data_nbytes)
 {
     //
@@ -135,7 +135,7 @@ srecord::output_file_srecord::write_inner(int tag, unsigned long address,
 
 
 void
-srecord::output_file_srecord::write_data_count()
+srecord::output_file_motorola::write_data_count()
 {
     if (data_count_written)
         return;
@@ -159,7 +159,7 @@ srecord::output_file_srecord::write_data_count()
 
 
 void
-srecord::output_file_srecord::write(const srecord::record &record)
+srecord::output_file_motorola::write(const srecord::record &record)
 {
     //
     // Make sure the address is nicely aligned.
@@ -250,7 +250,7 @@ srecord::output_file_srecord::write(const srecord::record &record)
 
 
 void
-srecord::output_file_srecord::line_length_set(int linlen)
+srecord::output_file_motorola::line_length_set(int linlen)
 {
     //
     // Given the number of characters, figure the maximum number of
@@ -285,7 +285,7 @@ srecord::output_file_srecord::line_length_set(int linlen)
 
 
 void
-srecord::output_file_srecord::address_length_set(int n)
+srecord::output_file_motorola::address_length_set(int n)
 {
     if (n < 2)
         n = 2;
@@ -296,7 +296,7 @@ srecord::output_file_srecord::address_length_set(int n)
 
 
 int
-srecord::output_file_srecord::preferred_block_size_get()
+srecord::output_file_motorola::preferred_block_size_get()
     const
 {
     return pref_block_size;
@@ -304,7 +304,7 @@ srecord::output_file_srecord::preferred_block_size_get()
 
 
 const char *
-srecord::output_file_srecord::format_name()
+srecord::output_file_motorola::format_name()
     const
 {
     return "Motorola S-Record";
