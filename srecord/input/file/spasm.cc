@@ -22,36 +22,37 @@
 #include <srecord/record.h>
 
 
-srec_input_file_spasm::~srec_input_file_spasm()
+srecord::input_file_spasm::~input_file_spasm()
 {
 }
 
 
-srec_input_file_spasm::srec_input_file_spasm(const std::string &a_file_name,
+srecord::input_file_spasm::input_file_spasm(const std::string &a_file_name,
         endian_t a_end) :
-    srec_input_file(a_file_name),
+    input_file(a_file_name),
     seen_some_input(false),
     end(a_end)
 {
 }
 
 
-srec_input::pointer
-srec_input_file_spasm::create_be(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_spasm::create_be(const std::string &a_file_name)
 {
     return create(a_file_name, endian_big);
 }
 
 
-srec_input::pointer
-srec_input_file_spasm::create(const std::string &a_file_name, endian_t a_end)
+srecord::input::pointer
+srecord::input_file_spasm::create(const std::string &a_file_name,
+    endian_t a_end)
 {
-    return pointer(new srec_input_file_spasm(a_file_name, a_end));
+    return pointer(new input_file_spasm(a_file_name, a_end));
 }
 
 
 int
-srec_input_file_spasm::read_inner(srec_record &record)
+srecord::input_file_spasm::read_inner(record &result)
 {
     if (peek_char() < 0)
         return 0;
@@ -73,10 +74,10 @@ srec_input_file_spasm::read_inner(srec_record &record)
     if (get_char() != '\n')
         fatal_error("end of line expected");
 
-    record =
-        srec_record
+    result =
+        record
         (
-            srec_record::type_data,
+            record::type_data,
             address * 2,                        // is this right??
             data,
             2
@@ -86,9 +87,9 @@ srec_input_file_spasm::read_inner(srec_record &record)
 
 
 bool
-srec_input_file_spasm::read(srec_record &record)
+srecord::input_file_spasm::read(record &result)
 {
-    if (!read_inner(record))
+    if (!read_inner(result))
     {
         if (!seen_some_input)
             fatal_error("file contains no data");
@@ -100,7 +101,7 @@ srec_input_file_spasm::read(srec_record &record)
 
 
 const char *
-srec_input_file_spasm::get_file_format_name()
+srecord::input_file_spasm::get_file_format_name()
     const
 {
     return

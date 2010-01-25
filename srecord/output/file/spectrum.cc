@@ -21,36 +21,36 @@
 #include <srecord/record.h>
 
 
-srec_output_file_spectrum::~srec_output_file_spectrum()
+srecord::output_file_spectrum::~output_file_spectrum()
 {
     if (enable_footer_flag)
         put_char(3);
 }
 
 
-srec_output_file_spectrum::srec_output_file_spectrum(
+srecord::output_file_spectrum::output_file_spectrum(
         const std::string &a_filename) :
-    srec_output_file(a_filename)
+    srecord::output_file(a_filename)
 {
 }
 
 
-srec_output::pointer
-srec_output_file_spectrum::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_spectrum::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_spectrum(a_file_name));
+    return pointer(new srecord::output_file_spectrum(a_file_name));
 }
 
 
 void
-srec_output_file_spectrum::put_decimal(unsigned long n)
+srecord::output_file_spectrum::put_decimal(unsigned long n)
 {
     put_stringf("%4.4lu", n);
 }
 
 
 void
-srec_output_file_spectrum::put_binary(unsigned char n)
+srecord::output_file_spectrum::put_binary(unsigned char n)
 {
     for (unsigned char bit = 0x80; bit; bit >>= 1)
     {
@@ -60,16 +60,16 @@ srec_output_file_spectrum::put_binary(unsigned char n)
 
 
 void
-srec_output_file_spectrum::write(const srec_record &record)
+srecord::output_file_spectrum::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         if (enable_header_flag)
             put_char(2);
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         {
             unsigned long address = record.get_address();
             int length = record.get_length();
@@ -83,9 +83,9 @@ srec_output_file_spectrum::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_execution_start_address:
-    case srec_record::type_unknown:
-    case srec_record::type_data_count:
+    case srecord::record::type_execution_start_address:
+    case srecord::record::type_unknown:
+    case srecord::record::type_data_count:
         // ignore
         break;
     }
@@ -93,29 +93,29 @@ srec_output_file_spectrum::write(const srec_record &record)
 
 
 void
-srec_output_file_spectrum::line_length_set(int)
+srecord::output_file_spectrum::line_length_set(int)
 {
     // ignore
 }
 
 
 void
-srec_output_file_spectrum::address_length_set(int)
+srecord::output_file_spectrum::address_length_set(int)
 {
     // ignore
 }
 
 
 int
-srec_output_file_spectrum::preferred_block_size_get()
+srecord::output_file_spectrum::preferred_block_size_get()
     const
 {
-    return srec_record::max_data_length;
+    return srecord::record::max_data_length;
 }
 
 
 const char *
-srec_output_file_spectrum::format_name()
+srecord::output_file_spectrum::format_name()
     const
 {
     return "Spectrum";

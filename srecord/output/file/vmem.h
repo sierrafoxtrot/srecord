@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_vmem class is used to write a file in
+  * The srecord::output_file_vmem class is used to write a file in
   * Verilog VMEM format, to be loaded using the $readmemh() call.
   */
-class srec_output_file_vmem:
-    public srec_output_file
+class output_file_vmem:
+    public output_file
 {
 public:
     /**
       * The destrutcor.
       */
-    virtual ~srec_output_file_vmem();
+    virtual ~output_file_vmem();
 
 private:
     /**
@@ -44,7 +47,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    srec_output_file_vmem(const std::string &file_name);
+    output_file_vmem(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -70,7 +73,7 @@ protected:
     int preferred_block_size_get() const;
 
     // See base class for documentation.
-    void command_line(srec_arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln);
 
     // See base class for documentation.
     const char *format_name() const;
@@ -119,17 +122,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_vmem();
+    output_file_vmem();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_vmem(const srec_output_file_vmem &);
+    output_file_vmem(const output_file_vmem &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_vmem &operator=(const srec_output_file_vmem &);
+    output_file_vmem &operator=(const output_file_vmem &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_VMEM_H

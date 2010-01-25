@@ -21,18 +21,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_mif class is used to represent the parse state
+  * The srecord::input_file_mif class is used to represent the parse state
   * when reading a Memory Initialization File (MIF) formatted file.
   */
-class srec_input_file_mif:
-    public srec_input_file
+class input_file_mif:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_mif();
+    virtual ~input_file_mif();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_mif(const std::string &file_name);
+    input_file_mif(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -173,17 +175,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_mif();
+    input_file_mif();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_mif(const srec_input_file_mif &);
+    input_file_mif(const input_file_mif &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_mif &operator=(const srec_input_file_mif &);
+    input_file_mif &operator=(const input_file_mif &);
+};
+
 };
 
 // vim: set ts=8 sw=4 et

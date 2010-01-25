@@ -23,7 +23,7 @@
 
 
 interval
-srec_arglex_tool::get_interval_small(const char *caption)
+srecord::arglex_tool::get_interval_small(const char *caption)
 {
     interval result = get_interval(caption);
     bool big_range_ok = false;

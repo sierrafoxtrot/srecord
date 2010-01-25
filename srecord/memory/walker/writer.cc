@@ -22,34 +22,34 @@
 #include <srecord/output.h>
 
 
-srec_memory_walker_writer::~srec_memory_walker_writer()
+srecord::memory_walker_writer::~memory_walker_writer()
 {
 }
 
 
-srec_memory_walker_writer::srec_memory_walker_writer(
-        const srec_output::pointer &arg) :
+srecord::memory_walker_writer::memory_walker_writer(
+        const srecord::output::pointer &arg) :
     op(arg)
 {
 }
 
 
-srec_memory_walker::pointer
-srec_memory_walker_writer::create(const srec_output::pointer &arg)
+srecord::memory_walker::pointer
+srecord::memory_walker_writer::create(const srecord::output::pointer &arg)
 {
-    return pointer(new srec_memory_walker_writer(arg));
+    return pointer(new srecord::memory_walker_writer(arg));
 }
 
 
 void
-srec_memory_walker_writer::notify_upper_bound(unsigned long address)
+srecord::memory_walker_writer::notify_upper_bound(unsigned long address)
 {
     op->notify_upper_bound(address);
 }
 
 
 void
-srec_memory_walker_writer::observe(unsigned long address, const void *data,
+srecord::memory_walker_writer::observe(unsigned long address, const void *data,
     int length)
 {
     op->write_data(address, data, length);
@@ -57,14 +57,14 @@ srec_memory_walker_writer::observe(unsigned long address, const void *data,
 
 
 void
-srec_memory_walker_writer::observe_header(const srec_record *rp)
+srecord::memory_walker_writer::observe_header(const srecord::record *rp)
 {
     op->write_header(rp);
 }
 
 
 void
-srec_memory_walker_writer::observe_start_address(const srec_record *rp)
+srecord::memory_walker_writer::observe_start_address(const srecord::record *rp)
 {
     op->write_execution_start_address(rp);
 }

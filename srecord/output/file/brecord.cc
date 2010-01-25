@@ -21,15 +21,15 @@
 #include <srecord/record.h>
 
 
-srec_output_file_brecord::~srec_output_file_brecord()
+srecord::output_file_brecord::~output_file_brecord()
 {
     flush();
 }
 
 
-srec_output_file_brecord::srec_output_file_brecord(
+srecord::output_file_brecord::output_file_brecord(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     buffer_address(0),
     buffer_length(0),
     buffer_maximum(BUFFER_MAXIMUM_MAXIMUM)
@@ -37,19 +37,19 @@ srec_output_file_brecord::srec_output_file_brecord(
 }
 
 
-srec_output::pointer
-srec_output_file_brecord::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_brecord::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_brecord(a_file_name));
+    return pointer(new srecord::output_file_brecord(a_file_name));
 }
 
 
 void
-srec_output_file_brecord::write(const srec_record &record)
+srecord::output_file_brecord::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         flush();
         put_4bytes(record.get_address());
         put_byte(0);
@@ -60,7 +60,7 @@ srec_output_file_brecord::write(const srec_record &record)
         // This format can't do any other record types
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         for (size_t j = 0; j < record.get_length(); ++j)
             buffer_stash(record.get_address() + j, record.get_data(j));
         break;
@@ -69,7 +69,8 @@ srec_output_file_brecord::write(const srec_record &record)
 
 
 void
-srec_output_file_brecord::buffer_stash(unsigned long addr, unsigned char data)
+srecord::output_file_brecord::buffer_stash(unsigned long addr,
+    unsigned char data)
 {
     if (buffer_length > 0 && addr != buffer_address + buffer_length)
         flush();
@@ -82,7 +83,7 @@ srec_output_file_brecord::buffer_stash(unsigned long addr, unsigned char data)
 
 
 void
-srec_output_file_brecord::flush()
+srecord::output_file_brecord::flush()
 {
     if (buffer_length > 0)
     {
@@ -100,7 +101,7 @@ srec_output_file_brecord::flush()
 
 
 void
-srec_output_file_brecord::line_length_set(int w)
+srecord::output_file_brecord::line_length_set(int w)
 {
     int x = (w - 10) / 2;
     if (x < 2)
@@ -112,7 +113,7 @@ srec_output_file_brecord::line_length_set(int w)
 
 
 void
-srec_output_file_brecord::address_length_set(int)
+srecord::output_file_brecord::address_length_set(int)
 {
     //
     // Irrelevant.  Ignore.
@@ -121,7 +122,7 @@ srec_output_file_brecord::address_length_set(int)
 
 
 int
-srec_output_file_brecord::preferred_block_size_get()
+srecord::output_file_brecord::preferred_block_size_get()
     const
 {
     return BUFFER_MAXIMUM_MAXIMUM;
@@ -129,7 +130,7 @@ srec_output_file_brecord::preferred_block_size_get()
 
 
 const char *
-srec_output_file_brecord::format_name()
+srecord::output_file_brecord::format_name()
     const
 {
     return "B-Record";

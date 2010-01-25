@@ -20,12 +20,12 @@
 #include <srecord/record.h>
 
 
-srec_input_catenate::~srec_input_catenate()
+srecord::input_catenate::~input_catenate()
 {
 }
 
 
-srec_input_catenate::srec_input_catenate(const pointer &a1, const pointer &a2) :
+srecord::input_catenate::input_catenate(const pointer &a1, const pointer &a2) :
     in1(a1),
     in2(a2)
 {
@@ -34,15 +34,15 @@ srec_input_catenate::srec_input_catenate(const pointer &a1, const pointer &a2) :
 }
 
 
-srec_input::pointer
-srec_input_catenate::create(const pointer &a1, const pointer &a2)
+srecord::input::pointer
+srecord::input_catenate::create(const pointer &a1, const pointer &a2)
 {
-    return pointer(new srec_input_catenate(a1, a2));
+    return pointer(new srecord::input_catenate(a1, a2));
 }
 
 
 bool
-srec_input_catenate::read(srec_record &record)
+srecord::input_catenate::read(srecord::record &record)
 {
     while (in1)
     {
@@ -54,8 +54,8 @@ srec_input_catenate::read(srec_record &record)
         }
         switch (record.get_type())
         {
-        case srec_record::type_unknown:
-        case srec_record::type_data_count:
+        case srecord::record::type_unknown:
+        case srecord::record::type_data_count:
             break;
 
         default:
@@ -69,8 +69,8 @@ srec_input_catenate::read(srec_record &record)
             return false;
         switch (record.get_type())
         {
-        case srec_record::type_unknown:
-        case srec_record::type_data_count:
+        case srecord::record::type_unknown:
+        case srecord::record::type_data_count:
             break;
 
         default:
@@ -81,7 +81,7 @@ srec_input_catenate::read(srec_record &record)
 
 
 std::string
-srec_input_catenate::filename()
+srecord::input_catenate::filename()
     const
 {
     return (in1 ? in1 : in2)->filename();
@@ -89,7 +89,7 @@ srec_input_catenate::filename()
 
 
 std::string
-srec_input_catenate::filename_and_line()
+srecord::input_catenate::filename_and_line()
     const
 {
     return (in1 ? in1 : in2)->filename_and_line();
@@ -97,7 +97,7 @@ srec_input_catenate::filename_and_line()
 
 
 const char *
-srec_input_catenate::get_file_format_name()
+srecord::input_catenate::get_file_format_name()
     const
 {
     return (in1 ? in1 : in2)->get_file_format_name();
@@ -105,7 +105,7 @@ srec_input_catenate::get_file_format_name()
 
 
 void
-srec_input_catenate::disable_checksum_validation()
+srecord::input_catenate::disable_checksum_validation()
 {
     if (in1)
         in1->disable_checksum_validation();

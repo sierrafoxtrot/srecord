@@ -21,28 +21,28 @@
 #include <srecord/record.h>
 
 
-srec_input_file_brecord::~srec_input_file_brecord()
+srecord::input_file_brecord::~input_file_brecord()
 {
 }
 
 
-srec_input_file_brecord::srec_input_file_brecord(
+srecord::input_file_brecord::input_file_brecord(
         const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+    input_file(a_file_name),
     seen_some_input(false)
 {
 }
 
 
-srec_input::pointer
-srec_input_file_brecord::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_brecord::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_brecord(a_file_name));
+    return pointer(new input_file_brecord(a_file_name));
 }
 
 
 int
-srec_input_file_brecord::read_inner(srec_record &record)
+srecord::input_file_brecord::read_inner(record &result)
 {
     if (peek_char() < 0)
         return 0;
@@ -60,27 +60,20 @@ srec_input_file_brecord::read_inner(srec_record &record)
 
     if (length == 0)
     {
-        record =
-            srec_record
-            (
-                srec_record::type_execution_start_address,
-                address,
-                0,
-                0
-            );
+        result = record(record::type_execution_start_address, address, 0, 0);
     }
     else
     {
-        record = srec_record(srec_record::type_data, address, data, length);
+        result = record(record::type_data, address, data, length);
     }
     return 1;
 }
 
 
 bool
-srec_input_file_brecord::read(srec_record &record)
+srecord::input_file_brecord::read(record &result)
 {
-    if (!read_inner(record))
+    if (!read_inner(result))
     {
         if (!seen_some_input)
             fatal_error("file contains no data");
@@ -92,7 +85,7 @@ srec_input_file_brecord::read(srec_record &record)
 
 
 const char *
-srec_input_file_brecord::get_file_format_name()
+srecord::input_file_brecord::get_file_format_name()
     const
 {
     return "Motorola MC68EZ328 bootstrap b-record";

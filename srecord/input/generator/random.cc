@@ -21,34 +21,34 @@
 #include <srecord/input/generator/random.h>
 
 
-srec_input_generator_random::~srec_input_generator_random()
+srecord::input_generator_random::~input_generator_random()
 {
 }
 
 
-srec_input_generator_random::srec_input_generator_random(
+srecord::input_generator_random::input_generator_random(
         const interval &a_range) :
-    srec_input_generator(a_range)
+    srecord::input_generator(a_range)
 {
 }
 
 
-srec_input::pointer
-srec_input_generator_random::create(const interval &a_range)
+srecord::input::pointer
+srecord::input_generator_random::create(const interval &a_range)
 {
-    return pointer(new srec_input_generator_random(a_range));
+    return pointer(new srecord::input_generator_random(a_range));
 }
 
 
 unsigned char
-srec_input_generator_random::generate_data(unsigned long)
+srecord::input_generator_random::generate_data(unsigned long)
 {
     return r250();
 }
 
 
 std::string
-srec_input_generator_random::filename()
+srecord::input_generator_random::filename()
     const
 {
     return "random";
@@ -56,7 +56,7 @@ srec_input_generator_random::filename()
 
 
 const char *
-srec_input_generator_random::get_file_format_name()
+srecord::input_generator_random::get_file_format_name()
     const
 {
     return "random";

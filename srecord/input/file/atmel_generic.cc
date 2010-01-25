@@ -23,37 +23,37 @@
 #include <srecord/record.h>
 
 
-srec_input_file_atmel_generic::~srec_input_file_atmel_generic()
+srecord::input_file_atmel_generic::~input_file_atmel_generic()
 {
 }
 
 
-srec_input_file_atmel_generic::srec_input_file_atmel_generic(
+srecord::input_file_atmel_generic::input_file_atmel_generic(
         const std::string &a_file_name, endian_t a_end) :
-    srec_input_file(a_file_name),
+    srecord::input_file(a_file_name),
     seen_some_input(false),
     end(a_end)
 {
 }
 
 
-srec_input::pointer
-srec_input_file_atmel_generic::create_be(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_atmel_generic::create_be(const std::string &a_file_name)
 {
     return create(a_file_name, endian_big);
 }
 
 
-srec_input::pointer
-srec_input_file_atmel_generic::create(const std::string &a_file_name,
+srecord::input::pointer
+srecord::input_file_atmel_generic::create(const std::string &a_file_name,
     endian_t a_end)
 {
-    return pointer(new srec_input_file_atmel_generic(a_file_name, a_end));
+    return pointer(new srecord::input_file_atmel_generic(a_file_name, a_end));
 }
 
 
 int
-srec_input_file_atmel_generic::read_inner(srec_record &record)
+srecord::input_file_atmel_generic::read_inner(srecord::record &record)
 {
     if (peek_char() < 0)
         return 0;
@@ -75,13 +75,13 @@ srec_input_file_atmel_generic::read_inner(srec_record &record)
     if (get_char() != '\n')
         fatal_error("end of line expected");
 
-    record = srec_record(srec_record::type_data, address * 2, data, 2);
+    record = srecord::record(srecord::record::type_data, address * 2, data, 2);
     return 1;
 }
 
 
 bool
-srec_input_file_atmel_generic::read(srec_record &record)
+srecord::input_file_atmel_generic::read(srecord::record &record)
 {
     if (!read_inner(record))
     {
@@ -95,7 +95,7 @@ srec_input_file_atmel_generic::read(srec_record &record)
 
 
 const char *
-srec_input_file_atmel_generic::get_file_format_name()
+srecord::input_file_atmel_generic::get_file_format_name()
     const
 {
     return

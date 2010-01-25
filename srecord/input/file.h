@@ -24,19 +24,21 @@
 
 #include <srecord/input.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file class is used to represent an generic input
+  * The srecord::input_file class is used to represent an generic input
   * file. It provides many helper methods common to most file input
   * classes.
   */
-class srec_input_file:
-    public srec_input
+class input_file:
+    public input
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file();
+    virtual ~input_file();
 
     /**
       * The guess class method is used to open a file of an unknown
@@ -74,7 +76,7 @@ protected:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file(const std::string &file_name);
+    input_file(const std::string &file_name);
 
     /**
       * The get_char method is used to fetch a character from
@@ -299,17 +301,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file();
+    input_file();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file(const srec_input_file &);
+    input_file(const input_file &);
 
     /**
       * the assignment operator.  Do not use.
       */
-    srec_input_file &operator=(const srec_input_file &);
+    input_file &operator=(const input_file &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_H

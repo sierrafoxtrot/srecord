@@ -21,15 +21,15 @@
 #include <srecord/record.h>
 
 
-srec_input_file_intel16::~srec_input_file_intel16()
+srecord::input_file_intel16::~input_file_intel16()
 {
     delete pushback;
 }
 
 
-srec_input_file_intel16::srec_input_file_intel16(
+srecord::input_file_intel16::input_file_intel16(
         const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+    srecord::input_file(a_file_name),
     data_record_count(0),
     garbage_warning(false),
     seen_some_input(false),
@@ -42,19 +42,19 @@ srec_input_file_intel16::srec_input_file_intel16(
 }
 
 
-srec_input::pointer
-srec_input_file_intel16::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_intel16::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_intel16(a_file_name));
+    return pointer(new srecord::input_file_intel16(a_file_name));
 }
 
 
 int
-srec_input_file_intel16::read_inner(srec_record &record)
+srecord::input_file_intel16::read_inner(record &result)
 {
     if (pushback)
     {
-        record = *pushback;
+        result = *pushback;
         delete pushback;
         pushback = 0;
         return 1;
@@ -128,10 +128,10 @@ srec_input_file_intel16::read_inner(srec_record &record)
         if (get_char() != '\n')
             fatal_error("end-of-line expected");
 
-        srec_record::address_t address_field =
-             2 * srec_record::decode_big_endian(buffer + 1, 2);
+        record::address_t address_field =
+             2 * record::decode_big_endian(buffer + 1, 2);
 
-        srec_record::type_t type = srec_record::type_unknown;
+        record::type_t type = record::type_unknown;
         switch (buffer[3])
         {
         case 0:
@@ -161,9 +161,9 @@ srec_input_file_intel16::read_inner(srec_record &record)
                     int split =
                         ((long long)1 << 32) - address_base - address_field;
                     pushback =
-                        new srec_record
+                        new record
                         (
-                            srec_record::type_data,
+                            record::type_data,
                             0L,
                             buffer + 4 + split,
                             nbytes - split
@@ -181,9 +181,9 @@ srec_input_file_intel16::read_inner(srec_record &record)
                 {
                     int split = (1L << 16) - address_field;
                     pushback =
-                        new srec_record
+                        new record
                         (
-                            srec_record::type_data,
+                            record::type_data,
                             address_base + ((address_field + split) & 0xFFFF),
                             buffer + 4 + split,
                             nbytes - split
@@ -191,7 +191,7 @@ srec_input_file_intel16::read_inner(srec_record &record)
                     nbytes = split;
                 }
             }
-            type = srec_record::type_data;
+            type = record::type_data;
             break;
 
         case 1:
@@ -220,7 +220,7 @@ srec_input_file_intel16::read_inner(srec_record &record)
                 fatal_error("length field must be 1");
             if (address_field != 0)
                 fatal_error("address field must be zero");
-            address_base = srec_record::decode_big_endian(buffer + 4, 2) << 5;
+            address_base = record::decode_big_endian(buffer + 4, 2) << 5;
             mode = segmented;
             continue;
 
@@ -233,12 +233,12 @@ srec_input_file_intel16::read_inner(srec_record &record)
             if (address_field != 0)
                 fatal_error("address field must be zero");
             address_field =
-                srec_record::decode_big_endian(buffer + 4, 2) * 16 +
-                srec_record::decode_big_endian(buffer + 6, 2);
-            record =
-                srec_record
+                record::decode_big_endian(buffer + 4, 2) * 16 +
+                record::decode_big_endian(buffer + 6, 2);
+            result =
+                record
                 (
-                    srec_record::type_execution_start_address,
+                    record::type_execution_start_address,
                     address_field << 1,
                     0,
                     0
@@ -259,7 +259,7 @@ srec_input_file_intel16::read_inner(srec_record &record)
                 fatal_error("length field must be 1");
             if (address_field != 0)
                 fatal_error("address field must be zero");
-            address_base = srec_record::decode_big_endian(buffer + 4, 2) << 17;
+            address_base = record::decode_big_endian(buffer + 4, 2) << 17;
             mode = linear;
             continue;
 
@@ -271,11 +271,11 @@ srec_input_file_intel16::read_inner(srec_record &record)
                 fatal_error("length field must be 2");
             if (address_field != 0)
                 fatal_error("address field must be zero");
-            address_field = srec_record::decode_big_endian(buffer + 4, 4);
-            record =
-                srec_record
+            address_field = record::decode_big_endian(buffer + 4, 4);
+            result =
+                record
                 (
-                    srec_record::type_execution_start_address,
+                    record::type_execution_start_address,
                     address_field << 1,
                     0,
                     0
@@ -286,8 +286,8 @@ srec_input_file_intel16::read_inner(srec_record &record)
         //
         // data record or unknown
         //
-        record =
-            srec_record
+        result =
+            record
             (
                 type,
                 address_base + address_field,
@@ -300,11 +300,11 @@ srec_input_file_intel16::read_inner(srec_record &record)
 
 
 bool
-srec_input_file_intel16::read(srec_record &record)
+srecord::input_file_intel16::read(record &result)
 {
     for (;;)
     {
-        if (!read_inner(record))
+        if (!read_inner(result))
         {
             if (!seen_some_input && garbage_warning)
                 fatal_error("file contains no data");
@@ -318,9 +318,9 @@ srec_input_file_intel16::read(srec_record &record)
             return false;
         }
         seen_some_input = true;
-        switch (record.get_type())
+        switch (result.get_type())
         {
-        case srec_record::type_unknown:
+        case record::type_unknown:
             fatal_error("record type not recognised");
             break;
 
@@ -328,16 +328,16 @@ srec_input_file_intel16::read(srec_record &record)
             // impossible
             continue;
 
-        case srec_record::type_data:
+        case record::type_data:
             ++data_record_count;
-            if (record.get_length() == 0)
+            if (result.get_length() == 0)
             {
                 warning("empty data record ignored");
                 continue;
             }
             break;
 
-        case srec_record::type_execution_start_address:
+        case record::type_execution_start_address:
             if (termination_seen)
                 warning("redundant execution start address record");
             termination_seen = true;
@@ -350,7 +350,7 @@ srec_input_file_intel16::read(srec_record &record)
 
 
 const char *
-srec_input_file_intel16::get_file_format_name()
+srecord::input_file_intel16::get_file_format_name()
     const
 {
     return "Intel Hexadecimal 16 (INHX16)";

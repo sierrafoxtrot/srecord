@@ -23,24 +23,27 @@
 #include <srecord/input/filter.h>
 #include <srecord/record.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_filter_unsplit class is used to represent a filter
+  * The srecord::input_filter_unsplit class is used to represent a filter
   * whoch explosed the deeper input source.  This is the inverse of the
-  * srec_input_filter_split class.  This can be used to takes the images
+  * srecord::input_filter_split class.  This can be used to takes the images
   * of thwo parallel EPROM images and create a unified image when they
   * are interleaved rather than consecutive.
   *
   * @see_also
-  *    srec_input_filter_split
+  *    srecord::input_filter_split
   */
-class srec_input_filter_unsplit:
-    public srec_input_filter
+class input_filter_unsplit:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_unsplit();
+    virtual ~input_filter_unsplit();
 
 private:
     /**
@@ -55,8 +58,8 @@ private:
       * @param width
       *     The width of each stripe within the swathe.
       */
-    srec_input_filter_unsplit(const srec_input::pointer &deeper, int modulus,
-        int offset, int width);
+    input_filter_unsplit(const input::pointer &deeper, int modulus, int offset,
+        int width);
 
 public:
     /**
@@ -72,38 +75,38 @@ public:
       * @param width
       *     The width of each stripe within the swathe.
       */
-    static pointer create(const srec_input::pointer &deeper, int modulus,
-        int offset, int width);
+    static pointer create(const input::pointer &deeper, int modulus, int offset,
+        int width);
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
 private:
     /**
       * The modulus instance variable is used to remember the number of
       * bytes wide each swathe is.
       */
-    srec_record::address_t modulus;
+    record::address_t modulus;
 
     /**
       * The offset instance variable is used to remember the offset
       * within the swathe.
       */
-    srec_record::address_t offset;
+    record::address_t offset;
 
     /**
       * The width instance variable is used to remember the width of
       * each stripe within the swathe.
       */
-    srec_record::address_t width;
+    record::address_t width;
 
     /**
       * The buffer instance variable is used to remember the last lot
       * of data read from the deeper inputs source, and currently being
       * processed.
       */
-    srec_record buffer;
+    record buffer;
 
     /**
       * The buffer_pos instance variable is used to remember where we
@@ -114,17 +117,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_unsplit();
+    input_filter_unsplit();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_unsplit(const srec_input_filter_unsplit &);
+    input_filter_unsplit(const input_filter_unsplit &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_unsplit &operator=(const srec_input_filter_unsplit &);
+    input_filter_unsplit &operator=(const input_filter_unsplit &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_UNSPLIT_H

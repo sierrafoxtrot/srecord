@@ -22,18 +22,21 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_file_intel16 class is used to represent the parse state
+  * The srecord::input_file_intel16 class is used to represent the parse state
   * of an INHX16 formatted file.
   */
-class srec_input_file_intel16:
-    public srec_input_file
+class input_file_intel16:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_intel16();
+    virtual ~input_file_intel16();
 
 private:
     /**
@@ -42,7 +45,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_intel16(const std::string &file_name);
+    input_file_intel16(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -68,7 +71,7 @@ private:
       * Read one record from the file.  The read method is a wrapper
       * around this method.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The data_record_count instance variable is used to remember the
@@ -111,7 +114,7 @@ private:
       * The pushback instance variable is used to remember the previous
       * record in the file.  This is needed in some instances, but not always.
       */
-    srec_record *pushback;
+    record *pushback;
 
     /**
       * The end_seen instance variable is used to remember whether or
@@ -122,17 +125,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_intel16();
+    input_file_intel16();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_intel16(const srec_input_file_intel16 &);
+    input_file_intel16(const input_file_intel16 &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_intel16 &operator=(const srec_input_file_intel16 &);
+    input_file_intel16 &operator=(const input_file_intel16 &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_INTEL16_H

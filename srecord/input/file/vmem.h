@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_vmem class is used to repesent the parse
+  * The srecord::input_file_vmem class is used to repesent the parse
   * state when reading a Verilog VMEM format input file.
   */
-class srec_input_file_vmem:
-    public srec_input_file
+class input_file_vmem:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_vmem();
+    virtual ~input_file_vmem();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_vmem(const std::string &file_name);
+    input_file_vmem(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -79,17 +81,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_vmem();
+    input_file_vmem();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_vmem(const srec_input_file_vmem &);
+    input_file_vmem(const input_file_vmem &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_vmem &operator=(const srec_input_file_vmem &);
+    input_file_vmem &operator=(const input_file_vmem &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_VMEM_H

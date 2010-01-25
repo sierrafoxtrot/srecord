@@ -21,7 +21,7 @@
 #include <srecord/record.h>
 
 
-srec_output_file_formatted_binary::~srec_output_file_formatted_binary()
+srecord::output_file_formatted_binary::~output_file_formatted_binary()
 {
     // assert(address == upper_bound);
     if (address != upper_bound)
@@ -34,9 +34,9 @@ srec_output_file_formatted_binary::~srec_output_file_formatted_binary()
 }
 
 
-srec_output_file_formatted_binary::srec_output_file_formatted_binary(
+srecord::output_file_formatted_binary::output_file_formatted_binary(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     upper_bound(0),
     address(0),
     check_sum(0)
@@ -46,15 +46,15 @@ srec_output_file_formatted_binary::srec_output_file_formatted_binary(
 }
 
 
-srec_output::pointer
-srec_output_file_formatted_binary::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_formatted_binary::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_formatted_binary(a_file_name));
+    return pointer(new srecord::output_file_formatted_binary(a_file_name));
 }
 
 
 void
-srec_output_file_formatted_binary::notify_upper_bound(unsigned long arg)
+srecord::output_file_formatted_binary::notify_upper_bound(unsigned long arg)
 {
     upper_bound = arg;
     if (upper_bound == 0)
@@ -63,14 +63,14 @@ srec_output_file_formatted_binary::notify_upper_bound(unsigned long arg)
 
 
 void
-srec_output_file_formatted_binary::write(const srec_record &record)
+srecord::output_file_formatted_binary::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // assert(upper bound != 0);
         if (upper_bound == 0)
-            fatal_error("must call srec_output::notify_upper_bound first");
+            fatal_error("must call srecord::output::notify_upper_bound first");
         if (upper_bound < (1uL << 16))
         {
             put_char(0x08); //     *
@@ -104,7 +104,7 @@ srec_output_file_formatted_binary::write(const srec_record &record)
         put_char(0xFF);
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         {
             while (address < record.get_address())
             {
@@ -126,12 +126,12 @@ srec_output_file_formatted_binary::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         // This format can't do execution start address records
         break;
 
-    case srec_record::type_unknown:
-    case srec_record::type_data_count:
+    case srecord::record::type_unknown:
+    case srecord::record::type_data_count:
         // ignore
         break;
     }
@@ -139,7 +139,7 @@ srec_output_file_formatted_binary::write(const srec_record &record)
 
 
 void
-srec_output_file_formatted_binary::line_length_set(int)
+srecord::output_file_formatted_binary::line_length_set(int)
 {
     //
     // Irrelevant.  Ignore.
@@ -148,7 +148,7 @@ srec_output_file_formatted_binary::line_length_set(int)
 
 
 void
-srec_output_file_formatted_binary::address_length_set(int)
+srecord::output_file_formatted_binary::address_length_set(int)
 {
     //
     // Irrelevant.  Ignore.
@@ -157,18 +157,18 @@ srec_output_file_formatted_binary::address_length_set(int)
 
 
 int
-srec_output_file_formatted_binary::preferred_block_size_get()
+srecord::output_file_formatted_binary::preferred_block_size_get()
     const
 {
     //
     // Irrelevant.  Use the largest we can get.
     //
-    return srec_record::max_data_length;
+    return srecord::record::max_data_length;
 }
 
 
 const char *
-srec_output_file_formatted_binary::format_name()
+srecord::output_file_formatted_binary::format_name()
     const
 {
     return "Formatted-Binary";

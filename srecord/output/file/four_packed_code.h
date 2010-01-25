@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_four_packed_code class is used to emit files
+  * The srecord::output_file_four_packed_code class is used to emit files
   * in the Four Packed Code (FPC) format.
   */
-class srec_output_file_four_packed_code:
-    public srec_output_file
+class output_file_four_packed_code:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_four_packed_code();
+    virtual ~output_file_four_packed_code();
 
 private:
     /**
@@ -44,7 +47,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    srec_output_file_four_packed_code(const std::string &file_name);
+    output_file_four_packed_code(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -112,19 +115,20 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_four_packed_code();
+    output_file_four_packed_code();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_four_packed_code(
-        const srec_output_file_four_packed_code &);
+    output_file_four_packed_code(const output_file_four_packed_code &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_four_packed_code &operator=(
-        const srec_output_file_four_packed_code &);
+    output_file_four_packed_code &operator=(
+        const output_file_four_packed_code &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_FOUR_PACKED_CODE_H

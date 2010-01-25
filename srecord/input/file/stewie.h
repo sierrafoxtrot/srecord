@@ -22,19 +22,21 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_stewie class is used to represent the parse
+  * The srecord::input_file_stewie class is used to represent the parse
   * state of an input file in an undocumented binary format loosely
   * based on the Motorola format.
   */
-class srec_input_file_stewie:
-    public srec_input_file
+class input_file_stewie:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_stewie();
+    virtual ~input_file_stewie();
 
 private:
     /**
@@ -43,7 +45,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_stewie(const std::string &file_name);
+    input_file_stewie(const std::string &file_name);
 
 public:
     /**
@@ -59,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -81,7 +83,7 @@ private:
       * The read_inner method is used to read a record of input.
       * The read method is a wrapper around this method.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The garbage_warning instance variable is used to remember whether
@@ -110,17 +112,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_stewie();
+    input_file_stewie();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_stewie(const srec_input_file_stewie &);
+    input_file_stewie(const input_file_stewie &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_stewie &operator=(const srec_input_file_stewie &);
+    input_file_stewie &operator=(const input_file_stewie &);
+};
+
 };
 
 #endif // LIB_INPUT_FILE_STEWIE_H

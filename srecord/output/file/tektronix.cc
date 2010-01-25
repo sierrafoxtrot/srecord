@@ -21,39 +21,39 @@
 #include <srecord/record.h>
 
 
-srec_output_file_tektronix::~srec_output_file_tektronix()
+srecord::output_file_tektronix::~output_file_tektronix()
 {
     // make sure terminator is written
 }
 
 
-srec_output_file_tektronix::srec_output_file_tektronix(
+srecord::output_file_tektronix::output_file_tektronix(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     pref_block_size(32)
 {
 }
 
 
-srec_output::pointer
-srec_output_file_tektronix::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_tektronix::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_tektronix(a_file_name));
+    return pointer(new srecord::output_file_tektronix(a_file_name));
 }
 
 
 void
-srec_output_file_tektronix::put_nibble(int n)
+srecord::output_file_tektronix::put_nibble(int n)
 {
-    srec_output_file::put_nibble(n);
+    srecord::output_file::put_nibble(n);
     checksum_add(n & 15);
 }
 
 
 void
-srec_output_file_tektronix::put_byte(unsigned char n)
+srecord::output_file_tektronix::put_byte(unsigned char n)
 {
-    // This differs from srec_output_file::put_byte only in that it
+    // This differs from srecord::output_file::put_byte only in that it
     // doesn't add to the checksum.
     put_nibble(n >> 4);
     put_nibble(n);
@@ -61,7 +61,7 @@ srec_output_file_tektronix::put_byte(unsigned char n)
 
 
 void
-srec_output_file_tektronix::write_inner(unsigned long address,
+srecord::output_file_tektronix::write_inner(unsigned long address,
     const void *data, int data_nbytes)
 {
     //
@@ -75,7 +75,7 @@ srec_output_file_tektronix::write_inner(unsigned long address,
     //
     put_char('/');
     unsigned char tmp[2];
-    srec_record::encode_big_endian(tmp, address, 2);
+    srecord::record::encode_big_endian(tmp, address, 2);
     checksum_reset();
     put_byte(tmp[0]);
     put_byte(tmp[1]);
@@ -94,15 +94,15 @@ srec_output_file_tektronix::write_inner(unsigned long address,
 
 
 void
-srec_output_file_tektronix::write(const srec_record &record)
+srecord::output_file_tektronix::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // This format can't do header reocrds
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         if (record.get_length() == 0)
                 break; // ignore
         if (record.get_address() + record.get_length() > (1UL << 16))
@@ -115,11 +115,11 @@ srec_output_file_tektronix::write(const srec_record &record)
         );
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         if (enable_goto_addr_flag)
         {
             if (record.get_address() >= (1UL << 16))
@@ -131,14 +131,14 @@ srec_output_file_tektronix::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
     }
 }
 
 
 void
-srec_output_file_tektronix::line_length_set(int n)
+srecord::output_file_tektronix::line_length_set(int n)
 {
     //
     // Given the number of characters, figure the maximum number of
@@ -156,24 +156,24 @@ srec_output_file_tektronix::line_length_set(int n)
         n = 255;
 
     //
-    // An additional constraint is the size of the srec_record
+    // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srec_record::max_data_length)
-        n = srec_record::max_data_length;
+    if (n > srecord::record::max_data_length)
+        n = srecord::record::max_data_length;
     pref_block_size = n;
 }
 
 
 void
-srec_output_file_tektronix::address_length_set(int)
+srecord::output_file_tektronix::address_length_set(int)
 {
     // ignore (this is a 16-bit format)
 }
 
 
 int
-srec_output_file_tektronix::preferred_block_size_get()
+srecord::output_file_tektronix::preferred_block_size_get()
     const
 {
     return pref_block_size;
@@ -181,7 +181,7 @@ srec_output_file_tektronix::preferred_block_size_get()
 
 
 const char *
-srec_output_file_tektronix::format_name()
+srecord::output_file_tektronix::format_name()
     const
 {
     return "Tektronix";

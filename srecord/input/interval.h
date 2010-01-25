@@ -23,11 +23,15 @@
 #include <srecord/interval.h>
 #include <srecord/input.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_interval function is used to read an input stream and
+  * The srecord::input_interval function is used to read an input stream and
   * build an interval based on the addresses which contain data within
   * the input.
   */
-interval srec_input_interval(srec_input::pointer);
+interval input_interval(srecord::input::pointer);
+
+};
 
 #endif // SRECORD_INPUT_INTERVAL_H

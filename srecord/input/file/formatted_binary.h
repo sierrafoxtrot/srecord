@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_formatted_binary class is used to represent the
+  * The srecord::input_file_formatted_binary class is used to represent the
   * parse state when reading a file in the Formatted Binary format.
   */
-class srec_input_file_formatted_binary:
-    public srec_input_file
+class input_file_formatted_binary:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_formatted_binary();
+    virtual ~input_file_formatted_binary();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_formatted_binary(const std::string &file_name);
+    input_file_formatted_binary(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read (srec_record &record);
+    bool read (record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -100,18 +102,19 @@ private:
     /**
       * The default constructor.
       */
-    srec_input_file_formatted_binary();
+    input_file_formatted_binary();
 
     /**
       * The copy constructor.
       */
-    srec_input_file_formatted_binary(const srec_input_file_formatted_binary &);
+    input_file_formatted_binary(const input_file_formatted_binary &);
 
     /**
       * The assignment operator.
       */
-    srec_input_file_formatted_binary &operator=(
-        const srec_input_file_formatted_binary &);
+    input_file_formatted_binary &operator=(const input_file_formatted_binary &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_FORMATTED_BINARY_H

@@ -26,21 +26,24 @@
 
 #define MSBIN_CONCATENATE_ADJACENT_RECORDS
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_msbin class is used to represent an output
+  * The srecord::output_file_msbin class is used to represent an output
   * file in Windows CE Binary Image Data Format.
   *
   * See http://msdn.microsoft.com/en-us/library/ms924510.aspx
   * for a description of the format.
   */
-class srec_output_file_msbin:
-    public srec_output_file
+class output_file_msbin:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_msbin();
+    virtual ~output_file_msbin();
 
 private:
     /**
@@ -49,7 +52,7 @@ private:
       * @param file_name
       *     The file name to open and write output to.
       */
-    srec_output_file_msbin(const std::string &file_name);
+    output_file_msbin(const std::string &file_name);
 
 public:
     /**
@@ -64,7 +67,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -134,22 +137,22 @@ private:
       * whether the #start_address instance variable is valid.
       *
       * Becomes true once we encounter a record of type
-      * srec_record::type_execution_start_address.
+      * record::type_execution_start_address.
       */
     bool start_address_set;
 
     /**
       * The start_address instance variable is used to remember
       * the execution start address, taken from a record of type
-      * srec_record::type_execution_start_address.
+      * record::type_execution_start_address.
       */
-    srec_record::address_t start_address;
+    record::address_t start_address;
 
     /**
       * The upper_bound instance variable is used to remember the upper
       * bound address as received via the #notify_upper_bound method.
       */
-    srec_record::address_t upper_bound;
+    record::address_t upper_bound;
 
     /**
       * The beginning_of_file instance variable is used to remember
@@ -162,23 +165,25 @@ private:
       * The current_addr instance variable is used to remember the
       * current address, used for concatenating adjacent records.
       */
-    srec_record::address_t current_addr;
+    record::address_t current_addr;
 #endif
 
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_msbin();
+    output_file_msbin();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_msbin(const srec_output_file_msbin &);
+    output_file_msbin(const output_file_msbin &);
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_msbin &operator=(const srec_output_file_msbin &);
+    output_file_msbin &operator=(const output_file_msbin &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_MSBIN_H

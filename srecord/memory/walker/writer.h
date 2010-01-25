@@ -23,18 +23,20 @@
 #include <srecord/memory/walker.h>
 #include <srecord/output.h>
 
+namespace srecord {
+
 /**
-  * The srec_memory_walker_writer class is used to write data to and
+  * The srecord::memory_walker_writer class is used to write data to and
   * output stream when a memory image is walked.
   */
-class srec_memory_walker_writer:
-    public srec_memory_walker
+class memory_walker_writer:
+    public memory_walker
 {
 public:
     /**
       * the destructor.
       */
-    virtual ~srec_memory_walker_writer();
+    virtual ~memory_walker_writer();
 
 private:
     /**
@@ -44,7 +46,7 @@ private:
       * @param deeper
       *     where to write the output
       */
-    srec_memory_walker_writer(const srec_output::pointer &deeper);
+    memory_walker_writer(const output::pointer &deeper);
 
 public:
     /**
@@ -54,7 +56,7 @@ public:
       * @param deeper
       *     where to write the output
       */
-    static pointer create(const srec_output::pointer &deeper);
+    static pointer create(const output::pointer &deeper);
 
 protected:
     // See base class for documentation.
@@ -64,32 +66,34 @@ protected:
     void notify_upper_bound(long unsigned);
 
     // See base class for documentation.
-    void observe_header(const srec_record *);
+    void observe_header(const record *);
 
     // See base class for documentation.
-    void observe_start_address(const srec_record *);
+    void observe_start_address(const record *);
 
 private:
     /**
       * The op instance variabel is used to remember where to send
       * the output.
       */
-    srec_output::pointer op;
+    output::pointer op;
 
     /**
       * The default constructor.  Do not use.
       */
-    srec_memory_walker_writer();
+    memory_walker_writer();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_memory_walker_writer(const srec_memory_walker_writer &);
+    memory_walker_writer(const memory_walker_writer &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_memory_walker_writer &operator=(const srec_memory_walker_writer &);
+    memory_walker_writer &operator=(const memory_walker_writer &);
 };
+
+}
 
 #endif // SRECORD_MEMORY_WALKER_WRITER_H

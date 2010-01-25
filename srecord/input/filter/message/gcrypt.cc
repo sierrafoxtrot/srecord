@@ -23,18 +23,18 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_message_gcrypt::~srec_input_filter_message_gcrypt()
+srecord::input_filter_message_gcrypt::~input_filter_message_gcrypt()
 {
 }
 
 
-srec_input_filter_message_gcrypt::srec_input_filter_message_gcrypt(
-    const srec_input::pointer &a_deeper,
+srecord::input_filter_message_gcrypt::input_filter_message_gcrypt(
+    const input::pointer &a_deeper,
     unsigned long a_address,
     int a_algo,
     bool a_hmac
 ) :
-    srec_input_filter_message(a_deeper),
+    input_filter_message(a_deeper),
     algo(a_algo),
     hmac(a_hmac),
     address(a_address)
@@ -42,14 +42,14 @@ srec_input_filter_message_gcrypt::srec_input_filter_message_gcrypt(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create(const srec_input::pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create(const input::pointer &a_deeper,
     unsigned long a_address, int algo, bool hmac)
 {
     return
         pointer
         (
-            new srec_input_filter_message_gcrypt
+            new input_filter_message_gcrypt
             (
                 a_deeper,
                 a_address,
@@ -60,17 +60,17 @@ srec_input_filter_message_gcrypt::create(const srec_input::pointer &a_deeper,
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create(const srec_input::pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create(const input::pointer &a_deeper,
     unsigned long a_address, const char *name, bool a_hmac)
 {
     return create(a_deeper, a_address, algorithm_from_name(name), a_hmac);
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_md5(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_md5(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_MD5);
@@ -83,9 +83,9 @@ srec_input_filter_message_gcrypt::create_md5(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_sha1(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_sha1(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_SHA1);
@@ -98,9 +98,9 @@ srec_input_filter_message_gcrypt::create_sha1(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_rmd160(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_rmd160(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_RMD160);
@@ -113,9 +113,9 @@ srec_input_filter_message_gcrypt::create_rmd160(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_md2(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_md2(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_MD2);
@@ -128,9 +128,9 @@ srec_input_filter_message_gcrypt::create_md2(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_tiger(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_tiger(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_TIGER);
@@ -143,9 +143,9 @@ srec_input_filter_message_gcrypt::create_tiger(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_haval(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_haval(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_HAVAL);
@@ -158,9 +158,9 @@ srec_input_filter_message_gcrypt::create_haval(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_sha256(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_sha256(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_SHA256);
@@ -173,9 +173,9 @@ srec_input_filter_message_gcrypt::create_sha256(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_sha384(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_sha384(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_SHA384);
@@ -188,9 +188,9 @@ srec_input_filter_message_gcrypt::create_sha384(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_sha512(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_sha512(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_SHA512);
@@ -203,9 +203,9 @@ srec_input_filter_message_gcrypt::create_sha512(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_sha224(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_sha224(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT_SHA224
     return create(a_deeper, a_address, GCRY_MD_SHA224);
@@ -218,9 +218,9 @@ srec_input_filter_message_gcrypt::create_sha224(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_md4(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_md4(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_MD4);
@@ -233,9 +233,9 @@ srec_input_filter_message_gcrypt::create_md4(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_crc32(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_crc32(
+    const srecord::input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_CRC32);
@@ -248,9 +248,9 @@ srec_input_filter_message_gcrypt::create_crc32(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_crc32_rfc1510(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_crc32_rfc1510(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_CRC32_RFC1510);
@@ -263,9 +263,9 @@ srec_input_filter_message_gcrypt::create_crc32_rfc1510(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_crc24_rfc2440(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_crc24_rfc2440(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT
     return create(a_deeper, a_address, GCRY_MD_CRC24_RFC2440);
@@ -278,9 +278,9 @@ srec_input_filter_message_gcrypt::create_crc24_rfc2440(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_gcrypt::create_whirlpool(
-    const srec_input::pointer &a_deeper, unsigned long a_address)
+srecord::input::pointer
+srecord::input_filter_message_gcrypt::create_whirlpool(
+    const input::pointer &a_deeper, unsigned long a_address)
 {
 #ifdef HAVE_LIBGCRYPT_WHIRLPOOL
     return create(a_deeper, a_address, GCRY_MD_WHIRLPOOL);
@@ -294,7 +294,7 @@ srec_input_filter_message_gcrypt::create_whirlpool(
 
 
 int
-srec_input_filter_message_gcrypt::algorithm_from_name(const char *name)
+srecord::input_filter_message_gcrypt::algorithm_from_name(const char *name)
 {
 #ifdef HAVE_LIBGCRYPT
     static int table[] =
@@ -333,8 +333,8 @@ srec_input_filter_message_gcrypt::algorithm_from_name(const char *name)
 
 
 void
-srec_input_filter_message_gcrypt::process(const srec_memory &input,
-    srec_record &output)
+srecord::input_filter_message_gcrypt::process(const memory &input,
+    record &output)
 {
 #ifdef HAVE_LIBGCRYPT
     // allocate the message digest handle
@@ -347,13 +347,13 @@ srec_input_filter_message_gcrypt::process(const srec_memory &input,
         fatal_error("gcry_md_open: %s", gcry_strerror(err));
 
     // traverse the memory
-    srec_memory_walker::pointer w = srec_memory_walker_gcrypt::create(handle);
+    memory_walker::pointer w = memory_walker_gcrypt::create(handle);
     input.walk(w);
 
     // generate the result
     const unsigned char *data = gcry_md_read(handle, algo);
     size_t data_size = gcry_md_get_algo_dlen(algo);
-    output = srec_record(srec_record::type_data, address, data, data_size);
+    output = record(record::type_data, address, data, data_size);
 
     // free the message digest handle
     gcry_md_close(handle);
@@ -361,9 +361,9 @@ srec_input_filter_message_gcrypt::process(const srec_memory &input,
     (void)input;
     fatal_error("not compiled with libgcrypt support");
     output =
-        srec_record
+        record
         (
-            srec_record::type_data,
+            record::type_data,
             address,
             (const unsigned char *)"oops",
             4
@@ -373,7 +373,7 @@ srec_input_filter_message_gcrypt::process(const srec_memory &input,
 
 
 const char *
-srec_input_filter_message_gcrypt::get_algorithm_name()
+srecord::input_filter_message_gcrypt::get_algorithm_name()
     const
 {
 #ifdef HAVE_LIBGCRYPT

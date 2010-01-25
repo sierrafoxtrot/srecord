@@ -22,17 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_ti_tagged_16 class is used to represent the
+  * The srecord::output_file_ti_tagged_16 class is used to represent the
   * output state of a file in Texas Instruments SDSMAC (320) format.
   */
-class srec_output_file_ti_tagged_16: public srec_output_file
+class output_file_ti_tagged_16:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_ti_tagged_16();
+    virtual ~output_file_ti_tagged_16();
 
 private:
     /**
@@ -43,7 +47,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    srec_output_file_ti_tagged_16(const std::string &file_name);
+    output_file_ti_tagged_16(const std::string &file_name);
 
 public:
     /**
@@ -57,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -75,7 +79,7 @@ protected:
     const char *format_name() const;
 
 private:
-    typedef srec_output_file inherited;
+    typedef output_file inherited;
 
     /**
       * The address instance variable is used to remember the current
@@ -112,18 +116,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_ti_tagged_16();
+    output_file_ti_tagged_16();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_ti_tagged_16(const srec_output_file_ti_tagged_16 &);
+    output_file_ti_tagged_16(const output_file_ti_tagged_16 &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_ti_tagged_16 &operator=(
-        const srec_output_file_ti_tagged_16 &);
+    output_file_ti_tagged_16 &operator=(const output_file_ti_tagged_16 &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

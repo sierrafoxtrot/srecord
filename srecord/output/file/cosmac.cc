@@ -20,14 +20,14 @@
 #include <srecord/output/file/cosmac.h>
 #include <srecord/record.h>
 
-srec_output_file_cosmac::~srec_output_file_cosmac()
+srecord::output_file_cosmac::~output_file_cosmac()
 {
 }
 
 
-srec_output_file_cosmac::srec_output_file_cosmac(
+srecord::output_file_cosmac::output_file_cosmac(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     address(0),
     address_length(4),
     line_length(80),
@@ -37,25 +37,25 @@ srec_output_file_cosmac::srec_output_file_cosmac(
 }
 
 
-srec_output::pointer
-srec_output_file_cosmac::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_cosmac::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_cosmac(a_file_name));
+    return pointer(new srecord::output_file_cosmac(a_file_name));
 }
 
 
 void
-srec_output_file_cosmac::write(const srec_record &record)
+srecord::output_file_cosmac::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
-    case srec_record::type_unknown:
-    case srec_record::type_data_count:
+    case srecord::record::type_header:
+    case srecord::record::type_unknown:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         if (record.get_address() >= (1uL << 24) && address_length < 8)
             address_length = 8;
         else if (record.get_address() >= (1uL << 16) && address_length < 6)
@@ -87,7 +87,7 @@ srec_output_file_cosmac::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         if (column != 0)
         {
             put_char('\n');
@@ -100,14 +100,14 @@ srec_output_file_cosmac::write(const srec_record &record)
 
 
 void
-srec_output_file_cosmac::line_length_set(int x)
+srecord::output_file_cosmac::line_length_set(int x)
 {
     line_length = (x < 4 ? 4 : x);
 }
 
 
 void
-srec_output_file_cosmac::address_length_set(int x)
+srecord::output_file_cosmac::address_length_set(int x)
 {
     x *= 2;
     if (x < 4)
@@ -119,7 +119,7 @@ srec_output_file_cosmac::address_length_set(int x)
 
 
 int
-srec_output_file_cosmac::preferred_block_size_get()
+srecord::output_file_cosmac::preferred_block_size_get()
     const
 {
     return ((line_length - 1) / 2);
@@ -127,7 +127,7 @@ srec_output_file_cosmac::preferred_block_size_get()
 
 
 const char *
-srec_output_file_cosmac::format_name()
+srecord::output_file_cosmac::format_name()
     const
 {
     return "cosmac";

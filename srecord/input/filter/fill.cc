@@ -24,15 +24,15 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_fill::~srec_input_filter_fill()
+srecord::input_filter_fill::~input_filter_fill()
 {
     delete [] filler_block;
 }
 
 
-srec_input_filter_fill::srec_input_filter_fill(const srec_input::pointer &a1,
+srecord::input_filter_fill::input_filter_fill(const input::pointer &a1,
         int a2, const interval &a3) :
-    srec_input_filter(a1),
+    input_filter(a1),
     filler_value(a2),
     filler_block(0),
     range(a3)
@@ -40,21 +40,21 @@ srec_input_filter_fill::srec_input_filter_fill(const srec_input::pointer &a1,
 }
 
 
-srec_input::pointer
-srec_input_filter_fill::create(const srec_input::pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_fill::create(const input::pointer &a_deeper,
     int a_value, const interval &a_range)
 {
-    return pointer(new srec_input_filter_fill(a_deeper, a_value, a_range));
+    return pointer(new input_filter_fill(a_deeper, a_value, a_range));
 }
 
 
 bool
-srec_input_filter_fill::generate(srec_record &record)
+srecord::input_filter_fill::generate(record &result)
 {
     if (range.empty())
         return false;
     interval::data_t lo = range.get_lowest();
-    size_t rec_len = srec_record::maximum_data_length(lo);
+    size_t rec_len = record::maximum_data_length(lo);
     interval::data_t hi = lo + rec_len;
     interval chunk(lo, hi);
     chunk *= range;
@@ -67,24 +67,24 @@ srec_input_filter_fill::generate(srec_record &record)
     }
     rec_len = chunk.get_highest() - chunk.get_lowest();
     assert(rec_len <= fill_block_size);
-    record = srec_record(srec_record::type_data, lo, filler_block, rec_len);
+    result = record(record::type_data, lo, filler_block, rec_len);
     range -= chunk;
     return true;
 }
 
 
 bool
-srec_input_filter_fill::read(srec_record &record)
+srecord::input_filter_fill::read(record &result)
 {
-    if (!srec_input_filter::read(record))
-        return generate(record);
-    if (record.get_type() == srec_record::type_data)
+    if (!input_filter::read(result))
+        return generate(result);
+    if (result.get_type() == record::type_data)
     {
         range -=
             interval
             (
-                record.get_address(),
-                record.get_address() + record.get_length()
+                result.get_address(),
+                result.get_address() + result.get_length()
             );
     }
     return true;

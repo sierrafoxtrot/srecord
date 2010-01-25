@@ -21,32 +21,32 @@
 #include <srecord/input/filter/checksum/bitnot.h>
 
 
-srec_input_filter_checksum_bitnot::~srec_input_filter_checksum_bitnot()
+srecord::input_filter_checksum_bitnot::~input_filter_checksum_bitnot()
 {
 }
 
 
-srec_input_filter_checksum_bitnot::srec_input_filter_checksum_bitnot(
-        srec_input::pointer a1, int a2, int a3, endian_t a_end, int a5) :
-    srec_input_filter_checksum(a1, a2, a3, a_end, a5)
+srecord::input_filter_checksum_bitnot::input_filter_checksum_bitnot(
+        input::pointer a1, int a2, int a3, endian_t a_end, int a5) :
+    input_filter_checksum(a1, a2, a3, a_end, a5)
 {
 }
 
 
-srec_input::pointer
-srec_input_filter_checksum_bitnot::create(const srec_input::pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_checksum_bitnot::create(const input::pointer &a_deeper,
     int a2, int a3, endian_t a_end, int a5)
 {
     return
         pointer
         (
-            new srec_input_filter_checksum_bitnot(a_deeper, a2, a3, a_end, a5)
+            new input_filter_checksum_bitnot(a_deeper, a2, a3, a_end, a5)
         );
 }
 
 
-srec_input_filter_checksum::sum_t
-srec_input_filter_checksum_bitnot::calculate()
+srecord::input_filter_checksum::sum_t
+srecord::input_filter_checksum_bitnot::calculate()
 {
     return ~sum;
 }

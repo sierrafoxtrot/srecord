@@ -112,15 +112,15 @@ static unsigned char digit[] = {
 };
 
 
-srec_output_file_four_packed_code::~srec_output_file_four_packed_code()
+srecord::output_file_four_packed_code::~output_file_four_packed_code()
 {
     put_string("$%%%%%\n");
 }
 
 
-srec_output_file_four_packed_code::srec_output_file_four_packed_code(
+srecord::output_file_four_packed_code::output_file_four_packed_code(
         const std::string &a_file_name):
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     pref_block_size(32),
     put_byte_pos(0),
     put_byte_value(0)
@@ -128,15 +128,15 @@ srec_output_file_four_packed_code::srec_output_file_four_packed_code(
 }
 
 
-srec_output::pointer
-srec_output_file_four_packed_code::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_four_packed_code::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_four_packed_code(a_file_name));
+    return pointer(new srecord::output_file_four_packed_code(a_file_name));
 }
 
 
 void
-srec_output_file_four_packed_code::put_byte(unsigned char n)
+srecord::output_file_four_packed_code::put_byte(unsigned char n)
 {
     put_byte_value |= (unsigned long)n << ((3 - put_byte_pos) << 3);
     ++put_byte_pos;
@@ -163,7 +163,7 @@ srec_output_file_four_packed_code::put_byte(unsigned char n)
 
 
 void
-srec_output_file_four_packed_code::write_inner(unsigned long address,
+srecord::output_file_four_packed_code::write_inner(unsigned long address,
     const void *data, int data_nbytes)
 {
     //
@@ -180,7 +180,7 @@ srec_output_file_four_packed_code::write_inner(unsigned long address,
     buffer[1] = 4 + data_nbytes;
     buffer[2] = 0;
     buffer[3] = 0;
-    srec_record::encode_big_endian(buffer + 4, address, 4);
+    srecord::record::encode_big_endian(buffer + 4, address, 4);
     if (data_nbytes)
     {
         memcpy(buffer + 8, data, data_nbytes);
@@ -208,15 +208,15 @@ srec_output_file_four_packed_code::write_inner(unsigned long address,
 
 
 void
-srec_output_file_four_packed_code::write(const srec_record & record)
+srecord::output_file_four_packed_code::write(const srecord::record & record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // This format can't do header records
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         if (record.get_address() + record.get_length() > (1UL << 16))
             data_address_too_large(record);
         write_inner
@@ -227,22 +227,22 @@ srec_output_file_four_packed_code::write(const srec_record & record)
         );
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         // This format can't do execution start addresses.
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
     }
 }
 
 
 void
-srec_output_file_four_packed_code::line_length_set(int linlen)
+srecord::output_file_four_packed_code::line_length_set(int linlen)
 {
     //
     // Given the number of characters, figure the maximum number of
@@ -259,31 +259,31 @@ srec_output_file_four_packed_code::line_length_set(int linlen)
         n = 252;
 
     //
-    // An additional constraint is the size of the srec_record
+    // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srec_record::max_data_length)
-        n = srec_record::max_data_length;
+    if (n > srecord::record::max_data_length)
+        n = srecord::record::max_data_length;
     pref_block_size = n;
 }
 
 
 int
-srec_output_file_four_packed_code::preferred_block_size_get() const
+srecord::output_file_four_packed_code::preferred_block_size_get() const
 {
     return pref_block_size;
 }
 
 
 void
-srec_output_file_four_packed_code::address_length_set(int)
+srecord::output_file_four_packed_code::address_length_set(int)
 {
     // Ignore.  We always emit a 32-bit address.
 }
 
 
 const char *
-srec_output_file_four_packed_code::format_name()
+srecord::output_file_four_packed_code::format_name()
     const
 {
     return "Four-Packed-Code";

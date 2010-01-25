@@ -22,18 +22,21 @@
 
 #include <srecord/input/generator.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_generator_repeat class is used to represent
+  * The srecord::input_generator_repeat class is used to represent
   * generating data which cycles over a fixed set of byte values.
   */
-class srec_input_generator_repeat:
-    public srec_input_generator
+class input_generator_repeat:
+    public input_generator
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_generator_repeat();
+    virtual ~input_generator_repeat();
 
 private:
     /**
@@ -46,7 +49,7 @@ private:
       * @param length
       *     The length of the array of data to be repeated.
       */
-    srec_input_generator_repeat(const interval &range, unsigned char *data,
+    input_generator_repeat(const interval &range, unsigned char *data,
         size_t length);
 
 public:
@@ -97,17 +100,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_generator_repeat();
+    input_generator_repeat();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_generator_repeat(const srec_input_generator_repeat &);
+    input_generator_repeat(const input_generator_repeat &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_generator_repeat &operator=(const srec_input_generator_repeat &);
+    input_generator_repeat &operator=(const input_generator_repeat &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

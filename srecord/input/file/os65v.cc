@@ -21,13 +21,13 @@
 #include <srecord/record.h>
 
 
-srec_input_file_os65v::~srec_input_file_os65v()
+srecord::input_file_os65v::~input_file_os65v()
 {
 }
 
 
-srec_input_file_os65v::srec_input_file_os65v(const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+srecord::input_file_os65v::input_file_os65v(const std::string &a_file_name) :
+    srecord::input_file(a_file_name),
     seen_some_input(false),
     address(0),
     state(0),
@@ -36,15 +36,15 @@ srec_input_file_os65v::srec_input_file_os65v(const std::string &a_file_name) :
 }
 
 
-srec_input::pointer
-srec_input_file_os65v::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_os65v::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_os65v(a_file_name));
+    return pointer(new srecord::input_file_os65v(a_file_name));
 }
 
 
 int
-srec_input_file_os65v::read_inner(srec_record &record)
+srecord::input_file_os65v::read_inner(srecord::record &record)
 {
     for (;;)
     {
@@ -103,9 +103,9 @@ srec_input_file_os65v::read_inner(srec_record &record)
                     unsigned char buf[1];
                     buf[0] = n;
                     record =
-                        srec_record
+                        srecord::record
                         (
-                            srec_record::type_data,
+                            srecord::record::type_data,
                             address,
                             buf,
                             1
@@ -118,9 +118,9 @@ srec_input_file_os65v::read_inner(srec_record &record)
 
         case 'G':
             record =
-                srec_record
+                srecord::record
                 (
-                    srec_record::type_execution_start_address,
+                    srecord::record::type_execution_start_address,
                     address,
                     0,
                     0
@@ -154,7 +154,7 @@ srec_input_file_os65v::read_inner(srec_record &record)
 
 
 bool
-srec_input_file_os65v::read(srec_record &record)
+srecord::input_file_os65v::read(srecord::record &record)
 {
     if (!read_inner(record))
     {
@@ -168,7 +168,7 @@ srec_input_file_os65v::read(srec_record &record)
 
 
 const char *
-srec_input_file_os65v::get_file_format_name()
+srecord::input_file_os65v::get_file_format_name()
     const
 {
     return "Ohio Scientific";

@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_aomf class is used to represent the output
+  * The srecord::output_file_aomf class is used to represent the output
   * state of a file in Intel Absolute Object Module Format (AOMF).
   */
-class srec_output_file_aomf:
-    public srec_output_file
+class output_file_aomf:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_aomf();
+    virtual ~output_file_aomf();
 
 private:
     /**
@@ -43,7 +46,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_aomf(const std::string &file_name);
+    output_file_aomf(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     int preferred_block_size_get() const;
@@ -129,12 +132,14 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_aomf(const srec_output_file_aomf &);
+    output_file_aomf(const output_file_aomf &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_aomf &operator=(const srec_output_file_aomf &);
+    output_file_aomf &operator=(const output_file_aomf &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_AOMF_H

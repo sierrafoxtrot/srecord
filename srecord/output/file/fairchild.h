@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_fairchild class is used to represent the running
+  * The srecord::output_file_fairchild class is used to represent the running
   * state when writing a file in Fairchild Fairbug format.
   */
-class srec_output_file_fairchild:
-    public srec_output_file
+class output_file_fairchild:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_fairchild();
+    virtual ~output_file_fairchild();
 
 private:
     /**
@@ -43,7 +46,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_fairchild(const std::string &file_name);
+    output_file_fairchild(const std::string &file_name);
 
 public:
     /**
@@ -57,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -95,17 +98,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_fairchild();
+    output_file_fairchild();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_fairchild(const srec_output_file_fairchild &);
+    output_file_fairchild(const output_file_fairchild &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_fairchild &operator=(const srec_output_file_fairchild &);
+    output_file_fairchild &operator=(const output_file_fairchild &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_FAIRCHILD_H

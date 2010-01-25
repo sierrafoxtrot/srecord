@@ -26,22 +26,24 @@
 #include <srecord/input/filter.h>
 #include <srecord/record.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_filter_checksum class is an abstraction of various
+  * The srecord::input_filter_checksum class is an abstraction of various
   * checksums to be ammplied to input sources.
   */
-class srec_input_filter_checksum:
-    public srec_input_filter
+class input_filter_checksum:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_checksum();
+    virtual ~input_filter_checksum();
 
 protected:
     // See bas class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     /**
       * The constructor.
@@ -61,7 +63,7 @@ protected:
       *     wider, it is assumed that they are alligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    srec_input_filter_checksum(srec_input::pointer deeper, int address,
+    input_filter_checksum(input::pointer deeper, int address,
         int length, endian_t end, int width = 1);
 
     typedef unsigned long sum_t;
@@ -112,23 +114,25 @@ protected:
       * @returns
       *     bool; false if end-of-file, true if data available
       */
-    bool generate(srec_record &record);
+    bool generate(record &record);
 
 private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_checksum();
+    input_filter_checksum();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_checksum(const srec_input_filter_checksum &);
+    input_filter_checksum(const input_filter_checksum &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_checksum &operator=(const srec_input_filter_checksum &);
+    input_filter_checksum &operator=(const input_filter_checksum &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_CHECKSUM_H

@@ -21,14 +21,14 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_split::~srec_input_filter_split()
+srecord::input_filter_split::~input_filter_split()
 {
 }
 
 
-srec_input_filter_split::srec_input_filter_split(const srec_input::pointer &a1,
+srecord::input_filter_split::input_filter_split(const input::pointer &a1,
         int a2, int a3, int a4) :
-    srec_input_filter(a1),
+    srecord::input_filter(a1),
     modulus(a2),
     offset(a2 - a3),
     width(a4),
@@ -43,29 +43,29 @@ srec_input_filter_split::srec_input_filter_split(const srec_input::pointer &a1,
 }
 
 
-srec_input::pointer
-srec_input_filter_split::create(const srec_input::pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_split::create(const srecord::input::pointer &a_deeper,
     int a2, int a3, int a4)
 {
-    return pointer(new srec_input_filter_split(a_deeper, a2, a3, a4));
+    return pointer(new srecord::input_filter_split(a_deeper, a2, a3, a4));
 }
 
 
 bool
-srec_input_filter_split::read(srec_record &record)
+srecord::input_filter_split::read(srecord::record &record)
 {
     for (;;)
     {
         while
         (
-            buffer.get_type() != srec_record::type_data
+            buffer.get_type() != srecord::record::type_data
         ||
             buffer_pos >= buffer.get_length()
         )
         {
-            if (!srec_input_filter::read(buffer))
+            if (!srecord::input_filter::read(buffer))
                 return false;
-            if (buffer.get_type() != srec_record::type_data)
+            if (buffer.get_type() != srecord::record::type_data)
             {
                 record = buffer;
                 return true;
@@ -73,9 +73,9 @@ srec_input_filter_split::read(srec_record &record)
             buffer_pos = 0;
         }
 
-        srec_record::address_t addr =
+        srecord::record::address_t addr =
             (buffer.get_address() + offset + buffer_pos);
-        srec_record::address_t phase = addr % modulus;
+        srecord::record::address_t phase = addr % modulus;
         if (phase < width)
         {
             unsigned char c = buffer.get_data(buffer_pos++);
@@ -88,7 +88,7 @@ srec_input_filter_split::read(srec_record &record)
             // off before the width multiplication.
             //
             addr = (addr / modulus - 1) * width + phase;
-            record = srec_record(srec_record::type_data, addr, &c, 1);
+            record = srecord::record(srecord::record::type_data, addr, &c, 1);
             return true;
         }
         ++buffer_pos;

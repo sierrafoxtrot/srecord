@@ -23,16 +23,16 @@
 #include <srecord/record.h>
 
 
-srec_output_file_hexdump::~srec_output_file_hexdump()
+srecord::output_file_hexdump::~output_file_hexdump()
 {
     row_cache_print();
     delete [] row_cache;
 }
 
 
-srec_output_file_hexdump::srec_output_file_hexdump(
+srecord::output_file_hexdump::output_file_hexdump(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     number_of_columns(0),
     row_cache_address(-1),
     row_cache_address_mask(0),
@@ -44,22 +44,22 @@ srec_output_file_hexdump::srec_output_file_hexdump(
 }
 
 
-srec_output::pointer
-srec_output_file_hexdump::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_hexdump::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_hexdump(a_file_name));
+    return pointer(new srecord::output_file_hexdump(a_file_name));
 }
 
 
 void
-srec_output_file_hexdump::command_line(srec_arglex_tool *)
+srecord::output_file_hexdump::command_line(srecord::arglex_tool *)
 {
     // nothing (yet?)
 }
 
 
 void
-srec_output_file_hexdump::row_cache_print()
+srecord::output_file_hexdump::row_cache_print()
 {
     if (row_cache_address == (unsigned long)(-1))
         return;
@@ -105,7 +105,8 @@ hex(char *buffer, long value, int nbytes)
 
 
 void
-srec_output_file_hexdump::emit_byte(unsigned long address, unsigned char data)
+srecord::output_file_hexdump::emit_byte(unsigned long address,
+    unsigned char data)
 {
     if (row_cache_address != (unsigned long)(-1))
     {
@@ -131,7 +132,7 @@ srec_output_file_hexdump::emit_byte(unsigned long address, unsigned char data)
 
 
 void
-srec_output_file_hexdump::write(const srec_record &record)
+srecord::output_file_hexdump::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
@@ -139,11 +140,11 @@ srec_output_file_hexdump::write(const srec_record &record)
         // ignore
         break;
 
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // ignore
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         {
             unsigned long a = record.get_address();
             for (size_t j = 0; j < record.get_length(); ++j)
@@ -151,7 +152,7 @@ srec_output_file_hexdump::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         // ignore
         break;
     }
@@ -159,7 +160,7 @@ srec_output_file_hexdump::write(const srec_record &record)
 
 
 int
-srec_output_file_hexdump::columns_to_line_length(int cols)
+srecord::output_file_hexdump::columns_to_line_length(int cols)
 {
     // 0000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
     //      ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^^
@@ -168,7 +169,7 @@ srec_output_file_hexdump::columns_to_line_length(int cols)
 
 
 void
-srec_output_file_hexdump::line_length_set(int line_length)
+srecord::output_file_hexdump::line_length_set(int line_length)
 {
     int n = 8;
     while (columns_to_line_length(n << 1) <= line_length)
@@ -183,25 +184,25 @@ srec_output_file_hexdump::line_length_set(int line_length)
 
 
 void
-srec_output_file_hexdump::address_length_set(int)
+srecord::output_file_hexdump::address_length_set(int)
 {
     // Ignore
 }
 
 
 int
-srec_output_file_hexdump::preferred_block_size_get()
+srecord::output_file_hexdump::preferred_block_size_get()
     const
 {
     //
     // Use the largest we can get,
     //
-    return srec_record::max_data_length;
+    return srecord::record::max_data_length;
 }
 
 
 const char *
-srec_output_file_hexdump::format_name()
+srecord::output_file_hexdump::format_name()
     const
 {
     return "hexdump";

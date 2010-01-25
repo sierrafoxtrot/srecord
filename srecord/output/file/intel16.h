@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_intel16 class is used to write an EPROM load file
+  * The srecord::output_file_intel16 class is used to write an EPROM load file
   * in INHX16 format.
   */
-class srec_output_file_intel16:
-    public srec_output_file
+class output_file_intel16:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_intel16();
+    virtual ~output_file_intel16();
 
 private:
     /**
@@ -44,7 +47,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    srec_output_file_intel16(const std::string &file_name);
+    output_file_intel16(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -94,17 +97,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_intel16();
+    output_file_intel16();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_intel16(const srec_output_file_intel16 &);
+    output_file_intel16(const output_file_intel16 &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_intel16 &operator=(const srec_output_file_intel16 &);
+    output_file_intel16 &operator=(const output_file_intel16 &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_INTEL16_H

@@ -22,17 +22,19 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
   * The mos_tech class is used to parse a MOS Technology format file.
   */
-class srec_input_file_mos_tech:
-    public srec_input_file
+class input_file_mos_tech:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_mos_tech();
+    virtual ~input_file_mos_tech();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_mos_tech(const std::string &file_name);
+    input_file_mos_tech(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -68,7 +70,7 @@ private:
       * Read one line (record) of input.  Called by the read() method.
       * Returns false at end of file.
       */
-    bool read_inner(srec_record &);
+    bool read_inner(record &);
 
     /**
       * The garbage_warning instance variable is used to remember
@@ -92,17 +94,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_mos_tech();
+    input_file_mos_tech();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_mos_tech(const srec_input_file_mos_tech &);
+    input_file_mos_tech(const input_file_mos_tech &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_mos_tech &operator=(const srec_input_file_mos_tech &);
+    input_file_mos_tech &operator=(const input_file_mos_tech &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_MOS_TECH_H

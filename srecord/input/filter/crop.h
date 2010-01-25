@@ -24,18 +24,20 @@
 #include <srecord/input/filter.h>
 #include <srecord/record.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_filter_crop filter is used to crop the data by
+  * The srecord::input_filter_crop filter is used to crop the data by
   * selecting portions of the address range to be passed through.
   */
-class srec_input_filter_crop:
-    public srec_input_filter
+class input_filter_crop:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_crop();
+    virtual ~input_filter_crop();
 
 private:
     /**
@@ -47,8 +49,7 @@ private:
       *     The address range to be preserved.  The rest will be
       *     ignored.
       */
-    srec_input_filter_crop(const srec_input::pointer &deeper,
-        const interval &range);
+    input_filter_crop(const input::pointer &deeper, const interval &range);
 
 public:
     /**
@@ -58,12 +59,11 @@ public:
       * @param deeper
       *     The incoming data source to be filtered
       */
-    static pointer create(const srec_input::pointer &deeper,
-        const interval &range);
+    static pointer create(const input::pointer &deeper, const interval &range);
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
 private:
     /**
@@ -76,7 +76,7 @@ private:
       * The dat instance variable is used to remember the current input
       * data record being filtered.
       */
-    srec_record data;
+    record data;
 
     /**
       * The data_range instance variable is used to remember the address
@@ -87,17 +87,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_crop();
+    input_filter_crop();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_crop(const srec_input_filter_crop &);
+    input_filter_crop(const input_filter_crop &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_crop &operator=(const srec_input_filter_crop &);
+    input_filter_crop &operator=(const input_filter_crop &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_CROP_H

@@ -23,17 +23,17 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_message_crc32::~srec_input_filter_message_crc32()
+srecord::input_filter_message_crc32::~input_filter_message_crc32()
 {
 }
 
 
-srec_input_filter_message_crc32::srec_input_filter_message_crc32(
-    const srec_input::pointer &a_deeper,
+srecord::input_filter_message_crc32::input_filter_message_crc32(
+    const input::pointer &a_deeper,
     unsigned long a_address,
     endian_t a_end
 ) :
-    srec_input_filter_message(a_deeper),
+    input_filter_message(a_deeper),
     address(a_address),
     end(a_end),
     seed_mode(crc32::seed_mode_ccitt)
@@ -41,31 +41,31 @@ srec_input_filter_message_crc32::srec_input_filter_message_crc32(
 }
 
 
-srec_input::pointer
-srec_input_filter_message_crc32::create(const srec_input::pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_message_crc32::create(const input::pointer &a_deeper,
     unsigned long a_address, endian_t a_end)
 {
     return
         pointer
         (
-            new srec_input_filter_message_crc32(a_deeper, a_address, a_end)
+            new input_filter_message_crc32(a_deeper, a_address, a_end)
         );
 }
 
 
 void
-srec_input_filter_message_crc32::command_line(srec_arglex_tool *cmdln)
+srecord::input_filter_message_crc32::command_line(arglex_tool *cmdln)
 {
     for (;;)
     {
         switch (cmdln->token_cur())
         {
-        case srec_arglex_tool::token_crc16_xmodem:
+        case arglex_tool::token_crc16_xmodem:
             seed_mode = crc32::seed_mode_xmodem;
             cmdln->token_next();
             break;
 
-        case srec_arglex_tool::token_crc16_ccitt:
+        case arglex_tool::token_crc16_ccitt:
             seed_mode = crc32::seed_mode_ccitt;
             cmdln->token_next();
             break;
@@ -78,15 +78,15 @@ srec_input_filter_message_crc32::command_line(srec_arglex_tool *cmdln)
 
 
 void
-srec_input_filter_message_crc32::process(const srec_memory &input,
-    srec_record &output)
+srecord::input_filter_message_crc32::process(const memory &input,
+    record &output)
 {
     //
     // Now CRC32 the bytes in order from lowest address to highest.
     // (Holes are ignored, not filled, warning already issued.)
     //
-    srec_memory_walker_crc32::pointer w =
-        srec_memory_walker_crc32::create(seed_mode);
+    memory_walker_crc32::pointer w =
+        memory_walker_crc32::create(seed_mode);
     input.walk(w);
     unsigned long crc = w->get();
 
@@ -94,13 +94,13 @@ srec_input_filter_message_crc32::process(const srec_memory &input,
     // Turn the CRC into the first data record.
     //
     unsigned char chunk[4];
-    srec_record::encode(chunk, crc, sizeof(chunk), end);
-    output = srec_record(srec_record::type_data, address, chunk, sizeof(chunk));
+    record::encode(chunk, crc, sizeof(chunk), end);
+    output = record(record::type_data, address, chunk, sizeof(chunk));
 }
 
 
 const char *
-srec_input_filter_message_crc32::get_algorithm_name()
+srecord::input_filter_message_crc32::get_algorithm_name()
     const
 {
     return "CRC32";

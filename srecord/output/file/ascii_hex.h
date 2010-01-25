@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_ascii_hex class is used to write a file in
+  * The srecord::output_file_ascii_hex class is used to write a file in
   * Ascii-Hex-Space format.
   */
-class srec_output_file_ascii_hex:
-    public srec_output_file
+class output_file_ascii_hex:
+    public output_file
 {
 public:
     /**
       * The destrutcor.
       */
-    virtual ~srec_output_file_ascii_hex();
+    virtual ~output_file_ascii_hex();
 
 private:
     /**
@@ -42,7 +45,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_ascii_hex(const std::string &file_name);
+    output_file_ascii_hex(const std::string &file_name);
 
 public:
     /**
@@ -57,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -125,17 +128,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_ascii_hex();
+    output_file_ascii_hex();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_ascii_hex(const srec_output_file_ascii_hex &);
+    output_file_ascii_hex(const output_file_ascii_hex &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_ascii_hex &operator=(const srec_output_file_ascii_hex &);
+    output_file_ascii_hex &operator=(const output_file_ascii_hex &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_ASCII_HEX_H

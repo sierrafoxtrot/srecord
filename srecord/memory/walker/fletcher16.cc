@@ -20,25 +20,25 @@
 #include <srecord/output.h>
 
 
-srec_memory_walker_fletcher16::~srec_memory_walker_fletcher16()
+srecord::memory_walker_fletcher16::~memory_walker_fletcher16()
 {
 }
 
 
-srec_memory_walker_fletcher16::srec_memory_walker_fletcher16()
+srecord::memory_walker_fletcher16::memory_walker_fletcher16()
 {
 }
 
 
-srec_memory_walker_fletcher16::pointer
-srec_memory_walker_fletcher16::create()
+srecord::memory_walker_fletcher16::pointer
+srecord::memory_walker_fletcher16::create()
 {
-    return pointer(new srec_memory_walker_fletcher16());
+    return pointer(new srecord::memory_walker_fletcher16());
 }
 
 
 void
-srec_memory_walker_fletcher16::observe(unsigned long, const void *data,
+srecord::memory_walker_fletcher16::observe(unsigned long, const void *data,
     int length)
 {
     checksum.nextbuf(data, length);
@@ -46,7 +46,7 @@ srec_memory_walker_fletcher16::observe(unsigned long, const void *data,
 
 
 unsigned
-srec_memory_walker_fletcher16::get()
+srecord::memory_walker_fletcher16::get()
     const
 {
     return checksum.get();

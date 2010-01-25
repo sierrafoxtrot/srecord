@@ -26,7 +26,7 @@
 
 
 interval
-srec_arglex_tool::get_interval_factor(const char *name)
+srecord::arglex_tool::get_interval_factor(const char *name)
 {
     switch (token_cur())
     {
@@ -82,16 +82,16 @@ srec_arglex_tool::get_interval_factor(const char *name)
     case token_within:
         {
             token_next();
-            srec_input::pointer ifp = get_input();
-            interval result = srec_input_interval(ifp);
+            srecord::input::pointer ifp = get_input();
+            interval result = srecord::input_interval(ifp);
             return result;
         }
 
     case token_over:
         {
             token_next();
-            srec_input::pointer ifp = get_input();
-            interval result = srec_input_interval(ifp);
+            srecord::input::pointer ifp = get_input();
+            interval result = srecord::input_interval(ifp);
             return result.flatten();
         }
     }
@@ -99,7 +99,7 @@ srec_arglex_tool::get_interval_factor(const char *name)
 
 
 interval
-srec_arglex_tool::get_interval_term(const char *name)
+srecord::arglex_tool::get_interval_term(const char *name)
 {
     interval result = get_interval_factor(name);
     for (;;)
@@ -121,7 +121,7 @@ srec_arglex_tool::get_interval_term(const char *name)
 
 
 interval
-srec_arglex_tool::get_interval(const char *name)
+srecord::arglex_tool::get_interval(const char *name)
 {
     interval result = get_interval_term(name);
     for (;;)

@@ -21,14 +21,14 @@
 #include <srecord/record.h>
 
 
-srec_input_file_tektronix_extended::~srec_input_file_tektronix_extended()
+srecord::input_file_tektronix_extended::~input_file_tektronix_extended()
 {
 }
 
 
-srec_input_file_tektronix_extended::srec_input_file_tektronix_extended(
+srecord::input_file_tektronix_extended::input_file_tektronix_extended(
         const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+    srecord::input_file(a_file_name),
     garbage_warning(false),
     seen_some_input(false),
     termination_seen(false)
@@ -36,15 +36,15 @@ srec_input_file_tektronix_extended::srec_input_file_tektronix_extended(
 }
 
 
-srec_input::pointer
-srec_input_file_tektronix_extended::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_tektronix_extended::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_tektronix_extended(a_file_name));
+    return pointer(new srecord::input_file_tektronix_extended(a_file_name));
 }
 
 
 int
-srec_input_file_tektronix_extended::read_inner(srec_record &record)
+srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
 {
     for (;;)
     {
@@ -106,7 +106,7 @@ srec_input_file_tektronix_extended::read_inner(srec_record &record)
     if (get_char() != '\n')
         fatal_error("end-of-line expected");
 
-    srec_record::type_t type = srec_record::type_unknown;
+    srecord::record::type_t type = srecord::record::type_unknown;
     switch (tag)
     {
     default:
@@ -114,21 +114,21 @@ srec_input_file_tektronix_extended::read_inner(srec_record &record)
 
     case 6:
         // data
-        type = srec_record::type_data;
+        type = srecord::record::type_data;
         break;
 
     case 8:
         // termination
-        type = srec_record::type_execution_start_address;
+        type = srecord::record::type_execution_start_address;
         break;
     }
-    record = srec_record(type, address, buffer, length);
+    record = srecord::record(type, address, buffer, length);
     return 1;
 }
 
 
 bool
-srec_input_file_tektronix_extended::read(srec_record &record)
+srecord::input_file_tektronix_extended::read(srecord::record &record)
 {
     for (;;)
     {
@@ -146,7 +146,7 @@ srec_input_file_tektronix_extended::read(srec_record &record)
         seen_some_input = true;
         if
         (
-            record.get_type() != srec_record::type_execution_start_address
+            record.get_type() != srecord::record::type_execution_start_address
         &&
             termination_seen
         )
@@ -156,13 +156,13 @@ srec_input_file_tektronix_extended::read(srec_record &record)
         }
         switch (record.get_type())
         {
-        case srec_record::type_unknown:
-        case srec_record::type_header:
-        case srec_record::type_data_count:
+        case srecord::record::type_unknown:
+        case srecord::record::type_header:
+        case srecord::record::type_data_count:
             fatal_error("record type not recognised");
             break;
 
-        case srec_record::type_data:
+        case srecord::record::type_data:
             ++data_record_count;
             if (record.get_length() == 0)
             {
@@ -171,7 +171,7 @@ srec_input_file_tektronix_extended::read(srec_record &record)
             }
             break;
 
-        case srec_record::type_execution_start_address:
+        case srecord::record::type_execution_start_address:
             if (record.get_length() > 0)
             {
                 warning("data in execution start address record ignored");
@@ -189,7 +189,7 @@ srec_input_file_tektronix_extended::read(srec_record &record)
 
 
 const char *
-srec_input_file_tektronix_extended::get_file_format_name()
+srecord::input_file_tektronix_extended::get_file_format_name()
     const
 {
     return "Tektronix Extended";

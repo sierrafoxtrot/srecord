@@ -22,14 +22,14 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_byte_swap::~srec_input_filter_byte_swap()
+srecord::input_filter_byte_swap::~input_filter_byte_swap()
 {
 }
 
 
-srec_input_filter_byte_swap::srec_input_filter_byte_swap(
-        const srec_input::pointer &arg) :
-    srec_input_filter(arg),
+srecord::input_filter_byte_swap::input_filter_byte_swap(
+        const srecord::input::pointer &arg) :
+    srecord::input_filter(arg),
     buffer(),
     buffer_pos(0),
     mask(1)
@@ -37,28 +37,28 @@ srec_input_filter_byte_swap::srec_input_filter_byte_swap(
 }
 
 
-srec_input::pointer
-srec_input_filter_byte_swap::create(const srec_input::pointer &a_deeper)
+srecord::input::pointer
+srecord::input_filter_byte_swap::create(const srecord::input::pointer &a_deeper)
 {
-    return pointer(new srec_input_filter_byte_swap(a_deeper));
+    return pointer(new srecord::input_filter_byte_swap(a_deeper));
 }
 
 
 bool
-srec_input_filter_byte_swap::read(srec_record &record)
+srecord::input_filter_byte_swap::read(srecord::record &record)
 {
     for (;;)
     {
         while
         (
-            buffer.get_type() != srec_record::type_data
+            buffer.get_type() != srecord::record::type_data
         ||
             buffer_pos >= buffer.get_length()
         )
         {
-            if (!srec_input_filter::read(buffer))
+            if (!srecord::input_filter::read(buffer))
                 return false;
-            if (buffer.get_type() != srec_record::type_data)
+            if (buffer.get_type() != srecord::record::type_data)
             {
                 record = buffer;
                 record.set_address(record.get_address() ^ mask);
@@ -69,14 +69,14 @@ srec_input_filter_byte_swap::read(srec_record &record)
 
         unsigned long addr = (buffer.get_address() + buffer_pos) ^ mask;
         unsigned char c = buffer.get_data(buffer_pos++);
-        record = srec_record(srec_record::type_data, addr, &c, 1);
+        record = srecord::record(srecord::record::type_data, addr, &c, 1);
         return true;
     }
 }
 
 
 void
-srec_input_filter_byte_swap::command_line(srec_arglex_tool *cmdln)
+srecord::input_filter_byte_swap::command_line(srecord::arglex_tool *cmdln)
 {
     if (cmdln->can_get_number())
     {

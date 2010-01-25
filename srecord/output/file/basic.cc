@@ -25,7 +25,7 @@
 #include <srecord/record.h>
 
 
-srec_output_file_basic::~srec_output_file_basic()
+srecord::output_file_basic::~output_file_basic()
 {
     if (range.empty())
         emit_byte(0xFF);
@@ -45,8 +45,8 @@ srec_output_file_basic::~srec_output_file_basic()
 }
 
 
-srec_output_file_basic::srec_output_file_basic(const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+srecord::output_file_basic::output_file_basic(const std::string &a_file_name) :
+    srecord::output_file(a_file_name),
     taddr(0),
     column(0),
     current_address(0),
@@ -55,15 +55,15 @@ srec_output_file_basic::srec_output_file_basic(const std::string &a_file_name) :
 }
 
 
-srec_output::pointer
-srec_output_file_basic::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_basic::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_basic(a_file_name));
+    return pointer(new srecord::output_file_basic(a_file_name));
 }
 
 
 void
-srec_output_file_basic::emit_byte(int n)
+srecord::output_file_basic::emit_byte(int n)
 {
     char buffer[8];
     sprintf(buffer, "%d", (unsigned char)n);
@@ -90,7 +90,7 @@ srec_output_file_basic::emit_byte(int n)
 
 
 void
-srec_output_file_basic::write(const srec_record &record)
+srecord::output_file_basic::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
@@ -98,7 +98,7 @@ srec_output_file_basic::write(const srec_record &record)
         // ignore
         break;
 
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // emit header records as comments in the file
         {
             bool bol = true;
@@ -124,7 +124,7 @@ srec_output_file_basic::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         if (range.empty())
             current_address = record.get_address();
         range +=
@@ -143,7 +143,7 @@ srec_output_file_basic::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         taddr = record.get_address();
         break;
     }
@@ -151,32 +151,32 @@ srec_output_file_basic::write(const srec_record &record)
 
 
 void
-srec_output_file_basic::line_length_set(int n)
+srecord::output_file_basic::line_length_set(int n)
 {
     line_length = n;
 }
 
 
 void
-srec_output_file_basic::address_length_set(int)
+srecord::output_file_basic::address_length_set(int)
 {
     // ignore
 }
 
 
 int
-srec_output_file_basic::preferred_block_size_get()
+srecord::output_file_basic::preferred_block_size_get()
     const
 {
     //
     // Irrelevant.  Use the largest we can get.
     //
-    return srec_record::max_data_length;
+    return srecord::record::max_data_length;
 }
 
 
 const char *
-srec_output_file_basic::format_name()
+srecord::output_file_basic::format_name()
     const
 {
     return "Basic";

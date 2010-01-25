@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The emon52 class is used to parse an EMON52 formatted file (Elektor
-  * Monitor, dunno what the 52 is for).
+  * The srecord::input_file_emon52 class is used to parse an EMON52
+  * formatted file (Elektor Monitor, dunno what the 52 is for).
   */
-class srec_input_file_emon52:
-    public srec_input_file
+class input_file_emon52:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_emon52();
+    virtual ~input_file_emon52();
 
 private:
     /**
@@ -43,7 +45,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_emon52(const std::string &file_name);
+    input_file_emon52(const std::string &file_name);
 
 public:
     /**
@@ -59,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -75,17 +77,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_emon52();
+    input_file_emon52();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_emon52(const srec_input_file_emon52 &);
+    input_file_emon52(const input_file_emon52 &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_emon52 &operator=(const srec_input_file_emon52 &);
+    input_file_emon52 &operator=(const input_file_emon52 &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_EMON52_H

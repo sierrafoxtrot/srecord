@@ -20,29 +20,29 @@
 #include <srecord/input/filter/interval/length.h>
 
 
-srec_input_filter_interval_length::~srec_input_filter_interval_length()
+srecord::input_filter_interval_length::~input_filter_interval_length()
 {
 }
 
 
-srec_input_filter_interval_length::srec_input_filter_interval_length(
+srecord::input_filter_interval_length::input_filter_interval_length(
         const pointer &a_deeper, long a_address, int a_length, endian_t a_end,
         int a_width, bool inclusive) :
-    srec_input_filter_interval(a_deeper, a_address, a_length, a_end, inclusive),
+    input_filter_interval(a_deeper, a_address, a_length, a_end, inclusive),
     width(a_width < 1 ? 1 : a_width)
 {
 
 }
 
 
-srec_input::pointer
-srec_input_filter_interval_length::create(const pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_interval_length::create(const pointer &a_deeper,
     long a_address, int a_length, endian_t a_end, int a_width, bool inclusive)
 {
     return
         pointer
         (
-            new srec_input_filter_interval_length
+            new input_filter_interval_length
             (
                 a_deeper,
                 a_address,
@@ -56,7 +56,7 @@ srec_input_filter_interval_length::create(const pointer &a_deeper,
 
 
 long
-srec_input_filter_interval_length::calculate_result()
+srecord::input_filter_interval_length::calculate_result()
     const
 {
     const interval &r = get_range();

@@ -23,19 +23,22 @@
 #include <srecord/endian.h>
 #include <srecord/input/filter/message.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_filter_message_adler32 class is used to represent the
+  * The srecord::input_filter_message_adler32 class is used to represent the
   * state of a checksum filter that inserts an Adler 32 checksum into
   * the data.
   */
-class srec_input_filter_message_adler32:
-    public srec_input_filter_message
+class input_filter_message_adler32:
+    public input_filter_message
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_message_adler32();
+    virtual ~input_filter_message_adler32();
 
 private:
     /**
@@ -44,7 +47,7 @@ private:
       * @param end
       *     The byte order.
       */
-    srec_input_filter_message_adler32(const srec_input::pointer &deeper,
+    input_filter_message_adler32(const input::pointer &deeper,
         unsigned long address, endian_t end);
 
 public:
@@ -57,12 +60,12 @@ public:
       * @param end
       *     The byte order.
       */
-    static pointer create(const srec_input::pointer &deeper,
+    static pointer create(const input::pointer &deeper,
         unsigned long address, endian_t end);
 
 protected:
     // See base class for documentation.
-    void process(const srec_memory &input, srec_record &output);
+    void process(const memory &input, record &output);
 
     // See base class for documentation.
     const char *get_algorithm_name() const;
@@ -83,19 +86,21 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_message_adler32();
+    input_filter_message_adler32();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_message_adler32(
-        const srec_input_filter_message_adler32 &);
+    input_filter_message_adler32(
+        const input_filter_message_adler32 &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_message_adler32 &operator=(
-        const srec_input_filter_message_adler32 &);
+    input_filter_message_adler32 &operator=(
+        const input_filter_message_adler32 &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

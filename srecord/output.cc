@@ -26,18 +26,18 @@
 #include <srecord/record.h>
 
 
-srec_output::srec_output()
+srecord::output::output()
 {
 }
 
 
-srec_output::~srec_output()
+srecord::output::~output()
 {
 }
 
 
 void
-srec_output::fatal_error(const char *fmt, ...)
+srecord::output::fatal_error(const char *fmt, ...)
     const
 {
     va_list ap;
@@ -48,7 +48,7 @@ srec_output::fatal_error(const char *fmt, ...)
 
 
 void
-srec_output::fatal_error_v(const char *fmt, va_list ap)
+srecord::output::fatal_error_v(const char *fmt, va_list ap)
     const
 {
     char buf[1024];
@@ -58,7 +58,7 @@ srec_output::fatal_error_v(const char *fmt, va_list ap)
 
 
 void
-srec_output::fatal_error_errno(const char *fmt, ...)
+srecord::output::fatal_error_errno(const char *fmt, ...)
     const
 {
     va_list ap;
@@ -69,7 +69,7 @@ srec_output::fatal_error_errno(const char *fmt, ...)
 
 
 void
-srec_output::fatal_error_errno_v(const char *fmt, va_list ap)
+srecord::output::fatal_error_errno_v(const char *fmt, va_list ap)
     const
 {
     int n = errno;
@@ -87,7 +87,7 @@ srec_output::fatal_error_errno_v(const char *fmt, va_list ap)
 
 
 void
-srec_output::warning(const char *fmt, ...)
+srecord::output::warning(const char *fmt, ...)
     const
 {
     va_list ap;
@@ -98,7 +98,7 @@ srec_output::warning(const char *fmt, ...)
 
 
 void
-srec_output::warning_v(const char *fmt, va_list ap)
+srecord::output::warning_v(const char *fmt, va_list ap)
     const
 {
     char buf[1024];
@@ -108,13 +108,13 @@ srec_output::warning_v(const char *fmt, va_list ap)
 
 
 void
-srec_output::write_header(const srec_record *rp)
+srecord::output::write_header(const srecord::record *rp)
 {
     if (rp)
     {
         // Make sure we are writing a header record
-        srec_record record(*rp);
-        record.set_type(srec_record::type_header);
+        srecord::record record(*rp);
+        record.set_type(srecord::record::type_header);
         write(record);
     }
     else
@@ -124,11 +124,11 @@ srec_output::write_header(const srec_record *rp)
         // If you want to change it, this is the place.
         //
         static char hdr[] = "http://srecord.sourceforge.net/";
-        srec_record record
+        srecord::record record
         (
-            srec_record::type_header,
-            (srec_record::address_t)0,
-            (const srec_record::data_t *)hdr,
+            srecord::record::type_header,
+            (srecord::record::address_t)0,
+            (const srecord::record::data_t *)hdr,
             strlen(hdr)
         );
         write(record);
@@ -137,14 +137,17 @@ srec_output::write_header(const srec_record *rp)
 
 
 void
-srec_output::write_data(unsigned long address, const void *data, size_t length)
+srecord::output::write_data(unsigned long address, const void *data,
+    size_t length)
 {
-    const srec_record::data_t *data_p = (const srec_record::data_t *)data;
+    const srecord::record::data_t *data_p =
+        (const srecord::record::data_t *)data;
     size_t block_size = preferred_block_size_get();
     while (length > 0)
     {
         int nbytes = (length > block_size ? block_size : length);
-        srec_record record(srec_record::type_data, address, data_p, nbytes);
+        srecord::record
+            record(srecord::record::type_data, address, data_p, nbytes);
         write(record);
         address += nbytes;
         data_p += nbytes;
@@ -154,13 +157,13 @@ srec_output::write_data(unsigned long address, const void *data, size_t length)
 
 
 void
-srec_output::write_execution_start_address(const srec_record *rp)
+srecord::output::write_execution_start_address(const srecord::record *rp)
 {
     if (rp)
     {
         // Make sure we are writing an execution start address record
-        srec_record record(*rp);
-        record.set_type(srec_record::type_execution_start_address);
+        srecord::record record(*rp);
+        record.set_type(srecord::record::type_execution_start_address);
         write(record);
     }
     else
@@ -169,20 +172,21 @@ srec_output::write_execution_start_address(const srec_record *rp)
         // This is the default execution start address record.
         // If you want to change it, this is the place.
         //
-        srec_record record(srec_record::type_execution_start_address, 0, 0, 0);
+        srecord::record
+            record(srecord::record::type_execution_start_address, 0, 0, 0);
         write(record);
     }
 }
 
 
 void
-srec_output::notify_upper_bound(unsigned long)
+srecord::output::notify_upper_bound(unsigned long)
 {
 }
 
 
 void
-srec_output::command_line(srec_arglex_tool *)
+srecord::output::command_line(srecord::arglex_tool *)
 {
     // Do nothing.
 }

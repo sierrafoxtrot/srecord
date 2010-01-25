@@ -20,27 +20,27 @@
 #include <srecord/input/filter/interval/minimum.h>
 
 
-srec_input_filter_interval_minimum::~srec_input_filter_interval_minimum()
+srecord::input_filter_interval_minimum::~input_filter_interval_minimum()
 {
 }
 
 
-srec_input_filter_interval_minimum::srec_input_filter_interval_minimum(
+srecord::input_filter_interval_minimum::input_filter_interval_minimum(
         const pointer &a_deeper, long a_address, int a_length, endian_t a_end,
         bool inclusive) :
-    srec_input_filter_interval(a_deeper, a_address, a_length, a_end, inclusive)
+    input_filter_interval(a_deeper, a_address, a_length, a_end, inclusive)
 {
 }
 
 
-srec_input::pointer
-srec_input_filter_interval_minimum::create(const pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_interval_minimum::create(const pointer &a_deeper,
     long a_address, int a_length, endian_t a_end, bool inclusive)
 {
     return
         pointer
         (
-            new srec_input_filter_interval_minimum
+            new input_filter_interval_minimum
             (
                 a_deeper,
                 a_address,
@@ -53,7 +53,7 @@ srec_input_filter_interval_minimum::create(const pointer &a_deeper,
 
 
 long
-srec_input_filter_interval_minimum::calculate_result()
+srecord::input_filter_interval_minimum::calculate_result()
     const
 {
     return get_range().get_lowest();

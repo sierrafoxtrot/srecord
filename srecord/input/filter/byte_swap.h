@@ -23,18 +23,20 @@
 #include <srecord/input/filter.h>
 #include <srecord/record.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_filter_byte_swap class is used to reverse the
+  * The srecord::input_filter_byte_swap class is used to reverse the
   * even-addressed and odd-addressed bytes in an input source.
   */
-class srec_input_filter_byte_swap:
-    public srec_input_filter
+class input_filter_byte_swap:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_byte_swap();
+    virtual ~input_filter_byte_swap();
 
 private:
     /**
@@ -43,7 +45,7 @@ private:
       * @param deeper
       *     The incoming data sourec to be byte-swapped.
       */
-    srec_input_filter_byte_swap(const srec_input::pointer &deeper);
+    input_filter_byte_swap(const input::pointer &deeper);
 
 public:
     /**
@@ -53,21 +55,21 @@ public:
       * @param deeper
       *     The incoming data sourec to be byte-swapped.
       */
-    static pointer create(const srec_input::pointer &deeper);
+    static pointer create(const input::pointer &deeper);
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
-    void command_line(srec_arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln);
 
 private:
     /**
       * The buffer instance variable is used to remember the data
       * fetched from the deeper data source.
       */
-    srec_record buffer;
+    record buffer;
 
     /**
       * The buffer_pos instance variable is used to remeber the byte
@@ -80,22 +82,24 @@ private:
       * be xor-ed with the address to form the byte-swapped address.
       * It defaults to 1, but can be altered by command line option.
       */
-    srec_record::address_t mask;
+    record::address_t mask;
 
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_byte_swap();
+    input_filter_byte_swap();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_byte_swap(const srec_input_filter_byte_swap &);
+    input_filter_byte_swap(const input_filter_byte_swap &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_byte_swap &operator=(const srec_input_filter_byte_swap &);
+    input_filter_byte_swap &operator=(const input_filter_byte_swap &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_BYTE_SWAP_H

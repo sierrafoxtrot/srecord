@@ -21,19 +21,21 @@
 
 #include <srecord/input.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_catenate class is used to represent an input source
+  * The srecord::input_catenate class is used to represent an input source
   * which presents two inoput sources af if they were a single input
   * source.
   */
-class srec_input_catenate:
-    public srec_input
+class input_catenate:
+    public input
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_catenate();
+    virtual ~input_catenate();
 
 private:
     /**
@@ -45,7 +47,7 @@ private:
       * @param in2
       *     The second of the inputs to be read.
       */
-    srec_input_catenate(const pointer &in1, const pointer &in2);
+    input_catenate(const pointer &in1, const pointer &in2);
 
 public:
     /**
@@ -61,7 +63,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     std::string filename() const;
@@ -91,17 +93,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_catenate();
+    input_catenate();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_catenate(const srec_input_catenate &);
+    input_catenate(const input_catenate &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_catenate &operator=(const srec_input_catenate &);
+    input_catenate &operator=(const input_catenate &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

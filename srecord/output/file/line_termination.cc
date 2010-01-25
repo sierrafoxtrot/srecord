@@ -22,12 +22,13 @@
 #include <srecord/output/file.h>
 
 
-srec_output_file::line_termination_t srec_output_file::line_termination =
-    srec_output_file::line_termination_native;
+srecord::output_file::line_termination_t
+  srecord::output_file::line_termination =
+    srecord::output_file::line_termination_native;
 
 
-srec_output_file::line_termination_t
-srec_output_file::line_termination_guess()
+srecord::output_file::line_termination_t
+srecord::output_file::line_termination_guess()
 {
 #if __dos__ || __windows__ || __WINDOWS__ || __CYGWIN__ | _WIN32
     // Perform this test first, so that Cygwin thinks it's on Windows,
@@ -48,7 +49,7 @@ srec_output_file::line_termination_guess()
 
 
 bool
-srec_output_file::line_termination_by_name(const std::string &name)
+srecord::output_file::line_termination_by_name(const std::string &name)
 {
     struct table_t
     {

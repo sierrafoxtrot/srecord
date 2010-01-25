@@ -22,29 +22,29 @@
 #include <srecord/record.h>
 
 
-srec_input_file_ti_tagged::~srec_input_file_ti_tagged()
+srecord::input_file_ti_tagged::~input_file_ti_tagged()
 {
 }
 
 
-srec_input_file_ti_tagged::srec_input_file_ti_tagged(
+srecord::input_file_ti_tagged::input_file_ti_tagged(
         const std::string &a_filename) :
-    srec_input_file(a_filename),
+    input_file(a_filename),
     address(0),
     csum(0)
 {
 }
 
 
-srec_input::pointer
-srec_input_file_ti_tagged::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_ti_tagged::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_ti_tagged(a_file_name));
+    return pointer(new input_file_ti_tagged(a_file_name));
 }
 
 
 int
-srec_input_file_ti_tagged::get_char()
+srecord::input_file_ti_tagged::get_char()
 {
     int c = inherited::get_char();
     if (c < 0 || c == '\n')
@@ -56,7 +56,7 @@ srec_input_file_ti_tagged::get_char()
 
 
 bool
-srec_input_file_ti_tagged::read(srec_record &record)
+srecord::input_file_ti_tagged::read(record &result)
 {
     for (;;)
     {
@@ -78,7 +78,7 @@ srec_input_file_ti_tagged::read(srec_record &record)
                 // followed by 2 data characters (1 data byte)
                 unsigned char data[1];
                 data[0] = get_byte();
-                record = srec_record(srec_record::type_data, address, data, 1);
+                result = record(record::type_data, address, data, 1);
                 ++address;
                 return true;
             }
@@ -133,7 +133,7 @@ srec_input_file_ti_tagged::read(srec_record &record)
                 unsigned char data[2];
                 data[0] = get_byte();
                 data[1] = get_byte();
-                record = srec_record(srec_record::type_data, address, data, 2);
+                result = record(record::type_data, address, data, 2);
                 address += 2;
                 return true;
             }
@@ -166,7 +166,7 @@ srec_input_file_ti_tagged::read(srec_record &record)
                 }
                 if (n > max)
                     n = max;
-                record = srec_record(srec_record::type_header, 0, buffer, n);
+                result = record(record::type_header, 0, buffer, n);
                 delete buffer;
             }
             return true;
@@ -176,7 +176,7 @@ srec_input_file_ti_tagged::read(srec_record &record)
 
 
 const char *
-srec_input_file_ti_tagged::get_file_format_name()
+srecord::input_file_ti_tagged::get_file_format_name()
     const
 {
     return "Texas Instruments Tagged (SDSMAC)";

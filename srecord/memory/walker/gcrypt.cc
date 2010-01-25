@@ -19,26 +19,27 @@
 #include <srecord/memory/walker/gcrypt.h>
 
 
-srec_memory_walker_gcrypt::~srec_memory_walker_gcrypt()
+srecord::memory_walker_gcrypt::~memory_walker_gcrypt()
 {
 }
 
 
-srec_memory_walker_gcrypt::srec_memory_walker_gcrypt(gcry_md_hd_t a_handle) :
+srecord::memory_walker_gcrypt::memory_walker_gcrypt(gcry_md_hd_t a_handle) :
     handle(a_handle)
 {
 }
 
 
-srec_memory_walker::pointer
-srec_memory_walker_gcrypt::create(gcry_md_hd_t a_handle)
+srecord::memory_walker::pointer
+srecord::memory_walker_gcrypt::create(gcry_md_hd_t a_handle)
 {
-    return pointer(new srec_memory_walker_gcrypt(a_handle));
+    return pointer(new srecord::memory_walker_gcrypt(a_handle));
 }
 
 
 void
-srec_memory_walker_gcrypt::observe(unsigned long, const void *data, int length)
+srecord::memory_walker_gcrypt::observe(unsigned long, const void *data,
+    int length)
 {
 #ifdef HAVE_LIBGCRYPT
     gcry_md_write(handle, data, length);

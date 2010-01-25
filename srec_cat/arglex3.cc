@@ -21,7 +21,7 @@
 
 
 srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv) :
-    srec_arglex_tool(argc, argv)
+    arglex_tool(argc, argv)
 {
     static const table_ty table[] =
     {
@@ -43,7 +43,7 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv) :
         //
         { "-Start_Address", token_execution_start_address, },
 
-        ARGLEX_END_MARKER
+        SRECORD_ARGLEX_END_MARKER
     };
 
     table_set(table);

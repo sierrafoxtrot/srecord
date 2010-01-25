@@ -34,28 +34,28 @@
 #include <process.h>
 #endif
 
-static const arglex::table_ty default_table[] =
+static const srecord::arglex::table_ty default_table[] =
 {
-    { "-",              arglex::token_stdio,            },
-    { "-Help",          arglex::token_help,             },
-    { "-LICense",       arglex::token_license,          },
-    { "-Page_Length",   arglex::token_page_length,      },
-    { "-Page_Width",    arglex::token_page_width,       },
-    { "-TRACIng",       arglex::token_tracing,          },
-    { "-Verbose",       arglex::token_verbose,          },
-    { "-VERSion",       arglex::token_version,          },
-    ARGLEX_END_MARKER
+    { "-",            srecord::arglex::token_stdio,       },
+    { "-Help",        srecord::arglex::token_help,        },
+    { "-LICense",     srecord::arglex::token_license,     },
+    { "-Page_Length", srecord::arglex::token_page_length, },
+    { "-Page_Width",  srecord::arglex::token_page_width,  },
+    { "-TRACIng",     srecord::arglex::token_tracing,     },
+    { "-Verbose",     srecord::arglex::token_verbose,     },
+    { "-VERSion",     srecord::arglex::token_version,     },
+    SRECORD_ARGLEX_END_MARKER
 };
 
 
-arglex::arglex() :
+srecord::arglex::arglex() :
     usage_tail_(0)
 {
     table_set(default_table);
 }
 
 
-arglex::arglex(int ac, char **av) :
+srecord::arglex::arglex(int ac, char **av) :
     usage_tail_(0)
 {
     progname_set(av[0]);
@@ -71,7 +71,7 @@ arglex::arglex(int ac, char **av) :
 
 
 void
-arglex::read_arguments_file(const char *filename)
+srecord::arglex::read_arguments_file(const char *filename)
 {
     FILE *fp = fopen(filename, "r");
     if (!fp)
@@ -130,13 +130,13 @@ arglex::read_arguments_file(const char *filename)
 }
 
 
-arglex::~arglex()
+srecord::arglex::~arglex()
 {
 }
 
 
 void
-arglex::table_set(const table_ty *tp)
+srecord::arglex::table_set(const table_ty *tp)
 {
     tables.push_back(tp);
 }
@@ -146,7 +146,7 @@ static const char *partial;
 
 
 bool
-arglex::compare(const char *formal, const char *actual)
+srecord::arglex::compare(const char *formal, const char *actual)
 {
     for (;;)
     {
@@ -374,7 +374,7 @@ default:
 //
 
 int
-arglex::token_next()
+srecord::arglex::token_next()
 {
     const table_ty  *tp;
     const table_ty  *hit[20];
@@ -519,14 +519,14 @@ arglex::token_next()
 
 
 void
-arglex::deprecated_option(const std::string &old_fashioned)
+srecord::arglex::deprecated_option(const std::string &old_fashioned)
 {
     deprecated_options.push_back(old_fashioned);
 }
 
 
 void
-arglex::check_deprecated(const std::string &actual)
+srecord::arglex::check_deprecated(const std::string &actual)
     const
 {
     for
@@ -551,7 +551,7 @@ arglex::check_deprecated(const std::string &actual)
 
 
 const char *
-arglex::token_name(int n)
+srecord::arglex::token_name(int n)
     const
 {
     switch (n)
@@ -592,7 +592,7 @@ arglex::token_name(int n)
 
 
 void
-arglex::help(const char *name)
+srecord::arglex::help(const char *name)
     const
 {
     if (!name)
@@ -605,7 +605,7 @@ arglex::help(const char *name)
 
 
 void
-arglex::version()
+srecord::arglex::version()
     const
 {
     print_version();
@@ -614,15 +614,15 @@ arglex::version()
 
 
 void
-arglex::license()
+srecord::arglex::license()
     const
 {
-    help("srec_license");
+    help("srecord::license");
 }
 
 
 void
-arglex::bad_argument()
+srecord::arglex::bad_argument()
     const
 {
     switch (token_cur())
@@ -656,7 +656,7 @@ arglex::bad_argument()
 
 
 int
-arglex::token_first()
+srecord::arglex::token_first()
 {
     switch (token_next())
     {
@@ -686,14 +686,14 @@ arglex::token_first()
 
 
 void
-arglex::usage_tail_set(const char *s)
+srecord::arglex::usage_tail_set(const char *s)
 {
     usage_tail_ = s;
 }
 
 
 const char *
-arglex::usage_tail_get()
+srecord::arglex::usage_tail_get()
     const
 {
     if (!usage_tail_)
@@ -703,7 +703,7 @@ arglex::usage_tail_get()
 
 
 void
-arglex::usage()
+srecord::arglex::usage()
     const
 {
     std::cerr << "Usage: " << progname_get() << " [ <option>... ] "
@@ -717,14 +717,14 @@ arglex::usage()
 
 
 void
-arglex::default_command_line_processing()
+srecord::arglex::default_command_line_processing()
 {
     bad_argument();
 }
 
 
 void
-arglex::fatal_error(const char *fmt, ...)
+srecord::arglex::fatal_error(const char *fmt, ...)
 {
     va_list ap;
     va_start(ap, fmt);

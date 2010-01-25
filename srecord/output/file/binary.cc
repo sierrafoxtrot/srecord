@@ -21,32 +21,32 @@
 #include <srecord/record.h>
 
 
-srec_output_file_binary::~srec_output_file_binary()
+srecord::output_file_binary::~output_file_binary()
 {
 }
 
 
-srec_output_file_binary::srec_output_file_binary(
+srecord::output_file_binary::output_file_binary(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name)
+    srecord::output_file(a_file_name)
 {
     if (line_termination == line_termination_native)
         line_termination = line_termination_binary;
 }
 
 
-srec_output::pointer
-srec_output_file_binary::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_binary::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_binary(a_file_name));
+    return pointer(new srecord::output_file_binary(a_file_name));
 }
 
 
 void
-srec_output_file_binary::write(const srec_record &record)
+srecord::output_file_binary::write(const srecord::record &record)
 {
     // This format can't do header records or termination records
-    if (record.get_type() != srec_record::type_data)
+    if (record.get_type() != srecord::record::type_data)
         return;
     seek_to(record.get_address());
     const unsigned char *data = record.get_data();
@@ -57,7 +57,7 @@ srec_output_file_binary::write(const srec_record &record)
 
 
 void
-srec_output_file_binary::line_length_set(int)
+srecord::output_file_binary::line_length_set(int)
 {
     //
     // Irrelevant.  Ignore.
@@ -66,7 +66,7 @@ srec_output_file_binary::line_length_set(int)
 
 
 void
-srec_output_file_binary::address_length_set(int)
+srecord::output_file_binary::address_length_set(int)
 {
     //
     // Irrelevant.  Ignore.
@@ -75,18 +75,18 @@ srec_output_file_binary::address_length_set(int)
 
 
 int
-srec_output_file_binary::preferred_block_size_get()
+srecord::output_file_binary::preferred_block_size_get()
     const
 {
     //
     // Irrelevant.  Use the largest we can get.
     //
-    return srec_record::max_data_length;
+    return srecord::record::max_data_length;
 }
 
 
 const char *
-srec_output_file_binary::format_name()
+srecord::output_file_binary::format_name()
     const
 {
     return "Binary";

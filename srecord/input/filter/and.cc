@@ -21,35 +21,35 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_and::~srec_input_filter_and()
+srecord::input_filter_and::~input_filter_and()
 {
 }
 
 
-srec_input_filter_and::srec_input_filter_and(const srec_input::pointer &a1,
+srecord::input_filter_and::input_filter_and(const input::pointer &a1,
         int a2) :
-    srec_input_filter(a1),
+    input_filter(a1),
     value(a2)
 {
 }
 
 
-srec_input::pointer
-srec_input_filter_and::create(const srec_input::pointer &a_deeper, int a_mask)
+srecord::input::pointer
+srecord::input_filter_and::create(const input::pointer &a_deeper, int a_mask)
 {
-    return pointer(new srec_input_filter_and(a_deeper, a_mask));
+    return pointer(new input_filter_and(a_deeper, a_mask));
 }
 
 
 bool
-srec_input_filter_and::read(srec_record &record)
+srecord::input_filter_and::read(record &result)
 {
-    if (!srec_input_filter::read(record))
+    if (!input_filter::read(result))
         return false;
-    if (record.get_type() == srec_record::type_data)
+    if (result.get_type() == record::type_data)
     {
-        for (size_t j = 0; j < record.get_length(); ++j)
-            record.set_data(j, record.get_data(j) & value);
+        for (size_t j = 0; j < result.get_length(); ++j)
+            result.set_data(j, result.get_data(j) & value);
     }
     return true;
 }

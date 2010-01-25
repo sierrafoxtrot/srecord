@@ -20,7 +20,7 @@
 #include <srecord/record.h>
 
 
-srec_output_file_os65v::~srec_output_file_os65v()
+srecord::output_file_os65v::~output_file_os65v()
 {
     //
     // The OS65 audio tape loader seems to have had two ways of
@@ -42,8 +42,8 @@ srec_output_file_os65v::~srec_output_file_os65v()
 }
 
 
-srec_output_file_os65v::srec_output_file_os65v(const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+srecord::output_file_os65v::output_file_os65v(const std::string &a_file_name) :
+    srecord::output_file(a_file_name),
     address(0),
     state(0),
     seen_start_address(false)
@@ -60,23 +60,23 @@ srec_output_file_os65v::srec_output_file_os65v(const std::string &a_file_name) :
 }
 
 
-srec_output::pointer
-srec_output_file_os65v::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_os65v::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_os65v(a_file_name));
+    return pointer(new srecord::output_file_os65v(a_file_name));
 }
 
 
 void
-srec_output_file_os65v::write(const srec_record &record)
+srecord::output_file_os65v::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // All header data is discarded
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         if (seen_start_address)
             fatal_error("more data following execution start address (bug)");
         if (address != record.get_address() || state == 0)
@@ -107,11 +107,11 @@ srec_output_file_os65v::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         if (enable_goto_addr_flag)
         {
             if (address != record.get_address() || state == 0)
@@ -129,39 +129,39 @@ srec_output_file_os65v::write(const srec_record &record)
         seen_start_address = true;
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
     }
 }
 
 
 void
-srec_output_file_os65v::line_length_set(int)
+srecord::output_file_os65v::line_length_set(int)
 {
     // Irrelevant.  Ignore.
 }
 
 
 void
-srec_output_file_os65v::address_length_set(int)
+srecord::output_file_os65v::address_length_set(int)
 {
     // Irrelevant.  Ignore.
 }
 
 
 int
-srec_output_file_os65v::preferred_block_size_get()
+srecord::output_file_os65v::preferred_block_size_get()
     const
 {
     //
     // Irrelevant.  Use the largest we can get.
     //
-    return srec_record::max_data_length;
+    return srecord::record::max_data_length;
 }
 
 
 const char *
-srec_output_file_os65v::mode(void)
+srecord::output_file_os65v::mode(void)
     const
 {
     return "wb";
@@ -169,7 +169,7 @@ srec_output_file_os65v::mode(void)
 
 
 const char *
-srec_output_file_os65v::format_name()
+srecord::output_file_os65v::format_name()
     const
 {
     return "OS65V";

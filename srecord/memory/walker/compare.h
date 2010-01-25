@@ -23,10 +23,13 @@
 #include <srecord/interval.h>
 #include <srecord/memory/walker.h>
 
-class srec_memory; // forward
+namespace srecord
+{
+
+class memory; // forward
 
 /**
-  * The srec_memory_walker_compare class is used to represent a memory
+  * The srecord::memory_walker_compare class is used to represent a memory
   * walker which compares memory data with another memory instance.
   *
   * Note that this is strictly an improper subset comparison.  I.e. that
@@ -36,16 +39,16 @@ class srec_memory; // forward
   * For a complete equality test, you need to use this comparison both
   * ways round.
   */
-class srec_memory_walker_compare:
-    public srec_memory_walker
+class memory_walker_compare:
+    public memory_walker
 {
 public:
-    typedef boost::shared_ptr<srec_memory_walker_compare> pointer;
+    typedef boost::shared_ptr<memory_walker_compare> pointer;
 
     /**
       * The destructor.
       */
-    virtual ~srec_memory_walker_compare();
+    virtual ~memory_walker_compare();
 
 private:
     /**
@@ -58,7 +61,7 @@ private:
       *     Whether or not to check that the data agrees as well as the
       *     address ranges.
       */
-    srec_memory_walker_compare(const srec_memory &other, bool check_wrong);
+    memory_walker_compare(const memory &other, bool check_wrong);
 
 public:
     /**
@@ -71,7 +74,7 @@ public:
       *     Whether or not to check that the data agrees as well as the
       *     address ranges.
       */
-    static pointer create(const srec_memory &other, bool check_wrong);
+    static pointer create(const memory &other, bool check_wrong);
 
     // See base class for documentation.
     virtual void observe(unsigned long, const void *, int);
@@ -96,7 +99,7 @@ private:
       * The other instance variable is used to remember the other memory
       * instance to be checked against this one.
       */
-    const srec_memory &other;
+    const memory &other;
 
     /**
       * The check_wrong instance variable is used to remember whether or
@@ -121,17 +124,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_memory_walker_compare();
+    memory_walker_compare();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_memory_walker_compare(const srec_memory_walker_compare &);
+    memory_walker_compare(const memory_walker_compare &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_memory_walker_compare &operator=(const srec_memory_walker_compare &);
+    memory_walker_compare &operator=(const memory_walker_compare &);
+};
+
 };
 
 #endif // SRECORD_MEMORY_WALKER_COMPARE_H

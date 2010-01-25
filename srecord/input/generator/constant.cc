@@ -22,36 +22,36 @@
 #include <srecord/input/generator/constant.h>
 
 
-srec_input_generator_constant::~srec_input_generator_constant()
+srecord::input_generator_constant::~input_generator_constant()
 {
 }
 
 
-srec_input_generator_constant::srec_input_generator_constant(
+srecord::input_generator_constant::input_generator_constant(
         const interval &a_range, unsigned char a_datum) :
-    srec_input_generator(a_range),
+    srecord::input_generator(a_range),
     datum(a_datum)
 {
 }
 
 
-srec_input::pointer
-srec_input_generator_constant::create(const interval &a_range,
+srecord::input::pointer
+srecord::input_generator_constant::create(const interval &a_range,
     unsigned char a_datum)
 {
-    return pointer(new srec_input_generator_constant(a_range, a_datum));
+    return pointer(new srecord::input_generator_constant(a_range, a_datum));
 }
 
 
 unsigned char
-srec_input_generator_constant::generate_data(unsigned long)
+srecord::input_generator_constant::generate_data(unsigned long)
 {
     return datum;
 }
 
 
 std::string
-srec_input_generator_constant::filename()
+srecord::input_generator_constant::filename()
     const
 {
     char buffer[20];
@@ -61,7 +61,7 @@ srec_input_generator_constant::filename()
 
 
 const char *
-srec_input_generator_constant::get_file_format_name()
+srecord::input_generator_constant::get_file_format_name()
     const
 {
     return "constant";

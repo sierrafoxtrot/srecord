@@ -22,28 +22,28 @@
 #include <srecord/record.h>
 
 
-srec_input_file_vmem::~srec_input_file_vmem()
+srecord::input_file_vmem::~input_file_vmem()
 {
 }
 
 
-srec_input_file_vmem::srec_input_file_vmem(const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+srecord::input_file_vmem::input_file_vmem(const std::string &a_file_name) :
+    srecord::input_file(a_file_name),
     seen_some_input(false),
     address(0)
 {
 }
 
 
-srec_input::pointer
-srec_input_file_vmem::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_vmem::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_vmem(a_file_name));
+    return pointer(new srecord::input_file_vmem(a_file_name));
 }
 
 
 bool
-srec_input_file_vmem::read(srec_record &record)
+srecord::input_file_vmem::read(srecord::record &record)
 {
     for (;;)
     {
@@ -134,9 +134,9 @@ srec_input_file_vmem::read(srec_record &record)
         case 2:
         case 4:
             record =
-                srec_record
+                srecord::record
                 (
-                    srec_record::type_data,
+                    srecord::record::type_data,
                     address * nbytes,
                     value,
                     nbytes
@@ -153,7 +153,7 @@ srec_input_file_vmem::read(srec_record &record)
 
 
 const char *
-srec_input_file_vmem::get_file_format_name()
+srecord::input_file_vmem::get_file_format_name()
     const
 {
     return "Verilog VMEM";

@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_forth class is used to write a file that
+  * The srecord::output_file_forth class is used to write a file that
   * can be read by a FORTH system
   */
-class srec_output_file_forth:
-    public srec_output_file
+class output_file_forth:
+    public output_file
 {
 public:
     /**
       * The destrutcor.
       */
-    virtual ~srec_output_file_forth();
+    virtual ~output_file_forth();
 
 private:
     /**
@@ -42,7 +45,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_forth(const std::string &file_name);
+    output_file_forth(const std::string &file_name);
 
 public:
     /**
@@ -57,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -69,7 +72,7 @@ protected:
     int preferred_block_size_get() const;
 
     // See base class for documentation.
-    void command_line(srec_arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln);
 
     // See base class for documentation.
     const char *format_name() const;
@@ -96,17 +99,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_forth();
+    output_file_forth();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_forth(const srec_output_file_forth &);
+    output_file_forth(const output_file_forth &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_forth &operator=(const srec_output_file_forth &);
+    output_file_forth &operator=(const output_file_forth &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_FORTH_H

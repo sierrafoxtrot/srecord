@@ -23,29 +23,29 @@
 #include <srecord/record.h>
 
 
-srec_input_file_needham::~srec_input_file_needham()
+srecord::input_file_needham::~input_file_needham()
 {
 }
 
 
-srec_input_file_needham::srec_input_file_needham(
+srecord::input_file_needham::input_file_needham(
         const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+    srecord::input_file(a_file_name),
     seen_some_input(false),
     address(0)
 {
 }
 
 
-srec_input::pointer
-srec_input_file_needham::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_needham::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_needham(a_file_name));
+    return pointer(new srecord::input_file_needham(a_file_name));
 }
 
 
 bool
-srec_input_file_needham::read(srec_record &record)
+srecord::input_file_needham::read(srecord::record &record)
 {
     for (;;)
     {
@@ -60,9 +60,9 @@ srec_input_file_needham::read(srec_record &record)
         {
             unsigned char c = get_byte();
             record =
-                srec_record
+                srecord::record
                 (
-                    srec_record::type_data,
+                    srecord::record::type_data,
                     address,
                     &c,
                     1
@@ -109,7 +109,7 @@ srec_input_file_needham::read(srec_record &record)
 
 
 const char *
-srec_input_file_needham::get_file_format_name()
+srecord::input_file_needham::get_file_format_name()
     const
 {
     return "Needham";

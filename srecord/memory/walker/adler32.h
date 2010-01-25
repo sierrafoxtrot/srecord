@@ -23,27 +23,30 @@
 #include <srecord/adler32.h>
 #include <srecord/memory/walker.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_memory_walker_adler32 class is used to represent the parse
+  * The srecord::memory_walker_adler32 class is used to represent the parse
   * state of a memory walker which calculates a running ADLER32 checksum.
   */
-class srec_memory_walker_adler32:
-    public srec_memory_walker
+class memory_walker_adler32:
+    public memory_walker
 {
 public:
-    typedef boost::shared_ptr<srec_memory_walker_adler32> pointer;
+    typedef boost::shared_ptr<memory_walker_adler32> pointer;
 
     /**
       * The destructor.
       */
-    virtual ~srec_memory_walker_adler32();
+    virtual ~memory_walker_adler32();
 
 private:
     /**
       * The default constructor.  It is private on putpose, use the
       * #create method instead.
       */
-    srec_memory_walker_adler32();
+    memory_walker_adler32();
 
 public:
     /**
@@ -72,12 +75,14 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    srec_memory_walker_adler32(const srec_memory_walker_adler32 &);
+    memory_walker_adler32(const memory_walker_adler32 &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_memory_walker_adler32 &operator=(const srec_memory_walker_adler32 &);
+    memory_walker_adler32 &operator=(const memory_walker_adler32 &);
+};
+
 };
 
 #endif // SRECORD_MEMORY_WALKER_ADLER32_H

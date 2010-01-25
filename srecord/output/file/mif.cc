@@ -22,7 +22,7 @@
 #include <srecord/record.h>
 
 
-srec_output_file_mif::~srec_output_file_mif()
+srecord::output_file_mif::~output_file_mif()
 {
     emit_header();
     put_stringf("END;\n");
@@ -31,8 +31,8 @@ srec_output_file_mif::~srec_output_file_mif()
 }
 
 
-srec_output_file_mif::srec_output_file_mif(const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+srecord::output_file_mif::output_file_mif(const std::string &a_file_name) :
+    srecord::output_file(a_file_name),
     depth(65536),
     width(8),
     width_in_bytes(1),
@@ -44,15 +44,15 @@ srec_output_file_mif::srec_output_file_mif(const std::string &a_file_name) :
 }
 
 
-srec_output::pointer
-srec_output_file_mif::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_mif::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_mif(a_file_name));
+    return pointer(new srecord::output_file_mif(a_file_name));
 }
 
 
 void
-srec_output_file_mif::command_line(srec_arglex_tool *cmdln)
+srecord::output_file_mif::command_line(srecord::arglex_tool *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_number)
     {
@@ -92,7 +92,7 @@ srec_output_file_mif::command_line(srec_arglex_tool *cmdln)
 
 
 void
-srec_output_file_mif::notify_upper_bound(unsigned long addr)
+srecord::output_file_mif::notify_upper_bound(unsigned long addr)
 {
     depth = addr;
     actual_depth = addr;
@@ -100,7 +100,7 @@ srec_output_file_mif::notify_upper_bound(unsigned long addr)
 
 
 void
-srec_output_file_mif::emit_header()
+srecord::output_file_mif::emit_header()
 {
     if (header_done)
         return;
@@ -136,15 +136,15 @@ srec_output_file_mif::emit_header()
 
 
 void
-srec_output_file_mif::write(const srec_record &record)
+srecord::output_file_mif::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         // Ignore.
         break;
 
-    case srec_record::type_header:
+    case srecord::record::type_header:
         if (enable_header_flag && record.get_length() > 0)
         {
             //
@@ -174,7 +174,7 @@ srec_output_file_mif::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         {
             unsigned long addr = record.get_address();
             unsigned len = record.get_length();
@@ -196,7 +196,7 @@ srec_output_file_mif::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         if (enable_data_count_flag)
         {
             unsigned long addr = record.get_address();
@@ -204,7 +204,7 @@ srec_output_file_mif::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         if (enable_goto_addr_flag)
         {
             unsigned long addr = record.get_address();
@@ -216,7 +216,7 @@ srec_output_file_mif::write(const srec_record &record)
 
 
 void
-srec_output_file_mif::line_length_set(int len)
+srecord::output_file_mif::line_length_set(int len)
 {
     int pref_mult = (len - 6) / (1 + 2 * width_in_bytes);
     if (pref_mult < 1)
@@ -226,14 +226,14 @@ srec_output_file_mif::line_length_set(int len)
 
 
 void
-srec_output_file_mif::address_length_set(int)
+srecord::output_file_mif::address_length_set(int)
 {
     // ignore
 }
 
 
 int
-srec_output_file_mif::preferred_block_size_get()
+srecord::output_file_mif::preferred_block_size_get()
     const
 {
     return pref_blk_sz;
@@ -241,7 +241,7 @@ srec_output_file_mif::preferred_block_size_get()
 
 
 const char *
-srec_output_file_mif::format_name()
+srecord::output_file_mif::format_name()
     const
 {
     return "Memory Initialization File (MIF, Altera)";

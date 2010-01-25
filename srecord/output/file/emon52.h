@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_emon52 class is used to write an EMON52 formatted
+  * The srecord::output_file_emon52 class is used to write an EMON52 formatted
   * file (Elektor Monitor, dunno what the 52 is for).
   */
-class srec_output_file_emon52:
-    public srec_output_file
+class output_file_emon52:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_emon52();
+    virtual ~output_file_emon52();
 
 private:
     /**
@@ -44,7 +47,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_emon52(const std::string &file_name);
+    output_file_emon52(const std::string &file_name);
 
 public:
     /**
@@ -59,7 +62,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -91,17 +94,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_emon52();
+    output_file_emon52();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_emon52(const srec_output_file_emon52 &);
+    output_file_emon52(const output_file_emon52 &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_emon52 &operator=(const srec_output_file_emon52 &);
+    output_file_emon52 &operator=(const output_file_emon52 &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_EMON52_H

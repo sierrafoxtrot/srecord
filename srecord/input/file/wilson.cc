@@ -21,13 +21,13 @@
 #include <srecord/record.h>
 
 
-srec_input_file_wilson::~srec_input_file_wilson()
+srecord::input_file_wilson::~input_file_wilson()
 {
 }
 
 
-srec_input_file_wilson::srec_input_file_wilson(const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+srecord::input_file_wilson::input_file_wilson(const std::string &a_file_name) :
+    input_file(a_file_name),
     garbage_warning(false),
     seen_some_input(false),
     termination_seen(false)
@@ -35,15 +35,15 @@ srec_input_file_wilson::srec_input_file_wilson(const std::string &a_file_name) :
 }
 
 
-srec_input::pointer
-srec_input_file_wilson::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_wilson::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_wilson(a_file_name));
+    return pointer(new input_file_wilson(a_file_name));
 }
 
 
 int
-srec_input_file_wilson::get_byte()
+srecord::input_file_wilson::get_byte()
 {
     int n = -1;
     int c = get_char();
@@ -70,7 +70,7 @@ srec_input_file_wilson::get_byte()
 }
 
 int
-srec_input_file_wilson::read_inner(srec_record &record)
+srecord::input_file_wilson::read_inner(record &result)
 {
     int c;
     for (;;)
@@ -115,17 +115,17 @@ srec_input_file_wilson::read_inner(srec_record &record)
     --line_length;
 
     int naddr = 4;
-    srec_record::type_t type = srec_record::type_unknown;
+    record::type_t type = record::type_unknown;
     switch (tag)
     {
     case '#':
         // data
-        type = srec_record::type_data;
+        type = record::type_data;
         break;
 
     case '\'':
         // termination
-        type = srec_record::type_execution_start_address;
+        type = record::type_execution_start_address;
         break;
     }
     if (line_length < naddr)
@@ -138,11 +138,11 @@ srec_input_file_wilson::read_inner(srec_record &record)
             tag
         );
     }
-    record =
-        srec_record
+    result =
+        record
         (
             type,
-            srec_record::decode_big_endian(buffer, naddr),
+            record::decode_big_endian(buffer, naddr),
             buffer + naddr,
             line_length - naddr
         );
@@ -151,7 +151,7 @@ srec_input_file_wilson::read_inner(srec_record &record)
 
 
 bool
-srec_input_file_wilson::read(srec_record &record)
+srecord::input_file_wilson::read(record &record)
 {
     for (;;)
     {
@@ -169,7 +169,7 @@ srec_input_file_wilson::read(srec_record &record)
         seen_some_input = true;
         if
         (
-                record.get_type() != srec_record::type_execution_start_address
+                record.get_type() != record::type_execution_start_address
         &&
                 termination_seen
         )
@@ -179,13 +179,13 @@ srec_input_file_wilson::read(srec_record &record)
         }
         switch (record.get_type())
         {
-        case srec_record::type_unknown:
-        case srec_record::type_header:
-        case srec_record::type_data_count:
+        case record::type_unknown:
+        case record::type_header:
+        case record::type_data_count:
             fatal_error("record type not recognised");
             break;
 
-        case srec_record::type_data:
+        case record::type_data:
             if (record.get_length() == 0)
             {
                     warning("empty data record ignored");
@@ -193,7 +193,7 @@ srec_input_file_wilson::read(srec_record &record)
             }
             break;
 
-        case srec_record::type_execution_start_address:
+        case record::type_execution_start_address:
             if (record.get_length() > 0)
             {
                     warning("data in execution start address record ignored");
@@ -211,7 +211,7 @@ srec_input_file_wilson::read(srec_record &record)
 
 
 const char *
-srec_input_file_wilson::get_file_format_name()
+srecord::input_file_wilson::get_file_format_name()
     const
 {
     return "Wilson (anyone know this format's real name?)";
@@ -219,7 +219,7 @@ srec_input_file_wilson::get_file_format_name()
 
 
 const char *
-srec_input_file_wilson::mode()
+srecord::input_file_wilson::mode()
     const
 {
     return "rb";

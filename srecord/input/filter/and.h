@@ -22,19 +22,21 @@
 
 #include <srecord/input/filter.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_filter_and clas sis used to represent the input state
+  * The srecord::input_filter_and clas sis used to represent the input state
   * of a filter which bit-wise ANDs all incoming data bytes with a fixed
   * value.
   */
-class srec_input_filter_and:
-    public srec_input_filter
+class input_filter_and:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_and();
+    virtual ~input_filter_and();
 
 private:
     /**
@@ -45,7 +47,7 @@ private:
       * @param mask
       *     The value to be bit-wise ANDed with each incoming data byte.
       */
-    srec_input_filter_and(const srec_input::pointer &deeper, int mask);
+    input_filter_and(const input::pointer &deeper, int mask);
 
 public:
     /**
@@ -57,11 +59,11 @@ public:
       * @param mask
       *     The value to be bit-wise ANDed with each incoming data byte.
       */
-    static pointer create(const srec_input::pointer &deeper, int mask);
+    static pointer create(const input::pointer &deeper, int mask);
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
 private:
     /**
@@ -73,17 +75,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_and();
+    input_filter_and();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_and(const srec_input_filter_and &);
+    input_filter_and(const input_filter_and &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_and &operator=(const srec_input_filter_and &);
+    input_filter_and &operator=(const input_filter_and &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_AND_H

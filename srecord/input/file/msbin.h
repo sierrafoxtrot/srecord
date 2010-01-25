@@ -25,21 +25,23 @@
 #include <srecord/record.h>
 #include <boost/static_assert.hpp>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_binary class is used to represent the parse
+  * The srecord::input_file_binary class is used to represent the parse
   * state of msbin (Windows CE Binary Image Data Format) input stream.
   *
   * See http://msdn.microsoft.com/en-us/library/ms924510.aspx
   * for a description of the format.
   */
-class srec_input_file_msbin:
-    public srec_input_file
+class input_file_msbin:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_msbin();
+    virtual ~input_file_msbin();
 
 private:
     /**
@@ -48,7 +50,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_msbin(const std::string &file_name);
+    input_file_msbin(const std::string &file_name);
 
 public:
     /**
@@ -64,7 +66,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -102,7 +104,7 @@ private:
       * The address instance variable is used to remember the current
       * address.
       */
-    srec_record::address_t address;
+    record::address_t address;
 
     /**
       * The remaining instance variable is used to remember the number
@@ -127,25 +129,25 @@ private:
       * start, the lowest data address in the file, as read from the
       * file header.
       */
-    srec_record::address_t image_start;
+    record::address_t image_start;
 
     /**
       * The image_length instance variable is used to remember the image
       * length, as read from the file header.
       */
-    srec_record::address_t image_length;
+    record::address_t image_length;
 
     /**
       * The lowest_address instance variable is used to remember the
       * lowest address encountered in records read so far.
       */
-    srec_record::address_t lowest_address;
+    record::address_t lowest_address;
 
     /**
       * The highest_address instance variable is used to remember the
       * highest address encountered in records read so far.
       */
-    srec_record::address_t highest_address;
+    record::address_t highest_address;
 
     /**
       * The read_file_header method is used to read the (optional) magic
@@ -154,7 +156,7 @@ private:
     void read_file_header();
 
     // Just to be sure we can fit uint32_t in address_t.
-    BOOST_STATIC_ASSERT(sizeof(srec_record::address_t) >= sizeof(uint32_t));
+    BOOST_STATIC_ASSERT(sizeof(record::address_t) >= sizeof(uint32_t));
 
     /**
       * The read_qword_le method is used to read a little endian quad
@@ -182,17 +184,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_msbin();
+    input_file_msbin();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_msbin(const srec_input_file_msbin &);
+    input_file_msbin(const input_file_msbin &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_msbin &operator=(const srec_input_file_msbin &);
+    input_file_msbin &operator=(const input_file_msbin &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_MSBIN_H

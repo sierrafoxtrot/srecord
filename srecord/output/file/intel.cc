@@ -21,15 +21,15 @@
 #include <srecord/record.h>
 
 
-srec_output_file_intel::~srec_output_file_intel()
+srecord::output_file_intel::~output_file_intel()
 {
     if (enable_footer_flag)
         write_inner(1, 0L, 0, 0);
 }
 
 
-srec_output_file_intel::srec_output_file_intel(const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+srecord::output_file_intel::output_file_intel(const std::string &a_file_name) :
+    srecord::output_file(a_file_name),
     address_base(1),
     pref_block_size(32),
     mode(linear)
@@ -40,15 +40,15 @@ srec_output_file_intel::srec_output_file_intel(const std::string &a_file_name) :
 }
 
 
-srec_output::pointer
-srec_output_file_intel::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_intel::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_intel(a_file_name));
+    return pointer(new srecord::output_file_intel(a_file_name));
 }
 
 
 void
-srec_output_file_intel::write_inner(int tag, unsigned long address,
+srecord::output_file_intel::write_inner(int tag, unsigned long address,
     const void *data, int data_nbytes)
 {
     //
@@ -64,7 +64,7 @@ srec_output_file_intel::write_inner(int tag, unsigned long address,
     checksum_reset();
     put_byte(data_nbytes);
     unsigned char tmp[2];
-    srec_record::encode_big_endian(tmp, address, 2);
+    srecord::record::encode_big_endian(tmp, address, 2);
     put_byte(tmp[0]);
     put_byte(tmp[1]);
     put_byte(tag);
@@ -77,18 +77,18 @@ srec_output_file_intel::write_inner(int tag, unsigned long address,
 
 
 void
-srec_output_file_intel::write(const srec_record &record)
+srecord::output_file_intel::write(const srecord::record &record)
 {
     unsigned char tmp[4];
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         //
         // This format can't do header records
         //
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         //
         // Segmented mode has an ugly boundary condition.
         //
@@ -99,23 +99,24 @@ srec_output_file_intel::write(const srec_record &record)
             // record across the boundary.  This avoids an ambiguity in
             // the Intel spec.
             //
-            srec_record::address_t begin_segment = record.get_address() >> 16;
-            srec_record::address_t end_segment =
+            srecord::record::address_t begin_segment =
+                record.get_address() >> 16;
+            srecord::record::address_t end_segment =
                 (record.get_address() + record.get_length() - 1) >> 16;
             if (begin_segment != end_segment)
             {
                 int split = (1L << 16) - (record.get_address() & 0xFFFF);
-                srec_record part1
+                srecord::record part1
                 (
-                    srec_record::type_data,
+                    srecord::record::type_data,
                     record.get_address(),
                     record.get_data(),
                     split
                 );
                 write(part1);
-                srec_record part2
+                srecord::record part2
                 (
-                    srec_record::type_data,
+                    srecord::record::type_data,
                     record.get_address() + split,
                     record.get_data() + split,
                     record.get_length() - split
@@ -130,14 +131,14 @@ srec_output_file_intel::write(const srec_record &record)
             address_base = record.get_address() & 0xFFFF0000;
             if (mode == linear)
             {
-                srec_record::encode_big_endian(tmp, address_base >> 16, 2);
+                srecord::record::encode_big_endian(tmp, address_base >> 16, 2);
                 write_inner(4, 0L, tmp, 2);
             }
             else
             {
                 if (address_base >= (1UL << 20))
                     data_address_too_large(record);
-                srec_record::encode_big_endian(tmp, address_base >> 4, 2);
+                srecord::record::encode_big_endian(tmp, address_base >> 4, 2);
                 write_inner(2, 0L, tmp, 2);
             }
         }
@@ -150,19 +151,19 @@ srec_output_file_intel::write(const srec_record &record)
         );
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         if (enable_goto_addr_flag)
         {
-            srec_record::encode_big_endian(tmp, record.get_address(), 4);
+            srecord::record::encode_big_endian(tmp, record.get_address(), 4);
             write_inner((mode == linear ? 5 : 3), 0L, tmp, 4);
         }
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
         break;
     }
@@ -170,7 +171,7 @@ srec_output_file_intel::write(const srec_record &record)
 
 
 void
-srec_output_file_intel::line_length_set(int n)
+srecord::output_file_intel::line_length_set(int n)
 {
     //
     // Given the number of characters, figure the maximum number of
@@ -188,24 +189,24 @@ srec_output_file_intel::line_length_set(int n)
         n = 255;
 
     //
-    // An additional constraint is the size of the srec_record
+    // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srec_record::max_data_length)
-        n = srec_record::max_data_length;
+    if (n > srecord::record::max_data_length)
+        n = srecord::record::max_data_length;
     pref_block_size = n;
 }
 
 
 void
-srec_output_file_intel::address_length_set(int x)
+srecord::output_file_intel::address_length_set(int x)
 {
     mode = (x <= 2 ? segmented : linear);
 }
 
 
 int
-srec_output_file_intel::preferred_block_size_get()
+srecord::output_file_intel::preferred_block_size_get()
         const
 {
     return pref_block_size;
@@ -213,7 +214,7 @@ srec_output_file_intel::preferred_block_size_get()
 
 
 const char *
-srec_output_file_intel::format_name()
+srecord::output_file_intel::format_name()
     const
 {
     return "Intel-Hex";

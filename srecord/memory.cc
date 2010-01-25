@@ -26,10 +26,10 @@
 #include <srecord/record.h>
 
 
-bool srec_memory::overwrite = false;
+bool srecord::memory::overwrite = false;
 
 
-srec_memory::srec_memory() :
+srecord::memory::memory() :
     nchunks(0),
     nchunks_max(0),
     chunk(0),
@@ -41,7 +41,7 @@ srec_memory::srec_memory() :
 }
 
 
-srec_memory::srec_memory(const srec_memory &arg) :
+srecord::memory::memory(const srecord::memory &arg) :
     nchunks(0),
     nchunks_max(0),
     chunk(0),
@@ -54,8 +54,8 @@ srec_memory::srec_memory(const srec_memory &arg) :
 }
 
 
-srec_memory &
-srec_memory::operator=(const srec_memory &arg)
+srecord::memory &
+srecord::memory::operator=(const srecord::memory &arg)
 {
     if (&arg != this)
     {
@@ -66,14 +66,14 @@ srec_memory::operator=(const srec_memory &arg)
 }
 
 
-srec_memory::~srec_memory()
+srecord::memory::~memory()
 {
     clear();
 }
 
 
 void
-srec_memory::clear()
+srecord::memory::clear()
 {
     delete header;
     header = 0;
@@ -91,32 +91,35 @@ srec_memory::clear()
 
 
 void
-srec_memory::copy(const srec_memory &arg)
+srecord::memory::copy(const srecord::memory &arg)
 {
     delete header;
     header = 0;
     if (arg.header)
-        header = new srec_record(*arg.header);
+        header = new srecord::record(*arg.header);
 
     delete execution_start_address;
     execution_start_address = 0;
     if (arg.execution_start_address)
-        execution_start_address = new srec_record(*arg.execution_start_address);
+    {
+        execution_start_address =
+            new srecord::record(*arg.execution_start_address);
+    }
 
     nchunks = arg.nchunks;
     while (nchunks_max < nchunks)
         nchunks_max = nchunks_max * 2 + 4;
-    chunk = new srec_memory_chunk * [nchunks_max];
+    chunk = new srecord::memory_chunk * [nchunks_max];
     for (int j = 0; j < nchunks; ++j)
     {
         // use copy-new to make the copies
-        chunk[j] = new srec_memory_chunk(*(arg.chunk[j]));
+        chunk[j] = new srecord::memory_chunk(*(arg.chunk[j]));
     }
 }
 
 
-srec_memory_chunk *
-srec_memory::find(unsigned long address)
+srecord::memory_chunk *
+srecord::memory::find(unsigned long address)
     const
 {
     //
@@ -130,7 +133,7 @@ srec_memory::find(unsigned long address)
     //
     int min = 0;
     int max = nchunks - 1;
-    srec_memory_chunk *mcp = 0;
+    srecord::memory_chunk *mcp = 0;
     while (min <= max)
     {
         int mid = (min + max) / 2;
@@ -152,8 +155,8 @@ srec_memory::find(unsigned long address)
     if (nchunks >= nchunks_max)
     {
         nchunks_max = nchunks_max * 2 + 4;
-        srec_memory_chunk **tmp =
-            new srec_memory_chunk * [nchunks_max];
+        srecord::memory_chunk **tmp =
+            new srecord::memory_chunk * [nchunks_max];
         for (int j = 0; j < nchunks; ++j)
             tmp[j] = chunk[j];
         delete [] chunk;
@@ -163,7 +166,7 @@ srec_memory::find(unsigned long address)
     //
     // Insert the new chunk.
     //
-    mcp = new srec_memory_chunk(address);
+    mcp = new srecord::memory_chunk(address);
     for (int up = nchunks; up > min; --up)
         chunk[up] = chunk[up - 1];
     ++nchunks;
@@ -175,39 +178,39 @@ srec_memory::find(unsigned long address)
 
 
 void
-srec_memory::set(unsigned long address, int datum)
+srecord::memory::set(unsigned long address, int datum)
 {
-    unsigned long address_hi = address / srec_memory_chunk::size;
-    unsigned long address_lo = address % srec_memory_chunk::size;
-    srec_memory_chunk *mcp = find(address_hi);
+    unsigned long address_hi = address / srecord::memory_chunk::size;
+    unsigned long address_lo = address % srecord::memory_chunk::size;
+    srecord::memory_chunk *mcp = find(address_hi);
     mcp->set(address_lo, datum);
 }
 
 
 int
-srec_memory::get(unsigned long address)
+srecord::memory::get(unsigned long address)
     const
 {
-    unsigned long address_hi = address / srec_memory_chunk::size;
-    unsigned long address_lo = address % srec_memory_chunk::size;
-    srec_memory_chunk *mcp = find(address_hi);
+    unsigned long address_hi = address / srecord::memory_chunk::size;
+    unsigned long address_lo = address % srecord::memory_chunk::size;
+    srecord::memory_chunk *mcp = find(address_hi);
     return mcp->get(address_lo);
 }
 
 
 bool
-srec_memory::set_p(unsigned long address)
+srecord::memory::set_p(unsigned long address)
     const
 {
-    unsigned long address_hi = address / srec_memory_chunk::size;
-    unsigned long address_lo = address % srec_memory_chunk::size;
-    srec_memory_chunk *mcp = find(address_hi);
+    unsigned long address_hi = address / srecord::memory_chunk::size;
+    unsigned long address_lo = address % srecord::memory_chunk::size;
+    srecord::memory_chunk *mcp = find(address_hi);
     return mcp->set_p(address_lo);
 }
 
 
 bool
-srec_memory::equal(const srec_memory &lhs, const srec_memory &rhs)
+srecord::memory::equal(const srecord::memory &lhs, const srecord::memory &rhs)
 {
     if (lhs.nchunks != rhs.nchunks)
         return false;
@@ -220,14 +223,14 @@ srec_memory::equal(const srec_memory &lhs, const srec_memory &rhs)
 
 
 bool
-srec_memory::compare(const srec_memory &lhs, const srec_memory &rhs)
+srecord::memory::compare(const srecord::memory &lhs, const srecord::memory &rhs)
 {
-    srec_memory_walker_compare::pointer wlhs =
-        srec_memory_walker_compare::create(rhs, true);
+    srecord::memory_walker_compare::pointer wlhs =
+        srecord::memory_walker_compare::create(rhs, true);
     lhs.walk(wlhs);
     wlhs->print("Left");
-    srec_memory_walker_compare::pointer wrhs =
-        srec_memory_walker_compare::create(lhs, false);
+    srecord::memory_walker_compare::pointer wrhs =
+        srecord::memory_walker_compare::create(lhs, false);
     rhs.walk(wrhs);
     wrhs->print("Right");
     return (!wlhs->same() || !wrhs->same());
@@ -235,7 +238,7 @@ srec_memory::compare(const srec_memory &lhs, const srec_memory &rhs)
 
 
 unsigned long
-srec_memory::get_upper_bound()
+srecord::memory::get_upper_bound()
     const
 {
     if (nchunks == 0)
@@ -245,7 +248,7 @@ srec_memory::get_upper_bound()
 
 
 void
-srec_memory::walk(srec_memory_walker::pointer w)
+srecord::memory::walk(srecord::memory_walker::pointer w)
     const
 {
     w->notify_upper_bound(get_upper_bound());
@@ -260,25 +263,25 @@ srec_memory::walk(srec_memory_walker::pointer w)
 
 
 void
-srec_memory::reader(const srec_input::pointer &ifp, bool barf)
+srecord::memory::reader(const srecord::input::pointer &ifp, bool barf)
 {
-    srec_record record;
+    srecord::record record;
     while (ifp->read(record))
     {
         switch (record.get_type())
         {
-        case srec_record::type_header:
+        case srecord::record::type_header:
             if (!header)
             {
-                header = new srec_record(record);
+                header = new srecord::record(record);
             }
             break;
 
-        case srec_record::type_unknown:
-        case srec_record::type_data_count:
+        case srecord::record::type_unknown:
+        case srecord::record::type_data_count:
             break;
 
-        case srec_record::type_data:
+        case srecord::record::type_data:
             //
             // For each data byte, we have to check for duplicates.  We
             // issue warnings for redundant settings, and we issue error
@@ -286,7 +289,7 @@ srec_memory::reader(const srec_input::pointer &ifp, bool barf)
             //
             for (size_t j = 0; j < record.get_length(); ++j)
             {
-                srec_record::address_t address = record.get_address() + j;
+                srecord::record::address_t address = record.get_address() + j;
                 int n = record.get_data(j);
                 if (barf && set_p(address))
                 {
@@ -322,10 +325,10 @@ srec_memory::reader(const srec_input::pointer &ifp, bool barf)
             }
             break;
 
-        case srec_record::type_execution_start_address:
+        case srecord::record::type_execution_start_address:
             if (!execution_start_address)
             {
-                execution_start_address = new srec_record(record);
+                execution_start_address = new srecord::record(record);
             }
             break;
         }
@@ -334,21 +337,21 @@ srec_memory::reader(const srec_input::pointer &ifp, bool barf)
 
 
 bool
-operator == (const srec_memory &lhs, const srec_memory &rhs)
+operator == (const srecord::memory &lhs, const srecord::memory &rhs)
 {
-    return srec_memory::equal(lhs, rhs);
+    return srecord::memory::equal(lhs, rhs);
 }
 
 
 bool
-operator != (const srec_memory &lhs, const srec_memory &rhs)
+operator != (const srecord::memory &lhs, const srecord::memory &rhs)
 {
-    return !srec_memory::equal(lhs, rhs);
+    return !srecord::memory::equal(lhs, rhs);
 }
 
 
-srec_memory_chunk *
-srec_memory::find_next_chunk(unsigned long address)
+srecord::memory_chunk *
+srecord::memory::find_next_chunk(unsigned long address)
     const
 {
     //
@@ -358,13 +361,13 @@ srec_memory::find_next_chunk(unsigned long address)
     //
     if (find_next_chunk_index < nchunks)
     {
-        srec_memory_chunk *mcp = chunk[find_next_chunk_index];
+        srecord::memory_chunk *mcp = chunk[find_next_chunk_index];
         if (mcp->get_address() > address)
             find_next_chunk_index = 0;
     }
     while (find_next_chunk_index < nchunks)
     {
-        srec_memory_chunk *mcp = chunk[find_next_chunk_index];
+        srecord::memory_chunk *mcp = chunk[find_next_chunk_index];
         if (mcp->get_address() >= address)
             return mcp;
         find_next_chunk_index++;
@@ -374,32 +377,32 @@ srec_memory::find_next_chunk(unsigned long address)
 
 
 bool
-srec_memory::find_next_data(unsigned long &address, void *data, size_t &nbytes)
-    const
+srecord::memory::find_next_data(unsigned long &address, void *data,
+    size_t &nbytes) const
 {
-    unsigned long address_hi = address / srec_memory_chunk::size;
+    unsigned long address_hi = address / srecord::memory_chunk::size;
     for (;;)
     {
-        srec_memory_chunk *mcp = find_next_chunk(address_hi);
+        srecord::memory_chunk *mcp = find_next_chunk(address_hi);
         if (!mcp)
             return false;
         if (mcp->find_next_data(address, data, nbytes))
             return true;
         address_hi = mcp->get_address() + 1;
-        address = address_hi * srec_memory_chunk::size;
+        address = address_hi * srecord::memory_chunk::size;
     }
 }
 
 
 void
-srec_memory::allow_overwriting()
+srecord::memory::allow_overwriting()
 {
     overwrite = true;
 }
 
 
-srec_record *
-srec_memory::get_header()
+srecord::record *
+srecord::memory::get_header()
     const
 {
     return header;
@@ -407,25 +410,25 @@ srec_memory::get_header()
 
 
 void
-srec_memory::set_header(const char *s)
+srecord::memory::set_header(const char *s)
 {
     delete header;
     size_t len = strlen(s);
-    if (len > srec_record::max_data_length)
-        len = srec_record::max_data_length;
+    if (len > srecord::record::max_data_length)
+        len = srecord::record::max_data_length;
     header =
-        new srec_record
+        new srecord::record
         (
-            srec_record::type_header,
+            srecord::record::type_header,
             0,
-            (srec_record::data_t *)s,
+            (srecord::record::data_t *)s,
             len
         );
 }
 
 
-srec_record *
-srec_memory::get_execution_start_address()
+srecord::record *
+srecord::memory::get_execution_start_address()
     const
 {
     return execution_start_address;
@@ -433,20 +436,26 @@ srec_memory::get_execution_start_address()
 
 
 void
-srec_memory::set_execution_start_address(unsigned long addr)
+srecord::memory::set_execution_start_address(unsigned long addr)
 {
     delete execution_start_address;
     execution_start_address =
-        new srec_record(srec_record::type_execution_start_address, addr, 0, 0);
+        new srecord::record
+        (
+            srecord::record::type_execution_start_address,
+            addr,
+            0,
+            0
+        );
 }
 
 
 bool
-srec_memory::has_holes()
+srecord::memory::has_holes()
     const
 {
-    srec_memory_walker_continuity::pointer sniffer =
-        srec_memory_walker_continuity::create();
+    srecord::memory_walker_continuity::pointer sniffer =
+        srecord::memory_walker_continuity::create();
     walk(sniffer);
     return (!sniffer->is_continuous());
 }

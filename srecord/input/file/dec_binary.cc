@@ -21,14 +21,14 @@
 #include <srecord/record.h>
 
 
-srec_input_file_dec_binary::~srec_input_file_dec_binary()
+srecord::input_file_dec_binary::~input_file_dec_binary()
 {
 }
 
 
-srec_input_file_dec_binary::srec_input_file_dec_binary(
+srecord::input_file_dec_binary::input_file_dec_binary(
         const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+    srecord::input_file(a_file_name),
     current_pos(0),
     current_length(0),
     current_address(0)
@@ -36,15 +36,15 @@ srec_input_file_dec_binary::srec_input_file_dec_binary(
 }
 
 
-srec_input::pointer
-srec_input_file_dec_binary::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_dec_binary::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_dec_binary(a_file_name));
+    return pointer(new srecord::input_file_dec_binary(a_file_name));
 }
 
 
 bool
-srec_input_file_dec_binary::skip_nul()
+srecord::input_file_dec_binary::skip_nul()
 {
     for (;;)
     {
@@ -59,7 +59,7 @@ srec_input_file_dec_binary::skip_nul()
 
 
 int
-srec_input_file_dec_binary::get_byte()
+srecord::input_file_dec_binary::get_byte()
 {
     int c = get_char();
     if (c < 0)
@@ -70,7 +70,7 @@ srec_input_file_dec_binary::get_byte()
 
 
 int
-srec_input_file_dec_binary::get_word()
+srecord::input_file_dec_binary::get_word()
 {
     // Little endian
     unsigned char n1 = get_byte();
@@ -81,7 +81,7 @@ srec_input_file_dec_binary::get_word()
 
 
 bool
-srec_input_file_dec_binary::read(srec_record &record)
+srecord::input_file_dec_binary::read(srecord::record &record)
 {
     //
     // The records in the file are much larger than SRecord usually
@@ -127,9 +127,9 @@ srec_input_file_dec_binary::read(srec_record &record)
             {
                 fatal_error("checksum mismatch (%02X)", checksum_get());
             }
-            srec_record::type_t type =
-                srec_record::type_execution_start_address;
-            record = srec_record(type, current_address, 0, 0);
+            srecord::record::type_t type =
+                srecord::record::type_execution_start_address;
+            record = srecord::record(type, current_address, 0, 0);
             seek_to_end();
             return true;
         }
@@ -139,8 +139,8 @@ srec_input_file_dec_binary::read(srec_record &record)
     //
     // Read as many bytes as possible into the buffer.
     //
-    unsigned char buffer[srec_record::max_data_length];
-    int nbytes = srec_record::max_data_length;
+    unsigned char buffer[srecord::record::max_data_length];
+    int nbytes = srecord::record::max_data_length;
     if (current_pos + nbytes > current_length)
         nbytes = current_length - current_pos;
     for (int j = 0; j < nbytes; ++j)
@@ -149,8 +149,8 @@ srec_input_file_dec_binary::read(srec_record &record)
     //
     // Create a data record and return.
     //
-    srec_record::type_t type = srec_record::type_data;
-    record = srec_record(type, current_address, buffer, nbytes);
+    srecord::record::type_t type = srecord::record::type_data;
+    record = srecord::record(type, current_address, buffer, nbytes);
     current_address += nbytes;
     current_pos += nbytes;
     return true;
@@ -158,7 +158,7 @@ srec_input_file_dec_binary::read(srec_record &record)
 
 
 const char *
-srec_input_file_dec_binary::mode()
+srecord::input_file_dec_binary::mode()
     const
 {
     return "rb";
@@ -166,7 +166,7 @@ srec_input_file_dec_binary::mode()
 
 
 const char *
-srec_input_file_dec_binary::get_file_format_name()
+srecord::input_file_dec_binary::get_file_format_name()
     const
 {
     return "DEC Binary (XXDP)";

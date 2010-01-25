@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_tektronix clas sis used to represent the parse
+  * The srecord::input_file_tektronix clas sis used to represent the parse
   * state of an input file in Tektronix (non-extended) format.
   */
-class srec_input_file_tektronix:
-    public srec_input_file
+class input_file_tektronix:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_tektronix();
+    virtual ~input_file_tektronix();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_tektronix(const std::string &file_name);
+    input_file_tektronix(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -82,7 +84,7 @@ private:
       * The read_inner methos is used to read a single record from
       * the input.  The read method is a wrapper around this method.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The data_record_count instance variable is used to remember the
@@ -111,17 +113,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_tektronix();
+    input_file_tektronix();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_tektronix(const srec_input_file_tektronix &);
+    input_file_tektronix(const input_file_tektronix &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_tektronix &operator=(const srec_input_file_tektronix &);
+    input_file_tektronix &operator=(const input_file_tektronix &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_TEKTRONIX_H

@@ -20,27 +20,27 @@
 #include <srecord/input/filter/interval/maximum.h>
 
 
-srec_input_filter_interval_maximum::~srec_input_filter_interval_maximum()
+srecord::input_filter_interval_maximum::~input_filter_interval_maximum()
 {
 }
 
 
-srec_input_filter_interval_maximum::srec_input_filter_interval_maximum(
+srecord::input_filter_interval_maximum::input_filter_interval_maximum(
         const pointer &a_deeper, long a_address, int a_length, endian_t a_end,
         bool inclusive) :
-    srec_input_filter_interval(a_deeper, a_address, a_length, a_end, inclusive)
+    input_filter_interval(a_deeper, a_address, a_length, a_end, inclusive)
 {
 }
 
 
-srec_input::pointer
-srec_input_filter_interval_maximum::create(const pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_interval_maximum::create(const pointer &a_deeper,
     long a_address, int a_length, endian_t a_end, bool inclusive)
 {
     return
         pointer
         (
-            new srec_input_filter_interval_maximum
+            new input_filter_interval_maximum
             (
                 a_deeper,
                 a_address,
@@ -53,7 +53,7 @@ srec_input_filter_interval_maximum::create(const pointer &a_deeper,
 
 
 long
-srec_input_filter_interval_maximum::calculate_result()
+srecord::input_filter_interval_maximum::calculate_result()
     const
 {
     return get_range().get_highest();

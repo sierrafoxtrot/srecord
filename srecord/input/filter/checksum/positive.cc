@@ -20,32 +20,32 @@
 #include <srecord/input/filter/checksum/positive.h>
 
 
-srec_input_filter_checksum_positive::~srec_input_filter_checksum_positive()
+srecord::input_filter_checksum_positive::~input_filter_checksum_positive()
 {
 }
 
 
-srec_input_filter_checksum_positive::srec_input_filter_checksum_positive(
-        const srec_input::pointer &a1, int a2, int a3, endian_t a_end, int a5) :
-    srec_input_filter_checksum(a1, a2, a3, a_end, a5)
+srecord::input_filter_checksum_positive::input_filter_checksum_positive(
+        const input::pointer &a1, int a2, int a3, endian_t a_end, int a5) :
+    input_filter_checksum(a1, a2, a3, a_end, a5)
 {
 }
 
 
-srec_input::pointer
-srec_input_filter_checksum_positive::create(const srec_input::pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_checksum_positive::create(const input::pointer &a_deeper,
     int a2, int a3, endian_t a_end, int a5)
 {
     return
         pointer
         (
-            new srec_input_filter_checksum_positive(a_deeper, a2, a3, a_end, a5)
+            new input_filter_checksum_positive(a_deeper, a2, a3, a_end, a5)
         );
 }
 
 
-srec_input_filter_checksum::sum_t
-srec_input_filter_checksum_positive::calculate()
+srecord::input_filter_checksum::sum_t
+srecord::input_filter_checksum_positive::calculate()
 {
     return sum;
 }

@@ -23,18 +23,20 @@
 #include <srecord/endian.h>
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_spasm class is used to represent the parse state
+  * The srecord::input_file_spasm class is used to represent the parse state
   * of a SPASM formatted input file.
   */
-class srec_input_file_spasm:
-    public srec_input_file
+class input_file_spasm:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_spasm();
+    virtual ~input_file_spasm();
 
 private:
     /**
@@ -45,7 +47,7 @@ private:
       * @param end
       *     The byte order.
       */
-    srec_input_file_spasm(const std::string &file_name,
+    input_file_spasm(const std::string &file_name,
         endian_t end = endian_big);
 
 public:
@@ -78,7 +80,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -88,7 +90,7 @@ private:
       * The read_inner method is used to read a record from the file.
       * The read method is a wrapper around it.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The seen_some_input instance variable is used to remember whether
@@ -105,17 +107,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_spasm();
+    input_file_spasm();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_spasm(const srec_input_file_spasm &);
+    input_file_spasm(const input_file_spasm &);
 
     /**
       * The assigmne toperator.  Do not use.
       */
-    srec_input_file_spasm &operator=(const srec_input_file_spasm &);
+    input_file_spasm &operator=(const input_file_spasm &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_SPASM_H

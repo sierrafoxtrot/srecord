@@ -23,18 +23,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_vhdl class is used to represent the state out
+  * The srecord::output_file_vhdl class is used to represent the state out
   * an output file in VHDL format.
   */
-class srec_output_file_vhdl:
-    public srec_output_file
+class output_file_vhdl:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_vhdl();
+    virtual ~output_file_vhdl();
 
 private:
     /**
@@ -45,7 +48,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    srec_output_file_vhdl(const std::string &file_name);
+    output_file_vhdl(const std::string &file_name);
 
 public:
     /**
@@ -59,7 +62,7 @@ public:
 
 protected:
     // See base class for documentation
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation
     void line_length_set(int);
@@ -71,7 +74,7 @@ protected:
     int preferred_block_size_get() const;
 
     // See base class for documentation
-    void command_line(srec_arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln);
 
     // See base class for documentation.
     const char *format_name() const;
@@ -105,17 +108,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_vhdl();
+    output_file_vhdl();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_vhdl(const srec_output_file_vhdl &);
+    output_file_vhdl(const output_file_vhdl &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_vhdl &operator=(const srec_output_file_vhdl &);
+    output_file_vhdl &operator=(const output_file_vhdl &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_VHDL_H

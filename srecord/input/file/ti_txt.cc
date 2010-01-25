@@ -23,13 +23,13 @@
 #include <srecord/record.h>
 
 
-srec_input_file_ti_txt::~srec_input_file_ti_txt()
+srecord::input_file_ti_txt::~input_file_ti_txt()
 {
 }
 
 
-srec_input_file_ti_txt::srec_input_file_ti_txt(const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+srecord::input_file_ti_txt::input_file_ti_txt(const std::string &a_file_name) :
+    input_file(a_file_name),
     seen_some_input(false),
     address(0),
     token(token_start_up),
@@ -39,15 +39,15 @@ srec_input_file_ti_txt::srec_input_file_ti_txt(const std::string &a_file_name) :
 }
 
 
-srec_input::pointer
-srec_input_file_ti_txt::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_ti_txt::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_ti_txt(a_file_name));
+    return pointer(new input_file_ti_txt(a_file_name));
 }
 
 
 void
-srec_input_file_ti_txt::get_next_token()
+srecord::input_file_ti_txt::get_next_token()
 {
     token_value = 0;
     for (;;)
@@ -119,7 +119,7 @@ srec_input_file_ti_txt::get_next_token()
 
 
 bool
-srec_input_file_ti_txt::read(srec_record &record)
+srecord::input_file_ti_txt::read(record &result)
 {
     for (;;)
     {
@@ -156,7 +156,7 @@ srec_input_file_ti_txt::read(srec_record &record)
         case token_number:
             {
                 seen_some_input = true;
-                unsigned char buffer[srec_record::max_data_length];
+                unsigned char buffer[record::max_data_length];
                 size_t n = 0;
                 for (;;)
                 {
@@ -164,7 +164,7 @@ srec_input_file_ti_txt::read(srec_record &record)
                         fatal_error("byte value (%ld) too large", token_value);
                     buffer[n++] = token_value;
                     get_next_token();
-                    if (n >= srec_record::max_data_length)
+                    if (n >= record::max_data_length)
                         break;
                     if (token != token_number)
                         break;
@@ -174,8 +174,7 @@ srec_input_file_ti_txt::read(srec_record &record)
                     warning("addresses (0x%08lX) too large", address);
                     address_warning = true;
                 }
-                record =
-                    srec_record(srec_record::type_data, address, buffer, n);
+                result = record(record::type_data, address, buffer, n);
                 address += n;
                 return true;
             }
@@ -194,7 +193,7 @@ srec_input_file_ti_txt::read(srec_record &record)
 
 
 const char *
-srec_input_file_ti_txt::get_file_format_name()
+srecord::input_file_ti_txt::get_file_format_name()
     const
 {
     return "ti-txt (MSP430)";

@@ -186,7 +186,7 @@ crc32::get()
     // the CRC little-endian, and it doesn't do the final bit-not.
     //
     // To simulate this (or something very much like it) try
-    //      srec_cat <file> -lecrc32 <addr> -lecrc32 <addr+4>
+    //      srecord::cat <file> -lecrc32 <addr> -lecrc32 <addr+4>
     //
     unsigned long temp = state;
     temp = UPDC32( ~state    & 0xFF, temp);

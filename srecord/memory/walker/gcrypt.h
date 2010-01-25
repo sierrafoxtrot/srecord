@@ -28,19 +28,22 @@ typedef void *gcry_md_hd_t;
 
 #include <srecord/memory/walker.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_memory_walker_gcrypt class is used to represent walking
+  * The srecord::memory_walker_gcrypt class is used to represent walking
   * memory and passing it to the gcrypt library in order to calculate a
   * message digest.
   */
-class srec_memory_walker_gcrypt:
-    public srec_memory_walker
+class memory_walker_gcrypt:
+    public memory_walker
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_memory_walker_gcrypt();
+    virtual ~memory_walker_gcrypt();
 
 private:
     /**
@@ -51,7 +54,7 @@ private:
       *     used to access the libgcrypt handle to the message digest
       *     being calculated.
       */
-    srec_memory_walker_gcrypt(gcry_md_hd_t handle);
+    memory_walker_gcrypt(gcry_md_hd_t handle);
 
 public:
     /**
@@ -78,17 +81,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_memory_walker_gcrypt();
+    memory_walker_gcrypt();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_memory_walker_gcrypt(const srec_memory_walker_gcrypt &);
+    memory_walker_gcrypt(const memory_walker_gcrypt &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_memory_walker_gcrypt &operator=(const srec_memory_walker_gcrypt &);
+    memory_walker_gcrypt &operator=(const memory_walker_gcrypt &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

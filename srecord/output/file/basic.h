@@ -23,18 +23,21 @@
 #include <srecord/output/file.h>
 #include <srecord/interval.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_basic class is used to emit record in BASIc
+  * The srecord::output_file_basic class is used to emit record in BASIc
   * format, using DATA statements.
   */
-class srec_output_file_basic:
-    public srec_output_file
+class output_file_basic:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_basic();
+    virtual ~output_file_basic();
 
 private:
     /**
@@ -43,7 +46,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_basic(const std::string &file_name);
+    output_file_basic(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for docum,entation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for docum,entation.
     void line_length_set(int);
@@ -113,17 +116,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_basic();
+    output_file_basic();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_basic(const srec_output_file_basic &);
+    output_file_basic(const output_file_basic &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_basic &operator=(const srec_output_file_basic &);
+    output_file_basic &operator=(const output_file_basic &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_BASIC_H

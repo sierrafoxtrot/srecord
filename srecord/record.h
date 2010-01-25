@@ -25,19 +25,21 @@
 
 #include <srecord/endian.h>
 
+namespace srecord {
+
 /**
-  * The srec_record class is used to represent a data record read
+  * The srecord::record class is used to represent a data record read
   * from a file.  (It is not limited to any particular file format.)
   * The records may be of various types.
   */
-class srec_record
+class record
 {
 public:
     /**
       * The destructor.  It isn't vurtual, so don't derived anything
       * from this class.
       */
-    ~srec_record();
+    ~record();
 
     /**
       * The type of the various record types.
@@ -65,24 +67,24 @@ public:
       * The default constructor.  The record will have an
       * indeterminate type, zero address, and no data.
       */
-    srec_record();
+    record();
 
     /**
       * The copy constructor.
       */
-    srec_record(const srec_record &);
+    record(const record &);
 
     /**
       * A constructor.  The record will have the given type, a zero
       * address and no data.
       */
-    srec_record(type_t);
+    record(type_t);
 
     /**
       * A constructor.  The record will have the given type, the
       * given address and no data.
       */
-    srec_record(type_t, address_t);
+    record(type_t, address_t);
 
     /**
       * A constructor.  The record will have the given type, the
@@ -99,13 +101,13 @@ public:
       *     How long the data is.
       *     assert(the_data_length < max_data_length);
       */
-    srec_record(type_t the_type, address_t the_address, const data_t *the_data,
+    record(type_t the_type, address_t the_address, const data_t *the_data,
         size_t the_data_length);
 
     /**
       * The assignment operator.
       */
-    srec_record &operator=(const srec_record &);
+    record &operator=(const record &);
 
     /**
       * The get_address method is used to get the address of the
@@ -360,6 +362,8 @@ private:
       * the rest are undefined.
       */
     data_t data[max_data_length];
+};
+
 };
 
 #endif // SRECORD_RECORD_H

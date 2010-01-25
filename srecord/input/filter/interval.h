@@ -23,19 +23,21 @@
 #include <srecord/interval.h>
 #include <srecord/input/filter.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_filter_interval class is used to represent a filter
+  * The srecord::input_filter_interval class is used to represent a filter
   * which works with the interval representing the data's coverage,
   * <i>exclusive</i> of where the result is to be placed.
   */
-class srec_input_filter_interval:
-    public srec_input_filter
+class input_filter_interval:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_interval();
+    virtual ~input_filter_interval();
 
 protected:
     /**
@@ -53,7 +55,7 @@ protected:
       *     true if the output location is included in the address
       *     range, false if not
       */
-    srec_input_filter_interval(const srec_input::pointer &deeper, long address,
+    input_filter_interval(const input::pointer &deeper, long address,
         int length, endian_t end, bool inclusive);
 
     /**
@@ -69,7 +71,7 @@ protected:
     const interval &get_range() const { return range; }
 
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
 private:
     /**
@@ -106,22 +108,24 @@ private:
       * @param record
       *     where to put the result
       */
-    bool generate(srec_record &record);
+    bool generate(record &record);
 
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_interval();
+    input_filter_interval();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_interval(const srec_input_filter_interval &);
+    input_filter_interval(const input_filter_interval &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_interval &operator=(const srec_input_filter_interval &);
+    input_filter_interval &operator=(const input_filter_interval &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

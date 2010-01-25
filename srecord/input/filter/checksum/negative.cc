@@ -20,32 +20,32 @@
 #include <srecord/input/filter/checksum/negative.h>
 
 
-srec_input_filter_checksum_negative::~srec_input_filter_checksum_negative()
+srecord::input_filter_checksum_negative::~input_filter_checksum_negative()
 {
 }
 
 
-srec_input_filter_checksum_negative::srec_input_filter_checksum_negative(
-        const srec_input::pointer &a1, int a2, int a3, endian_t a_end, int a5) :
-    srec_input_filter_checksum(a1, a2, a3, a_end, a5)
+srecord::input_filter_checksum_negative::input_filter_checksum_negative(
+        const input::pointer &a1, int a2, int a3, endian_t a_end, int a5) :
+    input_filter_checksum(a1, a2, a3, a_end, a5)
 {
 }
 
 
-srec_input::pointer
-srec_input_filter_checksum_negative::create(const srec_input::pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_checksum_negative::create(const input::pointer &a_deeper,
     int a2, int a3, endian_t a_end, int a5)
 {
     return
         pointer
         (
-            new srec_input_filter_checksum_negative(a_deeper, a2, a3, a_end, a5)
+            new input_filter_checksum_negative(a_deeper, a2, a3, a_end, a5)
         );
 }
 
 
-srec_input_filter_checksum::sum_t
-srec_input_filter_checksum_negative::calculate()
+srecord::input_filter_checksum::sum_t
+srecord::input_filter_checksum_negative::calculate()
 {
     return -sum;
 }

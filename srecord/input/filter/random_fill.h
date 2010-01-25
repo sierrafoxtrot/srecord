@@ -24,24 +24,27 @@
 #include <srecord/input/filter.h>
 #include <srecord/record.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_filter_random_fill class is used to represent a filter
+  * The srecord::input_filter_random_fill class is used to represent a filter
   * which replaces in set data locations with random data.
   */
-class srec_input_filter_random_fill:
-    public srec_input_filter
+class input_filter_random_fill:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_random_fill();
+    virtual ~input_filter_random_fill();
 
 private:
     /**
       * The constructor.
       */
-    srec_input_filter_random_fill(const srec_input::pointer &deeper,
+    input_filter_random_fill(const input::pointer &deeper,
         const interval &range);
 
 public:
@@ -52,12 +55,11 @@ public:
       * @param deeper
       *     The incoming data source to be filtered
       */
-    static pointer create(const srec_input::pointer &deeper,
-        const interval &range);
+    static pointer create(const input::pointer &deeper, const interval &range);
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
 private:
     /**
@@ -70,23 +72,24 @@ private:
     /**
       * The generate method is used to genetate fill records.
       */
-    bool generate(srec_record &record);
+    bool generate(record &record);
 
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_random_fill();
+    input_filter_random_fill();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_random_fill(const srec_input_filter_random_fill &);
+    input_filter_random_fill(const input_filter_random_fill &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_random_fill &operator=(
-        const srec_input_filter_random_fill &);
+    input_filter_random_fill &operator=(const input_filter_random_fill &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_RANDOM_FILL_H

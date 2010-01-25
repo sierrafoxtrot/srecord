@@ -22,14 +22,14 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_crop::~srec_input_filter_crop()
+srecord::input_filter_crop::~input_filter_crop()
 {
 }
 
 
-srec_input_filter_crop::srec_input_filter_crop(
-        const srec_input::pointer &a_deeper, const interval &a_range) :
-    srec_input_filter(a_deeper),
+srecord::input_filter_crop::input_filter_crop(
+        const srecord::input::pointer &a_deeper, const interval &a_range) :
+    srecord::input_filter(a_deeper),
     range(a_range),
     data(),
     data_range()
@@ -37,16 +37,16 @@ srec_input_filter_crop::srec_input_filter_crop(
 }
 
 
-srec_input::pointer
-srec_input_filter_crop::create(const srec_input::pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_crop::create(const srecord::input::pointer &a_deeper,
     const interval &a_range)
 {
-    return pointer(new srec_input_filter_crop(a_deeper, a_range));
+    return pointer(new srecord::input_filter_crop(a_deeper, a_range));
 }
 
 
 bool
-srec_input_filter_crop::read(srec_record &record)
+srecord::input_filter_crop::read(srecord::record &record)
 {
     for (;;)
     {
@@ -59,7 +59,7 @@ srec_input_filter_crop::read(srec_record &record)
             //
             // If the input is exhausted, we are done.
             //
-            if (!srec_input_filter::read(data))
+            if (!srecord::input_filter::read(data))
             {
                 return false;
             }
@@ -73,7 +73,7 @@ srec_input_filter_crop::read(srec_record &record)
                 record = data;
                 return true;
 
-            case srec_record::type_data:
+            case srecord::record::type_data:
                 //
                 // Data records are remembered, and
                 // doled out peicmeal, as they mask
@@ -87,7 +87,7 @@ srec_input_filter_crop::read(srec_record &record)
                     );
                 break;
 
-            case srec_record::type_execution_start_address:
+            case srecord::record::type_execution_start_address:
                 //
                 // Discard execution start address records which do not
                 // fall into the clip region.
@@ -119,9 +119,9 @@ srec_input_filter_crop::read(srec_record &record)
         unsigned long lo = fragment.get_lowest();
         unsigned long hi = fragment.get_highest();
         record =
-            srec_record
+            srecord::record
             (
-                srec_record::type_data,
+                srecord::record::type_data,
                 lo,
                 data.get_data() + lo - data.get_address(),
                 hi - lo

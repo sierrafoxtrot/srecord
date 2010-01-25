@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_needham class is used to represent the parse
+  * The srecord::input_file_needham class is used to represent the parse
   * state of a file in Needham Hex format.
   */
-class srec_input_file_needham:
-    public srec_input_file
+class input_file_needham:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_needham();
+    virtual ~input_file_needham();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_needham(const std::string &file_name);
+    input_file_needham(const std::string &file_name);
 
 public:
     /**
@@ -58,13 +60,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
 
 private:
-    int read_inner(srec_record &);
+    int read_inner(record &);
     bool garbage_warning;
     bool seen_some_input;
     unsigned long address;
@@ -72,17 +74,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_needham();
+    input_file_needham();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_needham(const srec_input_file_needham &);
+    input_file_needham(const input_file_needham &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_needham &operator=(const srec_input_file_needham &);
+    input_file_needham &operator=(const input_file_needham &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_NEEDHAM_H

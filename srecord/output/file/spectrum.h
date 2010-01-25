@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_spectrum class is used to represent the running
+  * The srecord::output_file_spectrum class is used to represent the running
   * state when writing a file in Spectrum format.
   */
-class srec_output_file_spectrum:
-    public srec_output_file
+class output_file_spectrum:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_spectrum();
+    virtual ~output_file_spectrum();
 
 private:
     /**
@@ -44,7 +47,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    srec_output_file_spectrum(const std::string &file_name);
+    output_file_spectrum(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -90,17 +93,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_spectrum();
+    output_file_spectrum();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_spectrum(const srec_output_file_spectrum &);
+    output_file_spectrum(const output_file_spectrum &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_spectrum &operator=(const srec_output_file_spectrum &);
+    output_file_spectrum &operator=(const output_file_spectrum &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_SPECTRUM_H

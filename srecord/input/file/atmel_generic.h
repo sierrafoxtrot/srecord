@@ -23,18 +23,20 @@
 #include <srecord/endian.h>
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_atmel_generic class is used to represent the
+  * The srecord::input_file_atmel_generic class is used to represent the
   * parse stat of an Atmel Genric formatted file.
   */
-class srec_input_file_atmel_generic:
-    public srec_input_file
+class input_file_atmel_generic:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_atmel_generic();
+    virtual ~input_file_atmel_generic();
 
 private:
     /**
@@ -45,7 +47,7 @@ private:
       * @param end
       *     The byte order.
       */
-    srec_input_file_atmel_generic(const std::string &file_name, endian_t end);
+    input_file_atmel_generic(const std::string &file_name, endian_t end);
 
 public:
     /**
@@ -77,7 +79,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -87,7 +89,7 @@ private:
       * The read_inner method is used to read a single record form
       * the file.  The read method is a wrapper around it.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The seen_some_input instance variable is used to remember whther
@@ -104,18 +106,19 @@ private:
     /**
       * The deafult constructor.  Do not use.
       */
-    srec_input_file_atmel_generic();
+    input_file_atmel_generic();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_atmel_generic(const srec_input_file_atmel_generic &);
+    input_file_atmel_generic(const input_file_atmel_generic &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_atmel_generic &operator=(
-        const srec_input_file_atmel_generic &);
+    input_file_atmel_generic &operator=(const input_file_atmel_generic &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_ATMEL_GENERIC_H

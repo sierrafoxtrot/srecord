@@ -21,32 +21,32 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_or::~srec_input_filter_or()
+srecord::input_filter_or::~input_filter_or()
 {
 }
 
 
-srec_input_filter_or::srec_input_filter_or(const srec_input::pointer &a1,
+srecord::input_filter_or::input_filter_or(const srecord::input::pointer &a1,
         int a2) :
-    srec_input_filter(a1),
+    srecord::input_filter(a1),
     value(a2)
 {
 }
 
 
-srec_input::pointer
-srec_input_filter_or::create(const srec_input::pointer &a_deeper, int a_value)
+srecord::input::pointer
+srecord::input_filter_or::create(const input::pointer &a_deeper, int a_value)
 {
-    return pointer(new srec_input_filter_or(a_deeper, a_value));
+    return pointer(new srecord::input_filter_or(a_deeper, a_value));
 }
 
 
 bool
-srec_input_filter_or::read(srec_record &record)
+srecord::input_filter_or::read(srecord::record &record)
 {
-    if (!srec_input_filter::read(record))
+    if (!srecord::input_filter::read(record))
         return false;
-    if (record.get_type() == srec_record::type_data)
+    if (record.get_type() == srecord::record::type_data)
     {
         for (size_t j = 0; j < record.get_length(); ++j)
             record.set_data(j, record.get_data(j) | value);

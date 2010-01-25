@@ -23,18 +23,21 @@
 #include <srecord/endian.h>
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_ascii_hex class is used to write a file in
+  * The srecord::output_file_ascii_hex class is used to write a file in
   * Atmel Generic format.
   */
-class srec_output_file_atmel_generic:
-    public srec_output_file
+class output_file_atmel_generic:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_atmel_generic();
+    virtual ~output_file_atmel_generic();
 
 private:
     /**
@@ -46,7 +49,7 @@ private:
       * @param end
       *     The byte order of the output.
       */
-    srec_output_file_atmel_generic(const std::string &file_name, endian_t end);
+    output_file_atmel_generic(const std::string &file_name, endian_t end);
 
 public:
     /**
@@ -63,7 +66,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -87,18 +90,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_atmel_generic();
+    output_file_atmel_generic();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_atmel_generic(const srec_output_file_atmel_generic &);
+    output_file_atmel_generic(const output_file_atmel_generic &);
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_atmel_generic &operator=(
-        const srec_output_file_atmel_generic &);
+    output_file_atmel_generic &operator=(const output_file_atmel_generic &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_ATMEL_GENERIC_H

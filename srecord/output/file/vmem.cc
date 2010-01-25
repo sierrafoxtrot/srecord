@@ -24,7 +24,7 @@
 #include <srecord/record.h>
 
 
-srec_output_file_vmem::~srec_output_file_vmem()
+srecord::output_file_vmem::~output_file_vmem()
 {
     if (column)
         put_char('\n');
@@ -35,7 +35,7 @@ srec_output_file_vmem::~srec_output_file_vmem()
 // The default number of bits is 32.
 // If you change this, you must also change the following files:
 //     lib/srec/output/file/vmem.cc
-//     man/man1/srec_cat.1
+//     man/man1/srecord::cat.1
 //
 #define DEFAULT_MEM_WIDTH 32
 
@@ -84,7 +84,7 @@ calc_width_shift(int x)
     //
     // The default number of bits is 32.
     // If you change this, you must also change the following files:
-    //     man/man1/srec_cat.1
+    //     man/man1/srecord::cat.1
     //     lib/srec/arglex_output.cc
     //
     return 2;
@@ -98,8 +98,8 @@ calc_width_mask(int x)
 }
 
 
-srec_output_file_vmem::srec_output_file_vmem(const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+srecord::output_file_vmem::output_file_vmem(const std::string &a_file_name) :
+    srecord::output_file(a_file_name),
     bytes_per_word(4),
     address(0),
     column(0),
@@ -111,15 +111,15 @@ srec_output_file_vmem::srec_output_file_vmem(const std::string &a_file_name) :
 }
 
 
-srec_output::pointer
-srec_output_file_vmem::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_vmem::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_vmem(a_file_name));
+    return pointer(new srecord::output_file_vmem(a_file_name));
 }
 
 
 void
-srec_output_file_vmem::command_line(srec_arglex_tool *cmdln)
+srecord::output_file_vmem::command_line(srecord::arglex_tool *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_number)
     {
@@ -140,11 +140,11 @@ srec_output_file_vmem::command_line(srec_arglex_tool *cmdln)
 
 
 void
-srec_output_file_vmem::write(const srec_record &record)
+srecord::output_file_vmem::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // emit header records as comments in the file
         if (enable_header_flag && record.get_length() > 0)
         {
@@ -173,7 +173,7 @@ srec_output_file_vmem::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         //
         // make sure the data is aligned properly
         //
@@ -246,22 +246,22 @@ srec_output_file_vmem::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_data_count:
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_data_count:
+    case srecord::record::type_execution_start_address:
         // ignore
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
     }
 }
 
 
 void
-srec_output_file_vmem::line_length_set(int linlen)
+srecord::output_file_vmem::line_length_set(int linlen)
 {
     int nwords = (linlen - 9) / (bytes_per_word * 2 + 1);
-    int max_words = srec_record::max_data_length >> width_shift;
+    int max_words = srecord::record::max_data_length >> width_shift;
     if (nwords > max_words)
         nwords = max_words;
     if (nwords < 1)
@@ -271,14 +271,14 @@ srec_output_file_vmem::line_length_set(int linlen)
 
 
 void
-srec_output_file_vmem::address_length_set(int)
+srecord::output_file_vmem::address_length_set(int)
 {
     // ignore
 }
 
 
 int
-srec_output_file_vmem::preferred_block_size_get()
+srecord::output_file_vmem::preferred_block_size_get()
     const
 {
     return pref_block_size;
@@ -286,7 +286,7 @@ srec_output_file_vmem::preferred_block_size_get()
 
 
 const char *
-srec_output_file_vmem::format_name()
+srecord::output_file_vmem::format_name()
     const
 {
     return "VMem";

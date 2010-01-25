@@ -22,14 +22,14 @@
 #include <srecord/record.h>
 
 
-srec_input_file_srecord::~srec_input_file_srecord()
+srecord::input_file_srecord::~input_file_srecord()
 {
 }
 
 
-srec_input_file_srecord::srec_input_file_srecord(
+srecord::input_file_srecord::input_file_srecord(
         const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+    input_file(a_file_name),
     data_count(0),
     garbage_warning(false),
     seen_some_input(false),
@@ -40,15 +40,15 @@ srec_input_file_srecord::srec_input_file_srecord(
 }
 
 
-srec_input::pointer
-srec_input_file_srecord::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_srecord::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_srecord(a_file_name));
+    return pointer(new input_file_srecord(a_file_name));
 }
 
 
 void
-srec_input_file_srecord::command_line(srec_arglex_tool *cmdln)
+srecord::input_file_srecord::command_line(arglex_tool *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_number)
     {
@@ -98,7 +98,7 @@ srec_input_file_srecord::command_line(srec_arglex_tool *cmdln)
 
 
 int
-srec_input_file_srecord::read_inner(srec_record &record)
+srecord::input_file_srecord::read_inner(record &result)
 {
     for (;;)
     {
@@ -142,12 +142,12 @@ srec_input_file_srecord::read_inner(srec_record &record)
     --line_length;
 
     int naddr = 2;
-    srec_record::type_t type = srec_record::type_unknown;
+    record::type_t type = record::type_unknown;
     switch (tag)
     {
     case 0:
         // header
-        type = srec_record::type_header;
+        type = record::type_header;
         if (line_length < naddr)
         {
             // Some programs write Very short headers.
@@ -157,24 +157,24 @@ srec_input_file_srecord::read_inner(srec_record &record)
 
     case 1:
         // data
-        type = srec_record::type_data;
+        type = record::type_data;
         break;
 
     case 2:
         // data
-        type = srec_record::type_data;
+        type = record::type_data;
         naddr = 3;
         break;
 
     case 3:
         // data
-        type = srec_record::type_data;
+        type = record::type_data;
         naddr = 4;
         break;
 
     case 5:
         // data count
-        type = srec_record::type_data_count;
+        type = record::type_data_count;
         //
         // This is documented as having 2 address bytes and
         // no data bytes.  The Green Hills toolchain happily
@@ -187,7 +187,7 @@ srec_input_file_srecord::read_inner(srec_record &record)
 
     case 6:
         // data count
-        type = srec_record::type_data_count;
+        type = record::type_data_count;
         //
         // Just in case some smarty-pants uses the Green Hills
         // trick, we cope with address size crap the same as S5.
@@ -199,19 +199,19 @@ srec_input_file_srecord::read_inner(srec_record &record)
 
     case 7:
         // termination
-        type = srec_record::type_execution_start_address;
+        type = record::type_execution_start_address;
         naddr = 4;
         break;
 
     case 8:
         // termination
-        type = srec_record::type_execution_start_address;
+        type = record::type_execution_start_address;
         naddr = 3;
         break;
 
     case 9:
         // termination
-        type = srec_record::type_execution_start_address;
+        type = record::type_execution_start_address;
         break;
     }
     if (line_length < naddr)
@@ -224,16 +224,16 @@ srec_input_file_srecord::read_inner(srec_record &record)
             tag
         );
     }
-    long tmp_addr = srec_record::decode_big_endian(buffer, naddr);
-    if (address_shift && type != srec_record::type_data_count)
+    long tmp_addr = record::decode_big_endian(buffer, naddr);
+    if (address_shift && type != record::type_data_count)
         tmp_addr <<= address_shift;
-    record = srec_record(type, tmp_addr, buffer + naddr, line_length - naddr);
+    result = record(type, tmp_addr, buffer + naddr, line_length - naddr);
     return 1;
 }
 
 
 bool
-srec_input_file_srecord::read(srec_record &record)
+srecord::input_file_srecord::read(record &record)
 {
     for (;;)
     {
@@ -256,14 +256,14 @@ srec_input_file_srecord::read(srec_record &record)
             return false;
         }
         seen_some_input = true;
-        if (record.get_type() != srec_record::type_header && !header_seen)
+        if (record.get_type() != record::type_header && !header_seen)
         {
             warning("no header record");
             header_seen = true;
         }
         if
         (
-            record.get_type() != srec_record::type_execution_start_address
+            record.get_type() != record::type_execution_start_address
         &&
             termination_seen
         )
@@ -273,11 +273,11 @@ srec_input_file_srecord::read(srec_record &record)
         }
         switch (record.get_type())
         {
-        case srec_record::type_unknown:
+        case record::type_unknown:
             fatal_error("record type not recognised");
             break;
 
-        case srec_record::type_header:
+        case record::type_header:
             if (header_seen)
                 warning("redundant header record");
             if (record.get_address())
@@ -288,7 +288,7 @@ srec_input_file_srecord::read(srec_record &record)
             header_seen = true;
             break;
 
-        case srec_record::type_data:
+        case record::type_data:
             ++data_count;
             if (record.get_length() == 0)
             {
@@ -297,10 +297,10 @@ srec_input_file_srecord::read(srec_record &record)
             }
             break;
 
-        case srec_record::type_data_count:
+        case record::type_data_count:
             {
-                srec_record::address_t addr = record.get_address();
-                srec_record::address_t mask = 0xFFFF;
+                record::address_t addr = record.get_address();
+                record::address_t mask = 0xFFFF;
                 while (addr > mask)
                     mask = ~(~mask << 8);
                 mask &= data_count;
@@ -316,7 +316,7 @@ srec_input_file_srecord::read(srec_record &record)
             }
             continue;
 
-        case srec_record::type_execution_start_address:
+        case record::type_execution_start_address:
             if (record.get_length() > 0)
             {
                 warning("data in termination record ignored");
@@ -334,7 +334,7 @@ srec_input_file_srecord::read(srec_record &record)
 
 
 const char *
-srec_input_file_srecord::get_file_format_name()
+srecord::input_file_srecord::get_file_format_name()
     const
 {
     return "Motorola S-Record";

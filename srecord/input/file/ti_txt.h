@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_ti_txt class is used to repesent the parse
+  * The srecord::input_file_ti_txt class is used to repesent the parse
   * state when reading a ti_txt (MSP430) format input file.
   */
-class srec_input_file_ti_txt:
-    public srec_input_file
+class input_file_ti_txt:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_ti_txt();
+    virtual ~input_file_ti_txt();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_ti_txt(const std::string &file_name);
+    input_file_ti_txt(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -68,7 +70,7 @@ private:
       * The read_inner method is used to read a single record from
       * the file.  The read method calls it.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The garbage_warning instance variable is used to remember whether
@@ -128,17 +130,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_ti_txt();
+    input_file_ti_txt();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_ti_txt(const srec_input_file_ti_txt &);
+    input_file_ti_txt(const input_file_ti_txt &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_ti_txt &operator=(const srec_input_file_ti_txt &);
+    input_file_ti_txt &operator=(const input_file_ti_txt &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_ti_txt_H

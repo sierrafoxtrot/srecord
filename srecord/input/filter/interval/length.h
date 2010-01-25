@@ -22,19 +22,21 @@
 
 #include <srecord/input/filter/interval.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_filter_interval_length class is used to represent a
+  * The srecord::input_filter_interval_length class is used to represent a
   * filter which injects the maximum minus minimum addresses of the data
   * into the data.
   */
-class srec_input_filter_interval_length:
-    public srec_input_filter_interval
+class input_filter_interval_length:
+    public input_filter_interval
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_interval_length();
+    virtual ~input_filter_interval_length();
 
 private:
     /**
@@ -54,7 +56,7 @@ private:
       *     true if the output location is included in the address
       *     range, false if not
       */
-    srec_input_filter_interval_length(const srec_input::pointer &deeper,
+    input_filter_interval_length(const input::pointer &deeper,
         long address, int length, endian_t end, int width, bool inclusive);
 
 public:
@@ -76,7 +78,7 @@ public:
       *     true if the output location is included in the address
       *     range, false if not
       */
-    static pointer create(const srec_input::pointer &deeper, long address,
+    static pointer create(const input::pointer &deeper, long address,
         int length, endian_t end, int width, bool inclusive);
 
 protected:
@@ -92,19 +94,20 @@ private:
     /**
       * The default constructor.
       */
-    srec_input_filter_interval_length();
+    input_filter_interval_length();
 
     /**
       * The copy constructor.
       */
-    srec_input_filter_interval_length(
-        const srec_input_filter_interval_length &);
+    input_filter_interval_length(const input_filter_interval_length &);
 
     /**
       * The assignment operator.
       */
-    srec_input_filter_interval_length &operator=(
-        const srec_input_filter_interval_length &);
+    input_filter_interval_length &operator=(
+        const input_filter_interval_length &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

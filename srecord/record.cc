@@ -24,7 +24,7 @@
 #include <srecord/record.h>
 
 
-srec_record::srec_record():
+srecord::record::record():
     type(type_unknown),
     address(0),
     length(0)
@@ -32,7 +32,7 @@ srec_record::srec_record():
 }
 
 
-srec_record::srec_record(const srec_record &arg) :
+srecord::record::record(const srecord::record &arg) :
     type(arg.type),
     address(arg.address),
     length(arg.length)
@@ -42,7 +42,7 @@ srec_record::srec_record(const srec_record &arg) :
 }
 
 
-srec_record::srec_record(type_t arg) :
+srecord::record::record(type_t arg) :
     type(arg),
     address(0),
     length(0)
@@ -50,7 +50,7 @@ srec_record::srec_record(type_t arg) :
 }
 
 
-srec_record::srec_record(type_t a1, address_t a2) :
+srecord::record::record(type_t a1, address_t a2) :
     type(a1),
     address(a2),
     length(0)
@@ -58,7 +58,7 @@ srec_record::srec_record(type_t a1, address_t a2) :
 }
 
 
-srec_record::srec_record(type_t a1, address_t a2, const data_t *a3, size_t a4) :
+srecord::record::record(type_t a1, address_t a2, const data_t *a3, size_t a4) :
     type(a1),
     address(a2),
     length(a4)
@@ -69,8 +69,8 @@ srec_record::srec_record(type_t a1, address_t a2, const data_t *a3, size_t a4) :
 }
 
 
-srec_record &
-srec_record::operator=(const srec_record &arg)
+srecord::record &
+srecord::record::operator=(const srecord::record &arg)
 {
     if (this != &arg)
     {
@@ -84,13 +84,13 @@ srec_record::operator=(const srec_record &arg)
 }
 
 
-srec_record::~srec_record()
+srecord::record::~record()
 {
 }
 
 
 size_t
-srec_record::maximum_data_length(address_t address)
+srecord::record::maximum_data_length(address_t address)
 {
     // FIXME: this is format specific
     if (address < ((address_t)1 << 16))
@@ -101,8 +101,8 @@ srec_record::maximum_data_length(address_t address)
 }
 
 
-srec_record::address_t
-srec_record::decode_big_endian(const data_t *buffer, size_t length)
+srecord::record::address_t
+srecord::record::decode_big_endian(const data_t *buffer, size_t length)
 {
     assert(length <= sizeof(address_t));
     address_t result = 0;
@@ -112,8 +112,8 @@ srec_record::decode_big_endian(const data_t *buffer, size_t length)
 }
 
 
-srec_record::address_t
-srec_record::decode_little_endian(const data_t *buffer, size_t length)
+srecord::record::address_t
+srecord::record::decode_little_endian(const data_t *buffer, size_t length)
 {
     assert(length <= sizeof(address_t));
     address_t result = 0;
@@ -129,7 +129,8 @@ srec_record::decode_little_endian(const data_t *buffer, size_t length)
 
 
 void
-srec_record::encode_big_endian(data_t *buffer, address_t value, size_t length)
+srecord::record::encode_big_endian(data_t *buffer, address_t value,
+    size_t length)
 {
     assert(length <= sizeof(address_t));
     while (length > 0)
@@ -142,7 +143,7 @@ srec_record::encode_big_endian(data_t *buffer, address_t value, size_t length)
 
 
 void
-srec_record::encode_little_endian(data_t *buffer, address_t value,
+srecord::record::encode_little_endian(data_t *buffer, address_t value,
     size_t length)
 {
     assert(length <= sizeof(address_t));
@@ -155,7 +156,7 @@ srec_record::encode_little_endian(data_t *buffer, address_t value,
 
 
 bool
-srec_record::is_all_zero()
+srecord::record::is_all_zero()
     const
 {
     for (size_t j = 0; j < length; ++j)
@@ -166,7 +167,7 @@ srec_record::is_all_zero()
 
 
 void
-srec_record::set_data_extend(size_t n, data_t d)
+srecord::record::set_data_extend(size_t n, data_t d)
 {
     assert(n < max_data_length);
     if (n < max_data_length)

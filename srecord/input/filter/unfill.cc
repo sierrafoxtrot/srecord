@@ -21,14 +21,14 @@
 #include <srecord/input/filter/unfill.h>
 
 
-srec_input_filter_unfill::~srec_input_filter_unfill()
+srecord::input_filter_unfill::~input_filter_unfill()
 {
 }
 
 
-srec_input_filter_unfill::srec_input_filter_unfill(
-        const srec_input::pointer &a1, int a2, int a3) :
-    srec_input_filter(a1),
+srecord::input_filter_unfill::input_filter_unfill(
+        const srecord::input::pointer &a1, int a2, int a3) :
+    srecord::input_filter(a1),
     fill_value(a2),
     fill_minimum(a3),
     buffer(),
@@ -37,29 +37,29 @@ srec_input_filter_unfill::srec_input_filter_unfill(
 }
 
 
-srec_input::pointer
-srec_input_filter_unfill::create(const srec_input::pointer &a_deeper, int a2,
+srecord::input::pointer
+srecord::input_filter_unfill::create(const input::pointer &a_deeper, int a2,
     int a3)
 {
-    return pointer(new srec_input_filter_unfill(a_deeper, a2, a3));
+    return pointer(new srecord::input_filter_unfill(a_deeper, a2, a3));
 }
 
 
 bool
-srec_input_filter_unfill::read(srec_record &record)
+srecord::input_filter_unfill::read(srecord::record &record)
 {
     for (;;)
     {
         while
         (
-            buffer.get_type() != srec_record::type_data
+            buffer.get_type() != srecord::record::type_data
         ||
             buffer_pos >= buffer.get_length()
         )
         {
-            if (!srec_input_filter::read(buffer))
+            if (!srecord::input_filter::read(buffer))
                 return false;
-            if (buffer.get_type() != srec_record::type_data)
+            if (buffer.get_type() != srecord::record::type_data)
             {
                 record = buffer;
                 return true;
@@ -88,9 +88,9 @@ srec_input_filter_unfill::read(srec_record &record)
             if (buffer_pos - first_pos < fill_minimum)
             {
                 record =
-                    srec_record
+                    srecord::record
                     (
-                        srec_record::type_data,
+                        srecord::record::type_data,
                         addr,
                         buffer.get_data() + first_pos,
                         buffer_pos - first_pos
@@ -111,9 +111,9 @@ srec_input_filter_unfill::read(srec_record &record)
                 ++buffer_pos;
             }
             record =
-                srec_record
+                srecord::record
                 (
-                    srec_record::type_data,
+                    srecord::record::type_data,
                     addr,
                     buffer.get_data() + first_pos,
                     buffer_pos - first_pos

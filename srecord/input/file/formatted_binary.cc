@@ -21,14 +21,14 @@
 #include <srecord/record.h>
 
 
-srec_input_file_formatted_binary::~srec_input_file_formatted_binary()
+srecord::input_file_formatted_binary::~input_file_formatted_binary()
 {
 }
 
 
-srec_input_file_formatted_binary::srec_input_file_formatted_binary(
+srecord::input_file_formatted_binary::input_file_formatted_binary(
         const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+    input_file(a_file_name),
     header_seen(false),
     upper_bound(0),
     address(0),
@@ -38,15 +38,15 @@ srec_input_file_formatted_binary::srec_input_file_formatted_binary(
 }
 
 
-srec_input::pointer
-srec_input_file_formatted_binary::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_formatted_binary::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_formatted_binary(a_file_name));
+    return pointer(new input_file_formatted_binary(a_file_name));
 }
 
 
 bool
-srec_input_file_formatted_binary::read(srec_record &record)
+srecord::input_file_formatted_binary::read(record &result)
 {
     if (!header_seen)
     {
@@ -144,9 +144,9 @@ srec_input_file_formatted_binary::read(srec_record &record)
     }
 
     long datalen = upper_bound - address;
-    if (datalen > srec_record::max_data_length)
-        datalen = srec_record::max_data_length;
-    unsigned char data[srec_record::max_data_length];
+    if (datalen > record::max_data_length)
+        datalen = record::max_data_length;
+    unsigned char data[record::max_data_length];
     for (long j = 0; j < datalen; ++j)
     {
         int c = get_char();
@@ -155,14 +155,14 @@ srec_input_file_formatted_binary::read(srec_record &record)
         data[j] = c;
         check_sum += c;
     }
-    record = srec_record(srec_record::type_data, address, data, datalen);
+    result = record(record::type_data, address, data, datalen);
     address += datalen;
     return true;
 }
 
 
 const char *
-srec_input_file_formatted_binary::get_file_format_name()
+srecord::input_file_formatted_binary::get_file_format_name()
     const
 {
     return "Formatted Binary";
@@ -170,7 +170,7 @@ srec_input_file_formatted_binary::get_file_format_name()
 
 
 const char *
-srec_input_file_formatted_binary::mode()
+srecord::input_file_formatted_binary::mode()
     const
 {
     return "rb";

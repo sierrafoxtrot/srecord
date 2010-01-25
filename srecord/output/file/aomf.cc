@@ -23,28 +23,28 @@
 #include <srecord/record.h>
 
 
-srec_output_file_aomf::~srec_output_file_aomf()
+srecord::output_file_aomf::~output_file_aomf()
 {
 }
 
 
-srec_output_file_aomf::srec_output_file_aomf(const std::string &a_file_name) :
-    srec_output_file(a_file_name)
+srecord::output_file_aomf::output_file_aomf(const std::string &a_file_name) :
+    srecord::output_file(a_file_name)
 {
     if (line_termination == line_termination_native)
         line_termination = line_termination_binary;
 }
 
 
-srec_output::pointer
-srec_output_file_aomf::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_aomf::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_aomf(a_file_name));
+    return pointer(new srecord::output_file_aomf(a_file_name));
 }
 
 
 void
-srec_output_file_aomf::emit_record(int type, const unsigned char *data,
+srecord::output_file_aomf::emit_record(int type, const unsigned char *data,
     size_t length)
 {
     checksum_reset();
@@ -57,7 +57,7 @@ srec_output_file_aomf::emit_record(int type, const unsigned char *data,
 
 
 void
-srec_output_file_aomf::module_header_record(const char *name)
+srecord::output_file_aomf::module_header_record(const char *name)
 {
     //
     // The TRN ID describes the system which created the file, and (by
@@ -80,10 +80,10 @@ srec_output_file_aomf::module_header_record(const char *name)
 
 
 void
-srec_output_file_aomf::content_record(unsigned long address,
+srecord::output_file_aomf::content_record(unsigned long address,
     const unsigned char *data, size_t len)
 {
-    size_t maxlen = 4 * srec_record::max_data_length;
+    size_t maxlen = 4 * srecord::record::max_data_length;
     while (len > 0)
     {
         unsigned char buffer[maxlen + 3];
@@ -101,7 +101,7 @@ srec_output_file_aomf::content_record(unsigned long address,
 
 
 void
-srec_output_file_aomf::module_end_record(const char *name)
+srecord::output_file_aomf::module_end_record(const char *name)
 {
     unsigned char buffer[1 + 255 + 4];
     size_t len = strlen(name);
@@ -118,7 +118,7 @@ srec_output_file_aomf::module_end_record(const char *name)
 
 
 void
-srec_output_file_aomf::put_byte(unsigned char n)
+srecord::output_file_aomf::put_byte(unsigned char n)
 {
     checksum_add(n);
     put_char(n);
@@ -127,7 +127,7 @@ srec_output_file_aomf::put_byte(unsigned char n)
 
 
 void
-srec_output_file_aomf::put_word(int n)
+srecord::output_file_aomf::put_word(int n)
 {
     put_byte(n);
     put_byte(n >> 8);
@@ -135,17 +135,17 @@ srec_output_file_aomf::put_word(int n)
 
 
 void
-srec_output_file_aomf::write(const srec_record &record)
+srecord::output_file_aomf::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         module_name.assign((const char *)record.get_data(),
             record.get_length());
         module_header_record(module_name.c_str());
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         if (record.get_length() < 1)
             return;
         if (record.get_address() + record.get_length() > (1UL << 24))
@@ -162,44 +162,44 @@ srec_output_file_aomf::write(const srec_record &record)
         );
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         module_end_record(module_name.c_str());
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
     }
 }
 
 
 void
-srec_output_file_aomf::line_length_set(int)
+srecord::output_file_aomf::line_length_set(int)
 {
     // Ignore.
 }
 
 
 void
-srec_output_file_aomf::address_length_set(int)
+srecord::output_file_aomf::address_length_set(int)
 {
     // Ignore (this is only a 16-bit format).
 }
 
 
 int
-srec_output_file_aomf::preferred_block_size_get()
+srecord::output_file_aomf::preferred_block_size_get()
     const
 {
-    return srec_record::max_data_length;
+    return srecord::record::max_data_length;
 }
 
 
 const char *
-srec_output_file_aomf::format_name()
+srecord::output_file_aomf::format_name()
     const
 {
     return "AOMF";

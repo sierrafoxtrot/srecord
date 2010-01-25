@@ -23,18 +23,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_os65v class is used to represent the input state
+  * The srecord::input_file_os65v class is used to represent the input state
   * of an Ohio Scientific hexadecimal formatted file.
   */
-class srec_input_file_os65v:
-    public srec_input_file
+class input_file_os65v:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_os65v();
+    virtual ~input_file_os65v();
 
 private:
     /**
@@ -43,7 +45,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_os65v(const std::string &file_name);
+    input_file_os65v(const std::string &file_name);
 
 public:
     /**
@@ -59,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -68,23 +70,23 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_os65v();
+    input_file_os65v();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_os65v(const srec_input_file_os65v &);
+    input_file_os65v(const input_file_os65v &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_os65v &operator=(const srec_input_file_os65v &);
+    input_file_os65v &operator=(const input_file_os65v &);
 
     /**
       * The read_inner method is used by the read method to get
       * another portion of input.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The seen_some_input instance variable is used to remember whether
@@ -110,6 +112,8 @@ private:
       * "return to monitor" sequence, or after a "GO" command.
       */
     bool ignore_the_rest;
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_OS65V_H

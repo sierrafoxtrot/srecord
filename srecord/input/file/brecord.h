@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_brecord class is used to represent the parse
+  * The srecord::input_file_brecord class is used to represent the parse
   * state of a Motorola MC68EZ328 bootstrap b-record format input file.
   */
-class srec_input_file_brecord:
-    public srec_input_file
+class input_file_brecord:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_brecord();
+    virtual ~input_file_brecord();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_brecord(const std::string &file_name);
+    input_file_brecord(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -68,7 +70,7 @@ private:
       * The read_inner method is used to read a record from the file.
       * The read method is a wrapper around it.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The seen_some_input instance variable is used to remember whether
@@ -79,17 +81,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_brecord();
+    input_file_brecord();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_brecord(const srec_input_file_brecord &);
+    input_file_brecord(const input_file_brecord &);
 
     /**
       * The assigmne toperator.  Do not use.
       */
-    srec_input_file_brecord &operator=(const srec_input_file_brecord &);
+    input_file_brecord &operator=(const input_file_brecord &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

@@ -24,7 +24,7 @@
 
 
 unsigned long
-srec_arglex_tool::get_number(const char *caption)
+srecord::arglex_tool::get_number(const char *caption)
 {
     unsigned long value = 0;
     unsigned long multiple;
@@ -55,8 +55,8 @@ srec_arglex_tool::get_number(const char *caption)
     case token_minimum_address:
         {
             token_next();
-            srec_input::pointer ifp = get_input();
-            over = srec_input_interval(ifp);
+            input::pointer ifp = get_input();
+            over = input_interval(ifp);
             value = over.get_lowest();
         }
         break;
@@ -64,8 +64,8 @@ srec_arglex_tool::get_number(const char *caption)
     case token_maximum_address:
         {
             token_next();
-            srec_input::pointer ifp = get_input();
-            over = srec_input_interval(ifp);
+            input::pointer ifp = get_input();
+            over = input_interval(ifp);
             value = over.get_highest();
         }
         break;
@@ -73,8 +73,8 @@ srec_arglex_tool::get_number(const char *caption)
     case token_length:
         {
             token_next();
-            srec_input::pointer ifp = get_input();
-            over = srec_input_interval(ifp);
+            input::pointer ifp = get_input();
+            over = input_interval(ifp);
             value = (over.get_highest() - over.get_lowest());
         }
         break;
@@ -121,7 +121,8 @@ srec_arglex_tool::get_number(const char *caption)
 
 
 unsigned long
-srec_arglex_tool::get_number(const char *caption, long minimum, long maximum)
+srecord::arglex_tool::get_number(const char *caption, long minimum,
+    long maximum)
 {
     long value = get_number(caption);
     if (value < minimum || value > maximum)

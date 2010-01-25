@@ -20,13 +20,13 @@
 #include <srecord/record.h>
 
 
-srec_input_file_mif::~srec_input_file_mif()
+srecord::input_file_mif::~input_file_mif()
 {
 }
 
 
-srec_input_file_mif::srec_input_file_mif(const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+srecord::input_file_mif::input_file_mif(const std::string &a_file_name) :
+    srecord::input_file(a_file_name),
     state(state_header),
     address(0),
     lex_radix(10),
@@ -38,15 +38,15 @@ srec_input_file_mif::srec_input_file_mif(const std::string &a_file_name) :
 }
 
 
-srec_input::pointer
-srec_input_file_mif::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_mif::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_mif(a_file_name));
+    return pointer(new srecord::input_file_mif(a_file_name));
 }
 
 
-srec_input_file_mif::token_t
-srec_input_file_mif::lex_addr()
+srecord::input_file_mif::token_t
+srecord::input_file_mif::lex_addr()
 {
     lex_radix = lex_addr_radix;
     token_t result = lex();
@@ -55,8 +55,8 @@ srec_input_file_mif::lex_addr()
 }
 
 
-srec_input_file_mif::token_t
-srec_input_file_mif::lex_data()
+srecord::input_file_mif::token_t
+srecord::input_file_mif::lex_data()
 {
     lex_radix = lex_data_radix;
     token_t result = lex();
@@ -65,8 +65,8 @@ srec_input_file_mif::lex_data()
 }
 
 
-srec_input_file_mif::token_t
-srec_input_file_mif::lex()
+srecord::input_file_mif::token_t
+srecord::input_file_mif::lex()
 {
     for (;;)
     {
@@ -222,14 +222,14 @@ srec_input_file_mif::lex()
 
 
 void
-srec_input_file_mif::syntax_error(const char *text)
+srecord::input_file_mif::syntax_error(const char *text)
 {
     fatal_error("%s", text);
 }
 
 
 void
-srec_input_file_mif::get_equals()
+srecord::input_file_mif::get_equals()
 {
     if (lex() != token_equals)
         syntax_error("equals (=) expected");
@@ -237,7 +237,7 @@ srec_input_file_mif::get_equals()
 
 
 long
-srec_input_file_mif::get_number()
+srecord::input_file_mif::get_number()
 {
     if (lex() != token_number)
         syntax_error("decimal number expected");
@@ -246,7 +246,7 @@ srec_input_file_mif::get_number()
 
 
 void
-srec_input_file_mif::get_semicolon()
+srecord::input_file_mif::get_semicolon()
 {
     if (lex() != token_semicolon)
         syntax_error("semicolon (;) expected");
@@ -254,7 +254,7 @@ srec_input_file_mif::get_semicolon()
 
 
 void
-srec_input_file_mif::get_colon()
+srecord::input_file_mif::get_colon()
 {
     if (lex() != token_colon)
         syntax_error("colon (:) expected");
@@ -262,7 +262,7 @@ srec_input_file_mif::get_colon()
 
 
 int
-srec_input_file_mif::get_radix()
+srecord::input_file_mif::get_radix()
 {
     switch (lex())
     {
@@ -287,9 +287,9 @@ srec_input_file_mif::get_radix()
 
 
 bool
-srec_input_file_mif::read(srec_record &record)
+srecord::input_file_mif::read(srecord::record &record)
 {
-    unsigned char buffer[srec_record::max_data_length];
+    unsigned char buffer[srecord::record::max_data_length];
     size_t bufpos = 0;
     unsigned address_range = 0;
 
@@ -405,9 +405,9 @@ srec_input_file_mif::read(srec_record &record)
                     if (address_range != 0)
                         syntax_error("data too large for address range");
                     record =
-                        srec_record
+                        srecord::record
                         (
-                            srec_record::type_data,
+                            srecord::record::type_data,
                             address - bufpos,
                             buffer,
                             bufpos
@@ -439,9 +439,9 @@ srec_input_file_mif::read(srec_record &record)
                         }
                     }
                     record =
-                        srec_record
+                        srecord::record
                         (
-                            srec_record::type_data,
+                            srecord::record::type_data,
                             address - bufpos,
                             buffer,
                             bufpos
@@ -457,7 +457,7 @@ srec_input_file_mif::read(srec_record &record)
 
 
 const char *
-srec_input_file_mif::get_file_format_name()
+srecord::input_file_mif::get_file_format_name()
     const
 {
     return "Memory Initialization File (MIF, Altera)";

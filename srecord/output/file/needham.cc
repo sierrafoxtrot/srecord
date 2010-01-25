@@ -21,7 +21,7 @@
 #include <srecord/record.h>
 
 
-srec_output_file_needham::~srec_output_file_needham()
+srecord::output_file_needham::~output_file_needham()
 {
     if (column)
     {
@@ -31,9 +31,9 @@ srec_output_file_needham::~srec_output_file_needham()
 }
 
 
-srec_output_file_needham::srec_output_file_needham(
+srecord::output_file_needham::output_file_needham(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     address(0),
     column(0),
     pref_block_size(16),
@@ -42,23 +42,23 @@ srec_output_file_needham::srec_output_file_needham(
 }
 
 
-srec_output::pointer
-srec_output_file_needham::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_needham::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_needham(a_file_name));
+    return pointer(new srecord::output_file_needham(a_file_name));
 }
 
 
 void
-srec_output_file_needham::write(const srec_record &record)
+srecord::output_file_needham::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // ignore
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         if (address != record.get_address())
         {
             if (column + 4 > pref_block_size)
@@ -94,34 +94,34 @@ srec_output_file_needham::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         // ignore
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
     }
 }
 
 
 void
-srec_output_file_needham::line_length_set(int linlen)
+srecord::output_file_needham::line_length_set(int linlen)
 {
     int n = (linlen + 1) / 3;
     if (n < 1)
         n = 1;
-    if (n > srec_record::max_data_length)
-        n = srec_record::max_data_length;
+    if (n > srecord::record::max_data_length)
+        n = srecord::record::max_data_length;
     pref_block_size = n;
 }
 
 
 void
-srec_output_file_needham::address_length_set(int n)
+srecord::output_file_needham::address_length_set(int n)
 {
     if (n < 2)
         n = 2;
@@ -132,7 +132,7 @@ srec_output_file_needham::address_length_set(int n)
 
 
 int
-srec_output_file_needham::preferred_block_size_get()
+srecord::output_file_needham::preferred_block_size_get()
     const
 {
     return pref_block_size;
@@ -140,7 +140,7 @@ srec_output_file_needham::preferred_block_size_get()
 
 
 const char *
-srec_output_file_needham::format_name()
+srecord::output_file_needham::format_name()
     const
 {
     return "Needham";

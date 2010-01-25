@@ -24,10 +24,10 @@
 
 #include <srecord/input/file.h>
 
-bool srec_input_file::ignore_checksums_default = false;
+bool srecord::input_file::ignore_checksums_default = false;
 
 
-srec_input_file::srec_input_file() :
+srecord::input_file::input_file() :
     file_name("standard input"),
     line_number(1),
     prev_was_newline(false),
@@ -40,14 +40,14 @@ srec_input_file::srec_input_file() :
 
 
 const char *
-srec_input_file::mode()
+srecord::input_file::mode()
     const
 {
     return "r";
 }
 
 
-srec_input_file::srec_input_file(const std::string &a_file_name) :
+srecord::input_file::input_file(const std::string &a_file_name) :
     file_name(a_file_name),
     line_number(1),
     prev_was_newline(false),
@@ -73,7 +73,7 @@ srec_input_file::srec_input_file(const std::string &a_file_name) :
 
 
 void *
-srec_input_file::get_fp()
+srecord::input_file::get_fp()
 {
     if (!vfp)
     {
@@ -94,7 +94,7 @@ srec_input_file::get_fp()
 }
 
 
-srec_input_file::~srec_input_file()
+srecord::input_file::~input_file()
 {
     FILE *fp = (FILE *)get_fp();
     if (fp != stdin && fclose(fp))
@@ -103,7 +103,7 @@ srec_input_file::~srec_input_file()
 
 
 std::string
-srec_input_file::filename()
+srecord::input_file::filename()
     const
 {
     return file_name;
@@ -111,7 +111,7 @@ srec_input_file::filename()
 
 
 std::string
-srec_input_file::filename_and_line()
+srecord::input_file::filename_and_line()
     const
 {
     if (!vfp)
@@ -126,7 +126,7 @@ srec_input_file::filename_and_line()
 
 
 int
-srec_input_file::get_char()
+srecord::input_file::get_char()
 {
     FILE *fp = (FILE *)get_fp();
     if (prev_was_newline)
@@ -170,7 +170,7 @@ srec_input_file::get_char()
 
 
 void
-srec_input_file::get_char_undo(int c)
+srecord::input_file::get_char_undo(int c)
 {
     if (c >= 0)
     {
@@ -184,7 +184,7 @@ srec_input_file::get_char_undo(int c)
 
 
 int
-srec_input_file::peek_char()
+srecord::input_file::peek_char()
 {
     FILE *fp = (FILE *)get_fp();
     int c = getc(fp);
@@ -201,7 +201,7 @@ srec_input_file::peek_char()
 
 
 int
-srec_input_file::get_nibble_value(int c)
+srecord::input_file::get_nibble_value(int c)
 {
     switch (c)
     {
@@ -220,7 +220,7 @@ srec_input_file::get_nibble_value(int c)
 
 
 int
-srec_input_file::get_nibble()
+srecord::input_file::get_nibble()
 {
     int c = get_char();
     int n = get_nibble_value(c);
@@ -231,7 +231,7 @@ srec_input_file::get_nibble()
 
 
 int
-srec_input_file::get_byte()
+srecord::input_file::get_byte()
 {
     int c1 = get_nibble();
     int c2 = get_nibble();
@@ -242,7 +242,7 @@ srec_input_file::get_byte()
 
 
 int
-srec_input_file::get_word()
+srecord::input_file::get_word()
 {
     int b1 = get_byte();
     int b2 = get_byte();
@@ -251,7 +251,7 @@ srec_input_file::get_word()
 
 
 unsigned long
-srec_input_file::get_3bytes()
+srecord::input_file::get_3bytes()
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -261,7 +261,7 @@ srec_input_file::get_3bytes()
 
 
 unsigned long
-srec_input_file::get_4bytes()
+srecord::input_file::get_4bytes()
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -272,7 +272,7 @@ srec_input_file::get_4bytes()
 
 
 int
-srec_input_file::checksum_get()
+srecord::input_file::checksum_get()
     const
 {
     return (checksum & 0xFF);
@@ -280,7 +280,7 @@ srec_input_file::checksum_get()
 
 
 int
-srec_input_file::checksum_get16()
+srecord::input_file::checksum_get16()
     const
 {
     return (checksum & 0xFFFF);
@@ -288,21 +288,21 @@ srec_input_file::checksum_get16()
 
 
 void
-srec_input_file::checksum_reset()
+srecord::input_file::checksum_reset()
 {
     checksum = 0;
 }
 
 
 void
-srec_input_file::checksum_add(unsigned char n)
+srecord::input_file::checksum_add(unsigned char n)
 {
     checksum += n;
 }
 
 
 void
-srec_input_file::seek_to_end()
+srecord::input_file::seek_to_end()
 {
     FILE *fp = (FILE *)get_fp();
     fseek(fp, 0L, SEEK_END);
@@ -310,7 +310,7 @@ srec_input_file::seek_to_end()
 
 
 void
-srec_input_file::disable_checksum_validation()
+srecord::input_file::disable_checksum_validation()
 {
     ignore_checksums = true;
 }

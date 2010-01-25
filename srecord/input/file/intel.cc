@@ -21,15 +21,15 @@
 #include <srecord/record.h>
 
 
-srec_input_file_intel::~srec_input_file_intel()
+srecord::input_file_intel::~input_file_intel()
 {
     if (pushback)
         delete pushback;
 }
 
 
-srec_input_file_intel::srec_input_file_intel(const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+srecord::input_file_intel::input_file_intel(const std::string &a_file_name) :
+    srecord::input_file(a_file_name),
     data_record_count(0),
     garbage_warning(false),
     seen_some_input(false),
@@ -42,15 +42,15 @@ srec_input_file_intel::srec_input_file_intel(const std::string &a_file_name) :
 }
 
 
-srec_input::pointer
-srec_input_file_intel::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_intel::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_intel(a_file_name));
+    return pointer(new srecord::input_file_intel(a_file_name));
 }
 
 
 int
-srec_input_file_intel::read_inner(srec_record &record)
+srecord::input_file_intel::read_inner(srecord::record &record)
 {
     if (pushback)
     {
@@ -124,10 +124,10 @@ srec_input_file_intel::read_inner(srec_record &record)
         if (get_char() != '\n')
             fatal_error("end-of-line expected");
 
-        srec_record::address_t address_field =
-            srec_record::decode_big_endian(buffer + 1, 2);
+        srecord::record::address_t address_field =
+            srecord::record::decode_big_endian(buffer + 1, 2);
 
-        srec_record::type_t type = srec_record::type_unknown;
+        srecord::record::type_t type = srecord::record::type_unknown;
         switch (buffer[3])
         {
         case 0:
@@ -157,9 +157,9 @@ srec_input_file_intel::read_inner(srec_record &record)
                     int split =
                         ((long long)1 << 32) - address_base - address_field;
                     pushback =
-                        new srec_record
+                        new srecord::record
                         (
-                            srec_record::type_data,
+                            srecord::record::type_data,
                             0L,
                             buffer + 4 + split,
                             buffer[0] - split
@@ -182,9 +182,9 @@ srec_input_file_intel::read_inner(srec_record &record)
                     //
                     int split = (1L << 16) - address_field;
                     pushback =
-                        new srec_record
+                        new srecord::record
                         (
-                            srec_record::type_data,
+                            srecord::record::type_data,
                             address_base + ((address_field + split) & 0xFFFF),
                             buffer + 4 + split,
                             buffer[0] - split
@@ -192,7 +192,7 @@ srec_input_file_intel::read_inner(srec_record &record)
                     buffer[0] = split;
                 }
             }
-            type = srec_record::type_data;
+            type = srecord::record::type_data;
             break;
 
         case 1:
@@ -220,7 +220,7 @@ srec_input_file_intel::read_inner(srec_record &record)
             if (address_field != 0)
                 fatal_error("address field must be zero");
             address_field =
-                srec_record::decode_big_endian(buffer + 4, 2);
+                srecord::record::decode_big_endian(buffer + 4, 2);
             address_base = address_field << 4;
             mode = segmented;
             continue;
@@ -234,12 +234,12 @@ srec_input_file_intel::read_inner(srec_record &record)
             if (address_field != 0)
                 fatal_error("address field must be zero");
             address_field =
-                srec_record::decode_big_endian(buffer + 4, 2) * 16 +
-                srec_record::decode_big_endian(buffer + 6, 2);
+                srecord::record::decode_big_endian(buffer + 4, 2) * 16 +
+                srecord::record::decode_big_endian(buffer + 6, 2);
             record =
-                srec_record
+                srecord::record
                 (
-                    srec_record::type_execution_start_address,
+                    srecord::record::type_execution_start_address,
                     address_field,
                     0,
                     0
@@ -259,7 +259,7 @@ srec_input_file_intel::read_inner(srec_record &record)
             if (address_field != 0)
                 fatal_error("address field must be zero");
             address_field =
-                srec_record::decode_big_endian(buffer + 4, 2);
+                srecord::record::decode_big_endian(buffer + 4, 2);
             address_base = address_field << 16;
             mode = linear;
             continue;
@@ -272,11 +272,11 @@ srec_input_file_intel::read_inner(srec_record &record)
                 fatal_error("length field must be 4");
             if (address_field != 0)
                 fatal_error("address field must be zero");
-            address_field = srec_record::decode_big_endian(buffer + 4, 4);
+            address_field = srecord::record::decode_big_endian(buffer + 4, 4);
             record =
-                srec_record
+                srecord::record
                 (
-                    srec_record::type_execution_start_address,
+                    srecord::record::type_execution_start_address,
                     address_field,
                     0,
                     0
@@ -288,7 +288,7 @@ srec_input_file_intel::read_inner(srec_record &record)
         // data record or unknown
         //
         record =
-            srec_record
+            srecord::record
             (
                 type,
                 address_base + address_field,
@@ -301,7 +301,7 @@ srec_input_file_intel::read_inner(srec_record &record)
 
 
 bool
-srec_input_file_intel::read(srec_record &record)
+srecord::input_file_intel::read(srecord::record &record)
 {
     for (;;)
     {
@@ -330,9 +330,9 @@ srec_input_file_intel::read(srec_record &record)
                 // round-trip occurs.
                 //
                 record =
-                    srec_record
+                    srecord::record
                     (
-                        srec_record::type_execution_start_address,
+                        srecord::record::type_execution_start_address,
                         0,
                         0,
                         0
@@ -350,7 +350,7 @@ srec_input_file_intel::read(srec_record &record)
         seen_some_input = true;
         switch (record.get_type())
         {
-        case srec_record::type_unknown:
+        case srecord::record::type_unknown:
             fatal_error("record type not recognised");
             break;
 
@@ -358,7 +358,7 @@ srec_input_file_intel::read(srec_record &record)
             // impossible
             continue;
 
-        case srec_record::type_data:
+        case srecord::record::type_data:
             ++data_record_count;
             if (record.get_length() == 0)
             {
@@ -367,7 +367,7 @@ srec_input_file_intel::read(srec_record &record)
             }
             break;
 
-        case srec_record::type_execution_start_address:
+        case srecord::record::type_execution_start_address:
             if (termination_seen)
                 warning("redundant execution start address record");
             termination_seen = true;
@@ -380,7 +380,7 @@ srec_input_file_intel::read(srec_record &record)
 
 
 const char *
-srec_input_file_intel::get_file_format_name()
+srecord::input_file_intel::get_file_format_name()
     const
 {
     return "Intel Hexadecimal (MCS-86)";

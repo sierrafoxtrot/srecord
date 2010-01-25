@@ -21,32 +21,33 @@
 #include <srecord/output.h>
 
 
-srec_memory_walker_adler32::~srec_memory_walker_adler32()
+srecord::memory_walker_adler32::~memory_walker_adler32()
 {
 }
 
 
-srec_memory_walker_adler32::srec_memory_walker_adler32()
+srecord::memory_walker_adler32::memory_walker_adler32()
 {
 }
 
 
-srec_memory_walker_adler32::pointer
-srec_memory_walker_adler32::create()
+srecord::memory_walker_adler32::pointer
+srecord::memory_walker_adler32::create()
 {
-    return pointer(new srec_memory_walker_adler32());
+    return pointer(new srecord::memory_walker_adler32());
 }
 
 
 void
-srec_memory_walker_adler32::observe(unsigned long, const void *data, int length)
+srecord::memory_walker_adler32::observe(unsigned long, const void *data,
+    int length)
 {
     checksum.nextbuf(data, length);
 }
 
 
 unsigned
-srec_memory_walker_adler32::get()
+srecord::memory_walker_adler32::get()
     const
 {
     return checksum.get();

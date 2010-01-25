@@ -22,26 +22,26 @@
 #include <srecord/record.h>
 
 
-srec_input_file_emon52::~srec_input_file_emon52()
+srecord::input_file_emon52::~input_file_emon52()
 {
 }
 
 
-srec_input_file_emon52::srec_input_file_emon52(const std::string &a_file_name) :
-    srec_input_file(a_file_name)
+srecord::input_file_emon52::input_file_emon52(const std::string &a_file_name) :
+    srecord::input_file(a_file_name)
 {
 }
 
 
-srec_input::pointer
-srec_input_file_emon52::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_emon52::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_emon52(a_file_name));
+    return pointer(new srecord::input_file_emon52(a_file_name));
 }
 
 
 void
-srec_input_file_emon52::skip_white_space()
+srecord::input_file_emon52::skip_white_space()
 {
     for (;;)
     {
@@ -54,7 +54,7 @@ srec_input_file_emon52::skip_white_space()
 
 
 bool
-srec_input_file_emon52::read(srec_record &record)
+srecord::input_file_emon52::read(srecord::record &record)
 {
     //
     // This format has no execution start address record type, and no
@@ -89,14 +89,14 @@ srec_input_file_emon52::read(srec_record &record)
     if (get_char() != '\n')
         fatal_error("end-of-line expected");
 
-    srec_record::type_t type = srec_record::type_data;
-    record = srec_record(type, address, buffer, length);
+    srecord::record::type_t type = srecord::record::type_data;
+    record = srecord::record(type, address, buffer, length);
     return true;
 }
 
 
 const char *
-srec_input_file_emon52::get_file_format_name()
+srecord::input_file_emon52::get_file_format_name()
     const
 {
     return "Elektor Monitor (EMON52)";

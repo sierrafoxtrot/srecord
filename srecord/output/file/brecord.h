@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_brecord class is used to represent an output
+  * The srecord::output_file_brecord class is used to represent an output
   * files in Motorola MC68EZ328 bootstrap b-record format.
   */
-class srec_output_file_brecord:
-    public srec_output_file
+class output_file_brecord:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_brecord();
+    virtual ~output_file_brecord();
 
 private:
     /**
@@ -43,7 +46,7 @@ private:
       *     The name of the file to write the output to.  The string "-"
       *     is understood to mean the standard output.
       */
-    srec_output_file_brecord(const std::string &file_name);
+    output_file_brecord(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -85,17 +88,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_brecord();
+    output_file_brecord();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_brecord(const srec_output_file_brecord &);
+    output_file_brecord(const output_file_brecord &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_brecord &operator=(const srec_output_file_brecord &);
+    output_file_brecord &operator=(const output_file_brecord &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

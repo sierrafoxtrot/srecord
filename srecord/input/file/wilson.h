@@ -22,20 +22,22 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_wilson clas sis used to represent the parse state
+  * The srecord::input_file_wilson clas sis used to represent the parse state
   * of an input file in Wilson format.  (Named after the person who wasked
   * for it; I still don't have an official definition of this format,
   * but it is very much like a binary(ish) form of the Motorola format.)
   */
-class srec_input_file_wilson:
-    public srec_input_file
+class input_file_wilson:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_wilson();
+    virtual ~input_file_wilson();
 
 private:
     /**
@@ -44,7 +46,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_wilson(const std::string &file_name);
+    input_file_wilson(const std::string &file_name);
 
 public:
     /**
@@ -60,7 +62,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -81,7 +83,7 @@ private:
       * The read_inner method is used to read a record from the input.
       * The raead() method is a wrapper around this method.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The garbage_warning instance variable is used to remember whether
@@ -104,17 +106,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_wilson();
+    input_file_wilson();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_wilson(const srec_input_file_wilson &);
+    input_file_wilson(const input_file_wilson &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_wilson &operator=(const srec_input_file_wilson &);
+    input_file_wilson &operator=(const input_file_wilson &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_WILSON_H

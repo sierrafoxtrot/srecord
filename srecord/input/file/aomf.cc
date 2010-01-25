@@ -112,15 +112,15 @@ o96name(int x)
 }
 
 
-srec_input_file_aomf::~srec_input_file_aomf()
+srecord::input_file_aomf::~input_file_aomf()
 {
     if (current_buffer)
         delete [] current_buffer;
 }
 
 
-srec_input_file_aomf::srec_input_file_aomf(const std::string &a_filename) :
-    srec_input_file(a_filename),
+srecord::input_file_aomf::input_file_aomf(const std::string &a_filename) :
+    srecord::input_file(a_filename),
     current_buffer(0),
     current_length(0),
     current_maximum(0),
@@ -131,15 +131,15 @@ srec_input_file_aomf::srec_input_file_aomf(const std::string &a_filename) :
 }
 
 
-srec_input::pointer
-srec_input_file_aomf::create(const std::string &a_filename)
+srecord::input::pointer
+srecord::input_file_aomf::create(const std::string &a_filename)
 {
-    return pointer(new srec_input_file_aomf(a_filename));
+    return pointer(new srecord::input_file_aomf(a_filename));
 }
 
 
 int
-srec_input_file_aomf::get_byte()
+srecord::input_file_aomf::get_byte()
 {
     int c = get_char();
     if (c < 0)
@@ -150,7 +150,7 @@ srec_input_file_aomf::get_byte()
 
 
 int
-srec_input_file_aomf::get_word()
+srecord::input_file_aomf::get_word()
 {
     // Little endian
     unsigned char n1 = get_byte();
@@ -161,7 +161,7 @@ srec_input_file_aomf::get_word()
 
 
 int
-srec_input_file_aomf::slurp()
+srecord::input_file_aomf::slurp()
 {
     current_pos = 0;
     current_length = 0;
@@ -192,7 +192,7 @@ srec_input_file_aomf::slurp()
 
 
 bool
-srec_input_file_aomf::read(srec_record &record)
+srecord::input_file_aomf::read(srecord::record &record)
 {
     for (;;)
     {
@@ -210,16 +210,16 @@ srec_input_file_aomf::read(srec_record &record)
                 if (nbytes > current_length - 1)
                     nbytes = current_length - 1;
                 record =
-                    srec_record
+                    srecord::record
                     (
-                        srec_record::type_header,
+                        srecord::record::type_header,
                         0, // address
                         current_buffer + 1,
                         nbytes
                     );
             }
             else
-                record = srec_record(srec_record::type_header, 0, 0, 0);
+                record = srecord::record(srecord::record::type_header, 0, 0, 0);
             current_length = 0;
             return true;
 
@@ -232,12 +232,12 @@ srec_input_file_aomf::read(srec_record &record)
             if (current_pos < current_length)
             {
                 size_t nbytes = current_length - current_pos;
-                if (nbytes > srec_record::max_data_length)
-                    nbytes = srec_record::max_data_length;
+                if (nbytes > srecord::record::max_data_length)
+                    nbytes = srecord::record::max_data_length;
                 record =
-                    srec_record
+                    srecord::record
                     (
-                        srec_record::type_data,
+                        srecord::record::type_data,
                         current_address,
                         current_buffer + current_pos,
                         nbytes
@@ -255,9 +255,9 @@ srec_input_file_aomf::read(srec_record &record)
             case O96_Mod_End:
                 state = expecting_eof;
                 record =
-                    srec_record
+                    srecord::record
                     (
-                        srec_record::type_execution_start_address,
+                        srecord::record::type_execution_start_address,
                         0,
                         0,
                         0
@@ -304,7 +304,7 @@ srec_input_file_aomf::read(srec_record &record)
 
 
 const char *
-srec_input_file_aomf::mode()
+srecord::input_file_aomf::mode()
     const
 {
     return "rb";
@@ -312,7 +312,7 @@ srec_input_file_aomf::mode()
 
 
 const char *
-srec_input_file_aomf::get_file_format_name()
+srecord::input_file_aomf::get_file_format_name()
     const
 {
     return "Intel Absolute Object Module Format (AOMF)";

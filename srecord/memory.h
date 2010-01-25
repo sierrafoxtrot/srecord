@@ -24,41 +24,43 @@
 #include <srecord/memory/chunk.h>
 #include <srecord/memory/walker.h>
 
-class srec_record; // forward
+namespace srecord {
+
+class record; // forward
 
 /**
-  * The srec_memory class is used to simulate memory contents.
+  * The srecord::memory class is used to simulate memory contents.
   * This allows staging of reord adta, and also validation of contents.
   */
-class srec_memory
+class memory
 {
 public:
     /**
       * The default constructor.
       */
-    srec_memory();
+    memory();
 
     /**
       * The copy constructor.
       */
-    srec_memory(const srec_memory &);
+    memory(const memory &);
 
     /**
       * The assignment operator.
       */
-    srec_memory &operator=(const srec_memory &);
+    memory &operator=(const memory &);
 
     /**
       * The destructor.
       */
-    ~srec_memory();
+    ~memory();
 
     /**
       * The set method is used to set the byte at the given `address'
       * to the given `value'.
       *
       * Uses the find() method to locate the chunk, and then calls
-      * the srec_memory_chunk::set method, to set the byte within
+      * the memory_chunk::set method, to set the byte within
       * the chunk.
       */
     void set(unsigned long address, int value);
@@ -71,7 +73,7 @@ public:
       * the results are undefined.
       *
       * Uses the find() method to locate the chunk, and then calls
-      * the srec_memory_chunk::get method, to get the byte within
+      * the memory_chunk::get method, to get the byte within
       * the chunk.
       */
     int get(unsigned long address) const;
@@ -82,16 +84,16 @@ public:
       * already set, false if never been set.
       *
       * Uses the find() method to locate the chunk, and then calls
-      * the srec_memory_chunk::set_p method, to get the status of
+      * the memory_chunk::set_p method, to get the status of
       * the byte within the chunk.
       */
     bool set_p(unsigned long address) const;
 
     /**
-      * The walk method is used to apply a srec_memory_walker derived
+      * The walk method is used to apply a memory_walker derived
       * class to every byte of memory.
       */
-    void walk(srec_memory_walker::pointer) const;
+    void walk(memory_walker::pointer) const;
 
     /**
       * The reader method is used to read the given `input' source
@@ -109,20 +111,20 @@ public:
       * warning, instead.  If `barf' is false, no checking of any
       * kind is performed.
       */
-    void reader(const srec_input::pointer &input, bool barf = false);
+    void reader(const input::pointer &input, bool barf = false);
 
     /**
-      * The equal method may be used to determine if two srec_memory
+      * The equal method may be used to determine if two memory
       * instances are equal.
       */
-    static bool equal(const srec_memory &, const srec_memory &);
+    static bool equal(const memory &, const memory &);
 
     /**
-      * The compare method may be used to determine if two srec_memory
+      * The compare method may be used to determine if two memory
       * instances are equal.  Verbose messages concerning the exact
       * differences are printed if they are not equal.
       */
-    static bool compare(const srec_memory &, const srec_memory &);
+    static bool compare(const memory &, const memory &);
 
     /**
       * The find_next_data method may be used to locate data at or
@@ -151,7 +153,7 @@ public:
       * header record set by either the reader() or set_header()
       * methods.  If neither has set a header, NULL is returned.
       */
-    srec_record *get_header() const;
+    record *get_header() const;
 
     /**
       * The set_header method may be used to set the header command.
@@ -165,7 +167,7 @@ public:
       * reader() or set_execution_start_address() methods.  If neither
       * has set an execution start address, NULL is returned.
       */
-    srec_record *get_execution_start_address() const;
+    record *get_execution_start_address() const;
 
     /**
       * The set_execution_start_address method may be used to set the
@@ -221,7 +223,7 @@ private:
       * settings of the various bytes.  By using a sparse array,
       * we can cope with arbitrary memory usages.
       */
-    mutable srec_memory_chunk **chunk;
+    mutable memory_chunk **chunk;
 
     /**
       * The find method is used to find the chunk which contains
@@ -230,21 +232,21 @@ private:
       *
       * Called by the get(), set() and set_p() methods.
       */
-    srec_memory_chunk *find(unsigned long address) const;
+    memory_chunk *find(unsigned long address) const;
 
     /**
       * The cache instance variable is used to accellerate the find()
       * method, based on the fact that most memory accesses are
       * sequential, in the same chunk.
       */
-    mutable srec_memory_chunk *cache;
+    mutable memory_chunk *cache;
 
     /**
       * The find_next_chunk method is used to visit each and every
       * byte, in cases where the walk() method is not appropriate.
       * Called by the find_next_data() method.
       */
-    srec_memory_chunk *find_next_chunk(unsigned long) const;
+    memory_chunk *find_next_chunk(unsigned long) const;
 
     /**
       * The find_next_chunk_index instance variable is used by
@@ -258,7 +260,7 @@ private:
       * It is set by the reader() and set_header() methods.  It is
       * read by the get_header() method.
       */
-    srec_record *header;
+    record *header;
 
     /**
       * The execution_start_address instance variable is used to track
@@ -266,7 +268,7 @@ private:
       * set_execution_start_address() methods.  It is read by the
       * get_execution_start_address() method.
       */
-    srec_record *execution_start_address;
+    record *execution_start_address;
 
     /**
       * The clear method is used to discard all data, as if when
@@ -278,7 +280,7 @@ private:
       * The copy method is used to copy the chunks from the `src' into
       * this object.  Only to be used the the assignment operator.
       */
-    void copy(const srec_memory &src);
+    void copy(const memory &src);
 
     /**
       * The get_upper_bound method is used to obtain the upper bound
@@ -287,16 +289,18 @@ private:
     unsigned long get_upper_bound() const;
 };
 
-/**
-  * The equality operator.  Used to test if two srec_memory objects
-  * are equal.  Calls the srec_memory::equal() method.
-  */
-bool operator == (const srec_memory &, const srec_memory &);
+};
 
 /**
-  * The inequality operator.  Used to test if two srec_memory objects
-  * are not equal.  Calls the srec_memory::equal() method.
+  * The equality operator.  Used to test if two srecord::memory objects
+  * are equal.  Calls the srecord::memory::equal() method.
   */
-bool operator != (const srec_memory &, const srec_memory &);
+bool operator == (const srecord::memory &, const srecord::memory &);
+
+/**
+  * The inequality operator.  Used to test if two srecord::memory objects
+  * are not equal.  Calls the srecord::memory::equal() method.
+  */
+bool operator != (const srecord::memory &, const srecord::memory &);
 
 #endif // SRECORD_MEMORY_H

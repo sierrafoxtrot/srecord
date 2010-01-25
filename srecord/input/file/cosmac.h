@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_cosmac class is used to represent the parse
+  * The srecord::input_file_cosmac class is used to represent the parse
   * state when reading an RCS Cosmac formatted file.
   */
-class srec_input_file_cosmac:
-    public srec_input_file
+class input_file_cosmac:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_cosmac();
+    virtual ~input_file_cosmac();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_cosmac(const std::string &file_name);
+    input_file_cosmac(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -92,17 +94,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_cosmac();
+    input_file_cosmac();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_cosmac(const srec_input_file_cosmac &);
+    input_file_cosmac(const input_file_cosmac &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_cosmac &operator=(const srec_input_file_cosmac &);
+    input_file_cosmac &operator=(const input_file_cosmac &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_COSMAC_H

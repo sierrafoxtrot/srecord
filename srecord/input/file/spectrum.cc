@@ -23,14 +23,14 @@
 #include <srecord/record.h>
 
 
-srec_input_file_spectrum::~srec_input_file_spectrum()
+srecord::input_file_spectrum::~input_file_spectrum()
 {
 }
 
 
-srec_input_file_spectrum::srec_input_file_spectrum(
+srecord::input_file_spectrum::input_file_spectrum(
         const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+    srecord::input_file(a_file_name),
     header_seen(false),
     trailer_seen(false),
     file_contains_data(false)
@@ -38,15 +38,15 @@ srec_input_file_spectrum::srec_input_file_spectrum(
 }
 
 
-srec_input::pointer
-srec_input_file_spectrum::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_spectrum::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_spectrum(a_file_name));
+    return pointer(new srecord::input_file_spectrum(a_file_name));
 }
 
 
 int
-srec_input_file_spectrum::get_decimal()
+srecord::input_file_spectrum::get_decimal()
 {
     int c;
     for (;;)
@@ -88,7 +88,7 @@ is_binary_digit(int c)
 
 
 int
-srec_input_file_spectrum::get_binary()
+srecord::input_file_spectrum::get_binary()
 {
     int c;
     for (;;)
@@ -121,7 +121,7 @@ srec_input_file_spectrum::get_binary()
 
 
 bool
-srec_input_file_spectrum::read(srec_record &record)
+srecord::input_file_spectrum::read(srecord::record &record)
 {
     //
     // Check for the file header
@@ -170,13 +170,13 @@ srec_input_file_spectrum::read(srec_record &record)
 
     unsigned long address = get_decimal();
     unsigned char data = get_binary();
-    record = srec_record(srec_record::type_data, address, &data, 1);
+    record = srecord::record(srecord::record::type_data, address, &data, 1);
     file_contains_data = true;
     return true;
 }
 
 const char *
-srec_input_file_spectrum::get_file_format_name ()
+srecord::input_file_spectrum::get_file_format_name ()
     const
 {
     return "Spectrum";

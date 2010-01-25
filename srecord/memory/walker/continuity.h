@@ -22,28 +22,31 @@
 
 #include <srecord/memory/walker.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_memory_walker_crc16 class is used to represent the parse
+  * The srecord::memory_walker_crc16 class is used to represent the parse
   * state of a memory walker which determines whether or not the data
   * are continuous.
   */
-class srec_memory_walker_continuity:
-    public srec_memory_walker
+class memory_walker_continuity:
+    public memory_walker
 {
 public:
-    typedef boost::shared_ptr<srec_memory_walker_continuity> pointer;
+    typedef boost::shared_ptr<memory_walker_continuity> pointer;
 
     /**
       * The destructror.
       */
-    virtual ~srec_memory_walker_continuity();
+    virtual ~memory_walker_continuity();
 
 private:
     /**
       * The default constructor.  It is private on purpose, use the
       * #create class method instead.
       */
-    srec_memory_walker_continuity();
+    memory_walker_continuity();
 
 public:
     /**
@@ -73,13 +76,14 @@ private:
     /**
       * The copy constructor.  No not use.
       */
-    srec_memory_walker_continuity(const srec_memory_walker_continuity &);
+    memory_walker_continuity(const memory_walker_continuity &);
 
     /**
       * The assignment operator.  No not use.
       */
-    srec_memory_walker_continuity &operator=(
-        const srec_memory_walker_continuity &);
+    memory_walker_continuity &operator=(const memory_walker_continuity &);
+};
+
 };
 
 #endif // SRECORD_MEMORY_WALKER_CONTINUITY_H

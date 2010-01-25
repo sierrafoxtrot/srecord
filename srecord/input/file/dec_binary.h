@@ -23,18 +23,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The dec_binary class is used to parse a DEC Binary (PDP 11 absolute
-  * loader XXDP) format file.
+  * The srecord::input_file_dec_binary class is used to parse a DEC
+  * Binary (PDP 11 absolute loader XXDP) format file.
   */
-class srec_input_file_dec_binary:
-    public srec_input_file
+class input_file_dec_binary:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_dec_binary();
+    virtual ~input_file_dec_binary();
 
 private:
     /**
@@ -44,7 +46,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_dec_binary(const std::string &file_name);
+    input_file_dec_binary(const std::string &file_name);
 
 public:
     /**
@@ -60,7 +62,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -118,12 +120,14 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_dec_binary(const srec_input_file_dec_binary &);
+    input_file_dec_binary(const input_file_dec_binary &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_dec_binary &operator=(const srec_input_file_dec_binary &);
+    input_file_dec_binary &operator=(const input_file_dec_binary &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_DEC_BINARY_H

@@ -21,33 +21,33 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_sequence::~srec_input_filter_sequence()
+srecord::input_filter_sequence::~input_filter_sequence()
 {
 }
 
 
-srec_input_filter_sequence::srec_input_filter_sequence(
-        srec_input::pointer arg) :
-    srec_input_filter(arg),
+srecord::input_filter_sequence::input_filter_sequence(
+        srecord::input::pointer arg) :
+    srecord::input_filter(arg),
     last_address(0),
     warned(false)
 {
 }
 
 
-srec_input::pointer
-srec_input_filter_sequence::create(srec_input::pointer arg)
+srecord::input::pointer
+srecord::input_filter_sequence::create(srecord::input::pointer arg)
 {
-    return pointer(new srec_input_filter_sequence(arg));
+    return pointer(new srecord::input_filter_sequence(arg));
 }
 
 
 bool
-srec_input_filter_sequence::read(srec_record &record)
+srecord::input_filter_sequence::read(srecord::record &record)
 {
-    if (!srec_input_filter::read(record))
+    if (!srecord::input_filter::read(record))
         return false;
-    if (record.get_type() == srec_record::type_data)
+    if (record.get_type() == srecord::record::type_data)
     {
 #if 0
         fprintf(stderr, "%s: %d: address = %08lX, length = %08X\n",

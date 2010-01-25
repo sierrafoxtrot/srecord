@@ -23,29 +23,29 @@
 #include <srecord/record.h>
 
 
-srec_input_file_fastload::~srec_input_file_fastload()
+srecord::input_file_fastload::~input_file_fastload()
 {
 }
 
 
-srec_input_file_fastload::srec_input_file_fastload(
+srecord::input_file_fastload::input_file_fastload(
         const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+    srecord::input_file(a_file_name),
     seen_some_input(false),
     address(0)
 {
 }
 
 
-srec_input::pointer
-srec_input_file_fastload::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_fastload::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_fastload(a_file_name));
+    return pointer(new srecord::input_file_fastload(a_file_name));
 }
 
 
 int
-srec_input_file_fastload::get_digit()
+srecord::input_file_fastload::get_digit()
 {
     int c = get_char();
     switch (c)
@@ -121,7 +121,7 @@ srec_input_file_fastload::get_digit()
 
 
 unsigned long
-srec_input_file_fastload::get_number(int min_digits, int max_digits)
+srecord::input_file_fastload::get_number(int min_digits, int max_digits)
 {
     unsigned long result = 0;
     for (int ndigits = 0; ndigits < max_digits; ++ndigits)
@@ -143,7 +143,7 @@ srec_input_file_fastload::get_number(int min_digits, int max_digits)
 
 
 void
-srec_input_file_fastload::expect_white_space()
+srecord::input_file_fastload::expect_white_space()
 {
     switch (peek_char())
     {
@@ -162,12 +162,12 @@ srec_input_file_fastload::expect_white_space()
 
 
 int
-srec_input_file_fastload::read_inner(srec_record &record)
+srecord::input_file_fastload::read_inner(srecord::record &record)
 {
     unsigned long n;
-    unsigned char data[srec_record::max_data_length];
+    unsigned char data[srecord::record::max_data_length];
     unsigned long data_address = address;
-    srec_record::type_t type;
+    srecord::record::type_t type;
     int data_length = 0;
     unsigned char the_byte;
     for (;;)
@@ -189,9 +189,9 @@ srec_input_file_fastload::read_inner(srec_record &record)
             {
                 got_a_record:
                 record =
-                    srec_record
+                    srecord::record
                     (
-                        srec_record::type_data,
+                        srecord::record::type_data,
                         data_address,
                         data,
                         data_length
@@ -233,8 +233,8 @@ srec_input_file_fastload::read_inner(srec_record &record)
             case 'E':
                 get_number(1, 6);
                 seek_to_end();
-                type = srec_record::type_execution_start_address;
-                record = srec_record(type, address, 0, 0);
+                type = srecord::record::type_execution_start_address;
+                record = srecord::record(type, address, 0, 0);
                 return 1;
 
             case 'K':
@@ -260,11 +260,11 @@ srec_input_file_fastload::read_inner(srec_record &record)
             case 'Z':
                 n = get_number(1, 6);
                 expect_white_space();
-                if (n >= srec_record::max_data_length)
+                if (n >= srecord::record::max_data_length)
                     fatal_error("clearing too many bytes (%lu)", n);
                 memset(data, 0, n);
-                type = srec_record::type_data;
-                record = srec_record(type, address, data, n);
+                type = srecord::record::type_data;
+                record = srecord::record(type, address, data, n);
                 address += n;
                 return 1;
 
@@ -274,7 +274,7 @@ srec_input_file_fastload::read_inner(srec_record &record)
             break;
 
         default:
-            if (data_length + 3 > srec_record::max_data_length)
+            if (data_length + 3 > srecord::record::max_data_length)
                 goto got_a_record;
             n = get_number(4, 4);
             the_byte = n >> 16;
@@ -294,7 +294,7 @@ srec_input_file_fastload::read_inner(srec_record &record)
 
 
 bool
-srec_input_file_fastload::read(srec_record &record)
+srecord::input_file_fastload::read(srecord::record &record)
 {
     if (!read_inner(record))
     {
@@ -308,7 +308,7 @@ srec_input_file_fastload::read(srec_record &record)
 
 
 const char *
-srec_input_file_fastload::get_file_format_name()
+srecord::input_file_fastload::get_file_format_name()
     const
 {
     return "LSI Logic Fast Load";

@@ -22,19 +22,21 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_four_packed_code represents an input file in
+  * The srecord::input_file_four_packed_code represents an input file in
   * the four packed code (FPC) format.  For extra points: who invented
   * this format?  Where is it used?
   */
-class srec_input_file_four_packed_code:
-    public srec_input_file
+class input_file_four_packed_code:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_four_packed_code();
+    virtual ~input_file_four_packed_code();
 
 private:
     /**
@@ -44,7 +46,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_four_packed_code(const std::string &file_name);
+    input_file_four_packed_code(const std::string &file_name);
 
 public:
     /**
@@ -60,7 +62,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -71,7 +73,7 @@ private:
       * from the input file.  Lines which don't start with "$"
       * will be ignored.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * See base class for documentation.  We override the default
@@ -127,19 +129,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_four_packed_code();
+    input_file_four_packed_code();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_four_packed_code(
-            const srec_input_file_four_packed_code &);
+    input_file_four_packed_code(const input_file_four_packed_code &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_four_packed_code &operator=(
-            const srec_input_file_four_packed_code &);
+    input_file_four_packed_code &operator=(const input_file_four_packed_code &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_FOUR_PACKED_CODE_H

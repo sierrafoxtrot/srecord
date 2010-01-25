@@ -22,9 +22,9 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_checksum::srec_input_filter_checksum(srec_input::pointer a1,
+srecord::input_filter_checksum::input_filter_checksum(input::pointer a1,
         int a2, int a3, endian_t a_end, int a5) :
-    srec_input_filter(a1),
+    input_filter(a1),
     checksum_address(a2),
     length(a3),
     end(a_end),
@@ -42,38 +42,31 @@ srec_input_filter_checksum::srec_input_filter_checksum(srec_input::pointer a1,
 }
 
 
-srec_input_filter_checksum::~srec_input_filter_checksum()
+srecord::input_filter_checksum::~input_filter_checksum()
 {
 }
 
 
 bool
-srec_input_filter_checksum::generate(srec_record &record)
+srecord::input_filter_checksum::generate(record &result)
 {
     if (length <= 0)
         return false;
     unsigned char chunk[sizeof(sum_t)];
     sum_t value = calculate();
-    srec_record::encode(chunk, value, length, end);
-    record =
-        srec_record
-        (
-            srec_record::type_data,
-            checksum_address,
-            chunk,
-            length
-        );
+    record::encode(chunk, value, length, end);
+    result = record(record::type_data, checksum_address, chunk, length);
     length = 0;
     return true;
 }
 
 
 bool
-srec_input_filter_checksum::read(srec_record &record)
+srecord::input_filter_checksum::read(record &record)
 {
-    if (!srec_input_filter::read(record))
+    if (!input_filter::read(record))
         return generate(record);
-    if (record.get_type() == srec_record::type_data)
+    if (record.get_type() == record::type_data)
     {
         if (width <= 1)
         {

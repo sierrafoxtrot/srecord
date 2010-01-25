@@ -21,29 +21,29 @@
 #include <srecord/memory/walker.h>
 
 
-srec_memory_walker::srec_memory_walker()
+srecord::memory_walker::memory_walker()
 {
 }
 
 
-srec_memory_walker::~srec_memory_walker()
-{
-}
-
-
-void
-srec_memory_walker::notify_upper_bound(unsigned long)
+srecord::memory_walker::~memory_walker()
 {
 }
 
 
 void
-srec_memory_walker::observe_header(const srec_record *)
+srecord::memory_walker::notify_upper_bound(unsigned long)
 {
 }
 
 
 void
-srec_memory_walker::observe_start_address(const srec_record *)
+srecord::memory_walker::observe_header(const srecord::record *)
+{
+}
+
+
+void
+srecord::memory_walker::observe_start_address(const srecord::record *)
 {
 }

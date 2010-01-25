@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_spectrum class is used to represent the parse
+  * The srecord::input_file_spectrum class is used to represent the parse
   * state when reading from a file in Spectrum format.
   */
-class srec_input_file_spectrum:
-    public srec_input_file
+class input_file_spectrum:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_spectrum();
+    virtual ~input_file_spectrum();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_spectrum(const std::string &file_name);
+    input_file_spectrum(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -97,17 +99,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_spectrum();
+    input_file_spectrum();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_spectrum(const srec_input_file_spectrum &);
+    input_file_spectrum(const input_file_spectrum &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_spectrum &operator=(const srec_input_file_spectrum &);
+    input_file_spectrum &operator=(const input_file_spectrum &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_SPECTRUM_H

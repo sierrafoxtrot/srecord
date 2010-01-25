@@ -20,16 +20,16 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_message::~srec_input_filter_message()
+srecord::input_filter_message::~input_filter_message()
 {
 }
 
 
-srec_input_filter_message::srec_input_filter_message(
-    const srec_input::pointer &a_deeper,
+srecord::input_filter_message::input_filter_message(
+    const input::pointer &a_deeper,
     bool a_naked
 ) :
-    srec_input_filter(a_deeper),
+    input_filter(a_deeper),
     naked(a_naked),
     buffer_pos(0),
     have_forwarded_header(false),
@@ -40,7 +40,7 @@ srec_input_filter_message::srec_input_filter_message(
 
 
 bool
-srec_input_filter_message::read(srec_record &record)
+srecord::input_filter_message::read(record &result)
 {
     //
     // If we haven't read the deeper input yet, read all of it into
@@ -61,7 +61,7 @@ srec_input_filter_message::read(srec_record &record)
                 "performed here.  You are strongly advised to use the "
                 "--fill 0xFF filter *before* this %s filter to ensure "
                 "both calculations are using the same byte values.  "
-                "See srec_info(1) for how to see the holes.",
+                "See srecord::info(1) for how to see the holes.",
                 get_algorithm_name(),
                 get_algorithm_name()
             );
@@ -74,10 +74,10 @@ srec_input_filter_message::read(srec_record &record)
     if (!have_forwarded_header)
     {
         have_forwarded_header = true;
-        srec_record *rp = buffer.get_header();
+        record *rp = buffer.get_header();
         if (rp)
         {
-            record = *rp;
+            result = *rp;
             return true;
         }
     }
@@ -88,7 +88,7 @@ srec_input_filter_message::read(srec_record &record)
     if (!have_given_result)
     {
         have_given_result = true;
-        process(buffer, record);
+        process(buffer, result);
         return true;
     }
 
@@ -102,8 +102,7 @@ srec_input_filter_message::read(srec_record &record)
         size_t nbytes = sizeof(data);
         if (buffer.find_next_data(ret_address, data, nbytes))
         {
-            record =
-                srec_record(srec_record::type_data, ret_address, data, nbytes);
+            result = record(record::type_data, ret_address, data, nbytes);
             buffer_pos = ret_address + nbytes;
             return true;
         }
@@ -117,10 +116,10 @@ srec_input_filter_message::read(srec_record &record)
     if (!have_forwarded_start_address)
     {
         have_forwarded_start_address = true;
-        srec_record *rp = buffer.get_execution_start_address();
+        record *rp = buffer.get_execution_start_address();
         if (rp)
         {
-            record = *rp;
+            result = *rp;
             return true;
         }
     }

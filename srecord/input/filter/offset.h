@@ -22,19 +22,22 @@
 
 #include <srecord/input/filter.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_filter_offset class is used to represent a filetr
+  * The srecord::input_filter_offset class is used to represent a filetr
   * where the addresses of the the deeper input source are offset by a
   * number of bytes.
   */
-class srec_input_filter_offset:
-    public srec_input_filter
+class input_filter_offset:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_offset();
+    virtual ~input_filter_offset();
 
 private:
     /**
@@ -46,7 +49,7 @@ private:
       *     The number of bytes to offset the addresses by.
       *     The value may be negative.
       */
-    srec_input_filter_offset(const srec_input::pointer &deeper, long nbytes);
+    input_filter_offset(const input::pointer &deeper, long nbytes);
 
 public:
     /**
@@ -59,11 +62,11 @@ public:
       *     The number of bytes to offset the addresses by.
       *     The value may be negative.
       */
-    static pointer create(const srec_input::pointer &deeper, long nbytes);
+    static pointer create(const input::pointer &deeper, long nbytes);
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
 private:
     /**
@@ -75,17 +78,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_offset();
+    input_filter_offset();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_offset(const srec_input_filter_offset &);
+    input_filter_offset(const input_filter_offset &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_offset &operator=(const srec_input_filter_offset &);
+    input_filter_offset &operator=(const input_filter_offset &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_OFFSET_H

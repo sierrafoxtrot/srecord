@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_fastload class is used to write an LSI Logic
+  * The srecord::output_file_fastload class is used to write an LSI Logic
   * Fast Load formatted file.
   */
-class srec_output_file_fastload:
-    public srec_output_file
+class output_file_fastload:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_fastload();
+    virtual ~output_file_fastload();
 
 private:
     /**
@@ -44,7 +47,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_fastload(const std::string &file_name);
+    output_file_fastload(const std::string &file_name);
 
 public:
     /**
@@ -60,7 +63,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -137,17 +140,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_fastload();
+    output_file_fastload();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_fastload(const srec_output_file_fastload &);
+    output_file_fastload(const output_file_fastload &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_fastload &operator=(const srec_output_file_fastload &);
+    output_file_fastload &operator=(const output_file_fastload &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_FASTLOAD_H

@@ -21,34 +21,35 @@
 #include <srecord/output.h>
 
 
-srec_memory_walker_crc32::~srec_memory_walker_crc32()
+srecord::memory_walker_crc32::~memory_walker_crc32()
 {
 }
 
 
-srec_memory_walker_crc32::srec_memory_walker_crc32(
+srecord::memory_walker_crc32::memory_walker_crc32(
         crc32::seed_mode_t seed_mode) :
     checksum(seed_mode)
 {
 }
 
 
-srec_memory_walker_crc32::pointer
-srec_memory_walker_crc32::create(crc32::seed_mode_t seed_mode)
+srecord::memory_walker_crc32::pointer
+srecord::memory_walker_crc32::create(crc32::seed_mode_t seed_mode)
 {
-    return pointer(new srec_memory_walker_crc32(seed_mode));
+    return pointer(new srecord::memory_walker_crc32(seed_mode));
 }
 
 
 void
-srec_memory_walker_crc32::observe(unsigned long, const void *data, int length)
+srecord::memory_walker_crc32::observe(unsigned long, const void *data,
+    int length)
 {
     checksum.nextbuf(data, length);
 }
 
 
 unsigned
-srec_memory_walker_crc32::get()
+srecord::memory_walker_crc32::get()
     const
 {
     return checksum.get();

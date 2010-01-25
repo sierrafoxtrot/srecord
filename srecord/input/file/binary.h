@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_binary class is used to represent the parse
+  * The srecord::input_file_binary class is used to represent the parse
   * state of a binary input stream.
   */
-class srec_input_file_binary:
-    public srec_input_file
+class input_file_binary:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_binary();
+    virtual ~input_file_binary();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_binary(const std::string &file_name);
+    input_file_binary(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See nase class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -76,17 +78,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_binary();
+    input_file_binary();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_binary(const srec_input_file_binary &);
+    input_file_binary(const input_file_binary &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_binary &operator=(const srec_input_file_binary &);
+    input_file_binary &operator=(const input_file_binary &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_BINARY_H

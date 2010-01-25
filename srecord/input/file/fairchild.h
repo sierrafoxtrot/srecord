@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_fairchild class is used to represent the parse
+  * The srecord::input_file_fairchild class is used to represent the parse
   * stat ewhen reading a file in Fairchild Fairbug format.
   */
-class srec_input_file_fairchild:
-    public srec_input_file
+class input_file_fairchild:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_fairchild();
+    virtual ~input_file_fairchild();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_fairchild(const std::string &file_name);
+    input_file_fairchild(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -99,17 +101,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_fairchild();
+    input_file_fairchild();
 
     /**
-      * T  Do not use.he copy constructor.  Do not use.
+      * The copy constructor.  Do not use.
       */
-    srec_input_file_fairchild(const srec_input_file_fairchild &);
+    input_file_fairchild(const input_file_fairchild &);
 
     /**
       * The assignment operator.
       */
-    srec_input_file_fairchild &operator=(const srec_input_file_fairchild &);
+    input_file_fairchild &operator=(const input_file_fairchild &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_FAIRCHILD_H

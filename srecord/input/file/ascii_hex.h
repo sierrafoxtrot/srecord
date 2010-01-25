@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_ascii_hex class is used to repesent the parse
+  * The srecord::input_file_ascii_hex class is used to repesent the parse
   * state when reading an Ascii-Hex format input file.
   */
-class srec_input_file_ascii_hex:
-    public srec_input_file
+class input_file_ascii_hex:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_ascii_hex();
+    virtual ~input_file_ascii_hex();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_ascii_hex(const std::string &file_name);
+    input_file_ascii_hex(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -68,7 +70,7 @@ private:
       * The read_inner method is used to read a single record from
       * the file.  The read method calls it.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The garbage_warning instance variable is used to remember whether
@@ -97,17 +99,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_ascii_hex();
+    input_file_ascii_hex();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_ascii_hex(const srec_input_file_ascii_hex &);
+    input_file_ascii_hex(const input_file_ascii_hex &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_ascii_hex &operator=(const srec_input_file_ascii_hex &);
+    input_file_ascii_hex &operator=(const input_file_ascii_hex &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_ASCII_HEX_H

@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_intel class is used to represent the parse state
+  * The srecord::input_file_intel class is used to represent the parse state
   * of an Intel Hex formatted file.
   */
-class srec_input_file_intel:
-    public srec_input_file
+class input_file_intel:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_intel();
+    virtual ~input_file_intel();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_intel(const std::string &file_name);
+    input_file_intel(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -68,7 +70,7 @@ private:
       * Read one record from the file.  The read method is a wrapper
       * around this method.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The data_record_count instance variable is used to remember the
@@ -111,7 +113,7 @@ private:
       * The pushback instance variable is used to remember the previous
       * record in the file.  This is needed in some instances, but not always.
       */
-    srec_record *pushback;
+    record *pushback;
 
     /**
       * The end_seen instance variable is used to remember whether or
@@ -122,17 +124,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_intel();
+    input_file_intel();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_intel(const srec_input_file_intel &);
+    input_file_intel(const input_file_intel &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_intel &operator=(const srec_input_file_intel &);
+    input_file_intel &operator=(const input_file_intel &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_INTEL_H

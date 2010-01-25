@@ -21,16 +21,16 @@
 #include <srecord/record.h>
 
 
-srec_output_file_intel16::~srec_output_file_intel16()
+srecord::output_file_intel16::~output_file_intel16()
 {
     if (enable_footer_flag)
         write_inner(1, 0L, 0, 0);
 }
 
 
-srec_output_file_intel16::srec_output_file_intel16(
+srecord::output_file_intel16::output_file_intel16(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     address_base(0),
     pref_block_size(32)
 {
@@ -40,15 +40,15 @@ srec_output_file_intel16::srec_output_file_intel16(
 }
 
 
-srec_output::pointer
-srec_output_file_intel16::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_intel16::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_intel16(a_file_name));
+    return pointer(new srecord::output_file_intel16(a_file_name));
 }
 
 
 void
-srec_output_file_intel16::write_inner(int tag, unsigned long address,
+srecord::output_file_intel16::write_inner(int tag, unsigned long address,
     const void *data, int data_nbytes)
 {
     //
@@ -64,7 +64,7 @@ srec_output_file_intel16::write_inner(int tag, unsigned long address,
     checksum_reset();
     put_byte(data_nbytes >> 1);
     unsigned char tmp[2];
-    srec_record::encode_big_endian(tmp, address, 2);
+    srecord::record::encode_big_endian(tmp, address, 2);
     put_byte(tmp[0]);
     put_byte(tmp[1]);
     put_byte(tag);
@@ -80,24 +80,29 @@ srec_output_file_intel16::write_inner(int tag, unsigned long address,
 
 
 void
-srec_output_file_intel16::write(const srec_record &record)
+srecord::output_file_intel16::write(const srecord::record &record)
 {
     unsigned char tmp[4];
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         //
         // This format can't do header records
         //
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         if ((record.get_address() & 1) || (record.get_length() & 1))
             fatal_alignment_error(2);
         if ((record.get_address() & 0xFFFE0000) != address_base)
         {
             address_base = record.get_address() & 0xFFFE0000;
-            srec_record::encode_big_endian(tmp, record.get_address() >> 17, 2);
+            srecord::record::encode_big_endian
+            (
+                tmp,
+                record.get_address() >> 17,
+                2
+            );
             write_inner(4, 0L, tmp, 2);
         }
         write_inner
@@ -109,19 +114,24 @@ srec_output_file_intel16::write(const srec_record &record)
         );
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         if (enable_goto_addr_flag && record.get_address() != 0)
         {
-            srec_record::encode_big_endian(tmp, record.get_address() >> 1, 4);
+            srecord::record::encode_big_endian
+            (
+                tmp,
+                record.get_address() >> 1,
+                4
+            );
             write_inner(5, 0L, tmp, 4);
         }
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
         break;
     }
@@ -129,7 +139,7 @@ srec_output_file_intel16::write(const srec_record &record)
 
 
 void
-srec_output_file_intel16::line_length_set(int n)
+srecord::output_file_intel16::line_length_set(int n)
 {
     //
     // Given the number of characters, figure the maximum number of
@@ -147,24 +157,24 @@ srec_output_file_intel16::line_length_set(int n)
         n = 255*2;
 
     //
-    // An additional constraint is the size of the srec_record
+    // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > (srec_record::max_data_length & ~1))
-        n = (srec_record::max_data_length & ~1);
+    if (n > (srecord::record::max_data_length & ~1))
+        n = (srecord::record::max_data_length & ~1);
     pref_block_size = n;
 }
 
 
 void
-srec_output_file_intel16::address_length_set(int)
+srecord::output_file_intel16::address_length_set(int)
 {
     // ignore
 }
 
 
 int
-srec_output_file_intel16::preferred_block_size_get()
+srecord::output_file_intel16::preferred_block_size_get()
         const
 {
     return pref_block_size;
@@ -172,7 +182,7 @@ srec_output_file_intel16::preferred_block_size_get()
 
 
 const char *
-srec_output_file_intel16::format_name()
+srecord::output_file_intel16::format_name()
     const
 {
     return "Intel-16";

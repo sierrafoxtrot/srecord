@@ -23,18 +23,21 @@
 #include <srecord/endian.h>
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_spasm class is used to represent an output
+  * The srecord::output_file_spasm class is used to represent an output
   * files in SPASM format.
   */
-class srec_output_file_spasm:
-    public srec_output_file
+class output_file_spasm:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_spasm();
+    virtual ~output_file_spasm();
 
 private:
     /**
@@ -47,7 +50,7 @@ private:
       * @param end
       *     The byte order of the file
       */
-    srec_output_file_spasm(const std::string &file_name, endian_t end);
+    output_file_spasm(const std::string &file_name, endian_t end);
 
 public:
     /**
@@ -64,7 +67,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -88,17 +91,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_spasm();
+    output_file_spasm();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_spasm(const srec_output_file_spasm &);
+    output_file_spasm(const output_file_spasm &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_spasm &operator=(const srec_output_file_spasm &);
+    output_file_spasm &operator=(const output_file_spasm &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_SPASM_H

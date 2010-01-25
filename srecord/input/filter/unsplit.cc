@@ -21,14 +21,14 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_unsplit::~srec_input_filter_unsplit()
+srecord::input_filter_unsplit::~input_filter_unsplit()
 {
 }
 
 
-srec_input_filter_unsplit::srec_input_filter_unsplit(
-        const srec_input::pointer &a1, int a2, int a3, int a4) :
-    srec_input_filter(a1),
+srecord::input_filter_unsplit::input_filter_unsplit(
+        const srecord::input::pointer &a1, int a2, int a3, int a4) :
+    srecord::input_filter(a1),
     modulus(a2),
     offset(a3),
     width(a4),
@@ -38,29 +38,29 @@ srec_input_filter_unsplit::srec_input_filter_unsplit(
 }
 
 
-srec_input::pointer
-srec_input_filter_unsplit::create(const srec_input::pointer &a_deeper, int a2,
+srecord::input::pointer
+srecord::input_filter_unsplit::create(const input::pointer &a_deeper, int a2,
     int a3, int a4)
 {
-    return pointer(new srec_input_filter_unsplit(a_deeper, a2, a3, a4));
+    return pointer(new srecord::input_filter_unsplit(a_deeper, a2, a3, a4));
 }
 
 
 bool
-srec_input_filter_unsplit::read(srec_record &record)
+srecord::input_filter_unsplit::read(srecord::record &record)
 {
     for (;;)
     {
         while
         (
-            buffer.get_type() != srec_record::type_data
+            buffer.get_type() != srecord::record::type_data
         ||
             buffer_pos >= buffer.get_length()
         )
         {
-            if (!srec_input_filter::read(buffer))
+            if (!srecord::input_filter::read(buffer))
                 return false;
-            if (buffer.get_type() != srec_record::type_data)
+            if (buffer.get_type() != srecord::record::type_data)
             {
                 record = buffer;
                 return true;
@@ -72,7 +72,7 @@ srec_input_filter_unsplit::read(srec_record &record)
         unsigned char c = buffer.get_data(buffer_pos++);
         int phase = addr % width;
         addr = (addr / width) * modulus + phase + offset;
-        record = srec_record(srec_record::type_data, addr, &c, 1);
+        record = srecord::record(srecord::record::type_data, addr, &c, 1);
         return true;
     }
 }

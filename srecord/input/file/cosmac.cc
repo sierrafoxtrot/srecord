@@ -21,13 +21,13 @@
 #include <srecord/record.h>
 
 
-srec_input_file_cosmac::~srec_input_file_cosmac()
+srecord::input_file_cosmac::~input_file_cosmac()
 {
 }
 
 
-srec_input_file_cosmac::srec_input_file_cosmac(const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+srecord::input_file_cosmac::input_file_cosmac(const std::string &a_file_name) :
+    input_file(a_file_name),
     state('\n'),
     address(0),
     seen_some_input(false)
@@ -35,15 +35,15 @@ srec_input_file_cosmac::srec_input_file_cosmac(const std::string &a_file_name) :
 }
 
 
-srec_input::pointer
-srec_input_file_cosmac::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_cosmac::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_cosmac(a_file_name));
+    return pointer(new input_file_cosmac(a_file_name));
 }
 
 
 bool
-srec_input_file_cosmac::read(srec_record &record)
+srecord::input_file_cosmac::read(record &result)
 {
     for (;;)
     {
@@ -131,7 +131,7 @@ srec_input_file_cosmac::read(srec_record &record)
             }
             get_char_undo(c);
             unsigned char data = get_byte();
-            record = srec_record(srec_record::type_data, address, &data, 1);
+            result = record(record::type_data, address, &data, 1);
             ++address;
             seen_some_input = true;
             return true;
@@ -141,7 +141,7 @@ srec_input_file_cosmac::read(srec_record &record)
 
 
 const char *
-srec_input_file_cosmac::get_file_format_name()
+srecord::input_file_cosmac::get_file_format_name()
     const
 {
     return "RCA Cosmac";

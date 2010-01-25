@@ -56,8 +56,8 @@
 #include <srecord/output/file/wilson.h>
 
 
-srec_output::pointer
-srec_arglex_tool::get_output()
+srecord::output::pointer
+srecord::arglex_tool::get_output()
 {
     //
     // skip the -output token
@@ -96,7 +96,7 @@ srec_arglex_tool::get_output()
     //
     // determine the file format
     //
-    srec_output::pointer ofp;
+    srecord::output::pointer ofp;
     switch (token_cur())
     {
     case token_motorola:
@@ -104,197 +104,197 @@ srec_arglex_tool::get_output()
         // fall through...
 
     default:
-        ofp = srec_output_file_srecord::create(fn);
+        ofp = srecord::output_file_srecord::create(fn);
         break;
 
     case token_aomf:
         token_next();
-        ofp = srec_output_file_aomf::create(fn);
+        ofp = srecord::output_file_aomf::create(fn);
         break;
 
     case token_ascii_hex:
         token_next();
-        ofp = srec_output_file_ascii_hex::create(fn);
+        ofp = srecord::output_file_ascii_hex::create(fn);
         break;
 
     case token_assembler:
         token_next();
-        ofp = srec_output_file_asm::create(fn);
+        ofp = srecord::output_file_asm::create(fn);
         break;
 
     case token_atmel_generic_be:
         token_next();
-        ofp = srec_output_file_atmel_generic::create(fn, endian_big);
+        ofp = srecord::output_file_atmel_generic::create(fn, endian_big);
         break;
 
     case token_atmel_generic_le:
         token_next();
-        ofp = srec_output_file_atmel_generic::create(fn, endian_little);
+        ofp = srecord::output_file_atmel_generic::create(fn, endian_little);
         break;
 
     case token_basic_data:
         token_next();
-        ofp = srec_output_file_basic::create(fn);
+        ofp = srecord::output_file_basic::create(fn);
         break;
 
     case token_binary:
         token_next();
-        ofp = srec_output_file_binary::create(fn);
+        ofp = srecord::output_file_binary::create(fn);
         break;
 
     case token_brecord:
         token_next();
-        ofp = srec_output_file_brecord::create(fn);
+        ofp = srecord::output_file_brecord::create(fn);
         break;
 
     case token_c_array:
         token_next();
-        ofp = srec_output_file_c::create(fn);
+        ofp = srecord::output_file_c::create(fn);
         break;
 
     case token_cosmac:
         token_next();
-        ofp = srec_output_file_cosmac::create(fn);
+        ofp = srecord::output_file_cosmac::create(fn);
         break;
 
     case token_dec_binary:
         token_next();
-        ofp = srec_output_file_dec_binary::create(fn);
+        ofp = srecord::output_file_dec_binary::create(fn);
         break;
 
     case token_emon52:
         token_next();
-        ofp = srec_output_file_emon52::create(fn);
+        ofp = srecord::output_file_emon52::create(fn);
         break;
 
     case token_fairchild:
         token_next();
-        ofp = srec_output_file_fairchild::create(fn);
+        ofp = srecord::output_file_fairchild::create(fn);
         break;
 
     case token_fast_load:
         token_next();
-        ofp = srec_output_file_fastload::create(fn);
+        ofp = srecord::output_file_fastload::create(fn);
         break;
 
     case token_formatted_binary:
         token_next();
-        ofp = srec_output_file_formatted_binary::create(fn);
+        ofp = srecord::output_file_formatted_binary::create(fn);
         break;
 
     case token_forth:
         token_next();
-        ofp = srec_output_file_forth::create(fn);
+        ofp = srecord::output_file_forth::create(fn);
         break;
 
     case token_four_packed_code:
         token_next();
-        ofp = srec_output_file_four_packed_code::create(fn);
+        ofp = srecord::output_file_four_packed_code::create(fn);
         break;
 
     case token_hexdump:
         token_next();
-        ofp = srec_output_file_hexdump::create(fn);
+        ofp = srecord::output_file_hexdump::create(fn);
         break;
 
     case token_intel:
         token_next();
-        ofp = srec_output_file_intel::create(fn);
+        ofp = srecord::output_file_intel::create(fn);
         break;
 
     case token_intel16:
         token_next();
-        ofp = srec_output_file_intel16::create(fn);
+        ofp = srecord::output_file_intel16::create(fn);
         break;
 
     case token_memory_initialization_file:
         token_next();
-        ofp = srec_output_file_mif::create(fn);
+        ofp = srecord::output_file_mif::create(fn);
         break;
 
     case token_mos_tech:
         token_next();
-        ofp = srec_output_file_mos_tech::create(fn);
+        ofp = srecord::output_file_mos_tech::create(fn);
         break;
 
     case token_msbin:
         token_next();
-        ofp = srec_output_file_msbin::create(fn);
+        ofp = srecord::output_file_msbin::create(fn);
         break;
 
     case token_needham_hex:
         token_next();
-        ofp = srec_output_file_needham::create(fn);
+        ofp = srecord::output_file_needham::create(fn);
         break;
 
     case token_ohio_scientific:
         token_next();
-        ofp = srec_output_file_os65v::create(fn);
+        ofp = srecord::output_file_os65v::create(fn);
         break;
 
     case token_signetics:
         token_next();
-        ofp = srec_output_file_signetics::create(fn);
+        ofp = srecord::output_file_signetics::create(fn);
         break;
 
     case token_spasm_be:
         token_next();
-        ofp = srec_output_file_spasm::create(fn, endian_big);
+        ofp = srecord::output_file_spasm::create(fn, endian_big);
         break;
 
     case token_spasm_le:
         token_next();
-        ofp = srec_output_file_spasm::create(fn, endian_little);
+        ofp = srecord::output_file_spasm::create(fn, endian_little);
         break;
 
     case token_spectrum:
         token_next();
-        ofp = srec_output_file_spectrum::create(fn);
+        ofp = srecord::output_file_spectrum::create(fn);
         break;
 
     case token_stewie:
         token_next();
-        ofp = srec_output_file_stewie::create(fn);
+        ofp = srecord::output_file_stewie::create(fn);
         break;
 
     case token_tektronix:
         token_next();
-        ofp = srec_output_file_tektronix::create(fn);
+        ofp = srecord::output_file_tektronix::create(fn);
         break;
 
     case token_tektronix_extended:
         token_next();
-        ofp = srec_output_file_tektronix_extended::create(fn);
+        ofp = srecord::output_file_tektronix_extended::create(fn);
         break;
 
     case token_ti_tagged:
         token_next();
-        ofp = srec_output_file_ti_tagged::create(fn);
+        ofp = srecord::output_file_ti_tagged::create(fn);
         break;
 
     case token_ti_tagged_16:
         token_next();
-        ofp = srec_output_file_ti_tagged_16::create(fn);
+        ofp = srecord::output_file_ti_tagged_16::create(fn);
         break;
 
     case token_ti_txt:
         token_next();
-        ofp = srec_output_file_ti_txt::create(fn);
+        ofp = srecord::output_file_ti_txt::create(fn);
         break;
 
     case token_vhdl:
         token_next();
-        ofp = srec_output_file_vhdl::create(fn);
+        ofp = srecord::output_file_vhdl::create(fn);
         break;
 
     case token_vmem:
         token_next();
-        ofp = srec_output_file_vmem::create(fn);
+        ofp = srecord::output_file_vmem::create(fn);
         break;
 
     case token_wilson:
         token_next();
-        ofp = srec_output_file_wilson::create(fn);
+        ofp = srecord::output_file_wilson::create(fn);
         break;
     }
 

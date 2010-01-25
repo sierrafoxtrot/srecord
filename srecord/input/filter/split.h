@@ -23,8 +23,11 @@
 #include <srecord/input/filter.h>
 #include <srecord/record.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_filter_split class is used to represent a filter
+  * The srecord::input_filter_split class is used to represent a filter
   * which splits ints input source into piceces.  The data of each
   * swathe then has the address adjusted to fill in the gaps.
   *
@@ -34,7 +37,7 @@
   * Note that you need to invoke this filter N times when you have N
   * swathes, once for each swathe.
   *
-  *
+  *                                                                        <pre>
   *           --> |    modulus    | <--
   * Input data:   |               |
   * ~-+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+-~
@@ -51,16 +54,16 @@
   *   |   |   |   | 0 | 1 | 4 | 5 | 8 | 9 |   |   |     half of the data.
   * ~-+---+---+---+---+---+---+---+---+---+---+---+-~
   *               |       |
-  *           --> | width | <--
+  *           --> | width | <--                                           </pre>
   */
-class srec_input_filter_split:
-    public srec_input_filter
+class input_filter_split:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_split();
+    virtual ~input_filter_split();
 
 private:
     /**
@@ -75,7 +78,7 @@ private:
       * @param width
       *     The width of each stripe within the swathe.
       */
-    srec_input_filter_split(const srec_input::pointer &deeper, int modulus,
+    input_filter_split(const input::pointer &deeper, int modulus,
         int offset, int width);
 
 public:
@@ -92,38 +95,38 @@ public:
       * @param width
       *     The width of each stripe within the swathe.
       */
-    static pointer create(const srec_input::pointer &deeper, int modulus,
+    static pointer create(const input::pointer &deeper, int modulus,
         int offset, int width);
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
 private:
     /**
       * The modulus instance variable is used to remember the number of
       * bytes wide each swathe is.
       */
-    srec_record::address_t modulus;
+    record::address_t modulus;
 
     /**
       * The offset instance variable is used to remember the offset
       * within the swathe.
       */
-    srec_record::address_t offset;
+    record::address_t offset;
 
     /**
       * The width instance variable is used to remember the width of
       * each stripe within the swathe.
       */
-    srec_record::address_t width;
+    record::address_t width;
 
     /**
       * The buffer instance variable is used to remember the last lot
       * of data read from the deeper inputs source, and currently being
       * processed.
       */
-    srec_record buffer;
+    record buffer;
 
     /**
       * The buffer_pos instance variable is used to remember where we
@@ -134,17 +137,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_split();
+    input_filter_split();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_split(const srec_input_filter_split &);
+    input_filter_split(const input_filter_split &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_split &operator=(const srec_input_filter_split &);
+    input_filter_split &operator=(const input_filter_split &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_SPLIT_H

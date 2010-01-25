@@ -26,7 +26,9 @@
 #include <vector>
 #include <string>
 
-#define ARGLEX_END_MARKER {0,0}
+#define SRECORD_ARGLEX_END_MARKER {0,0}
+
+namespace srecord {
 
 /**
   * The arglex class is used to implement a lexical analizer for command
@@ -363,6 +365,8 @@ protected:
       *     the tables, otherwise users are going to be VERY confused.
       */
     void deprecated_option(const std::string &formal_name);
+};
+
 };
 
 #endif // LIB_ARGLEX_H

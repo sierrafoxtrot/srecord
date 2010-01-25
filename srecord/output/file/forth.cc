@@ -22,30 +22,30 @@
 #include <srecord/arglex/tool.h>
 
 
-srec_output_file_forth::~srec_output_file_forth()
+srecord::output_file_forth::~output_file_forth()
 {
     emit_end_of_file();
 }
 
 
-srec_output_file_forth::srec_output_file_forth(
+srecord::output_file_forth::output_file_forth(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     address(0),
     store_cmd("C!")
 {
 }
 
 
-srec_output::pointer
-srec_output_file_forth::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_forth::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_forth(a_file_name));
+    return pointer(new srecord::output_file_forth(a_file_name));
 }
 
 
 void
-srec_output_file_forth::emit_end_of_file()
+srecord::output_file_forth::emit_end_of_file()
 {
     put_char('\n');
 
@@ -57,15 +57,15 @@ srec_output_file_forth::emit_end_of_file()
 
 
 void
-srec_output_file_forth::write(const srec_record &record)
+srecord::output_file_forth::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         put_string("HEX\n");
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         address = record.get_address();
         //
         // Now write out the new address.  It is important not to
@@ -83,42 +83,42 @@ srec_output_file_forth::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         // Ignore.
         // The destructor sill call emit_end_of_file();
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
     }
 }
 
 
 const char *
-srec_output_file_forth::format_name()
+srecord::output_file_forth::format_name()
     const
 {
     return "FORTH";
 }
 
 void
-srec_output_file_forth::command_line(srec_arglex_tool *cmdln)
+srecord::output_file_forth::command_line(srecord::arglex_tool *cmdln)
 {
     for (;;)
     {
         switch (cmdln->token_cur())
         {
-        case srec_arglex_tool::token_ram:
+        case srecord::arglex_tool::token_ram:
             cmdln->token_next();
             // Store into RAM
             store_cmd = "C!";
             break;
 
-        case srec_arglex_tool::token_eeprom:
+        case srecord::arglex_tool::token_eeprom:
             cmdln->token_next();
             // Store into EEPROM
             store_cmd = "EEC!";
@@ -130,15 +130,15 @@ srec_output_file_forth::command_line(srec_arglex_tool *cmdln)
     }
 }
 
-void srec_output_file_forth::line_length_set(int)
+void srecord::output_file_forth::line_length_set(int)
 {
 }
 
-void srec_output_file_forth::address_length_set(int)
+void srecord::output_file_forth::address_length_set(int)
 {
 }
 
-int srec_output_file_forth::preferred_block_size_get() const
+int srecord::output_file_forth::preferred_block_size_get() const
 {
   return 16;
 }

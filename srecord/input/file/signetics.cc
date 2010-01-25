@@ -21,29 +21,29 @@
 #include <srecord/record.h>
 
 
-srec_input_file_signetics::~srec_input_file_signetics()
+srecord::input_file_signetics::~input_file_signetics()
 {
 }
 
 
-srec_input_file_signetics::srec_input_file_signetics(
+srecord::input_file_signetics::input_file_signetics(
         const std::string &a_filename) :
-    srec_input_file(a_filename),
+    srecord::input_file(a_filename),
     garbage_warning(false),
     seen_some_input(false)
 {
 }
 
 
-srec_input::pointer
-srec_input_file_signetics::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_signetics::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_signetics(a_file_name));
+    return pointer(new srecord::input_file_signetics(a_file_name));
 }
 
 
 void
-srec_input_file_signetics::checksum_add(unsigned char n)
+srecord::input_file_signetics::checksum_add(unsigned char n)
 {
     checksum ^= n;
     checksum = (checksum << 1) | ((checksum >> 7) & 1);
@@ -51,7 +51,7 @@ srec_input_file_signetics::checksum_add(unsigned char n)
 
 
 int
-srec_input_file_signetics::read_inner(srec_record &record)
+srecord::input_file_signetics::read_inner(srecord::record &record)
 {
     for (;;)
     {
@@ -119,14 +119,14 @@ srec_input_file_signetics::read_inner(srec_record &record)
     if (get_char() != '\n')
         fatal_error("end-of-line expected");
 
-    srec_record::type_t type = srec_record::type_data;
-    record = srec_record(type, address, buffer, length);
+    srecord::record::type_t type = srecord::record::type_data;
+    record = srecord::record(type, address, buffer, length);
     return 1;
 }
 
 
 bool
-srec_input_file_signetics::read(srec_record &record)
+srecord::input_file_signetics::read(srecord::record &record)
 {
     if (!read_inner(record))
     {
@@ -140,7 +140,7 @@ srec_input_file_signetics::read(srec_record &record)
 
 
 const char *
-srec_input_file_signetics::get_file_format_name()
+srecord::input_file_signetics::get_file_format_name()
     const
 {
     return "Signetics";

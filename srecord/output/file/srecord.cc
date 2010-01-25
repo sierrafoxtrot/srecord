@@ -24,16 +24,16 @@
 #include <srecord/record.h>
 
 
-srec_output_file_srecord::~srec_output_file_srecord()
+srecord::output_file_srecord::~output_file_srecord()
 {
     write_data_count();
     // check for termination record
 }
 
 
-srec_output_file_srecord::srec_output_file_srecord(
+srecord::output_file_srecord::output_file_srecord(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     data_count(0),
     pref_block_size(32),
     address_length(2),
@@ -43,15 +43,15 @@ srec_output_file_srecord::srec_output_file_srecord(
 }
 
 
-srec_output::pointer
-srec_output_file_srecord::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_srecord::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_srecord(a_file_name));
+    return pointer(new srecord::output_file_srecord(a_file_name));
 }
 
 
 void
-srec_output_file_srecord::command_line(srec_arglex_tool *cmdln)
+srecord::output_file_srecord::command_line(srecord::arglex_tool *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_number)
     {
@@ -95,7 +95,7 @@ srec_output_file_srecord::command_line(srec_arglex_tool *cmdln)
 
 
 void
-srec_output_file_srecord::write_inner(int tag, unsigned long address,
+srecord::output_file_srecord::write_inner(int tag, unsigned long address,
     int address_nbytes, const void *data, int data_nbytes)
 {
     //
@@ -117,7 +117,7 @@ srec_output_file_srecord::write_inner(int tag, unsigned long address,
     unsigned char buffer[256];
     int line_length = address_nbytes + data_nbytes + 1;
     buffer[0] = line_length;
-    srec_record::encode_big_endian(buffer + 1, address, address_nbytes);
+    srecord::record::encode_big_endian(buffer + 1, address, address_nbytes);
     if (data_nbytes)
         memcpy(buffer + 1 + address_nbytes, data, data_nbytes);
 
@@ -135,7 +135,7 @@ srec_output_file_srecord::write_inner(int tag, unsigned long address,
 
 
 void
-srec_output_file_srecord::write_data_count()
+srecord::output_file_srecord::write_data_count()
 {
     if (data_count_written)
         return;
@@ -151,7 +151,7 @@ srec_output_file_srecord::write_data_count()
 
     //
     // It is not clear in the spec whether the data count should be
-    // reset at this point.  It will not happen for srec_cat, so it
+    // reset at this point.  It will not happen for srecord::cat, so it
     // probably isn't a problem.
     //
     data_count = 0;
@@ -159,7 +159,7 @@ srec_output_file_srecord::write_data_count()
 
 
 void
-srec_output_file_srecord::write(const srec_record &record)
+srecord::output_file_srecord::write(const srecord::record &record)
 {
     //
     // Make sure the address is nicely aligned.
@@ -182,12 +182,12 @@ srec_output_file_srecord::write(const srec_record &record)
 
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         if (enable_header_flag)
             write_inner(0, 0, 2, record.get_data(), record.get_length());
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         if (shifted_address < (1UL << 16) && address_length <= 2)
         {
             write_inner
@@ -225,11 +225,11 @@ srec_output_file_srecord::write(const srec_record &record)
         data_count_written = false;
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         if (enable_goto_addr_flag)
         {
             write_data_count();
@@ -243,14 +243,14 @@ srec_output_file_srecord::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
     }
 }
 
 
 void
-srec_output_file_srecord::line_length_set(int linlen)
+srecord::output_file_srecord::line_length_set(int linlen)
 {
     //
     // Given the number of characters, figure the maximum number of
@@ -275,17 +275,17 @@ srec_output_file_srecord::line_length_set(int linlen)
         n = 250;
 
     //
-    // An additional constraint is the size of the srec_record
+    // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srec_record::max_data_length)
-        n = srec_record::max_data_length;
+    if (n > srecord::record::max_data_length)
+        n = srecord::record::max_data_length;
     pref_block_size = n;
 }
 
 
 void
-srec_output_file_srecord::address_length_set(int n)
+srecord::output_file_srecord::address_length_set(int n)
 {
     if (n < 2)
         n = 2;
@@ -296,7 +296,7 @@ srec_output_file_srecord::address_length_set(int n)
 
 
 int
-srec_output_file_srecord::preferred_block_size_get()
+srecord::output_file_srecord::preferred_block_size_get()
     const
 {
     return pref_block_size;
@@ -304,7 +304,7 @@ srec_output_file_srecord::preferred_block_size_get()
 
 
 const char *
-srec_output_file_srecord::format_name()
+srecord::output_file_srecord::format_name()
     const
 {
     return "Motorola S-Record";

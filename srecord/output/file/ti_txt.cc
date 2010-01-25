@@ -21,7 +21,7 @@
 #include <srecord/record.h>
 
 
-srec_output_file_ti_txt::~srec_output_file_ti_txt()
+srecord::output_file_ti_txt::~output_file_ti_txt()
 {
     if (column > 0)
         put_char('\n');
@@ -30,9 +30,9 @@ srec_output_file_ti_txt::~srec_output_file_ti_txt()
 }
 
 
-srec_output_file_ti_txt::srec_output_file_ti_txt(
+srecord::output_file_ti_txt::output_file_ti_txt(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     address(),
     address_set(false),
     address_length(2),
@@ -43,15 +43,15 @@ srec_output_file_ti_txt::srec_output_file_ti_txt(
 }
 
 
-srec_output::pointer
-srec_output_file_ti_txt::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_ti_txt::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_ti_txt(a_file_name));
+    return pointer(new srecord::output_file_ti_txt(a_file_name));
 }
 
 
 void
-srec_output_file_ti_txt::put_byte_wrap(unsigned char c)
+srecord::output_file_ti_txt::put_byte_wrap(unsigned char c)
 {
     if (column && column + 3 > line_length)
     {
@@ -70,15 +70,15 @@ srec_output_file_ti_txt::put_byte_wrap(unsigned char c)
 
 
 void
-srec_output_file_ti_txt::write(const srec_record &record)
+srecord::output_file_ti_txt::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // All header data is discarded
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         if (!address_set || address != record.get_address())
         {
             if (column > 0)
@@ -106,35 +106,35 @@ srec_output_file_ti_txt::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         // ignore
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
     }
 }
 
 
 void
-srec_output_file_ti_txt::line_length_set(int linlen)
+srecord::output_file_ti_txt::line_length_set(int linlen)
 {
     int n = (linlen + 1) / 3;
     if (n < 1)
         n = 1;
-    if (n > srec_record::max_data_length)
-        n = srec_record::max_data_length;
+    if (n > srecord::record::max_data_length)
+        n = srecord::record::max_data_length;
     pref_block_size = n;
     line_length = pref_block_size * 3 - 1;
 }
 
 
 void
-srec_output_file_ti_txt::address_length_set(int n)
+srecord::output_file_ti_txt::address_length_set(int n)
 {
     if (n < 2)
         n = 2;
@@ -145,7 +145,7 @@ srec_output_file_ti_txt::address_length_set(int n)
 
 
 int
-srec_output_file_ti_txt::preferred_block_size_get()
+srecord::output_file_ti_txt::preferred_block_size_get()
     const
 {
     return pref_block_size;
@@ -153,7 +153,7 @@ srec_output_file_ti_txt::preferred_block_size_get()
 
 
 const char *
-srec_output_file_ti_txt::format_name()
+srecord::output_file_ti_txt::format_name()
     const
 {
     return "TI-Txt";

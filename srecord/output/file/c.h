@@ -23,18 +23,21 @@
 #include <srecord/output/file.h>
 #include <srecord/interval.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_c class is used to represent an output file
+  * The srecord::output_file_c class is used to represent an output file
   * which emits C code.
   */
-class srec_output_file_c:
-    public srec_output_file
+class output_file_c:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_c();
+    virtual ~output_file_c();
 
 private:
     /**
@@ -44,7 +47,7 @@ private:
       *     The file name to open to write data to.  The name "-" is
       *     understood to mean the standard output.
       */
-    srec_output_file_c(const std::string &file_name);
+    output_file_c(const std::string &file_name);
 
 public:
     /**
@@ -59,7 +62,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -71,7 +74,7 @@ protected:
     int preferred_block_size_get() const;
 
     // See base class for documentation.
-    void command_line(srec_arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln);
 
     // See base class for documentation.
     const char *format_name() const;
@@ -199,17 +202,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_c();
+    output_file_c();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_c(const srec_output_file_c &);
+    output_file_c(const output_file_c &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_c &operator=(const srec_output_file_c &);
+    output_file_c &operator=(const output_file_c &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_C_H

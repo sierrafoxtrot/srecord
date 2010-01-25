@@ -22,30 +22,30 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_not::~srec_input_filter_not()
+srecord::input_filter_not::~input_filter_not()
 {
 }
 
 
-srec_input_filter_not::srec_input_filter_not(const srec_input::pointer &arg) :
-    srec_input_filter(arg)
+srecord::input_filter_not::input_filter_not(const input::pointer &arg) :
+    srecord::input_filter(arg)
 {
 }
 
 
-srec_input::pointer
-srec_input_filter_not::create(const srec_input::pointer &a_deeper)
+srecord::input::pointer
+srecord::input_filter_not::create(const srecord::input::pointer &a_deeper)
 {
-    return pointer(new srec_input_filter_not(a_deeper));
+    return pointer(new srecord::input_filter_not(a_deeper));
 }
 
 
 bool
-srec_input_filter_not::read(srec_record &record)
+srecord::input_filter_not::read(srecord::record &record)
 {
-    if (!srec_input_filter::read(record))
+    if (!srecord::input_filter::read(record))
         return false;
-    if (record.get_type() == srec_record::type_data)
+    if (record.get_type() == srecord::record::type_data)
     {
         for (size_t j = 0; j < record.get_length(); ++j)
             record.set_data(j, ~record.get_data(j));

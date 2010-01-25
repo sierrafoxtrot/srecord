@@ -21,7 +21,7 @@
 #include <srecord/record.h>
 
 
-srec_output_file_signetics::~srec_output_file_signetics()
+srecord::output_file_signetics::~output_file_signetics()
 {
     put_char(':');
     put_word(last_address);
@@ -30,24 +30,24 @@ srec_output_file_signetics::~srec_output_file_signetics()
 }
 
 
-srec_output_file_signetics::srec_output_file_signetics(
+srecord::output_file_signetics::output_file_signetics(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     pref_block_size(32),
     last_address(0)
 {
 }
 
 
-srec_output::pointer
-srec_output_file_signetics::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_signetics::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_signetics(a_file_name));
+    return pointer(new srecord::output_file_signetics(a_file_name));
 }
 
 
 void
-srec_output_file_signetics::checksum_add(unsigned char n)
+srecord::output_file_signetics::checksum_add(unsigned char n)
 {
     checksum ^= n;
     checksum = (checksum << 1) | ((checksum >> 7) & 1);
@@ -55,15 +55,15 @@ srec_output_file_signetics::checksum_add(unsigned char n)
 
 
 void
-srec_output_file_signetics::write(const srec_record &record)
+srecord::output_file_signetics::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // This format can't do header records
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         if (record.get_length() < 1)
             return;
         if (record.get_address() + record.get_length() > (1UL << 16))
@@ -81,22 +81,22 @@ srec_output_file_signetics::write(const srec_record &record)
         last_address = record.get_address() + record.get_length();
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         // This format can't do execution start address records
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
     }
 }
 
 
 void
-srec_output_file_signetics::line_length_set(int linlen)
+srecord::output_file_signetics::line_length_set(int linlen)
 {
     //
     // Given the number of characters, figure the maximum number of
@@ -113,31 +113,31 @@ srec_output_file_signetics::line_length_set(int linlen)
         n = 255;
 
     //
-    // An additional constraint is the size of the srec_record
+    // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srec_record::max_data_length)
-        n = srec_record::max_data_length;
+    if (n > srecord::record::max_data_length)
+        n = srecord::record::max_data_length;
     pref_block_size = n;
 }
 
 
 void
-srec_output_file_signetics::address_length_set(int)
+srecord::output_file_signetics::address_length_set(int)
 {
     // ignore (this is only a 16-bit format)
 }
 
 
 int
-srec_output_file_signetics::preferred_block_size_get() const
+srecord::output_file_signetics::preferred_block_size_get() const
 {
     return pref_block_size;
 }
 
 
 const char *
-srec_output_file_signetics::format_name()
+srecord::output_file_signetics::format_name()
     const
 {
     return "Signetics";

@@ -24,13 +24,13 @@
 
 
 interval
-srec_input_interval(srec_input::pointer ifp)
+srecord::input_interval(srecord::input::pointer ifp)
 {
     interval range;
-    srec_record record;
+    srecord::record record;
     while (ifp->read(record))
     {
-        if (record.get_type() != srec_record::type_data)
+        if (record.get_type() != srecord::record::type_data)
             continue;
         range +=
             interval

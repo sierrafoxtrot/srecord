@@ -21,7 +21,7 @@
 #include <srecord/record.h>
 
 
-srec_output_file_fastload::~srec_output_file_fastload()
+srecord::output_file_fastload::~output_file_fastload()
 {
     if (bytes_since_checksum)
     {
@@ -38,9 +38,9 @@ srec_output_file_fastload::~srec_output_file_fastload()
 }
 
 
-srec_output_file_fastload::srec_output_file_fastload(
+srecord::output_file_fastload::output_file_fastload(
         const std::string &a_filename) :
-    srec_output_file(a_filename),
+    srecord::output_file(a_filename),
     line_length(0),
     address(~0uL),
     column(0),
@@ -52,15 +52,15 @@ srec_output_file_fastload::srec_output_file_fastload(
 }
 
 
-srec_output::pointer
-srec_output_file_fastload::create(const std::string &a_filename)
+srecord::output::pointer
+srecord::output_file_fastload::create(const std::string &a_filename)
 {
-    return pointer(new srec_output_file_fastload(a_filename));
+    return pointer(new srecord::output_file_fastload(a_filename));
 }
 
 
 void
-srec_output_file_fastload::put_number(unsigned long n, int min_digits)
+srecord::output_file_fastload::put_number(unsigned long n, int min_digits)
 {
     unsigned char buffer[20];
     unsigned char *bp = buffer;
@@ -95,7 +95,7 @@ number_width(unsigned long n)
 
 
 void
-srec_output_file_fastload::put_command(int c, unsigned long n, int ndigits)
+srecord::output_file_fastload::put_command(int c, unsigned long n, int ndigits)
 {
     int width = number_width(n);
     if (width < ndigits)
@@ -116,17 +116,17 @@ srec_output_file_fastload::put_command(int c, unsigned long n, int ndigits)
 
 
 void
-srec_output_file_fastload::write(const srec_record &record)
+srecord::output_file_fastload::write(const srecord::record &record)
 {
     size_t j;
 
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // This format can't do header records
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         if (record.get_length() < 1)
             return;
         if (record.get_address() != address)
@@ -176,11 +176,11 @@ srec_output_file_fastload::write(const srec_record &record)
         address += record.get_length();
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         if (enable_goto_addr_flag)
         {
             if (bytes_since_checksum)
@@ -196,14 +196,14 @@ srec_output_file_fastload::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
     }
 }
 
 
 void
-srec_output_file_fastload::line_length_set(int linlen)
+srecord::output_file_fastload::line_length_set(int linlen)
 {
     line_length = linlen;
     if (line_length < 10)
@@ -233,23 +233,23 @@ srec_output_file_fastload::line_length_set(int linlen)
 
 
 void
-srec_output_file_fastload::address_length_set(int)
+srecord::output_file_fastload::address_length_set(int)
 {
     // ignore
 }
 
 
 int
-srec_output_file_fastload::preferred_block_size_get()
+srecord::output_file_fastload::preferred_block_size_get()
     const
 {
     // Prefer a multiple of 3
-    return ((srec_record::max_data_length / 3) * 3);
+    return ((srecord::record::max_data_length / 3) * 3);
 }
 
 
 const char *
-srec_output_file_fastload::format_name()
+srecord::output_file_fastload::format_name()
     const
 {
     return "FastLoad";

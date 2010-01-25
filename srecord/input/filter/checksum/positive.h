@@ -22,18 +22,20 @@
 
 #include <srecord/input/filter/checksum.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_filter_checksum_positive class is used to represent the
+  * The srecord::input_filter_checksum_positive class is used to represent the
   * state of a checksum filter that inserts a positive sum into the data.
   */
-class srec_input_filter_checksum_positive:
-    public srec_input_filter_checksum
+class input_filter_checksum_positive:
+    public input_filter_checksum
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_checksum_positive();
+    virtual ~input_filter_checksum_positive();
 
 private:
     /**
@@ -53,8 +55,8 @@ private:
       *     wider, it is assumed that they are alligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    srec_input_filter_checksum_positive(const srec_input::pointer &deeper,
-        int address, int length, endian_t end, int width = 1);
+    input_filter_checksum_positive(const input::pointer &deeper, int address,
+        int length, endian_t end, int width = 1);
 
 public:
     /**
@@ -75,8 +77,8 @@ public:
       *     wider, it is assumed that they are alligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    static pointer create(const srec_input::pointer &deeper, int address,
-        int length, endian_t end, int width = 1);
+    static pointer create(const input::pointer &deeper, int address, int length,
+        endian_t end, int width = 1);
 
 protected:
     // See base class for documentation.
@@ -86,19 +88,20 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_checksum_positive();
+    input_filter_checksum_positive();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_checksum_positive(
-        const srec_input_filter_checksum_positive &);
+    input_filter_checksum_positive(const input_filter_checksum_positive &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_checksum_positive &operator=(
-        const srec_input_filter_checksum_positive &);
+    input_filter_checksum_positive &operator=(
+        const input_filter_checksum_positive &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_CHECKSUM_POSITIVE_H

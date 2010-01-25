@@ -22,7 +22,8 @@
 #include <algorithm>
 #include <string.h>
 
-srec_input_file_msbin::~srec_input_file_msbin()
+
+srecord::input_file_msbin::~input_file_msbin()
 {
     if (first_record_read)
     {
@@ -51,8 +52,8 @@ srec_input_file_msbin::~srec_input_file_msbin()
 }
 
 
-srec_input_file_msbin::srec_input_file_msbin(const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+srecord::input_file_msbin::input_file_msbin(const std::string &a_file_name) :
+    input_file(a_file_name),
     header_read(false),
     first_record_read(false),
     execution_start_record_seen(false),
@@ -65,14 +66,15 @@ srec_input_file_msbin::srec_input_file_msbin(const std::string &a_file_name) :
 }
 
 
-srec_input::pointer
-srec_input_file_msbin::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_msbin::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_msbin(a_file_name));
+    return pointer(new input_file_msbin(a_file_name));
 }
 
 
-uint32_t srec_input_file_msbin::read_qword_le()
+uint32_t
+srecord::input_file_msbin::read_qword_le()
 {
     unsigned char c[sizeof(uint32_t)];
 
@@ -86,11 +88,12 @@ uint32_t srec_input_file_msbin::read_qword_le()
         c[i] = (unsigned char)j;
     }
 
-    return srec_record::decode_little_endian(c, sizeof(c));
+    return record::decode_little_endian(c, sizeof(c));
 }
 
 
-void srec_input_file_msbin::read_file_header()
+void
+srecord::input_file_msbin::read_file_header()
 {
     // Optional magic
     static const unsigned char Magic[7] =
@@ -121,11 +124,11 @@ void srec_input_file_msbin::read_file_header()
         buff[sizeof(buff) - 1] = j;
 
         // Read first qword
-        image_start = srec_record::decode_little_endian(buff, sizeof(uint32_t));
+        image_start = record::decode_little_endian(buff, sizeof(uint32_t));
 
         // Read second qword
         image_length =
-            srec_record::decode_little_endian
+            record::decode_little_endian
             (
                 buff + sizeof(uint32_t),
                 sizeof(uint32_t)
@@ -145,7 +148,7 @@ void srec_input_file_msbin::read_file_header()
 
 
 uint32_t
-srec_input_file_msbin::checksum(const unsigned char *data, size_t len)
+srecord::input_file_msbin::checksum(const unsigned char *data, size_t len)
 {
     uint32_t sum = 0;
 
@@ -157,7 +160,7 @@ srec_input_file_msbin::checksum(const unsigned char *data, size_t len)
 
 
 bool
-srec_input_file_msbin::read(srec_record &record)
+srecord::input_file_msbin::read(record &result)
 {
     // Read the file header if we haven't read it yet.
     if (!header_read)
@@ -231,14 +234,7 @@ srec_input_file_msbin::read(srec_record &record)
             );
         }
 
-        record =
-            srec_record
-            (
-                srec_record::type_execution_start_address,
-                remaining,
-                0,
-                0
-            );
+        result = record(record::type_execution_start_address, remaining, 0, 0);
 
         // This should be the last record - but if it was not, we try to read
         // further and produce a warning.
@@ -249,9 +245,9 @@ srec_input_file_msbin::read(srec_record &record)
 
     // Data record
     // Read (part) of the record
-    unsigned char data[srec_record::max_data_length];
+    unsigned char data[record::max_data_length];
     const size_t to_read =
-        std::min(remaining, (uint32_t)srec_record::max_data_length);
+        std::min(remaining, (uint32_t)record::max_data_length);
 
     int c = get_char();
     if (c < 0)
@@ -275,7 +271,7 @@ srec_input_file_msbin::read(srec_record &record)
         }
     }
 
-    record = srec_record(srec_record::type_data, address, data, read);
+    result = record(record::type_data, address, data, read);
     address += read;
     assert(remaining >= read);
     remaining -= read;
@@ -301,7 +297,7 @@ srec_input_file_msbin::read(srec_record &record)
 
 
 const char *
-srec_input_file_msbin::mode()
+srecord::input_file_msbin::mode()
     const
 {
     return "rb";
@@ -309,7 +305,7 @@ srec_input_file_msbin::mode()
 
 
 const char *
-srec_input_file_msbin::get_file_format_name()
+srecord::input_file_msbin::get_file_format_name()
     const
 {
     return "Windows CE Binary Image Data Format";

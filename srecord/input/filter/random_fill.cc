@@ -23,33 +23,33 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_random_fill::~srec_input_filter_random_fill()
+srecord::input_filter_random_fill::~input_filter_random_fill()
 {
 }
 
 
-srec_input_filter_random_fill::srec_input_filter_random_fill(
-        const srec_input::pointer &a1, const interval &a3) :
-    srec_input_filter(a1),
+srecord::input_filter_random_fill::input_filter_random_fill(
+        const srecord::input::pointer &a1, const interval &a3) :
+    srecord::input_filter(a1),
     range(a3)
 {
 }
 
 
-srec_input::pointer
-srec_input_filter_random_fill::create(const srec_input::pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_random_fill::create(const input::pointer &a_deeper,
     const interval &a_range)
 {
-    return pointer(new srec_input_filter_random_fill(a_deeper, a_range));
+    return pointer(new srecord::input_filter_random_fill(a_deeper, a_range));
 }
 
 
 bool
-srec_input_filter_random_fill::generate(srec_record &record)
+srecord::input_filter_random_fill::generate(srecord::record &record)
 {
     if (range.empty())
         return false;
-    unsigned char buffer[srec_record::max_data_length];
+    unsigned char buffer[srecord::record::max_data_length];
     interval chunk(range.get_lowest(), range.get_lowest() + sizeof(buffer));
     chunk *= range;
     chunk.first_interval_only();
@@ -57,9 +57,9 @@ srec_input_filter_random_fill::generate(srec_record &record)
     for (int j = 0; j < nbytes; ++j)
         buffer[j] = r250();
     record =
-        srec_record
+        srecord::record
         (
-            srec_record::type_data,
+            srecord::record::type_data,
             chunk.get_lowest(),
             buffer,
             nbytes
@@ -70,11 +70,11 @@ srec_input_filter_random_fill::generate(srec_record &record)
 
 
 bool
-srec_input_filter_random_fill::read(srec_record &record)
+srecord::input_filter_random_fill::read(srecord::record &record)
 {
-    if (!srec_input_filter::read(record))
+    if (!srecord::input_filter::read(record))
         return generate(record);
-    if (record.get_type() == srec_record::type_data)
+    if (record.get_type() == srecord::record::type_data)
     {
         range -=
             interval

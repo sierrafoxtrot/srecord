@@ -21,7 +21,7 @@
 
 
 std::string
-srec_arglex_tool::get_string(const char *caption)
+srecord::arglex_tool::get_string(const char *caption)
 {
     if (token_cur() != token_string)
     {

@@ -22,24 +22,27 @@
 
 #include <srecord/input/generator.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_generator_constant class is used to represent the
+  * The srecord::input_generator_constant class is used to represent the
   * state of a data generator which supplies constant bytes.
   */
-class srec_input_generator_constant:
-    public srec_input_generator
+class input_generator_constant:
+    public input_generator
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_generator_constant();
+    virtual ~input_generator_constant();
 
 private:
     /**
       * The constructor.
       */
-    srec_input_generator_constant(const interval &range, unsigned char datum);
+    input_generator_constant(const interval &range, unsigned char datum);
 
 public:
     /**
@@ -68,18 +71,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_generator_constant();
+    input_generator_constant();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_generator_constant(const srec_input_generator_constant &);
+    input_generator_constant(const input_generator_constant &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_generator_constant &operator=(
-        const srec_input_generator_constant &);
+    input_generator_constant &operator=(const input_generator_constant &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

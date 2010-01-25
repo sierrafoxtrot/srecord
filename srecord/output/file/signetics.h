@@ -22,20 +22,23 @@
 
 #include <srecord/output/file.h>
 
-class srec_record; // forward
+namespace srecord
+{
+
+class record; // forward
 
 /**
-  * The srec_output_file_signetics class is used to represent output to
+  * The srecord::output_file_signetics class is used to represent output to
   * a file using the Signetiocs format.
   */
-class srec_output_file_signetics:
-    public srec_output_file
+class output_file_signetics:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_signetics();
+    virtual ~output_file_signetics();
 
 private:
     /**
@@ -46,7 +49,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    srec_output_file_signetics(const std::string &file_name);
+    output_file_signetics(const std::string &file_name);
 
 public:
     /**
@@ -60,7 +63,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -104,17 +107,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_signetics();
+    output_file_signetics();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_signetics(const srec_output_file_signetics &);
+    output_file_signetics(const output_file_signetics &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_signetics &operator=(const srec_output_file_signetics &);
+    output_file_signetics &operator=(const output_file_signetics &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_SIGNETICS_H

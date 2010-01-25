@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_tektronix_extended class is used to represent
+  * The srecord::output_file_tektronix_extended class is used to represent
   * an output file which is in Tektronix Extended format.
   */
-class srec_output_file_tektronix_extended:
-    public srec_output_file
+class output_file_tektronix_extended:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_tektronix_extended();
+    virtual ~output_file_tektronix_extended();
 
 private:
     /**
@@ -44,7 +47,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    srec_output_file_tektronix_extended(const std::string &file_name);
+    output_file_tektronix_extended(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -106,19 +109,20 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_tektronix_extended();
+    output_file_tektronix_extended();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_tektronix_extended(
-        const srec_output_file_tektronix_extended &);
+    output_file_tektronix_extended(const output_file_tektronix_extended &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_tektronix_extended &operator=(
-        const srec_output_file_tektronix_extended &);
+    output_file_tektronix_extended &operator=(
+        const output_file_tektronix_extended &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_TEKTRONIX_EXTENDED_H

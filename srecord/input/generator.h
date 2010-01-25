@@ -23,18 +23,21 @@
 #include <srecord/input.h>
 #include <srecord/interval.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_generator class is used to represent the state of
+  * The srecord::input_generator class is used to represent the state of
   * generating data from whole cloth.
   */
-class srec_input_generator:
-    public srec_input
+class input_generator:
+    public input
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_generator();
+    virtual ~input_generator();
 
     /**
       * The constructor.
@@ -42,7 +45,7 @@ public:
       * @param range
       *     The data range over which data is to be generated.
       */
-    srec_input_generator(const interval &range);
+    input_generator(const interval &range);
 
     /**
       * The create class method may be used to create new instances of
@@ -51,11 +54,11 @@ public:
       * @param cmdln
       *     The command line arguments, for deciding what to generate.
       */
-    static srec_input::pointer create(srec_arglex_tool *cmdln);
+    static input::pointer create(arglex_tool *cmdln);
 
 protected:
     // See base class for documentation
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation
     void disable_checksum_validation();
@@ -82,17 +85,19 @@ private:
     /**
       * The default constructor.
       */
-    srec_input_generator();
+    input_generator();
 
     /**
       * The copy constructor.
       */
-    srec_input_generator(const srec_input_generator &);
+    input_generator(const input_generator &);
 
     /**
       * The assignment operator.
       */
-    srec_input_generator &operator=(const srec_input_generator &);
+    input_generator &operator=(const input_generator &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

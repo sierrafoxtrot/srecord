@@ -20,15 +20,15 @@
 #include <srecord/input/generator/repeat.h>
 
 
-srec_input_generator_repeat::~srec_input_generator_repeat()
+srecord::input_generator_repeat::~input_generator_repeat()
 {
     delete [] data;
 }
 
 
-srec_input_generator_repeat::srec_input_generator_repeat(
+srecord::input_generator_repeat::input_generator_repeat(
         const interval &a_range, unsigned char *a_data, size_t a_length) :
-    srec_input_generator(a_range),
+    srecord::input_generator(a_range),
     address(a_range.get_lowest()),
     data(0),
     length(a_length)
@@ -40,23 +40,24 @@ srec_input_generator_repeat::srec_input_generator_repeat(
 }
 
 
-srec_input::pointer
-srec_input_generator_repeat::create(const interval &a_range,
+srecord::input::pointer
+srecord::input_generator_repeat::create(const interval &a_range,
     unsigned char *a_data, size_t a_length)
 {
-    return pointer(new srec_input_generator_repeat(a_range, a_data, a_length));
+    return
+        pointer(new srecord::input_generator_repeat(a_range, a_data, a_length));
 }
 
 
 unsigned char
-srec_input_generator_repeat::generate_data(unsigned long addr)
+srecord::input_generator_repeat::generate_data(unsigned long addr)
 {
     return data[(addr - address) % length];
 }
 
 
 std::string
-srec_input_generator_repeat::filename()
+srecord::input_generator_repeat::filename()
     const
 {
     return "generate repeat data";
@@ -64,7 +65,7 @@ srec_input_generator_repeat::filename()
 
 
 const char *
-srec_input_generator_repeat::get_file_format_name()
+srecord::input_generator_repeat::get_file_format_name()
     const
 {
     return "generate repeat data";

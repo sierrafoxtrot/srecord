@@ -21,22 +21,25 @@
 
 #include <srecord/input/filter/message.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_filter_message_gcrypt class is used to represent a
+  * The srecord::input_filter_message_gcrypt class is used to represent a
   * filter that runs the data through one of the hashing algorithms in
   * the gcrypt library.
   *
   * http://freshmeat.net/projects/libgcrypt/
   * http://directory.fsf.org/project/libgcrypt/
   */
-class srec_input_filter_message_gcrypt:
-    public srec_input_filter_message
+class input_filter_message_gcrypt:
+    public input_filter_message
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_message_gcrypt();
+    virtual ~input_filter_message_gcrypt();
 
 private:
     /**
@@ -52,7 +55,7 @@ private:
       * @param address
       *     Where to place the hash in memory.
       */
-    srec_input_filter_message_gcrypt(const srec_input::pointer &deeper,
+    input_filter_message_gcrypt(const input::pointer &deeper,
         unsigned long address, int algo, bool hmac);
 
 private:
@@ -69,8 +72,8 @@ private:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create(const srec_input::pointer &deeper,
-        unsigned long address, int algo, bool hmac = false);
+    static pointer create(const input::pointer &deeper, unsigned long address,
+        int algo, bool hmac = false);
 
     /**
       * The algorithm_from_name class method is used to translate an
@@ -97,8 +100,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create(const srec_input::pointer &deeper,
-        unsigned long address, const char *algo, bool hmac = false);
+    static pointer create(const input::pointer &deeper, unsigned long address,
+        const char *algo, bool hmac = false);
 
     /**
       * The create_md5 class method is used to create a new dynamically
@@ -109,7 +112,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_md5(const srec_input::pointer &deeper,
+    static pointer create_md5(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -121,7 +124,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_sha1(const srec_input::pointer &deeper,
+    static pointer create_sha1(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -133,7 +136,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_rmd160(const srec_input::pointer &deeper,
+    static pointer create_rmd160(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -145,7 +148,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_md2(const srec_input::pointer &deeper,
+    static pointer create_md2(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -157,7 +160,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_tiger(const srec_input::pointer &deeper,
+    static pointer create_tiger(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -169,7 +172,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_haval(const srec_input::pointer &deeper,
+    static pointer create_haval(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -181,7 +184,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_sha256(const srec_input::pointer &deeper,
+    static pointer create_sha256(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -193,7 +196,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_sha384(const srec_input::pointer &deeper,
+    static pointer create_sha384(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -205,7 +208,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_sha512(const srec_input::pointer &deeper,
+    static pointer create_sha512(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -217,7 +220,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_sha224(const srec_input::pointer &deeper,
+    static pointer create_sha224(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -229,7 +232,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_md4(const srec_input::pointer &deeper,
+    static pointer create_md4(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -241,7 +244,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_crc32(const srec_input::pointer &deeper,
+    static pointer create_crc32(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -254,7 +257,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_crc32_rfc1510(const srec_input::pointer &deeper,
+    static pointer create_crc32_rfc1510(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -267,7 +270,7 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_crc24_rfc2440(const srec_input::pointer &deeper,
+    static pointer create_crc24_rfc2440(const input::pointer &deeper,
         unsigned long address);
 
     /**
@@ -280,12 +283,12 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_whirlpool(const srec_input::pointer &deeper,
+    static pointer create_whirlpool(const input::pointer &deeper,
         unsigned long address);
 
 protected:
     // See base class for documentation.
-    void process(const srec_memory &input, srec_record &output);
+    void process(const memory &input, record &output);
 
     // See base class for documentation.
     const char *get_algorithm_name() const;
@@ -312,18 +315,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_message_gcrypt();
+    input_filter_message_gcrypt();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_message_gcrypt(const srec_input_filter_message_gcrypt &);
+    input_filter_message_gcrypt(const input_filter_message_gcrypt &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_message_gcrypt &operator=(
-        const srec_input_filter_message_gcrypt &);
+    input_filter_message_gcrypt &operator=(const input_filter_message_gcrypt &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

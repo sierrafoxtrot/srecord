@@ -23,12 +23,12 @@
 #include <srecord/arglex/tool.h>
 
 class srec_cat_arglex3:
-    public srec_arglex_tool
+    public srecord::arglex_tool
 {
 public:
     enum
     {
-        token_line_length = srec_arglex_tool::token_MAX,
+        token_line_length = srecord::arglex_tool::token_MAX,
         token_address_length,
         token_data_only,
         token_crlf,

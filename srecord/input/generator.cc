@@ -27,19 +27,19 @@
 #include <srecord/record.h>
 
 
-srec_input_generator::~srec_input_generator()
+srecord::input_generator::~input_generator()
 {
 }
 
 
-srec_input_generator::srec_input_generator(const interval &a_range) :
+srecord::input_generator::input_generator(const interval &a_range) :
     range(a_range)
 {
 }
 
 
 bool
-srec_input_generator::read(srec_record &result)
+srecord::input_generator::read(srecord::record &result)
 {
     //
     // If there is not data left to generate,
@@ -53,7 +53,7 @@ srec_input_generator::read(srec_record &result)
     // biggest record size available.
     //
     unsigned long addr = range.get_lowest();
-    interval partial(addr, addr + srec_record::max_data_length);
+    interval partial(addr, addr + srecord::record::max_data_length);
     partial *= range;
 
     //
@@ -65,7 +65,7 @@ srec_input_generator::read(srec_record &result)
     //
     // Generate the data and build the result record.
     //
-    result.set_type(srec_record::type_data);
+    result.set_type(srecord::record::type_data);
     result.set_address(addr);
     result.set_length(1);
     interval::data_t size = partial.get_highest() - addr;
@@ -86,14 +86,14 @@ srec_input_generator::read(srec_record &result)
 }
 
 
-srec_input::pointer
-srec_input_generator::create(srec_arglex_tool *cmdln)
+srecord::input::pointer
+srecord::input_generator::create(srecord::arglex_tool *cmdln)
 {
     interval range = cmdln->get_interval_small("--generate");
-    srec_input::pointer result;
+    srecord::input::pointer result;
     switch (cmdln->token_cur())
     {
-    case srec_arglex_tool::token_constant_be:
+    case srecord::arglex_tool::token_constant_be:
         {
             cmdln->token_next();
             unsigned long datum =
@@ -124,7 +124,7 @@ srec_input_generator::create(srec_arglex_tool *cmdln)
             data[1] = datum >> 16;
             data[0] = datum >> 24;
             result =
-                srec_input_generator_repeat::create
+                srecord::input_generator_repeat::create
                 (
                     range,
                     data + 4 - length,
@@ -133,7 +133,7 @@ srec_input_generator::create(srec_arglex_tool *cmdln)
         }
         break;
 
-    case srec_arglex_tool::token_constant_le:
+    case srecord::arglex_tool::token_constant_le:
         {
             cmdln->token_next();
             unsigned long datum =
@@ -163,11 +163,11 @@ srec_input_generator::create(srec_arglex_tool *cmdln)
             data[1] = datum >> 8;
             data[2] = datum >> 16;
             data[3] = datum >> 24;
-            result = srec_input_generator_repeat::create(range, data, length);
+            result = input_generator_repeat::create(range, data, length);
         }
         break;
 
-    case srec_arglex_tool::token_constant:
+    case srecord::arglex_tool::token_constant:
         {
             cmdln->token_next();
             int n = cmdln->get_number("--generate --constant");
@@ -179,18 +179,18 @@ srec_input_generator::create(srec_arglex_tool *cmdln)
                     n
                 );
             }
-            result = srec_input_generator_constant::create(range, n);
+            result = srecord::input_generator_constant::create(range, n);
         }
         break;
 
-    case srec_arglex_tool::token_random:
+    case srecord::arglex_tool::token_random:
         {
             cmdln->token_next();
-            result = srec_input_generator_random::create(range);
+            result = srecord::input_generator_random::create(range);
         }
         break;
 
-    case srec_arglex_tool::token_repeat_data:
+    case srecord::arglex_tool::token_repeat_data:
         {
             cmdln->token_next();
             size_t length = 0;
@@ -243,18 +243,17 @@ srec_input_generator::create(srec_arglex_tool *cmdln)
             //
             if (length == 1)
             {
-                result = srec_input_generator_constant::create(range, data[0]);
+                result = input_generator_constant::create(range, data[0]);
             }
             else
             {
-                result =
-                    srec_input_generator_repeat::create(range, data, length);
+                result = input_generator_repeat::create(range, data, length);
             }
             delete [] data;
         }
         break;
 
-    case srec_arglex_tool::token_repeat_string:
+    case srecord::arglex_tool::token_repeat_string:
         {
             cmdln->token_next();
             std::string s = cmdln->get_string("--repeat-string");
@@ -266,12 +265,12 @@ srec_input_generator::create(srec_arglex_tool *cmdln)
                 // NOTREACHED
 
             case 1:
-                result = srec_input_generator_constant::create(range, s[0]);
+                result = srecord::input_generator_constant::create(range, s[0]);
                 break;
 
             default:
                 result =
-                    srec_input_generator_repeat::create
+                    srecord::input_generator_repeat::create
                     (
                         range,
                         (unsigned char *)s.c_str(),
@@ -295,7 +294,7 @@ srec_input_generator::create(srec_arglex_tool *cmdln)
 
 
 void
-srec_input_generator::disable_checksum_validation()
+srecord::input_generator::disable_checksum_validation()
 {
     // Do nothing.
     // None of the generators have checksums.

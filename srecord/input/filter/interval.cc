@@ -21,15 +21,19 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_interval::~srec_input_filter_interval()
+srecord::input_filter_interval::~input_filter_interval()
 {
 }
 
 
-srec_input_filter_interval::srec_input_filter_interval(
-        const srec_input::pointer &a_deeper, long a_address, int a_length,
-        endian_t a_end, bool inclusive) :
-    srec_input_filter(a_deeper),
+srecord::input_filter_interval::input_filter_interval(
+    const input::pointer &a_deeper,
+    long a_address,
+    int a_length,
+    endian_t a_end,
+    bool inclusive
+) :
+    input_filter(a_deeper),
     address(a_address),
     length(a_length <= 1 ? 1 : a_length >= 8 ? 8 : a_length),
     end(a_end)
@@ -40,25 +44,25 @@ srec_input_filter_interval::srec_input_filter_interval(
 
 
 bool
-srec_input_filter_interval::generate(srec_record &record)
+srecord::input_filter_interval::generate(record &result)
 {
     if (length <= 0)
         return false;
     long value = calculate_result();
     unsigned char chunk[8];
-    srec_record::encode(chunk, value, length, end);
-    record = srec_record(srec_record::type_data, address, chunk, length);
+    record::encode(chunk, value, length, end);
+    result = record(record::type_data, address, chunk, length);
     length = 0;
     return true;
 }
 
 
 bool
-srec_input_filter_interval::read(srec_record &record)
+srecord::input_filter_interval::read(record &record)
 {
-    if (!srec_input_filter::read(record))
+    if (!input_filter::read(record))
         return generate(record);
-    if (record.get_type() == srec_record::type_data)
+    if (record.get_type() == record::type_data)
     {
         interval i(record.get_address(), record.get_address_end());
         range += i;

@@ -26,11 +26,13 @@
 
 class interval; // forward
 
+namespace srecord {
+
 /**
-  * The srec_arglex_tool is used to parse command line with srec-specific
+  * The srecord::arglex_tool is used to parse command line with srec-specific
   * arguments.
   */
-class srec_arglex_tool:
+class arglex_tool:
     public arglex
 {
 public:
@@ -188,13 +190,13 @@ public:
     /**
       * The destructor.
       */
-    virtual ~srec_arglex_tool();
+    virtual ~arglex_tool();
 
     /**
       * The constructor.  Pass the argc and argv as given to main;
       * there is not need to change the values at all.
       */
-    srec_arglex_tool(int argc, char **argv);
+    arglex_tool(int argc, char **argv);
 
     /**
       * The get_input method is used to parse an input specification
@@ -205,7 +207,7 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    srec_input::pointer get_input();
+    input::pointer get_input();
 
     /**
       * The get_output method is used to parse an output specification
@@ -215,7 +217,7 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    srec_output::pointer get_output();
+    output::pointer get_output();
 
     /**
       * The get_number method is used to parse a numeric value from the
@@ -379,7 +381,7 @@ private:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    srec_input::pointer get_simple_input();
+    input::pointer get_simple_input();
 
     /**
       * The get_endian_by_token method is sued to obtain the endian-ness
@@ -426,17 +428,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_arglex_tool();
+    arglex_tool();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_arglex_tool(const srec_arglex_tool &);
+    arglex_tool(const arglex_tool &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_arglex_tool &operator=(const srec_arglex_tool &);
+    arglex_tool &operator=(const arglex_tool &);
+};
+
 };
 
 #endif // SRECORD_ARGLEX_TOOL_H

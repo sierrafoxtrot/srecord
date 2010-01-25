@@ -23,20 +23,23 @@
 #include <srecord/crc16.h>
 #include <srecord/memory/walker.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_memory_walker_crc16 class is used to represent the parse
+  * The srecord::memory_walker_crc16 class is used to represent the parse
   * state of a memory walker which calculates a running CRC16 checksum.
   */
-class srec_memory_walker_crc16:
-    public srec_memory_walker
+class memory_walker_crc16:
+    public memory_walker
 {
 public:
-    typedef boost::shared_ptr<srec_memory_walker_crc16> pointer;
+    typedef boost::shared_ptr<memory_walker_crc16> pointer;
 
     /**
       * The destructror.
       */
-    virtual ~srec_memory_walker_crc16();
+    virtual ~memory_walker_crc16();
 
 private:
     /**
@@ -52,7 +55,7 @@ private:
       * @param bitdir
       *     the bit direction of the CRC.
       */
-    srec_memory_walker_crc16(crc16::seed_mode_t seed_mode, bool augment_flag,
+    memory_walker_crc16(crc16::seed_mode_t seed_mode, bool augment_flag,
         unsigned short polynomial, crc16::bit_direction_t bitdir);
 
 public:
@@ -92,12 +95,14 @@ private:
     /**
       * The copy constructor.  No not use.
       */
-    srec_memory_walker_crc16(const srec_memory_walker_crc16 &);
+    memory_walker_crc16(const memory_walker_crc16 &);
 
     /**
       * The assignment operator.  No not use.
       */
-    srec_memory_walker_crc16 &operator=(const srec_memory_walker_crc16 &);
+    memory_walker_crc16 &operator=(const memory_walker_crc16 &);
+};
+
 };
 
 #endif // SRECORD_MEMORY_WALKER_CRC16_H

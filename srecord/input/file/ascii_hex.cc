@@ -23,15 +23,15 @@
 #include <srecord/record.h>
 
 
-srec_input_file_ascii_hex::~srec_input_file_ascii_hex()
+srecord::input_file_ascii_hex::~input_file_ascii_hex()
 {
     // check termination?
 }
 
 
-srec_input_file_ascii_hex::srec_input_file_ascii_hex(
+srecord::input_file_ascii_hex::input_file_ascii_hex(
         const std::string &a_filename) :
-    srec_input_file(a_filename),
+    input_file(a_filename),
     garbage_warning(false),
     seen_some_input(false),
     address(0),
@@ -40,15 +40,15 @@ srec_input_file_ascii_hex::srec_input_file_ascii_hex(
 }
 
 
-srec_input::pointer
-srec_input_file_ascii_hex::create(const std::string &a_filename)
+srecord::input::pointer
+srecord::input_file_ascii_hex::create(const std::string &a_filename)
 {
-    return pointer(new srec_input_file_ascii_hex(a_filename));
+    return pointer(new input_file_ascii_hex(a_filename));
 }
 
 
 int
-srec_input_file_ascii_hex::read_inner(srec_record &record)
+srecord::input_file_ascii_hex::read_inner(record &result)
 {
     if (state == state_ignore)
         return 0;
@@ -86,7 +86,7 @@ srec_input_file_ascii_hex::read_inner(srec_record &record)
         if (isxdigit(c))
         {
             unsigned char c = get_byte();
-            record = srec_record(srec_record::type_data, address, &c, 1);
+            result = record(record::type_data, address, &c, 1);
             int sep = get_char();
             if (sep >= 0 && !isspace((unsigned char)sep))
                 fatal_error("not execution character");
@@ -165,9 +165,9 @@ srec_input_file_ascii_hex::read_inner(srec_record &record)
 
 
 bool
-srec_input_file_ascii_hex::read(srec_record &record)
+srecord::input_file_ascii_hex::read(record &result)
 {
-    if (!read_inner(record))
+    if (!read_inner(result))
     {
         if (!seen_some_input)
             fatal_error("file contains no data");
@@ -179,7 +179,7 @@ srec_input_file_ascii_hex::read(srec_record &record)
 
 
 const char *
-srec_input_file_ascii_hex::get_file_format_name()
+srecord::input_file_ascii_hex::get_file_format_name()
     const
 {
     return "Ascii Hex";

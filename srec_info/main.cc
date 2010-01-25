@@ -33,11 +33,11 @@
 int
 main(int argc, char **argv)
 {
-    srec_arglex_tool cmdline(argc, argv);
+    srecord::arglex_tool cmdline(argc, argv);
     cmdline.token_first();
-    typedef std::vector<srec_input::pointer> infile_t;
+    typedef std::vector<srecord::input::pointer> infile_t;
     infile_t infile;
-    while (cmdline.token_cur() != arglex::token_eoln)
+    while (cmdline.token_cur() != srecord::arglex::token_eoln)
     {
         switch (cmdline.token_cur())
         {
@@ -45,10 +45,10 @@ main(int argc, char **argv)
             cmdline.default_command_line_processing();
             continue;
 
-        case srec_arglex_tool::token_paren_begin:
-        case srec_arglex_tool::token_string:
-        case srec_arglex_tool::token_stdio:
-        case srec_arglex_tool::token_generator:
+        case srecord::arglex_tool::token_paren_begin:
+        case srecord::arglex_tool::token_string:
+        case srecord::arglex_tool::token_stdio:
+        case srecord::arglex_tool::token_generator:
             infile.push_back(cmdline.get_input());
             continue;
         }
@@ -62,20 +62,20 @@ main(int argc, char **argv)
     //
     for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
     {
-        srec_input::pointer ifp = *it;
+        srecord::input::pointer ifp = *it;
         if (infile.size() > 1)
         {
             std::cout << std::endl;
             std::cout << ifp->filename() << ":" << std::endl;
         }
         std::cout << "Format: " << ifp->get_file_format_name() << std::endl;
-        srec_record record;
+        srecord::record record;
         interval range;
         while (ifp->read(record))
         {
             switch (record.get_type())
             {
-            case srec_record::type_header:
+            case srecord::record::type_header:
                 if (record.get_length() < 1)
                     break;
                 std::cout << "Header: \"";
@@ -96,7 +96,7 @@ main(int argc, char **argv)
                 std::cout << "\"" << std::endl;
                 break;
 
-            case srec_record::type_data:
+            case srecord::record::type_data:
                 range +=
                     interval
                     (
@@ -105,7 +105,7 @@ main(int argc, char **argv)
                     );
                 break;
 
-            case srec_record::type_execution_start_address:
+            case srecord::record::type_execution_start_address:
                 {
                     std::cout << "Execution Start Address: ";
                     unsigned long addr = record.get_address();

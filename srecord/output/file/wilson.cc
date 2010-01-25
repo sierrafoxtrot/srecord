@@ -23,14 +23,14 @@
 #include <srecord/record.h>
 
 
-srec_output_file_wilson::~srec_output_file_wilson()
+srecord::output_file_wilson::~output_file_wilson()
 {
 }
 
 
-srec_output_file_wilson::srec_output_file_wilson(
+srecord::output_file_wilson::output_file_wilson(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     pref_block_size(32)
 {
     if (line_termination == line_termination_native)
@@ -38,15 +38,15 @@ srec_output_file_wilson::srec_output_file_wilson(
 }
 
 
-srec_output::pointer
-srec_output_file_wilson::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_wilson::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_wilson(a_file_name));
+    return pointer(new srecord::output_file_wilson(a_file_name));
 }
 
 
 void
-srec_output_file_wilson::put_byte(unsigned char n)
+srecord::output_file_wilson::put_byte(unsigned char n)
 {
     static const char *table[256] =
     {
@@ -89,7 +89,7 @@ srec_output_file_wilson::put_byte(unsigned char n)
 
 
 void
-srec_output_file_wilson::write_inner(int tag, unsigned long address,
+srecord::output_file_wilson::write_inner(int tag, unsigned long address,
     const void *data, int data_nbytes)
 {
     //
@@ -104,7 +104,7 @@ srec_output_file_wilson::write_inner(int tag, unsigned long address,
     unsigned char buffer[256];
     int line_length = data_nbytes + 5;
     buffer[0] = line_length;
-    srec_record::encode_big_endian(buffer + 1, address, 4);
+    srecord::record::encode_big_endian(buffer + 1, address, 4);
     if (data_nbytes)
         memcpy(buffer + 5, data, data_nbytes);
 
@@ -121,15 +121,15 @@ srec_output_file_wilson::write_inner(int tag, unsigned long address,
 
 
 void
-srec_output_file_wilson::write(const srec_record &record)
+srecord::output_file_wilson::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // This format doesn't appear to have header records
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         write_inner
         (
             '#',
@@ -139,16 +139,16 @@ srec_output_file_wilson::write(const srec_record &record)
         );
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         if (enable_goto_addr_flag)
             write_inner('\'', record.get_address(), 0, 0);
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
         break;
     }
@@ -156,7 +156,7 @@ srec_output_file_wilson::write(const srec_record &record)
 
 
 void
-srec_output_file_wilson::line_length_set(int linlen)
+srecord::output_file_wilson::line_length_set(int linlen)
 {
     //
     // Given the number of characters, figure the maximum number of
@@ -180,17 +180,17 @@ srec_output_file_wilson::line_length_set(int linlen)
         n = 250;
 
     //
-    // An additional constraint is the size of the srec_record
+    // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srec_record::max_data_length)
-        n = srec_record::max_data_length;
+    if (n > srecord::record::max_data_length)
+        n = srecord::record::max_data_length;
     pref_block_size = n;
 }
 
 
 void
-srec_output_file_wilson::address_length_set(int)
+srecord::output_file_wilson::address_length_set(int)
 {
     // ignore  (this may change if I ever get a formal spec for
     // this format)
@@ -198,7 +198,7 @@ srec_output_file_wilson::address_length_set(int)
 
 
 int
-srec_output_file_wilson::preferred_block_size_get()
+srecord::output_file_wilson::preferred_block_size_get()
     const
 {
     return pref_block_size;
@@ -206,7 +206,7 @@ srec_output_file_wilson::preferred_block_size_get()
 
 
 const char *
-srec_output_file_wilson::format_name()
+srecord::output_file_wilson::format_name()
     const
 {
     return "Wilson";

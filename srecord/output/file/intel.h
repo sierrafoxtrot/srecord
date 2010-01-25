@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_intel class is used to write an EPROM load file
+  * The srecord::output_file_intel class is used to write an EPROM load file
   * in Intel Hex format.
   */
-class srec_output_file_intel:
-    public srec_output_file
+class output_file_intel:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_intel();
+    virtual ~output_file_intel();
 
 private:
     /**
@@ -44,7 +47,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    srec_output_file_intel(const std::string &file_name);
+    output_file_intel(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -104,17 +107,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_intel();
+    output_file_intel();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_intel(const srec_output_file_intel &);
+    output_file_intel(const output_file_intel &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_intel &operator=(const srec_output_file_intel &);
+    output_file_intel &operator=(const output_file_intel &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_INTEL_H

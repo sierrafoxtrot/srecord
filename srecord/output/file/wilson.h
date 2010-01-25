@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_wilson class is used to
+  * The srecord::output_file_wilson class is used to
   * represent an output file which is in Tektronix format.
   */
-class srec_output_file_wilson:
-    public srec_output_file
+class output_file_wilson:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_wilson();
+    virtual ~output_file_wilson();
 
 private:
     /**
@@ -44,7 +47,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    srec_output_file_wilson(const std::string &file_name);
+    output_file_wilson(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -101,17 +104,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_wilson();
+    output_file_wilson();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_wilson(const srec_output_file_wilson &);
+    output_file_wilson(const output_file_wilson &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_wilson &operator=(const srec_output_file_wilson &);
+    output_file_wilson &operator=(const output_file_wilson &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_WILSON_H

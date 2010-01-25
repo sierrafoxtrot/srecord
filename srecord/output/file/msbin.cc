@@ -20,7 +20,7 @@
 #include <srecord/output/file/msbin.h>
 
 
-srec_output_file_msbin::~srec_output_file_msbin()
+srecord::output_file_msbin::~output_file_msbin()
 {
     if (start_address_set && enable_goto_addr_flag)
     {
@@ -37,9 +37,9 @@ srec_output_file_msbin::~srec_output_file_msbin()
 }
 
 
-srec_output_file_msbin::srec_output_file_msbin(
+srecord::output_file_msbin::output_file_msbin(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     start_address_set(false),
     start_address(0),
     beginning_of_file(true)
@@ -52,19 +52,19 @@ srec_output_file_msbin::srec_output_file_msbin(
 }
 
 
-srec_output::pointer
-srec_output_file_msbin::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_msbin::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_msbin(a_file_name));
+    return pointer(new srecord::output_file_msbin(a_file_name));
 }
 
 
 void
-srec_output_file_msbin::write_qword_le(uint32_t d)
+srecord::output_file_msbin::write_qword_le(uint32_t d)
 {
     unsigned char c[sizeof(uint32_t)];
 
-    srec_record::encode_little_endian(c, d, sizeof(c));
+    srecord::record::encode_little_endian(c, d, sizeof(c));
 
     for (size_t i = 0; i < sizeof(c); ++i)
         put_char(c[i]);
@@ -72,7 +72,7 @@ srec_output_file_msbin::write_qword_le(uint32_t d)
 
 
 uint32_t
-srec_output_file_msbin::checksum(const unsigned char *data, size_t len)
+srecord::output_file_msbin::checksum(const unsigned char *data, size_t len)
 {
     uint32_t sum = 0;
 
@@ -84,7 +84,7 @@ srec_output_file_msbin::checksum(const unsigned char *data, size_t len)
 
 
 void
-srec_output_file_msbin::write_file_header(uint32_t start, uint32_t length)
+srecord::output_file_msbin::write_file_header(uint32_t start, uint32_t length)
 {
     // Write magic
     static const unsigned char Magic[7] =
@@ -99,7 +99,7 @@ srec_output_file_msbin::write_file_header(uint32_t start, uint32_t length)
 
 
 void
-srec_output_file_msbin::write_record_header(uint32_t addr, uint32_t length,
+srecord::output_file_msbin::write_record_header(uint32_t addr, uint32_t length,
     uint32_t checksum)
 {
     write_qword_le(addr);
@@ -109,25 +109,25 @@ srec_output_file_msbin::write_record_header(uint32_t addr, uint32_t length,
 
 
 void
-srec_output_file_msbin::notify_upper_bound(unsigned long addr)
+srecord::output_file_msbin::notify_upper_bound(unsigned long addr)
 {
     upper_bound = addr;
 }
 
 
 void
-srec_output_file_msbin::write(const srec_record &record)
+srecord::output_file_msbin::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         // Just note down the execution start address. It must be
         // the last record in the MsBin format.
         start_address = record.get_address();
         start_address_set = true;
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         {
             // Write data.
             if (beginning_of_file)
@@ -176,9 +176,9 @@ srec_output_file_msbin::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_header:
-    case srec_record::type_data_count:
-    case srec_record::type_unknown:
+    case srecord::record::type_header:
+    case srecord::record::type_data_count:
+    case srecord::record::type_unknown:
         // Ignore.
         break;
     }
@@ -186,7 +186,7 @@ srec_output_file_msbin::write(const srec_record &record)
 
 
 void
-srec_output_file_msbin::line_length_set(int)
+srecord::output_file_msbin::line_length_set(int)
 {
     //
     // Irrelevant.  Ignore.
@@ -195,7 +195,7 @@ srec_output_file_msbin::line_length_set(int)
 
 
 void
-srec_output_file_msbin::address_length_set(int)
+srecord::output_file_msbin::address_length_set(int)
 {
     //
     // Irrelevant.  Ignore.
@@ -204,18 +204,18 @@ srec_output_file_msbin::address_length_set(int)
 
 
 int
-srec_output_file_msbin::preferred_block_size_get()
+srecord::output_file_msbin::preferred_block_size_get()
     const
 {
     //
     // Irrelevant.  Use the largest we can get.
     //
-    return srec_record::max_data_length;
+    return srecord::record::max_data_length;
 }
 
 
 const char *
-srec_output_file_msbin::format_name()
+srecord::output_file_msbin::format_name()
     const
 {
     return "Windows CE Binary Image Data Format";

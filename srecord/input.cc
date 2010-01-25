@@ -26,19 +26,19 @@
 #include <srecord/quit/prefix.h>
 
 
-srec_input::srec_input() :
+srecord::input::input() :
     quitter(&quit_default)
 {
 }
 
 
-srec_input::~srec_input()
+srecord::input::~input()
 {
 }
 
 
 void
-srec_input::fatal_error(const char *fmt, ...)
+srecord::input::fatal_error(const char *fmt, ...)
     const
 {
     va_list ap;
@@ -50,7 +50,7 @@ srec_input::fatal_error(const char *fmt, ...)
 
 
 void
-srec_input::fatal_error_errno(const char *fmt, ...)
+srecord::input::fatal_error_errno(const char *fmt, ...)
     const
 {
     va_list ap;
@@ -62,7 +62,7 @@ srec_input::fatal_error_errno(const char *fmt, ...)
 
 
 void
-srec_input::warning(const char *fmt, ...)
+srecord::input::warning(const char *fmt, ...)
     const
 {
     va_list ap;
@@ -74,7 +74,7 @@ srec_input::warning(const char *fmt, ...)
 
 
 std::string
-srec_input::filename_and_line()
+srecord::input::filename_and_line()
     const
 {
     return filename();
@@ -82,21 +82,21 @@ srec_input::filename_and_line()
 
 
 void
-srec_input::set_quit(quit &arg)
+srecord::input::set_quit(quit &arg)
 {
     quitter = &arg;
 }
 
 
 void
-srec_input::reset_quit()
+srecord::input::reset_quit()
 {
     quitter = &quit_default;
 }
 
 
 void
-srec_input::command_line(srec_arglex_tool *)
+srecord::input::command_line(srecord::arglex_tool *)
 {
     // Do nothing.
 }

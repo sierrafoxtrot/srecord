@@ -21,31 +21,31 @@
 #include <srecord/record.h>
 
 
-srec_input_filter_offset::~srec_input_filter_offset()
+srecord::input_filter_offset::~input_filter_offset()
 {
 }
 
 
-srec_input_filter_offset::srec_input_filter_offset(
-        const srec_input::pointer &a1, long a2) :
-    srec_input_filter(a1),
+srecord::input_filter_offset::input_filter_offset(
+        const srecord::input::pointer &a1, long a2) :
+    srecord::input_filter(a1),
     nbytes(a2)
 {
 }
 
 
-srec_input::pointer
-srec_input_filter_offset::create(const srec_input::pointer &a_deeper,
+srecord::input::pointer
+srecord::input_filter_offset::create(const srecord::input::pointer &a_deeper,
     long nbytes)
 {
-    return pointer(new srec_input_filter_offset(a_deeper, nbytes));
+    return pointer(new srecord::input_filter_offset(a_deeper, nbytes));
 }
 
 
 bool
-srec_input_filter_offset::read(srec_record &record)
+srecord::input_filter_offset::read(srecord::record &record)
 {
-    if (!srec_input_filter::read(record))
+    if (!srecord::input_filter::read(record))
         return false;
     long addr = record.get_address() + nbytes;
 

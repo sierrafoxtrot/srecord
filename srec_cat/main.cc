@@ -35,15 +35,15 @@ main(int argc, char **argv)
 {
     srec_cat_arglex3 cmdline(argc, argv);
     cmdline.token_first();
-    srec_input::pointer infile;
-    srec_output::pointer outfile;
+    srecord::input::pointer infile;
+    srecord::output::pointer outfile;
     int line_length = 0;
     int address_length = 0;
     std::string header;
     bool header_set = false;
     unsigned long execution_start_address = 0;
     bool execution_start_address_set = false;
-    while (cmdline.token_cur() != arglex::token_eoln)
+    while (cmdline.token_cur() != srecord::arglex::token_eoln)
     {
         switch (cmdline.token_cur())
         {
@@ -51,20 +51,20 @@ main(int argc, char **argv)
             cmdline.default_command_line_processing();
             continue;
 
-        case srec_arglex_tool::token_paren_begin:
-        case srec_arglex_tool::token_string:
-        case srec_arglex_tool::token_stdio:
-        case srec_arglex_tool::token_generator:
+        case srecord::arglex_tool::token_paren_begin:
+        case srecord::arglex_tool::token_string:
+        case srecord::arglex_tool::token_stdio:
+        case srecord::arglex_tool::token_generator:
             {
-                srec_input::pointer ip = cmdline.get_input();
+                srecord::input::pointer ip = cmdline.get_input();
                 if (infile)
-                    infile = srec_input_catenate::create(infile, ip);
+                    infile = srecord::input_catenate::create(infile, ip);
                 else
                     infile = ip;
             }
             continue;
 
-        case srec_arglex_tool::token_output:
+        case srecord::arglex_tool::token_output:
             if (outfile)
                 cmdline.usage();
             outfile = cmdline.get_output();
@@ -73,7 +73,7 @@ main(int argc, char **argv)
         case srec_cat_arglex3::token_line_length:
             if (line_length > 0)
                 cmdline.usage();
-            if (cmdline.token_next() != arglex::token_number)
+            if (cmdline.token_next() != srecord::arglex::token_number)
                 cmdline.usage();
             line_length = cmdline.value_number();
             if (line_length <= 0)
@@ -87,7 +87,7 @@ main(int argc, char **argv)
         case srec_cat_arglex3::token_address_length:
             if (address_length > 0)
                 cmdline.usage();
-            if (cmdline.token_next() != arglex::token_number)
+            if (cmdline.token_next() != srecord::arglex::token_number)
                 cmdline.usage();
             address_length = cmdline.value_number();
             if (address_length <= 0 || address_length > (int)sizeof(long))
@@ -99,10 +99,10 @@ main(int argc, char **argv)
             break;
 
         case srec_cat_arglex3::token_data_only:
-            srec_output_file::enable_header(false);
-            srec_output_file::enable_data_count(false);
-            srec_output_file::enable_goto_addr(false);
-            srec_output_file::enable_footer(false);
+            srecord::output_file::enable_header(false);
+            srecord::output_file::enable_data_count(false);
+            srecord::output_file::enable_goto_addr(false);
+            srecord::output_file::enable_footer(false);
             break;
 
         case srec_cat_arglex3::token_enable:
@@ -112,7 +112,7 @@ main(int argc, char **argv)
                 bool yesno = (tok == srec_cat_arglex3::token_enable);
                 cmdline.token_next();
                 std::string name = cmdline.get_string(cmdline.token_name(tok));
-                if (!srec_output_file::enable_by_name(name, yesno))
+                if (!srecord::output_file::enable_by_name(name, yesno))
                 {
                     std::cerr << "argument of " << cmdline.token_name(tok)
                         << "=" << name << " unknown" << std::endl;
@@ -122,7 +122,7 @@ main(int argc, char **argv)
             continue;
 
         case srec_cat_arglex3::token_crlf:
-            srec_output_file::line_termination_by_name("crlf");
+            srecord::output_file::line_termination_by_name("crlf");
             break;
 
         case srec_cat_arglex3::token_line_termination:
@@ -130,7 +130,7 @@ main(int argc, char **argv)
                 int tok = cmdline.token_cur();
                 cmdline.token_next();
                 std::string name = cmdline.get_string(cmdline.token_name(tok));
-                if (!srec_output_file::line_termination_by_name(name))
+                if (!srecord::output_file::line_termination_by_name(name))
                 {
                     std::cerr << "line termination \"" << name << "\" unknown"
                         << std::endl;
@@ -140,7 +140,7 @@ main(int argc, char **argv)
             continue;
 
         case srec_cat_arglex3::token_header:
-            if (cmdline.token_next() != arglex::token_string)
+            if (cmdline.token_next() != srecord::arglex::token_string)
             {
                 std::cerr << "the header option requires a string argument"
                     << std::endl;
@@ -148,7 +148,7 @@ main(int argc, char **argv)
             }
             header = cmdline.value_string();
             header_set = true;
-            srec_output_file::enable_header(true);
+            srecord::output_file::enable_header(true);
             break;
 
         case srec_cat_arglex3::token_execution_start_address:
@@ -162,7 +162,7 @@ main(int argc, char **argv)
             execution_start_address =
                 cmdline.get_number("-Execution_Start_Address");
             execution_start_address_set = true;
-            srec_output_file::enable_goto_addr(true);
+            srecord::output_file::enable_goto_addr(true);
             continue;
         }
         cmdline.token_next();
@@ -186,7 +186,7 @@ main(int argc, char **argv)
     // EPROMs which are usually smaller than the available virtual
     // memory of the development system.
     //
-    srec_memory m;
+    srecord::memory m;
     if (header_set)
         m.set_header(header.c_str());
     m.reader(infile, true);
@@ -196,7 +196,8 @@ main(int argc, char **argv)
     //
     // Open the output file and write the remembered data out to it.
     //
-    srec_memory_walker::pointer w = srec_memory_walker_writer::create(outfile);
+    srecord::memory_walker::pointer w =
+        srecord::memory_walker_writer::create(outfile);
     m.walk(w);
 
     //

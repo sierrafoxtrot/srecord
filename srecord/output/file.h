@@ -24,25 +24,26 @@
 #include <srecord/output.h>
 #include <srecord/format_printf.h>
 
+namespace srecord {
 
 /**
-  * The srec_output_file class is used to represent a generic output file.
+  * The srecord::output_file class is used to represent a generic output file.
   * It provides a numnber of services useful to many output file formats.
   */
-class srec_output_file:
-    public srec_output
+class output_file:
+    public output
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file();
+    virtual ~output_file();
 
     /**
       * The default constructor.
       * Output will be sent to the standard output.
       */
-    srec_output_file();
+    output_file();
 
     /**
       * The constructor.  The output will be sent to the named file (or
@@ -51,7 +52,7 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file(const std::string &file_name);
+    output_file(const std::string &file_name);
 
     // See base class for documentation.
     virtual const std::string filename() const;
@@ -347,7 +348,7 @@ protected:
       * @param record
       *     The offending data record.
       */
-    void data_address_too_large(const srec_record &record) const;
+    void data_address_too_large(const record &record) const;
 
 private:
     /**
@@ -385,12 +386,14 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file(const srec_output_file &);
+    output_file(const output_file &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file &operator=(const srec_output_file &);
+    output_file &operator=(const output_file &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_H

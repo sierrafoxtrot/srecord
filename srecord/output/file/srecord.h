@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_srecord class is used to represent an output
+  * The srecord::output_file_srecord class is used to represent an output
   * file which emits Motorola S-Record format.
   */
-class srec_output_file_srecord:
-    public srec_output_file
+class output_file_srecord:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_srecord();
+    virtual ~output_file_srecord();
 
 private:
     /**
@@ -43,7 +46,7 @@ private:
       *     The file name to open to write data to.  The name "-" is
       *     understood to mean the standard output.
       */
-    srec_output_file_srecord(const std::string &file_name);
+    output_file_srecord(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -70,7 +73,7 @@ protected:
     int preferred_block_size_get() const;
 
     // See base class for documentation.
-    void command_line(srec_arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln);
 
     // See base class for documentation.
     const char *format_name() const;
@@ -144,12 +147,14 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_srecord(const srec_output_file_srecord &);
+    output_file_srecord(const output_file_srecord &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_srecord &operator=(const srec_output_file_srecord &);
+    output_file_srecord &operator=(const output_file_srecord &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_SRECORD_H

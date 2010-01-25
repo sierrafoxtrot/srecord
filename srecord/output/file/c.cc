@@ -68,7 +68,7 @@ identifier(const std::string &s)
 }
 
 
-srec_output_file_c::~srec_output_file_c()
+srecord::output_file_c::~output_file_c()
 {
     //
     // Finish initializing the data array.
@@ -437,8 +437,8 @@ build_include_file_name(const std::string &filename)
 }
 
 
-srec_output_file_c::srec_output_file_c(const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+srecord::output_file_c::output_file_c(const std::string &a_file_name) :
+    srecord::output_file(a_file_name),
     prefix("eprom"),
     taddr(0),
     header_done(false),
@@ -456,15 +456,15 @@ srec_output_file_c::srec_output_file_c(const std::string &a_file_name) :
 }
 
 
-srec_output::pointer
-srec_output_file_c::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_c::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_c(a_file_name));
+    return pointer(new srecord::output_file_c(a_file_name));
 }
 
 
 void
-srec_output_file_c::command_line(srec_arglex_tool *cmdln)
+srecord::output_file_c::command_line(srecord::arglex_tool *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_string)
     {
@@ -475,50 +475,50 @@ srec_output_file_c::command_line(srec_arglex_tool *cmdln)
     {
         switch (cmdln->token_cur())
         {
-        case srec_arglex_tool::token_constant:
+        case srecord::arglex_tool::token_constant:
             cmdln->token_next();
             constant = true;
             break;
 
-        case srec_arglex_tool::token_constant_not:
+        case srecord::arglex_tool::token_constant_not:
             cmdln->token_next();
             constant = false;
             break;
 
-        case srec_arglex_tool::token_include:
+        case srecord::arglex_tool::token_include:
             cmdln->token_next();
             include = true;
             break;
 
-        case srec_arglex_tool::token_include_not:
+        case srecord::arglex_tool::token_include_not:
             cmdln->token_next();
             include = false;
             break;
 
-        case srec_arglex_tool::token_c_compressed:
+        case srecord::arglex_tool::token_c_compressed:
             cmdln->token_next();
             hex_style = true;
             section_style = true;
             break;
 
-        case srec_arglex_tool::token_output_word:
+        case srecord::arglex_tool::token_output_word:
             cmdln->token_next();
             output_word = true;
             break;
 
-        case srec_arglex_tool::token_style_hexadecimal:
+        case srecord::arglex_tool::token_style_hexadecimal:
             cmdln->token_next();
             hex_style = true;
             break;
 
-        case srec_arglex_tool::token_style_hexadecimal_not:
+        case srecord::arglex_tool::token_style_hexadecimal_not:
             cmdln->token_next();
             hex_style = false;
             break;
 
-        case srec_arglex_tool::token_style_section:
-        case srec_arglex_tool::token_a430:
-        case srec_arglex_tool::token_cl430:
+        case srecord::arglex_tool::token_style_section:
+        case srecord::arglex_tool::token_a430:
+        case srecord::arglex_tool::token_cl430:
             cmdln->token_next();
             section_style = true;
             break;
@@ -531,7 +531,7 @@ srec_output_file_c::command_line(srec_arglex_tool *cmdln)
 
 
 void
-srec_output_file_c::emit_header()
+srecord::output_file_c::emit_header()
 {
     if (header_done)
         return;
@@ -550,7 +550,7 @@ srec_output_file_c::emit_header()
 
 
 void
-srec_output_file_c::emit_byte(int n)
+srecord::output_file_c::emit_byte(int n)
 {
     char buffer[30];
     if (hex_style)
@@ -577,7 +577,7 @@ srec_output_file_c::emit_byte(int n)
 
 
 void
-srec_output_file_c::emit_word(unsigned int n)
+srecord::output_file_c::emit_word(unsigned int n)
 {
     char buffer[30];
     if (hex_style)
@@ -604,7 +604,7 @@ srec_output_file_c::emit_word(unsigned int n)
 
 
 std::string
-srec_output_file_c::format_address(unsigned long addr)
+srecord::output_file_c::format_address(unsigned long addr)
 {
     char buffer[30];
     if (hex_style)
@@ -616,7 +616,7 @@ srec_output_file_c::format_address(unsigned long addr)
 
 
 void
-srec_output_file_c::write(const srec_record &record)
+srecord::output_file_c::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
@@ -624,7 +624,7 @@ srec_output_file_c::write(const srec_record &record)
         // ignore
         break;
 
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // emit header records as comments in the file
         {
             put_string("/* ");
@@ -650,7 +650,7 @@ srec_output_file_c::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         emit_header();
         if (output_word)
         {
@@ -704,7 +704,7 @@ srec_output_file_c::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         taddr = record.get_address();
         break;
     }
@@ -712,14 +712,14 @@ srec_output_file_c::write(const srec_record &record)
 
 
 void
-srec_output_file_c::line_length_set(int n)
+srecord::output_file_c::line_length_set(int n)
 {
     line_length = n;
 }
 
 
 void
-srec_output_file_c::address_length_set(int n)
+srecord::output_file_c::address_length_set(int n)
 {
     switch (n)
     {
@@ -746,7 +746,7 @@ srec_output_file_c::address_length_set(int n)
 
 
 int
-srec_output_file_c::preferred_block_size_get()
+srecord::output_file_c::preferred_block_size_get()
     const
 {
     //
@@ -754,13 +754,13 @@ srec_output_file_c::preferred_block_size_get()
     // but be careful about words.
     //
     if (output_word)
-        return (srec_record::max_data_length & ~1);
-    return srec_record::max_data_length;
+        return (srecord::record::max_data_length & ~1);
+    return srecord::record::max_data_length;
 }
 
 
 const char *
-srec_output_file_c::format_name()
+srecord::output_file_c::format_name()
     const
 {
     return (output_word ? "C-Array (16-bit)" : "C-Array (8-bit)");

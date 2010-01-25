@@ -22,36 +22,39 @@
 
 #include <srecord/input/filter.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_filter_sequence class is used to represent an input
+  * The srecord::input_filter_sequence class is used to represent an input
   * filter which does not change the data in any way, but issues
   * warnings if the data is not instrictly ascending address order.
   */
-class srec_input_filter_sequence:
-    public srec_input_filter
+class input_filter_sequence:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_sequence();
+    virtual ~input_filter_sequence();
 
 private:
     /**
       * The constructor.
       */
-    srec_input_filter_sequence(srec_input::pointer deeper);
+    input_filter_sequence(input::pointer deeper);
 
 public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
       */
-    static pointer create(srec_input::pointer deeper);
+    static pointer create(input::pointer deeper);
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
 private:
     /**
@@ -76,17 +79,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_sequence();
+    input_filter_sequence();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_sequence(const srec_input_filter_sequence &);
+    input_filter_sequence(const input_filter_sequence &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_sequence &operator=(const srec_input_filter_sequence &);
+    input_filter_sequence &operator=(const input_filter_sequence &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_SEQUENCE_H

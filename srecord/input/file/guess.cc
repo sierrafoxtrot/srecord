@@ -50,46 +50,46 @@
 #include <srecord/record.h>
 
 
-typedef srec_input::pointer (*func_p)(const std::string &file_name);
+typedef srecord::input::pointer (*func_p)(const std::string &file_name);
 
 static func_p table[] =
 {
-    srec_input_file_aomf::create,
-    srec_input_file_ascii_hex::create,
-    srec_input_file_atmel_generic::create_be,
-    srec_input_file_brecord::create,
-    srec_input_file_dec_binary::create,
-    srec_input_file_emon52::create,
-    srec_input_file_fairchild::create,
-    srec_input_file_fastload::create,
-    srec_input_file_formatted_binary::create,
-    srec_input_file_four_packed_code::create,
-    srec_input_file_intel::create,
-    srec_input_file_intel16::create,
-    srec_input_file_mif::create,
-    srec_input_file_mos_tech::create,
-    srec_input_file_msbin::create,
-    srec_input_file_needham::create,
-    srec_input_file_os65v::create,
-    srec_input_file_signetics::create,
-    srec_input_file_spasm::create_be,
-    srec_input_file_spectrum::create,
-    srec_input_file_srecord::create,
-    srec_input_file_stewie::create,
-    srec_input_file_tektronix::create,
-    srec_input_file_tektronix_extended::create,
-    srec_input_file_ti_tagged::create,
-    srec_input_file_ti_txt::create,
-    srec_input_file_vmem::create,
-    srec_input_file_wilson::create,
+    srecord::input_file_aomf::create,
+    srecord::input_file_ascii_hex::create,
+    srecord::input_file_atmel_generic::create_be,
+    srecord::input_file_brecord::create,
+    srecord::input_file_dec_binary::create,
+    srecord::input_file_emon52::create,
+    srecord::input_file_fairchild::create,
+    srecord::input_file_fastload::create,
+    srecord::input_file_formatted_binary::create,
+    srecord::input_file_four_packed_code::create,
+    srecord::input_file_intel::create,
+    srecord::input_file_intel16::create,
+    srecord::input_file_mif::create,
+    srecord::input_file_mos_tech::create,
+    srecord::input_file_msbin::create,
+    srecord::input_file_needham::create,
+    srecord::input_file_os65v::create,
+    srecord::input_file_signetics::create,
+    srecord::input_file_spasm::create_be,
+    srecord::input_file_spectrum::create,
+    srecord::input_file_srecord::create,
+    srecord::input_file_stewie::create,
+    srecord::input_file_tektronix::create,
+    srecord::input_file_tektronix_extended::create,
+    srecord::input_file_ti_tagged::create,
+    srecord::input_file_ti_txt::create,
+    srecord::input_file_vmem::create,
+    srecord::input_file_wilson::create,
 };
 
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 #define ENDOF(a) ((a) + SIZEOF(a))
 
 
-srec_input::pointer
-srec_input_file::guess(const std::string &fn)
+srecord::input::pointer
+srecord::input_file::guess(const std::string &fn)
 {
     if (fn.empty() || fn == "-")
     {
@@ -109,7 +109,7 @@ srec_input_file::guess(const std::string &fn)
         // Create a new file reader
         //
         func_p func = *tp;
-        srec_input::pointer ifp = func(fn);
+        srecord::input::pointer ifp = func(fn);
         try
         {
             //
@@ -117,7 +117,7 @@ srec_input_file::guess(const std::string &fn)
             // (it also silences all error and warning messages).
             //
             ifp->set_quit(quitter);
-            srec_record record;
+            srecord::record record;
 
             //
             // Try to read something from the file.  If it is
@@ -160,5 +160,5 @@ srec_input_file::guess(const std::string &fn)
         "%s: unable to determine the file format, assuming binary",
         fn.c_str()
     );
-    return srec_input_file_binary::create(fn);
+    return srecord::input_file_binary::create(fn);
 }

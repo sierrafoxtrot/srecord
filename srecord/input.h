@@ -26,41 +26,44 @@
 
 #include <srecord/format_printf.h>
 
-class quit; // forward
-class srec_arglex_tool; // forward
+class quit; // forward // FIXME
+
+namespace srecord {
+
+class arglex_tool; // forward
 
 /**
-  * The srec_input class is used to represent an abstract EPROM load
+  * The srecord::input class is used to represent an abstract EPROM load
   * file source.  It could be one of many file formats, or a chain of
   * filters applied to an input file.
   */
-class srec_input
+class input
 {
 public:
-    typedef boost::shared_ptr<srec_input> pointer;
+    typedef boost::shared_ptr<input> pointer;
 
     /**
       * The destructor.
       */
-    virtual ~srec_input();
+    virtual ~input();
 
     /**
       * The read method is used to read one record from the input.
       * It returns 0 at the end of the input, and 1 if a record is
       * read successfully.
       *
-      * See the srec_record documentation (header file) for details
+      * See the srecord::record documentation (header file) for details
       * of the various record types.
       *
       * Note: there is no guarantee that a header record will appear
       * first, or that a execution start address record will appear last.
       *
-      * @param record
+      * @param rec
       *     Where to put the returned data.
       * @returns
       *     bool; true if data was read, false if at end-of-file
       */
-    virtual bool read(class srec_record &record) = 0;
+    virtual bool read(class record &rec) = 0;
 
     /**
       * The fatal_error method is used to report problems parsing
@@ -149,7 +152,7 @@ public:
       *     Where to obtain information about the curreent parse state
       *     of the command line.
       */
-    virtual void command_line(srec_arglex_tool *cmdln);
+    virtual void command_line(srecord::arglex_tool *cmdln);
 
 private:
     /**
@@ -163,18 +166,20 @@ protected:
     /**
       * The default constructor.  Only derived classes may call.
       */
-    srec_input();
+    input();
 
 private:
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input(const srec_input &);
+    input(const input &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input &operator=(const srec_input &);
+    input &operator=(const input &);
+};
+
 };
 
 #endif // SRECORD_INPUT_H

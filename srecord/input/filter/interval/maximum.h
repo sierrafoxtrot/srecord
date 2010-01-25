@@ -22,19 +22,22 @@
 
 #include <srecord/input/filter/interval.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_filter_interval_maximum class is used to represent a
+  * The srecord::input_filter_interval_maximum class is used to represent a
   * filter which injects the maximum address (last used address + 1) of
   * the data into the data.
   */
-class srec_input_filter_interval_maximum:
-    public srec_input_filter_interval
+class input_filter_interval_maximum:
+    public input_filter_interval
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_interval_maximum();
+    virtual ~input_filter_interval_maximum();
 
 private:
     /**
@@ -52,8 +55,8 @@ private:
       *     true if the output location is included in the address
       *     range, false if not
       */
-    srec_input_filter_interval_maximum(const srec_input::pointer &deeper,
-        long address, int length, endian_t end, bool inclusive);
+    input_filter_interval_maximum(const input::pointer &deeper, long address,
+        int length, endian_t end, bool inclusive);
 
 public:
     /**
@@ -71,7 +74,7 @@ public:
       *     true if the output location is included in the address
       *     range, false if not
       */
-    static pointer create(const srec_input::pointer &deeper, long address,
+    static pointer create(const input::pointer &deeper, long address,
         int length, endian_t end, bool inclusive);
 
 protected:
@@ -82,19 +85,20 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_interval_maximum();
+    input_filter_interval_maximum();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_interval_maximum(
-        const srec_input_filter_interval_maximum &);
+    input_filter_interval_maximum(const input_filter_interval_maximum &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_interval_maximum &operator=(
-        const srec_input_filter_interval_maximum &);
+    input_filter_interval_maximum &operator=(
+        const input_filter_interval_maximum &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

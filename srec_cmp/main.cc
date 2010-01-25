@@ -28,7 +28,7 @@
 
 
 static bool
-execution_start_addresses_differ(srec_record *rp1, srec_record *rp2)
+execution_start_addresses_differ(srecord::record *rp1, srecord::record *rp2)
 {
     return (rp1 && rp2 && rp1->get_address() != rp2->get_address());
 }
@@ -37,13 +37,13 @@ execution_start_addresses_differ(srec_record *rp1, srec_record *rp2)
 int
 main(int argc, char **argv)
 {
-    srec_arglex_tool cmdline(argc, argv);
+    srecord::arglex_tool cmdline(argc, argv);
     cmdline.usage_tail_set("<file1> <file2>");
     cmdline.token_first();
-    srec_input::pointer if1;
-    srec_input::pointer if2;
+    srecord::input::pointer if1;
+    srecord::input::pointer if2;
     bool verbose = false;
-    while (cmdline.token_cur() != srec_arglex_tool::token_eoln)
+    while (cmdline.token_cur() != srecord::arglex_tool::token_eoln)
     {
         switch (cmdline.token_cur())
         {
@@ -51,10 +51,10 @@ main(int argc, char **argv)
             cmdline.default_command_line_processing();
             continue;
 
-        case srec_arglex_tool::token_paren_begin:
-        case srec_arglex_tool::token_string:
-        case srec_arglex_tool::token_stdio:
-        case srec_arglex_tool::token_generator:
+        case srecord::arglex_tool::token_paren_begin:
+        case srecord::arglex_tool::token_string:
+        case srecord::arglex_tool::token_stdio:
+        case srecord::arglex_tool::token_generator:
             if (!if1)
                 if1 = cmdline.get_input();
             else if (!if2)
@@ -67,7 +67,7 @@ main(int argc, char **argv)
             }
             continue;
 
-        case arglex::token_verbose:
+        case srecord::arglex::token_verbose:
             verbose = true;
             break;
         }
@@ -82,13 +82,13 @@ main(int argc, char **argv)
     //
     // Read the first file into memory.
     //
-    srec_memory m1;
+    srecord::memory m1;
     m1.reader(if1);
 
     //
     // Read the second file into memory.
     //
-    srec_memory m2;
+    srecord::memory m2;
     m2.reader(if2);
 
     //
@@ -96,7 +96,7 @@ main(int argc, char **argv)
     //
     if (verbose)
     {
-        bool different = srec_memory::compare(m1, m2);
+        bool different = srecord::memory::compare(m1, m2);
         if
         (
             execution_start_addresses_differ

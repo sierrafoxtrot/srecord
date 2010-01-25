@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_signetics class is used to represent reading a
+  * The srecord::input_file_signetics class is used to represent reading a
   * Signetics format file.
   */
-class srec_input_file_signetics:
-    public srec_input_file
+class input_file_signetics:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_signetics();
+    virtual ~input_file_signetics();
 
 private:
     /**
@@ -43,7 +45,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_signetics(const std::string &file_name);
+    input_file_signetics(const std::string &file_name);
 
 public:
     /**
@@ -59,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -75,23 +77,23 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_signetics();
+    input_file_signetics();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_signetics(const srec_input_file_signetics &);
+    input_file_signetics(const input_file_signetics &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_signetics &operator=(const srec_input_file_signetics &);
+    input_file_signetics &operator=(const input_file_signetics &);
 
     /**
       * The read_inner method is used to read one line/record from
       * the input.  Used by the `read' method.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The garbage_warning instance variable is used to remember
@@ -105,6 +107,8 @@ private:
       * remember whether any input has been seen.
       */
     bool seen_some_input;
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_SIGNETICS_H

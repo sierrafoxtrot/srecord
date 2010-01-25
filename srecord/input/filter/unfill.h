@@ -23,26 +23,29 @@
 #include <srecord/input/filter.h>
 #include <srecord/record.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_filter_unfill class is used to represent a filter
+  * The srecord::input_filter_unfill class is used to represent a filter
   * which makes holes in the data wherever a specified data byte value
   * appears.
   *
-  * This is the inverse of the srec_input_filter_fill class.
+  * This is the inverse of the srecord::input_filter_fill class.
   *
   * Usually this is used to find the actual limits of data from an
   * extracted EPROM image; you can specify a minimum run legth of the
   * same byte, so that you don't simply get a 1/256 reduction in density
   * in the middle of "real" data.
   */
-class srec_input_filter_unfill:
-    public srec_input_filter
+class input_filter_unfill:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_unfill();
+    virtual ~input_filter_unfill();
 
 private:
     /**
@@ -55,8 +58,7 @@ private:
       * @param minimum
       *     The minimum run length to be considered a hole.
       */
-    srec_input_filter_unfill(const srec_input::pointer &deeper, int value,
-        int minimum);
+    input_filter_unfill(const input::pointer &deeper, int value, int minimum);
 
 public:
     /**
@@ -70,32 +72,31 @@ public:
       * @param minimum
       *     The minimum run length to be considered a hole.
       */
-    static pointer create(const srec_input::pointer &deeper, int value,
-        int minimum);
+    static pointer create(const input::pointer &deeper, int value, int minimum);
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
 private:
     /**
       * The fill_value instance variable is used to remember the value
       * of the bytes to be turned into holes.
       */
-    srec_record::data_t fill_value;
+    record::data_t fill_value;
 
     /**
       * The fill_minimum instance variable is used to remember the
       * minimum run length to be considered a hole.
       */
-    srec_record::address_t fill_minimum;
+    record::address_t fill_minimum;
 
     /**
       * The buffer instance variable is used to remember the data
       * that has been read from the deeper input source and is being
       * processed to unfill certain valued bytes.
       */
-    srec_record buffer;
+    record buffer;
 
     /**
       * The fill_value instance variable is used to remember where we
@@ -106,17 +107,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_unfill();
+    input_filter_unfill();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_unfill(const srec_input_filter_unfill &);
+    input_filter_unfill(const input_filter_unfill &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_unfill &operator=(const srec_input_filter_unfill &);
+    input_filter_unfill &operator=(const input_filter_unfill &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_UNFILL_H

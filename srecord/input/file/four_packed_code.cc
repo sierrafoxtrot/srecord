@@ -21,14 +21,14 @@
 #include <srecord/record.h>
 
 
-srec_input_file_four_packed_code::~srec_input_file_four_packed_code()
+srecord::input_file_four_packed_code::~input_file_four_packed_code()
 {
 }
 
 
-srec_input_file_four_packed_code::srec_input_file_four_packed_code(
+srecord::input_file_four_packed_code::input_file_four_packed_code(
         const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+    srecord::input_file(a_file_name),
     garbage_warning(false),
     seen_some_input(false),
     running_address(0)
@@ -36,15 +36,15 @@ srec_input_file_four_packed_code::srec_input_file_four_packed_code(
 }
 
 
-srec_input::pointer
-srec_input_file_four_packed_code::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_four_packed_code::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_four_packed_code(a_file_name));
+    return pointer(new srecord::input_file_four_packed_code(a_file_name));
 }
 
 
 int
-srec_input_file_four_packed_code::get_digit()
+srecord::input_file_four_packed_code::get_digit()
 {
     int c = get_char();
     switch (c)
@@ -142,7 +142,7 @@ srec_input_file_four_packed_code::get_digit()
 
 
 int
-srec_input_file_four_packed_code::get_byte()
+srecord::input_file_four_packed_code::get_byte()
 {
     if (get_byte_pos >= 4)
         get_byte_pos = 0;
@@ -158,7 +158,7 @@ srec_input_file_four_packed_code::get_byte()
 
 
 int
-srec_input_file_four_packed_code::read_inner(srec_record &record)
+srecord::input_file_four_packed_code::read_inner(srecord::record &record)
 {
     for (;;)
     {
@@ -238,17 +238,17 @@ srec_input_file_four_packed_code::read_inner(srec_record &record)
     if (get_char() != '\n')
         fatal_error("end-of-line expected");
 
-    srec_record::type_t type = srec_record::type_data;
+    srecord::record::type_t type = srecord::record::type_data;
     if (length == 0)
-        type = srec_record::type_execution_start_address;
-    record = srec_record(type, address, buffer, length);
+        type = srecord::record::type_execution_start_address;
+    record = srecord::record(type, address, buffer, length);
     running_address = address + length;
     return 1;
 }
 
 
 bool
-srec_input_file_four_packed_code::read(srec_record &record)
+srecord::input_file_four_packed_code::read(srecord::record &record)
 {
     if (!read_inner(record))
     {
@@ -262,7 +262,7 @@ srec_input_file_four_packed_code::read(srec_record &record)
 
 
 const char *
-srec_input_file_four_packed_code::get_file_format_name()
+srecord::input_file_four_packed_code::get_file_format_name()
     const
 {
     return "Four Packed Code (FPC)";

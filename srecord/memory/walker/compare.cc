@@ -24,12 +24,12 @@
 #include <srecord/memory/walker/compare.h>
 
 
-srec_memory_walker_compare::~srec_memory_walker_compare()
+srecord::memory_walker_compare::~memory_walker_compare()
 {
 }
 
 
-srec_memory_walker_compare::srec_memory_walker_compare(const srec_memory &a1,
+srecord::memory_walker_compare::memory_walker_compare(const srecord::memory &a1,
         bool a2) :
     other(a1),
     check_wrong(a2)
@@ -37,15 +37,15 @@ srec_memory_walker_compare::srec_memory_walker_compare(const srec_memory &a1,
 }
 
 
-srec_memory_walker_compare::pointer
-srec_memory_walker_compare::create(const srec_memory &a1, bool a2)
+srecord::memory_walker_compare::pointer
+srecord::memory_walker_compare::create(const srecord::memory &a1, bool a2)
 {
-    return pointer(new srec_memory_walker_compare(a1, a2));
+    return pointer(new srecord::memory_walker_compare(a1, a2));
 }
 
 
 void
-srec_memory_walker_compare::observe(unsigned long addr, const void *p,
+srecord::memory_walker_compare::observe(unsigned long addr, const void *p,
     int len)
 {
     interval wrongTemp;
@@ -83,7 +83,7 @@ spaces(int n)
 
 
 void
-srec_memory_walker_compare::print(const char *caption)
+srecord::memory_walker_compare::print(const char *caption)
     const
 {
     std::ios::fmtflags old =
@@ -114,7 +114,7 @@ srec_memory_walker_compare::print(const char *caption)
 
 
 bool
-srec_memory_walker_compare::same()
+srecord::memory_walker_compare::same()
     const
 {
     return (wrong.empty() && unset.empty());

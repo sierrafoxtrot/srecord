@@ -22,18 +22,21 @@
 
 #include <srecord/input/filter.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_filter_not class is used to represent an input stream
+  * The srecord::input_filter_not class is used to represent an input stream
   * which bit-wise NOTs the data.
   */
-class srec_input_filter_not:
-    public srec_input_filter
+class input_filter_not:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_not();
+    virtual ~input_filter_not();
 
 private:
     /**
@@ -42,7 +45,7 @@ private:
       * @param deeper
       *     The input source to be filtered.
       */
-    srec_input_filter_not(const srec_input::pointer &deeper);
+    input_filter_not(const input::pointer &deeper);
 
 public:
     /**
@@ -52,27 +55,29 @@ public:
       * @param deeper
       *     The incoming data source
       */
-    static pointer create(const srec_input::pointer &deeper);
+    static pointer create(const input::pointer &deeper);
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
 private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_not();
+    input_filter_not();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_not(const srec_input_filter_not &);
+    input_filter_not(const input_filter_not &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_not &operator=(const srec_input_filter_not &);
+    input_filter_not &operator=(const input_filter_not &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_NOT_H

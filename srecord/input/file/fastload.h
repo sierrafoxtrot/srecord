@@ -22,17 +22,19 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
   * The fastload class is used to parse an LSI Logic Fast Load format file.
   */
-class srec_input_file_fastload:
-    public srec_input_file
+class input_file_fastload:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_fastload();
+    virtual ~input_file_fastload();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_fastload(const std::string &file_name);
+    input_file_fastload(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -68,7 +70,7 @@ private:
       * Read one line (record) of input.  Called by the read() method.
       * Returns false at end of file.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * Get a singe base-64 digit.  Returns 0..63 for a valid digit.
@@ -106,17 +108,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_fastload();
+    input_file_fastload();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_fastload(const srec_input_file_fastload &);
+    input_file_fastload(const input_file_fastload &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_fastload &operator=(const srec_input_file_fastload &);
+    input_file_fastload &operator=(const input_file_fastload &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_FASTLOAD_H

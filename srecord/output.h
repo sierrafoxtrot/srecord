@@ -26,36 +26,38 @@
 
 #include <srecord/format_printf.h>
 
-class srec_arglex_tool; // forward
-class srec_record; // forward
+namespace srecord {
+
+class arglex_tool; // forward
+class record; // forward
 
 /**
-  * The srec_output class is used to represent an abstract output vector.
+  * The srecord::output class is used to represent an abstract output vector.
   * It could be a file, it could be a filter first, before it reaches
   * a file.
   */
-class srec_output
+class output
 {
 public:
-    typedef boost::shared_ptr<srec_output> pointer;
+    typedef boost::shared_ptr<output> pointer;
 
     /**
       * The destructor.
       */
-    virtual ~srec_output();
+    virtual ~output();
 
     /**
       * The write method is used to write a recordonto an output.
       * Derived classes must implement this method.
       */
-    virtual void write(const srec_record &) = 0;
+    virtual void write(const record &) = 0;
 
     /**
       * The write_header method is used to write a header record
       * to the output.  If no record is specified, a default
       * record will be supplied.  The write method will be called.
       */
-    virtual void write_header(const srec_record * = 0);
+    virtual void write_header(const record * = 0);
 
     /**
       * The write_data method is used to write data to the output.
@@ -70,7 +72,7 @@ public:
       * specified, a default record will be supplied.  The write method
       * will be called.
       */
-    virtual void write_execution_start_address(const srec_record * = 0);
+    virtual void write_execution_start_address(const record * = 0);
 
     /**
       * The set_line_length method is used to set the maximum
@@ -176,24 +178,26 @@ public:
       *     Where to obtain information about the curreent parse stat of
       *     the command line.
       */
-    virtual void command_line(srec_arglex_tool *cmdln);
+    virtual void command_line(arglex_tool *cmdln);
 
 protected:
     /**
       * The default constructor.  Only dervived classes may use.
       */
-    srec_output();
+    output();
 
 private:
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output(const srec_output &);
+    output(const output &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output &operator=(const srec_output &);
+    output &operator=(const output &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_H

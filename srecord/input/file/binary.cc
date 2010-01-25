@@ -21,27 +21,27 @@
 #include <srecord/record.h>
 
 
-srec_input_file_binary::~srec_input_file_binary()
+srecord::input_file_binary::~input_file_binary()
 {
 }
 
 
-srec_input_file_binary::srec_input_file_binary(const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+srecord::input_file_binary::input_file_binary(const std::string &a_file_name) :
+    srecord::input_file(a_file_name),
     address(0)
 {
 }
 
 
-srec_input::pointer
-srec_input_file_binary::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_binary::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_binary(a_file_name));
+    return pointer(new srecord::input_file_binary(a_file_name));
 }
 
 
 bool
-srec_input_file_binary::read(srec_record &record)
+srecord::input_file_binary::read(srecord::record &record)
 {
 #ifdef HAVE_SPARSE_LSEEK
     //
@@ -61,7 +61,7 @@ srec_input_file_binary::read(srec_record &record)
     if (c < 0)
         return false;
     int length = 0;
-    unsigned char data[srec_record::max_data_length];
+    unsigned char data[srecord::record::max_data_length];
     for (;;)
     {
         data[length++] = c;
@@ -71,14 +71,14 @@ srec_input_file_binary::read(srec_record &record)
         if (c < 0)
             break;
     }
-    record = srec_record(srec_record::type_data, address, data, length);
+    record = srecord::record(srecord::record::type_data, address, data, length);
     address += length;
     return true;
 }
 
 
 const char *
-srec_input_file_binary::mode()
+srecord::input_file_binary::mode()
     const
 {
     return "rb";
@@ -86,7 +86,7 @@ srec_input_file_binary::mode()
 
 
 const char *
-srec_input_file_binary::get_file_format_name()
+srecord::input_file_binary::get_file_format_name()
     const
 {
     return "Binary";

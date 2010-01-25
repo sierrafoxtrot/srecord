@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_ti_txt class is used to write a file in
+  * The srecord::output_file_ti_txt class is used to write a file in
   * ti_txt (MSP430) format.
   */
-class srec_output_file_ti_txt:
-    public srec_output_file
+class output_file_ti_txt:
+    public output_file
 {
 public:
     /**
       * The destrutcor.
       */
-    virtual ~srec_output_file_ti_txt();
+    virtual ~output_file_ti_txt();
 
 private:
     /**
@@ -44,7 +47,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    srec_output_file_ti_txt(const std::string &file_name);
+    output_file_ti_txt(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -130,17 +133,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_ti_txt();
+    output_file_ti_txt();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_ti_txt(const srec_output_file_ti_txt &);
+    output_file_ti_txt(const output_file_ti_txt &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_ti_txt &operator=(const srec_output_file_ti_txt &);
+    output_file_ti_txt &operator=(const output_file_ti_txt &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_ti_txt_H

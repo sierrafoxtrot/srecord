@@ -21,38 +21,38 @@
 #include <srecord/record.h>
 
 
-srec_output_file_fairchild::~srec_output_file_fairchild()
+srecord::output_file_fairchild::~output_file_fairchild()
 {
 }
 
 
-srec_output_file_fairchild::srec_output_file_fairchild(
+srecord::output_file_fairchild::output_file_fairchild(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     address(~0uL)
 {
 }
 
 
-srec_output::pointer
-srec_output_file_fairchild::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_fairchild::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_fairchild(a_file_name));
+    return pointer(new srecord::output_file_fairchild(a_file_name));
 }
 
 
 void
-srec_output_file_fairchild::put_nibble(unsigned n)
+srecord::output_file_fairchild::put_nibble(unsigned n)
 {
-    srec_output_file::put_nibble(n);
+    srecord::output_file::put_nibble(n);
     checksum_add(n & 15);
 }
 
 
 void
-srec_output_file_fairchild::put_byte(unsigned char n)
+srecord::output_file_fairchild::put_byte(unsigned char n)
 {
-    // This differs from srec_output_file::put_byte only in that it
+    // This differs from srecord::output_file::put_byte only in that it
     // doesn't add to the checksum.
     put_nibble(n >> 4);
     put_nibble(n);
@@ -60,17 +60,17 @@ srec_output_file_fairchild::put_byte(unsigned char n)
 
 
 void
-srec_output_file_fairchild::write(const srec_record &record)
+srecord::output_file_fairchild::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
-    case srec_record::type_unknown:
-    case srec_record::type_data_count:
+    case srecord::record::type_header:
+    case srecord::record::type_unknown:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         {
             int len = record.get_length();
             unsigned long new_addr = record.get_address();
@@ -105,7 +105,7 @@ srec_output_file_fairchild::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         put_string("*\n");
         break;
     }
@@ -113,21 +113,21 @@ srec_output_file_fairchild::write(const srec_record &record)
 
 
 void
-srec_output_file_fairchild::line_length_set(int)
+srecord::output_file_fairchild::line_length_set(int)
 {
     // ignore
 }
 
 
 void
-srec_output_file_fairchild::address_length_set(int)
+srecord::output_file_fairchild::address_length_set(int)
 {
     // ignore
 }
 
 
 int
-srec_output_file_fairchild::preferred_block_size_get()
+srecord::output_file_fairchild::preferred_block_size_get()
     const
 {
     return 8;
@@ -135,7 +135,7 @@ srec_output_file_fairchild::preferred_block_size_get()
 
 
 const char *
-srec_output_file_fairchild::format_name()
+srecord::output_file_fairchild::format_name()
     const
 {
     return "Fairchild";

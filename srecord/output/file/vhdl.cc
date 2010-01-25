@@ -25,7 +25,7 @@
 #include <srecord/progname.h>
 
 
-srec_output_file_vhdl::~srec_output_file_vhdl()
+srecord::output_file_vhdl::~output_file_vhdl()
 {
     emit_header();
     put_stringf("  others => %s_dont_care\n" " );\n", prefix.c_str());
@@ -36,8 +36,8 @@ srec_output_file_vhdl::~srec_output_file_vhdl()
 }
 
 
-srec_output_file_vhdl::srec_output_file_vhdl(const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+srecord::output_file_vhdl::output_file_vhdl(const std::string &a_file_name) :
+    srecord::output_file(a_file_name),
     bytes_per_word(1),
     prefix("eprom"),
     header_done(false)
@@ -45,15 +45,15 @@ srec_output_file_vhdl::srec_output_file_vhdl(const std::string &a_file_name) :
 }
 
 
-srec_output::pointer
-srec_output_file_vhdl::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_vhdl::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_vhdl(a_file_name));
+    return pointer(new srecord::output_file_vhdl(a_file_name));
 }
 
 
 void
-srec_output_file_vhdl::command_line(srec_arglex_tool *cmdln)
+srecord::output_file_vhdl::command_line(srecord::arglex_tool *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_number)
     {
@@ -77,7 +77,7 @@ srec_output_file_vhdl::command_line(srec_arglex_tool *cmdln)
 
 
 void
-srec_output_file_vhdl::emit_header()
+srecord::output_file_vhdl::emit_header()
 {
     if (header_done)
         return;
@@ -119,15 +119,15 @@ srec_output_file_vhdl::emit_header()
 
 
 void
-srec_output_file_vhdl::write(const srec_record &record)
+srecord::output_file_vhdl::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         // Ignore.
         break;
 
-    case srec_record::type_header:
+    case srecord::record::type_header:
         if (enable_header_flag && record.get_length() > 0)
         {
             //
@@ -157,7 +157,7 @@ srec_output_file_vhdl::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         //
         // Make sure the data is aligned.
         //
@@ -178,7 +178,7 @@ srec_output_file_vhdl::write(const srec_record &record)
         emit_header();
         for (size_t j = 0; j < record.get_length(); j += bytes_per_word)
         {
-            srec_record::address_t current_word = 0;
+            srecord::record::address_t current_word = 0;
             for (unsigned k = 0; k < bytes_per_word; ++k)
                 current_word = (current_word << 8) + record.get_data(j + k);
             put_stringf
@@ -191,11 +191,11 @@ srec_output_file_vhdl::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // Ignore.
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         // Ignore.
         break;
     }
@@ -203,28 +203,28 @@ srec_output_file_vhdl::write(const srec_record &record)
 
 
 void
-srec_output_file_vhdl::line_length_set(int)
+srecord::output_file_vhdl::line_length_set(int)
 {
     // ignore
 }
 
 
 void
-srec_output_file_vhdl::address_length_set(int)
+srecord::output_file_vhdl::address_length_set(int)
 {
     // ignore
 }
 
 
 int
-srec_output_file_vhdl::preferred_block_size_get()
+srecord::output_file_vhdl::preferred_block_size_get()
     const
 {
     //
     // Use the largest we can get, but it has to be a multiple of our
     // word size.
     //
-    int n = srec_record::max_data_length;
+    int n = srecord::record::max_data_length;
     if (bytes_per_word > 1)
         n -= (n % bytes_per_word);
     return n;
@@ -232,7 +232,7 @@ srec_output_file_vhdl::preferred_block_size_get()
 
 
 const char *
-srec_output_file_vhdl::format_name()
+srecord::output_file_vhdl::format_name()
     const
 {
     return "VHDL";

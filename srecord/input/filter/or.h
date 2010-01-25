@@ -22,19 +22,22 @@
 
 #include <srecord/input/filter.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_filter_and clas sis used to represent the input state
+  * The srecord::input_filter_and clas sis used to represent the input state
   * of a filter which bit-wise ORs all incoming data bytes with a fixed
   * value.
   */
-class srec_input_filter_or:
-    public srec_input_filter
+class input_filter_or:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_or();
+    virtual ~input_filter_or();
 
 private:
     /**
@@ -45,7 +48,7 @@ private:
       * @param value
       *     The value to be bit-wise ORed with each incoming data byte.
       */
-    srec_input_filter_or(const srec_input::pointer &deeper, int value);
+    input_filter_or(const input::pointer &deeper, int value);
 
 public:
     /**
@@ -57,11 +60,11 @@ public:
       * @param value
       *     The value to be bit-wise ORed with each incoming data byte.
       */
-    static pointer create(const srec_input::pointer &deeper, int value);
+    static pointer create(const input::pointer &deeper, int value);
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
 private:
     /**
@@ -73,17 +76,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_or();
+    input_filter_or();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_or(const srec_input_filter_or &);
+    input_filter_or(const input_filter_or &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_or &operator=(const srec_input_filter_or &);
+    input_filter_or &operator=(const input_filter_or &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_OR_H

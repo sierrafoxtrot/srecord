@@ -22,18 +22,21 @@
 
 #include <srecord/output/file.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_binary class is used to represetn an output
+  * The srecord::output_file_binary class is used to represent an output
   * file in raw binary format.
   */
-class srec_output_file_binary:
-    public srec_output_file
+class output_file_binary:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_binary();
+    virtual ~output_file_binary();
 
 private:
     /**
@@ -42,7 +45,7 @@ private:
       * @param file_name
       *     The file name to open and write output to.
       */
-    srec_output_file_binary(const std::string &file_name);
+    output_file_binary(const std::string &file_name);
 
 public:
     /**
@@ -57,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -75,17 +78,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_binary();
+    output_file_binary();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_binary(const srec_output_file_binary &);
+    output_file_binary(const output_file_binary &);
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_binary &operator=(const srec_output_file_binary &);
+    output_file_binary &operator=(const output_file_binary &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_BINARY_H

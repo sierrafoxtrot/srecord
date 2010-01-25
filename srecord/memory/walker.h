@@ -22,21 +22,23 @@
 
 #include <boost/shared_ptr.hpp>
 
-class srec_record; // forward
+namespace srecord {
+
+class record; // forward
 
 /**
-  * The srec_memory_walker class is used to represent an abstract handler
+  * The srecord::memory_walker class is used to represent an abstract handler
   * for the action to perform when walking a memory image.
   */
-class srec_memory_walker
+class memory_walker
 {
 public:
-    typedef boost::shared_ptr<srec_memory_walker> pointer;
+    typedef boost::shared_ptr<memory_walker> pointer;
 
     /**
       * The destructor.
       */
-    virtual ~srec_memory_walker();
+    virtual ~memory_walker();
 
     /**
       * The observe method is used by the memory walker to provide data.
@@ -57,30 +59,32 @@ public:
       * The observe_header method is used to inform the walker of the
       * header record.  The default does nothing.
       */
-    virtual void observe_header(const srec_record * = 0);
+    virtual void observe_header(const record * = 0);
 
     /**
       * The observe_start_address method is used to inform the walker
       * of the execution start address record.  The default does nothing.
       */
-    virtual void observe_start_address(const srec_record * = 0);
+    virtual void observe_start_address(const record * = 0);
 
 protected:
     /**
       * The default constructor.  May only be called by derived classes.
       */
-    srec_memory_walker();
+    memory_walker();
 
 private:
     /**
       * The copy constructor.  Do not use.
       */
-    srec_memory_walker(const srec_memory_walker &);
+    memory_walker(const memory_walker &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_memory_walker &operator=(const srec_memory_walker &);
+    memory_walker &operator=(const memory_walker &);
+};
+
 };
 
 #endif // SRECORD_MEMORY_WALKER_H

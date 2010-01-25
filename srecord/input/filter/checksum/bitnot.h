@@ -22,18 +22,20 @@
 
 #include <srecord/input/filter/checksum.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_filter_checksum_bitnot class is used to represent the
+  * The srecord::input_filter_checksum_bitnot class is used to represent the
   * state of a checksum filter that inserts a bitnot sum into the data.
   */
-class srec_input_filter_checksum_bitnot:
-    public srec_input_filter_checksum
+class input_filter_checksum_bitnot:
+    public input_filter_checksum
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_checksum_bitnot();
+    virtual ~input_filter_checksum_bitnot();
 
 private:
     /**
@@ -53,7 +55,7 @@ private:
       *     wider, it is assumed that they are alligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    srec_input_filter_checksum_bitnot(srec_input::pointer deeper, int address,
+    input_filter_checksum_bitnot(input::pointer deeper, int address,
         int length, endian_t end, int width = 1);
 
 public:
@@ -75,7 +77,7 @@ public:
       *     wider, it is assumed that they are alligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    static pointer create(const srec_input::pointer &deeper, int address,
+    static pointer create(const input::pointer &deeper, int address,
         int length, endian_t end, int width = 1);
 
 protected:
@@ -87,19 +89,20 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_checksum_bitnot();
+    input_filter_checksum_bitnot();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_checksum_bitnot(
-        const srec_input_filter_checksum_bitnot &);
+    input_filter_checksum_bitnot(const input_filter_checksum_bitnot &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_checksum_bitnot &operator=(
-            const srec_input_filter_checksum_bitnot &);
+    input_filter_checksum_bitnot &operator=(
+            const input_filter_checksum_bitnot &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_CHECKSUM_BITNOT_H

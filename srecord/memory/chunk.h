@@ -24,12 +24,14 @@
 
 #include <srecord/memory/walker.h>
 
+namespace srecord {
+
 /**
-  * The srec_memory_chunk class is used to represent portion of memory.
+  * The srecord::memory_chunk class is used to represent portion of memory.
   * Not all bytes are actually set, so there is a bit map of which bytes
   * actually contain data.
   */
-class srec_memory_chunk
+class memory_chunk
 {
 public:
     enum {
@@ -41,22 +43,22 @@ public:
     /**
       * The constructor.
       */
-    srec_memory_chunk(unsigned long address);
+    memory_chunk(unsigned long address);
 
     /**
       * The copy constructor.
       */
-    srec_memory_chunk(const srec_memory_chunk &);
+    memory_chunk(const memory_chunk &);
 
     /**
       * The assignment operator.
       */
-    srec_memory_chunk &operator=(const srec_memory_chunk &);
+    memory_chunk &operator=(const memory_chunk &);
 
     /**
       * The destructor.
       */
-    ~srec_memory_chunk();
+    ~memory_chunk();
 
     /**
       * The set method is used to set the byte at the given offset within
@@ -80,7 +82,7 @@ public:
       * The walk method is used to iterate across all of the bytes which
       * are set within the chunk, calling the walker's observe method.
       */
-    void walk(srec_memory_walker::pointer) const;
+    void walk(memory_walker::pointer) const;
 
     /**
       * The get_address method is used to get the address of the memory
@@ -94,7 +96,7 @@ public:
       * chunks are equal.  The must have the same address, the same bit
       * mask, and the same byte values on the valid bytes.
       */
-    static bool equal(const srec_memory_chunk &, const srec_memory_chunk &);
+    static bool equal(const memory_chunk &, const memory_chunk &);
 
     /**
       * The find_next_data method is used when iteratinbg across all of
@@ -131,10 +133,12 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_memory_chunk();
+    memory_chunk();
 };
 
-bool operator == (const srec_memory_chunk &, const srec_memory_chunk &);
-bool operator != (const srec_memory_chunk &, const srec_memory_chunk &);
+};
+
+bool operator == (const srecord::memory_chunk &, const srecord::memory_chunk &);
+bool operator != (const srecord::memory_chunk &, const srecord::memory_chunk &);
 
 #endif // SRECORD_MEMORY_CHUNK_H

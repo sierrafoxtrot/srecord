@@ -23,18 +23,21 @@
 #include <srecord/output/file.h>
 #include <srecord/interval.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_output_file_asm class is used to represent an output file
+  * The srecord::output_file_asm class is used to represent an output file
   * which emits assembler code.
   */
-class srec_output_file_asm:
-    public srec_output_file
+class output_file_asm:
+    public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_output_file_asm();
+    virtual ~output_file_asm();
 
 private:
     /**
@@ -43,7 +46,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    srec_output_file_asm(const std::string &file_name);
+    output_file_asm(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +61,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const srec_record &);
+    void write(const record &);
 
     // See base class for documentation.
     void line_length_set(int);
@@ -70,7 +73,7 @@ protected:
     int preferred_block_size_get() const;
 
     // See base class for documentation.
-    void command_line(srec_arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln);
 
     // See base class for documentation.
     const char *format_name() const;
@@ -179,17 +182,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_output_file_asm();
+    output_file_asm();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_output_file_asm(const srec_output_file_asm &);
+    output_file_asm(const output_file_asm &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_output_file_asm &operator=(const srec_output_file_asm &);
+    output_file_asm &operator=(const output_file_asm &);
+};
+
 };
 
 #endif // SRECORD_OUTPUT_FILE_ASM_H

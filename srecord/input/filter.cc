@@ -20,19 +20,19 @@
 #include <srecord/input/filter.h>
 
 
-srec_input_filter::~srec_input_filter()
+srecord::input_filter::~input_filter()
 {
 }
 
 
-srec_input_filter::srec_input_filter(srec_input::pointer arg) :
+srecord::input_filter::input_filter(srecord::input::pointer arg) :
     ifp(arg)
 {
 }
 
 
 std::string
-srec_input_filter::filename()
+srecord::input_filter::filename()
     const
 {
     return ifp->filename();
@@ -40,7 +40,7 @@ srec_input_filter::filename()
 
 
 std::string
-srec_input_filter::filename_and_line()
+srecord::input_filter::filename_and_line()
     const
 {
     return ifp->filename_and_line();
@@ -48,14 +48,14 @@ srec_input_filter::filename_and_line()
 
 
 bool
-srec_input_filter::read(srec_record &record)
+srecord::input_filter::read(srecord::record &record)
 {
     return ifp->read(record);
 }
 
 
 const char *
-srec_input_filter::get_file_format_name()
+srecord::input_filter::get_file_format_name()
     const
 {
     return ifp->get_file_format_name();
@@ -63,7 +63,7 @@ srec_input_filter::get_file_format_name()
 
 
 void
-srec_input_filter::disable_checksum_validation()
+srecord::input_filter::disable_checksum_validation()
 {
     ifp->disable_checksum_validation();
 }

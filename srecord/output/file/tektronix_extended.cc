@@ -21,31 +21,31 @@
 #include <srecord/record.h>
 
 
-srec_output_file_tektronix_extended::~srec_output_file_tektronix_extended()
+srecord::output_file_tektronix_extended::~output_file_tektronix_extended()
 {
     // check for termination record
 }
 
 
-srec_output_file_tektronix_extended::srec_output_file_tektronix_extended(
+srecord::output_file_tektronix_extended::output_file_tektronix_extended(
         const std::string &a_file_name) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     pref_block_size(32),
     address_length(4)
 {
 }
 
 
-srec_output::pointer
-srec_output_file_tektronix_extended::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_tektronix_extended::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_tektronix_extended(a_file_name));
+    return pointer(new srecord::output_file_tektronix_extended(a_file_name));
 }
 
 
 void
-srec_output_file_tektronix_extended::write_inner(int tag, unsigned long addr,
-    int addr_nbytes, const void *data_p, int data_nbytes)
+srecord::output_file_tektronix_extended::write_inner(int tag,
+    unsigned long addr, int addr_nbytes, const void *data_p, int data_nbytes)
 {
     if (addr_nbytes < address_length)
         addr_nbytes = address_length;
@@ -95,15 +95,15 @@ addr_width(unsigned long n)
 
 
 void
-srec_output_file_tektronix_extended::write(const srec_record &record)
+srecord::output_file_tektronix_extended::write(const srecord::record &record)
 {
     switch (record.get_type())
     {
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // This format can't do header records
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         write_inner
         (
             6,
@@ -114,11 +114,11 @@ srec_output_file_tektronix_extended::write(const srec_record &record)
         );
         break;
 
-    case srec_record::type_data_count:
+    case srecord::record::type_data_count:
         // ignore
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         if (enable_goto_addr_flag)
         {
             write_inner
@@ -132,14 +132,14 @@ srec_output_file_tektronix_extended::write(const srec_record &record)
         }
         break;
 
-    case srec_record::type_unknown:
+    case srecord::record::type_unknown:
         fatal_error("can't write unknown record type");
     }
 }
 
 
 void
-srec_output_file_tektronix_extended::line_length_set(int linlen)
+srecord::output_file_tektronix_extended::line_length_set(int linlen)
 {
     //
     // Given the number of characters, figure the maximum number of
@@ -161,17 +161,17 @@ srec_output_file_tektronix_extended::line_length_set(int linlen)
         n = 123;
 
     //
-    // An additional constraint is the size of the srec_record
+    // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srec_record::max_data_length)
-        n = srec_record::max_data_length;
+    if (n > srecord::record::max_data_length)
+        n = srecord::record::max_data_length;
     pref_block_size = n;
 }
 
 
 void
-srec_output_file_tektronix_extended::address_length_set(int n)
+srecord::output_file_tektronix_extended::address_length_set(int n)
 {
     if (n < 2)
         n = 2;
@@ -182,7 +182,7 @@ srec_output_file_tektronix_extended::address_length_set(int n)
 
 
 int
-srec_output_file_tektronix_extended::preferred_block_size_get()
+srecord::output_file_tektronix_extended::preferred_block_size_get()
     const
 {
     return pref_block_size;
@@ -190,7 +190,7 @@ srec_output_file_tektronix_extended::preferred_block_size_get()
 
 
 const char *
-srec_output_file_tektronix_extended::format_name()
+srecord::output_file_tektronix_extended::format_name()
     const
 {
     return "Tektronix-Extended";

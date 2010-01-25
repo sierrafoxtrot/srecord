@@ -21,12 +21,12 @@
 #include <srecord/memory/walker/continuity.h>
 
 
-srec_memory_walker_continuity::~srec_memory_walker_continuity()
+srecord::memory_walker_continuity::~memory_walker_continuity()
 {
 }
 
 
-srec_memory_walker_continuity::srec_memory_walker_continuity() :
+srecord::memory_walker_continuity::memory_walker_continuity() :
     current_address(0),
     data_seen(false),
     nholes(0)
@@ -34,15 +34,15 @@ srec_memory_walker_continuity::srec_memory_walker_continuity() :
 }
 
 
-srec_memory_walker_continuity::pointer
-srec_memory_walker_continuity::create()
+srecord::memory_walker_continuity::pointer
+srecord::memory_walker_continuity::create()
 {
-    return pointer(new srec_memory_walker_continuity());
+    return pointer(new srecord::memory_walker_continuity());
 }
 
 
 void
-srec_memory_walker_continuity::observe(unsigned long addr, const void *,
+srecord::memory_walker_continuity::observe(unsigned long addr, const void *,
     int nbytes)
 {
     if (data_seen)
@@ -59,7 +59,7 @@ srec_memory_walker_continuity::observe(unsigned long addr, const void *,
 
 
 bool
-srec_memory_walker_continuity::is_continuous()
+srecord::memory_walker_continuity::is_continuous()
     const
 {
     return (data_seen && nholes == 0);

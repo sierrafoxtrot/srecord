@@ -21,13 +21,13 @@
 #include <srecord/record.h>
 
 
-srec_input_file_stewie::~srec_input_file_stewie()
+srecord::input_file_stewie::~input_file_stewie()
 {
 }
 
 
-srec_input_file_stewie::srec_input_file_stewie(const std::string &a_file_name) :
-    srec_input_file(a_file_name),
+srecord::input_file_stewie::input_file_stewie(const std::string &a_file_name) :
+    input_file(a_file_name),
     data_count(0),
     garbage_warning(false),
     seen_some_input(false),
@@ -37,15 +37,15 @@ srec_input_file_stewie::srec_input_file_stewie(const std::string &a_file_name) :
 }
 
 
-srec_input::pointer
-srec_input_file_stewie::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_stewie::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_stewie(a_file_name));
+    return pointer(new input_file_stewie(a_file_name));
 }
 
 
 int
-srec_input_file_stewie::get_byte()
+srecord::input_file_stewie::get_byte()
 {
     int n = get_char();
     if (n < 0)
@@ -56,7 +56,7 @@ srec_input_file_stewie::get_byte()
 
 
 int
-srec_input_file_stewie::read_inner(srec_record &record)
+srecord::input_file_stewie::read_inner(record &result)
 {
     if (termination_seen)
         return 0;
@@ -76,14 +76,13 @@ srec_input_file_stewie::read_inner(srec_record &record)
         // The header record is literally "S003"
         if (get_char() != '0' || get_char() != '3')
             fatal_error("format error");
-        record = srec_record(srec_record::type_header, 0, 0, 0);
+        result = record(record::type_header, 0, 0, 0);
         return 1;
 
     case 7:
     case 8:
     case 9:
-        record =
-            srec_record(srec_record::type_execution_start_address, 0, 0, 0);
+        result = record(record::type_execution_start_address, 0, 0, 0);
         return 1;
     }
     checksum_reset();
@@ -102,29 +101,29 @@ srec_input_file_stewie::read_inner(srec_record &record)
     --line_length;
 
     int naddr = 2;
-    srec_record::type_t type = srec_record::type_unknown;
+    record::type_t type = record::type_unknown;
     switch (tag)
     {
     case 1:
         // data
-        type = srec_record::type_data;
+        type = record::type_data;
         break;
 
     case 2:
         // data
-        type = srec_record::type_data;
+        type = record::type_data;
         naddr = 3;
         break;
 
     case 3:
         // data
-        type = srec_record::type_data;
+        type = record::type_data;
         naddr = 4;
         break;
 
     case 5:
         // data count
-        type = srec_record::type_data_count;
+        type = record::type_data_count;
         //
         // Just in case some smarty-pants uses the Green Hills trick, we
         // cope with address size crap the same as Motorola S-Record.
@@ -135,7 +134,7 @@ srec_input_file_stewie::read_inner(srec_record &record)
 
     case 6:
         // data count
-        type = srec_record::type_data_count;
+        type = record::type_data_count;
         //
         // Just in case some smarty-pants uses the Green Hills trick, we
         // cope with address size crap the same as Motorola S-Record.
@@ -155,11 +154,11 @@ srec_input_file_stewie::read_inner(srec_record &record)
             tag
         );
     }
-    record =
-        srec_record
+    result =
+        record
         (
             type,
-            srec_record::decode_big_endian(buffer, naddr),
+            record::decode_big_endian(buffer, naddr),
             buffer + naddr,
             line_length - naddr
         );
@@ -168,11 +167,11 @@ srec_input_file_stewie::read_inner(srec_record &record)
 
 
 bool
-srec_input_file_stewie::read(srec_record &record)
+srecord::input_file_stewie::read(record &result)
 {
     for (;;)
     {
-        if (!read_inner(record))
+        if (!read_inner(result))
         {
             if (!seen_some_input && garbage_warning)
                 fatal_error("file contains no data");
@@ -191,41 +190,41 @@ srec_input_file_stewie::read(srec_record &record)
             return false;
         }
         seen_some_input = true;
-        if (record.get_type() != srec_record::type_header && !header_seen)
+        if (result.get_type() != record::type_header && !header_seen)
         {
             warning("no header record");
             header_seen = true;
         }
-        switch (record.get_type())
+        switch (result.get_type())
         {
-        case srec_record::type_unknown:
+        case record::type_unknown:
             fatal_error("record type not recognised");
             break;
 
-        case srec_record::type_header:
+        case record::type_header:
             if (header_seen)
                 warning("redundant header record");
-            if (record.get_address())
+            if (result.get_address())
             {
                 warning("address in header record ignored");
-                record.set_address(0);
+                result.set_address(0);
             }
             header_seen = true;
             break;
 
-        case srec_record::type_data:
+        case record::type_data:
             ++data_count;
-            if (record.get_length() == 0)
+            if (result.get_length() == 0)
             {
                 warning("empty data record ignored");
                 continue;
             }
             break;
 
-        case srec_record::type_data_count:
+        case record::type_data_count:
             {
-                srec_record::address_t addr = record.get_address();
-                srec_record::address_t mask = 0xFFFF;
+                record::address_t addr = result.get_address();
+                record::address_t mask = 0xFFFF;
                 while (addr > mask)
                     mask = ~(~mask << 8);
                 mask &= data_count;
@@ -241,11 +240,11 @@ srec_input_file_stewie::read(srec_record &record)
             }
             continue;
 
-        case srec_record::type_execution_start_address:
-            if (record.get_length() > 0)
+        case record::type_execution_start_address:
+            if (result.get_length() > 0)
             {
                 warning("data in termination record ignored");
-                record.set_length(0);
+                result.set_length(0);
             }
             if (termination_seen)
                 warning("redundant termination record");
@@ -259,7 +258,7 @@ srec_input_file_stewie::read(srec_record &record)
 
 
 const char *
-srec_input_file_stewie::get_file_format_name()
+srecord::input_file_stewie::get_file_format_name()
     const
 {
     return "mobile phone signed binary (SBN)";
@@ -267,7 +266,7 @@ srec_input_file_stewie::get_file_format_name()
 
 
 const char *
-srec_input_file_stewie::mode()
+srecord::input_file_stewie::mode()
     const
 {
     return "rb";

@@ -21,37 +21,38 @@
 #include <srecord/record.h>
 
 
-srec_output_file_spasm::~srec_output_file_spasm()
+srecord::output_file_spasm::~output_file_spasm()
 {
 }
 
 
-srec_output_file_spasm::srec_output_file_spasm(const std::string &a_file_name,
+srecord::output_file_spasm::output_file_spasm(const std::string &a_file_name,
         endian_t a_end) :
-    srec_output_file(a_file_name),
+    srecord::output_file(a_file_name),
     end(a_end)
 {
 }
 
 
-srec_output::pointer
-srec_output_file_spasm::create(const std::string &a_file_name, endian_t a_end)
+srecord::output::pointer
+srecord::output_file_spasm::create(const std::string &a_file_name,
+    endian_t a_end)
 {
-    return pointer(new srec_output_file_spasm(a_file_name, a_end));
+    return pointer(new srecord::output_file_spasm(a_file_name, a_end));
 }
 
 
 void
-srec_output_file_spasm::write(const srec_record &record)
+srecord::output_file_spasm::write(const srecord::record &record)
 {
     // This format can't do header records or termination records
-    if (record.get_type() != srec_record::type_data)
+    if (record.get_type() != srecord::record::type_data)
         return;
 
     if (record.get_address() + record.get_length() > (1UL << 17))
         data_address_too_large(record);
 
-    srec_record::address_t address = record.get_address();
+    srecord::record::address_t address = record.get_address();
     if ((address & 1) || (record.get_length() & 1))
         fatal_alignment_error(2);
 
@@ -76,7 +77,7 @@ srec_output_file_spasm::write(const srec_record &record)
 
 
 void
-srec_output_file_spasm::line_length_set(int)
+srecord::output_file_spasm::line_length_set(int)
 {
     //
     // Irrelevant.  Ignore.
@@ -85,7 +86,7 @@ srec_output_file_spasm::line_length_set(int)
 
 
 void
-srec_output_file_spasm::address_length_set(int)
+srecord::output_file_spasm::address_length_set(int)
 {
     //
     // Irrelevant.  Ignore.
@@ -94,19 +95,19 @@ srec_output_file_spasm::address_length_set(int)
 
 
 int
-srec_output_file_spasm::preferred_block_size_get()
+srecord::output_file_spasm::preferred_block_size_get()
     const
 {
     //
     // Irrelevant.  Use the largest we can get.
     // But make sure it is an even number of bytes long.
     //
-    return (srec_record::max_data_length & ~1);
+    return (srecord::record::max_data_length & ~1);
 }
 
 
 const char *
-srec_output_file_spasm::format_name()
+srecord::output_file_spasm::format_name()
     const
 {
     return "Spasm";

@@ -26,7 +26,7 @@
 #include <srecord/record.h>
 
 
-srec_output_file_asm::~srec_output_file_asm()
+srecord::output_file_asm::~output_file_asm()
 {
     if (!section_style && range.empty())
     {
@@ -200,8 +200,8 @@ srec_output_file_asm::~srec_output_file_asm()
 }
 
 
-srec_output_file_asm::srec_output_file_asm(const std::string &filename) :
-    srec_output_file(filename),
+srecord::output_file_asm::output_file_asm(const std::string &filename) :
+    srecord::output_file(filename),
     prefix("eprom"),
     taddr(0),
     column(0),
@@ -216,15 +216,15 @@ srec_output_file_asm::srec_output_file_asm(const std::string &filename) :
 }
 
 
-srec_output::pointer
-srec_output_file_asm::create(const std::string &a_file_name)
+srecord::output::pointer
+srecord::output_file_asm::create(const std::string &a_file_name)
 {
-    return pointer(new srec_output_file_asm(a_file_name));
+    return pointer(new srecord::output_file_asm(a_file_name));
 }
 
 
 void
-srec_output_file_asm::command_line(srec_arglex_tool *cmdln)
+srecord::output_file_asm::command_line(srecord::arglex_tool *cmdln)
 {
     if (cmdln->token_cur() == arglex::token_string)
     {
@@ -235,14 +235,14 @@ srec_output_file_asm::command_line(srec_arglex_tool *cmdln)
     {
         switch (cmdln->token_cur())
         {
-        case srec_arglex_tool::token_a430:
+        case srecord::arglex_tool::token_a430:
             cmdln->token_next();
             // Generate "IAR assembler compiler compliant" output.
             section_style = true;
             hex_style = true;
             break;
 
-        case srec_arglex_tool::token_cl430:
+        case srecord::arglex_tool::token_cl430:
             cmdln->token_next();
             // Generate "Code Composer Essential compliant" output.
             dot_style = true;
@@ -250,27 +250,27 @@ srec_output_file_asm::command_line(srec_arglex_tool *cmdln)
             hex_style = true;
             break;
 
-        case srec_arglex_tool::token_style_dot:
+        case srecord::arglex_tool::token_style_dot:
             cmdln->token_next();
             dot_style = true;
             break;
 
-        case srec_arglex_tool::token_style_hexadecimal:
+        case srecord::arglex_tool::token_style_hexadecimal:
             cmdln->token_next();
             hex_style = true;
             break;
 
-        case srec_arglex_tool::token_style_hexadecimal_not:
+        case srecord::arglex_tool::token_style_hexadecimal_not:
             cmdln->token_next();
             hex_style = false;
             break;
 
-        case srec_arglex_tool::token_style_section:
+        case srecord::arglex_tool::token_style_section:
             cmdln->token_next();
             section_style = true;
             break;
 
-        case srec_arglex_tool::token_output_word:
+        case srecord::arglex_tool::token_output_word:
             cmdln->token_next();
             output_word = true;
             break;
@@ -283,7 +283,7 @@ srec_output_file_asm::command_line(srec_arglex_tool *cmdln)
 
 
 void
-srec_output_file_asm::emit_byte(int n)
+srecord::output_file_asm::emit_byte(int n)
 {
     char buffer[8];
     if (hex_style)
@@ -321,7 +321,7 @@ srec_output_file_asm::emit_byte(int n)
 
 
 void
-srec_output_file_asm::emit_word(unsigned int n)
+srecord::output_file_asm::emit_word(unsigned int n)
 {
     char buffer[16];
     if (hex_style)
@@ -359,7 +359,7 @@ srec_output_file_asm::emit_word(unsigned int n)
 
 
 void
-srec_output_file_asm::write(const srec_record & record)
+srecord::output_file_asm::write(const srecord::record & record)
 {
     switch (record.get_type())
     {
@@ -367,7 +367,7 @@ srec_output_file_asm::write(const srec_record & record)
         // ignore
         break;
 
-    case srec_record::type_header:
+    case srecord::record::type_header:
         // emit header records as comments in the file
         {
             bool bol = true;
@@ -393,7 +393,7 @@ srec_output_file_asm::write(const srec_record & record)
         }
         break;
 
-    case srec_record::type_data:
+    case srecord::record::type_data:
         //
         // emit the data prelude, if we have not done so already
         //
@@ -485,7 +485,7 @@ srec_output_file_asm::write(const srec_record & record)
         }
         break;
 
-    case srec_record::type_execution_start_address:
+    case srecord::record::type_execution_start_address:
         taddr = record.get_address();
         if (enable_goto_addr_flag)
         {
@@ -502,34 +502,34 @@ srec_output_file_asm::write(const srec_record & record)
 
 
 void
-srec_output_file_asm::line_length_set(int n)
+srecord::output_file_asm::line_length_set(int n)
 {
     line_length = n;
 }
 
 
 void
-srec_output_file_asm::address_length_set(int)
+srecord::output_file_asm::address_length_set(int)
 {
     // ignore
 }
 
 
 int
-srec_output_file_asm::preferred_block_size_get()
+srecord::output_file_asm::preferred_block_size_get()
     const
 {
     //
     // Use the largest we can get.
     //
     if (output_word)
-        return (srec_record::max_data_length & ~1);
-    return srec_record::max_data_length;
+        return (srecord::record::max_data_length & ~1);
+    return srecord::record::max_data_length;
 }
 
 
 const char *
-srec_output_file_asm::format_name()
+srecord::output_file_asm::format_name()
     const
 {
     return (output_word ? "Assembler (16-bit)" : "Assembler (8-bit)");

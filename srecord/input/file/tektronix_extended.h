@@ -22,18 +22,20 @@
 
 #include <srecord/input/file.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_file_tektronix_extended clas sis used to represent
+  * The srecord::input_file_tektronix_extended clas sis used to represent
   * the parse state of an input file in Tektronix Extended format.
   */
-class srec_input_file_tektronix_extended:
-    public srec_input_file
+class input_file_tektronix_extended:
+    public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_file_tektronix_extended();
+    virtual ~input_file_tektronix_extended();
 
 private:
     /**
@@ -42,7 +44,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    srec_input_file_tektronix_extended(const std::string &file_name);
+    input_file_tektronix_extended(const std::string &file_name);
 
 public:
     /**
@@ -58,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     // See base class for documentation.
     const char *get_file_format_name() const;
@@ -74,7 +76,7 @@ private:
       * The read_inner method is used to read a record of input.
       * The read method is a wrapper around this method.
       */
-    int read_inner(srec_record &);
+    int read_inner(record &);
 
     /**
       * The garbage_warning instance variable is used to remember
@@ -104,19 +106,20 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_file_tektronix_extended();
+    input_file_tektronix_extended();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_file_tektronix_extended(
-        const srec_input_file_tektronix_extended &);
+    input_file_tektronix_extended(const input_file_tektronix_extended &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_file_tektronix_extended &operator=(
-        const srec_input_file_tektronix_extended &);
+    input_file_tektronix_extended &operator=(
+        const input_file_tektronix_extended &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILE_TEKTRONIX_EXTENDED_H

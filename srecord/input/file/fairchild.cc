@@ -21,14 +21,14 @@
 #include <srecord/record.h>
 
 
-srec_input_file_fairchild::~srec_input_file_fairchild()
+srecord::input_file_fairchild::~input_file_fairchild()
 {
 }
 
 
-srec_input_file_fairchild::srec_input_file_fairchild(
+srecord::input_file_fairchild::input_file_fairchild(
         const std::string &a_filename) :
-    srec_input_file(a_filename),
+    input_file(a_filename),
     header_seen(false),
     address(0),
     file_contains_data(false)
@@ -36,26 +36,26 @@ srec_input_file_fairchild::srec_input_file_fairchild(
 }
 
 
-srec_input::pointer
-srec_input_file_fairchild::create(const std::string &a_file_name)
+srecord::input::pointer
+srecord::input_file_fairchild::create(const std::string &a_file_name)
 {
-    return pointer(new srec_input_file_fairchild(a_file_name));
+    return pointer(new input_file_fairchild(a_file_name));
 }
 
 
 int
-srec_input_file_fairchild::get_nibble()
+srecord::input_file_fairchild::get_nibble()
 {
-    int n = srec_input_file::get_nibble();
+    int n = input_file::get_nibble();
     checksum_add(n);
     return n;
 }
 
 
 int
-srec_input_file_fairchild::get_byte()
+srecord::input_file_fairchild::get_byte()
 {
-    // this differs from the srec_input_file method only in that we
+    // this differs from the srecord::input_file method only in that we
     // don't add to the checksum.
     int c1 = get_nibble();
     int c2 = get_nibble();
@@ -64,7 +64,7 @@ srec_input_file_fairchild::get_byte()
 
 
 bool
-srec_input_file_fairchild::read(srec_record &record)
+srecord::input_file_fairchild::read(record &result)
 {
     if (!header_seen)
     {
@@ -111,7 +111,7 @@ srec_input_file_fairchild::read(srec_record &record)
                 unsigned char data[8];
                 for (int j = 0; j < 8; ++j)
                     data[j] = get_byte();
-                record = srec_record(srec_record::type_data, address, data, 8);
+                result = record(record::type_data, address, data, 8);
                 address += 8;
                 file_contains_data = true;
 
@@ -137,7 +137,7 @@ srec_input_file_fairchild::read(srec_record &record)
 
 
 const char *
-srec_input_file_fairchild::get_file_format_name()
+srecord::input_file_fairchild::get_file_format_name()
     const
 {
     return "Fairchild Fairbug";

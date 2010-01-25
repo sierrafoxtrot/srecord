@@ -29,13 +29,13 @@
 #include <srecord/record.h>
 
 
-bool srec_output_file::enable_header_flag = true;
-bool srec_output_file::enable_data_count_flag = true;
-bool srec_output_file::enable_goto_addr_flag = true;
-bool srec_output_file::enable_footer_flag = true;
+bool srecord::output_file::enable_header_flag = true;
+bool srecord::output_file::enable_data_count_flag = true;
+bool srecord::output_file::enable_goto_addr_flag = true;
+bool srecord::output_file::enable_footer_flag = true;
 
 
-srec_output_file::srec_output_file() :
+srecord::output_file::output_file() :
     file_name("standard output"),
     line_number(1),
     vfp(0),
@@ -49,7 +49,7 @@ srec_output_file::srec_output_file() :
 }
 
 
-srec_output_file::srec_output_file(const std::string &a_file_name) :
+srecord::output_file::output_file(const std::string &a_file_name) :
     file_name(a_file_name),
     line_number(1),
     vfp(0),
@@ -76,7 +76,7 @@ srec_output_file::srec_output_file(const std::string &a_file_name) :
 
 
 void *
-srec_output_file::get_fp()
+srecord::output_file::get_fp()
 {
     if (!vfp)
     {
@@ -106,7 +106,7 @@ srec_output_file::get_fp()
 }
 
 
-srec_output_file::~srec_output_file()
+srecord::output_file::~output_file()
 {
     FILE *fp = (FILE *)get_fp();
     if (fflush(fp))
@@ -117,7 +117,7 @@ srec_output_file::~srec_output_file()
 
 
 const std::string
-srec_output_file::filename()
+srecord::output_file::filename()
     const
 {
     char buffer[20];
@@ -127,7 +127,7 @@ srec_output_file::filename()
 
 
 void
-srec_output_file::put_char(int c)
+srecord::output_file::put_char(int c)
 {
     FILE *fp = (FILE *)get_fp();
     if (c == '\n')
@@ -182,14 +182,14 @@ srec_output_file::put_char(int c)
 
 
 void
-srec_output_file::put_nibble(int n)
+srecord::output_file::put_nibble(int n)
 {
     put_char("0123456789ABCDEF"[n & 15]);
 }
 
 
 void
-srec_output_file::put_byte(unsigned char n)
+srecord::output_file::put_byte(unsigned char n)
 {
     put_nibble(n >> 4);
     put_nibble(n);
@@ -198,7 +198,7 @@ srec_output_file::put_byte(unsigned char n)
 
 
 void
-srec_output_file::put_word(int n)
+srecord::output_file::put_word(int n)
 {
     put_byte(n >> 8);
     put_byte(n);
@@ -206,7 +206,7 @@ srec_output_file::put_word(int n)
 
 
 void
-srec_output_file::put_3bytes(unsigned long n)
+srecord::output_file::put_3bytes(unsigned long n)
 {
     put_byte(n >> 16);
     put_byte(n >> 8);
@@ -215,7 +215,7 @@ srec_output_file::put_3bytes(unsigned long n)
 
 
 void
-srec_output_file::put_4bytes(unsigned long n)
+srecord::output_file::put_4bytes(unsigned long n)
 {
     put_byte(n >> 24);
     put_byte(n >> 16);
@@ -225,38 +225,38 @@ srec_output_file::put_4bytes(unsigned long n)
 
 
 int
-srec_output_file::checksum_get()
+srecord::output_file::checksum_get()
 {
     return (checksum & 0xFF);
 }
 
 
 int
-srec_output_file::checksum_get16()
+srecord::output_file::checksum_get16()
 {
     return (checksum & 0xFFFF);
 }
 
 
 void
-srec_output_file::checksum_reset()
+srecord::output_file::checksum_reset()
 {
     checksum = 0;
 }
 
 void
-srec_output_file::checksum_add(unsigned char n)
+srecord::output_file::checksum_add(unsigned char n)
 {
     checksum += n;
 }
 
 
 void
-srec_output_file::seek_to(unsigned long address)
+srecord::output_file::seek_to(unsigned long address)
 {
     //
     // Seeking on non-regular files is problematic.  Avoid doing
-    // this if possible.  (Usually we can, srec_cat emits records
+    // this if possible.  (Usually we can, srecord::cat emits records
     // in ascending address order.)
     //
     if (!is_regular)
@@ -295,7 +295,7 @@ srec_output_file::seek_to(unsigned long address)
 
 
 void
-srec_output_file::put_string(const char *s)
+srecord::output_file::put_string(const char *s)
 {
     while (*s)
         put_char(*s++);
@@ -303,7 +303,7 @@ srec_output_file::put_string(const char *s)
 
 
 void
-srec_output_file::put_string(const std::string &s)
+srecord::output_file::put_string(const std::string &s)
 {
     const char *cp = s.c_str();
     const char *ep = cp + s.size();
@@ -313,7 +313,7 @@ srec_output_file::put_string(const std::string &s)
 
 
 void
-srec_output_file::put_stringf(const char *fmt, ...)
+srecord::output_file::put_stringf(const char *fmt, ...)
 {
     va_list ap;
     va_start(ap, fmt);
@@ -325,35 +325,35 @@ srec_output_file::put_stringf(const char *fmt, ...)
 
 
 void
-srec_output_file::enable_header(bool yesno)
+srecord::output_file::enable_header(bool yesno)
 {
     enable_header_flag = yesno;
 }
 
 
 void
-srec_output_file::enable_data_count(bool yesno)
+srecord::output_file::enable_data_count(bool yesno)
 {
     enable_data_count_flag = yesno;
 }
 
 
 void
-srec_output_file::enable_goto_addr(bool yesno)
+srecord::output_file::enable_goto_addr(bool yesno)
 {
     enable_goto_addr_flag = yesno;
 }
 
 
 void
-srec_output_file::enable_footer(bool yesno)
+srecord::output_file::enable_footer(bool yesno)
 {
     enable_footer_flag = yesno;
 }
 
 
 bool
-srec_output_file::enable_by_name(const std::string &name, bool yesno)
+srecord::output_file::enable_by_name(const std::string &name, bool yesno)
 {
     struct table_t
     {
@@ -363,10 +363,10 @@ srec_output_file::enable_by_name(const std::string &name, bool yesno)
 
     static const table_t table[] =
     {
-        { "Header", &srec_output_file::enable_header },
-        { "Data_Count", &srec_output_file::enable_data_count },
-        { "Execution_Start_Address", &srec_output_file::enable_goto_addr },
-        { "Footer", &srec_output_file::enable_footer },
+        { "Header", &srecord::output_file::enable_header },
+        { "Data_Count", &srecord::output_file::enable_data_count },
+        { "Execution_Start_Address", &srecord::output_file::enable_goto_addr },
+        { "Footer", &srecord::output_file::enable_footer },
     };
 
     for (const table_t *tp = table; tp < ENDOF(table); ++tp)
@@ -382,7 +382,7 @@ srec_output_file::enable_by_name(const std::string &name, bool yesno)
 
 
 void
-srec_output_file::set_is_regular()
+srecord::output_file::set_is_regular()
 {
     FILE *fp = (FILE *)vfp;
     struct stat st;
@@ -391,7 +391,7 @@ srec_output_file::set_is_regular()
 
 
 void
-srec_output_file::fatal_alignment_error(int multiple)
+srecord::output_file::fatal_alignment_error(int multiple)
 {
     if (multiple > 4)
     {
@@ -422,7 +422,7 @@ srec_output_file::fatal_alignment_error(int multiple)
 
 
 void
-srec_output_file::data_address_too_large(const srec_record &record)
+srecord::output_file::data_address_too_large(const srecord::record &record)
     const
 {
     unsigned long lo = record.get_address();

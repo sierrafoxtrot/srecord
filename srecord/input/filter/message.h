@@ -22,8 +22,11 @@
 #include <srecord/input/filter.h>
 #include <srecord/memory.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_filter_message class is used to represent an abstract
+  * The srecord::input_filter_message class is used to represent an abstract
   * base class for filters that must operate on the complete data, in
   * order, in order to functions (e.g. CRC, message digest, etc).
   *
@@ -32,14 +35,14 @@
   * that a derived class must supply are data block processing and
   * results creation.
   */
-class srec_input_filter_message:
-    public srec_input_filter
+class input_filter_message:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_message();
+    virtual ~input_filter_message();
 
 protected:
     /**
@@ -51,11 +54,10 @@ protected:
       *     Whether or not to forward the data: true means result only
       *     with no data, false means result and data.
       */
-    srec_input_filter_message(const srec_input::pointer &deeper,
-        bool naked = false);
+    input_filter_message(const input::pointer &deeper, bool naked = false);
 
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
     /**
       * The process method is used to process the data from the input.
@@ -65,7 +67,7 @@ protected:
       * @param output
       *     The filter's output.
       */
-    virtual void process(const srec_memory &input, srec_record &output) = 0;
+    virtual void process(const memory &input, record &output) = 0;
 
     /**
       * The get_algorithm_name method is used in error messages.
@@ -86,7 +88,7 @@ private:
       * in order to calculate the result, and the input may be out of
       * address order, necessitating this buffer.
       */
-    srec_memory buffer;
+    memory buffer;
 
     /**
       * The buffer_pos instance variable is used to remember where we
@@ -116,17 +118,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_message();
+    input_filter_message();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_message(const srec_input_filter_message &);
+    input_filter_message(const input_filter_message &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_message &operator=(const srec_input_filter_message &);
+    input_filter_message &operator=(const input_filter_message &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

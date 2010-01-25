@@ -22,24 +22,27 @@
 
 #include <srecord/input/generator.h>
 
+namespace srecord
+{
+
 /**
-  * The srec_input_generator_random class is used to represent a factory
+  * The srecord::input_generator_random class is used to represent a factory
   * which manufactures random data.
   */
-class srec_input_generator_random:
-    public srec_input_generator
+class input_generator_random:
+    public input_generator
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_generator_random();
+    virtual ~input_generator_random();
 
 private:
     /**
       * The constructor.
       */
-    srec_input_generator_random(const interval &range);
+    input_generator_random(const interval &range);
 
 public:
     /**
@@ -62,17 +65,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_generator_random();
+    input_generator_random();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_generator_random(const srec_input_generator_random &);
+    input_generator_random(const input_generator_random &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_generator_random &operator=(const srec_input_generator_random &);
+    input_generator_random &operator=(const input_generator_random &);
+};
+
 };
 
 // vim:ts=8:sw=4:et

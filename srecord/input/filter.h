@@ -23,24 +23,26 @@
 
 #include <srecord/input.h>
 
+namespace srecord {
+
 /**
-  * The input filter class is an abstract interface for all of the
+  * The srecord::input_filter class is an abstract interface for all of the
   * various filters that can be applied to an incoming EPROM file.
   *
   * Each filter is-a input, but each also has-a deeper input, from which
   * is obtained the data to be filtered.
   */
-class srec_input_filter:
-    public srec_input
+class input_filter:
+    public input
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter();
+    virtual ~input_filter();
 
     // See base class for documentation.
-    bool read(class srec_record &record);
+    bool read(class record &record);
 
     // See base class for documentation.
     std::string filename() const;
@@ -61,30 +63,32 @@ protected:
       * \param deeper
       *     The deeper input to be filtered.
       */
-    srec_input_filter(srec_input::pointer deeper);
+    input_filter(input::pointer deeper);
 
     //
-    // I'd like this to be private, but srec_input_filter_crc16 and
-    // srec_input_filter_crc32 need to access it directly, rather than
-    // going through the srec_input_filter::read method.
+    // I'd like this to be private, but srecord::input_filter_crc16 and
+    // srecord::input_filter_crc32 need to access it directly, rather than
+    // going through the srecord::input_filter::read method.
     //
-    srec_input::pointer ifp;
+    pointer ifp;
 
 private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter();
+    input_filter();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter(const srec_input_filter &);
+    input_filter(const input_filter &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter &operator=(const srec_input_filter &);
+    input_filter &operator=(const input_filter &);
+};
+
 };
 
 #endif // SRECORD_INPUT_FILTER_H

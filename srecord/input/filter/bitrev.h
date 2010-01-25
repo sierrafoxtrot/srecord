@@ -21,18 +21,20 @@
 
 #include <srecord/input/filter.h>
 
+namespace srecord {
+
 /**
-  * The srec_input_filter_bitrev clas sis used to represent the input state
+  * The srecord::input_filter_bitrev clas sis used to represent the input state
   * of a filter which reverses the order of bits in each data byte.
   */
-class srec_input_filter_bitrev:
-    public srec_input_filter
+class input_filter_bitrev:
+    public input_filter
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~srec_input_filter_bitrev();
+    virtual ~input_filter_bitrev();
 
 private:
     /**
@@ -41,7 +43,7 @@ private:
       * @param deeper
       *     The deeper input to be used as a data source.
       */
-    srec_input_filter_bitrev(const srec_input::pointer &deeper);
+    input_filter_bitrev(const input::pointer &deeper);
 
 public:
     /**
@@ -51,27 +53,29 @@ public:
       * @param deeper
       *     The incoming data source to be filtered
       */
-    static pointer create(const srec_input::pointer &deeper);
+    static pointer create(const input::pointer &deeper);
 
 protected:
     // See base class for documentation.
-    bool read(srec_record &record);
+    bool read(record &record);
 
 private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_input_filter_bitrev();
+    input_filter_bitrev();
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_input_filter_bitrev(const srec_input_filter_bitrev &);
+    input_filter_bitrev(const input_filter_bitrev &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_input_filter_bitrev &operator=(const srec_input_filter_bitrev &);
+    input_filter_bitrev &operator=(const input_filter_bitrev &);
+};
+
 };
 
 // vim:ts=8:sw=4:et
