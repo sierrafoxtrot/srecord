@@ -17,11 +17,14 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_QUIT_H
-#define LIB_QUIT_H
+#ifndef SRECORD_QUIT_H
+#define SRECORD_QUIT_H
 
 #include <stdarg.h>
 #include <srecord/format_printf.h>
+
+namespace srecord
+{
 
 /**
   * The quit class is an abstract class for reporting error messages,
@@ -126,4 +129,6 @@ public:
   */
 extern quit &quit_default;
 
-#endif // LIB_QUIT_H
+};
+
+#endif // SRECORD_QUIT_H

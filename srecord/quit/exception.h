@@ -17,10 +17,13 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_QUIT_EXCEPTION_H
-#define LIB_QUIT_EXCEPTION_H
+#ifndef SRECORD_QUIT_EXCEPTION_H
+#define SRECORD_QUIT_EXCEPTION_H
 
 #include <srecord/quit.h>
+
+namespace srecord
+{
 
 /**
   * The quit_exception class is use to represent a quit handler which
@@ -64,4 +67,6 @@ private:
     quit_exception &operator=(const quit_exception &);
 };
 
-#endif // LIB_QUIT_EXCEPTION_H
+};
+
+#endif // SRECORD_QUIT_EXCEPTION_H

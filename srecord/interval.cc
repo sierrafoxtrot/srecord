@@ -43,7 +43,7 @@
 //      Use the interval_free function for this purpose.
 //
 
-interval::interval()
+srecord::interval::interval()
 {
     length = 0;
     size = 0;
@@ -54,11 +54,11 @@ interval::interval()
 }
 
 
-static inline interval::long_data_t
-promote(interval::data_t datum, size_t pos)
+static inline srecord::interval::long_data_t
+promote(srecord::interval::data_t datum, size_t pos)
 {
     if (datum == 0 && (pos & 1))
-        return ((interval::long_data_t)1 << 32);
+        return ((srecord::interval::long_data_t)1 << 32);
     return datum;
 }
 
@@ -88,7 +88,7 @@ promote(interval::data_t datum, size_t pos)
 //      Use the interval_free function for this purpose.
 //
 
-interval::interval(data_t first, data_t last)
+srecord::interval::interval(data_t first, data_t last)
 {
     length = 2;
     size = 8;
@@ -109,7 +109,8 @@ interval::interval(data_t first, data_t last)
     // assert(valid());
 }
 
-interval::interval(data_t first)
+
+srecord::interval::interval(data_t first)
 {
     length = 2;
     size = 8;
@@ -123,7 +124,7 @@ interval::interval(data_t first)
 }
 
 
-interval::interval(const interval &arg)
+srecord::interval::interval(const interval &arg)
 {
     // assert(arg.valid());
     length = arg.length;
@@ -142,8 +143,8 @@ interval::interval(const interval &arg)
 }
 
 
-interval &
-interval::operator=(const interval &arg)
+srecord::interval &
+srecord::interval::operator=(const interval &arg)
 {
     if (this != &arg)
     {
@@ -186,7 +187,7 @@ interval::operator=(const interval &arg)
 //      ip      - the interval to release
 //
 
-interval::~interval()
+srecord::interval::~interval()
 {
     // assert(valid());
     if (data)
@@ -221,7 +222,7 @@ interval::~interval()
 //
 
 bool
-interval::valid()
+srecord::interval::valid()
     const
 {
     if (length > size)
@@ -272,7 +273,7 @@ interval::valid()
 //
 
 void
-interval::append(data_t datum)
+srecord::interval::append(data_t datum)
 {
     //
     // should always be increasing
@@ -341,8 +342,8 @@ interval::append(data_t datum)
 //      Use the interval_free function for this purpose.
 //
 
-interval
-interval::union_(const interval &left, const interval &right)
+srecord::interval
+srecord::interval::union_(const interval &left, const interval &right)
 {
     // assert(left.valid());
     // assert(right.valid());
@@ -424,8 +425,8 @@ interval::union_(const interval &left, const interval &right)
 //      Use the interval_free function for this purpose.
 //
 
-interval
-interval::intersection(const interval &left, const interval &right)
+srecord::interval
+srecord::interval::intersection(const interval &left, const interval &right)
 {
     // assert(left.valid());
     // assert(right.valid());
@@ -506,8 +507,8 @@ interval::intersection(const interval &left, const interval &right)
 //      Use the interval_free function for this purpose.
 //
 
-interval
-interval::difference(const interval &left, const interval &right)
+srecord::interval
+srecord::interval::difference(const interval &left, const interval &right)
 {
     // assert(left.valid());
     // assert(right.valid());
@@ -584,7 +585,7 @@ interval::difference(const interval &left, const interval &right)
 //
 
 bool
-interval::member(data_t datum)
+srecord::interval::member(data_t datum)
     const
 {
     if (length == 0)
@@ -624,7 +625,7 @@ interval::member(data_t datum)
 //
 
 void
-interval::scan_begin()
+srecord::interval::scan_begin()
 {
     // assert(valid());
     // assert(!scan_index);
@@ -657,7 +658,7 @@ interval::scan_begin()
 //
 
 bool
-interval::scan_next(data_t &datum)
+srecord::interval::scan_next(data_t &datum)
 {
     // assert(valid());
     // assert(scan_index & 1);
@@ -691,7 +692,7 @@ interval::scan_next(data_t &datum)
 //
 
 void
-interval::scan_end()
+srecord::interval::scan_end()
 {
     // assert(valid());
     // assert(scan_index & 1);
@@ -701,7 +702,7 @@ interval::scan_end()
 
 
 void
-interval::first_interval_only()
+srecord::interval::first_interval_only()
 {
     // assert(valid());
     if (length > 2)
@@ -713,7 +714,7 @@ interval::first_interval_only()
 
 
 bool
-interval::empty()
+srecord::interval::empty()
     const
 {
     return (length == 0);
@@ -721,7 +722,7 @@ interval::empty()
 
 
 bool
-interval::equal(const interval &lhs, const interval &rhs)
+srecord::interval::equal(const interval &lhs, const interval &rhs)
 {
     if (lhs.length != rhs.length)
         return false;
@@ -732,8 +733,8 @@ interval::equal(const interval &lhs, const interval &rhs)
 }
 
 
-interval::data_t
-interval::get_lowest()
+srecord::interval::data_t
+srecord::interval::get_lowest()
     const
 {
     // assert(valid());
@@ -741,8 +742,8 @@ interval::get_lowest()
 }
 
 
-interval::data_t
-interval::get_highest()
+srecord::interval::data_t
+srecord::interval::get_highest()
     const
 {
     // assert(valid());
@@ -751,7 +752,7 @@ interval::get_highest()
 
 
 void
-interval::print(std::ostream &os)
+srecord::interval::print(std::ostream &os)
     const
 {
     if (length != 2)
@@ -772,7 +773,7 @@ interval::print(std::ostream &os)
 
 
 static std::string
-to_string(interval::data_t x)
+to_string(srecord::interval::data_t x)
 {
     int width = 4;
     if (x >= 0x10000)
@@ -786,7 +787,7 @@ to_string(interval::data_t x)
 
 
 std::string
-interval::representation()
+srecord::interval::representation()
     const
 {
     std::string result;
@@ -812,8 +813,8 @@ interval::representation()
 }
 
 
-interval
-interval::pad(int mult)
+srecord::interval
+srecord::interval::pad(int mult)
     const
 {
     if (mult < 2)

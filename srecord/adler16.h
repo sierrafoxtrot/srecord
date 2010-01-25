@@ -16,10 +16,13 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_ADLER16_H
-#define LIB_ADLER16_H
+#ifndef SRECORD_ADLER16_H
+#define SRECORD_ADLER16_H
 
 #include <stddef.h>
+
+namespace srecord
+{
 
 /**
   * The adler16 class is used to represent the running value of a 16-bit
@@ -78,5 +81,7 @@ private:
     unsigned char sum_b;
 };
 
+};
+
 // vim:ts=8:sw=4:et
-#endif // LIB_ADLER16_H
+#endif // SRECORD_ADLER16_H

@@ -27,25 +27,25 @@
 #include <srecord/quit/normal.h>
 
 
-quit_normal::~quit_normal()
+srecord::quit_normal::~quit_normal()
 {
 }
 
 
-quit_normal::quit_normal()
+srecord::quit_normal::quit_normal()
 {
 }
 
 
 void
-quit_normal::exit(int n)
+srecord::quit_normal::exit(int n)
 {
     ::exit(n);
 }
 
 
 void
-quit_normal::message_v(const char *fmt, va_list ap)
+srecord::quit_normal::message_v(const char *fmt, va_list ap)
 {
     char buf[2000];
     snprintf(buf, sizeof(buf), "%s: ", progname_get());
@@ -100,5 +100,5 @@ quit_normal::message_v(const char *fmt, va_list ap)
 }
 
 
-static quit_normal quit_normal_default;
-quit &quit_default = quit_normal_default;
+static srecord::quit_normal quit_normal_default;
+srecord::quit &srecord::quit_default = quit_normal_default;

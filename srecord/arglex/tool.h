@@ -24,9 +24,11 @@
 #include <srecord/input.h>
 #include <srecord/output.h>
 
-class interval; // forward
 
-namespace srecord {
+namespace srecord
+{
+
+class interval; // forward
 
 /**
   * The srecord::arglex_tool is used to parse command line with srec-specific

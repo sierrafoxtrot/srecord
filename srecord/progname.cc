@@ -26,7 +26,7 @@ static char *progname;
 
 
 void
-progname_set(char *s)
+srecord::progname_set(char *s)
 {
     for (;;)
     {
@@ -81,7 +81,7 @@ progname_set(char *s)
 
 
 const char *
-progname_get()
+srecord::progname_get()
 {
     return (progname ? progname : "???");
 }

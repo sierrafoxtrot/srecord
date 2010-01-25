@@ -20,8 +20,8 @@
 #include <srecord/interval.h>
 
 
-interval
-interval::flatten()
+srecord::interval
+srecord::interval::flatten()
     const
 {
     if (length <= 2)

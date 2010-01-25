@@ -70,7 +70,7 @@ main(int argc, char **argv)
         }
         std::cout << "Format: " << ifp->get_file_format_name() << std::endl;
         srecord::record record;
-        interval range;
+        srecord::interval range;
         while (ifp->read(record))
         {
             switch (record.get_type())
@@ -98,7 +98,7 @@ main(int argc, char **argv)
 
             case srecord::record::type_data:
                 range +=
-                    interval
+                    srecord::interval
                     (
                         record.get_address(),
                         record.get_address() + record.get_length()
@@ -133,7 +133,7 @@ main(int argc, char **argv)
         bool first_line = true;
         for (;;)
         {
-            interval tmp = range;
+            srecord::interval tmp = range;
             tmp.first_interval_only();
             if (first_line)
             {

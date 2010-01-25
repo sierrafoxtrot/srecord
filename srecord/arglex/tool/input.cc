@@ -84,7 +84,7 @@
 #include <srecord/input/interval.h>
 
 
-endian_t
+srecord::endian_t
 srecord::arglex_tool::get_endian_by_token(int tok)
     const
 {

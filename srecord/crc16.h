@@ -20,11 +20,13 @@
 // write-up on the CRC16 calculation.
 //
 
-#ifndef LIB_CRC16_H
-#define LIB_CRC16_H
-
+#ifndef SRECORD_CRC16_H
+#define SRECORD_CRC16_H
 
 #include <stddef.h>
+
+namespace srecord
+{
 
 /**
   * The crc16 class is used to represent the running value of a 16-bit
@@ -159,4 +161,6 @@ private:
     inline unsigned short updcrc(unsigned char c, unsigned short state) const;
 };
 
-#endif // LIB_CRC16_H
+};
+
+#endif // SRECORD_CRC16_H

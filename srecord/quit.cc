@@ -25,30 +25,30 @@
 #include <srecord/quit.h>
 
 
-quit::~quit()
+srecord::quit::~quit()
 {
 }
 
 
-quit::quit()
+srecord::quit::quit()
 {
 }
 
 
-quit::quit(const quit &)
+srecord::quit::quit(const quit &)
 {
 }
 
 
-quit &
-quit::operator=(const quit &)
+srecord::quit &
+srecord::quit::operator=(const quit &)
 {
     return *this;
 }
 
 
 void
-quit::fatal_error(const char *fmt, ...)
+srecord::quit::fatal_error(const char *fmt, ...)
 {
     va_list ap;
     va_start(ap, fmt);
@@ -58,7 +58,7 @@ quit::fatal_error(const char *fmt, ...)
 
 
 void
-quit::fatal_error_v(const char *fmt, va_list ap)
+srecord::quit::fatal_error_v(const char *fmt, va_list ap)
 {
     message_v(fmt, ap);
     exit(1);
@@ -66,7 +66,7 @@ quit::fatal_error_v(const char *fmt, va_list ap)
 
 
 void
-quit::fatal_error_errno(const char *fmt, ...)
+srecord::quit::fatal_error_errno(const char *fmt, ...)
 {
     va_list ap;
     va_start(ap, fmt);
@@ -76,7 +76,7 @@ quit::fatal_error_errno(const char *fmt, ...)
 
 
 void
-quit::fatal_error_errno_v(const char *fmt, va_list ap)
+srecord::quit::fatal_error_errno_v(const char *fmt, va_list ap)
 {
     int n = errno;
     char buf[1024];
@@ -86,7 +86,7 @@ quit::fatal_error_errno_v(const char *fmt, va_list ap)
 
 
 void
-quit::warning(const char *fmt, ...)
+srecord::quit::warning(const char *fmt, ...)
 {
     va_list ap;
     va_start(ap, fmt);
@@ -96,7 +96,7 @@ quit::warning(const char *fmt, ...)
 
 
 void
-quit::warning_v(const char *fmt, va_list ap)
+srecord::quit::warning_v(const char *fmt, va_list ap)
 {
     char buf[1024];
     vsnprintf(buf, sizeof(buf), fmt, ap);
@@ -105,7 +105,7 @@ quit::warning_v(const char *fmt, va_list ap)
 
 
 void
-quit::message(const char *fmt, ...)
+srecord::quit::message(const char *fmt, ...)
 {
     va_list ap;
     va_start(ap, fmt);

@@ -19,27 +19,27 @@
 #include <srecord/adler32.h>
 
 
-adler32::~adler32()
+srecord::adler32::~adler32()
 {
 }
 
 
-adler32::adler32() :
+srecord::adler32::adler32() :
     sum_a(1),
     sum_b(0)
 {
 }
 
 
-adler32::adler32(const adler32 &rhs) :
+srecord::adler32::adler32(const adler32 &rhs) :
     sum_a(rhs.sum_a),
     sum_b(rhs.sum_b)
 {
 }
 
 
-adler32 &
-adler32::operator=(const adler32 &rhs)
+srecord::adler32 &
+srecord::adler32::operator=(const adler32 &rhs)
 {
     if (this != &rhs)
     {
@@ -51,7 +51,7 @@ adler32::operator=(const adler32 &rhs)
 
 
 unsigned long
-adler32::get()
+srecord::adler32::get()
     const
 {
     return ((((unsigned long)sum_b) << 16) | sum_a);
@@ -59,7 +59,7 @@ adler32::get()
 
 
 void
-adler32::next(unsigned char c)
+srecord::adler32::next(unsigned char c)
 {
     // This is not portable to int=16-bit machines
     sum_a = (sum_a + c) % 65521;
@@ -68,7 +68,7 @@ adler32::next(unsigned char c)
 
 
 void
-adler32::nextbuf(const void *data, size_t nbytes)
+srecord::adler32::nextbuf(const void *data, size_t nbytes)
 {
     const unsigned char *dp = (const unsigned char *)data;
     while (nbytes > 0)

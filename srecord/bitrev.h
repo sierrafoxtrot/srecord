@@ -16,8 +16,11 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_BITREV_H
-#define LIB_BITREV_H
+#ifndef SRECORD_BITREV_H
+#define SRECORD_BITREV_H
+
+namespace srecord
+{
 
 /**
   * The bitrev8 function is used to reverse the order of the bits in an
@@ -91,5 +94,7 @@ unsigned long long bitrev56(unsigned long long value);
   */
 unsigned long long bitrev64(unsigned long long value);
 
+};
+
 // vim:ts=8:sw=4:et
-#endif // LIB_BITREV_H
+#endif // SRECORD_BITREV_H

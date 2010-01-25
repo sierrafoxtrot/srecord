@@ -23,19 +23,19 @@
 #include <srecord/quit/prefix.h>
 
 
-quit_prefix::~quit_prefix()
+srecord::quit_prefix::~quit_prefix()
 {
 }
 
 
-quit_prefix::quit_prefix(quit &a1, const char *a2) :
+srecord::quit_prefix::quit_prefix(quit &a1, const char *a2) :
     prefix(a2),
     deeper(a1)
 {
 }
 
 
-quit_prefix::quit_prefix(quit &a1, const std::string &a2) :
+srecord::quit_prefix::quit_prefix(quit &a1, const std::string &a2) :
     prefix(a2),
     deeper(a1)
 {
@@ -43,14 +43,14 @@ quit_prefix::quit_prefix(quit &a1, const std::string &a2) :
 
 
 void
-quit_prefix::exit(int n)
+srecord::quit_prefix::exit(int n)
 {
     deeper.exit(n);
 }
 
 
 void
-quit_prefix::message_v(const char *fmt, va_list ap)
+srecord::quit_prefix::message_v(const char *fmt, va_list ap)
 {
     if (prefix != "")
     {

@@ -17,8 +17,11 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_R250_H
-#define LIB_R250_H
+#ifndef SRECORD_R250_H
+#define SRECORD_R250_H
+
+namespace srecord
+{
 
 /**
   * The r250 function is used to produce a 32-bit random number.
@@ -26,4 +29,6 @@
   */
 unsigned long r250(void);
 
-#endif // LIB_R250_H
+};
+
+#endif // SRECORD_R250_H

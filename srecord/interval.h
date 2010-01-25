@@ -17,12 +17,15 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_INTERVAL_H
-#define LIB_INTERVAL_H
+#ifndef SRECORD_INTERVAL_H
+#define SRECORD_INTERVAL_H
 
 #include <cstddef>
 #include <stdint.h>
 #include <iostream>
+
+namespace srecord
+{
 
 /**
   * The interval class is used to represent a set of integer values,
@@ -358,4 +361,6 @@ operator << (std::ostream &os, const interval &val)
     return os;
 }
 
-#endif // LIB_INTERVAL_H
+};
+
+#endif // SRECORD_INTERVAL_H

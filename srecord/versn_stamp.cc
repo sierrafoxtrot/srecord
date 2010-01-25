@@ -20,26 +20,26 @@
 #include <iostream>
 
 #include <srecord/versn_stamp.h>
-#include <lib/patchlevel.h>
-#include <lib/progname.h>
+#include <srecord/patchlevel.h>
+#include <srecord/progname.h>
 
 
 const char *
-version_stamp(void)
+srecord::version_stamp(void)
 {
     return PATCHLEVEL;
 }
 
 
 const char *
-copyright_years(void)
+srecord::copyright_years(void)
 {
     return COPYRIGHT_YEARS;
 }
 
 
 void
-print_version(void)
+srecord::print_version(void)
 {
     std::cout << progname_get() << " version " << version_stamp() << std::endl;
     std::cout << "Copyright (C) " << copyright_years() << " Peter Miller"

@@ -17,10 +17,13 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_QUIT_NORMAL_H
-#define LIB_QUIT_NORMAL_H
+#ifndef SRECORD_QUIT_NORMAL_H
+#define SRECORD_QUIT_NORMAL_H
 
 #include <srecord/quit.h>
+
+namespace srecord
+{
 
 /**
   * The quit_normal class is used to represent a quit handler which
@@ -60,4 +63,6 @@ private:
     quit_normal &operator=(const quit_normal &);
 };
 
-#endif // LIB_QUIT_NORMAL_H
+};
+
+#endif // SRECORD_QUIT_NORMAL_H

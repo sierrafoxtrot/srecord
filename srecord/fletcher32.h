@@ -16,10 +16,13 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_FLETCHER32_H
-#define LIB_FLETCHER32_H
+#ifndef SRECORD_FLETCHER32_H
+#define SRECORD_FLETCHER32_H
 
 #include <stddef.h>
+
+namespace srecord
+{
 
 /**
   * The fletcher32 class is used to represent the running value of a 32-bit
@@ -102,5 +105,7 @@ private:
     unsigned long sum2;
 };
 
+};
+
 // vim:ts=8:sw=4:et
-#endif // LIB_FLETCHER32_H
+#endif // SRECORD_FLETCHER32_H

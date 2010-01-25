@@ -19,12 +19,12 @@
 #include <srecord/fletcher16.h>
 
 
-fletcher16::~fletcher16()
+srecord::fletcher16::~fletcher16()
 {
 }
 
 
-fletcher16::fletcher16() :
+srecord::fletcher16::fletcher16() :
     sum1(0xFF),
     sum2(0xFF)
 {
@@ -32,15 +32,15 @@ fletcher16::fletcher16() :
 }
 
 
-fletcher16::fletcher16(const fletcher16 &rhs) :
+srecord::fletcher16::fletcher16(const fletcher16 &rhs) :
     sum1(rhs.sum1),
     sum2(rhs.sum2)
 {
 }
 
 
-fletcher16 &
-fletcher16::operator=(const fletcher16 &rhs)
+srecord::fletcher16 &
+srecord::fletcher16::operator=(const fletcher16 &rhs)
 {
     if (this != &rhs)
     {
@@ -52,7 +52,7 @@ fletcher16::operator=(const fletcher16 &rhs)
 
 
 void
-fletcher16::next(unsigned char ch)
+srecord::fletcher16::next(unsigned char ch)
 {
     // reduction step to reduce sums to 8 bits
     sum1 += ch;
@@ -63,7 +63,7 @@ fletcher16::next(unsigned char ch)
 
 
 void
-fletcher16::nextbuf(const void *vdata, size_t nbytes)
+srecord::fletcher16::nextbuf(const void *vdata, size_t nbytes)
 {
     //
     // A few tricks, well-known to implementors of the IP checksum, are
@@ -112,7 +112,7 @@ fletcher16::nextbuf(const void *vdata, size_t nbytes)
 
 
 unsigned short
-fletcher16::get()
+srecord::fletcher16::get()
     const
 {
     return ((sum2 << 8) | sum1);

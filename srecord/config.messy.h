@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_CONFIG_MESSY_H
-#define LIB_CONFIG_MESSY_H
+#ifndef SRECORD_CONFIG_MESSY_H
+#define SRECORD_CONFIG_MESSY_H
 
 //
 // Make sure Solaris includes POSIX extensions.
@@ -51,4 +51,4 @@
 #define vsnprintf _vsnprintf
 #endif
 
-#endif // LIB_CONFIG_MESSY_H
+#endif // SRECORD_CONFIG_MESSY_H

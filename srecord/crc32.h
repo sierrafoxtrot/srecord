@@ -17,11 +17,13 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_CRC32_H
-#define LIB_CRC32_H
-
+#ifndef SRECORD_CRC32_H
+#define SRECORD_CRC32_H
 
 #include <stddef.h>
+
+namespace srecord
+{
 
 /**
   * The crc32 class is used to represent the running value of a 32-bit
@@ -80,4 +82,6 @@ private:
     unsigned long state;
 };
 
-#endif // LIB_CRC32_H
+};
+
+#endif // SRECORD_CRC32_H

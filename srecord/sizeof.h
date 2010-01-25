@@ -17,11 +17,11 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_SIZEOF_H
-#define LIB_SIZEOF_H
+#ifndef SRECORD_SIZEOF_H
+#define SRECORD_SIZEOF_H
 
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 #define ENDOF(a) ((a) + SIZEOF(a))
 
 // vim:ts=8:sw=4:et
-#endif // LIB_SIZEOF_H
+#endif // SRECORD_SIZEOF_H

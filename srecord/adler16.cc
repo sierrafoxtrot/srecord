@@ -19,27 +19,27 @@
 #include <srecord/adler16.h>
 
 
-adler16::~adler16()
+srecord::adler16::~adler16()
 {
 }
 
 
-adler16::adler16() :
+srecord::adler16::adler16() :
     sum_a(1),
     sum_b(0)
 {
 }
 
 
-adler16::adler16(const adler16 &rhs) :
+srecord::adler16::adler16(const adler16 &rhs) :
     sum_a(rhs.sum_a),
     sum_b(rhs.sum_b)
 {
 }
 
 
-adler16 &
-adler16::operator=(const adler16 &rhs)
+srecord::adler16 &
+srecord::adler16::operator=(const adler16 &rhs)
 {
     if (this != &rhs)
     {
@@ -51,7 +51,7 @@ adler16::operator=(const adler16 &rhs)
 
 
 unsigned short
-adler16::get()
+srecord::adler16::get()
     const
 {
     return ((((unsigned short)sum_b) << 8) | sum_a);
@@ -59,7 +59,7 @@ adler16::get()
 
 
 void
-adler16::next(unsigned char c)
+srecord::adler16::next(unsigned char c)
 {
     // This is not portable to int=16-bit machines
     sum_a = (sum_a + c) % 251;
@@ -68,7 +68,7 @@ adler16::next(unsigned char c)
 
 
 void
-adler16::nextbuf(const void *data, size_t nbytes)
+srecord::adler16::nextbuf(const void *data, size_t nbytes)
 {
     const unsigned char *dp = (const unsigned char *)data;
     while (nbytes > 0)

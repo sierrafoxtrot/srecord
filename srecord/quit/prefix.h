@@ -17,11 +17,14 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_QUIT_PREFIX_H
-#define LIB_QUIT_PREFIX_H
+#ifndef SRECORD_QUIT_PREFIX_H
+#define SRECORD_QUIT_PREFIX_H
 
 #include <string>
 #include <srecord/quit.h>
+
+namespace srecord
+{
 
 /**
   * The quit_prefix class is used to filter the messages issued to include
@@ -86,4 +89,6 @@ private:
     quit_prefix &operator=(const quit_prefix &);
 };
 
-#endif // LIB_QUIT_PREFIX_H
+};
+
+#endif // SRECORD_QUIT_PREFIX_H

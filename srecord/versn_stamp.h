@@ -17,8 +17,11 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_COMMON_VERSN_STAMP_H
-#define LIB_COMMON_VERSN_STAMP_H
+#ifndef SRECORD_COMMON_VERSN_STAMP_H
+#define SRECORD_COMMON_VERSN_STAMP_H
+
+namespace srecord
+{
 
 /**
   * The version_stamp function is used to obtain the version number,
@@ -40,4 +43,6 @@ const char *copyright_years(void);
   */
 void print_version(void);
 
-#endif // LIB_COMMON_VERSN_STAMP_H
+};
+
+#endif // SRECORD_COMMON_VERSN_STAMP_H

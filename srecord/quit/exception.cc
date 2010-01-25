@@ -20,25 +20,25 @@
 #include <srecord/quit/exception.h>
 
 
-quit_exception::~quit_exception()
+srecord::quit_exception::~quit_exception()
 {
 }
 
 
-quit_exception::quit_exception()
+srecord::quit_exception::quit_exception()
 {
 }
 
 
 void
-quit_exception::exit(int)
+srecord::quit_exception::exit(int)
 {
     throw vomit();
 }
 
 
 void
-quit_exception::message_v(const char *, va_list)
+srecord::quit_exception::message_v(const char *, va_list)
 {
     // don't say anything
 }

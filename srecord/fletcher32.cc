@@ -19,12 +19,12 @@
 #include <srecord/fletcher32.h>
 
 
-fletcher32::~fletcher32()
+srecord::fletcher32::~fletcher32()
 {
 }
 
 
-fletcher32::fletcher32() :
+srecord::fletcher32::fletcher32() :
     sum1(0xFFFF),
     sum2(0xFFFF)
 {
@@ -32,15 +32,15 @@ fletcher32::fletcher32() :
 }
 
 
-fletcher32::fletcher32(const fletcher32 &rhs) :
+srecord::fletcher32::fletcher32(const fletcher32 &rhs) :
     sum1(rhs.sum1),
     sum2(rhs.sum2)
 {
 }
 
 
-fletcher32 &
-fletcher32::operator=(const fletcher32 &rhs)
+srecord::fletcher32 &
+srecord::fletcher32::operator=(const fletcher32 &rhs)
 {
     if (this != &rhs)
     {
@@ -52,7 +52,7 @@ fletcher32::operator=(const fletcher32 &rhs)
 
 
 void
-fletcher32::next(unsigned char x)
+srecord::fletcher32::next(unsigned char x)
 {
     sum1 += x;
     sum2 += sum1;
@@ -63,7 +63,7 @@ fletcher32::next(unsigned char x)
 
 
 void
-fletcher32::nextbuf(const void *vdata, size_t nbytes)
+srecord::fletcher32::nextbuf(const void *vdata, size_t nbytes)
 {
     //
     // A few tricks, well-known to implementors of the IP checksum, are
@@ -112,7 +112,7 @@ fletcher32::nextbuf(const void *vdata, size_t nbytes)
 
 
 unsigned long
-fletcher32::get()
+srecord::fletcher32::get()
     const
 {
     return ((sum2 << 16) | sum1);

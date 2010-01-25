@@ -22,7 +22,7 @@
 #include <srecord/arglex/tool.h>
 
 
-interval
+srecord::interval
 srecord::arglex_tool::get_interval_small(const char *caption)
 {
     interval result = get_interval(caption);

@@ -17,8 +17,11 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_ENDIAN_H
-#define LIB_ENDIAN_H
+#ifndef SRECORD_ENDIAN_H
+#define SRECORD_ENDIAN_H
+
+namespace srecord
+{
 
 enum endian_t
 {
@@ -37,5 +40,7 @@ enum endian_t
   */
 const char *endian_to_string(endian_t x);
 
+};
+
 // vim:ts=8:sw=4:et
-#endif // LIB_ENDIAN_H
+#endif // SRECORD_ENDIAN_H

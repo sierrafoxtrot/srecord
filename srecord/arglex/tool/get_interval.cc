@@ -25,7 +25,7 @@
 #include <srecord/input/interval.h>
 
 
-interval
+srecord::interval
 srecord::arglex_tool::get_interval_factor(const char *name)
 {
     switch (token_cur())
@@ -98,7 +98,7 @@ srecord::arglex_tool::get_interval_factor(const char *name)
 }
 
 
-interval
+srecord::interval
 srecord::arglex_tool::get_interval_term(const char *name)
 {
     interval result = get_interval_factor(name);
@@ -120,7 +120,7 @@ srecord::arglex_tool::get_interval_term(const char *name)
 }
 
 
-interval
+srecord::interval
 srecord::arglex_tool::get_interval(const char *name)
 {
     interval result = get_interval_term(name);

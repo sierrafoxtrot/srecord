@@ -16,10 +16,13 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_FLETCHER16_H
-#define LIB_FLETCHER16_H
+#ifndef SRECORD_FLETCHER16_H
+#define SRECORD_FLETCHER16_H
 
 #include <stddef.h>
+
+namespace srecord
+{
 
 /**
   * The fletcher16 class is used to represent the running value of a 16-bit
@@ -108,5 +111,7 @@ private:
     unsigned short sum2;
 };
 
+};
+
 // vim: set ts=8 sw=4 et
-#endif // LIB_FLETCHER16_H
+#endif // SRECORD_FLETCHER16_H

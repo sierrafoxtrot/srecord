@@ -23,7 +23,7 @@
 
 
 std::string
-pretty_size(long long x, int width)
+srecord::pretty_size(long long x, int width)
 {
     double tmp = x;
     bool negative = false;

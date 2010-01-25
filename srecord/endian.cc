@@ -21,7 +21,7 @@
 
 
 const char *
-endian_to_string(endian_t x)
+srecord::endian_to_string(endian_t x)
 {
     switch (x)
     {

@@ -17,8 +17,8 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_FORMAT_PRINTF_H
-#define LIB_FORMAT_PRINTF_H
+#ifndef SRECORD_FORMAT_PRINTF_H
+#define SRECORD_FORMAT_PRINTF_H
 
 #ifdef __GNUC__
 #define FORMAT_PRINTF(x, y) __attribute__((__format__(printf, x, y)))
@@ -30,4 +30,4 @@
 #define NORETURN
 #endif
 
-#endif // LIB_FORMAT_PRINTF_H
+#endif // SRECORD_FORMAT_PRINTF_H

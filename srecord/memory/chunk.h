@@ -136,9 +136,9 @@ private:
     memory_chunk();
 };
 
-};
-
 bool operator == (const srecord::memory_chunk &, const srecord::memory_chunk &);
 bool operator != (const srecord::memory_chunk &, const srecord::memory_chunk &);
+
+};
 
 #endif // SRECORD_MEMORY_CHUNK_H

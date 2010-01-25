@@ -16,10 +16,13 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_ADLER32_H
-#define LIB_ADLER32_H
+#ifndef SRECORD_ADLER32_H
+#define SRECORD_ADLER32_H
 
 #include <stddef.h>
+
+namespace srecord
+{
 
 /**
   * The adler32 class is used to represent the running value of a 32-bit
@@ -81,5 +84,7 @@ private:
     unsigned short sum_b;
 };
 
+};
+
 // vim:ts=8:sw=4:et
-#endif // LIB_ADLER32_H
+#endif // SRECORD_ADLER32_H

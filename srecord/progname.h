@@ -17,8 +17,11 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_PROGNAME_H
-#define LIB_PROGNAME_H
+#ifndef SRECORD_PROGNAME_H
+#define SRECORD_PROGNAME_H
+
+namespace srecord
+{
 
 /**
   * The progname_set function is used by main() to set the name of the
@@ -32,4 +35,6 @@ void progname_set(char *);
   */
 const char *progname_get();
 
-#endif // LIB_PROGNAME_H
+};
+
+#endif // SRECORD_PROGNAME_H

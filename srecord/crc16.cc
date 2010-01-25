@@ -45,7 +45,7 @@ static unsigned short const xmodem_seed = 0;
 
 
 void
-crc16::calculate_table()
+srecord::crc16::calculate_table()
 {
     if (polynomial == 0)
         polynomial = polynomial_ccitt;
@@ -74,24 +74,24 @@ crc16::calculate_table()
 
 
 static int
-state_from_seed_mode(crc16::seed_mode_t seed_mode)
+state_from_seed_mode(srecord::crc16::seed_mode_t seed_mode)
 {
     switch (seed_mode)
     {
-    case crc16::seed_mode_ccitt:
+    case srecord::crc16::seed_mode_ccitt:
         return ccitt_seed;
 
-    case crc16::seed_mode_xmodem:
+    case srecord::crc16::seed_mode_xmodem:
         return xmodem_seed;
 
-    case crc16::seed_mode_broken:
+    case srecord::crc16::seed_mode_broken:
         return broken_seed;
     }
     return ccitt_seed;
 }
 
 
-crc16::crc16(
+srecord::crc16::crc16(
     seed_mode_t seed_mode,
     bool a_augment,
     unsigned short a_polynomial,
@@ -106,7 +106,7 @@ crc16::crc16(
 }
 
 
-crc16::crc16(const crc16 &rhs) :
+srecord::crc16::crc16(const crc16 &rhs) :
     state(rhs.state),
     augment(rhs.augment),
     polynomial(rhs.polynomial),
@@ -117,8 +117,8 @@ crc16::crc16(const crc16 &rhs) :
 }
 
 
-crc16 &
-crc16::operator=(const crc16 &rhs)
+srecord::crc16 &
+srecord::crc16::operator=(const crc16 &rhs)
 {
     if (this != &rhs)
     {
@@ -133,7 +133,7 @@ crc16::operator=(const crc16 &rhs)
 }
 
 
-crc16::~crc16()
+srecord::crc16::~crc16()
 {
 }
 
@@ -146,7 +146,7 @@ crc16::~crc16()
 //
 
 inline unsigned short
-crc16::updcrc(unsigned char c, unsigned short state)
+srecord::crc16::updcrc(unsigned char c, unsigned short state)
     const
 {
     if (bitdir == bit_direction_most_to_least)
@@ -193,7 +193,7 @@ crc16::updcrc(unsigned char c, unsigned short state)
 //
 
 inline unsigned short
-crc16::updcrc(unsigned char c, unsigned short state)
+srecord::crc16::updcrc(unsigned char c, unsigned short state)
     const
 {
     if (bitdir == bit_direction_least_to_most)
@@ -221,7 +221,7 @@ crc16::updcrc(unsigned char c, unsigned short state)
 //
 
 inline unsigned short
-crc16::updcrc(unsigned char c, unsigned short state)
+srecord::crc16::updcrc(unsigned char c, unsigned short state)
     const
 {
     if (bitdir == bit_direction_least_to_most)
@@ -234,14 +234,14 @@ crc16::updcrc(unsigned char c, unsigned short state)
 
 
 void
-crc16::next(unsigned char ch)
+srecord::crc16::next(unsigned char ch)
 {
     state = updcrc(ch, state);
 }
 
 
 void
-crc16::nextbuf(const void *data, size_t nbytes)
+srecord::crc16::nextbuf(const void *data, size_t nbytes)
 {
     unsigned char *dp = (unsigned char *)data;
     while (nbytes > 0)
@@ -253,7 +253,7 @@ crc16::nextbuf(const void *data, size_t nbytes)
 
 
 unsigned short
-crc16::get()
+srecord::crc16::get()
     const
 {
     if (augment)
@@ -268,7 +268,7 @@ crc16::get()
 
 
 void
-crc16::print_table()
+srecord::crc16::print_table()
     const
 {
     printf("/*\n");

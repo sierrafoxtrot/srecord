@@ -97,21 +97,21 @@ calculate_table()
 
 
 static unsigned long
-initial_state_from_seed_mode(crc32::seed_mode_t seed_mode)
+initial_state_from_seed_mode(srecord::crc32::seed_mode_t seed_mode)
 {
     switch (seed_mode)
     {
-    case crc32::seed_mode_ccitt:
+    case srecord::crc32::seed_mode_ccitt:
         return ccitt_seed;
 
-    case crc32::seed_mode_xmodem:
+    case srecord::crc32::seed_mode_xmodem:
         return xmodem_seed;
     }
     return ccitt_seed;
 }
 
 
-crc32::crc32(seed_mode_t seed_mode) :
+srecord::crc32::crc32(seed_mode_t seed_mode) :
     state(initial_state_from_seed_mode(seed_mode))
 {
     if (!table[1])
@@ -119,14 +119,14 @@ crc32::crc32(seed_mode_t seed_mode) :
 }
 
 
-crc32::crc32(const crc32 &arg) :
+srecord::crc32::crc32(const crc32 &arg) :
     state(arg.state)
 {
 }
 
 
-crc32 &
-crc32::operator=(const crc32 &arg)
+srecord::crc32 &
+srecord::crc32::operator=(const crc32 &arg)
 {
     if (this != &arg)
     {
@@ -136,7 +136,7 @@ crc32::operator=(const crc32 &arg)
 }
 
 
-crc32::~crc32()
+srecord::crc32::~crc32()
 {
 }
 
@@ -150,14 +150,14 @@ UPDC32(unsigned char octet, unsigned long crc)
 
 
 void
-crc32::next(unsigned char x)
+srecord::crc32::next(unsigned char x)
 {
     state = UPDC32(x, state);
 }
 
 
 void
-crc32::nextbuf(const void *data, size_t nbytes)
+srecord::crc32::nextbuf(const void *data, size_t nbytes)
 {
     const unsigned char *dp = (const unsigned char *)data;
     while (nbytes > 0)
@@ -170,7 +170,7 @@ crc32::nextbuf(const void *data, size_t nbytes)
 
 
 unsigned long
-crc32::get()
+srecord::crc32::get()
     const
 {
 #if 1

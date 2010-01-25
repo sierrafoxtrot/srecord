@@ -364,7 +364,7 @@ all +=
  * deletes them for integration builds.)
  */
 
-lib/patchlevel.h:
+srecord/patchlevel.h:
         set shallow
 {
     copyright_years =
@@ -409,7 +409,7 @@ cascade etc/README.man = etc/version.so etc/new.so;
 cascade etc/change_log.man = etc/version.so etc/new.so;
 cascade etc/reference.man = etc/version.so ;
 cascade etc/srecord.lsm = etc/version.so ;
-cascade lib/versn_stamp.cc = lib/patchlevel.h ;
+cascade srecord/versn_stamp.cc = srecord/patchlevel.h ;
 cascade man/man1/z_copyright.so = etc/version.so ;
 
 #include [resolve etc/doxygen.cook etc/metrics.cook etc/tags.cook ]

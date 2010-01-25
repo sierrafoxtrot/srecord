@@ -26,11 +26,10 @@
 
 #include <srecord/format_printf.h>
 
-class quit; // forward // FIXME
-
 namespace srecord {
 
 class arglex_tool; // forward
+class quit; // forward
 
 /**
   * The srecord::input class is used to represent an abstract EPROM load

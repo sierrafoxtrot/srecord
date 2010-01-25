@@ -94,7 +94,7 @@ r250_init(void)
 
 
 unsigned long
-r250(void)
+srecord::r250(void)
 {
     if (!ready)
         r250_init();

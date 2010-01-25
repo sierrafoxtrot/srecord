@@ -17,10 +17,13 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
-#ifndef LIB_PRETTY_SIZE_H
-#define LIB_PRETTY_SIZE_H
+#ifndef SRECORD_PRETTY_SIZE_H
+#define SRECORD_PRETTY_SIZE_H
 
 #include <string>
+
+namespace srecord
+{
 
 /**
   * The pretty_size function is used to convert a number into a smaller
@@ -36,5 +39,7 @@
   */
 std::string pretty_size(long long x, int width = 0);
 
+};
+
 // vim:ts=8:sw=4:et
-#endif // LIB_PRETTY_SIZE_H
+#endif // SRECORD_PRETTY_SIZE_H

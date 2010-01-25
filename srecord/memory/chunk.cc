@@ -151,14 +151,16 @@ srecord::memory_chunk::get_upper_bound()
 
 
 bool
-operator == (const srecord::memory_chunk &lhs, const srecord::memory_chunk &rhs)
+srecord::operator == (const srecord::memory_chunk &lhs,
+    const srecord::memory_chunk &rhs)
 {
     return srecord::memory_chunk::equal(lhs, rhs);
 }
 
 
 bool
-operator != (const srecord::memory_chunk &lhs, const srecord::memory_chunk &rhs)
+srecord::operator != (const srecord::memory_chunk &lhs,
+    const srecord::memory_chunk &rhs)
 {
     return !srecord::memory_chunk::equal(lhs, rhs);
 }
