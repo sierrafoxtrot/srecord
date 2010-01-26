@@ -109,6 +109,46 @@ AC_DEFINE(HAVE_LIBGCRYPT_WHIRLPOOL, 1, [Define this symbol if your
 operating system has a libgcrypt that supports WHIRLPOOL.])
 AC_MSG_RESULT(yes),AC_MSG_RESULT(no))dnl
 
+dnl!
+dnl!  Now look for libtool.
+dnl!
+AC_CHECK_PROGS(LIBTOOL, libtool)
+if test -z "$LIBTOOL"
+then
+  AC_MSG_RESULT([
+        You must have GNU Libtool installed to build srecord.
+        Homepage: http://www.gnu.org/software/libtool/])
+  OK=no
+  if apt-get --version > /dev/null 2> /dev/null; then
+    AC_MSG_RESULT([
+        The following command may be used to install it:
+        sudo apt-get install libtool
+    ])
+    OK=yes
+  fi
+  if yum --version > /dev/null 2> /dev/null; then
+    AC_MSG_RESULT([
+        The following command may be used to install it:
+        sudo yum install libtool
+    ])
+    OK=yes
+  fi
+  if pkg_info -a > /dev/null 2> /dev/null; then
+    AC_MSG_RESULT([
+        The following command may be used to install it:
+        sudo pkg_add -r libtool
+    ])
+    OK=yes
+  fi
+  if test "$OK" != "yes"; then
+    AC_MSG_RESULT([
+        If you are using a package based install, you will need the
+        libtool package.
+    ])
+  fi
+  exit 1
+fi
+
 dnl
 dnl     If the soelim program exists, and understands the -I option,
 dnl     arrange for the Makefile to install the .ps files from the
