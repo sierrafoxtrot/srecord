@@ -185,7 +185,7 @@ AC_SUBST(HAVE_GROFF)
 #
 # Evaluate some of the variables, to remove ${prefix} references.
 # This way, they can be used in C programs and Roff input.
-# Make sure that srecord is mentioned in the libdir and datadir paths;
+# Make sure that srecord is mentioned in the datadir path;
 # add it if it is not already there.
 #
 test "x$prefix" = xNONE && prefix="${ac_default_prefix-/usr/local}"
@@ -196,14 +196,6 @@ eval "datarootdir=$datarootdir"
 eval "mandir=$mandir"
 eval "libdir=$libdir"
 eval "datadir=$datadir"
-case "$libdir" in
-*/srecord/* | */srecord )
-    ;;
-*)
-    libdir="${libdir}/srecord"
-    AC_MSG_RESULT([Rewriting --libdir=$libdir])
-    ;;
-esac
 case "$datadir" in
     */srecord/* | */srecord )
     ;;
@@ -212,7 +204,6 @@ case "$datadir" in
     AC_MSG_RESULT([Rewriting --datadir=$datadir])
 ;;
 esac
-
 
 
 AH_TOP([/*
