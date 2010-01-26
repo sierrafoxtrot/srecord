@@ -18,65 +18,70 @@
  */
 
 integration-build-targets:
-        archive/change_log.txt
-        archive/[project_minus].README
-        archive/[project_minus].lsm
-        archive/[project_minus].spec
-        archive/[project_minus].tar.gz
-        archive/[project_minus].pdf
-        archive/[project_short].png
-        archive/[project_short].ico
-        archive/[project_short]-128.png
-        archive/[project_short]-64.png
-        archive/[project_short]-32.png
-        archive/[project_short]-16.png
-        archive/whining-64.png
-        [fromto etc/%.html archive/%.html
-            [match_mask etc/%.html [source_files]]
-        ]
-        [fromto etc/%.png.uue archive/%.png
-            [match_mask etc/%.png.uue [source_files]]
-        ]
-        ;
+    archive/change_log.txt
+    archive/[project_minus].README
+    archive/[project_minus].lsm
+    archive/[project_minus].spec
+    archive/[project_minus].tar.gz
+    archive/[project_minus].pdf
+    archive/[project_short].png
+    archive/[project_short].ico
+    archive/[project_short]-128.png
+    archive/[project_short]-64.png
+    archive/[project_short]-32.png
+    archive/[project_short]-16.png
+    archive/whining-64.png
+    [fromto etc/%.html archive/%.html
+        [match_mask etc/%.html [source_files]]
+    ]
+    [fromto etc/%.png.uue archive/%.png
+        [match_mask etc/%.png.uue [source_files]]
+    ]
+    ;
 
 source_file_order =
-        README
-        [sort
-                [stringset
-                        [source_files]
-                        BUILDING
-                        LICENSE
+    README
+    [sort
+        [stringset
+            [source_files]
+            BUILDING
+            LICENSE
 
-                        /*
-                         * These two are for time stamping the distribution.
-                         */
-                        etc/version.so
-                        srecord/patchlevel.h
+            /*
+             * These two are for time stamping the distribution.
+             */
+            etc/version.so
+            srecord/patchlevel.h
 
-                        /*
-                         * These four are for building the distribution.
-                         */
-                        Makefile.in
-                        srecord/config.h.in
-                        install-sh
-                        configure
+            /*
+             * These four are for building the distribution.
+             */
+            Makefile.in
+            srecord/config.h.in
+            install-sh
+            configure
 
-                        /*
-                         * This is for building the RPM package
-                         */
-                        [project_minus].spec
+            /*
+             * This is for building the RPM package
+             */
+            [project_minus].spec
 
-                        /*
-                         * for the reference manual
-                         */
-                        etc/ref-index.so
-                        etc/ref-parts.so
-                        etc/new.so
-                -
-                        README
-                ]
+            /*
+             * for the reference manual
+             */
+            etc/ref-index.so
+            etc/ref-parts.so
+            etc/new.so
+
+            /*
+             * For pkg-config
+             */
+            libdir/pkgconfig/[project_short].pc.in
+        -
+            README
         ]
-        ;
+    ]
+    ;
 
 
 /*
@@ -89,7 +94,11 @@ aemakegen = aemakegen;
 
 Makefile.in: [source_files]
 {
-    [aemakegen] -p [project] -c [change] > [target].tmp
+    if [not [verbose]] then
+        function print GEN [target];
+
+    [aemakegen] -p [project] -c [change] -o [target].tmp
+        libdir/pkgconfig/[project_short].pc.in
         set meter;
     [awk] -f [resolve etc/Makefile.awk] < [target].tmp > [target];
     rm [target].tmp
@@ -97,64 +106,64 @@ Makefile.in: [source_files]
 }
 
 archive/[project_minus].tar.gz: [source_file_order]
-        set shallow
+    set shallow
 {
-        tar cf - [resolve [source_file_order]]
-                | tardy
-                        -una Peter -gna Miller
-                        -unu 0 -gnu 0
-                        -ms 0644 -mc 07022
-                        -now
-                        -prefix\=[project_minus]
-                        [prepost "-rp=" "" [search_list]]
-                | gzip -9
-                > [target];
+    tar cf - [resolve [source_file_order]]
+        | tardy
+            -una Peter -gna Miller
+            -unu 0 -gnu 0
+            -ms 0644 -mc 07022
+            -now
+            -prefix\=[project_minus]
+            [prepost "-rp=" "" [search_list]]
+        | gzip -9
+        > [target];
 }
 
 archive/[project_minus].%: %
-        set shallow
+    set shallow
 {
-        cat [resolve [need]] > [target];
+    cat [resolve [need]] > [target];
 }
 
 archive/[project_minus].pdf: etc/reference.pdf
-        set shallow
+    set shallow
 {
-        cat [resolve [need]] > [target];
+    cat [resolve [need]] > [target];
 }
 
 %: etc/%.man
 {
-        roffpp
-                [prepost "-I" /[arch] [search_list]]
-                [addprefix "-I" [search_list]]
-                [resolve etc/%.man]
-        | groff -Tascii -t -P-bcu -man
-        > [target];
+    roffpp
+        [prepost "-I" /[arch] [search_list]]
+        [addprefix "-I" [search_list]]
+        [resolve etc/%.man]
+    | groff -Tascii -t -P-bcu -man
+    > [target];
 }
 
 archive/%.txt: etc/%.man
     set shallow
 {
-        roffpp
-                [prepost "-I" /[arch] [search_list]]
-                [addprefix "-I" [search_list]]
-                [resolve etc/%.man]
-        | groff -Tascii -t -P-bcu -man
-        > [target];
+    roffpp
+        [prepost "-I" /[arch] [search_list]]
+        [addprefix "-I" [search_list]]
+        [resolve etc/%.man]
+    | groff -Tascii -t -P-bcu -man
+    > [target];
 }
 
 etc/%.man.d: etc/%.man
-        set no-cascade
+    set no-cascade
 {
-        [c_incl] -nc -ns -api -nrec
-                --lang\=roff
-                [addprefix "-I" [search_list]]
-                [resolve etc/%.man]
-                -prefix "'cascade etc/%.man ='"
-                -suffix "';'"
-                [addprefix "-rlp=" [search_list]]
-                -o [target];
+    [c_incl] -nc -ns -api -nrec
+        --lang\=roff
+        [addprefix "-I" [search_list]]
+        [resolve etc/%.man]
+        -prefix "'cascade etc/%.man ='"
+        -suffix "';'"
+        [addprefix "-rlp=" [search_list]]
+        -o [target];
 }
 
 #include-cooked [addsuffix ".d" [match_mask etc/%.man [source_files]]]
@@ -168,102 +177,102 @@ etc/%.man.d: etc/%.man
 RPM: archive/[project_minus]-1.i386.rpm;
 
 archive/[project_minus]-1.i386.rpm archive/[project_minus]-1.src.rpm:
-                archive/[project_minus].tar.gz etc/rpm-build.sh
-        set shallow
+        archive/[project_minus].tar.gz etc/rpm-build.sh
+    set shallow
 {
-        sh [resolve etc/rpm-build.sh]
-                RPM-temporary
-                [resolve archive/[project_minus].tar.gz]
-                ;
-        mv RPM-temporary/RPMS/i386/[project_minus]-1.i386.rpm
-                archive/[project_minus]-1.i386.rpm
-                ;
-        mv RPM-temporary/SRPMS/[project_minus]-1.src.rpm
-                archive/[project_minus]-1.src.rpm
-                ;
-        rm -r RPM-temporary;
+    sh [resolve etc/rpm-build.sh]
+        RPM-temporary
+        [resolve archive/[project_minus].tar.gz]
+        ;
+    mv RPM-temporary/RPMS/i386/[project_minus]-1.i386.rpm
+        archive/[project_minus]-1.i386.rpm
+        ;
+    mv RPM-temporary/SRPMS/[project_minus]-1.src.rpm
+        archive/[project_minus]-1.src.rpm
+        ;
+    rm -r RPM-temporary;
 }
 
 [project_minus].spec: etc/spec.sh [source_files]
 {
-        version\=[version_short]
-        sh [resolve etc/spec.sh] [source_files]
-                > [target];
+    version\=[version_short]
+    sh [resolve etc/spec.sh] [source_files]
+        > [target];
 }
 
 archive/[project_minus].spec: [project_minus].spec
-        set shallow
+    set shallow
 {
-        cat [resolve [need]] > [target];
+    cat [resolve [need]] > [target];
 }
 
 archive/%: etc/%.uue
-        set shallow
+    set shallow
 {
-        uudecode -o [target] [resolve [need]];
+    uudecode -o [target] [resolve [need]];
 }
 
 
 etc/%.html.d: etc/%.html
-        set no-cascade
+    set no-cascade
 {
-        c_incl -nc -ns -eia -r -nrec
-                [prepost "-I" /[arch] [search_list]]
-                [addprefix "-I" [search_list]]
-                -prefix "'cascade etc/"%".html ='"
-                -suffix "';'"
-                [resolve etc/%.html]
-                [prepost "-rlp=" "" [search_list]] /* remove leading path */
-                -slp [arch] "'[arch]'" /* substitute leading path */
-                -o [target];
+    c_incl -nc -ns -eia -r -nrec
+        [prepost "-I" /[arch] [search_list]]
+        [addprefix "-I" [search_list]]
+        -prefix "'cascade etc/"%".html ='"
+        -suffix "';'"
+        [resolve etc/%.html]
+        [prepost "-rlp=" "" [search_list]] /* remove leading path */
+        -slp [arch] "'[arch]'" /* substitute leading path */
+        -o [target];
 }
 
 #include-cooked [addsuffix ".d" [match_mask etc/%.html [source_files]]]
 
 archive/%.html: etc/%.html: etc/ssp.awk etc/version.so
-        set shallow
+    set shallow
 {
-        roffpp
-                [prepost "-I" /[arch] [search_list]]
-                [addprefix "-I" [search_list]]
-                [resolve etc/%.html]
-        | groff -Tascii -t -P-bcu -man
-        | [awk] -f [resolve etc/ssp.awk]
-        > [target];
+    roffpp
+        [prepost "-I" /[arch] [search_list]]
+        [addprefix "-I" [search_list]]
+        [resolve etc/%.html]
+    | groff -Tascii -t -P-bcu -man
+    | [awk] -f [resolve etc/ssp.awk]
+    > [target];
 }
 
 
 etc/[project_short].lsm.d: etc/[project_short].lsm
-        set no-cascade
+    set no-cascade
 {
-        c_incl -nc -ns -eia -r -nrec
-                [prepost "-I" /[arch] [search_list]]
-                [addprefix "-I" [search_list]]
-                -prefix "'cascade etc/"[project_short]".lsm ='"
-                -suffix "';'"
-                [resolve etc/[project_short].lsm]
-                [prepost "-rlp=" "" [search_list]] /* remove leading path */
-                -slp [arch] "'[arch]'" /* substitute leading path */
-                -o [target];
+    c_incl -nc -ns -eia -r -nrec
+        [prepost "-I" /[arch] [search_list]]
+        [addprefix "-I" [search_list]]
+        -prefix "'cascade etc/"[project_short]".lsm ='"
+        -suffix "';'"
+        [resolve etc/[project_short].lsm]
+        [prepost "-rlp=" "" [search_list]] /* remove leading path */
+        -slp [arch] "'[arch]'" /* substitute leading path */
+        -o [target];
 }
 
 #include-cooked-nowarn etc/[project_short].lsm.d
 
 archive/[project_minus].lsm: etc/[project_short].lsm etc/ssp.awk
-        set shallow
+    set shallow
 {
-        roffpp
-                [prepost "-I" /[arch] [search_list]]
-                [addprefix "-I" [search_list]]
-                [resolve etc/[project_short].lsm]
-        | groff -Tascii -t -P-bcu -man
-        | [awk] -f [resolve etc/ssp.awk]
-        > [target];
+    roffpp
+        [prepost "-I" /[arch] [search_list]]
+        [addprefix "-I" [search_list]]
+        [resolve etc/[project_short].lsm]
+    | groff -Tascii -t -P-bcu -man
+    | [awk] -f [resolve etc/ssp.awk]
+    > [target];
 }
 
 LICENSE: man/cat1/srec_license.1
 {
-        cat [resolve [need]] > [target];
+    cat [resolve [need]] > [target];
 }
 
 archive/%1-%2.png: archive/%1.png
@@ -296,4 +305,14 @@ archive/srecord.ico:
 check-tarball: etc/check-tarball.sh archive/[project_minus].tar.gz
 {
     sh [resolve etc/check-tarball.sh archive/[project_minus].tar.gz];
+}
+
+
+libdir/pkgconfig/[project_short].pc.in: [source_files]
+{
+    if [not [verbose]] then
+        function print GEN [target];
+
+    [aemakegen] -p\=[project] -c\=[change] --target\=pkg-config
+        > [target];
 }
