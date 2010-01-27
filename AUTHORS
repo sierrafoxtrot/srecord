@@ -1,6 +1,10 @@
-Copyright (C) 1998-2009 Peter Miller <pmiller@opensource.org.au>
-Copyright (C) 2009 David Kozub <zub@linux.fjfi.cvut.cz>
-Copyright (C) 2008 Torsten Sadowski
-Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
-Copyright (C) 2000 Hendrik De Vloed <hendrik.devloed@rug.ac.be>
-Copyright (C) 1986 Gary S Brown
+Copyright (C) 1998-2010 Peter Miller <pmiller@opensource.org.au>
+Copyright (C) 2009 David Kozub <zub@linux.fjfi.cvut.cz>, MsBin
+Copyright (C) 2008 Torsten Sadowski <tsadowski@gmx.net>, Forth
+Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>, [L]GPL
+Copyright (C) 2000 Hendrik De Vloed <hendrik.devloed@rug.ac.be>, vhdl
+Copyright (C) 1986 Gary S Brown, crc32
+                   Stefan Schauer <s-schauer1@ti.com>, ti-txt
+                   Jim Holt <Jim.Holt@motorola.com>, vmem
+                   David Fenyes <dave@fenyes.net>, os65v
+                   Holger Mueller <hmueller@sitronic.com>, bit-not

@@ -46,7 +46,7 @@ static unsigned long xmodem_seed = 0;
 
 
 //
-// Portions of the code in the file are derived from code which is
+// Portions of the code in this file are derived from code which is
 // "Copyright (C) 1986 Gary S. Brown.  You may use this program, or
 // code or tables extracted from it, as desired without restriction."
 //
