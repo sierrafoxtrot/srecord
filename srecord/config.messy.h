@@ -21,6 +21,13 @@
 #define SRECORD_CONFIG_MESSY_H
 
 //
+// If gcrypt is too old, there is no point trying to make it work.
+//
+#if defined(HAVE_LIBGCRYPT) && !defined(HAVE_GCRY_MD_HD_T)
+#undef HAVE_LIBGCRYPT
+#endif
+
+//
 // Make sure Solaris includes POSIX extensions.
 //
 #if (defined(__sun) || defined(__sun__) || defined(sun)) && \

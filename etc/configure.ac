@@ -94,6 +94,16 @@ dnl! Test to see if libgcrypt is sufficiently modern.
 dnl!
 AC_MSG_CHECKING([for gcrypt SHA224 support])
 AC_TRY_COMPILE([#include <gcrypt.h>],
+[gcry_md_hd_t handle; return 0;],
+AC_DEFINE(HAVE_GCRY_MD_HD_T, 1, [Define this symbol if your
+operating system has a libgcrypt that defines the gcry_md_hd_t symbol.])
+AC_MSG_RESULT(yes),AC_MSG_RESULT(no))dnl
+
+dnl!
+dnl! Test to see if libgcrypt is sufficiently modern.
+dnl!
+AC_MSG_CHECKING([for gcrypt SHA224 support])
+AC_TRY_COMPILE([#include <gcrypt.h>],
 [return GCRY_MD_SHA224;],
 AC_DEFINE(HAVE_LIBGCRYPT_SHA224, 1, [Define this symbol if your
 operating system has a libgcrypt that supports SHA224.])
