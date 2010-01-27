@@ -193,11 +193,11 @@ archive/[project_minus]-1.i386.rpm archive/[project_minus]-1.src.rpm:
     rm -r RPM-temporary;
 }
 
-[project_minus].spec: etc/spec.sh [source_files]
+[project_minus].spec: [source_files]
 {
-    version\=[version_short]
-    sh [resolve etc/spec.sh] [source_files]
-        > [target];
+    [aemakegen] --target\=rpm-spec -p [project] -c [change] -o [target]
+        libdir/pkgconfig/[project_short].pc.in
+        ;
 }
 
 archive/[project_minus].spec: [project_minus].spec
