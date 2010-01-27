@@ -19,6 +19,9 @@
 .TH \*(n) 1 SRecord "Reference Manual"
 .SH NAME
 \*(n) \- manipulate eprom load files
+.if require_index \{
+.XX "${trim_ext ${basename $fn}}(1)" "manipulate eprom load files"
+.\}
 .SH SYNOPSIS
 .B \*(n)
 [
