@@ -159,6 +159,9 @@ loop program = [program_list]
     all += [arch]/bin/[program] ;
 }
 
+integration-build-targets = ;
+integration-build-targets: [integration-build-targets];
+
 if [match %1C%2 [version]] then
 {
     baseline = bl;

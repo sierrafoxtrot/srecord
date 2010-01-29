@@ -1,6 +1,6 @@
 .\"
 .\" srecord - Manipulate EPROM load files
-.\" Copyright (C) 2009, 2010 Peter Miller
+.\" Copyright (C) 2010 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -16,31 +16,18 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
-.if n *
-.if t \(bu
-.\" Change 16, 20, 21, 22, 23, 25, 27, 28, 29, 30, 32
-There is now a shared library installed, including the
-necessary header files so that you can use all of the file formats and
-filters in your own projects.
-.PP
-.if n *
-.if t \(bu
-.\" Change 35, 39, 50, 51
-The license on the shared library code is
-GNU Lesser General Public License, version 3.0 or later.
-.PP
-.if n *
-.if t \(bu
-.\" Change 15, 52
-The code can cope with older versions of GNU Libgcrypt.
-In the case of very old versions, by ignoring it.
-.PP
-.if n *
-.if t \(bu
-.\" Change 18, 33, 36
-A number of build problems have been fixed.
+.\"
+.\" you can create the initial cut of this file using the
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 54 -unf
+.\" command, and then editing it to be more appropriate.
+.\"
+.\" ------------------------------------------------------------------------
+.\" .PP
+.\" .if n *
+.\" .if t \(bu
+.\" .\" Change N
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.53 (2009-Nov-10)
+.SS Version 1.55 (2010-Jan-29)
 .\" vim: set ts=8 sw=4 et

@@ -16,7 +16,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-integration-build-targets: web-site;
+if [not [defined integration-build-targets]] then
+    integration-build-targets = ;
+integration-build-targets += web-site;
 
 web-site: [web-site];
 
@@ -346,7 +348,6 @@ debian/changelog: [source_files]
  */
 if [in [fromto %1D%2 %2 [version]] 001 002 003 004] then
 {
-    integration-build-targets += debian-package;
     web-site += debian-package;
 }
 
