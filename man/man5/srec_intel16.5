@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2003, 2006-2009 Peter Miller
+.\"     Copyright (C) 2003, 2006-2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -68,19 +68,29 @@ Start Linear Address Record
 .SS General Record Format
 .TS
 allbox,tab(;);
-lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i).
+ce ce ce ce ce ce.
 T{
-Record Mark
+Record
+.br
+Mark
 T};T{
-Record Length
+Record
+.br
+Length
 T};T{
-Load Offset
+Load
+.br
+Offset
 T};T{
-Record Type
+Record
+.br
+Type
 T};T{
 Data
 T};T{
-Checksum
+Check
+.br
+sum
 T}
 .TE
 .TP 8n
@@ -139,23 +149,34 @@ and including the Checksum field, is zero.
 (8\[hy], 16\[hy] or 32\[hy]bit formats)
 .TS
 allbox,tab(;);
-lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i).
+ce ce ce ce ce ce.
 T{
-Record Mark
+Record
+.br
+Mark
 .br
 (\[lq]:\[rq])
 T};T{
-Record Length
+Record
+.br
+Length
 T};T{
-Load Offset
+Load
+.br
+Offset
 T};T{
-Record Type
+Record
+.br
+Type
 T};T{
 Data
 T};T{
-Checksum
+Check
+.br
+sum
 T}
 .TE
+.PP
 The Data Record provides a set of hexadecimal digits that represent
 the ASCII code for data bytes that make up a portion of a memory image.
 .PP
@@ -188,28 +209,42 @@ Record Type, and Data fields.
 .SS Execution Start Address Record
 .TS
 allbox,tab(;);
-lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i).
+ce ce ce ce ce ce.
 T{
-Record Mark
+Record
+.br
+Mark
 .br
 (\[lq]:\[rq])
 T};T{
-Record Length
+Record
+.br
+Length
+.br
 (4)
 T};T{
-Load Offset
+Load
+.br
+Offset
+.br
 (0)
 T};T{
-Record Type
+Record
+.br
+Type
+.br
 (5)
 T};T{
-EIP
+EIP (4
 .br
-(4 bytes)
+bytes)
 T};T{
-Checksum
+Check
+.br
+sum
 T}
 .TE
+.PP
 The Execution Start Address Record is used to specify the execution start
 address for the object file.
 This is where the loader is to jump to begin execution once the hex load
@@ -250,24 +285,40 @@ Record Type, and EIP fields.
 This shall be the last record in the file.
 .TS
 allbox,tab(;);
-lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i).
+ce ce ce ce ce.
 T{
-Record Mark
+Record
+.br
+Mark
+.br
 (\[lq]:\[rq])
 T};T{
-Record Length
+Record
+.br
+Length
+.br
 (0)
 T};T{
-Load Offset
+Load
+.br
+Offset
+.br
 (0)
 T};T{
-Record Type
+Record
+.br
+Type
+.br
 (1)
 T};T{
-Checksum
+Check
+.br
+sum
+.br
 (0xFF)
 T}
 .TE
+.PP
 The End of File Record specifies the end of the hexadecimal object file.
 .PP
 The contents of the individual fields within the record are:

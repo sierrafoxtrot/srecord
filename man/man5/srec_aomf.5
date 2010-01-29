@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2004, 2006-2009 Peter Miller
+.\"     Copyright (C) 2004, 2006-2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -45,19 +45,25 @@ the type and length fields.
 All 16\[hy]bit fields are little\[hy]endian.
 .TS
 tab(;),center,allbox;
-cw(0.4i) cw(0.8i) cw(1.6i) cw(0.4i).
+ce ce ce ce.
 T{
-REC TYP
+REC
+.br
+TYP
 .br
 8 bits
 T};T{
-Record Length
+Record
+.br
+Length
 .br
 16 bits
 T};T{
 Payload
 T};T{
-CHK SUM
+CHK
+.br
+SUM
 .br
 8 bits
 T}
@@ -91,17 +97,23 @@ considered erroneous.
 .SS Module Header Record
 .TS
 tab(;),center,allbox;
-cw(0.4i) cw(0.8i) cw(1.2i) cw(0.4i) cw(0.4i) cw(0.4i).
+ce ce ce ce ce ce.
 T{
-REC TYP
+REC
+.br
+TYP
 .br
 0x02
 T};T{
-Record Length
+Record
+.br
+Length
 .br
 16 bits
 T};T{
-Module Name
+Module
+.br
+Name
 T};T{
 TRN ID
 .br
@@ -111,7 +123,9 @@ zero
 .br
 8 bits
 T};T{
-CHK SUM
+CHK
+.br
+SUM
 .br
 8 bits
 T}
@@ -133,21 +147,31 @@ l l.
 .SS Module End Record
 .TS
 tab(;),center,allbox;
-cw(0.4i) cw(0.8i) cw(1.2i) cw(0.8i) cw(0.4i) cw(0.4i) cw(0.4i).
+ce ce ce ce ce ce ce.
 T{
-REC TYP 0x04
+REC
+.br
+TYP
+.br
+0x04
 T};T{
-Record Length
+Record
+.br
+Length
 .br
 16 bits
 T};T{
-Module Name
+Module
+.br
+Name
 T};T{
 zero
 .br
 16 bits
 T};T{
-REG MSK
+REG
+.br
+MSK
 .br
 8 bits
 T};T{
@@ -155,7 +179,9 @@ zero
 .br
 8 bits
 T};T{
-CHK SUM
+CHK
+.br
+SUM
 .br
 8 bits
 T}
@@ -188,13 +214,17 @@ bank #3.
 .SS Content Record
 .TS
 tab(;),center,allbox;
-cw(0.4i) cw(0.8i) cw(0.4i) cw(0.8i) cw(1.2i) cw(0.4i).
+ce ce ce ce ce ce.
 T{
-REC TYP
+REC
+.br
+TYP
 .br
 0x06
 T};T{
-Record Length
+Record
+.br
+Length
 .br
 16 bits
 T};T{
@@ -208,7 +238,9 @@ Offset
 T};T{
 DATA
 T};T{
-CHK SUM
+CHK
+.br
+SUM
 .br
 8 bits
 T}
@@ -230,10 +262,10 @@ A sequence of data bytes to be loaded from OFFSET to OFFSET+RECORDLENGTH\[mi]5.
 In general, raw binary data will expand in sized by approximately 1.02 times
 when represented with this format.
 .SH SOURCE
+.nf
 http://www.intel.com/design/mcs96/swsup/omf96_pi.pdf
-.br
 ftp://download.intel.com/design/mcs51/SWSUP/omf51.exe (zip archive)
-.br
 http://www.elsist.net/WebSite/ftp/various/OMF51EPS.pdf
+.fi
 .ds n) srec_cat
 .so man/man1/z_copyright.so

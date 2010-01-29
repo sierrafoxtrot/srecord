@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2000, 2001, 2006-2009 Peter Miller
+.\"     Copyright (C) 1998, 2000, 2001, 2006-2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -78,16 +78,28 @@ Start Linear Address Record (32\[hy]bit format only)
 .SS General Record Format
 .TS
 allbox,tab(;);
-lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) l l.
+le le le le le le.
 T{
-Record Mark
+Record
+.br
+Mark
 T};T{
-Record Length
+Record
+.br
+Length
 T};T{
-Load Offset
+Load
+.br
+Offset
 T};T{
-Record Type
-T};Data;Checksum
+Record
+.br
+Type
+T};Data;T{
+Check
+.br
+sum
+T}
 .TE
 .TP 8n
 Record Mark.
@@ -151,25 +163,42 @@ and including the Checksum field, is zero.
 (32\[hy]bit format only)
 .TS
 allbox,tab(;);
-lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) l l.
+ce ce ce ce ce ce.
 T{
-Record Mark
+Record
+.br
+Mark
+.br
 (\[lq]:\[rq])
 T};T{
-Record Length
+Record
+.br
+Length
+.br
 (2)
 T};T{
-Load Offset
+Load
+.br
+Offset
+.br
 (0)
 T};T{
-Record Type
+Record
+.br
+Type
+.br
 (4)
 T};T{
-ULBA
+ULBA (2
 .br
-(2 bytes)
-T};Checksum
+bytes)
+T};T{
+Check
+.br
+sum
+T}
 .TE
+.PP
 The 32\[hy]bit Extended Linear Address Record is used to specify bits 16\[hy]31
 of the Linear Base Address (LBA), where bits 0\[hy]15 of the LBA are zero.
 Bits 16\[hy]31 of the LBA are referred to as the Upper Linear Base Address
@@ -230,25 +259,42 @@ Record Type, and ULBA fields.
 (16\[hy] or 32\[hy]bit formats)
 .TS
 allbox,tab(;);
-lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) l l.
+ce ce ce ce ce ce.
 T{
-Record Mark
+Record
+.br
+Mark
+.br
 (\[lq]:\[rq])
 T};T{
-Record Length
+Record
+.br
+Length
+.br
 (2)
 T};T{
-Load Offset
+Load
+.br
+Offset
+.br
 (0)
 T};T{
-Record Type
+Record
+.br
+Type
+.br
 (2)
 T};T{
-USBA
+USBA (2
 .br
-(2 bytes)
-T};Checksum
+bytes)
+T};T{
+Check
+.br
+sum
+T}
 .TE
+.PP
 The 16\[hy]bit Extended Segment Address Record is used to specify bits 4\[hy]19
 of the Segment Base Address (SBA), where bits 0\[hy]3 of the SBA are zero.
 Bits 4\[hy]19 of the SBA are referred to as the Upper Segment Base Address
@@ -311,19 +357,32 @@ Record Type, and USBA fields.
 (8\[hy], 16\[hy] or 32\[hy]bit formats)
 .TS
 allbox,tab(;);
-lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) l l.
+ce ce ce ce ce ce.
 T{
-Record Mark
+Record
+.br
+Mark
 .br
 (\[lq]:\[rq])
 T};T{
-Record Length
+Record
+.br
+Length
 T};T{
-Load Offset
+Load
+.br
+Offset
 T};T{
-Record Type
-T};Data;Checksum
+Record
+.br
+Type
+T};Data;T{
+Check
+.br
+sum
+T}
 .TE
+.PP
 The Data Record provides a set of hexadecimal digits that represent
 the ASCII code for data bytes that make up a portion of a memory image.
 The method for calculating the absolute address (linear in the 8\[hy]bit and
@@ -378,26 +437,42 @@ it will always produce separate records on output.
 (32\[hy]bit format only)
 .TS
 allbox,tab(;);
-lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) l l.
+ce ce ce ce ce ce.
 T{
-Record Mark
+Record
+.br
+Mark
 .br
 (\[lq]:\[rq])
 T};T{
-Record Length
+Record
+.br
+Length
+.br
 (4)
 T};T{
-Load Offset
+Load.
+.br
+Offset
+.br
 (0)
 T};T{
-Record Type
+Record
+.br
+Type
+.br
 (5)
 T};T{
-EIP
+EIP (4
 .br
-(4 bytes)
-T};Checksum
+bytes)
+T};T{
+Check
+.br
+sum
+T}
 .TE
+.PP
 The Start Linear Address Record is used to specify the execution start
 address for the object file.  The value given is the 32\[hy]bit linear
 address for the EIP register.  Note that this record only specifies
@@ -442,27 +517,46 @@ Record Type, and EIP fields.
 (16\[hy] or 32\[hy]bit formats)
 .TS
 allbox,tab(;);
-lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) l l l.
+ce ce ce ce ce ce ce.
 T{
-Record Mark
+Record
+.br
+Mark
+.br
 (\[lq]:\[rq])
 T};T{
-Record Length
+Record
+.br
+Length
+.br
 (4)
 T};T{
-Load Offset
+Load.
+.br
+Offset
+.br
 (0)
 T};T{
-Record Type
+Record
+.br
+Type
+.br
 (3)
 T};T{
-CS
-(2 bytes)
+CS (2
+.br
+bytes)
 T};T{
-IP
-(2 bytes)
-T};Checksum
+IP (2
+.br
+bytes)
+T};T{
+Check
+.br
+sum
+T}
 .TE
+.PP
 The Start Segment Address Record is used to specify the execution
 start address for the object file.  The value given is the 20\[hy]bit
 segment address for the CS and IP registers.  Note that this record only
@@ -509,24 +603,40 @@ Record Type, CS, and IP fields.
 (8\[hy], 16\[hy], or 32\[hy]bit formats)
 .TS
 allbox,tab(;);
-lw(0.6i) lw(0.6i) lw(0.6i) lw(0.6i) l.
+ce ce ce ce ce.
 T{
-Record Mark
+Record
+.br
+Mark
+.br
 (\[lq]:\[rq])
 T};T{
-Record Length
+Record
+.br
+Length
+.br
 (0)
 T};T{
-Load Offset
+Load
+.br
+Offset
+.br
 (0)
 T};T{
-Record Type
+Record
+.br
+Type
+.br
 (1)
 T};T{
-Checksum
+Check
+.br
+sum
+.br
 (0xFF)
 T}
 .TE
+.PP
 The End of File Record specifies the end of the hexadecimal object file.
 .PP
 The contents of the individual fields within the record are:
