@@ -16,7 +16,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-integration-build-targets:
+integration-build-targets: web-site;
+
+web-site: [web-site];
+
+web-site =
     archive/change_log.txt
     archive/[project_minus].README
     archive/[project_minus].lsm
@@ -35,8 +39,7 @@ integration-build-targets:
     ]
     [fromto etc/%.png.uue archive/%.png
         [match_mask etc/%.png.uue [source_files]]
-    ]
-    ;
+    ];
 
 source_file_order =
     README
@@ -344,6 +347,7 @@ debian/changelog: [source_files]
 if [in [fromto %1D%2 %2 [version]] 001 002 003 004] then
 {
     integration-build-targets += debian-package;
+    web-site += debian-package;
 }
 
 debian-package: archive/[project_minus].tar.gz
