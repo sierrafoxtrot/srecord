@@ -1,20 +1,19 @@
 /*
- *      srecord - manipulate eprom load files
- *      Copyright (C) 1998-2000, 2003, 2004, 2006-2010 Peter Miller
+ * srecord - manipulate eprom load files
+ * Copyright (C) 1998-2000, 2003, 2004, 2006-2010 Peter Miller
  *
- *      This program is free software; you can redistribute it and/or modify
- *      it under the terms of the GNU General Public License as published by
- *      the Free Software Foundation; either version 3 of the License, or
- *      (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or (at
+ * your option) any later version.
  *
- *      This program is distributed in the hope that it will be useful,
- *      but WITHOUT ANY WARRANTY; without even the implied warranty of
- *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *      GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
  *
- *      You should have received a copy of the GNU General Public License
- *      along with this program. If not, see
- *      <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 integration-build-targets:
@@ -106,18 +105,24 @@ Makefile.in: [source_files]
 }
 
 archive/[project_minus].tar.gz: [source_file_order]
+        debian/control /* et al */
     set shallow
 {
     tar cf - [resolve [source_file_order]]
-        | tardy
-            -una Peter -gna Miller
-            -unu 0 -gnu 0
-            -ms 0644 -mc 07022
-            -now
-            -prefix\=[project_minus]
-            [prepost "-rp=" "" [search_list]]
-        | gzip -9
-        > [target];
+        debian/changelog
+        debian/compat
+        debian/control
+        debian/rules
+        'debian/*.install'
+    | tardy
+        -una Peter -gna Miller
+        -unu 0 -gnu 0
+        -ms 0644 -mc 07022
+        -now
+        -prefix\=[project_minus]
+        [prepost "-rp=" "" [search_list]]
+    | gzip -9
+    > [target];
 }
 
 archive/[project_minus].%: %
@@ -315,4 +320,73 @@ libdir/pkgconfig/[project_short].pc.in: [source_files]
 
     [aemakegen] -p\=[project] -c\=[change] --target\=pkg-config
         > [target];
+}
+
+
+debian/control
+debian/srecord.install
+debian/changelog: [source_files]
+    set shallow
+{
+    /* This actually makes more files than just debian/control */
+    [aemakegen] -project\=[project] -change\=[change] --target\=debian
+        libdir/pkgconfig/[project_short].pc.in
+        ;
+}
+
+
+/*
+ * if [or
+ *     [in [fromto %1D%2 %2 [version]] 001 002 003 004]
+ *     [collect "set +e; on_ac_power; expr 1 - $?; exit 0" ]
+ * ] then
+ */
+if [in [fromto %1D%2 %2 [version]] 001 002 003 004] then
+{
+    integration-build-targets += debian-package;
+}
+
+debian-package: archive/[project_minus].tar.gz
+    debian/changelog
+{
+    local vsn = [collect head -1 [resolve debian/changelog]
+                         | sed "'s|.*(\\([^()]*\\).*|\\1|'" ];
+    vsn = [fromto %-1 % [vsn]];
+    function print "vsn = '"[vsn]"'";
+    if [not [in [count [vsn]] 1]] then
+        fail "debian version not right";
+    local tarball = [project_short]_[vsn].orig.tar.gz;
+
+    local user = [collect id -un];
+    local key = ;
+    if [in [user] archives] then
+        key = -k19CEC7D5;
+    else
+        key = -us -uc;
+
+    /*
+     * We fake the .orig.tar.gz file to not have a debian/ directory,
+     * by filtering it out with tardy.  This silences a PITA lintian
+     * warning, for no real benefit.
+     */
+
+    unset GPG_AGENT_INFO &&
+    rm -rf archive/debian &&
+    mkdir -p archive/debian &&
+    cd archive/debian &&
+    echo Options Indexes > .htaccess &&
+    gunzip < ../[project_minus].tar.gz
+        | tardy -exclude "'"[project_minus]"/debian/*'"
+        | gzip -9 > [tarball] &&
+    tar xzf ../[project_minus].tar.gz &&
+    cd [project_minus] &&
+#if 0
+    dpkg-buildpackage -sgpg [key] -sa &&
+#else
+    debuild [key] -sa &&
+#endif
+    cd .. &&
+    rm -rf [project_minus] &&
+    lintian -iIv --pedantic *.changes
+    ;
 }

@@ -1,6 +1,6 @@
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2010 Peter Miller
+# Copyright (C) 2009, 2010 Peter Miller
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,6 +29,59 @@ project_specific =
     {
         name = "aemakegen:library-directory";
         value = "srecord";
+    },
+    {
+        name = "aemakegen:debian:build-depends";
+        value = "groff, libboost-dev, libgcrypt11-dev";
+    },
+    {
+        name = "aemakegen:debian:copyright";
+        value = "false";
+    },
+    {
+        name = "aemakegen:debian:description:srecord";
+        value =
+            "collection of powerful tools for manipulating EPROM load files";
+    },
+    {
+        name = "aemakegen:debian:extended-description:srecord";
+        value =
+@The srecord package is a collection of powerful tools for manipulating EPROM
+load files. It reads and writes numerous EPROM file formats, and can perform
+many different manipulations.
+
+The tools include:
+ * The srec_cat program may be used to catenate (join) EPROM load files, or
+   portions of EPROM load files, together. Because it understands all of the
+   input and output formats, it can also be used to convert files from one
+   format to another. It also understands filters.
+ * The srec_cmp program may be used to compare EPROM load files, or portions
+   of EPROM load files, for equality.
+ * The srec_info program may be used to print summary information about EPROM
+   load files.@;
+    },
+    {
+        name = "aemakegen:debian:extended-description:libsrecord";
+        value =
+@This package is a collection of powerful C++ classes for manipulating EPROM
+load files. It reads and writes numerous EPROM file formats, and can perform
+many different manipulations.@;
+    },
+    {
+        name = "aemakegen:debian:homepage";
+        value = "http://srecord.sourceforge.net";
+    },
+    {
+        name = "aemakegen:debian:maintainer";
+        value = "Peter Miller <pmiller@opensource.org.au>";
+    },
+    {
+        name = "aemakegen:debian:priority";
+        value = "extra";
+    },
+    {
+        name = "aemakegen:debian:section";
+        value = "utils";
     },
 ];
 
