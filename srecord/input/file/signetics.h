@@ -93,7 +93,7 @@ private:
       * The read_inner method is used to read one line/record from
       * the input.  Used by the `read' method.
       */
-    int read_inner(record &);
+    bool read_inner(record &);
 
     /**
       * The garbage_warning instance variable is used to remember

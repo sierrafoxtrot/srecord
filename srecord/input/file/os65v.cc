@@ -43,13 +43,13 @@ srecord::input_file_os65v::create(const std::string &a_file_name)
 }
 
 
-int
+bool
 srecord::input_file_os65v::read_inner(srecord::record &record)
 {
     for (;;)
     {
         if (ignore_the_rest)
-            return 0;
+            return false;
         int c = get_char();
         switch (c)
         {
@@ -57,7 +57,7 @@ srecord::input_file_os65v::read_inner(srecord::record &record)
             //
             // End of file.
             //
-            return 0;
+            return false;
 
         case '0': case '1': case '2': case '3': case '4':
         case '5': case '6': case '7': case '8': case '9':
@@ -98,7 +98,7 @@ srecord::input_file_os65v::read_inner(srecord::record &record)
                     if (address == 0x00FD && n == 0)
                     {
                         ignore_the_rest = true;
-                        return 0;
+                        return false;
                     }
                     unsigned char buf[1];
                     buf[0] = n;
@@ -110,10 +110,10 @@ srecord::input_file_os65v::read_inner(srecord::record &record)
                             buf,
                             1
                         );
-                    return 1;
+                    return true;
                 }
                 fatal_error("mode not set");
-                return 0;
+                return false;
             }
 
         case 'G':
@@ -126,7 +126,7 @@ srecord::input_file_os65v::read_inner(srecord::record &record)
                     0
                 );
             ignore_the_rest = true;
-            return 1;
+            return true;
 
         case '\r':
             if (state == '/')
@@ -147,7 +147,7 @@ srecord::input_file_os65v::read_inner(srecord::record &record)
 
         default:
             fatal_error("unknown command");
-            return 0;
+            return false;
         }
     }
 }

@@ -70,7 +70,7 @@ private:
       * Read one record from the file.  The read method is a wrapper
       * around this method.
       */
-    int read_inner(record &);
+    bool read_inner(record &);
 
     /**
       * The data_record_count instance variable is used to remember the

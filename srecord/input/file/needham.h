@@ -66,7 +66,7 @@ protected:
     const char *get_file_format_name() const;
 
 private:
-    int read_inner(record &);
+    bool read_inner(record &);
     bool garbage_warning;
     bool seen_some_input;
     unsigned long address;

@@ -50,14 +50,14 @@ srecord::input_file_signetics::checksum_add(unsigned char n)
 }
 
 
-int
+bool
 srecord::input_file_signetics::read_inner(srecord::record &record)
 {
     for (;;)
     {
         int c = get_char();
         if (c < 0)
-            return 0;
+            return false;
         if (c == ':')
             break;
         if (c == '\n')
@@ -71,7 +71,7 @@ srecord::input_file_signetics::read_inner(srecord::record &record)
         {
             c = get_char();
             if (c < 0)
-                return 0;
+                return false;
             if (c == '\n')
                 break;
         }
@@ -84,7 +84,7 @@ srecord::input_file_signetics::read_inner(srecord::record &record)
         // this is the end indicator
         if (get_char() != '\n')
             fatal_error("end-of-line expected");
-        return 0;
+        return false;
     }
 
     int running_checksum = checksum_get();
@@ -121,7 +121,7 @@ srecord::input_file_signetics::read_inner(srecord::record &record)
 
     srecord::record::type_t type = srecord::record::type_data;
     record = srecord::record(type, address, buffer, length);
-    return 1;
+    return true;
 }
 
 

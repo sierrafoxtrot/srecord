@@ -51,11 +51,11 @@ srecord::input_file_spasm::create(const std::string &a_file_name,
 }
 
 
-int
+bool
 srecord::input_file_spasm::read_inner(record &result)
 {
     if (peek_char() < 0)
-        return 0;
+        return false;
 
     int address = get_word();
     if (get_char() != ' ')
@@ -82,7 +82,7 @@ srecord::input_file_spasm::read_inner(record &result)
             data,
             2
         );
-    return 1;
+    return true;
 }
 
 

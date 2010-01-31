@@ -43,14 +43,14 @@ srecord::input_file_tektronix_extended::create(const std::string &a_file_name)
 }
 
 
-int
+bool
 srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
 {
     for (;;)
     {
         int c = get_char();
         if (c < 0)
-            return 0;
+            return false;
         if (c == '%')
             break;
         if (c == '\n')
@@ -64,7 +64,7 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
         {
             c = get_char();
             if (c < 0)
-                return 0;
+                return false;
             if (c == '\n')
                 break;
         }
@@ -123,7 +123,7 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
         break;
     }
     record = srecord::record(type, address, buffer, length);
-    return 1;
+    return true;
 }
 
 

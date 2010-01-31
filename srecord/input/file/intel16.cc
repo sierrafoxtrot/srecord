@@ -49,7 +49,7 @@ srecord::input_file_intel16::create(const std::string &a_file_name)
 }
 
 
-int
+bool
 srecord::input_file_intel16::read_inner(record &result)
 {
     if (pushback)
@@ -57,7 +57,7 @@ srecord::input_file_intel16::read_inner(record &result)
         result = *pushback;
         delete pushback;
         pushback = 0;
-        return 1;
+        return true;
     }
 
     //
@@ -74,7 +74,7 @@ srecord::input_file_intel16::read_inner(record &result)
         // end of file means we are done
         //
         if (c < 0)
-            return 0;
+            return false;
 
         //
         // quietly ignore blank lines
@@ -97,7 +97,7 @@ srecord::input_file_intel16::read_inner(record &result)
             {
                 c = get_char();
                 if (c < 0)
-                    return 0;
+                    return false;
                 if (c == '\n')
                     break;
             }
@@ -204,7 +204,7 @@ srecord::input_file_intel16::read_inner(record &result)
                 fatal_error("address field must be zero");
             end_seen = true;
             seek_to_end();
-            return 0;
+            return false;
 
         case 2:
             //
@@ -243,7 +243,7 @@ srecord::input_file_intel16::read_inner(record &result)
                     0,
                     0
                 );
-            return 1;
+            return true;
 
         case 4:
             //
@@ -280,7 +280,7 @@ srecord::input_file_intel16::read_inner(record &result)
                     0,
                     0
                 );
-            return 1;
+            return true;
         }
 
         //
@@ -294,7 +294,7 @@ srecord::input_file_intel16::read_inner(record &result)
                 buffer + 4,
                 nbytes
             );
-        return 1;
+        return true;
     }
 }
 

@@ -52,11 +52,11 @@ srecord::input_file_atmel_generic::create(const std::string &a_file_name,
 }
 
 
-int
+bool
 srecord::input_file_atmel_generic::read_inner(srecord::record &record)
 {
     if (peek_char() < 0)
-        return 0;
+        return false;
 
     int address = get_3bytes();
     if (get_char() != ':')
@@ -76,7 +76,7 @@ srecord::input_file_atmel_generic::read_inner(srecord::record &record)
         fatal_error("end of line expected");
 
     record = srecord::record(srecord::record::type_data, address * 2, data, 2);
-    return 1;
+    return true;
 }
 
 

@@ -47,11 +47,11 @@ srecord::input_file_ascii_hex::create(const std::string &a_filename)
 }
 
 
-int
+bool
 srecord::input_file_ascii_hex::read_inner(record &result)
 {
     if (state == state_ignore)
-        return 0;
+        return false;
 
     if (state == state_initial)
     {
@@ -61,7 +61,7 @@ srecord::input_file_ascii_hex::read_inner(record &result)
             if (c < 0)
             {
                 state = state_ignore;
-                return 0;
+                return false;
             }
             if (c == 2)
             {
@@ -81,7 +81,7 @@ srecord::input_file_ascii_hex::read_inner(record &result)
         int c = peek_char();
         if (c < 0)
         {
-            return 0;
+            return false;
         }
         if (isxdigit(c))
         {
@@ -102,14 +102,14 @@ srecord::input_file_ascii_hex::read_inner(record &result)
                 get_char();
                 break;
             }
-            return 1;
+            return true;
         }
         c = get_char();
         switch (c)
         {
         case 3:
             state = state_ignore;
-            return 0;
+            return false;
 
         case ' ':
         case '\t':

@@ -73,7 +73,7 @@ private:
       * from the input file.  Lines which don't start with "$"
       * will be ignored.
       */
-    int read_inner(record &);
+    bool read_inner(record &);
 
     /**
       * See base class for documentation.  We override the default

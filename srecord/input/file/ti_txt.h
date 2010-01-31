@@ -67,12 +67,6 @@ protected:
 
 private:
     /**
-      * The read_inner method is used to read a single record from
-      * the file.  The read method calls it.
-      */
-    int read_inner(record &);
-
-    /**
       * The garbage_warning instance variable is used to remember whether
       * a warning has already been issued if the file contains garbage.
       */

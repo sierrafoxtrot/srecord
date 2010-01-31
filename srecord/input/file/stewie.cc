@@ -55,18 +55,18 @@ srecord::input_file_stewie::get_byte()
 }
 
 
-int
+bool
 srecord::input_file_stewie::read_inner(record &result)
 {
     if (termination_seen)
-        return 0;
+        return false;
     int c = get_char();
     if (c < 0)
-        return 0;
+        return false;
     if (c != 'S')
     {
         fatal_error("'S' expected");
-        return 0;
+        return false;
     }
     int tag = get_nibble();
     switch (tag)
@@ -77,13 +77,13 @@ srecord::input_file_stewie::read_inner(record &result)
         if (get_char() != '0' || get_char() != '3')
             fatal_error("format error");
         result = record(record::type_header, 0, 0, 0);
-        return 1;
+        return true;
 
     case 7:
     case 8:
     case 9:
         result = record(record::type_execution_start_address, 0, 0, 0);
-        return 1;
+        return true;
     }
     checksum_reset();
     int line_length = get_byte();
@@ -162,7 +162,7 @@ srecord::input_file_stewie::read_inner(record &result)
             buffer + naddr,
             line_length - naddr
         );
-    return 1;
+    return true;
 }
 
 

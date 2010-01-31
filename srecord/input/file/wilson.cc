@@ -69,7 +69,8 @@ srecord::input_file_wilson::get_byte()
     return n;
 }
 
-int
+
+bool
 srecord::input_file_wilson::read_inner(record &result)
 {
     int c;
@@ -77,7 +78,7 @@ srecord::input_file_wilson::read_inner(record &result)
     {
         c = get_char();
         if (c < 0)
-            return 0;
+            return false;
         if (c == '#' || c == '\'')
             break;
         if (c == '\n')
@@ -91,7 +92,7 @@ srecord::input_file_wilson::read_inner(record &result)
         {
             c = get_char();
             if (c < 0)
-                return 0;
+                return false;
             if (c == '\n')
                 break;
         }
@@ -146,7 +147,7 @@ srecord::input_file_wilson::read_inner(record &result)
             buffer + naddr,
             line_length - naddr
         );
-    return 1;
+    return true;
 }
 
 

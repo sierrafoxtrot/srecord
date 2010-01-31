@@ -70,7 +70,7 @@ private:
       * Read one line (record) of input.  Called by the read() method.
       * Returns false at end of file.
       */
-    int read_inner(record &);
+    bool read_inner(record &);
 
     /**
       * Get a singe base-64 digit.  Returns 0..63 for a valid digit.

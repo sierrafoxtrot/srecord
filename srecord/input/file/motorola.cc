@@ -97,14 +97,14 @@ srecord::input_file_motorola::command_line(arglex_tool *cmdln)
 }
 
 
-int
+bool
 srecord::input_file_motorola::read_inner(record &result)
 {
     for (;;)
     {
         int c = get_char();
         if (c < 0)
-            return 0;
+            return false;
         if (c == 'S')
             break;
         if (c == '\n')
@@ -118,7 +118,7 @@ srecord::input_file_motorola::read_inner(record &result)
         {
             c = get_char();
             if (c < 0)
-                return 0;
+                return false;
             if (c == '\n')
                 break;
         }
@@ -228,7 +228,7 @@ srecord::input_file_motorola::read_inner(record &result)
     if (address_shift && type != record::type_data_count)
         tmp_addr <<= address_shift;
     result = record(type, tmp_addr, buffer + naddr, line_length - naddr);
-    return 1;
+    return true;
 }
 
 

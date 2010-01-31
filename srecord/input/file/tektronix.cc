@@ -65,14 +65,14 @@ srecord::input_file_tektronix::get_byte()
 }
 
 
-int
+bool
 srecord::input_file_tektronix::read_inner(srecord::record &record)
 {
     for (;;)
     {
         int c = get_char();
         if (c < 0)
-            return 0;
+            return false;
         if (c == '/')
             break;
         if (c == '\n')
@@ -86,7 +86,7 @@ srecord::input_file_tektronix::read_inner(srecord::record &record)
         {
             c = get_char();
             if (c < 0)
-                return 0;
+                return false;
             if (c == '\n')
                 break;
         }
@@ -98,7 +98,7 @@ srecord::input_file_tektronix::read_inner(srecord::record &record)
         // lines beginning with "//" are end-of-file records
         //
         seek_to_end();
-        return 0;
+        return false;
     }
 
     unsigned char buffer[255+5];
@@ -151,7 +151,7 @@ srecord::input_file_tektronix::read_inner(srecord::record &record)
             buffer + 4,
             buffer[2]
         );
-    return 1;
+    return true;
 }
 
 

@@ -161,7 +161,7 @@ srecord::input_file_fastload::expect_white_space()
 }
 
 
-int
+bool
 srecord::input_file_fastload::read_inner(srecord::record &record)
 {
     unsigned long n;
@@ -175,7 +175,7 @@ srecord::input_file_fastload::read_inner(srecord::record &record)
         switch (peek_char())
         {
         case -1:
-            return 0;
+            return false;
 
         case ' ':
         case '\t':
@@ -196,7 +196,7 @@ srecord::input_file_fastload::read_inner(srecord::record &record)
                         data,
                         data_length
                     );
-                return 1;
+                return true;
             }
             get_char();
             switch (get_char())
@@ -235,7 +235,7 @@ srecord::input_file_fastload::read_inner(srecord::record &record)
                 seek_to_end();
                 type = srecord::record::type_execution_start_address;
                 record = srecord::record(type, address, 0, 0);
-                return 1;
+                return true;
 
             case 'K':
                 get_number(1, 6);
@@ -266,7 +266,7 @@ srecord::input_file_fastload::read_inner(srecord::record &record)
                 type = srecord::record::type_data;
                 record = srecord::record(type, address, data, n);
                 address += n;
-                return 1;
+                return true;
 
             default:
                 fatal_error("unknown command");

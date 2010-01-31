@@ -88,7 +88,7 @@ private:
       * The read_inner method is used to read a record from the file.
       * The read method is a wrapper around it.
       */
-    int read_inner(record &);
+    bool read_inner(record &);
 
     /**
       * The seen_some_input instance variable is used to remember whether

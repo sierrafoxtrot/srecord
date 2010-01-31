@@ -80,7 +80,7 @@ private:
       * The read_inner method is used to read a single line of input.
       * the raed method is a wrapper around this method.
       */
-    int read_inner(record &);
+    bool read_inner(record &);
 
     /**
       * The address instance variable is used to remember where we are

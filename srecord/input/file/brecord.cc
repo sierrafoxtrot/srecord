@@ -41,11 +41,11 @@ srecord::input_file_brecord::create(const std::string &a_file_name)
 }
 
 
-int
+bool
 srecord::input_file_brecord::read_inner(record &result)
 {
     if (peek_char() < 0)
-        return 0;
+        return false;
 
     unsigned long address = get_4bytes();
     unsigned char length = get_byte();
@@ -66,7 +66,7 @@ srecord::input_file_brecord::read_inner(record &result)
     {
         result = record(record::type_data, address, data, length);
     }
-    return 1;
+    return true;
 }
 
 

@@ -76,7 +76,7 @@ private:
       * The read_inner method is used to read a record of input.
       * The read method is a wrapper around this method.
       */
-    int read_inner(record &);
+    bool read_inner(record &);
 
     /**
       * The garbage_warning instance variable is used to remember

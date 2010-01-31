@@ -157,14 +157,14 @@ srecord::input_file_four_packed_code::get_byte()
 }
 
 
-int
+bool
 srecord::input_file_four_packed_code::read_inner(srecord::record &record)
 {
     for (;;)
     {
         int c = get_char();
         if (c < 0)
-            return 0;
+            return false;
         if (c == '$')
             break;
         if (c == '\n')
@@ -178,7 +178,7 @@ srecord::input_file_four_packed_code::read_inner(srecord::record &record)
         {
             c = get_char();
             if (c < 0)
-                return 0;
+                return false;
             if (c == '\n')
                 break;
         }
@@ -196,7 +196,7 @@ srecord::input_file_four_packed_code::read_inner(srecord::record &record)
                 fatal_error("end-of-line expected");
         while (get_char() >= 0)
                 ;
-        return 0;
+        return false;
 
     case 1:
     case 2:
@@ -243,7 +243,7 @@ srecord::input_file_four_packed_code::read_inner(srecord::record &record)
         type = srecord::record::type_execution_start_address;
     record = srecord::record(type, address, buffer, length);
     running_address = address + length;
-    return 1;
+    return true;
 }
 
 

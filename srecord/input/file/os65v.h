@@ -86,7 +86,7 @@ private:
       * The read_inner method is used by the read method to get
       * another portion of input.
       */
-    int read_inner(record &);
+    bool read_inner(record &);
 
     /**
       * The seen_some_input instance variable is used to remember whether
