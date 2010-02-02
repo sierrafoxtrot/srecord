@@ -31,7 +31,7 @@ build_command =
     "change=$c "
     "version=$v "
     "arch=$arch "
-    "-nl -st "
+    "-nl "
     "search_path=$search_path"
     ;
 

@@ -1,6 +1,6 @@
 /*
  *      srecord - manipulate eprom load files
- *      Copyright (C) 1998-2001, 2003, 2006-2008 Peter Miller
+ *      Copyright (C) 1998-2001, 2003, 2006-2008, 2010 Peter Miller
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -20,11 +20,11 @@
 all = [all] documentation;
 
 documentation:
-        [fromto man/man%1/%2.%1 man/cat%1/%2.%1
-                [match_mask man/man%1/%2.%1 [source_files]]
-        ]
-        etc/reference.pdf
-        ;
+    [fromto man/man%1/%2.%1 man/cat%1/%2.%1
+        [match_mask man/man%1/%2.%1 [source_files]]
+    ]
+    etc/reference.pdf
+    ;
 
 /* Sigh */
 cascade etc/srecord.html = etc/version.so(exists);
@@ -32,6 +32,9 @@ cascade etc/srecord.html = etc/version.so(exists);
 man/cat%1/%2.%1: man/man%1/%2.%1
     etc/groff.sh
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     sh [resolve etc/groff.sh]
         [addprefix "-I" [search_list]]
         -Tascii -t -P-c -man
@@ -40,54 +43,42 @@ man/cat%1/%2.%1: man/man%1/%2.%1
 }
 
 man/man%1/%2.%1.d: man/man%1/%2.%1
-        set no-cascade
+    set no-cascade
 {
-        [c_incl] -nc -ns -api -nrec
-                --lang\=roff
-                [addprefix "-I" [search_list]]
-                [resolve man/man%1/%2.%1]
-                -prefix "'cascade man/man%1/%2.%1 ='"
-                -suffix "';'"
-                [addprefix "-rlp=" [search_list]]
-                -o [target];
-}
-
-man/man%1/%2.%1,M:: man/man%1/%2.%1,Md;
-
-man/man%1/%2.%1,Md: man/man%1/%2.%1
-{
-        [c_incl] -nc -ns -api
-                --lang\=roff
-                [addprefix "-I" [search_list]]
-                [resolve man/man%1/%2.%1]
-                [addprefix "-rlp=" [search_list]]
-                -o [target];
+    [c_incl] -nc -ns -api -nrec
+        --lang\=roff
+        [addprefix "-I" [search_list]]
+        [resolve man/man%1/%2.%1]
+        -prefix "'cascade man/man%1/%2.%1 ='"
+        -suffix "';'"
+        [addprefix "-rlp=" [search_list]]
+        -o [target];
 }
 
 man/man%1/%2.so.d: man/man%1/%2.so
-        set no-cascade
+    set no-cascade
 {
-        [c_incl] -nc -ns -api -nrec
-                --lang\=roff
-                [addprefix "-I" [search_list]]
-                [resolve man/man%1/%2.so]
-                -prefix "'cascade man/man%1/%2.so ='"
-                -suffix "';'"
-                [addprefix "-rlp=" [search_list]]
-                -o [target];
+    [c_incl] -nc -ns -api -nrec
+        --lang\=roff
+        [addprefix "-I" [search_list]]
+        [resolve man/man%1/%2.so]
+        -prefix "'cascade man/man%1/%2.so ='"
+        -suffix "';'"
+        [addprefix "-rlp=" [search_list]]
+        -o [target];
 }
 
 etc/%.so.d: etc/%.so
-        set no-cascade
+    set no-cascade
 {
-        [c_incl] -nc -ns -api -nrec
-                --lang\=roff
-                [addprefix "-I" [search_list]]
-                [resolve etc/%.so]
-                -prefix "'cascade etc/%.so ='"
-                -suffix "';'"
-                [addprefix "-rlp=" [search_list]]
-                -o [target];
+    [c_incl] -nc -ns -api -nrec
+        --lang\=roff
+        [addprefix "-I" [search_list]]
+        [resolve etc/%.so]
+        -prefix "'cascade etc/%.so ='"
+        -suffix "';'"
+        [addprefix "-rlp=" [search_list]]
+        -o [target];
 }
 
 #include-cooked [addsuffix ".d" [match_mask etc/%.man [source_files]]]
@@ -97,6 +88,9 @@ etc/%.so.d: etc/%.so
 etc/%.pdf: etc/%.man etc/page-list.awk
     etc/groff.sh
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     sh [resolve etc/groff.sh]
         [addprefix "-I" [search_list]]
         -t -man
@@ -116,25 +110,34 @@ cascade etc/reference.man = etc/ref-index.so etc/ref-parts.so;
 etc/ref-index.so: [match_mask man/man%1/%2.%1 [source_files]]
         etc/ref-ptx1.awk etc/ref-ptx.ignore etc/ref-ptx2.awk
 {
-        [awk] -f [resolve etc/ref-ptx1.awk]
-                [resolve [match_mask man/man%1/%2.%1 [source_files]]]
-        | ptx -O -r -w1000 -i[resolve etc/ref-ptx.ignore]
-        | sort -t'\'"\'' -f -d +5 -6 +3 -4
-        | [awk] -F'\'"\'' -f [resolve etc/ref-ptx2.awk]
-        > [target];
+    if [not [verbose]] then
+        function print GEN [target];
+
+    [awk] -f [resolve etc/ref-ptx1.awk]
+        [resolve [match_mask man/man%1/%2.%1 [source_files]]]
+    | ptx -O -r -w1000 -i[resolve etc/ref-ptx.ignore]
+    | sort -t'\'"\'' -f -d +5 -6 +3 -4
+    | [awk] -F'\'"\'' -f [resolve etc/ref-ptx2.awk]
+    > [target];
 }
 
 etc/ref-parts.so: [match_mask man/man%1/%2.%1 [source_files]]
         etc/ref-ptx.sh
 {
-        sh -f [resolve etc/ref-ptx.sh]
-                [match_mask man/man%1/%2.%1 [source_files]]
+    if [not [verbose]] then
+        function print GEN [target];
+
+    sh -f [resolve etc/ref-ptx.sh]
+        [match_mask man/man%1/%2.%1 [source_files]]
         > [target];
 }
 
 #if [count [match_mask etc/new.%.so [source_files]]]
 etc/new.so: : etc/new.sh [match_mask etc/new.%.so [source_files]]
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     sh [resolve etc/new.sh] -r [match_mask etc/new.%.so [need]] > [target];
 }
 #include-cooked-nowarn etc/new.so.d

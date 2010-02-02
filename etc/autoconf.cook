@@ -41,6 +41,9 @@ if [not [defined cxx]] then
 
 configure: etc/configure.ac install-sh
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     if [not [exists install-sh]] then
     {
         /*
@@ -100,6 +103,9 @@ install-sh: [install-sh]
 
 srecord/config.h.in: etc/configure.ac
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     autoheader [resolve etc/configure.ac] > [target];
 }
 

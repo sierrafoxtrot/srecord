@@ -113,6 +113,9 @@ archive/[project_minus].tar.gz: [source_file_order]
         debian/control /* et al */
     set shallow
 {
+    if [not [verbose]] then
+        function print TAR [target];
+
     tar cf - [resolve [source_file_order]]
         debian/changelog
         debian/compat
@@ -133,17 +136,26 @@ archive/[project_minus].tar.gz: [source_file_order]
 archive/[project_minus].%: %
     set shallow
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     cat [resolve [need]] > [target];
 }
 
 archive/[project_minus].pdf: etc/reference.pdf
     set shallow
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     cat [resolve [need]] > [target];
 }
 
 %: etc/%.man
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     roffpp
         [prepost "-I" /[arch] [search_list]]
         [addprefix "-I" [search_list]]
@@ -155,6 +167,9 @@ archive/[project_minus].pdf: etc/reference.pdf
 archive/%.txt: etc/%.man
     set shallow
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     roffpp
         [prepost "-I" /[arch] [search_list]]
         [addprefix "-I" [search_list]]
@@ -190,6 +205,9 @@ archive/[project_minus]-1.i386.rpm archive/[project_minus]-1.src.rpm:
         archive/[project_minus].tar.gz etc/rpm-build.sh
     set shallow
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     sh [resolve etc/rpm-build.sh]
         RPM-temporary
         [resolve archive/[project_minus].tar.gz]
@@ -205,6 +223,9 @@ archive/[project_minus]-1.i386.rpm archive/[project_minus]-1.src.rpm:
 
 [project_minus].spec: [source_files]
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     [aemakegen] --target\=rpm-spec -p [project] -c [change] -o [target]
         libdir/pkgconfig/[project_short].pc.in
         ;
@@ -242,6 +263,9 @@ etc/%.html.d: etc/%.html
 archive/%.html: etc/%.html: etc/ssp.awk etc/version.so
     set shallow
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     roffpp
         [prepost "-I" /[arch] [search_list]]
         [addprefix "-I" [search_list]]
@@ -271,6 +295,9 @@ etc/[project_short].lsm.d: etc/[project_short].lsm
 archive/[project_minus].lsm: etc/[project_short].lsm etc/ssp.awk
     set shallow
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     roffpp
         [prepost "-I" /[arch] [search_list]]
         [addprefix "-I" [search_list]]
@@ -287,6 +314,9 @@ LICENSE: man/cat1/srec_license.1
 
 archive/%1-%2.png: archive/%1.png
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     if [find_command pngcrush] then
     {
         convert [resolve archive/%1.png] -scale %2 archive/%1-%2.tmp.png;
@@ -308,6 +338,9 @@ archive/srecord.ico:
     archive/srecord-96.png
     archive/srecord-128.png
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     png2ico [target] [resolve [need]];
 }
 
@@ -333,6 +366,9 @@ debian/srecord.install
 debian/changelog: [source_files]
     set shallow
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     /* This actually makes more files than just debian/control */
     [aemakegen] -project\=[project] -change\=[change] --target\=debian
         libdir/pkgconfig/[project_short].pc.in

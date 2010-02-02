@@ -98,6 +98,9 @@ if [find_command ctags] then
 tags: [change_source_files]
     set shallow no-cascade
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     xargs ctags [ctags-opts] [target]
             set meter;
 data
@@ -115,6 +118,9 @@ dataend
 TAGS: [change_source_files]
     set shallow no-cascade
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     xargs [etags] [etags-opts] [target]
         set meter;
 data

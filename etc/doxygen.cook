@@ -19,13 +19,16 @@
 
 doxygen = [find_command doxygen];
 if [not [doxygen]] then
-        doxygen = doxygen;
+    doxygen = doxygen;
 all += archive/srecord/index.html;
 
 archive/%0index.html: [match_mask %0%%0%%.h [source_files]]
-        etc/doxygen.cfg
+    etc/doxygen.cfg
 {
-        cat [resolve etc/doxygen.cfg] - > Doxyfile;
+    if [not [verbose]] then
+        function print DOX [target];
+
+    cat [resolve etc/doxygen.cfg] - > Doxyfile;
 data
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or
 # absolute) base path where the generated documentation will be

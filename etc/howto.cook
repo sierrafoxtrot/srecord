@@ -26,6 +26,25 @@ set time-adjust;
 awk = gawk;
 
 /*
+ * See how verbose we have decided to be.
+ */
+if [not [defined verbose]] then
+    verbose = 0;
+libtool-quiet = ;
+if [not [verbose]] then
+{
+    set silent;
+    libtool-quiet = --quiet;
+    set no-star;
+}
+else
+{
+    set no-silent;
+    libtool-quiet = ;
+    set star;
+}
+
+/*
  * The first item in search list should be the absolute path of the
  * current directory.  Assume that it is.
  */
@@ -107,22 +126,6 @@ if [count [change_source_files]] then
 debug = /* -g */ ;      /* g++ takes forever if you say -g for complex
                         template usage */
 
-if [not [defined verbose]] then
-    verbose = 1;
-libtool-quiet = ;
-if [not [verbose]] then
-{
-    set silent;
-    libtool-quiet = --quiet;
-    set no-star;
-}
-else
-{
-    set no-silent;
-    libtool-quiet = ;
-    set star;
-}
-
 all = ;
 
 /* the right hand side is deferred until triggered */
@@ -140,8 +143,6 @@ all: [all];
 [arch]/[project_short]/lib[project_short].la_obj =
     [fromto %0%.cc [arch]/%0%.lo [match_mask srecord/%0%.cc [source_files]]]
     ;
-function print [arch]/[project_short]/lib[project_short].la_obj \=
-    [[arch]/[project_short]/lib[project_short].la_obj];
 
 /*
  * Generate lists of object files for programs
@@ -153,9 +154,7 @@ loop program = [program_list]
         [fromto %0%.cc [arch]/%0%.lo
             [match_mask [program]/%0%.cc [source_files]]
         ];
-    function print [arch]/bin/[program]_obj \= [[arch]/bin/[program]_obj];
     [arch]/bin/[program]_libs = [arch]/[project_short]/lib[project_short].la ;
-    function print [arch]/bin/[program]_libs \= [[arch]/bin/[program]_libs];
     all += [arch]/bin/[program] ;
 }
 
@@ -202,7 +201,7 @@ cascade %0%.lo = %0%.o %0.libs/%.lo;
 [arch]/%0%.lo [arch]/%0%.o [arch]/%0.libs/%.o: %0%.cc [arch]/srecord/config.h
 {
     if [not [verbose]] then
-        function print [c++] %0%.cc;
+        function print CXX %0%.cc;
 
     rm -f [arch]/%0%.lo [arch]/%0.libs/%.o [arch]/%0.libs/%.lo;
     libtool [libtool-quiet] --mode\=compile
@@ -296,7 +295,7 @@ cc_dep_files =
     set unlink
 {
     if [not [verbose]] then
-    function print LINK [target];
+        function print LINK [target];
 
     /*
      * We include the "hidden" libtool output files because we need to
@@ -368,8 +367,11 @@ all +=
  */
 
 srecord/patchlevel.h:
-        set shallow
+    set shallow
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     copyright_years =
         [collect
             aegis -list version -p [project] -c [change]
@@ -386,6 +388,9 @@ etc/version.so:
     set ['if' [or [not [defined baseline] ] [not [exists bl/etc/version.so
                 ] ] ] 'then' shallow]
 {
+    if [not [verbose]] then
+        function print GEN [target];
+
     copyright_years =
         [collect
             aegis -list version -p [project] -c [change]
