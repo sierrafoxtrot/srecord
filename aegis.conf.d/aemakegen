@@ -35,13 +35,17 @@ project_specific =
         value = "groff, libboost-dev, libgcrypt11-dev";
     },
     {
+        name = "aemakegen:rpm-spec:build-requires";
+        value = "groff, boost-devel, libgcrypt-devel";
+    },
+    {
         name = "aemakegen:debian:copyright";
         value = "false";
     },
     {
         name = "aemakegen:debian:description:srecord";
         value =
-            "collection of powerful tools for manipulating EPROM load files";
+            "A collection of powerful tools for manipulating EPROM load files";
     },
     {
         name = "aemakegen:debian:extended-description:srecord";
