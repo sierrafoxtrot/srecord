@@ -1,6 +1,6 @@
 '\" t
 .\" srecord - The "srecord" program.
-.\" Copyright (C) 1998-2009 Peter Miller
+.\" Copyright (C) 1998-2010 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -455,7 +455,7 @@ The alternate XMODEM calculation is performed.
 The initial seed is 0x0000.
 .TP 8n
 \fB\-BROKEN\fP
-A common\[hy]but\[hy]broken calculation is performed.
+A common\[hy]but\[hy]broken calculation is performed (see note 2 below).
 The initial seed is 0x84CF.
 .TP 8n
 \fB\-AUGment
@@ -477,12 +477,15 @@ may not be the same as the lower and upper bounds of your EPROM.  This
 is another reason to use the \fB\-fill\fP filter, because it will
 establish the data across the full EPROM address range.
 .PP
-Note that there are a great many CRC16 implementations out there,
-see http://www.joegeluso.com/software/articles/ccitt.htm for more
+\f[B]Note 2:\fP there are a great many CRC16 implementations out there,
+see http://www.joegeluso.com\%/software\%/articles\%/ccitt.htm (now gone,
+reproduced at http://\%srecord.sourceforge.net\%/crc16-ccitt.html)
+and \[lq]A painless guide to CRC error detection algorithms\[rq]
+http://www.repairfaq.org/filipg/LINK/F_crc_v3.html for more
 information.  If all else fails, SRecord is open source software:
 read the SRecord source code.  The CRC16 source code (found in the
-\f[CW]lib/crc16.cc\fP file of the distribution tarball) has a great many
-explanatory comments.
+\f[CW]srecord/crc16.cc\fP file of the distribution tarball) has a great
+many explanatory comments.
 .PP
 Please try all twelve combinations of the above options before reporting a
 bug in the CRC16 calculation.

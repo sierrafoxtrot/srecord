@@ -418,6 +418,7 @@ debian-package: archive/[project_minus].tar.gz
     echo Options Indexes > .htaccess &&
     gunzip < ../[project_minus].tar.gz
         | tardy -exclude "'"[project_minus]"/debian/*'"
+                -exclude [project_minus]/etc/crc16-ccitt.html /*not free enuf*/
         | gzip -9 > [tarball] &&
     tar xzf ../[project_minus].tar.gz &&
     cd [project_minus] &&

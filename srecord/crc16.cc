@@ -21,7 +21,9 @@
 // "A painless guide to CRC error detection algorithms"
 // http://www.repairfaq.org/filipg/LINK/F_crc_v3.html
 //
-// See also http://www.joegeluso.com/software/articles/ccitt.htm
+// See also http://www.joegeluso.com/software/articles/ccitt.htm (gone)
+//          http://srecord.sourceforge.net/crc16-ccitt.html (duplicate)
+//                         etc/crc16-ccitt.html (in the source tarball).
 //
 // See test/01/t0150a.sh for test vectors.
 //
