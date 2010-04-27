@@ -28,7 +28,8 @@ srecord::output_file_ascii_hex::~output_file_ascii_hex()
 
 
 srecord::output_file_ascii_hex::output_file_ascii_hex(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::output_file(a_file_name),
     address(0),
     column(0),
@@ -93,6 +94,9 @@ srecord::output_file_ascii_hex::write(const srecord::record &record)
             put_char(2);
             ++column;
             start_code_emitted = true;
+
+            if (!enable_optional_address_flag)
+                address = (unsigned long)-1L;
         }
         if (address != record.get_address())
         {

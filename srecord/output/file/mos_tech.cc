@@ -42,7 +42,8 @@ srecord::output_file_mos_tech::~output_file_mos_tech()
 
 
 srecord::output_file_mos_tech::output_file_mos_tech(
-        const std::string &a_filename) :
+    const std::string &a_filename
+) :
     srecord::output_file(a_filename),
     pref_block_size(24),
     data_record_count(0)

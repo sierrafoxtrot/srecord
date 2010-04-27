@@ -436,16 +436,24 @@ Headers often, but not always, include descriptive text.
 Data_Count
 This feature controls the presence of data record count records, which
 appear aftre the data, and state how many data records preceeded them.
-Usually a data intergrity mechanism.
+Usually a data integrity mechanism.
 .TP 8n
 Execution_Start_Address
-The feature controls the presence of execution start address records,
+This feature controls the presence of execution start address records,
 which is where the monitor will jump to and start executing code once
 the hex file has finished loading.
 .TP 8n
 Footer
 This feature controls the presence of a file termination record,
 one that \f[I]does not\fP double as an execution start address record.
+.TP
+Optional_Address
+In formats that have the address and the data separated or partially
+separated (as opposed to having a complete address in every record) it
+is possible to disable emitting the first address where that address
+would be zero, as these format often default the address to zero if
+no address is seen beofre the first data record.  This is disabled by
+default, the zero address is always emitted.
 .PP
 Not all formats have all of the above features.
 Not all formats are able to optionally omit any or all the above features.

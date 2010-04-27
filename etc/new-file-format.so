@@ -221,6 +221,12 @@ If this option is used, no end-of-file records are to be produced.  This
 is available as the \f[CW]enable_footer_flag\fP class variable in the
 methods of your derived class.
 .TP 8n
+\fB\-enable=optional-address
+If this option is used, in combination with a format that does not have
+an address on every line, the the first zero address many be omitted.
+All subsequent addresses are not optional, just the first zero address.
+Defaults to disabled.
+.TP 8n
 \f[B]\-ignore-checksums\fP
 If this flag is set, your file input methods must parse \f[I]but not
 check\fP checksums, if the format has checksums.  This is available in

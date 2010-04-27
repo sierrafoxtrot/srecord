@@ -36,7 +36,8 @@ srecord::output_file_ti_tagged_16::~output_file_ti_tagged_16()
 
 
 srecord::output_file_ti_tagged_16::output_file_ti_tagged_16(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::output_file(a_file_name),
     address(0),
     column(0),
@@ -99,6 +100,8 @@ srecord::output_file_ti_tagged_16::write(const srecord::record &record)
                 put_char(c);
             }
         }
+        if (!enable_optional_address_flag)
+            address = (unsigned long)-1L;
         break;
 
     case srecord::record::type_data:

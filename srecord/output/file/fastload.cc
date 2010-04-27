@@ -39,7 +39,8 @@ srecord::output_file_fastload::~output_file_fastload()
 
 
 srecord::output_file_fastload::output_file_fastload(
-        const std::string &a_filename) :
+    const std::string &a_filename
+) :
     srecord::output_file(a_filename),
     line_length(0),
     address(~0uL),
@@ -124,6 +125,8 @@ srecord::output_file_fastload::write(const srecord::record &record)
     {
     case srecord::record::type_header:
         // This format can't do header records
+        if (!enable_optional_address_flag)
+            address = (unsigned long)-1L;
         break;
 
     case srecord::record::type_data:

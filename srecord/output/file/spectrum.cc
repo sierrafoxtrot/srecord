@@ -29,7 +29,8 @@ srecord::output_file_spectrum::~output_file_spectrum()
 
 
 srecord::output_file_spectrum::output_file_spectrum(
-        const std::string &a_filename) :
+    const std::string &a_filename
+) :
     srecord::output_file(a_filename)
 {
 }

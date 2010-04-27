@@ -29,9 +29,9 @@ srecord::output_file_forth::~output_file_forth()
 
 
 srecord::output_file_forth::output_file_forth(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::output_file(a_file_name),
-    address(0),
     store_cmd("C!")
 {
 }
@@ -66,20 +66,22 @@ srecord::output_file_forth::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        address = record.get_address();
-        //
-        // Now write out the new address.  It is important not to
-        // disturb the checksum, so don't use the put_byte method.
-        //
-        for (size_t j = 0; j < record.get_length(); ++j)
         {
-            put_byte(record.get_data(j));
-            put_char(' ');
-            put_word(address);
-            put_char(' ');
-            put_string(store_cmd);
-            ++address;
-            put_char('\n');
+            record::address_t address = record.get_address();
+            //
+            // Now write out the new address.  It is important not to
+            // disturb the checksum, so don't use the put_byte method.
+            //
+            for (size_t j = 0; j < record.get_length(); ++j)
+            {
+                put_byte(record.get_data(j));
+                put_char(' ');
+                put_word(address);
+                put_char(' ');
+                put_string(store_cmd);
+                ++address;
+                put_char('\n');
+            }
         }
         break;
 

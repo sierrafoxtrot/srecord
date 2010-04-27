@@ -28,7 +28,8 @@ srecord::output_file_emon52::~output_file_emon52()
 
 
 srecord::output_file_emon52::output_file_emon52(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::output_file(a_file_name),
     pref_block_size(16)
 {

@@ -33,6 +33,7 @@ bool srecord::output_file::enable_header_flag = true;
 bool srecord::output_file::enable_data_count_flag = true;
 bool srecord::output_file::enable_goto_addr_flag = true;
 bool srecord::output_file::enable_footer_flag = true;
+bool srecord::output_file::enable_optional_address_flag = false;
 
 
 srecord::output_file::output_file() :
@@ -352,6 +353,13 @@ srecord::output_file::enable_footer(bool yesno)
 }
 
 
+void
+srecord::output_file::enable_optional_address(bool yesno)
+{
+    enable_optional_address_flag = yesno;
+}
+
+
 bool
 srecord::output_file::enable_by_name(const std::string &name, bool yesno)
 {
@@ -367,6 +375,8 @@ srecord::output_file::enable_by_name(const std::string &name, bool yesno)
         { "Data_Count", &srecord::output_file::enable_data_count },
         { "Execution_Start_Address", &srecord::output_file::enable_goto_addr },
         { "Footer", &srecord::output_file::enable_footer },
+        { "Optional_Address",
+          &srecord::output_file::enable_optional_address },
     };
 
     for (const table_t *tp = table; tp < ENDOF(table); ++tp)

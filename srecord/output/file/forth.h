@@ -82,12 +82,6 @@ protected:
 
 private:
     /**
-      * The address instance variable is used to remember where we are
-      * up to in the output.  Used to limit the number of $A line emitted.
-      */
-    unsigned long address;
-
-    /**
      * The FORTH store command to use. Either C! for RAM or EEC! for EEPROM
      */
     std::string store_cmd;

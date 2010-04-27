@@ -33,7 +33,8 @@ srecord::output_file_dec_binary::~output_file_dec_binary()
 
 
 srecord::output_file_dec_binary::output_file_dec_binary(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::output_file(a_file_name),
     pref_block_size(preferred_block_size_calculate())
 {

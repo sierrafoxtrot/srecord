@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - The "srecord" program.
-#       Copyright (C) 2007, 2008 Peter Miller
+#       Copyright (C) 2007, 2008, 2010 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -40,14 +40,15 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 awk -f x.awk > test.ok << 'fubar'
-^B 7F D2 43 A6 7F F3 43 A6 3F C0 00 3F 3B DE 70
-0C 3B E0 00 01 93 FE 00 00 7F FA 02 A6 93 FE 00
-04 7F FB 02 A6 93 FE 00 08 7F D2 42 A6 7F F3 42
-A6 48 00 1F 04 00 00 00 00 00 00 00 00 00 00 00
+^B $A0000,
+7F D2 43 A6 7F F3 43 A6 3F C0 00 3F 3B DE 70 0C
+3B E0 00 01 93 FE 00 00 7F FA 02 A6 93 FE 00 04
+7F FB 02 A6 93 FE 00 08 7F D2 42 A6 7F F3 42 A6
+48 00 1F 04 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 ^C
+^C
 fubar
 if test $? -ne 0; then no_result; fi
 

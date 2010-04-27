@@ -29,7 +29,8 @@ srecord::output_file_wilson::~output_file_wilson()
 
 
 srecord::output_file_wilson::output_file_wilson(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::output_file(a_file_name),
     pref_block_size(32)
 {

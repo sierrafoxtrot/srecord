@@ -26,8 +26,10 @@ srecord::output_file_spasm::~output_file_spasm()
 }
 
 
-srecord::output_file_spasm::output_file_spasm(const std::string &a_file_name,
-        endian_t a_end) :
+srecord::output_file_spasm::output_file_spasm(
+    const std::string &a_file_name,
+    endian_t a_end
+) :
     srecord::output_file(a_file_name),
     end(a_end)
 {

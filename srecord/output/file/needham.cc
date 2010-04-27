@@ -32,7 +32,8 @@ srecord::output_file_needham::~output_file_needham()
 
 
 srecord::output_file_needham::output_file_needham(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::output_file(a_file_name),
     address(0),
     column(0),
@@ -56,6 +57,8 @@ srecord::output_file_needham::write(const srecord::record &record)
     {
     case srecord::record::type_header:
         // ignore
+        if (!enable_optional_address_flag)
+            address = (unsigned long)-1L;
         break;
 
     case srecord::record::type_data:

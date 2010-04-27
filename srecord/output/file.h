@@ -271,6 +271,22 @@ protected:
       */
     static bool enable_footer_flag;
 
+    /**
+      * The enable_optional_address_records class variable is used
+      * to remember whether or not to emit optional address records.
+      * Defaults to true.  Set by the #enable_by_name method.
+      */
+    static bool enable_optional_address_flag;
+
+    /**
+      * The enable_footer class method is used to enable or disable
+      * emitting optional address records.
+      *
+      * @param yesno
+      *     true if records should be written, false if not
+      */
+    static void enable_optional_address(bool yesno);
+
     enum line_termination_t
     {
         line_termination_native,

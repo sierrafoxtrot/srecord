@@ -27,7 +27,8 @@ srecord::output_file_brecord::~output_file_brecord()
 
 
 srecord::output_file_brecord::output_file_brecord(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::output_file(a_file_name),
     block_size(BUFFER_MAXIMUM_MAXIMUM)
 {

@@ -40,7 +40,8 @@ srecord::output_file_msbin::~output_file_msbin()
 
 
 srecord::output_file_msbin::output_file_msbin(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::output_file(a_file_name),
     start_address_set(false),
     start_address(0),

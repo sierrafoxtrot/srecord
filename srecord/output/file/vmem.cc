@@ -171,6 +171,8 @@ srecord::output_file_vmem::write(const srecord::record &record)
             }
             put_string(" */\n");
         }
+        if (!enable_optional_address_flag)
+            address = (unsigned long)-1L;
         break;
 
     case srecord::record::type_data:
