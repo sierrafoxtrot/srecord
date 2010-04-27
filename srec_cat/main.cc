@@ -25,6 +25,7 @@
 #include <srecord/memory/walker/writer.h>
 #include <srecord/output.h>
 #include <srecord/output/file.h>
+#include <srecord/output/filter/reblock.h>
 #include <srecord/record.h>
 
 #include <srec_cat/arglex3.h>
@@ -44,6 +45,8 @@ main(int argc, char **argv)
     unsigned long execution_start_address = 0;
     bool execution_start_address_set = false;
     int output_block_size = 0;
+    bool output_block_packing = false;
+    bool output_block_align = false;
     while (cmdline.token_cur() != srecord::arglex::token_eoln)
     {
         switch (cmdline.token_cur())
@@ -184,6 +187,14 @@ main(int argc, char **argv)
             execution_start_address_set = true;
             srecord::output_file::enable_goto_addr(true);
             continue;
+
+        case srec_cat_arglex3::token_output_block_packing:
+            output_block_packing = true;
+            break;
+
+        case srec_cat_arglex3::token_output_block_align:
+            output_block_align = true;
+            break;
         }
         cmdline.token_next();
     }
@@ -191,6 +202,23 @@ main(int argc, char **argv)
         infile = cmdline.get_input();
     if (!outfile)
         outfile = cmdline.get_output();
+
+    if (output_block_packing || output_block_align)
+    {
+        //
+        // Reblock the output so that it matches the output file's block
+        // size exactly.  That way SRecord's internal memory chunk size
+        // does not cause output artifacts.  This requires lost of
+        // memory copying back and forth, so only do it if they asked
+        // for it.
+        //
+        // This filter makes no semantic difference to the output.
+        // (If it does, it's a bug.)
+        //
+        outfile =
+            srecord::output_filter_reblock::create(outfile, output_block_align);
+    }
+
     if (address_length > 0)
         outfile->address_length_set(address_length);
     if (line_length > 0)

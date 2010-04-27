@@ -515,6 +515,18 @@ data starts in memory, use the \fB\-offset\fP filter.
 This option may be used to specify the exact number of data bytes to
 appear in each output record.  There are format-specific limitations on
 this value, you will get an error if the value isn't valid.
+.TP 8n
+\fB\-Output_Block_Packing\fP
+From time to time, with large files, you may notice that your data
+records are spit unexpectedly on output.  This usually happens where
+record lengths are not a power of 2.  If this bothers you (or your
+comparison tools) this option may be used to repack the output so that
+SRecord's internal block boundaries are not visable in the output.
+.TP 8n
+\fB\-Output_Block_Alignment\fP
+This option is similar to the \fB\-Output_Block_Packing\fP option,
+except that short records are used after holes to cause subsequent
+records to be placed on a block size boundary.
 .so man/man1/o_multiple.so
 .PP
 All other options will produce a diagnostic error.

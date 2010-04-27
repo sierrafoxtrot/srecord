@@ -3,18 +3,17 @@
 // Copyright (C) 1998-2000, 2002, 2003, 2006-2008, 2010 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
+// it under the terms of the GNU Lesser General Public License as
+// published by the Free Software Foundation; either version 3 of the
+// License, or (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Lesser General Public License for more details.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
 #ifndef SRECORD_MEMORY_CHUNK_H
@@ -37,6 +36,17 @@ public:
     enum {
     /**
       * The size value is the size, in bytes, of each memory chunk.
+      *
+      * @note
+      *     Code that uses this value <b>shall not</b> assume that
+      *     it is, or will ever be, a power of 2.  The compiler will
+      *     optimize for you, don't do premature optimizations like bit
+      *     masks and bit shifts.
+      * @note
+      *     If you change this value, you will have to change tests
+      *     test/01/t0199a.sh and test/02/t0200a.sh to match,
+      *     otherwise it will fail.  Make sure that interactions with
+      *     srecord::output_filter_reblock are what you intended, too.
       */
     size = 7 * 256 };
 
