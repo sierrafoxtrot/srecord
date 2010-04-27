@@ -34,7 +34,7 @@ srecord::output_file_hexdump::output_file_hexdump(
         const std::string &a_file_name) :
     srecord::output_file(a_file_name),
     number_of_columns(0),
-    row_cache_address(-1),
+    row_cache_address((unsigned long)-1),
     row_cache_address_mask(0),
     row_cache_size(0),
     row_cache(0),
@@ -71,7 +71,7 @@ srecord::output_file_hexdump::row_cache_print()
         put_char(*cp++);
     put_char('\n');
     memset(row_cache, ' ', row_cache_size);
-    row_cache_address = -1;
+    row_cache_address = (unsigned long)-1;
 }
 
 
