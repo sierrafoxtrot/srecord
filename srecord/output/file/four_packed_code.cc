@@ -268,6 +268,18 @@ srecord::output_file_four_packed_code::line_length_set(int linlen)
 }
 
 
+bool
+srecord::output_file_four_packed_code::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 1 || nbytes > record::max_data_length)
+        return false;
+    if (nbytes > 252)
+        return false;
+    pref_block_size = nbytes;
+    return true;
+}
+
+
 int
 srecord::output_file_four_packed_code::preferred_block_size_get() const
 {

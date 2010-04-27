@@ -1,6 +1,6 @@
 '\" t
 .\" srecord - manipulate eprom load files
-.\" Copyright (C) 1998, 2000-2009 Peter Miller
+.\" Copyright (C) 1998, 2000-2010 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -510,6 +510,11 @@ Please note: the execution start address is a different concept than the
 first address in memory of your data.  If you want to change where your
 data starts in memory, use the \fB\-offset\fP filter.
 .RE
+.TP 8n
+\fB\-Output_Block_Size\fP \f[I]number\fP
+This option may be used to specify the exact number of data bytes to
+appear in each output record.  There are format-specific limitations on
+this value, you will get an error if the value isn't valid.
 .so man/man1/o_multiple.so
 .PP
 All other options will produce a diagnostic error.

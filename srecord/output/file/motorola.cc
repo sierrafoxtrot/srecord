@@ -295,6 +295,16 @@ srecord::output_file_motorola::address_length_set(int n)
 }
 
 
+bool
+srecord::output_file_motorola::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 1 || nbytes > record::max_data_length)
+        return false;
+    pref_block_size = nbytes;
+    return true;
+}
+
+
 int
 srecord::output_file_motorola::preferred_block_size_get()
     const

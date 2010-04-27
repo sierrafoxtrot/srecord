@@ -176,6 +176,18 @@ srecord::output_file_ti_tagged_16::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_ti_tagged_16::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 2 || nbytes > record::max_data_length)
+        return false;
+    if (nbytes & 1)
+        return false;
+    line_length = 5 * (nbytes / 2);
+    return true;
+}
+
+
 int
 srecord::output_file_ti_tagged_16::preferred_block_size_get()
     const

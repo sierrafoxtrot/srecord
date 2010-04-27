@@ -2,19 +2,18 @@
 // srecord - manipulate eprom load files
 // Copyright (C) 1998, 1999, 2001-2003, 2006-2010 Peter Miller
 //
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
+// This program is free software; you can redistribute it and/or modify it
+// under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or (at your
+// option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Lesser General Public License for more details.
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+// for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
 #ifndef SRECORD_OUTPUT_H
@@ -100,6 +99,21 @@ public:
     virtual int preferred_block_size_get() const = 0;
 
     /**
+      * The preferred_block_size_set method is is to set a precific
+      * number of bytes for the preferred block size.
+      *
+      * @param nbytes
+      *     The exact number of bytes to be returned by the
+      *     #preferred_block_size_get method.
+      * @returns
+      *     There are format-specific limitations on block sizes, this
+      *     method will return true if the setting was acceptable, false
+      *     if the format is incapable of using the specified block
+      *     size.
+      */
+    virtual bool preferred_block_size_set(int nbytes) = 0;
+
+    /**
       * The fatal_error method is used to report fatal errors.
       * The `fmt' string is in the same style a standard C printf
       * function.  It calls the fatal_error_v method.  This method
@@ -160,7 +174,7 @@ public:
     /**
       * The notify_upper_bound method is used to notify the output class
       * of the upper bound (highest address plus one) of the output
-      * to come.  Shall be called before the hread or any data records
+      * to come.  Shall be called before the head or any data records
       * are written.
       *
       * @param addr
@@ -182,7 +196,7 @@ public:
 
 protected:
     /**
-      * The default constructor.  Only dervived classes may use.
+      * The default constructor.  Only derived classes may use.
       */
     output();
 

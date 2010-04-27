@@ -93,6 +93,13 @@ srecord::output_file_atmel_generic::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_atmel_generic::preferred_block_size_set(int nbytes)
+{
+    return (nbytes == 2);
+}
+
+
 int
 srecord::output_file_atmel_generic::preferred_block_size_get()
     const

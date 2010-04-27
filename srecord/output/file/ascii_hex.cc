@@ -179,6 +179,17 @@ srecord::output_file_ascii_hex::line_length_set(int linlen)
 }
 
 
+bool
+srecord::output_file_ascii_hex::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 1 || nbytes > srecord::record::max_data_length)
+        return false;
+    pref_block_size = nbytes;
+    line_length = pref_block_size * 3 - 1;
+    return true;
+}
+
+
 void
 srecord::output_file_ascii_hex::address_length_set(int n)
 {

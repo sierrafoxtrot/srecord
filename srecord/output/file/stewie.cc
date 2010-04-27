@@ -2,19 +2,18 @@
 // srecord - manipulate eprom load files
 // Copyright (C) 2004, 2006-2008, 2010 Peter Miller
 //
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
+// This program is free software; you can redistribute it and/or modify it
+// under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or (at your
+// option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Lesser General Public License for more details.
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+// for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
 #include <cstring>
@@ -38,7 +37,8 @@ srecord::output_file_stewie::~output_file_stewie()
 
 
 srecord::output_file_stewie::output_file_stewie(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::output_file(a_file_name),
     data_count(0),
     address_length(2),
@@ -200,6 +200,18 @@ srecord::output_file_stewie::line_length_set(int n)
     else if (n > 250)
         n = 250;
     preferred_block_size = n;
+}
+
+
+bool
+srecord::output_file_stewie::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 1 || nbytes > record::max_data_length)
+        return false;
+    if (nbytes > 250)
+        return false;
+    preferred_block_size = nbytes;
+    return true;
 }
 
 

@@ -232,6 +232,18 @@ srecord::output_file_mif::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_mif::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 1 || nbytes > record::max_data_length)
+        return false;
+    if (nbytes % width_in_bytes)
+        return false;
+    pref_blk_sz = nbytes;
+    return true;
+}
+
+
 int
 srecord::output_file_mif::preferred_block_size_get()
     const

@@ -190,6 +190,14 @@ srecord::output_file_aomf::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_aomf::preferred_block_size_set(int)
+{
+    // Irrelevant.
+    return true;
+}
+
+
 int
 srecord::output_file_aomf::preferred_block_size_get()
     const

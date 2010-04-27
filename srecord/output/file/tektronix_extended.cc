@@ -181,6 +181,18 @@ srecord::output_file_tektronix_extended::address_length_set(int n)
 }
 
 
+bool
+srecord::output_file_tektronix_extended::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 1 || nbytes > record::max_data_length)
+        return false;
+    if (nbytes > 123)
+        return false;
+    pref_block_size = nbytes;
+    return true;
+}
+
+
 int
 srecord::output_file_tektronix_extended::preferred_block_size_get()
     const

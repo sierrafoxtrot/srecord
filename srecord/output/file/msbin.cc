@@ -205,6 +205,13 @@ srecord::output_file_msbin::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_msbin::preferred_block_size_set(int nbytes)
+{
+    return (nbytes >= 1 && nbytes <= record::max_data_length);
+}
+
+
 int
 srecord::output_file_msbin::preferred_block_size_get()
     const

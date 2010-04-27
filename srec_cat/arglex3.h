@@ -37,6 +37,7 @@ public:
         token_enable,
         token_disable,
         token_line_termination,
+        token_output_block_size,
         token_MAX
     };
 

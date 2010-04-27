@@ -74,6 +74,14 @@ srecord::output_file_binary::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_binary::preferred_block_size_set(int)
+{
+    // Ignore.
+    return true;
+}
+
+
 int
 srecord::output_file_binary::preferred_block_size_get()
     const

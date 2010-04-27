@@ -118,11 +118,24 @@ srecord::output_file_cosmac::address_length_set(int x)
 }
 
 
+bool
+srecord::output_file_cosmac::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 1 || nbytes > record::max_data_length)
+        return false;
+    line_length = 2 * nbytes + 1;
+    return true;
+}
+
+
 int
 srecord::output_file_cosmac::preferred_block_size_get()
     const
 {
-    return ((line_length - 1) / 2);
+    int n = ((line_length - 1) / 2);
+    if (n > record::max_data_length)
+        n = record::max_data_length;
+    return n;
 }
 
 

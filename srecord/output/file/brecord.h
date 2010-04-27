@@ -43,8 +43,8 @@ private:
       * The constructor.
       *
       * @param file_name
-      *     The name of the file to write the output to.  The string "-"
-      *     is understood to mean the standard output.
+      *     The name of the file to write the output to.
+      *     The string "-" is understood to mean the standard output.
       */
     output_file_brecord(const std::string &file_name);
 
@@ -54,8 +54,8 @@ public:
       * allocated instances of this class.
       *
       * @param file_name
-      *     The file name to open to write data to.  The name "-" is
-      *     understood to mean the standard output.
+      *     The file name to open to write data to.
+      *     The name "-" is understood to mean the standard output.
       */
     static pointer create(const std::string &file_name);
 
@@ -73,17 +73,14 @@ protected:
     int preferred_block_size_get() const;
 
     // See base class for documentation.
+    bool preferred_block_size_set(int nbytes);
+
+    // See base class for documentation.
     const char *format_name() const;
 
 private:
     enum { BUFFER_MAXIMUM_MAXIMUM = 31 };
-    unsigned long buffer_address;
-    unsigned buffer_length;
-    unsigned buffer_maximum;
-    unsigned char buffer[BUFFER_MAXIMUM_MAXIMUM];
-
-    void flush();
-    void buffer_stash(unsigned long address, unsigned char data);
+    unsigned block_size;
 
     /**
       * The default constructor.  Do not use.

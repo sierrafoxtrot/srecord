@@ -164,6 +164,14 @@ srecord::output_file_basic::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_basic::preferred_block_size_set(int)
+{
+    // ignore
+    return true;
+}
+
+
 int
 srecord::output_file_basic::preferred_block_size_get()
     const

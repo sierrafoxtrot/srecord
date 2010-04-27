@@ -239,6 +239,40 @@ srecord::output_file_fastload::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_fastload::preferred_block_size_set(int nbytes)
+{
+    if (nbytes > srecord::record::max_data_length)
+        return false;
+
+    // Don't go bigger than this, or you get undetectable errors.
+    enum { MAX = 256 };
+
+    int ll = (nbytes / 3) * 4;
+
+    int bytes_on_last_line = ((ll - 9) / 4) * 3;
+    if (bytes_on_last_line > MAX)
+        return false;
+    else if (bytes_on_last_line < 0)
+        return false;
+
+    int bytes_on_other_lines = (ll / 4) * 3;
+    if (bytes_on_other_lines > MAX)
+        return false;
+    else if (bytes_on_other_lines < 1)
+        return false;
+
+    int num_other_lines =
+        (MAX - bytes_on_last_line) / bytes_on_other_lines;
+
+    max_since_checksum =
+        num_other_lines * bytes_on_other_lines + bytes_on_last_line;
+
+    line_length = ll;
+    return true;
+}
+
+
 int
 srecord::output_file_fastload::preferred_block_size_get()
     const

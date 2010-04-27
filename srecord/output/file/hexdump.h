@@ -73,6 +73,9 @@ protected:
     int preferred_block_size_get() const;
 
     // See base class for documentation.
+    bool preferred_block_size_set(int nbytes);
+
+    // See base class for documentation.
     void command_line(arglex_tool *cmdln);
 
     // See base class for documentation.

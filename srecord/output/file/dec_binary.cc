@@ -149,6 +149,16 @@ srecord::output_file_dec_binary::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_dec_binary::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 1 || nbytes > record::max_data_length)
+        return false;
+    pref_block_size = nbytes;
+    return true;
+}
+
+
 int
 srecord::output_file_dec_binary::preferred_block_size_get()
     const
@@ -170,7 +180,7 @@ srecord::output_file_dec_binary::preferred_block_size_calculate()
     for (;;)
     {
         if (max - 7 <= srecord::record::max_data_length)
-        return (max - 7);
+            return (max - 7);
         max >>= 1;
     }
     return 1;

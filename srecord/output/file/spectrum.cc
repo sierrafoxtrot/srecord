@@ -106,6 +106,13 @@ srecord::output_file_spectrum::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_spectrum::preferred_block_size_set(int nbytes)
+{
+    return (nbytes == 1);
+}
+
+
 int
 srecord::output_file_spectrum::preferred_block_size_get()
     const

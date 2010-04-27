@@ -94,6 +94,13 @@ srecord::output_file_spasm::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_spasm::preferred_block_size_set(int nbytes)
+{
+    return (nbytes == 2);
+}
+
+
 int
 srecord::output_file_spasm::preferred_block_size_get()
     const

@@ -745,6 +745,17 @@ srecord::output_file_c::address_length_set(int n)
 }
 
 
+bool
+srecord::output_file_c::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 1 || nbytes > record::max_data_length)
+        return false;
+    if (output_word && (nbytes & 1))
+        return false;
+    return true;
+}
+
+
 int
 srecord::output_file_c::preferred_block_size_get()
     const

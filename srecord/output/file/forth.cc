@@ -130,15 +130,28 @@ srecord::output_file_forth::command_line(srecord::arglex_tool *cmdln)
     }
 }
 
-void srecord::output_file_forth::line_length_set(int)
+
+void
+srecord::output_file_forth::line_length_set(int)
 {
 }
 
-void srecord::output_file_forth::address_length_set(int)
+
+void
+srecord::output_file_forth::address_length_set(int)
 {
 }
 
-int srecord::output_file_forth::preferred_block_size_get() const
+
+bool
+srecord::output_file_forth::preferred_block_size_set(int nbytes)
+{
+    return (nbytes >= 1 && nbytes <= record::max_data_length);
+}
+
+
+int
+srecord::output_file_forth::preferred_block_size_get() const
 {
   return 16;
 }

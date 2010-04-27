@@ -126,6 +126,13 @@ srecord::output_file_fairchild::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_fairchild::preferred_block_size_set(int nbytes)
+{
+    return (nbytes == 8);
+}
+
+
 int
 srecord::output_file_fairchild::preferred_block_size_get()
     const

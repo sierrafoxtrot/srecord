@@ -515,6 +515,17 @@ srecord::output_file_asm::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_asm::preferred_block_size_set(int nbytes)
+{
+    if (nbytes <= 0)
+        return false;
+    if (!output_word)
+        return true;
+    return ((nbytes & 1) == 0);
+}
+
+
 int
 srecord::output_file_asm::preferred_block_size_get()
     const

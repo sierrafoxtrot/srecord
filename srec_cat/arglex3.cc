@@ -36,6 +36,7 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv) :
         { "-Line_Length", token_line_length, },
         { "-Line_Termination", token_line_termination, },
         { "-End_Of_Line", token_line_termination, },
+        { "-Output_Block_Size", token_output_block_size, },
 
         //
         // This option is intentionally undocumented.  It is preserved

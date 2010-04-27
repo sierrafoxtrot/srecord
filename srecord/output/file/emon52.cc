@@ -91,7 +91,7 @@ srecord::output_file_emon52::line_length_set(int linlen)
     // Given the number of characters, figure the maximum number of
     // data baytes.
     //
-    int             n = (linlen - 11) / 3;
+    int n = (linlen - 11) / 3;
 
     //
     // Constrain based on the file format.
@@ -115,6 +115,16 @@ void
 srecord::output_file_emon52::address_length_set(int)
 {
     // ignore (this is only a 16-bit format)
+}
+
+
+bool
+srecord::output_file_emon52::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 1 || nbytes > record::max_data_length)
+        return false;
+    pref_block_size = nbytes;
+    return true;
 }
 
 

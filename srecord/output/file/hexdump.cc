@@ -183,6 +183,19 @@ srecord::output_file_hexdump::line_length_set(int line_length)
 }
 
 
+bool
+srecord::output_file_hexdump::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 2 || nbytes > record::max_data_length)
+        return false;
+    if ((nbytes & -nbytes) != nbytes)
+        return false;
+    number_of_columns = nbytes;
+    row_cache_address_mask = number_of_columns - 1;
+    return true;
+}
+
+
 void
 srecord::output_file_hexdump::address_length_set(int)
 {

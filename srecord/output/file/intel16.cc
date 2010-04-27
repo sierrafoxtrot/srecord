@@ -173,6 +173,18 @@ srecord::output_file_intel16::address_length_set(int)
 }
 
 
+bool
+srecord::output_file_intel16::preferred_block_size_set(int nbytes)
+{
+    if (nbytes < 2 || nbytes > record::max_data_length)
+        return false;
+    if (nbytes & 1)
+        return false;
+    pref_block_size = nbytes;
+    return true;
+}
+
+
 int
 srecord::output_file_intel16::preferred_block_size_get()
         const
