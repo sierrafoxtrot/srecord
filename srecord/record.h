@@ -35,7 +35,7 @@ class record
 {
 public:
     /**
-      * The destructor.  It isn't vurtual, so don't derived anything
+      * The destructor.  It isn't virtual, so don't derive anything
       * from this class.
       */
     ~record();

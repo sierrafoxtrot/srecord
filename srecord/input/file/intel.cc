@@ -320,7 +320,7 @@ srecord::input_file_intel::read(srecord::record &record)
                 // Address Record (0x02) and the Extended Linear Address
                 // Record (0x04) are both optional. The respective
                 // addresses default to 0 until either type of record is
-                // encounterd.''
+                // encountered.''
                 //
                 termination_seen = true;
 #if 0

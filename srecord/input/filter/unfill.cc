@@ -76,7 +76,7 @@ srecord::input_filter_unfill::read(srecord::record &record)
             // Let runs of fill characters go through,
             // if the run is shorter than the minimum.
             // This is so that single bytes can be left in,
-            // but long oatches are thrown away.
+            // but long patches are thrown away.
             //
             while (buffer_pos < buffer.get_length())
             {

@@ -26,7 +26,7 @@
 namespace srecord {
 
 /**
-  * The srecord::memory_walker_writer class is used to write data to and
+  * The srecord::memory_walker_writer class is used to write data to an
   * output stream when a memory image is walked.
   */
 class memory_walker_writer:

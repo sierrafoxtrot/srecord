@@ -81,7 +81,7 @@ public:
     /**
       * The enable_goto_addr class method is used to enable or disable
       * the writing of execution start address records into output file,
-      * if the format supports optional excution start address records.
+      * if the format supports optional execution start address records.
       *
       * @param yesno
       *     true if execution start address records should be written,
@@ -256,8 +256,8 @@ protected:
     static bool enable_data_count_flag;
 
     /**
-      * The enable_exec_goto_flag class variable is set by the
-      * enable_exec_goto() method, to remember whether or not execution
+      * The enable_goto_addr_flag class variable is set by the
+      * enable_goto_addr() method, to remember whether or not execution
       * start address records are to be emitted (if the format supports
       * optional execution start address records).
       */

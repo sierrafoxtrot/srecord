@@ -34,7 +34,7 @@ namespace srecord
   * This is the inverse of the srecord::input_filter_fill class.
   *
   * Usually this is used to find the actual limits of data from an
-  * extracted EPROM image; you can specify a minimum run legth of the
+  * extracted EPROM image; you can specify a minimum run length of the
   * same byte, so that you don't simply get a 1/256 reduction in density
   * in the middle of "real" data.
   */
@@ -100,7 +100,7 @@ private:
 
     /**
       * The fill_value instance variable is used to remember where we
-      * are up to in the "bufefr" instance variable.
+      * are up to in the "buffer" instance variable.
       */
     size_t buffer_pos;
 
