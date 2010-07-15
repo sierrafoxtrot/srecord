@@ -484,6 +484,7 @@ Peter Miller <pmiller@opensource.org.au>
 .ft R
 .RE
 Any and all feedback is welcome.
+Please make sure \[lq]srecord\[rq] appears in the Subject: line.
 .PP
 When reporting problems,
 please include the version number
