@@ -76,6 +76,9 @@ protected:
     // See base class for documentation.
     const char *get_algorithm_name() const;
 
+    // See base class for documentation.
+    void command_line(srecord::arglex_tool *cmdln);
+
 private:
     /**
       * The address instance variable is used to remember where to place
@@ -88,6 +91,12 @@ private:
       * order is big-endian or little-endian.
       */
     endian_t end;
+
+    unsigned char sum1;
+
+    unsigned char sum2;
+
+    int answer;
 
     /**
       * The default constructor.  Do not use.

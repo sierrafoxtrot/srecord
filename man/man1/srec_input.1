@@ -530,7 +530,8 @@ The same as the \fB\-Big_Endian_MINimum\fP filter,
 except that the result does \f[B]not\fP include the minimum itself.
 .\"             big endian fletcher 16
 .TP 8n
-\fB\-Big_Endian_Fletcher_16\fP \f[I]address\fP
+\fB\-Big_Endian_Fletcher_16\fP \f[I]address\fP \
+[ \f[I]sum1\fP \f[I]sum2\fP [ \f[I]answer\fP ]]
 .RS
 This filter may be used to insert an Fletcher 16\[hy]bit checksum
 of the data into the data.
@@ -552,6 +553,17 @@ is another reason to use the \fB\-fill\fP filter, because it will
 establish the data across the full EPROM address range.
 .PP
 http://en.wikipedia.org/wiki/Fletcher%27s_checksum
+.PP
+It is possible to select seed values for \f[I]sum1\fP and \f[I]sum2\fP
+in the algorithm, by adding seed values on the command line.  They each
+default to 0xFF if not explictly stated.  The default values (0) means
+that an empty EPROM (all 0x00 or all 0xFF) will sum to zero; by changing
+the seeds, an empty EPROM will always fail.
+.PP
+The third optional argument is the desired sum, when the checksum itself
+is summed.  A common value is 0x0000, placed in the last two bytes of an
+EPROM, so that the Fletcher 16 checksum of the EPROM is exactly 0x0000.
+No manipulation of the final value is performed if this value if not specified.
 .RE
 .\"             big endian fletcher 32
 .TP 8n

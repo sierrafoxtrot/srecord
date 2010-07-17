@@ -25,31 +25,40 @@ srecord::memory_walker_fletcher16::~memory_walker_fletcher16()
 }
 
 
-srecord::memory_walker_fletcher16::memory_walker_fletcher16()
+srecord::memory_walker_fletcher16::memory_walker_fletcher16(
+    int a_sum1,
+    int a_sum2,
+    int a_answer,
+    endian_t a_end
+) :
+    checksum(a_sum1, a_sum2, a_answer, a_end)
 {
 }
 
 
 srecord::memory_walker_fletcher16::pointer
-srecord::memory_walker_fletcher16::create()
+srecord::memory_walker_fletcher16::create(int a_sum1, int a_sum2,
+    int a_answer, endian_t a_end)
 {
-    return pointer(new srecord::memory_walker_fletcher16());
+    return
+        pointer(new memory_walker_fletcher16(a_sum1, a_sum2, a_answer, a_end));
 }
 
 
 void
 srecord::memory_walker_fletcher16::observe(unsigned long, const void *data,
-    int length)
+    int data_size)
 {
-    checksum.nextbuf(data, length);
+    checksum.nextbuf(data, data_size);
 }
 
 
 unsigned
-srecord::memory_walker_fletcher16::get()
+srecord::memory_walker_fletcher16::get(void)
     const
 {
     return checksum.get();
 }
+
 
 // vim:ts=8:sw=4:et

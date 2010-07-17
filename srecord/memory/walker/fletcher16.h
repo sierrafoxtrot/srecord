@@ -42,27 +42,55 @@ public:
 
 private:
     /**
-      * The default constructor.  It is private on putpose, use the
+      * The constructor.  It is private on purpose, use the
       * #create method instead.
+      *
+      * @param sum1
+      *     The seed value for sum1.  Defaults to zero.
+      * @param sum2
+      *     The seed value for sum2.  Defaults to zero.
+      * @param answer
+      *     Set this to -1 to be completely ignored.
+      *     If >= 0, this is the desired outcome if the checksum
+      *     includes the checksum itself.  The checksum returned will be
+      *     calculated to return this desired outcome, when traversed,
+      *     rather than a pure Fletcher-16 checksum.
+      * @param end
+      *     The endian-ness of the checksum.  This is needed to
+      *     manipulate the answer.  Ignored if answer is ignored.
       */
-    memory_walker_fletcher16();
+    memory_walker_fletcher16(int sum1, int sum2, int answer, endian_t end);
 
 public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
+      *
+      * @param sum1
+      *     The seed value for sum1.  Defaults to zero.
+      * @param sum2
+      *     The seed value for sum2.  Defaults to zero.
+      * @param answer
+      *     Set this to -1 to be completely ignored.
+      *     If >= 0, this is the desired outcome if the checksum
+      *     includes the checksum itself.  The checksum returned will be
+      *     calculated to return this desired outcome, when traversed,
+      *     rather than a pure Fletcher-16 checksum.
+      * @param end
+      *     The endian-ness of the checksum.  This is needed to
+      *     manipulate the answer.  Ignored if answer is ignored.
       */
-    static pointer create();
+    static pointer create(int sum1, int sum2, int answer, endian_t end);
 
     /**
       * The get method is used to get the Fletcher-16 checksum once all memory
-      * chunks have been processed by calls to our observe method.
+      * chunks have been processed by calls to our #observe method.
       */
-    unsigned get() const;
+    unsigned get(void) const;
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long address, const void *data, int data_size);
 
 private:
     /**
@@ -70,6 +98,11 @@ private:
       * state of the Fletcher-16 checksum calculation.
       */
     fletcher16 checksum;
+
+    /**
+      * The default constructor.  Do not use.
+      */
+    memory_walker_fletcher16();
 
     /**
       * The copy constructor.  Do not use.

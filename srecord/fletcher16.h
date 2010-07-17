@@ -19,7 +19,9 @@
 #ifndef SRECORD_FLETCHER16_H
 #define SRECORD_FLETCHER16_H
 
-#include <stddef.h>
+#include <cstddef>
+
+#include <srecord/endian.h>
 
 namespace srecord
 {
@@ -63,8 +65,23 @@ public:
 
     /**
       * The default constructor.
+      *
+      * @param sum1
+      *     The seed value for sum1.  Defaults to 0xFF.
+      * @param sum2
+      *     The seed value for sum2.  Defaults to 0xFF.
+      * @param answer
+      *     Set this to -1 to be completely ignored.
+      *     If >= 0, this is the desired outcome if the checksum
+      *     includes the checksum itself.  The checksum returned will be
+      *     calculated to return this desired outcome, when traversed,
+      *     rather than a pure Fletcher-16 checksum.
+      * @param end
+      *     The endian-ness of the checksum.  This is needed to
+      *     manipulate the answer.  Ignored if #answer is ignored.
       */
-    fletcher16();
+    fletcher16(unsigned char sum1 = 0, unsigned char sum2 = 0,
+        int answer = -1, endian_t end = endian_little);
 
     /**
       * The copy constructor.
@@ -99,16 +116,40 @@ public:
 
 private:
     /**
-      * The sum1 instance variable is used to remember the running
-      * sum of the 8-bit bytes, mod 255
+      * The sum1 instance variable is used to remember the running sum
+      * of the 8-bit bytes, mod 255.  We use a 16-bit value rather than
+      * an 8-bit value for convenience, see #nextbuf implementation for
+      * details.
       */
     unsigned short sum1;
 
     /**
       * The sum2 instance variable is used to remember the running
-      * sum of the sum of the 8-bit bytes, mod 255
+      * sum of the sum of the 8-bit bytes, mod 255.  We use a 16-bit
+      * value rather than an 8-bit value for convenience, see #nextbuf
+      * implementation for details.
       */
     unsigned short sum2;
+
+    /**
+      * The anser instance variable is used to remember the desired
+      * outcome if the checksum includes the checksum itself.
+      *
+      * Set this to -1 to be completely ignored.
+      *
+      * If >= 0, this is the desired outcome if the checksum includes
+      * the checksum itself.  The checksum returned will be calculated
+      * to return this desired outcome, when traversed, rather than a
+      * pure Fletcher-16 checksum.
+      */
+    int answer;
+
+    /**
+      * The end instance variable is used to remember the endian-ness of
+      * the checksum.  This is needed to manipulate the answer.  Ignored
+      * if #answer is ignored.
+      */
+    endian_t end;
 };
 
 };

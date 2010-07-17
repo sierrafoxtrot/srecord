@@ -44,28 +44,45 @@ public:
       * The observe method is used by the memory walker to provide data.
       * Derived classes are required to impliment this method, and do
       * something with the data.
+      *
+      * @param address
+      *     The base address of this chunk of memory.
+      * @param data
+      *     The base address of this chunk of memory in memory.
+      * @param data_size
+      *     The size, in bytes, of this chunk of memory.
       */
-    virtual void observe(unsigned long, const void *, int) = 0;
+    virtual void observe(unsigned long address, const void *data,
+        int data_size) = 0;
 
     /**
       * The notify_upper_bound method is used to notify the walker of
       * the upper bound (highest address plus one) of the observe calls
       * to come.  Shall be called before the any observe calls are made.
       * By default, nothing happens.
+      *
+      * @param address
+      *     The address of the byte immediately beyond the used memory.
       */
-    virtual void notify_upper_bound(unsigned long);
+    virtual void notify_upper_bound(unsigned long address);
 
     /**
       * The observe_header method is used to inform the walker of the
       * header record.  The default does nothing.
+      *
+      * @param rec
+      *     The record to be processed.
       */
-    virtual void observe_header(const record * = 0);
+    virtual void observe_header(const record *rec = 0);
 
     /**
       * The observe_start_address method is used to inform the walker
       * of the execution start address record.  The default does nothing.
+      *
+      * @param rec
+      *     The record to be processed.
       */
-    virtual void observe_start_address(const record * = 0);
+    virtual void observe_start_address(const record *rec = 0);
 
 protected:
     /**

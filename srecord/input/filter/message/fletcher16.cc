@@ -34,7 +34,10 @@ srecord::input_filter_message_fletcher16::input_filter_message_fletcher16(
 ) :
     input_filter_message(a_deeper),
     address(a_address),
-    end(a_end)
+    end(a_end),
+    sum1(0xFF),
+    sum2(0xFF),
+    answer(-1)
 {
 }
 
@@ -53,6 +56,21 @@ srecord::input_filter_message_fletcher16::create(
 
 
 void
+srecord::input_filter_message_fletcher16::command_line(
+    srecord::arglex_tool *cmdln)
+{
+    if (cmdln->token_cur() == arglex::token_number)
+    {
+        sum1 = 0xFF & cmdln->get_number("sum1");
+        sum2 = 0xFF & cmdln->get_number("sum2");
+
+        if (cmdln->token_cur() == arglex::token_number)
+            answer = 0xFFFF & cmdln->get_number("answer");
+    }
+}
+
+
+void
 srecord::input_filter_message_fletcher16::process(const memory &input,
     record &output)
 {
@@ -62,7 +80,7 @@ srecord::input_filter_message_fletcher16::process(const memory &input,
     // warning issued already.)
     //
     memory_walker_fletcher16::pointer w =
-        memory_walker_fletcher16::create();
+        memory_walker_fletcher16::create(sum1, sum2, answer, end);
     input.walk(w);
     unsigned short fletcher = w->get();
 
