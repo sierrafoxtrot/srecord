@@ -27,7 +27,7 @@
 .\}
 .SH DESCRIPTION
 This format is the output of the Microsoft WinCE Platform Builder.
-This is a binary (non-text) file format.
+This is a binary (non\[hy]text) file format.
 File names in this format typically (ambiguously) use the \f[CW].bin\fP suffix.
 .SS File Format
 Files in this format start with a header record.
@@ -39,7 +39,7 @@ This is mandatory.
 .SS File Header Record
 Data in this format start with an optional header containing the magic
 \[lq]B000FF\en\[rq], followed by the image start (four bytes, little
-endian) address and the span of the image (highest address - lowest
+endian) address and the span of the image (highest address \- lowest
 address + 1) (four bytes, little endian).
 The file header does not have a checksum;
 it is therefore possible that a corrupt file header will go undetected.
@@ -96,7 +96,7 @@ T}
 .TE
 .PP
 The checksum is calculated by a simple sum of unsigned bytes
-into a 32-bit accumulator.
+into a 32\[hy]bit accumulator.
 .PP
 The 12 record header bytes are not included in the record checksums;
 it is therefore possible that a corrupt record header will go undetected.
@@ -104,7 +104,7 @@ it is therefore possible that a corrupt record header will go undetected.
 It is not possible to place data at address zero with this format.
 Address zero is reserved for use by the execution start address record.
 .PP
-There is effectively no limit on the length of a record (2^32-1).  It is
+There is effectively no limit on the length of a record (2^32\-1).  It is
 not uncommon for a MsBin file to contain records with sizes in the tens
 of megabytes.
 .SS Execution Start Address Record
@@ -139,7 +139,7 @@ successfully parsed by the command line utilities \f[CW]viewbin\fP and
 \f[CW]cvrtbin\fP (part of Windows CE platform).
 .PP
 For a MsBin file to be usable in Microsoft WinCE Platform Builder it has
-to contain a TOC meta-structure.  This is data embedded in the file by
+to contain a TOC meta\[hy]structure.  This is data embedded in the file by
 Microsoft WinCE Platform Builder itself.
 .PP
 The opposite conversion \- from MsBin \- comes in handy when analyzing
@@ -150,6 +150,6 @@ times (approaching asymptotically from above) when represented with
 this format, as the 15\[hy]byte file header is averaged over the data
 content.  Holes in the data will also increase the size.
 .SH SOURCE
-http://msdn.microsoft.com/en-us/library/ms924510.aspx
+http://msdn.microsoft.com/en\-us/library/ms924510.aspx
 .ds n) srec_cat
 .so man/man1/z_copyright.so

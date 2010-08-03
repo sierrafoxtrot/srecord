@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2001, 2003, 2006, 2007, 2009 Peter Miller
+.\"     Copyright (C) 2001, 2003, 2006, 2007, 2009, 2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ reverse effect of the \[lq]fill\[rq] filter.
 .if n *
 .if t \(bu
 .\" change 17
-There is a new bit-wise NOT filter, which may be used to invert the data.
+There is a new bit\[hy]wise NOT filter, which may be used to invert the data.
 .PP
 .if n *
 .if t \(bu

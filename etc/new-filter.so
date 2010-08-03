@@ -23,14 +23,14 @@ How to add a new filter
 .SH DESCRIPTION
 This section describes how to add a new filter.  It's mostly a set
 of reminders for the maintainer.  If you want a filter added to the
-distribution, use this method and e-mail the maintainer a patch
-(generated with \f[CW]diff -Nur\fP, usually) and it can be added to the
+distribution, use this method and e\[hy]mail the maintainer a patch
+(generated with \f[CW]diff \-Nur\fP, usually) and it can be added to the
 sources if appropriate.
 .SS New Files
 The directory hierarchy is an echo of the class hierarchy, making it
 easy to guess the filename of a class, and to work out the appropriate
 file name of a new class.  You get used to it.  It is suggested that you
-simply work in the root of the source tree (exploiting tab-completion in
+simply work in the root of the source tree (exploiting tab\[hy]completion in
 your shell and your editor) rather than continually changing directories
 up and down the source tree.  All of the file names below assume this.
 .PP
@@ -111,7 +111,7 @@ records not nicely aligned.
 Be conservative in what you produce.
 Even when the input is weird, the output produced by the filter must be
 conforming.
-\f[I]E.g.\fP the byte-swap filter still works when it has only one
+\f[I]E.g.\fP the byte\[hy]swap filter still works when it has only one
 of the two bytes, and the other is a hole; it swaps the byte and the hole.
 .TP 3n
 \(bu
@@ -129,7 +129,7 @@ issuing a warning in the presence of holes.
 .TP 3n
 \(bu
 If the new filter is supposed to be its own inverse (\f[I]e.g.\fP
-byte-swap), or a pair of filters are supposed to be inverses
+byte\[hy]swap), or a pair of filters are supposed to be inverses
 (\f[I]e.g.\fP split and unsplit) be sure to write a test to confirm
 this.  The tests should exersize all of the boundary conditions
 (\f[I]e.g.\fP around the edges of holes, extremes of data ranges).
@@ -138,7 +138,7 @@ this.  The tests should exersize all of the boundary conditions
 .TS
 tab(;);
 l l l.
-Peter Miller;E-Mail:;pmiller@opensource.org.au
+Peter Miller;E\[hy]Mail:;pmiller@opensource.org.au
 \f(CW/\e/\e*\fP;WWW:;http://miller.emu.id.au/pmiller/
 .TE
 .\" vim:ts=8:sw=4:et

@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2007 Peter Miller
+.\"     Copyright (C) 2007, 2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -20,12 +20,12 @@
 .if n *
 .if t \(bu
 .\" Change 18
-The ascii-hex output format has been improved.
+The ascii\[hy]hex output format has been improved.
 .PP
 .if n *
 .if t \(bu
 .\" Change 16, 12
-The ti-tagged-16-bit format is now understood for reading and writing.
+The ti\[hy]tagged 16\[hy]bit format is now understood for reading and writing.
 .PP
 .if n *
 .if t \(bu
@@ -35,8 +35,9 @@ The Intel format no longer warns about missing optional records.
 .if n *
 .if t \(bu
 .\" Change 12
-A bug in the ti-tagged format has been fixed,
+A bug in the ti\[hy]tagged format has been fixed,
 it now understands the '0' tag.
+.\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.29 (2007-Mar-13)
+.SS Version 1.29 (2007\[hy]Mar\[hy]13)
 .\" vim:ts=8:sw=4:et

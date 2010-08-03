@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2007 Peter Miller
+.\"     Copyright (C) 2007, 2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ You can generate constant data, random data and repeating data.
 .if n *
 .if t \(bu
 .\" Change 11, 12
-The assembler and C-Array outputs now support additional options to
+The assembler and C\[hy]Array outputs now support additional options to
 facilitate MSP430 systems.  They can also optionally write shorts rather
 than bytes.
 .PP
@@ -48,5 +48,5 @@ You can now round address ranges on the command line to be whole
 multiples of a number of bytes.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.32 (2007-Apr-24)
+.SS Version 1.32 (2007\[hy]Apr\[hy]24)
 .\" vim:ts=8:sw=4:et

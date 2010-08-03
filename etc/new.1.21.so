@@ -1,6 +1,6 @@
 .\"
 .\" srecord - manipulate eprom load files
-.\" Copyright (C) 2005-2007 Peter Miller
+.\" Copyright (C) 2005-2007, 2010 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 .if n *
 .if t \(bu
 .\" Change 22
-The \fB\-byte-swap\fP filter now has an optional \fIwidth\fP argument,
+The \fB\-byte\[hy]swap\fP filter now has an optional \fIwidth\fP argument,
 to specify the address width to swap.  The default is two bytes.
 .PP
 .if n *
@@ -28,7 +28,7 @@ to specify the address width to swap.  The default is two bytes.
 .\" Change 20
 .\" pmiller, Thu Jul 14 00:11:27 2005, motorola address multiplier
 The motorola file format now accepts an additional 'width'
-command line argument, so you can have 16-bit and 32-bit address
+command line argument, so you can have 16\[hy]bit and 32\[hy]bit address
 multiples.
 .PP
 .if n *
@@ -43,8 +43,8 @@ This fixes SourceForge bug 1119786.
 .if n *
 .if t \(bu
 .\" Change 16
-The \-C-Array output format now uses the \f[CW]const\fP keyword by
-default, you can turn it off with the \-no-const option.  The \-C-Array
+The \-C\[hy]Array output format now uses the \f[CW]const\fP keyword by
+default, you can turn it off with the \-no\[hy]const option.  The \-C\[hy]Array
 output format can now generate an additional include file if you use the
 \-INClude option.
 This answers SourceForge feature request 942132.
@@ -58,12 +58,12 @@ and MacOsX has been added to the ./configure script.
 .if n *
 .if t \(bu
 .\" Change 12
-There is a new \-ignore-checksum command line option.
-The \-ignore-checksums option may be used to disable checksum
+There is a new \-ignore\[hy]checksum command line option.
+The \-ignore\[hy]checksums option may be used to disable checksum
 validation of input files, for those formats which have
 checksums at all.  Note that the checksum values are still read
 in and parsed (so it is still an error if they are missing) but
 their values are not checked.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.21 (2005-Feb-07)
+.SS Version 1.21 (2005\[hy]Feb\[hy]07)

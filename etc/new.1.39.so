@@ -1,6 +1,6 @@
 .\"
 .\" srecord - Manipulate EPROM load files
-.\" Copyright (C) 2008 Peter Miller
+.\" Copyright (C) 2008, 2010 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -36,20 +36,18 @@ Some build problems with g++ 4.3 have been fixed
 .if t \(bu
 .\" Change 15
 A bug has been fixed in the calculation of ranges on the command
-line, it no longer goes into an infinite loop for "--fill 0xFF
--over { foo.hex -exclude -within foo.hex }" construct, which
+line, it no longer goes into an infinite loop for "\-fill 0xFF
+\-over { foo.hex \-exclude \-within foo.hex }" construct, which
 should have been calculating an empty fill set, but was instead
 calculating a 4GB fill set.
 .PP
 .if n *
 .if t \(bu
-.\" srecord.1.39.D002
 .\" Change 12
-.\" pmiller, Thu Feb  7 12:02:21 2008, CRC32 -xmodem
-The CRC32 filters now take an -xmodem option, to use an
-xmodem-like (all bit zero) initial state, rather than the
+The CRC32 filters now take an \-xmodem option, to use an
+xmodem\[hy]like (all bit zero) initial state, rather than the
 default CCITT (all bits on) initial state.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.39 (2008-Feb-04)
+.SS Version 1.39 (2008\[hy]Feb\[hy]04)
 .\" vim:ts=8:sw=4:et

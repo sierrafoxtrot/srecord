@@ -1,6 +1,6 @@
 .\"
 .\" srecord - Manipulate EPROM load files
-.\" Copyright (C) 2008 Peter Miller
+.\" Copyright (C) 2008, 2010 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ updated to conform to this expectation.
 .if t \(bu
 .\" Change 17
 The manual page for \f[I]srec_cat\fP(1) has been enhanced to describe
-the in-memory data model, and the resulting output data order.
+the in\[hy]memory data model, and the resulting output data order.
 .PP
 .if n *
 .if t \(bu
@@ -52,9 +52,9 @@ takes notice of $RPM_BUILD_ROOT
 .if n *
 .if t \(bu
 .\" Change 11
-There is a new \fB\-line-termination\fP option, which may be
+There is a new \fB\-line\[hy]termination\fP option, which may be
 used to select the desired line termination of output text files.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.43 (2008-Jul-06)
+.SS Version 1.43 (2008\[hy]Jul\[hy]06)
 .\" vim:ts=8:sw=4:et

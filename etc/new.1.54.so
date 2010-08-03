@@ -20,7 +20,7 @@
 .if n *
 .if t \(bu
 .\" Change 15
-The Makefile.in has been improved, it now copes with non-standard
+The Makefile.in has been improved, it now copes with non\[hy]standard
 \f[CW]\-\-prefix\fP options.
 .PP
 .if n *
@@ -30,5 +30,5 @@ The rpm.spec file has been improved, it now separates the
 commands, shared libraries and development files.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.54 (2010-Jan-29)
+.SS Version 1.54 (2010\[hy]Jan-29)
 .\" vim: set ts=8 sw=4 et

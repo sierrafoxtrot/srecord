@@ -1,6 +1,6 @@
 .\"
 .\" srecord - Manipulate EPROM load files
-.\" Copyright (C) 2008 Peter Miller
+.\" Copyright (C) 2008, 2010 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -22,17 +22,17 @@
 .\" srecord.1.42.D007
 .\" Change 17, 19
 .\" pmiller, Fri Jul  4 14:44:25 2008, srec_cat --disable=data-count
-The \f[I]srec-cat \-data-only\fP option has been broken down into four
+The \f[I]srec\[hy]cat \-data\[hy]only\fP option has been broken down into four
 separate controls.  It is now possible to \fB\-enable\fP and \fB\-disable\fP
-individual features, such as \[lq]header\[rq], \[lq]data-count\[rq],
-\[lq]execution-start-address\[rq] and \[lq]footer\[rq].
+individual features, such as \[lq]header\[rq], \[lq]data\[hy]count\[rq],
+\[lq]execution\[hy]start\[hy]address\[rq] and \[lq]footer\[rq].
 See \f[I]srec_cat\fP(1) for more information.
 .PP
 .if n *
 .if t \(bu
 .\" Change 16
-The \f[I]srec_cat \-start-address\fP option has been renamed
-\fB\-execution-start-address\fP to remove any confusion with the
+The \f[I]srec_cat \-start\[hy]address\fP option has been renamed
+\fB\-execution\[hy]start\[hy]address\fP to remove any confusion with the
 \fB\-offset\fP filter.  The documentation now explicitly explains the
 difference between the two.
 .PP
@@ -49,5 +49,5 @@ A bug has been fixed in the MOS Tech format, it now emits an end record
 even when there is no execution start address passed in.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.42 (2008-Jun-01)
+.SS Version 1.42 (2008\[hy]Jun\[hy]01)
 .\" vim:ts=8:sw=4:et

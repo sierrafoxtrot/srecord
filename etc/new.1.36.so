@@ -1,6 +1,6 @@
 .\"
 .\" srecord - The "srecord" program.
-.\" Copyright (C) 2007 Peter Miller
+.\" Copyright (C) 2007, 2010 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 .if t \(bu
 .\" Change 15
 It is now possible to have negative expressions on the command
-line, to facilitate \[lq]--offset - -minimum foo\[rq] usages.
+line, to facilitate \[lq]\-\-offset \- \-minimum foo\[rq] usages.
 .PP
 .if n *
 .if t \(bu
@@ -36,5 +36,5 @@ The use of \f[I]uudecode\fP(1) in the tests has been removed,
 so \f[I]sharutils\fP is no longer a build dependency.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.36 (2007-Aug-07)
+.SS Version 1.36 (2007\[hy]Aug\[hy]07)
 .\" vim:ts=8:sw=4:et

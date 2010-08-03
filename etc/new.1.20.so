@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2004-2007 Peter Miller
+.\"     Copyright (C) 2004-2007, 2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ More Doxygen comments have been added to the class header files.
 .if n *
 .if t \(bu
 .\" Change 21
-There is a new \fIsrec_cat --crlf\fP option, which may be used for force
+There is a new \fIsrec_cat \-\-crlf\fP option, which may be used for force
 CRLF output on operating systems which don't use that style of line
 termination.
 .PP
@@ -38,7 +38,7 @@ A number of problems with GCC, particularly with the early 3.\fIx\fP series.
 .if t \(bu
 .\" Change 16
 There is a new "Stewie" format, an undocumented format loosely based on
-the Motorola S-Record format, apparently used in mobile phones.
+the Motorola S\[hy]Record format, apparently used in mobile phones.
 More information would be most welcome.
 .PP
 .if n *
@@ -46,4 +46,4 @@ More information would be most welcome.
 A number of build problems have been fixed.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.20 (2004-Feb-08)
+.SS Version 1.20 (2004\[hy]Feb\[hy]08)

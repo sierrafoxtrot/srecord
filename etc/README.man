@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2000-2004, 2006-2009 Peter Miller
+.\"     Copyright (C) 1998, 2000-2004, 2006-2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -36,9 +36,9 @@ relatively simple.
 .SS The File Formats
 The SRecord package understands a number of file formats:
 .TP 8n
-Ascii-Hex
-The ascii-hex format is understood for both reading and writing.
-(Also known as the ascii-space-hex format.)
+Ascii\[hy]Hex
+The ascii\[hy]hex format is understood for both reading and writing.
+(Also known as the ascii\[hy]space\[hy]hex format.)
 .TP
 ASM
 It is possible, for output only, to produce a serices of DB statements
@@ -59,8 +59,9 @@ This format cannot be read.
 Binary
 Binary files can both be read and written.
 .TP 8n
-B-Record
-Files in Freescale Dragonball bootstrap b-record format can be read and written.
+B\[hy]Record
+Files in Freescale Dragonball bootstrap b\[hy]record format can be read
+and written.
 .TP 8n
 C
 It is also possible to write a C array declaration which contains the data.
@@ -93,7 +94,7 @@ The FPC format is understood for both reading and writing.
 .TP 8n
 Intel
 The Intel hexadecimal format is understood for both reading and writing.
-(Also known as the Intel MCS-86 Object format.)
+(Also known as the Intel MCS\[hy]86 Object format.)
 .TP 8n
 Intel AOMF
 The Intel Absolute Object Module Format (AOMF) is understood for both
@@ -111,8 +112,8 @@ MOS Technology
 The MOS Technology hexadecimal format is understood for both reading
 and writing.
 .TP 8n
-Motorola S-Record
-The Motorola hexadecimal S-Record format is understood for both reading
+Motorola S\[hy]Record
+The Motorola hexadecimal S\[hy]Record format is understood for both reading
 and writing.
 (Also known as the Exorciser, Exormacs or Exormax format.)
 .TP 8n
@@ -143,11 +144,11 @@ format are both understood for both reading and writing.
 .TP 8n
 Texas Instruments Tagged
 The Texas Instruments Tagged format is understood for both reading and
-writing (both 8 and 16 bit).  Also known as the TI-tagged or TI-SDSMAC
+writing (both 8 and 16 bit).  Also known as the TI\[hy]tagged or TI\[hy]SDSMAC
 format.
 .TP 8n
-Texas Instruments ti-txt
-The TI-TXT format is understood for reading and writing.  This format is
+Texas Instruments ti\[hy]txt
+The TI\[hy]TXT format is understood for reading and writing.  This format is
 used with the bootstrap loader of the Texas Instruments MSP430 family of
 processors.
 .TP 8n
@@ -189,7 +190,7 @@ The \fIchecksum\fP filter may be used to insert the checksum of the data
 (bitnot, negative or positive) into the data.
 .TP 8n
 bit reverse
-The \f[I]bit-reverse\fP filter may be used to
+The \f[I]bit\[hy]reverse\fP filter may be used to
 reverse the order of bits in each data byte.
 .TP 8n
 byte swap
@@ -200,8 +201,8 @@ The \fIcrc\fP filters may be used to insert a CRC into the data.
 .TP
 checksum
 The \fIchecksum\fP filters may be used to insert a checksum into
-the data.  Positive, negative and bit-not checksums are available,
-as well as big-endian and little-endian byte orders.
+the data.  Positive, negative and bit\[hy]not checksums are available,
+as well as big\[hy]endian and little\[hy]endian byte orders.
 .TP 8n
 crop
 The \fIcrop\fP filter may be used to isolate an input address range,
@@ -260,11 +261,11 @@ l l s
 l l l.
 URL:;http://srecord.sourceforge.net/
 File:;index.html;# the SRecord page
-File:;srecord-\*(v).README;# Description, from the tar file
-File:;srecord-\*(v).lsm;# Description, LSM format
-File:;srecord-\*(v).spec;# RedHat package specification
-File:;srecord-\*(v).tar.gz;# the complete source
-File:;srecord-\*(v).pdf;# Reference Manual
+File:;srecord\-\*(v).README;# Description, from the tar file
+File:;srecord\-\*(v).lsm;# Description, LSM format
+File:;srecord\-\*(v).spec;# RedHat package specification
+File:;srecord\-\*(v).tar.gz;# the complete source
+File:;srecord\-\*(v).pdf;# Reference Manual
 .TE
 .br
 .ne 1i
@@ -316,7 +317,7 @@ file included with this distribution.
 .TS
 tab(;);
 l l l.
-Peter Miller;E-Mail:;pmiller@opensource.org.au
+Peter Miller;E\[hy]Mail:;pmiller@opensource.org.au
 \f(CW/\e/\e*\fP;WWW:;http://miller.emu.id.au/pmiller/
 .TE
 .br

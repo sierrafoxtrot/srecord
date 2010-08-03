@@ -1,6 +1,6 @@
 .\"
 .\" srecord - Manipulate EPROM load files
-.\" Copyright (C) 2009 Peter Miller
+.\" Copyright (C) 2009, 2010 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -26,11 +26,11 @@ A number of gcc 4.4 build problems have been fixed.
 .if t \(bu
 .\" Change 12
 A bugs has been fixed in the Intel output format. When using the
-segemented format (address-length=2) records that span the end
+segemented format (address\[hy]length=2) records that span the end
 of segment boundary are tricky. The code now carefully splits
 such output records, to ensure the two parts are explicitly
 placed into separate segments.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.50 (2009-Jul-09)
+.SS Version 1.50 (2009\[hy]Jul\[hy]09)
 .\" vim: set ts=8 sw=4 et

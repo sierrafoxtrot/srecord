@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2006, 2007 Peter Miller
+.\"     Copyright (C) 2006, 2007, 2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@
 .if t \(bu
 .\" Change 15
 It is now possible to read and write files in the Freescale
-MC68EZ328 Dragonball bootstrap b-record format
+MC68EZ328 Dragonball bootstrap b\[hy]record format
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.27 (2006-Dec-21)
+.SS Version 1.27 (2006\[hy]Dec\[hy]21)
 .\" vim:ts=8:sw=4:et

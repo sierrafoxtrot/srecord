@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2003, 2004, 2006, 2007 Peter Miller
+.\"     Copyright (C) 2003, 2004, 2006, 2007, 2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 .if t \(bu
 .\" change 18
 There is now support for Intel Extended Segment addressing output,
-via the --address-length=2 option.
+via the \-\-address\[hy]length=2 option.
 .PP
 .if n *
 .if t \(bu
@@ -38,4 +38,4 @@ except that the bytes counts and the addresses refer to words (hi,lo)
 rather than bytes.  See \fIsrec_intel16\fP(5) for more information.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.16 (2003-Jul-28)
+.SS Version 1.16 (2003\[hy]Jul\[hy]28)

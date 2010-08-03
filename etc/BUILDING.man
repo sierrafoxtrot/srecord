@@ -38,14 +38,14 @@ fetch and install before you proceed with your installation of SRecord.
 Boost Library
 You will need the C++ Boost Library.
 If you are using a package based system, you will need the
-libboost-devel package, or one named something very similar.
+libboost\[hy]devel package, or one named something very similar.
 .br
 http://boost.org/
 .TP 8n
 Libgcrypt Library
 You will need the GNU Crypt library.
 If you are using a package based system, you will need the
-libgcrypt-devel package, or one named something very similar.
+libgcrypt\[hy]devel package, or one named something very similar.
 .br
 http://directory.fsf.org/project/libgcrypt/
 .TP 8n
@@ -82,7 +82,7 @@ program included in this distribution.
 The
 .I configure
 shell script attempts to guess correct values for
-various system-dependent variables used during compilation,
+various system\[hy]dependent variables used during compilation,
 and creates the
 .I Makefile
 and
@@ -139,7 +139,7 @@ for example,
 .RS
 .FT CW
 .nf
-\f[B]% \fP./configure --quiet
+\f[B]% \fP./configure \-\-quiet
 \bB%\fP
 .fi
 .ft R
@@ -173,7 +173,7 @@ then it will report that it can't find the source code.
 In that case,
 run
 .I configure
-with the option \f[CW]--srcdir=\fP\f[I]DIR\fP,
+with the option \f[CW]\-\-srcdir=\fP\f[I]DIR\fP,
 where
 .I DIR
 is the directory that contains the source code.
@@ -191,29 +191,29 @@ and
 There are options which allow you to control the placement
 of these files.
 .TP 8n
-\f[CW]--prefix=\fP\f[I]PATH\fP
+\f[CW]\-\-prefix=\fP\f[I]PATH\fP
 This specifies the path prefix to be used in the installation.
 Defaults to \f[I]/usr/local\fP unless otherwise specified.
 .TP 8n
-\f[CW]--exec-prefix=\fP\f[I]PATH\fP
+\f[CW]\-\-exec\-prefix=\fP\f[I]PATH\fP
 You can specify separate installation prefixes for
-architecture-specific files files.
+architecture\[hy]specific files files.
 Defaults to \f[I]${prefix}\fP unless otherwise specified.
 .TP 8n
-\f[CW]--bindir=\fP\f[I]PATH\fP
+\f[CW]\-\-bindir=\fP\f[I]PATH\fP
 This directory contains executable programs.  On a network, this
 directory may be shared between machines with identical hardware and
-operating systems; it may be mounted read-only.  Defaults to
+operating systems; it may be mounted read\[hy]only.  Defaults to
 \f[I]${exec_prefix}/bin\fP unless otherwise specified.
 .TP 8n
-\f[CW]--mandir=\fP\f[I]PATH\fP
-This directory contains the on-line manual entries.  On a network, this
+\f[CW]\-\-mandir=\fP\f[I]PATH\fP
+This directory contains the on\[hy]line manual entries.  On a network, this
 directory may be shared between all machines; it may be mounted
-read-only.  Defaults to \f[I]${prefix}/man\fP unless otherwise specified.
+read\[hy]only.  Defaults to \f[I]${prefix}/man\fP unless otherwise specified.
 .PP
 .I configure
 ignores most other arguments that you give it;
-use the \f[CW]--help\fP option for a complete list.
+use the \f[CW]\-\-help\fP option for a complete list.
 .br
 .ne 2i
 .PP
@@ -226,12 +226,12 @@ script does not know about,
 you can give
 .I configure
 initial values for variables by setting them in the environment.
-In Bourne-compatible shells,
+In Bourne\[hy]compatible shells,
 you can do that on the command line like this:
 .RS
 .ft CW
 .nf
-\f[B]$ \fPCXX='g++ -traditional' LIBS=-lposix ./configure
+\f[B]$ \fPCXX='g++ \-traditional' LIBS=\-lposix ./configure
 \f[I]\&...lots of output...\fP
 \f[B]$\fP
 .fi
@@ -251,7 +251,7 @@ The default is
 Variable: CPPFLAGS
 Preprocessor flags, commonly defines and include search paths.
 Defaults to empty.
-It is common to use \f[CW]CPPFLAGS=-I/usr/local/include\fP to access other
+It is common to use \f[CW]CPPFLAGS=\-I/usr/local/include\fP to access other
 installed packages.
 .TP 8n
 Variable: INSTALL
@@ -264,12 +264,12 @@ otherwise.
 .TP 8n
 Variable: LIBS
 Libraries to link with,
-in the form \f[CW]-l\fP\f[I]foo\fP \f[CW]-l\fP\f[I]bar\fP.
+in the form \f[CW]\-l\fP\f[I]foo\fP \f[CW]\-l\fP\f[I]bar\fP.
 The
 .I configure
 script will append to this,
 rather than replace it.
-It is common to use \f[CW]LIBS=-L/usr/local/lib\fP to access other
+It is common to use \f[CW]LIBS=\-L/usr/local/lib\fP to access other
 installed packages.
 .PP
 If you need to do unusual things to compile the package,
@@ -380,8 +380,8 @@ This is most simply done as
 .RS
 .ft CW
 .nf
-CC='gcc -no-cygwin' \e
-CXX='g++ -mno-cygwin -I/usr/include/boost-1_33_1' \e
+CC='gcc \-no\-cygwin' \e
+CXX='g++ \-mno\-cygwin \-I/usr/include/boost\-1_33_1' \e
 ./configure
 .fi
 .ft R
@@ -391,7 +391,7 @@ DJGPP always produces native binaries, however
 if you want to make native binaries with Cygwin (\f[I]i.e.\fP ones which
 work outside Cygwin) there is one extra step you need after running
 \f[CW]./configure\fP and before you run \f[CW]make\fP.  You need to
-edit the \f[I]Makefile\fP file, and add \f[CW]-mno-cygwin\fP to the end of
+edit the \f[I]Makefile\fP file, and add \f[CW]\-mno\-cygwin\fP to the end of
 the \f[CW]CXX=g++\fP line.
 .PP
 Once built (using either tool set) Windows binaries should be testable
@@ -441,11 +441,11 @@ the
 package is installed under the
 .I /usr/local
 tree by default.
-Use the \f[CW]--prefix=\fP\f[I]PATH\fP option to
+Use the \f[CW]\-\-prefix=\fP\f[I]PATH\fP option to
 .I configure
 if you want some other path.
 More specific installation locations are assignable,
-use the \f[CW]--help\fP option to
+use the \f[CW]\-\-help\fP option to
 .I configure
 for details.
 .PP
@@ -492,7 +492,7 @@ given by the
 .RS
 .ft CW
 .nf
-\f[B]% \fPsrec_cat -version
+\f[B]% \fPsrec_cat \-version
 .if n \f[B]srecord version\fP \f[I]\*(V)\fP
 .if t \f[CB]srecord version\fP \f[I]\*(V)\fP
 \f[I]\&...warranty disclaimer...\fP
@@ -531,6 +531,6 @@ file included with this distribution.
 .TS
 tab(;);
 l r l.
-Peter Miller;E-Mail:;pmiller@opensource.org.au
+Peter Miller;E\[hy]Mail:;pmiller@opensource.org.au
 \f[CW]/\e/\e*\fP;WWW:;http://miller.emu.id.au/pmiller/
 .TE

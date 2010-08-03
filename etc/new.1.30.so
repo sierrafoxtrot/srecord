@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2007 Peter Miller
+.\"     Copyright (C) 2007, 2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -19,20 +19,16 @@
 .PP
 .if n *
 .if t \(bu
-.\" srecord.1.30.D006
 .\" Change 17
-.\" pmiller, Tue Apr  3 20:57:40 2007, Verilog comments
 The Verilog format now suppresses comments when you specify
-the --data-only option.
+the \-\-data\[hy]only option.
 .PP
 .if n *
 .if t \(bu
-.\" srecord.1.30.D002
 .\" Change 11
-.\" pmiller, Wed Mar 28 11:49:56 2007, ti-txt
-The Texas Instruments ti-txt (MSP430) format is now understood
+The Texas Instruments ti\[hy]txt (MSP430) format is now understood
 for reading and writing.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.30 (2007-Mar-21)
+.SS Version 1.30 (2007\[hy]Mar\[hy]21)
 .\" vim:ts=8:sw=4:et

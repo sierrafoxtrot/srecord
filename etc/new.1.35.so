@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - The "srecord" program.
-.\"     Copyright (C) 2007 Peter Miller
+.\"     Copyright (C) 2007, 2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -20,13 +20,13 @@
 .if n *
 .if t \(bu
 .\" Change 22, 21
-A bug has been fixed in the CRC-16 CCITT calculation; the algorithm was
+A bug has been fixed in the CRC\[hy]16 CCITT calculation; the algorithm was
 correct but the start value was incorrect, leading to incorrect results.
 .PP
 .if n *
 .if t \(bu
 .\" Change 12, 25
-The CRC16 filters have a new --no-augment option, to omit the 16
+The CRC16 filters have a new \-\-no\[hy]augment option, to omit the 16
 zero bits augmenting the message.  This is not CCITT standard
 conforming, but some implementations do this.
 .PP
@@ -42,5 +42,5 @@ in the tarball.
 The license has been changed to GNU GPL version 3.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.SS Version 1.35 (2007-Jun-23)
+.SS Version 1.35 (2007\[hy]Jun\[hy]23)
 .\" vim:ts=8:sw=4:et

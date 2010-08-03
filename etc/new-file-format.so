@@ -23,14 +23,14 @@ How to add a new file format
 .SH DESCRIPTION
 This section describes how to add a new file format.  It's mostly a
 set of reminders for the maintainer.  If you want a format added to
-the distribution, use this method and e-mail the maintainer a patch
-(generated with \f[CW]diff -Nur\fP, usually) and it can be added to the
+the distribution, use this method and e\[hy]mail the maintainer a patch
+(generated with \f[CW]diff \-Nur\fP, usually) and it can be added to the
 sources if appropriate.
 .SS New Files
 The directory hierarchy is an echo of the class hierarchy, making it
 easy to guess the filename of a class, and to work out the appropriate
 file name of a new class.  You get used to it.  It is suggested that you
-simply work in the root of the source tree (exploiting tab-completion in
+simply work in the root of the source tree (exploiting tab\[hy]completion in
 your shell and your editor) rather than continually changing directories
 up and down the source tree.  All of the file names below assume this.
 .PP
@@ -64,7 +64,7 @@ as is all too often the case,
 use \f[CW]thesaurus.com\fP to find a synonym.
 Use the following command
 .RS
-\f[CW]find man/. -type f | xargs grep -i \fP\f[I]synonym\fP
+\f[CW]find man/. \-type f | xargs grep \-i \fP\f[I]synonym\fP
 .RE
 to make sure it hasn't been used yet.
 .RE
@@ -133,7 +133,7 @@ valid data.  This includes treating mandatory input fields as optional
 with input definitions to their logical extremes (\f[I]e.g.\fP 255 byte
 data records in Motorola format).
 Checksums should always be checked on input, only ignore them if the
-\-ignore-checksums command line option has been given.
+\-ignore\[hy]checksums command line option has been given.
 Absurd line lengths must be tolerated.
 .TP 8n
 Be conservative in what you produce
@@ -155,7 +155,7 @@ Round Trip
 In general, what went in is what comes out.
 .TP 3n
 \(bu
-The data may be re-arranged in order, the line lengths may change, but
+The data may be re\[hy]arranged in order, the line lengths may change, but
 the same data should go out as came in.
 (The data should be unchanged even if the format changed,
 assuming equally capable formats.)
@@ -172,7 +172,7 @@ If the input has no execution start address record, the output should
 not have one either (if at all possible).  This means not automatically
 inserting an execution start address record if the output file code does
 not see one by the time the destructor is called.
-(The \-disable=exec-start-addr flag affects this, too.)
+(The \-disable=exec\[hy]start\[hy]addr flag affects this, too.)
 .TP 3n
 \(bu
 Write at least one \f[B]test\fP that does a \[lq]round trip\[rq] of
@@ -184,20 +184,20 @@ segment boundaries).
 Holes
 Do not to fill in holes in the data.  That said, sometimes you
 \f[I]have\fP to fill holes in the data.  This happens, for example, when
-a 16-bit format is faced with an 8-bit byte of data for one or other
-half of a 16-bit word.  If there is no other way around it, fill the
+a 16\[hy]bit format is faced with an 8\[hy]bit byte of data for one or other
+half of a 16\[hy]bit word.  If there is no other way around it, fill the
 hole with 0xFF.  This is because most erased EPROMs have 0xFF data, and
 so the 0xFF won't change anything.
 .SH OPTIONS
 There are also some command line arguments you will need to take into account:
 .TP 8n
-\f[B]\-address-length\fP
+\f[B]\-address\[hy]length\fP
 This options is used to specify the minimum address length, if your new
 format has a choice about how many bytes of address it produces.
 .TP 8n
-\f[B]\-data-only\fP
+\f[B]\-data\[hy]only\fP
 This option implies all of the \f[B]\-disable=header\fP,
-\f[B]\-disable=data-count\fP \f[B]\-disable=exec-start-addr\fP and
+\f[B]\-disable=data\[hy]count\fP \f[B]\-disable=exec\[hy]start\[hy]addr\fP and
 \f[B]\-disable=footer\fP options.
 Only the essential data records are produced.
 .TP 8n
@@ -206,35 +206,35 @@ If this option is used, no header records are to be produced (or minimal
 header records).  This is available as the \f[CW]enable_header_flag\fP
 class variable in the methods of your derived class.
 .TP 8n
-\f[B]\-disable=data-count\fP
+\f[B]\-disable=data\[hy]count\fP
 If this option is used, no data record count records are to be produced.
 This is available as the \f[CW]enable_data_count_flag\fP class variable
 in the methods of your derived class.
 .TP 8n
-\f[B]\-disable=exec-start-addr\fP
+\f[B]\-disable=exec\[hy]start\[hy]addr\fP
 If this option is used, no execution start address records are to be
 produced.  This is available as the \f[CW]enable_goto_addr_flag\fP class
 variable in the methods of your derived class.
 .TP 8n
 \f[B]\-disable=footer\fP
-If this option is used, no end-of-file records are to be produced.  This
+If this option is used, no end\[hy]of\[hy]file records are to be produced.  This
 is available as the \f[CW]enable_footer_flag\fP class variable in the
 methods of your derived class.
 .TP 8n
-\fB\-enable=optional-address
+\fB\-enable=optional\[hy]address
 If this option is used, in combination with a format that does not have
 an address on every line, the the first zero address many be omitted.
 All subsequent addresses are not optional, just the first zero address.
 Defaults to disabled.
 .TP 8n
-\f[B]\-ignore-checksums\fP
+\f[B]\-ignore\[hy]checksums\fP
 If this flag is set, your file input methods must parse \f[I]but not
 check\fP checksums, if the format has checksums.  This is available in
 the \f[CW]use_checksums()\fP method within the methods of your derived
 class.  This only applies to input; output must always produce correct
 checksums.
 .TP 8n
-\f[B]\-line-length\fP
+\f[B]\-line\[hy]length\fP
 Where your output format is text, and there exists the possibility of
 putting more or less text on each line (\f[I]e.g.\fP the Motorola format
 allows a variable number of data bytes per record) then this should be
@@ -246,6 +246,6 @@ derived class.
 .TS
 tab(;);
 l l l.
-Peter Miller;E-Mail:;pmiller@opensource.org.au
+Peter Miller;E\[hy]Mail:;pmiller@opensource.org.au
 \f(CW/\e/\e*\fP;WWW:;http://miller.emu.id.au/pmiller/
 .TE
