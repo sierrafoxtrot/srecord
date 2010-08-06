@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2010 Peter Miller
+# Copyright (C) 2010 David Kozub <zub@linux.fjfi.cvut.cz>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,37 +17,22 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-TEST_SUBJECT="srecord::output_filter_reblock"
+TEST_SUBJECT="msbin concatenate records"
 . test_prelude
 
-# Note: the position of this data depends on srecord::memory_chunk::size
-#        defined in srecord/memory/chunk.h
-# This test of of data alignment spanning a chunk boundary.
-# If you change that value, you will have to change this test.
-cat > test.in << 'fubar'
-S00600004844521B
-S12306E0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F06
-S1230700202122232425262728292A2B2C2D2E2F303132333435363738393A3B3C3D3E3FE5
-S5030002FA
-S9030000FC
-fubar
+# Generate a long enough test data
+srec_cat -generate 1 1048577 -repeat-string 'MsBinConcatenateRecordsTest' -execution-start-address=1 -o test.in
 if test $? -ne 0; then no_result; fi
 
-cat > test.ok << 'fubar'
-S00600004844521B
-S30E000006E0000102030405060708E7
-S322000006E9090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F20212223242553
-S31F00000706262728292A2B2C2D2E2F303132333435363738393A3B3C3D3E3FB2
-S5030003F9
-S70500000000FA
-fubar
-if test $? -ne 0; then no_result; fi
-
-srec_cat test.in -o test.out --address-length=4 \
-        --output-block-size=29 --output-block-align
+# Test a round-trip srec->MsBin->srec
+srec_cat test.in -o test.msbin -MsBin
 if test $? -ne 0; then fail; fi
 
-diff test.ok test.out
+srec_cat test.msbin -MsBin -o test.out
+if test $? -ne 0; then fail; fi
+
+# test if the encoded msbin file is identical
+cmp test.in test.out
 if test $? -ne 0; then fail; fi
 
 #
