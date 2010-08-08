@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - The "srecord" program.
-#       Copyright (C) 2007, 2008 Peter Miller
+#       Copyright (C) 2007, 2008, 2010 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ Data:   0000 - 0043
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat in.srec -offset - -minimum in.srec -o out.srec
+srec_cat in.srec -offset - -minimum-address in.srec -o out.srec
 if test $? -ne 0; then fail; fi
 
 srec_info out.srec > test.out

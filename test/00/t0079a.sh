@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - manipulate eprom load files
-#       Copyright (C) 2002, 2003, 2006-2008 Peter Miller
+#       Copyright (C) 2002, 2003, 2006-2008, 2010 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 #       <http://www.gnu.org/licenses/>.
 #
 
-TEST_SUBJECT="input -max"
+TEST_SUBJECT="input -max-addr"
 . test_prelude
 
 cat > test.in1 << 'fubar'
@@ -45,7 +45,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in1 test.in2 -offset -max test.in1 -o test.out
+srec_cat test.in1 test.in2 -offset -max-addr test.in1 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -60,7 +60,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in1 test.in2 -offset -max test.in1 -ru 16 -o test.out
+srec_cat test.in1 test.in2 -offset -max-addr test.in1 -ru 16 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
