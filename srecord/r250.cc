@@ -60,28 +60,28 @@ r250_init(void)
 {
     ready = true;
 
-    /*
-     * initialize crummy linear congruential
-     */
+    //
+    // initialize crummy linear congruential
+    //
     time_t now;
     time(&now);
     srand(now + getpid());
 
-    /*
-     * position to start of array
-     */
+    //
+    // position to start of array
+    //
     pos = buf;
 
-    /*
-     * initialise contents of array
-     */
+    //
+    // initialise contents of array
+    //
     unsigned long *bp;
     for (bp = buf; bp < ENDOF(buf); ++bp)
         *bp = rand32();
 
-    /*
-     * make sure the bits are linearly independent
-     */
+    //
+    // make sure the bits are linearly independent
+    //
     unsigned long bit;
     for (bit = 1, bp = buf + 3; bit; bp += 11, bit <<= 1)
     {

@@ -56,7 +56,7 @@ private:
     output_file_msbin(const std::string &file_name);
 
 public:
-    /*
+    /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
       *
@@ -92,8 +92,9 @@ private:
     /**
       * MAX_PENDING_DATA_SIZE is the upper limit of the size of data
       * we are willing to keep in the pending_records vector.
+      * (50MiB)
       */
-    enum { MAX_PENDING_DATA_SIZE = 50*1024*1024 /* 50 MiB */ };
+    enum { MAX_PENDING_DATA_SIZE = 50*1024*1024 };
 
     /**
       * The write_qword_le method is used to write a little endian quad
