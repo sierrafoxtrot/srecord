@@ -67,7 +67,7 @@ srecord::output_file_msbin::create(const std::string &a_file_name)
 
 
 void
-srecord::output_file_msbin::write_qword_le(uint32_t d)
+srecord::output_file_msbin::write_dword_le(uint32_t d)
 {
     unsigned char c[sizeof(uint32_t)];
 
@@ -100,8 +100,8 @@ srecord::output_file_msbin::write_file_header(uint32_t start, uint32_t length)
         put_char(Magic[i]);
 
     // Write header itself
-    write_qword_le(start);
-    write_qword_le(length);
+    write_dword_le(start);
+    write_dword_le(length);
 }
 
 
@@ -109,9 +109,9 @@ void
 srecord::output_file_msbin::write_record_header(uint32_t addr, uint32_t length,
     uint32_t checksum)
 {
-    write_qword_le(addr);
-    write_qword_le(length);
-    write_qword_le(checksum);
+    write_dword_le(addr);
+    write_dword_le(length);
+    write_dword_le(checksum);
 }
 
 

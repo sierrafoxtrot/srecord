@@ -76,7 +76,7 @@ srecord::input_file_msbin::create(const std::string &a_file_name)
 
 
 uint32_t
-srecord::input_file_msbin::read_qword_le()
+srecord::input_file_msbin::read_dword_le()
 {
     unsigned char c[sizeof(uint32_t)];
 
@@ -101,7 +101,7 @@ srecord::input_file_msbin::read_file_header()
     static const unsigned char Magic[7] =
         { 'B', '0', '0', '0', 'F', 'F', '\n' };
 
-    // +1 so that buff can be reused for two qwords in case the magic is missing
+    // +1 so that buff can be reused for two dwords in case the magic is missing
     unsigned char buff[sizeof(Magic) + 1];
     for (size_t i = 0; i < sizeof(Magic); ++i)
     {
@@ -118,17 +118,17 @@ srecord::input_file_msbin::read_file_header()
     {
         // Ok, there's no magic in the header. But it's optional anyway.
 
-        // Fill up to two qwords
+        // Fill up to two dwords
         BOOST_STATIC_ASSERT(sizeof(buff) == 2 * sizeof(uint32_t));
         int j = get_char();
         if (j < 0)
             fatal_error("short input file");
         buff[sizeof(buff) - 1] = j;
 
-        // Read first qword
+        // Read first dword
         image_start = record::decode_little_endian(buff, sizeof(uint32_t));
 
-        // Read second qword
+        // Read second dword
         image_length =
             record::decode_little_endian
             (
@@ -138,8 +138,8 @@ srecord::input_file_msbin::read_file_header()
     }
     else
     {
-        image_start = read_qword_le();
-        image_length = read_qword_le();
+        image_start = read_dword_le();
+        image_length = read_dword_le();
     }
 
     // What shall we do with the (useless) file header?
@@ -196,9 +196,9 @@ srecord::input_file_msbin::read(record &result)
         }
 
         // Read header of the next record
-        address = read_qword_le();
-        remaining = read_qword_le();
-        record_checksum = read_qword_le();
+        address = read_dword_le();
+        remaining = read_dword_le();
+        record_checksum = read_dword_le();
 
         // Reset running checksum
         running_checksum = 0;

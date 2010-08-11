@@ -97,13 +97,13 @@ private:
     enum { MAX_PENDING_DATA_SIZE = 50*1024*1024 };
 
     /**
-      * The write_qword_le method is used to write a little endian quad
-      * word into the output.
+      * The write_dword_le method is used to write a little endian
+      * double word into the output.
       *
       * @param d
       *     The data to be written.
       */
-    void write_qword_le(uint32_t d);
+    void write_dword_le(uint32_t d);
 
     /**
       * The checksum method is used to calculate the checksum of a given

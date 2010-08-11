@@ -161,10 +161,10 @@ private:
     BOOST_STATIC_ASSERT(sizeof(record::address_t) >= sizeof(uint32_t));
 
     /**
-      * The read_qword_le method is used to read a little endian quad
+      * The read_dword_le method is used to read a little endian double
       * word from the input.
       */
-    uint32_t read_qword_le();
+    uint32_t read_dword_le();
 
     /**
       * The checksum method is used to calculate the checksum of a given

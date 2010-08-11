@@ -1,7 +1,10 @@
 #!/bin/sh
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2010 David Kozub <zub@linux.fjfi.cvut.cz>
+# Copyright (C) 2010 Peter Miller
+#
+# written by David Kozub <zub@linux.fjfi.cvut.cz>
+# Copyright assigned to Peter Miller 27-Jan-2010
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +34,7 @@ if test $? -ne 0; then fail; fi
 srec_cat test.msbin -MsBin -o test.out
 if test $? -ne 0; then fail; fi
 
-# test if the encoded msbin file is identical
+# test if the resulting srec file is identical to the generated input
 cmp test.in test.out
 if test $? -ne 0; then fail; fi
 
