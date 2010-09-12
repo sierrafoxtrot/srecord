@@ -19,6 +19,7 @@
 .ad l
 .hy 0
 .so etc/version.so
+.nf
 <html>
 <head>
 <link rel="icon" href="srecord.ico" type="image/x-icon">
@@ -30,79 +31,142 @@
 <center>SRecord \*(v)<br>
 Files for Download
 </center></h1>
-<H2> SourceForge Downloads </h2>
-Please consider using the <a
-href="http://sourceforge.net/project/showfiles.php?group_id=72866">
-SourceForge.net download mirrors</a>, rather than these files.
-The mirrors are almost certainly closer to you, and faster, than these
-HTML links.  Plus, there are precompiled Windows executables available
-that way.
-
-<h2> The Master Sources </h2>
-<table align=center>
-<tr>
-<th>File Name</th>
-<th>Description</th>
-</tr>
-<tr>
-<td valign=top>
-<a href="srecord-\*(v).README"><tt>srecord-\*(v).README</tt></a></td>
-<td valign=top>
-The <tt>README</tt> file from the tar distribution.</td>
-</tr>
-<tr>
-<td valign=top>
-<a href="change_log.txt"><tt>change_log.txt</tt></a></td>
-<td valign=top>
-The release notes describing the changes in this version.</td>
-</tr>
-<tr>
-<td valign=top>
-<a href="srecord-\*(v).lsm"><tt>srecord-\*(v).lsm</tt></a></td>
-<td valign=top>
-Brief description in
-.nf
-<a href="ftp://sunsite.unc.edu/pub/Linux/LSM-TEMPLATE">LSM</a>
-.fi
-format.</td>
-</tr>
-<tr>
-<td valign=top>
-<a href="srecord-\*(v).spec"><tt>srecord-\*(v).spec</tt></a></td>
-<td valign=top>
-RedHat package manager specification file (<a
-href="http://www.rpm.org/">RPM</a>)</td>
-</tr>
-<tr>
-<td valign=top>
-<a href="srecord-\*(v).tar.gz"><tt>srecord-\*(v).tar.gz</tt></a></td>
-<td valign=top>
-The complete source.</td>
-</tr>
-<tr>
-<td valign=top>
-<a href="srecord-\*(v).pdf"><tt>srecord-\*(v).pdf</tt></a></td>
-<td valign=top>
-SRecord Reference Manual, in Adobe Acrobat format.</td>
-</tr>
-</table>
-.br
-<h2> Debian Packages </h2>
-The SRecord Debian packages are maintained by
-<a href="mailto:fabo@debian.org" >Fathi Boudra
-&lt;fabo@debian.org&gt;</a>.  The Debian packages are available at <a
-href="http://packages.qa.debian.org/s/srecord.html"
->http://packages.qa.debian.org/s/srecord.html</a>
-.br
+There are several ways you can obtain the software,
+as either source code or pre-compiled binaries.
+<br clear="all" />
 <p>
-The SRecord &ldquo;upstream&rdquo; maintainer also does routine package
-builds against Ubuntu (64-bit).  These are <b>not</b> the official
-Debian packages.  You can grab them <a href="debian/" >from this web
-site</a>.  (The <i>orig.tar.gz</i> file has the <tt>debian/</tt>
-directory removed, as preferred by Debian packaging conventions.)
-.br
-<h2>Precompiled Windows Executables</h2>
-See the <a
-href="http://sourceforge.net/project/showfiles.php?group_id=72866">
-SourceForge.net download mirrors</a> for precompiled windows executables.
+<table>
+
+<tr>
+    <td valign="top" align="center" >
+    <img src="srecord-64.png" alt="[*]" />
+    </td>
+    <td valign="top" >
+        <h2> The Master Sources </h2>
+        The following files are available for download from this web site:
+        <p>
+        <table>
+        <tr>
+        <th>File Name</th>
+        <th>Description</th>
+        </tr>
+        <tr>
+        <td valign="top" nowrap>
+        <a href="srecord-\*(v).README"><tt>srecord-\*(v).README</tt></a></td>
+        <td valign="top" >
+        The <tt>README</tt> file from the tar distribution.</td>
+        </tr>
+        <tr>
+        <td valign="top" nowrap>
+        <a href="change_log.txt"><tt>change_log.txt</tt></a></td>
+        <td valign="top">
+        The release notes describing the changes in this version.</td>
+        </tr>
+        <tr>
+        <td valign="top" nowrap>
+        <a href="srecord-\*(v).lsm"><tt>srecord-\*(v).lsm</tt></a></td>
+        <td valign="top">
+        Brief description in
+        <a href="ftp://sunsite.unc.edu/pub/Linux/LSM-TEMPLATE">LSM</a>
+        format.</td>
+        </tr>
+        <tr>
+        <td valign="top" nowrap>
+        <a href="srecord-\*(v).spec"><tt>srecord-\*(v).spec</tt></a></td>
+        <td valign="top">
+        RedHat package manager specification file (<a
+        href="http://www.rpm.org/">RPM</a>)</td>
+        </tr>
+        <tr>
+        <td valign="top" nowrap>
+        <a href="srecord-\*(v).tar.gz"><tt>srecord-\*(v).tar.gz</tt></a></td>
+        <td valign="top">
+        The complete source.</td>
+        </tr>
+        <tr>
+        <td valign="top" nowrap>
+        <a href="srecord-\*(v).pdf"><tt>srecord-\*(v).pdf</tt></a></td>
+        <td valign="top">
+        SRecord Reference Manual, in Adobe Acrobat format.</td>
+        </tr>
+        </table>
+        <p><br/>
+    </td>
+    </tr>
+
+<tr>
+    <td valign="top" align="center" >
+    <img src="http://libexplain.sourceforge.net/sf.png" alt="[*]" />
+    </td>
+    <td valign="top" >
+        <H2> SourceForge Downloads </h2>
+        The best possible download speed for the source tarball will be
+        from the <a
+        href="http://sourceforge.net/project/showfiles.php?group_id=72866"
+        >SourceForge download pages</a>, and here is the <a
+       href="http://sourceforge.net/project/platformdownload.php?group_id=72866"
+        >most recent tarball</a> from there.
+        <p><br/>
+    </td>
+    </tr>
+
+<tr>
+    <td valign="top" align="center" >
+    <img src="http://miller.emu.id.au/pmiller/software/launchpad-logo.png"
+        alt="[*]" />
+    </td>
+    <td valign="top" >
+        <h2> Ubuntu Packages </h2>
+        If you use Ubuntu Linux, there are pre-built packages available
+        for installation using the normal <tt>sudo apt-get install</tt>
+        method, from <a
+        href="https://launchpad.net/~pmiller-opensource/+archive/ppa"
+        >this package archive</a> (<a
+        href="https://help.launchpad.net/Packaging/PPA" >PPA</a>).
+        <p>
+        Instructions are available there for how to manually add the PPA
+        to your <tt>/etc/apt/sources.list</tt> file, but the following
+        commands are sufficient on recent versions of Ubuntu:
+        <blockquote>
+<pre>sudo add-apt-repository ppa:pmiller-opensource/ppa
+sudo apt-get update
+sudo apt-get install srecord</pre>
+        </blockquote>
+        <p><br/>
+    </td>
+    </tr>
+
+<tr>
+    <td valign="top" align="center" >
+    <img src="debian.png" alt="[*]" />
+    </td>
+    <td valign="top" >
+        <h2> Debian Packages </h2>
+        The SRecord Debian packages are maintained by
+        <a href="mailto:fabo@debian.org"
+        >Fathi Boudra &lt;fabo@debian.org&gt;</a>.
+        The Debian packages are available at <a
+        href="http://packages.qa.debian.org/s/srecord.html"
+        >http://packages.qa.debian.org/s/srecord.html</a>
+        <p><br/>
+    </td>
+    </tr>
+
+<tr>
+    <td valign="top" align="center" >
+    <img src="whining-64.png" alt="[*]" />
+    </td>
+    <td valign="top" >
+        <h2>Precompiled Windows Executables</h2>
+        See the <a
+        href="http://sourceforge.net/project/showfiles.php?group_id=72866"
+        >SourceForge.net download mirrors</a> for precompiled windows
+        executables.  They tend to be less up-to-date than the Ubuntu binarie,
+        see <a href="windows.html" >here</a> for how to build up-to-date
+        binaries yourself.
+    </td>
+    </tr>
+
+</table>
+
 </body></html>
