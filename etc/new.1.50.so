@@ -16,12 +16,12 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 16, 11
 A number of gcc 4.4 build problems have been fixed.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 12

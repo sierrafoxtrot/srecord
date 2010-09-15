@@ -16,13 +16,13 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 16
 Numerous fixes have been made to header handling.  It is now possible
 to specify an empty header with the \f[CW]\-header\fP command line option.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 15

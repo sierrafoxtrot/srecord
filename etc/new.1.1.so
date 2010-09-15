@@ -16,24 +16,24 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 This release includes file format man pages.
 The web page also includes a PostScript reference manual,
 containing all of the man pages.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 The Intel hex format now has full 32\[hy]bit support.
 See \fIsrec_intel\fP(5) for more information.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 The Tektronix hex format is now supported (only the 16\[hy]bit version,
 Extended Tektronix hex is not yet supported).
 See \fIsrec_tektronix\fP(5) for more information.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 There is a new \fIsplit\fP filter, useful for wide data buses and memory

@@ -16,29 +16,29 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 19
 The Intel format now emits the redundant extended linear address record
 at the start of the file; some loaders couldn't cope without it.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 18
 The Binary format now copes with writing to pipes.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 17
 The Motorola format now understands the S6 (24\[hy]bit data record count)
 records for reading and writing.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 16
 The DEC Binary format now works correctly on Windows machines.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 15

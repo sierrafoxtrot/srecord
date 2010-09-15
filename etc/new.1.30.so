@@ -16,13 +16,13 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 17
 The Verilog format now suppresses comments when you specify
 the \-\-data\[hy]only option.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 11

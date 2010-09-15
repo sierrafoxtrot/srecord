@@ -16,18 +16,18 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 19
 There is a new \[lq]unfill\[rq] filter, which may be used to perform the
 reverse effect of the \[lq]fill\[rq] filter.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 17
 There is a new bit\[hy]wise NOT filter, which may be used to invert the data.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 16

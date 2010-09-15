@@ -16,31 +16,31 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 18, 19, 20
 More examples have been added to the documentation.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 17
 It is now possible to perform set intersection and set
 difference on address ranges on the command line.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 16
 There is a new category of data source: generators.
 You can generate constant data, random data and repeating data.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 11, 12
 The assembler and C\[hy]Array outputs now support additional options to
 facilitate MSP430 systems.  They can also optionally write shorts rather
 than bytes.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 15

@@ -16,22 +16,22 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 31
 An RPM build problem has been fixed.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 25
 The dependency on the Boost library is now documented in the BUILDING file.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 21, 16
 Some build problems with g++ 4.3 have been fixed
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 15
@@ -40,7 +40,7 @@ line, it no longer goes into an infinite loop for "\-fill 0xFF
 \-over { foo.hex \-exclude \-within foo.hex }" construct, which
 should have been calculating an empty fill set, but was instead
 calculating a 4GB fill set.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 12

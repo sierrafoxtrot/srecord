@@ -16,19 +16,19 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 15
 It is now possible to have negative expressions on the command
 line, to facilitate \[lq]\-\-offset \- \-minimum foo\[rq] usages.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 12
 The \f[I]srec_cat\fP(1) command now has a simple hexadecimal dump output
 format.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 11

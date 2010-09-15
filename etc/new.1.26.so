@@ -1,7 +1,7 @@
 
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2006, 2007 Peter Miller
+.\"     Copyright (C) 2006, 2007, 2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 22, 25
@@ -25,7 +25,7 @@
 There is a new warning issued when input data records are not in
 strictly ascending address order.  There is a new command line option to
 silence the warning.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 19

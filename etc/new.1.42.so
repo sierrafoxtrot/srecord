@@ -16,7 +16,7 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" srecord.1.42.D007
@@ -27,7 +27,7 @@ separate controls.  It is now possible to \fB\-enable\fP and \fB\-disable\fP
 individual features, such as \[lq]header\[rq], \[lq]data\[hy]count\[rq],
 \[lq]execution\[hy]start\[hy]address\[rq] and \[lq]footer\[rq].
 See \f[I]srec_cat\fP(1) for more information.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 16
@@ -35,13 +35,13 @@ The \f[I]srec_cat \-start\[hy]address\fP option has been renamed
 \fB\-execution\[hy]start\[hy]address\fP to remove any confusion with the
 \fB\-offset\fP filter.  The documentation now explicitly explains the
 difference between the two.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 15
 Examples of converting to and from binary files have been added
 to the \f[I]srec_examples\fP(1) man page.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 12

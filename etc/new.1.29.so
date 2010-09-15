@@ -16,22 +16,22 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 18
 The ascii\[hy]hex output format has been improved.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 16, 12
 The ti\[hy]tagged 16\[hy]bit format is now understood for reading and writing.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 11
 The Intel format no longer warns about missing optional records.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 12

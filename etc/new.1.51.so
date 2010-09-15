@@ -16,7 +16,7 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 11

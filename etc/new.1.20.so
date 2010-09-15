@@ -16,31 +16,31 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 26, 25, 23, 22
 More Doxygen comments have been added to the class header files.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 21
 There is a new \fIsrec_cat \-\-crlf\fP option, which may be used for force
 CRLF output on operating systems which don't use that style of line
 termination.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 18
 A number of problems with GCC, particularly with the early 3.\fIx\fP series.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 16
 There is a new "Stewie" format, an undocumented format loosely based on
 the Motorola S\[hy]Record format, apparently used in mobile phones.
 More information would be most welcome.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 A number of build problems have been fixed.

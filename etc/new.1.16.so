@@ -16,19 +16,19 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 18
 There is now support for Intel Extended Segment addressing output,
 via the \-\-address\[hy]length=2 option.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 17, 15
 There is now support for output of Verilog VMEM format.
 See \fIsrec_vmem\fP(5) for more information.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 12

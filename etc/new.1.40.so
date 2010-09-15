@@ -15,12 +15,12 @@
 .\" You should have received a copy of the GNU General Public License
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 28, 27
 False negative being reported by tests on Cygwin have been fixed.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 19
@@ -30,19 +30,19 @@ There are six new filters (\-be\[hy]exclusive\[hy]length,
 \-le\[hy]exclusive\[hy]minimum) which are very similar to their
 non\[hy]exclusive equivalents, except that they do not include the
 adress range covered by their output in their output.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 18, 16
 A bug has been fixed in the C word\[hy]array output.
 It was getting offsets and lengths wrong in some cases.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 14
 A bug has been fixed in the generated C array header file,
 it no longer omits the section descriptor arrays.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 12

@@ -16,13 +16,13 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 15
 The Makefile.in has been improved, it now copes with non\[hy]standard
 \f[CW]\-\-prefix\fP options.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 15

@@ -16,13 +16,13 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 17
 The documentation is now in PDF format.  This was in order to make it
 more accessible to a wider range of people.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 16
@@ -32,19 +32,19 @@ always want S3 data records in a Motorola hex file, use the
 \f[CW]\-\-address\[hy]length=4\fP option.
 This helps when talking to brain\[hy]dead EPROM programmers which do not
 fully implement the format specification.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 15
 There is a new \fI\-\-multiple\fP option to the commands, which permits
 an input file to contain multiple (contradictory) values for some memory
 locations.  The last value in the file will be used.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 12
 A problem has been fixed which stopped SRecord from building under Cygwin.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" change 11

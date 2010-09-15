@@ -16,26 +16,26 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 22, 21
 A bug has been fixed in the CRC\[hy]16 CCITT calculation; the algorithm was
 correct but the start value was incorrect, leading to incorrect results.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 12, 25
 The CRC16 filters have a new \-\-no\[hy]augment option, to omit the 16
 zero bits augmenting the message.  This is not CCITT standard
 conforming, but some implementations do this.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 17
 A problem has been fixed in the generated Makefile.in file found
 in the tarball.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 15

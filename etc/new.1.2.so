@@ -16,18 +16,18 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 A bug has been fixed which would cause the crop and exclude filters to
 dump core sometimes.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 A bug has been fixed where binary files were handled incorrectly on
 Windows NT (actually, any system in which text files aren't the same as
 binary files).
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 There are three new data filters.  The \-\-OR filter, which may be used to

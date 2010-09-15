@@ -16,21 +16,21 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 16
 The CRC16 filters now support a \-Broken option, to perform a
 common\[hy]but\[hy]broken CRC16 calculation, in addition to the CCITT
 and XMODEM calculations.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 15
 A link has been added to the CRC16 man page section
 to the www.joegeluso.com/software/articles/ccitt.htm web page,
 to explain the difficulties in seeding CRC16 calculations.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" srecord.1.37.D003
@@ -38,7 +38,7 @@ to explain the difficulties in seeding CRC16 calculations.
 A buglet has been fixed in the \f[I]srec_motorola\fP(5) man page, it now
 includes \f[CW]S6\fP in the list of things that can appear in the type
 field.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 11

@@ -16,7 +16,7 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 17
@@ -24,12 +24,12 @@ There is a new option for the \-\-\f[I]x\fP\[hy]e\[hy]length filters,
 they can now
 accept a width, and this is divided into the byte lenght, so
 that you can insert the length in units of words (2) or longs (4).
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 12, 15
 Some small corrections have been made to the documentation.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 11

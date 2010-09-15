@@ -16,7 +16,7 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 22, 21, 16
@@ -25,14 +25,14 @@ addition to the previous high\[hy]to\[hy]low bit order.
 It is also possible to specify the polynomial, with the default the
 CCITT standard polynomial, as was in the previous code.
 See \f[I]srec_input\fP(1) for more information.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 20, 19, 15, 12
 The MD5, RipeMD\[hy]160, SHA1, SHA224, SHA256, SHA384, SHA 512 and Whirlpool
 message digests are now supported.
 See \f[I]srec_input\fP(1) for more information.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" srecord.1.49.D005

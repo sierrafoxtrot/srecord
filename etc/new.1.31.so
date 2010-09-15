@@ -16,14 +16,14 @@
 .\"     along with this program. If not, see
 .\"     <http://www.gnu.org/licenses/>.
 .\"
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 12
 The TI\[hy]TXT format output has been improved; it is less spec conforming
 but more reality conforming.  It now allows odd alignment without
 padding.  It also ends with a \f[CW]q\fP instead of a \f[CW]Q\fP.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 11

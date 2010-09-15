@@ -16,39 +16,39 @@
 .\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 18
 Some compilers issue a warning when const appears before extern.
 "warning: storage class is not first".  The C output has been
 updated to conform to this expectation.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 17
 The manual page for \f[I]srec_cat\fP(1) has been enhanced to describe
 the in\[hy]memory data model, and the resulting output data order.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 15
 The \fB\-motorola\fP optional width argument now produces a better
 error message when it is out of range.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 15
 The \fB\-fill\fP filter now checks the size, and fails for absurdly
 large fills, with a \fB\-big\fP override if they really want >1GB
 fills.
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 16
 A bug in the .spec file for rpmbuild has been fixed, it now
 takes notice of $RPM_BUILD_ROOT
-.PP
+.TP 2n
 .if n *
 .if t \(bu
 .\" Change 11
