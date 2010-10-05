@@ -19,6 +19,7 @@
 .ad l
 .hy 0
 .so etc/version.so
+.nf
 <html>
 <head>
 <link rel="icon" href="srecord.ico" type="image/x-icon">
@@ -30,53 +31,46 @@
 <center>SRecord \*(v)</center></h1>
 The <i>SRecord</i> package is a collection of powerful tools for
 manipulating EPROM load files.
-.br
 <p>
-I wrote SRecord because when I was looking for programs to manipulate
-EPROM load files, I could not find very many.  The ones that I could
-find only did a few of the things I needed.  SRecord is written in C++
-and polymorphism is used to provide the file format flexibility and
-arbitrary filter chaining.  Adding more file formats and filters is
-relatively simple.
-.br
+I wrote SRecord because when I was looking for programs to manipulate EPROM
+load files, I could not find very many.  The ones that I could find only did a
+few of the things I needed.  SRecord is written in C++ and polymorphism is used
+to provide the file format flexibility and arbitrary filter chaining.  Adding
+more file formats and filters is relatively simple,
+see the <a href="srecord-\*(v).pdf" >Reference Manual</a>.
 <p align=center>
 [ <a href="download.html">Download</a> |
 <a href="mailing-list.html">Mailing List</a> |
 <a href="windows.html">Windows</a> |
 <a
-.nf
 href="http://aegis.sourceforge.net/cgi-bin/aeget/srecord.\*(v)?menu"
-.fi
 >Aegis</a> |
 <a
-.nf
 href="http://aegis.sourceforge.net/cgi-bin/aeget/srecord.\*(v)/?\
 rss+completed.xml"
-.fi
 ><img src="http://aegis.sourceforge.net/cgi-bin/aeget/icon/rss.gif"
 border=0 alt="RSS"></a> ]
 <br>
 [ Sourceforge: <a href="http://sourceforge.net/projects/srecord"
 >Project</a> |
 <a
-.nf
 href="http://sourceforge.net/project/stats/?group_id=72866"
-.fi
 >Statistics</a> ]
 </p>
-.br
 <p>
 SRecord runs on almost any flavor of UNIX.  The source distribution is
 self configuring using a GNU Autoconf generated configure script.
 <p>
+<blockquote>
 SRecord also runs on Windows.
 You can build SRecord for Windows using
 <a href="http://www.cygwin.com/">Cygwin</a> or
 <a href="http://www.delorie.com/djgpp/">DJGPP</a>,
 see the <a href="windows.html">Windows</a> page.
-<blockquote>
+<p>
 <a href="windows.html" >FAQ</a>:
-<i>Please, <b>please</b>, couldn't you build it for me?</i></br>
+<i>Please, <b>please</b>, couldn't you just build a Windows executable for
+me?</i></br>
 <b>No.</b>  I rarely use Windows.
 Besides, SRecord is <a href="http://www.opensource.org/"
 >open source</a>, so you have the source code, so you can <a
@@ -84,9 +78,7 @@ href="windows.html" >do it yourself</a>.  It is very easy to <a
 href="windows.html" >do it yourself</a>, or you could consider upgrading
 to Linux.
 </blockquote>
-.br
 <p><br clear="all" />
-.br
 <table><tr><td valign="top" width="60%" rowspan=4 bgcolor="#ccffcc">
 <p align=center>
 <img src="doc_chip.png" align="right" width=98 height=128 />
@@ -94,14 +86,12 @@ to Linux.
 <p>
 The <i>SRecord</i> package understands a number of file formats:
 <dl>
-.br
 <dt>
 Ascii-Hex
 <dd>
 The Ascii-Hex format is understood for both reading and writing.
 (Also known as the Ascii-Space-Hex format.)
 <p>
-.br
 <dt>
 ASM
 <dd>
@@ -109,14 +99,12 @@ It is possible, for output only, to produce a series of DB statements
 containing the data.  This can be useful for embedding data into assembler
 programs.
 <p>
-.br
 <dt>
 Atmel Generic
 <dd>
 This format is produced by the Atmel AVR assembler.
 It is understood for both reading and writing.
 <p>
-.br
 <dt>
 BASIC
 <dd>
@@ -124,110 +112,93 @@ It is possible, for output only, to produce a series of DATA statements
 containing the data.  This can be useful for embedding data into BASIC
 programs.
 <p>
-.br
 <dt>
 Binary
 <dd>
 Binary files can both be read and written.
 <p>
-.br
 <dt>
 B-Record
 <dd>
 Files in Freescale Dragonball bootstrap b-record format can be read and written.
 <p>
-.br
 <dt>
 C Array
 <dd>
 It is possible, for output only, to produce a C array definition containing
 the data.  This can be useful for embedding data into other programs.
 <p>
-.br
 <dt>
 Cosmac
 <dd>
 The RCA Cosmac Elf format is understood for both reading and writing.
 <p>
-.br
 <dt>
 DEC Binary
 <dd>
 The DEC Binary (XXDP) format is understood for both reading and writing.
 <p>
-.br
 <dt>
 Elektor Monitor (EMON52)
 <dd>
 The EMON52 format is understood for both reading and writing.
 <p>
-.br
 <dt>
 Fairchild Fairbug
 <dd>
 The Fairchild Fairbug format is understood for both reading and writing.
 <p>
-.br
 <dt>
 hexdump
 <dd>
 It is possible, for output only, to produce a simple hexadecimal listing.
 This can be useful for developer debugging.
 <p>
-.br
 <dt>
 LSI Logic Fast Load
 <dd>
 The LSI Logic Fast Load format is understood for both reading and writing.
 <p>
-.br
 <dt>
 Formatted Binary
 <dd>
 The Formatted Binary (XXDP) format is understood for both reading and writing.
 <p>
-.br
 <dt>
 Four Packed Code (FPC)
 <dd>
 The FPC format is understood for both reading and writing.
 <p>
-.br
 <dt>
 Intel
 <dd>
 The Intel hexadecimal format is understood for both reading and writing.
 (Also known as the Intel MCS-86 Object format.)
 <p>
-.br
 <dt>
 Intel AOMF
 <dd>
 The Intel Absolute Object Module Format (AOMF) is understood for both
 reading and writing.
 <p>
-.br
 <dt>
 Intel 16
 <dd>
 The Intel hexadecimal 16 format is understood for both reading and writing.
 (Also known as the INHX16 file format.)
 <p>
-.br
 <dt>
 MIF
 <dd>
 The Memory Initialization File (MIF) format by Altera is understood for
 both reading and writing.
 <p>
-.br
 <dt>
 MOS Technology
 <dd>
 The MOS Technology hexadecimal format is understood for both reading
 and writing.
 <p>
-.br
 <dt>
 Motorola S-Record
 <dd>
@@ -235,54 +206,46 @@ The Motorola hexadecimal S-Record format is understood for both reading
 and writing.
 (Also known as the Exorciser, Exormacs or Exormax format.)
 <p>
-.br
 <dt>
 MsBin
 <dd>
 The Windows CE Binary Image Data Format is supported both for reading
 and writing.
 <p>
-.br
 <dt>
 Needham Electronics
 <dd>
 The Needham Electronics ASCII file format is understood for both reading
 and writing.
 <p>
-.br
 <dt>
 Ohio Scientific
 <dd>
 The Ohio Scientific hexadecimal format is understood for both reading
 and writing.
 <p>
-.br
 <dt>
 Signetics
 <dd>
 The Signetics format is understood for both reading and writing.
 <p>
-.br
 <dt>
 Spectrum
 <dd>
 The Spectrum format is understood for both reading and writing.
 <p>
-.br
 <dt>
 SPASM
 <dd>
 The SPASM format is used by a variety of PIC programmers; it is understood
 for both reading and writing.
 <p>
-.br
 <dt>
 Tektronix (Extended)
 <dd>
 The Tektronix hexadecimal format and the Tektronix extended hexadecimal
 format are understood for both reading and writing.
 <p>
-.br
 <dt>
 Texas Instruments Tagged
 <dd>
@@ -290,7 +253,6 @@ The Texas Instruments Tagged hexadecimal format is understood for both
 reading and writing (both 8 and 16 bits).  Also known as the TI-Tagged
 or TI-SDSMAC object format.
 <p>
-.br
 <dt>
 ti-txt
 <dd>
@@ -298,14 +260,12 @@ The TI-TXT format is understood for reading and writing.  This format is
 used with the bootstrap loader of the Texas Instruments MSP430 family of
 processors.
 <p>
-.br
 <dt>
 VHDL
 <dd>
 It is possible, for output only, to produce a VHDL definition containing
 the data.  This can be useful for some embedded development systems.
 <p>
-.br
 <dt>
 Verilog VMEM
 <dd>
@@ -317,7 +277,6 @@ Wilson
 <dd>
 The Wilson format is understood for both reading and writing.
 This mystery format was added for a mysterious type of EPROM writer.
-.br
 <dt>
 <p>
 If you have a description of other EPROM load file formats that SRecord
@@ -325,14 +284,12 @@ does not yet understand, please <a href="mailto:pmiller@opensource.org.au"
 >let me know</a>, and they can be added.
 </dl>
 </td><td valign="top" width="40%" bgcolor="#ccccff">
-.br
 <p align=center>
 <img src="doc_cat.png" align="right" width=98 height=128 />
 <b>The Tools</b></p>
 <p>
 A number of tools are include in the <i>SRecord</i> package.
 All of the tools understand all of the file formats, and all of the filters.
-.br
 <dl><dt>
 srec_cat
 <dd>
@@ -342,14 +299,12 @@ all of the input and output formats, it can also be used to convert
 files from one format to another.
 It also understands <i>filters</i>, see below.
 <p>
-.br
 <dt>
 srec_cmp
 <dd>
 The <i>srec_cmp</i> program may be used to compare EPROM load files,
 or portions of EPROM load files, for equality.
 <p>
-.br
 <dt>
 srec_info
 <dd>
@@ -357,7 +312,6 @@ The <i>srec_info</i> program may be used to print summary information
 about EPROM load files.
 </dl>
 </td></tr>
-.br
 <tr><td bgcolor="#ffffcc">
 <p align=center>
 <img src="doc_lens.png" align="right" width=98 height=128 />
@@ -373,7 +327,6 @@ crc
 The <i>crc</i> filters may be used to insert an inustry standard cyclic
 redundancy check (CRC) into the data.
 <p>
-.br
 <dt>
 checksum
 <dd>
@@ -381,49 +334,42 @@ The <i>checksum</i> filters may be used to insert a checksum into
 the data.  Positive, negative and bit-not checksums are available,
 as well as big-endian and little-endian byte orders.
 <p>
-.br
 <dt>
 crop
 <dd>
 The <i>crop</i> filter may be used to isolate an input address range,
 or ranges, and discard the rest.
 <p>
-.br
 <dt>
 exclude
 <dd>
 The <i>exclude</i> filter may be used to exclude an input address range,
 or ranges, and keep the rest.
 <p>
-.br
 <dt>
 fill
 <dd>
 The <i>fill</i> filter may be used to fill holes in the data with a
 given byte value.
 <p>
-.br
 <dt>
 unfill
 <dd>
 The <i>unfill</i> filter may be used to make holes in the data for bytes
 with a given value.
 <p>
-.br
 <dt>
 random fill
 <dd>
 The <i>random fill</i> filter may be used to fill holes in the data with
 random byte values.
 <p>
-.br
 <dt>
 length
 <dd>
 The <i>length</i> filter may be used to insert the data length into
 the data.
 <p>
-.br
 <dt>
 offset
 <dd>
@@ -442,17 +388,14 @@ unsplit
 The <i>unsplit</i> filter may be used to
 reverse the effects of the <i>split</i> filter.
 </dl>
-.br
 <p>
 More than one filter may be applied to each input file.
 Different filters may be applied to each input file.
 All filters may be applied to all file formats.
-.br
 <p>
 There are many more filters available, see the <i>srec_input</i>(1) man
 page for more information.
 </td></tr>
-.br
 <tr><td bgcolor="#ffccff">
 <p align=center>
 <img src="doc_gen.png" align="right" width=98 height=128 />
@@ -463,19 +406,15 @@ The <i>SRecord</i> package is made more powerful by the concept of
 a generator may be specified instead.  The following generators are
 available:
 <dl>
-.br
 <dt>constant
 <dd>The <i>constant</i> generator may be used to create constant value bytes.
 <p>
-.br
 <dt>random
 <dd>The <i>random</i> generator may be used to create random bytes.
 <p>
-.br
 <dt>repeated data
 <dd>The <i>repeated data</i> generator may be used to create data which
 repeats a sequence of byte values over and over again.
-.br
 </dl>
 <p>
 Generators and data files can be combined on the same command line.
@@ -499,76 +438,45 @@ see the <a href="http://uncia.sourceforge.net/" >Uncia</a> project.
 For a similar idea, applied to file systems rather than EPROM load files,
 see the <a href="http://plasticfs.sourceforge.net/" >PlasticFS</a> project.
 .\" ------------------------------------------------------------------------
-.br
 <hr>
 <table border=0><tr><td valign="top">
 <a href="http://www.fsf.org/">
 <img
-.br
 src="http://upload.wikimedia.org/wikipedia/commons/b/bf/\
 GNU-FDL-ic%C3%B4ne-Transparente.PNG"
-border=0 width=129 height=122 ></a>
-.br
-</td><td valign="top" width="15%">
-.br
+border=0 alt="" ></a>
+</td><td valign="top" width="35%">
 SRecord is written and owned by
 <a href="mailto:pmiller@opensource.org.au"
 >Peter Miller &lt;pmiller@opensource.org.au&gt;</a>
 and is freely distributable under the terms and conditions of the
-<a href="http://www.gnu.org/licenses/gpl.txt">GNU GPL</a>.
-.br
+<a href="http://www.gnu.org/licenses/gpl.txt" >GNU GPL</a>.
 </td><td valign="top">
-.br
-<a href="http://www.opensource.org/docs/definition.php">
-<img
-.nf
+<a href="http://www.opensource.org/docs/definition.php" ><img
 src="http://www.opensource.org/trademarks/opensource/web/opensource-110x95.png"
-border="0" width="110" height="95"></a>
-.fi
-</td><td valign="top" align="right">
-SRecord is developed using <a
-href="http://aegis.sourceforge.net/">Aegis</a>, a transaction based
-software configuration management system.
-The Aegis <a
-.nf
-href="http://aegis.sourceforge.net/cgi-bin/aeget/srecord.\*(v)?menu"
-.fi
->repository</a> for this project is available.
-.br
-</td><td valign="top">
-.br
-<a href="http://aegis.sourceforge.net/" ><img
-src="http://aegis.sourceforge.net/aegis.png"
-border=0 ></a>
-.br
-</td><td valign="top" align="right">
-.br
+border="0" /></a>
+</td>
+<td valign="top" align="right">
 There is more <a
 href="http://miller.emu.id.au/pmiller/software/"
 >Software by Peter Miller</a>
 at his home page.
 </td><td valign="top">
-.br
 <a href="http://miller.emu.id.au/pmiller/" ><img
-.nf
 src="http://miller.emu.id.au/pmiller/pmiller_2003_colour.64.png"
-.fi
-border=0 ></a>
+border=0 /></a>
 </td></tr></table>
 .\" ------------------------------------------------------------------------
-.br
 <hr>
 <a href="http://sourceforge.net/"><img
 src="http://sourceforge.net/sflogo.php?group_id=72866&amp;type=5"
 width="210" height="62" border="0" alt="SourceForge.net Logo"
 align="right"></a>
-This page is hosted by <a href="http://sourceforge.net/">SourceForge</a>.
+This page is hosted by <a href="http://sourceforge.net/" >SourceForge</a>.
 <br>
 This page has been accessed approximately
 <img
-.nf
 src="http://miller.emu.id.au/cgi-bin/web_hit_counter?pmiller_srecord_\*(v)"
-.fi
 > times since
 .ds MO1 Jan
 .ds MO2 Feb

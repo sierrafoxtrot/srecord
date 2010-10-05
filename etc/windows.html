@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2003, 2006-2009 Peter Miller
+.\"     Copyright (C) 2003, 2006-2010 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 .ad l
 .hy 0
 .so etc/version.so
+.nf
 <html>
 <head>
 <link rel="icon" href="srecord.ico" type="image/x-icon">
@@ -28,12 +29,12 @@
 <img src="srecord-64.png" align=left>
 <img src="srecord-64.png" align=right>
 <h1 align="center" >
-<center><a href="../index.html" >SRecord</a> \*(v)<br>
-on Windows
+<a href="index.html" >SRecord</a> \*(v)<br>
+For Windows
 </h1>
 <a href="http://www.cygwin.com/"
 ><img src="http://www.cygwin.com/cygwin-icon.gif" align="right" border=0 /></a>
-The <a href="http://www.cygwin.com/">Cygwin</a> tools are ports of the
+The <a href="http://www.cygwin.com/" >Cygwin</a> tools are ports of the
 popular GNU development tools and utilities for Windows 95, 98, NT, XP,
 Vista, <i>etc</i>.  They function by using the Cygwin library which
 provides a UNIX-like API on top of the Win32 API.
@@ -41,29 +42,22 @@ provides a UNIX-like API on top of the Win32 API.
 This means that you can compile SRecord for Windows
 95, 98, NT, XP, Vista, <i>etc</i>.  SRecord was tested
 on Windows in this way.  Other tools, such as <a
-href="http://www.scl.com/products/mks/datasheets/nutcracker.html">
-Nutcracker</a>, are expected to work but have not been confirmed.
+href="http://www.scl.com/products/mks/datasheets/nutcracker.html"
+>Nutcracker</a>, are expected to work but have not been confirmed.
 <p>
-<a href="http://www.delorie.com/djgpp/">DJGPP</a> is a complete 32-bit
-C/C++ development system for Intel 80386 (and higher) PCs running DOS.
+<a href="http://www.delorie.com/djgpp/" >DJGPP</a> is a complete 32-bit
+C++ development system for Intel 80386 (and higher) PCs running DOS.
 It includes ports of many GNU development utilities.
 <p>
 <a href="http://www.cygwin.com/"
 ><img src="http://www.cygwin.com/cygwin-icon.gif" align="right" border=0 /></a>
-Once you have <a href="http://www.cygwin.com/">Cygwin</a> or <a
-href="http://www.delorie.com/djgpp/">DJGPP</a> installed, simply follow
+Once you have <a href="http://www.cygwin.com/" >Cygwin</a> or <a
+href="http://www.delorie.com/djgpp/" >DJGPP</a> installed, simply follow
 the instructions in the BUILDING file, as if it were Unix.
 <p>
-<b>Note:</b>
-Some problems have been reported using GCC 3.2.
-If you experience problems, please try GCC 2.96 instead.
-Of course, a patch to fix the 3.2 problems is always welcome.
-<p>
 Pre-built windows binaries are available from <a
-.nf
-href="https://sourceforge.net/project/showfiles.php?group_id=72866">
-.fi
-sourceforge.net</a>, although they tend to lag behind the current release.
+href="https://sourceforge.net/project/showfiles.php?group_id=72866"
+>sourceforge.net</a>, although they tend to lag behind the current release.
 <h2>FAQ</h2>
 <img src="whining-64.png" align="right" />
 <i>Please, <b>please</b>, can you just build it for me?</i>
@@ -73,12 +67,14 @@ No.  The author rarely uses Windows for anything.  No.
 <a href="http://www.opensource.org/" ><img
 src="http://www.opensource.org/trademarks/opensource/web/opensource-110x95.png"
 align="left" border=0 /></a>
-Besides, SRecord is <a href="http://www.opensource.org/" >open source</a>.
-That means you can get the <a href="srecord-\*(v).tar.gz" >source code</a>.
+Besides, SRecord is <a href="http://www.opensource.org/" ><i>Open
+Source</i></a>.  That means you can <i>get the <a href="srecord-\*(v).tar.gz"
+>source code</a></i>.
 That means you can build it youself.
 <p>
 If you let the author know the URL to get your compiled binaries from,
-after some-one else confirms they work, he will upload them to SourceForge.
+after some-one else confirms they work, he will upload them to <a
+href="http://sourceforge.net/projects/srecord/files/" >SourceForge</a>.
 <br clear="all" />
 
 <h2>Windows Build</h2>
@@ -87,24 +83,74 @@ after some-one else confirms they work, he will upload them to SourceForge.
 Building SRecord on Windows using
 <a href="http://www.cygwin.com/" >Cygwin</a> is as easy as doing it for Unix:
 <blockquote>
-.nf
 <pre>$ <b>./configure</b>
 $ <b>make</b>
 $</pre>
-.fi
 </blockquote>
 but this makes executables which need the CYGWIN1.DLL which often isn't
 what is desired.  To make executables which don't need it, do this:
 <blockquote>
-.nf
 <pre>$ <b>CC='gcc -mno-cygwin' CXX='g++ -mno-cygwin' ./configure</b>
 $ <b>make</b>
 $</pre>
-.fi
 </blockquote>
 This is how the executables on <a
-.nf
-href="https://sourceforge.net/project/showfiles.php?group_id=72866">
-.fi
-sourceforge.net</a> were built.
+href="http://sourceforge.net/projects/srecord/files/"
+>sourceforge.net</a> were built.
+
+.\" ------------------------------------------------------------------------
+<hr>
+<table border=0><tr><td valign="top">
+<a href="http://www.fsf.org/" ><img
+src="http://upload.wikimedia.org/wikipedia/commons/b/bf/\
+GNU-FDL-ic%C3%B4ne-Transparente.PNG"
+border=0 alt="" /></a>
+</td><td valign="top" width="35%">
+SRecord is written and owned by
+<a href="mailto:pmiller@opensource.org.au"
+>Peter Miller &lt;pmiller@opensource.org.au&gt;</a>
+and is freely distributable under the terms and conditions of the
+<a href="http://www.gnu.org/licenses/gpl.txt">GNU GPL</a>.
+</td>
+<td valign="top">
+<a href="http://www.opensource.org/docs/definition.php" ><img
+src="http://www.opensource.org/trademarks/opensource/web/opensource-110x95.png"
+border="0" /></a>
+</td>
+<td valign="top" align="right">
+There is more <a
+href="http://miller.emu.id.au/pmiller/software/"
+>Software by Peter Miller</a>
+at his home page.
+</td><td valign="top">
+<a href="http://miller.emu.id.au/pmiller/" ><img
+src="http://miller.emu.id.au/pmiller/pmiller_2003_colour.64.png"
+border=0 ></a>
+</td></tr></table>
+.\" ------------------------------------------------------------------------
+<hr>
+<a href="http://sourceforge.net/"><img
+src="http://sourceforge.net/sflogo.php?group_id=72866&amp;type=5"
+width="210" height="62" border="0" alt="SourceForge.net Logo"
+align="right"></a>
+This page is hosted by <a href="http://sourceforge.net/">SourceForge</a>.
+<br>
+This page has been accessed approximately
+<img
+src="http://miller.emu.id.au/cgi-bin/web_hit_counter?pmiller_srecord_\*(v)_win"
+> times since
+.ds MO1 Jan
+.ds MO2 Feb
+.ds MO3 Mar
+.ds MO4 Apr
+.ds MO5 May
+.ds MO6 Jun
+.ds MO7 Jul
+.ds MO8 Aug
+.ds MO9 Sep
+.ds MO10 Oct
+.ds MO11 Nov
+.ds MO12 Dec
+.nr y4 \n[yr]+1900
+\n[dy]-\*[MO\n[mo]]-\n[y4].
 </body></html>
