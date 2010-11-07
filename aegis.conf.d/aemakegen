@@ -65,11 +65,30 @@ The tools include:
    load files.@;
     },
     {
+        name = "aemakegen:rpm-spec:description:srecord";
+        value =
+@The srecord package is a collection of powerful tools for manipulating EPROM
+load files. It reads and writes numerous EPROM file formats, and can perform
+many different manipulations.@;
+    },
+    {
         name = "aemakegen:debian:extended-description:libsrecord";
         value =
 @This package is a collection of powerful C++ classes for manipulating EPROM
 load files. It reads and writes numerous EPROM file formats, and can perform
 many different manipulations.@;
+    },
+    {
+        name = "aemakegen:rpm-spec:description:srecord-libs";
+        value =
+@This package contains the shared libraries for programs that manipulate EPROM
+load files.@;
+    },
+    {
+        name = "aemakegen:rpm-spec:description:srecord-devel";
+        value =
+@This package contains static libraries and header files for compiling programs
+that manipulate EPROM load files.@;
     },
     {
         name = "aemakegen:debian:homepage";
