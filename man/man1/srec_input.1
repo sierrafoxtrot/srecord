@@ -1,6 +1,6 @@
 '\" t
 .\" srecord - The "srecord" program.
-.\" Copyright (C) 1998-2010 Peter Miller
+.\" Copyright (C) 1998-2011 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -112,9 +112,9 @@ This option says to use the FPC format to read the file.
 See \f[I]srec_fpc\fP(5) for a description of this file format.
 .TP 8n
 \fB\-Guess\fP
-This option may be used to ask \*(n) to guess the input format.
+This option may be used to ask the command to guess the input format.
 This is slower than specifying an explicit format,
-as it may open and close the file a number of times.
+as it may open and scan and close the file a number of times.
 .TP 8n
 \fB\-Intel\fP
 This option says to use the Intel hex format to read the file.
@@ -142,7 +142,7 @@ for a description of this file format.
 \fB\-Motorola\fP [ \f[I]width\fP ]
 .RS
 This option says to use the Motorola S\[hy]Record format to read the file.
-(May also be written \-S\[hy]Record.)
+(May be written \fB\-S\[hy]Record\fP as well.)
 See
 .IR srec_motorola (5)
 for a description of this file format.

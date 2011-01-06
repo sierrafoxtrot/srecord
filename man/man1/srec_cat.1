@@ -1,6 +1,6 @@
 '\" t
 .\" srecord - manipulate eprom load files
-.\" Copyright (C) 1998, 2000-2010 Peter Miller
+.\" Copyright (C) 1998, 2000-2011 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -498,6 +498,8 @@ Style names may be abbreviated like command line option names.
 This option may be used to limit the length of the output lines to at
 most \f[I]number\fP characters.  (Not meaningful for binary file format.)
 Defaults to something less than 80 characters, depending on the format.
+If you need to control the maximum number of bytes in each output record,
+use the \fB\-\-Ouput_Block_Size\fP option.
 .TP 8n
 \fB\-HEAder\fP \f[I]string\fP
 This option may be used to set the header comment,
@@ -523,6 +525,8 @@ data starts in memory, use the \fB\-offset\fP filter.
 This option may be used to specify the exact number of data bytes to
 appear in each output record.  There are format\[hy]specific limitations on
 this value, you will get an error if the value isn't valid.
+If you need to control the maximum number of characters on a line of
+text output, use the \fB\-\-Line_Length\fP option.
 .TP 8n
 \fB\-Output_Block_Packing\fP
 From time to time, with large files, you may notice that your data

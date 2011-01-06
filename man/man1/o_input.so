@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998-2007, 2009 Peter Miller
+.\"     Copyright (C) 1998-2007, 2009, 2011 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -45,5 +45,5 @@ An input generator specification looks like this:
 Generators include random data and various forms of constant data.
 .SS Common Manual Page
 See \f[I]srec_input\fP(1) for complete details of input specifiers.
-This description in a separate manual page
+This description is in a separate manual page
 because it is common to more than one SRecord command.
