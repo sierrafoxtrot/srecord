@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2005-2010 Peter Miller
+// Copyright (C) 1998-2003, 2005-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -202,7 +202,14 @@ srecord::input_file_intel::read_inner(srecord::record &record)
             if (buffer[0] != 0)
                 fatal_error("length field must be zero");
             if (address_field != 0)
-                fatal_error("address field must be zero");
+            {
+                warning
+                (
+                    "end-of-file record's address field should be zero, "
+                        "not 0x%04X",
+                    address_field
+                );
+            }
             end_seen = true;
             seek_to_end();
             return false;
