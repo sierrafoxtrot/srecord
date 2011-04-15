@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2010 Peter Miller
+# Copyright (C) 2010, 2011 Peter Miller
 #
 # written by David Kozub <zub@linux.fjfi.cvut.cz>
 # Copyright assigned to Peter Miller 27-Jan-2010
@@ -44,4 +44,4 @@ if test $? -ne 0; then fail; fi
 #
 pass
 
-# vim:ts=8:sw=4:et
+# vim: set ts=8 sw=4 et :

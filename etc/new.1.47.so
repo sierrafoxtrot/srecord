@@ -1,6 +1,6 @@
 .\"
 .\" srecord - Manipulate EPROM load files
-.\" Copyright (C) 2009, 2010 Peter Miller
+.\" Copyright (C) 2009-2011 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -31,4 +31,4 @@ There are new Adler Checksum filters, both 32\[hy]bits and
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.47 (2009\[hy]Feb\[hy]19)
-.\" vim: set ts=8 sw=4 et
+.\" vim: set ts=8 sw=4 et :

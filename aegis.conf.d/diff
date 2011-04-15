@@ -1,6 +1,6 @@
 #
 #       srecord - The "srecord" program.
-#       Copyright (C) 2007 Peter Miller
+#       Copyright (C) 2007, 2011 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -51,4 +51,4 @@
 diff_command = "fcomp -w -s $original $input -o $output";
 
 
-# vim:ts=8:sw=4:et
+# vim: set ts=8 sw=4 et :

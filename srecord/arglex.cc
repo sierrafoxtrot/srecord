@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2002, 2003, 2006-2010 Peter Miller
+// Copyright (C) 1998, 1999, 2002, 2003, 2006-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -733,4 +733,4 @@ srecord::arglex::fatal_error(const char *fmt, ...)
     va_end(ap);
 }
 
-// vim:ts=8:sw=4:et
+// vim: set ts=8 sw=4 et :

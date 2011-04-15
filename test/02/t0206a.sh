@@ -52,4 +52,4 @@ if test $? -ne 0; then fail; fi
 #
 pass
 
-# vim:ts=8:sw=4:et
+# vim: set ts=8 sw=4 et :

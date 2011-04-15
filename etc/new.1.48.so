@@ -1,6 +1,6 @@
 .\"
 .\" srecord - Manipulate EPROM load files
-.\" Copyright (C) 2009, 2010 Peter Miller
+.\" Copyright (C) 2009-2011 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -33,4 +33,4 @@ A typo in the srec_input(1) man page has been fixed.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.48 (2009-Apr-19)
-.\" vim: set ts=8 sw=4 et
+.\" vim: set ts=8 sw=4 et :

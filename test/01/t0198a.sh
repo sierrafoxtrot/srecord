@@ -2,7 +2,7 @@
 #
 # srecord - Manipulate EPROM load files
 # Copyright (C) 2009 David Kozub <zub@linux.fjfi.cvut.cz>
-# Copyright (C) 2009 Peter Miller
+# Copyright (C) 2009, 2011 Peter Miller
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -61,4 +61,4 @@ if test $? -ne 0; then fail; fi
 #
 pass
 
-# vim:ts=8:sw=4:et
+# vim: set ts=8 sw=4 et :

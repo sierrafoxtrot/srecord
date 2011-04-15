@@ -1,6 +1,6 @@
 .\"
 .\" srecord - Manipulate EPROM load files
-.\" Copyright (C) 2008, 2010 Peter Miller
+.\" Copyright (C) 2008, 2010, 2011 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -57,4 +57,4 @@ used to select the desired line termination of output text files.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.43 (2008\[hy]Jul\[hy]06)
-.\" vim:ts=8:sw=4:et
+.\" vim: set ts=8 sw=4 et :

@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2009, 2010 Peter Miller
+// Copyright (C) 2009-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -145,5 +145,5 @@ private:
 
 };
 
-// vim: set ts=8 sw=4 et
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_OUTPUT_FILE_MIF_H
