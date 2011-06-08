@@ -32,7 +32,7 @@ if test $? -ne 0; then no_result; fi
 # Note that 0 == 0xFF mod 255
 
 cat > test.ok << 'fubar'
-0x2860
+0x6028
 0xFFFF
 fubar
 if test $? -ne 0; then no_result; fi
@@ -47,8 +47,8 @@ if test $? -ne 0; then fail; fi
 # try again for different answer
 
 cat > test.ok << 'fubar'
-0xA491
-0xDEAD
+0x91A4
+0xADDE
 fubar
 if test $? -ne 0; then no_result; fi
 
@@ -61,8 +61,8 @@ if test $? -ne 0; then fail; fi
 # try again for different answer
 
 cat > test.ok << 'fubar'
-0xCA8C
-0xFACE
+0x8CCA
+0xCEFA
 fubar
 if test $? -ne 0; then no_result; fi
 
@@ -75,8 +75,8 @@ if test $? -ne 0; then fail; fi
 # try again for different answer
 
 cat > test.ok << 'fubar'
-0x2782
-0x4321
+0x8227
+0x2143
 fubar
 if test $? -ne 0; then no_result; fi
 

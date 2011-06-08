@@ -29,7 +29,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
-0x2877
+0x7728
 fubar
 if test $? -ne 0; then no_result; fi
 

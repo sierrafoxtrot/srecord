@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2010 Peter Miller
+// Copyright (C) 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -68,17 +68,16 @@ main(int argc, char **argv)
         checksum.nextbuf(buffer, n);
         checksum1.nextbuf(buffer, n);
     }
+    printf("0x%04X\n", checksum.get());
     if (answer >= 0)
     {
-        printf("0x%04X\n", checksum.get());
         fflush(stdout);
         unsigned n = checksum.get();
 
-        checksum1.next(n & 0xFF);
+        // big endian ?!?
         checksum1.next(n >> 8);
+        checksum1.next(n & 0xFF);
         printf("0x%04X\n", checksum1.get());
     }
-    else
-        printf("0x%04X\n", checksum.get());
     return 0;
 }
