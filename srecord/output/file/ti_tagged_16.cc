@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2007-2010 Peter Miller
+// Copyright (C) 2007-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -106,8 +106,8 @@ srecord::output_file_ti_tagged_16::write(const srecord::record &record)
 
     case srecord::record::type_data:
         {
-            if (record.get_address() + record.get_length() > (1UL << 17))
-                data_address_too_large(record);
+            if (!record.address_range_fits_into_n_bits(17))
+                data_address_too_large(record, 17);
 
             //
             // we can't start at an odd address,

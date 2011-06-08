@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2002, 2005-2010 Peter Miller
+// Copyright (C) 1998-2002, 2005-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -432,10 +432,28 @@ srecord::output_file::fatal_alignment_error(int multiple)
 
 
 void
-srecord::output_file::data_address_too_large(const srecord::record &record)
-    const
+srecord::output_file::data_address_too_large(const srecord::record &record,
+    unsigned nbits) const
 {
     unsigned long lo = record.get_address();
     unsigned long hi = lo + record.get_length() - 1;
+    assert(nbits <= 32);
+    if (nbits > 0)
+    {
+        int prec = (nbits + 3) / 4;
+        fatal_error
+        (
+            "data address range (0x%.*lX..0x%.*lX) is too large, "
+                "the available range is only (0x%.*lx..0x%.*lX)",
+            prec,
+            lo,
+            prec,
+            hi,
+            prec,
+            0uL,
+            prec,
+            (1uL << nbits) - 1
+        );
+    }
     fatal_error("data address (0x%lX..0x%lX) too large", lo, hi);
 }

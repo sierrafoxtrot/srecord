@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2001-2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 1998, 1999, 2001-2003, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -70,17 +70,17 @@ protected:
     void address_length_set(int);
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get(void) const;
 
     // See base class for documentation.
     bool preferred_block_size_set(int nbytes);
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name(void) const;
 
 private:
     /**
-      * The write_inner method is used toi write a single line to the
+      * The write_inner method is used to write a single line to the
       * output file.
       */
     void write_inner(int, unsigned long, const void *, int);

@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2005-2010 Peter Miller
+// Copyright (C) 1998-2003, 2005-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -363,8 +363,10 @@ protected:
       *
       * @param record
       *     The offending data record.
+      * @param nbits
+      *     The number of bits in the available address range
       */
-    void data_address_too_large(const record &record) const;
+    void data_address_too_large(const record &record, unsigned nbits) const;
 
 private:
     /**

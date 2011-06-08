@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2001-2003, 2006-2010 Peter Miller
+// Copyright (C) 1998, 1999, 2001-2003, 2006-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -106,8 +106,8 @@ srecord::output_file_tektronix::write(const srecord::record &record)
     case srecord::record::type_data:
         if (record.get_length() == 0)
                 break; // ignore
-        if (record.get_address() + record.get_length() > (1UL << 16))
-            data_address_too_large(record);
+        if (!record.address_range_fits_into_n_bits(16))
+            data_address_too_large(record, 16);
         write_inner
         (
             record.get_address(),

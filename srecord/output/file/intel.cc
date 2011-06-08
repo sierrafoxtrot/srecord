@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2001-2003, 2006-2010 Peter Miller
+// Copyright (C) 1998, 1999, 2001-2003, 2006-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -139,7 +139,7 @@ srecord::output_file_intel::write(const srecord::record &record)
             else
             {
                 if (address_base >= (1UL << 20))
-                    data_address_too_large(record);
+                    data_address_too_large(record, 20);
                 srecord::record::encode_big_endian(tmp, address_base >> 4, 2);
                 write_inner(2, 0L, tmp, 2);
             }

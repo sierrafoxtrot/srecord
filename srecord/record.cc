@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2001, 2002, 2006-2010 Peter Miller
+// Copyright (C) 1998, 1999, 2001, 2002, 2006-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -175,4 +175,14 @@ srecord::record::set_data_extend(size_t n, data_t d)
         if (length <= n)
             length = n + 1;
     }
+}
+
+
+bool
+srecord::record::address_range_fits_into_n_bits(unsigned nbits)
+    const
+{
+    assert(nbits > 0);
+    assert(nbits <= 32);
+    return ((address >> nbits) < 1 && ((address + length - 1) >> nbits) < 1);
 }
