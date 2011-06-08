@@ -1,6 +1,6 @@
 //
 // srecord - The "srecord" program.
-// Copyright (C) 2007, 2010 Peter Miller
+// Copyright (C) 2007, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -23,8 +23,17 @@
 std::string
 srecord::arglex_tool::get_string(const char *caption)
 {
-    if (token_cur() != token_string)
+    switch (token_cur())
     {
+    case token_string:
+    case token_number:
+        {
+            std::string result = value_string();
+            token_next();
+            return result;
+        }
+
+    default:
         fatal_error
         (
             "string expected for %s before %s",
@@ -32,8 +41,6 @@ srecord::arglex_tool::get_string(const char *caption)
             token_name(token_cur())
         );
         // NOTREACHED
+        return std::string();
     }
-    std::string result = value_string();
-    token_next();
-    return result;
 }
