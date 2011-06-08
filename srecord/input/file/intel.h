@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2000, 2002, 2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 1998-2000, 2002, 2003, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -97,11 +97,18 @@ private:
       */
     bool termination_seen;
 
+    enum mode_t
+    {
+        mode_linear, // aka i32hex
+        mode_segmented, // aka i16hex
+        mode_i8hex
+    };
+
     /**
       * The mode instance variable is used to remember what addressing
       * mode the file is currently in.
       */
-    enum { linear, segmented } mode;
+    mode_t mode;
 
     /**
       * The address_base instance variable is used to remember the

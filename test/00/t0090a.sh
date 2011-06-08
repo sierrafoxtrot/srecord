@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - manipulate eprom load files
-#       Copyright (C) 2003, 2006-2008 Peter Miller
+#       Copyright (C) 2003, 2006-2008, 2011 Peter Miller
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ cat > test.ok << 'fubar'
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -offset 0x10000 -o test.out -intel -al=2
+srec_cat test.in -offset 0x10000 -o test.out -intel -al=3
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

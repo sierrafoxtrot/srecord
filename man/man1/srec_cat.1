@@ -265,8 +265,10 @@ An Intel hex format file will be written.
 (See
 .IR srec_intel (5)
 for a description of this file format.)
-The default is to emit 32\[hy]bit linear addressing;
-if you want 16\[hy]bit extended segment addressing
+The default is to emit \[lq]i32hex\[rq] 32\[hy]bit linear addressing;
+if you want \[lq]i16hex\[rq] 20\[hy]bit extended segment addressing
+use the \fB\-address\[hy]length=3\fP option,
+if you want \[lq]i8hex\[rq] 16\[hy]bit addressing
 use the \fB\-address\[hy]length=2\fP option.
 .TP 8n
 \fB\-Intel_16\fP

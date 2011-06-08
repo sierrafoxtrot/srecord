@@ -17,7 +17,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-TEST_SUBJECT="broken Intel end-of-file records"
+TEST_SUBJECT="ancient Intel end-of-file records"
 . test_prelude
 
 cat > test.in << 'fubar'
@@ -32,6 +32,7 @@ cat > test.ok << 'fubar'
 :020000040000FA
 :2000000012C02CC02BC02AC029C028C027C026C025C0FBC123C080C245C2EBC11FC01EC079
 :1017F000000000000201010053454C20200034BBD2
+:040000050000FF0FE9
 :00000001FF
 fubar
 if test $? -ne 0; then no_result; fi

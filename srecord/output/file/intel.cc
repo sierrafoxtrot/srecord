@@ -32,7 +32,7 @@ srecord::output_file_intel::output_file_intel(const std::string &a_file_name) :
     srecord::output_file(a_file_name),
     address_base(0),
     pref_block_size(32),
-    mode(linear)
+    mode(mode_linear)
 {
     // The address base always has the lower 16 bits set to zero.
     // By making it be 1, we force the first data record to emit an
@@ -91,57 +91,77 @@ srecord::output_file_intel::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        //
-        // Segmented mode has an ugly boundary condition.
-        //
-        if (mode != linear)
+        switch (mode)
         {
+        case mode_i8hex:
+            // This format is limited to 64KiB.
+            if (!record.address_range_fits_into_n_bits(16))
+                data_address_too_large(record, 16);
+            break;
+
+        case mode_segmented:
             //
-            // If the record would cross a segment boundary, split the
-            // record across the boundary.  This avoids an ambiguity in
-            // the Intel spec.
+            // Segmented mode has an ugly boundary condition.
             //
-            srecord::record::address_t begin_segment =
-                record.get_address() >> 16;
-            srecord::record::address_t end_segment =
-                (record.get_address() + record.get_length() - 1) >> 16;
-            if (begin_segment != end_segment)
             {
-                int split = (1L << 16) - (record.get_address() & 0xFFFF);
-                srecord::record part1
-                (
-                    srecord::record::type_data,
-                    record.get_address(),
-                    record.get_data(),
-                    split
-                );
-                write(part1);
-                srecord::record part2
-                (
-                    srecord::record::type_data,
-                    record.get_address() + split,
-                    record.get_data() + split,
-                    record.get_length() - split
-                );
-                write(part2);
-                return;
+                // This format is limited to 1MiB.
+                if (!record.address_range_fits_into_n_bits(20))
+                    data_address_too_large(record, 20);
+
+                //
+                // If the record would cross a segment boundary, split the
+                // record across the boundary.  This avoids an ambiguity in
+                // the Intel spec.
+                //
+                srecord::record::address_t begin_segment =
+                    record.get_address() >> 16;
+                srecord::record::address_t end_segment =
+                    (record.get_address() + record.get_length() - 1) >> 16;
+                if (begin_segment != end_segment)
+                {
+                    int split = (1L << 16) - (record.get_address() & 0xFFFF);
+                    srecord::record part1
+                    (
+                        srecord::record::type_data,
+                        record.get_address(),
+                        record.get_data(),
+                        split
+                    );
+                    write(part1);
+                    srecord::record part2
+                    (
+                        srecord::record::type_data,
+                        record.get_address() + split,
+                        record.get_data() + split,
+                        record.get_length() - split
+                    );
+                    write(part2);
+                    return;
+                }
             }
+            break;
+
+        case mode_linear:
+            break;
         }
 
         if ((record.get_address() & 0xFFFF0000) != address_base)
         {
             address_base = record.get_address() & 0xFFFF0000;
-            if (mode == linear)
+            switch (mode)
             {
+            case mode_linear:
                 srecord::record::encode_big_endian(tmp, address_base >> 16, 2);
                 write_inner(4, 0L, tmp, 2);
-            }
-            else
-            {
-                if (address_base >= (1UL << 20))
-                    data_address_too_large(record, 20);
+                break;
+
+            case mode_segmented:
                 srecord::record::encode_big_endian(tmp, address_base >> 4, 2);
                 write_inner(2, 0L, tmp, 2);
+                break;
+
+            case mode_i8hex:
+                break;
             }
         }
         write_inner
@@ -161,7 +181,22 @@ srecord::output_file_intel::write(const srecord::record &record)
         if (enable_goto_addr_flag)
         {
             srecord::record::encode_big_endian(tmp, record.get_address(), 4);
-            write_inner((mode == linear ? 5 : 3), 0L, tmp, 4);
+            switch (mode)
+            {
+            case mode_linear:
+                write_inner(5, 0L, tmp, 4);
+                break;
+
+            case mode_segmented:
+                write_inner(3, 0L, tmp, 4);
+                break;
+
+            case mode_i8hex:
+                // In ancient times, it went into the EOF record
+                write_inner(1, record.get_address(), 0, 0);
+                enable_footer_flag = false;
+                break;
+            }
         }
         break;
 
@@ -203,7 +238,18 @@ srecord::output_file_intel::line_length_set(int n)
 void
 srecord::output_file_intel::address_length_set(int x)
 {
-    mode = (x <= 2 ? segmented : linear);
+    if (x <= 2)
+    {
+        mode = mode_i8hex;
+    }
+    else if (x <= 3)
+    {
+        mode = mode_segmented;
+    }
+    else
+    {
+        mode = mode_linear;
+    }
 }
 
 

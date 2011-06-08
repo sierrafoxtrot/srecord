@@ -34,7 +34,7 @@ srecord::input_file_intel::input_file_intel(const std::string &a_file_name) :
     garbage_warning(false),
     seen_some_input(false),
     termination_seen(false),
-    mode(linear),
+    mode(mode_i8hex),
     address_base(0),
     pushback(0),
     end_seen(false)
@@ -134,8 +134,9 @@ srecord::input_file_intel::read_inner(srecord::record &record)
             //
             // data
             //
-            if (mode == linear)
+            switch (mode)
             {
+            case mode_linear:
                 //
                 // linear addressing model
                 //
@@ -166,9 +167,9 @@ srecord::input_file_intel::read_inner(srecord::record &record)
                         );
                     buffer[0] = split;
                 }
-            }
-            else
-            {
+                break;
+
+            case mode_segmented:
                 //
                 // segmented addressing model
                 //
@@ -191,6 +192,10 @@ srecord::input_file_intel::read_inner(srecord::record &record)
                         );
                     buffer[0] = split;
                 }
+                break;
+
+            case mode_i8hex:
+                break;
             }
             type = srecord::record::type_data;
             break;
@@ -200,18 +205,39 @@ srecord::input_file_intel::read_inner(srecord::record &record)
             // end-of-file record
             //
             if (buffer[0] != 0)
-                fatal_error("length field must be zero");
-            if (address_field != 0)
-            {
-                warning
-                (
-                    "end-of-file record's address field should be zero, "
-                        "not 0x%04X",
-                    address_field
-                );
-            }
+                fatal_error("EOF data length field must be zero");
             end_seen = true;
             seek_to_end();
+            switch (mode)
+            {
+            case mode_i8hex:
+                if (address_field != 0)
+                {
+                    record =
+                        srecord::record
+                        (
+                            srecord::record::type_execution_start_address,
+                            address_field,
+                            0,
+                            0
+                        );
+                    return true;
+                }
+                break;
+
+            case mode_linear:
+            case mode_segmented:
+                if (address_field != 0)
+                {
+                    warning
+                    (
+                        "end-of-file record's address field should be zero, "
+                            "not 0x%04X",
+                        address_field
+                    );
+                }
+                break;
+            }
             return false;
 
         case 2:
@@ -229,7 +255,7 @@ srecord::input_file_intel::read_inner(srecord::record &record)
             address_field =
                 srecord::record::decode_big_endian(buffer + 4, 2);
             address_base = address_field << 4;
-            mode = segmented;
+            mode = mode_segmented;
             continue;
 
         case 3:
@@ -251,6 +277,7 @@ srecord::input_file_intel::read_inner(srecord::record &record)
                     0,
                     0
                 );
+            mode = mode_segmented;
             return true;
 
         case 4:
@@ -268,7 +295,7 @@ srecord::input_file_intel::read_inner(srecord::record &record)
             address_field =
                 srecord::record::decode_big_endian(buffer + 4, 2);
             address_base = address_field << 16;
-            mode = linear;
+            mode = mode_linear;
             continue;
 
         case 5:
@@ -288,6 +315,7 @@ srecord::input_file_intel::read_inner(srecord::record &record)
                     0,
                     0
                 );
+            mode = mode_linear;
             return true;
         }
 

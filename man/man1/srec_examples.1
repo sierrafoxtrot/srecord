@@ -93,10 +93,10 @@ so it does not need to be specified after the file name.
 .SS Different Shapes of the Same Format
 It is regrettably common that some addle\[hy]pated EPROM programmers only
 implement a portion of the specification used to represent their hex
-files.  For example, some compilers produce \(lqs19\(rq Motorola
+files.  For example, some compilers produce \[lq]s19\[rq] Motorola
 data (that is, S1 data records with S9 start records, 16 bit address
 fields) which would be OK except that some blockhead EPROM programmers insist
-on \(lqs37\(rq Motorola data (that is, S3 data records with S7 start
+on \[lq]s37\[rq] Motorola data (that is, S3 data records with S7 start
 records, 32 bit address fields).
 .PP
 It is possible to convert from one Motorola shape to another using the
@@ -112,6 +112,19 @@ This command says to use four byte (32\[hy]bit) addresses on output.
 .PP
 This section also applies to Intel hex files, as they, too, have the
 ability to select from a variety of address widths.
+To convert from one Intel shape to another using the
+same \fB\-Address\[hy]Length\fP option:
+.PP
+.RS
+.ft CW
+srec_cat i32.hex \-o i16.hex \-address\[hy]length=3
+.ft R
+.RE
+.PP
+This command says to use \[lq]i16hex\[rq] 20\[hy]bit segmented addresses on
+output.  An address length of 4 is the default (\[lq]i32hex\[rq] 32\[hy]bit
+linear addressing), and an address length of 2 would request \[lq]i8hex\[rq]
+16\[hy]bit addressing.
 .SS Line Lengths
 From time to time you will come across a feeble\[hy]minded EPROM
 programmer that can't cope with long text lines, they assume that there
@@ -678,7 +691,7 @@ The above example reverses the previous 16\[hy]bit data bus example.
 In general, you unsplit with the same parameters that you split with.
 .\" ------------------------------------------------------------------------
 .SH FILLING THE BLANKS
-Often EPROM load files will have \(lqholes\(rq in them, places where the
+Often EPROM load files will have \[lq]holes\[rq] in them, places where the
 compiler and linker did not put anything.  For some purposes this is OK,
 and for other purposes something has to be done about the holes.
 .SS The Fill Filter
@@ -707,7 +720,7 @@ srec_cat \f[I]infile\fP \-fill 0x00 \-over \f[I]infile\fP \-o \f[I]outfile\fP
 This example demonstrates the fact that wherever an address range may be
 specified, the \fB\-over\fP and \fB\-within\fP options may be used.
 .SS Unfilling the Blanks
-It is common to need to \(lqunfill\(rq an EPROM image after you read it
+It is common to need to \[lq]unfill\[rq] an EPROM image after you read it
 out of a chip.  Usually, it will have had all the holes filled with 0xFF
 (areas of the EPROM you don't program show as 0xFF when you read them back).
 .PP

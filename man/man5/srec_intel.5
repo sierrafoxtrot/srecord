@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2000, 2001, 2006-2010 Peter Miller
+.\"     Copyright (C) 1998, 2000, 2001, 2006-2011 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -41,6 +41,14 @@ The 16\[hy]bit hexadecimal format allows for the 20\[hy]bit segmented
 address space of the Intel 16\[hy]bit processors.  And the 32\[hy]bit
 format allows for the 32\[hy]bit linear address space of the Intel
 32\[hy]bit processors.
+.PP
+.TS
+tab(;);
+lf(CW) c c l.
+\-\-address\-length=2;\[lq]i8hex\[rq];16\[hy]bit;
+\-\-address\-length=3;\[lq]i16hex\[rq];20\[hy]bit;segmented
+\-\-address\-length=4;\[lq]i32hex\[rq];32\[hy]bit;linear
+.TE
 .PP
 The hexadecimal representation of binary is coded in ASCII alphanumeric
 characters.  For example, the 8\[hy]bit binary value 0011\[hy]1111 is 3F in
@@ -653,6 +661,7 @@ the length is zero.
 Load Offset
 This field contains 0x30303030, the hexadecimal encoding of the ASCII
 characters \[lq]0000\[rq], since this field is not used for this record.
+In ancient times, i8hex used this for the start address record.
 .TP 8n
 Record Type
 This field contains 0x3031, the hexadecimal encoding of the ASCII
@@ -692,6 +701,8 @@ Kenneth L. Short,
 1987,
 Prentice\[hy]Hall,
 ISBN 0\[hy]13\[hy]580606\[hy]2.
+.PP
+http://en.wikipedia.org/wiki/Intel_HEX
 .\" ------------------------------------------------------------------------
 .ds n) srec_cat
 .so man/man1/z_copyright.so

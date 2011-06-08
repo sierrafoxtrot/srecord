@@ -28,7 +28,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -o test.middle -intel --address-length=2
+srec_cat test.in -o test.middle -intel --address-length=3
 if test $? -ne 0; then fail; fi
 
 # make sure that round-trip data is identical

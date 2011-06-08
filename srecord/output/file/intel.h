@@ -97,6 +97,13 @@ private:
       */
     int pref_block_size;
 
+    enum mode_t
+    {
+        mode_linear, // aka i32hex
+        mode_segmented, // aka i16hex
+        mode_i8hex
+    };
+
     /**
       * The mode instance variable is used to remember what addressing
       * mode the file is currently in.  If set to "segmented" (via the
@@ -105,7 +112,7 @@ private:
       * "linear" gets you 32-bit output (record type 4, extended linear
       * address record).
       */
-    enum { linear, segmented } mode;
+    mode_t mode;
 
     /**
       * The default constructor.  Do not use.
