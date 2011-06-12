@@ -1,6 +1,6 @@
 dnl
 dnl  srecord - manipulate eprom load files
-dnl  Copyright (C) 1998, 1999, 2002, 2006-2010 Peter Miller
+dnl  Copyright (C) 1998, 1999, 2002, 2006-2011 Peter Miller
 dnl
 dnl  This program is free software; you can redistribute it and/or modify
 dnl  it under the terms of the GNU General Public License as published by
@@ -28,6 +28,24 @@ AC_CHECK_PROGS(GROFF, groff roff)
 AC_CHECK_PROGS(SOELIM, gsoelim soelim roffpp)
 AC_CHECK_FUNCS(snprintf vsnprintf)
 AC_CHECK_LIB(gcrypt, gcry_md_open)
+
+dnl! @synopsis AC_ADD_CFLAGS
+dnl!
+dnl! Add the given option to CFLAGS, if it doesn't break the compiler
+AC_DEFUN([AC_ADD_CFLAGS],
+[AC_MSG_CHECKING([if $CC accepts $1])
+  ac_add_cflags__old_cflags="$CFLAGS"
+  CFLAGS="$CFLAGS $1"
+  AC_TRY_LINK([#include <stdio.h>],
+    [printf("Hello, World!\n"); return 0;],
+    AC_MSG_RESULT([yes]),
+    AC_MSG_RESULT([no])
+    CFLAGS="$ac_add_cflags__old_cflags")
+])
+
+AC_ADD_CFLAGS(-Wall)
+AC_ADD_CFLAGS(-Wextra)
+AC_ADD_CFLAGS([-Wl,--as-needed])
 
 dnl
 dnl Make sure Boost is installed.
@@ -218,7 +236,7 @@ esac
 
 AH_TOP([/*
  * srecord - manipulate eprom load files
- * Copyright (C) 1998-2002, 2006-2010 Peter Miller
+ * Copyright (C) 1998-2002, 2006-2011 Peter Miller
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
