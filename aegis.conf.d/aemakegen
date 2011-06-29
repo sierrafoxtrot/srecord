@@ -23,6 +23,10 @@ project_specific =
         value = "true";
     },
     {
+        name = "aemakegen:libtool-la";
+        value = "false";
+    },
+    {
         name = "aemakegen:version-info";
         value = "0:0:0";
     },
