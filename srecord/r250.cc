@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2004, 2006, 2007, 2010 Peter Miller
+// Copyright (C) 2004, 2006, 2007, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
 //
 
 #include <cstdlib>
-#include <time.h>
+#include <ctime>
 #include <unistd.h>
 
 #include <srecord/r250.h>

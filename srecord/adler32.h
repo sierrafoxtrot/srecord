@@ -19,7 +19,7 @@
 #ifndef SRECORD_ADLER32_H
 #define SRECORD_ADLER32_H
 
-#include <stddef.h>
+#include <cstddef>
 
 namespace srecord
 {

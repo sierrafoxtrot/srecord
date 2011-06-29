@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000, 2002, 2003, 2006-2010 Peter Miller
+// Copyright (C) 2000, 2002, 2003, 2006-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -167,7 +167,7 @@ srecord::input_file_ti_tagged_16::read(record &result)
                 if (n > max)
                     n = max;
                 result = record(record::type_header, 0, buffer, n);
-                delete buffer;
+                delete [] buffer;
             }
             return true;
         }

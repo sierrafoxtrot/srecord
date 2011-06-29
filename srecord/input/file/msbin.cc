@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2009, 2010 Peter Miller
+// Copyright (C) 2009-2011 Peter Miller
 //
 // Code contribution by David Kozub <zub@linux.fjfi.cvut.cz>
 // Copyright assigned to Peter Miller 27-Jan-2010.
@@ -19,10 +19,11 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include <srecord/input/file/msbin.h>
-#include <limits>
 #include <algorithm>
-#include <string.h>
+#include <limits>
+#include <cstring>
+
+#include <srecord/input/file/msbin.h>
 
 
 srecord::input_file_msbin::~input_file_msbin()
