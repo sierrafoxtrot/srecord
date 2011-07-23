@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000, 2002, 2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2000, 2002, 2003, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +27,7 @@ namespace srecord
 /**
   * The quit_normal class is used to represent a quit handler which
   * behaves in the "normal" way: print error message son the standard
-  * error, and exit via the gloibal ::exit function.
+  * error, and exit via the gloibal exit function.
   */
 class quit_normal:
     public quit

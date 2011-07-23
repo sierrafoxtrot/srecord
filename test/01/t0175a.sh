@@ -60,7 +60,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
-00001000: 76 F8 02 84                                      vx..
+00001000: 76 F8 02 84                                      #vx..
 fubar
 if test $? -ne 0; then no_result; fi
 

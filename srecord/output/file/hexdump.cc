@@ -1,6 +1,6 @@
 //
 // srecord - The "srecord" program.
-// Copyright (C) 2007-2010 Peter Miller
+// Copyright (C) 2007-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -60,7 +60,7 @@ srecord::output_file_hexdump::command_line(srecord::arglex_tool *)
 
 
 void
-srecord::output_file_hexdump::row_cache_print()
+srecord::output_file_hexdump::row_cache_print(void)
 {
     if (row_cache_address == (unsigned long)(-1))
         return;
@@ -122,13 +122,14 @@ srecord::output_file_hexdump::emit_byte(unsigned long address,
         row_cache_address = address & ~row_cache_address_mask;
         hex(row_cache, row_cache_address, address_length);
         row_cache[address_length * 2] = ':';
+        row_cache[address_length * 2 + 3 + 3 * number_of_columns] = '#';
     }
     address &= row_cache_address_mask;
     hex_byte(row_cache + address_length * 2 + 2 + 3 * address, data);
     data &= 0x7F;
     if (data < ' ' || data > '~')
         data = '.';
-    row_cache[address_length * 2 + 3 + 3 * number_of_columns + address] = data;
+    row_cache[address_length * 2 + 4 + 3 * number_of_columns + address] = data;
 }
 
 
@@ -163,9 +164,9 @@ srecord::output_file_hexdump::write(const srecord::record &record)
 int
 srecord::output_file_hexdump::columns_to_line_length(int cols)
 {
-    // 0000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    // 0000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  #................
     //      ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^^
-    return (address_length * 2 + 3 + 4 * cols);
+    return (address_length * 2 + 4 + 4 * cols);
 }
 
 
@@ -205,7 +206,7 @@ srecord::output_file_hexdump::address_length_set(int)
 
 
 int
-srecord::output_file_hexdump::preferred_block_size_get()
+srecord::output_file_hexdump::preferred_block_size_get(void)
     const
 {
     //
@@ -216,7 +217,7 @@ srecord::output_file_hexdump::preferred_block_size_get()
 
 
 const char *
-srecord::output_file_hexdump::format_name()
+srecord::output_file_hexdump::format_name(void)
     const
 {
     return "hexdump";

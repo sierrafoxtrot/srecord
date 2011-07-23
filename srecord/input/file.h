@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2008, 2010 Peter Miller
+// Copyright (C) 1998-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -54,17 +54,17 @@ public:
       * ignore checksums flag.  This is usually the result of an
       * --ignore-checksums command line option.
       */
-    static void ignore_all_checksums() { ignore_checksums_default = true; }
+    static void ignore_all_checksums(void) { ignore_checksums_default = true; }
 
 protected:
     // See base class for documentation.
-    virtual std::string filename() const;
+    virtual std::string filename(void) const;
 
     // See base class for documentation.
-    virtual std::string filename_and_line() const;
+    virtual std::string filename_and_line(void) const;
 
     // See base class for documentation.
-    void disable_checksum_validation();
+    void disable_checksum_validation(void);
 
 protected:
     /**
@@ -88,7 +88,7 @@ protected:
       * filename_and_line method may report the current file location.
       * This makes for more informative error messages.
       */
-    virtual int get_char();
+    virtual int get_char(void);
 
     /**
       * The get_char_undo method is used to return a character to
@@ -102,7 +102,7 @@ protected:
       * of input, without actually consuming it (a later get_char
       * or peak_char method will still see it).
       */
-    int peek_char();
+    int peek_char(void);
 
     /**
       * The get_nibble_value class method is used to translate a
@@ -123,7 +123,7 @@ protected:
       * are not hexadecimal digits will result in a fatal error,
       * and the method call will not return.
       */
-    int get_nibble();
+    int get_nibble(void);
 
     /**
       * The get_byte method is used to fetch a byte value from the
@@ -139,14 +139,14 @@ protected:
       * it if they have a special case.  Over-ride with caution,
       * as it affects many other methods.
       */
-    virtual int get_byte();
+    virtual int get_byte(void);
 
     /**
       * The get_word method is used to fetch a 16-bit value from the
       * input.  The get_byte method is called twice, and the two byte
       * values are assembles big-endian (most significant byte first).
       */
-    int get_word();
+    int get_word(void);
 
     /**
       * The get_3bytes method is used to fetch a 24-bit value from
@@ -154,7 +154,7 @@ protected:
       * and the three byte values are assembles big-endian (most
       * significant byte first).
       */
-    unsigned long get_3bytes();
+    unsigned long get_3bytes(void);
 
     /**
       * The get_4bytes method is used to fetch a 32-bit value from
@@ -162,7 +162,7 @@ protected:
       * and the three byte values are assembles big-endian (most
       * significant byte first).
       */
-    unsigned long get_4bytes();
+    unsigned long get_4bytes(void);
 
     /**
       * The checksum_get method is used to get the current value of
@@ -170,7 +170,7 @@ protected:
       * usually called by the get_byte method).  Only the lower 8
       * bits of the sum are returned.
       */
-    int checksum_get() const;
+    int checksum_get(void) const;
 
     /**
       * The checksum_get16 method is used to get the current value of
@@ -178,7 +178,7 @@ protected:
       * usually called by the get_byte method).  Only the lower 16
       * bits of the sum are returned.
       */
-    int checksum_get16() const;
+    int checksum_get16(void) const;
 
     /**
       * The checksum_add method is used to add another 8-bit value
@@ -190,13 +190,13 @@ protected:
       * The checksum_rest method is used to set the running checksum
       * to zero.
       */
-    void checksum_reset();
+    void checksum_reset(void);
 
     /**
       * The seek_to_end method is used to move the input position
       * to the end of the file.
       */
-    void seek_to_end();
+    void seek_to_end(void);
 
     /**
       * The mode method is used to return a suitable mode string for
@@ -204,7 +204,7 @@ protected:
       * a text file.  Other file formats may need to override this
       * if they have other needs (e.g. "rb" for binary).
       */
-    virtual const char *mode() const;
+    virtual const char *mode(void) const;
 
 private:
     /**
@@ -259,7 +259,7 @@ protected:
       * @returns
       *     bool; true if need to check checksums, false to ignore checksums.
       */
-    bool use_checksums() const { return !ignore_checksums; }
+    bool use_checksums(void) const { return !ignore_checksums; }
 
 private:
     /**
@@ -296,7 +296,7 @@ private:
       * If the file has not been opened yet, it will be opened by
       * this method.
       */
-    void *get_fp();
+    void *get_fp(void);
 
     /**
       * The default constructor.  Do not use.

@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2010 Peter Miller
+// Copyright (C) 2000-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -29,6 +29,7 @@
 #include <srecord/input/file/fastload.h>
 #include <srecord/input/file/formatted_binary.h>
 #include <srecord/input/file/four_packed_code.h>
+#include <srecord/input/file/hexdump.h>
 #include <srecord/input/file/intel.h>
 #include <srecord/input/file/intel16.h>
 #include <srecord/input/file/mif.h>
@@ -82,6 +83,7 @@ static func_p table[] =
     srecord::input_file_ti_txt::create,
     srecord::input_file_vmem::create,
     srecord::input_file_wilson::create,
+    srecord::input_file_hexdump::create,
 };
 
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))

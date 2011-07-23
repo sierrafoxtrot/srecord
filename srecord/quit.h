@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000, 2002, 2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2000, 2002, 2003, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -115,7 +115,7 @@ public:
 
     /**
       * The exit method is used to terminate execution.  It could
-      * call the ::exit function, or it could throw an exception, or
+      * call the global exit function, or it could throw an exception, or
       * some other action, but it shall NOT return.  Derived classes
       * are required to supply this method.
       */

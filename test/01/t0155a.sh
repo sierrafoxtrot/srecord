@@ -27,11 +27,11 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
-00000000: 4E 6F 77 20 69 73 20 74                6D 65 20  Now is t     me
-00000010: 66 6F 72 20 61 6C 6C 20 67 6F 6F 64 20 6D 65 6E  for all good men
-00000020: 20 74 6F 20 63 6F 6D 65 20 74                     to come t
-00000030:                      74 68 65 69 72 20 70 61 72         their par
-00000040: 74 79 2E 0A                                      ty..
+00000000: 4E 6F 77 20 69 73 20 74                6D 65 20  #Now is t     me
+00000010: 66 6F 72 20 61 6C 6C 20 67 6F 6F 64 20 6D 65 6E  #for all good men
+00000020: 20 74 6F 20 63 6F 6D 65 20 74                    # to come t
+00000030:                      74 68 65 69 72 20 70 61 72  #       their par
+00000040: 74 79 2E 0A                                      #ty..
 fubar
 if test $? -ne 0; then no_result; fi
 

@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2001-2003, 2006-2010 Peter Miller
+// Copyright (C) 1998, 1999, 2001-2003, 2006-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -124,7 +124,7 @@ public:
     /**
       * The fatal_error_v method is used to report fatal errors.
       * The `fmt' string is in the same style a standard C vprintf
-      * function.  It calls ::exit.  This method does not return.
+      * function.  It calls global exit.  This method does not return.
       */
     virtual void fatal_error_v(const char *fmt, va_list ap) const;
 
@@ -132,14 +132,14 @@ public:
       * The fatal_error_errno method is used to report fatal errors,
       * and append the string equivalent of errno.  The `fmt' string
       * is in the same style a standard C printf function.  It calls
-      * ::exit().  This method does not return.
+      * global exit().  This method does not return.
       */
     virtual void fatal_error_errno(const char *fmt, ...) const
                                                         FORMAT_PRINTF(2, 3);
     /**
       * The fatal_error_errno_v method is used to report fatal
       * errors.  The `fmt' string is in the same style a standard C
-      * vprintf function.  It calls the ::exit function.
+      * vprintf function.  It calls the global exit function.
       * This method does not return.
       */
     virtual void fatal_error_errno_v(const char *fmt, va_list ap) const;

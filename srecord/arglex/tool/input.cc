@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2010 Peter Miller
+// Copyright (C) 1998-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -34,6 +34,7 @@
 #include <srecord/input/file/fastload.h>
 #include <srecord/input/file/formatted_binary.h>
 #include <srecord/input/file/four_packed_code.h>
+#include <srecord/input/file/hexdump.h>
 #include <srecord/input/file/intel.h>
 #include <srecord/input/file/intel16.h>
 #include <srecord/input/file/mif.h>
@@ -331,6 +332,11 @@ srecord::arglex_tool::get_simple_input()
     case token_guess:
         token_next();
         ifp = input_file::guess(fn);
+        break;
+
+    case token_hexdump:
+        token_next();
+        ifp = input_file_hexdump::create(fn);
         break;
 
     case token_intel:
