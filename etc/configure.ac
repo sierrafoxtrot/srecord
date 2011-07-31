@@ -29,6 +29,9 @@ AC_CHECK_PROGS(SOELIM, gsoelim soelim roffpp)
 AC_CHECK_FUNCS(snprintf vsnprintf)
 AC_CHECK_LIB(gcrypt, gcry_md_open)
 
+dnl! This is needed for MingGW build, but not for Unix or Linux, etc.
+AC_CHECK_LIB(gpg-error, main)
+
 dnl! @synopsis AC_ADD_CFLAGS
 dnl!
 dnl! Add the given option to CFLAGS, if it doesn't break the compiler
