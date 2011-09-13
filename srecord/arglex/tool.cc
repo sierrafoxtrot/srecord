@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2010 Peter Miller
+// Copyright (C) 1998-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -109,6 +109,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-IGnore_Checksums", token_ignore_checksums, },
         { "-INCLude", token_include, },
         { "-INtel_HeXadecimal_16", token_intel16, },
+        { "-INtel_16", token_intel16, }, // not the preferred name
         { "-Intel", token_intel, },
         { "-International_Telecommunication_Union", token_crc16_ccitt,},
         { "-INTERSection", token_intersection, },
