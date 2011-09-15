@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2006-2010 Peter Miller
+// Copyright (C) 1998-2003, 2006-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -296,14 +296,19 @@ srecord::memory::reader(const srecord::input::pointer &ifp, bool barf)
                     int old = get(address);
                     if (n == old)
                     {
-                        ifp->warning("redundant %08lX value", (long)address);
+                        ifp->warning
+                        (
+                            "redundant 0x%08lX value (0x%02X)",
+                            (long)address,
+                            n
+                        );
                     }
                     else if (overwrite)
                     {
                         ifp->warning
                         (
-                            "multiple %08lX values (previous = %02X, "
-                                "this one = %02X)",
+                            "multiple 0x%08lX values (previous = 0x%02X, "
+                                "this one = 0x%02X)",
                             (long)address,
                             old,
                             n
@@ -313,8 +318,8 @@ srecord::memory::reader(const srecord::input::pointer &ifp, bool barf)
                     {
                         ifp->fatal_error
                         (
-                            "contradictory %08lX value (previous = %02X, "
-                                "this one = %02X)",
+                            "contradictory 0x%08lX value (previous = 0x%02X, "
+                                "this one = 0x%02X)",
                             (long)address,
                             old,
                             n
