@@ -43,6 +43,7 @@
 #include <srecord/output/file/msbin.h>
 #include <srecord/output/file/needham.h>
 #include <srecord/output/file/os65v.h>
+#include <srecord/output/file/ppx.h>
 #include <srecord/output/file/signetics.h>
 #include <srecord/output/file/spasm.h>
 #include <srecord/output/file/spectrum.h>
@@ -241,6 +242,11 @@ srecord::arglex_tool::get_output()
     case token_ohio_scientific:
         token_next();
         ofp = srecord::output_file_os65v::create(fn);
+        break;
+
+    case token_ppx:
+        token_next();
+        ofp = srecord::output_file_ppx::create(fn);
         break;
 
     case token_signetics:

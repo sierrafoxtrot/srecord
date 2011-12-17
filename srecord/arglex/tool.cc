@@ -31,6 +31,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
 {
     static const table_ty table[] =
     {
+        // sort using "!LANG=C sort -f"
         { "(", token_paren_begin, },
         { ")", token_paren_end, },
         { "+", token_union, },
@@ -163,6 +164,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-Output", token_output, },
         { "-Output_Words", token_output_word, },
         { "-OVer", token_over, },
+        { "-Prom_Pogrammer_X", token_ppx, },
         { "-RAM", token_ram, },
         { "-Random_Fill", token_random_fill, },
         { "-RANDom", token_random, },
@@ -189,6 +191,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-SPEctrum", token_spectrum, },
         { "-SPlit", token_split, },
         { "-S_record", token_motorola, },
+        { "-Stag_Hexadecimal", token_ppx, },
         { "-STewie", token_stewie, },
         { "-SUBtract", token_minus, },
         { "-Tektronix_Extended", token_tektronix_extended, },

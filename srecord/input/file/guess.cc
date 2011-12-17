@@ -39,6 +39,7 @@
 #include <srecord/input/file/msbin.h>
 #include <srecord/input/file/needham.h>
 #include <srecord/input/file/os65v.h>
+#include <srecord/input/file/ppx.h>
 #include <srecord/input/file/signetics.h>
 #include <srecord/input/file/spasm.h>
 #include <srecord/input/file/spectrum.h>
@@ -75,6 +76,7 @@ static func_p table[] =
     srecord::input_file_msbin::create,
     srecord::input_file_needham::create,
     srecord::input_file_os65v::create,
+    srecord::input_file_ppx::create,
     srecord::input_file_signetics::create,
     srecord::input_file_spasm::create_be,
     srecord::input_file_spectrum::create,

@@ -44,6 +44,7 @@
 #include <srecord/input/file/msbin.h>
 #include <srecord/input/file/needham.h>
 #include <srecord/input/file/os65v.h>
+#include <srecord/input/file/ppx.h>
 #include <srecord/input/file/signetics.h>
 #include <srecord/input/file/spasm.h>
 #include <srecord/input/file/spectrum.h>
@@ -186,7 +187,7 @@ srecord::arglex_tool::get_inclusive_by_token(int tok)
 
 
 srecord::input::pointer
-srecord::arglex_tool::get_simple_input()
+srecord::arglex_tool::get_simple_input(void)
 {
     std::string fn = "-";
     switch (token_cur())
@@ -377,14 +378,19 @@ srecord::arglex_tool::get_simple_input()
         ifp = input_file_msbin::create(fn);
         break;
 
+    case token_needham_hex:
+        token_next();
+        ifp = input_file_needham::create(fn);
+        break;
+
     case token_ohio_scientific:
         token_next();
         ifp = input_file_os65v::create(fn);
         break;
 
-    case token_needham_hex:
+    case token_ppx:
         token_next();
-        ifp = input_file_needham::create(fn);
+        ifp = input_file_ppx::create(fn);
         break;
 
     case token_signetics:

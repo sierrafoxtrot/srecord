@@ -229,10 +229,10 @@ Defaults to disabled.
 .TP 8n
 \f[B]\-ignore\[hy]checksums\fP
 If this flag is set, your file input methods must parse \f[I]but not
-check\fP checksums, if the format has checksums.  This is available in
-the \f[CW]use_checksums()\fP method within the methods of your derived
-class.  This only applies to input; output must always produce correct
-checksums.
+check\fP checksums, if the format has checksums.  You can tell if you
+need to use checksums by calling the \f[CW]use_checksums()\fP method
+within the implementation of your derived class.  This only applies to
+input; output must always produce correct checksums.
 .TP 8n
 \f[B]\-line\[hy]length\fP
 Where your output format is text, and there exists the possibility of

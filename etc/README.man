@@ -80,7 +80,7 @@ The EMON52 format is understood for both reading and writing.
 Fairchild Fairbug
 The Fairchild Fairbug format is understood for both reading and writing.
 .TP
-hexdump
+Hexdump
 It is possible to get a simple hexdump as output.
 .TP
 LSI Logic Fast Load
@@ -124,12 +124,17 @@ MsBin
 The Windows CE Binary Image Data Format is supported both for reading
 and writing.
 .TP 8n
+Needham
 The Needham Electronics ASCII file format is understood for noth reading
 and writing.
 .TP 8n
 OS65V
 The Ohio Scientific hexadecimal format is understood for both reading
 and writing.
+.TP 8n
+PPX
+The Stag Prom Programmer hexadecimal format is understood for both
+reading and writing.
 .TP 8n
 Signetics
 The Signetics format is understood for both reading and writing.
