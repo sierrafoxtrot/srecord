@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001-2004, 2006-2010 Peter Miller
+// Copyright (C) 2001-2004, 2006-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -37,6 +37,7 @@
 #include <srecord/output/file/intel.h>
 #include <srecord/output/file/intel16.h>
 #include <srecord/output/file/mif.h>
+#include <srecord/output/file/mips_flash.h>
 #include <srecord/output/file/mos_tech.h>
 #include <srecord/output/file/motorola.h>
 #include <srecord/output/file/msbin.h>
@@ -210,6 +211,16 @@ srecord::arglex_tool::get_output()
     case token_memory_initialization_file:
         token_next();
         ofp = srecord::output_file_mif::create(fn);
+        break;
+
+    case token_mips_flash_be:
+        token_next();
+        ofp = srecord::output_file_mips_flash::create_be(fn);
+        break;
+
+    case token_mips_flash_le:
+        token_next();
+        ofp = srecord::output_file_mips_flash::create_le(fn);
         break;
 
     case token_mos_tech:

@@ -55,7 +55,7 @@ public:
     output_file(const std::string &file_name);
 
     // See base class for documentation.
-    virtual const std::string filename() const;
+    virtual const std::string filename(void) const;
 
     /**
       * The enable_header class method is used to enable or disable
@@ -133,13 +133,13 @@ protected:
       * over-ride it if they have a special case.  Over-ride with
       * caution, as it affects many other methods.
       */
-    virtual void put_char(int);
+    virtual void put_char(int c);
 
     /**
       * The put_nibble method is used to send a hexadecimal digit (0..9,
       * A..F) to the output.  It calls put_char to send the output.
       */
-    void put_nibble(int);
+    void put_nibble(int value);
 
     /**
       * The put_byte method is used to send a byte value to the output.
@@ -147,43 +147,43 @@ protected:
       * twice, big-endian (most significant nibble first).
       *
       * The value of the byte will be added to the running checksum, via
-      * the checksum_add() method.
+      * the #checksum_add method.
       *
-      * Usually, this get_byte() method implemention is sufficient for
+      * Usually, this #put_byte method implemention is sufficient for
       * most output classes, however derived classes may over-ride it if
       * they have a special case.  Over-ride with caution, as it affects
       * many other methods.
       */
-    virtual void put_byte(unsigned char);
+    virtual void put_byte(unsigned char value);
 
     /**
       * The put_word method is used to send a 16-bit value to the
-      * output.  The put_byte() method is called twice, and the two byte
+      * output.  The #put_byte method is called twice, and the two byte
       * values are sent big-endian (most significant byte first).
       */
-    virtual void put_word(int);
+    virtual void put_word(int value);
 
     /**
       * The put_3bytes method is used to send a 24-bit value to the
-      * output.  The put_byte() method is called three times, and the
+      * output.  The #put_byte method is called three times, and the
       * three byte values are sent big-endian (most significant byte
       * first).
       */
-    virtual void put_3bytes(unsigned long);
+    virtual void put_3bytes(unsigned long value);
 
     /**
       * The put_4bytes method is used to send a 32-bit value to the
-      * output.  The put_byte() method is called four times, and the
+      * output.  The #put_byte method is called four times, and the
       * four byte values are sent big-endian (most significant byte
       * first).
       */
-    virtual void put_4bytes(unsigned long);
+    virtual void put_4bytes(unsigned long value);
 
     /**
       * The checksum_reset method is used to set the running checksum to
       * zero.
       */
-    void checksum_reset();
+    void checksum_reset(void);
 
     /**
       * The checksum_add method is used to add another 8-bit value to
@@ -197,19 +197,19 @@ protected:
 
     /**
       * The checksum_get method is used to get the current value of the
-      * running checksum (added to by the checksum_add() method, usually
-      * called by the get_byte() method).  Only the lower 8 bits of the
+      * running checksum (added to by the #checksum_add method, usually
+      * called by the #put_byte method).  Only the lower 8 bits of the
       * sum are returned.
       */
-    int checksum_get();
+    int checksum_get(void);
 
     /**
       * The checksum_get16 method is used to get the current value of
-      * the running checksum (added to by the checksum_add() method,
-      * usually called by the get_byte() method).  Only the lower 16
+      * the running checksum (added to by the #checksum_add method,
+      * usually called by the #put_byte method).  Only the lower 16
       * bits of the sum are returned.
       */
-    int checksum_get16();
+    int checksum_get16(void);
 
     /**
       * The seek_to method is used to move the output position to the
@@ -219,29 +219,29 @@ protected:
 
     /**
       * The put_string method is used to send a nul-terminated C string
-      * to the output.  Multiple calls to put_char() are made.
+      * to the output.  Multiple calls to #put_char are made.
       */
-    void put_string(const char *);
+    void put_string(const char *text);
 
     /**
       * The put_string method is used to send C++ string
-      * to the output.  Multiple calls to put_char() are made.
+      * to the output.  Multiple calls to #put_char are made.
       *
-      * @param s
-      *     The string to pint.
+      * @param text
+      *     The string to print.
       */
-    void put_string(const std::string &s);
+    void put_string(const std::string &text);
 
     /**
       * The put_stringf method is used to send a formatted string to the
       * output.  The format and operation ios similar to the standard
-      * printf function.  Multiple calls to put_char() are made.
+      * printf function.  Multiple calls to #put_char are made.
       */
     void put_stringf(const char *, ...)             FORMAT_PRINTF(2, 3);
 
     /**
       * The enable_header_flag class variable is set by the
-      * enable_header() method, to remember whether or not header
+      * #enable_header method, to remember whether or not header
       * records are to be emitted (if the format supports optional
       * header records).
       */
@@ -249,7 +249,7 @@ protected:
 
     /**
       * The enable_data_count_flag class variable is set by the
-      * enable_data_count() method, to remember whether or not data
+      * #enable_data_count method, to remember whether or not data
       * record count records are to be emitted (if the format supports
       * optional data record count records).
       */
@@ -257,7 +257,7 @@ protected:
 
     /**
       * The enable_goto_addr_flag class variable is set by the
-      * enable_goto_addr() method, to remember whether or not execution
+      * #enable_goto_addr method, to remember whether or not execution
       * start address records are to be emitted (if the format supports
       * optional execution start address records).
       */
@@ -265,7 +265,7 @@ protected:
 
     /**
       * The enable_footer_flag class variable is set by the
-      * enable_footer() method, to remember whether or not footer
+      * #enable_footer method, to remember whether or not footer
       * records (end-of-file record) are to be emitted (if the format
       * supports optional footer records).
       */
@@ -305,15 +305,15 @@ protected:
     static line_termination_t line_termination;
 
     /**
-      * The line_termination_guess class method i sused to figure out
+      * The line_termination_guess class method is used to figure out
       * the line termination style of the host environment.
       */
-    static line_termination_t line_termination_guess();
+    static line_termination_t line_termination_guess(void);
 
 private:
     /**
-      * The file_name instance variable is used by the filename() and
-      * filename_and_line() methods to report the name of the input
+      * The file_name instance variable is used by the #filename and
+      * filename_and_line methods to report the name of the input
       * file.  This makes for informative error mesages.
       */
     std::string file_name;
@@ -321,15 +321,15 @@ private:
     /**
       * The line_number instance variable is used by the get_char
       * method to remember the current line number.  It us used by the
-      * filename_and_line() method to report the current file location.
+      * filename_and_line method to report the current file location.
       */
     int line_number;
 
     /**
-      * The vfp instance variable is used by the get_fp() method to
+      * The vfp instance variable is used by the #get_fp method to
       * remember the file pointer.  You need to cast it to FILE* befor
       * you use it.  Never access this instance variable directly,
-      * always go via the get_fp() method.  This ensures the file has
+      * always go via the #get_fp method.  This ensures the file has
       * been opened first!
       */
     void *vfp;
@@ -338,9 +338,9 @@ protected:
     /**
       * The checksum instance variable is used record the running
       * checksum.  NEVER access this variable directly.  Always use the
-      * checksum_reset() method to set it mack to its initial state.
-      * Always use the checksum_add() method to add a byte to it.
-      * Always use the checksum_get() or checksum_get16() methods to
+      * #checksum_reset method to set it mack to its initial state.
+      * Always use the #checksum_add method to add a byte to it.
+      * Always use the #checksum_get or #checksum_get16 methods to
       * read its value.
       */
     int checksum;
@@ -384,7 +384,7 @@ private:
     bool is_regular;
 
     /**
-      * The set_is_regular method shall be used whenevr vfp is assigned,
+      * The set_is_regular method shall be used whenever vfp is assigned,
       * to estanblish whther the output file is a regular file or a
       * special file (like a pipe).
       */
@@ -399,7 +399,7 @@ private:
       * If the file has not been opened yet, it will be opened by this
       * method.
       */
-    void *get_fp();
+    void *get_fp(void);
 
     /**
       * The copy constructor.  Do not use.

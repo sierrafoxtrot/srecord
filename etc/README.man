@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2000-2004, 2006-2010 Peter Miller
+.\"     Copyright (C) 1998, 2000-2004, 2006-2011 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -111,6 +111,9 @@ reading and writing.
 MOS Technology
 The MOS Technology hexadecimal format is understood for both reading
 and writing.
+.TP 8n
+MIPS\[hy]Flash
+The MIPS Flash file format is supported for both reading and writing.
 .TP 8n
 Motorola S\[hy]Record
 The Motorola hexadecimal S\[hy]Record format is understood for both reading

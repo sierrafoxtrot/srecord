@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2010 Peter Miller
+// Copyright (C) 1998-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -130,6 +130,8 @@ public:
         token_minimum_be,
         token_minimum_le,
         token_minus,
+        token_mips_flash_be,
+        token_mips_flash_le,
         token_mos_tech,
         token_motorola,
         token_msbin,

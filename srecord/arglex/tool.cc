@@ -144,6 +144,8 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-MInimum-Address", token_minimum_address, },
         { "-MInimum", token_minimum_address, },        // deprecated, put second
         { "-MINUs", token_minus, },
+        { "-Mips_Flash_BigEndian", token_mips_flash_be, },
+        { "-Mips_Flash_LittleEndian", token_mips_flash_le, },
         { "-MOS_Technologies", token_mos_tech, },
         { "-Most_To_Least", token_crc16_most_to_least },
         { "-Motorola", token_motorola, },

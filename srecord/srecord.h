@@ -37,6 +37,7 @@
 #include <srecord/input/file/intel.h>
 #include <srecord/input/file/intel16.h>
 #include <srecord/input/file/mif.h>
+#include <srecord/input/file/mips_flash.h>
 #include <srecord/input/file/mos_tech.h>
 #include <srecord/input/file/msbin.h>
 #include <srecord/input/file/needham.h>
@@ -117,6 +118,7 @@
 #include <srecord/output/file/intel.h>
 #include <srecord/output/file/intel16.h>
 #include <srecord/output/file/mif.h>
+#include <srecord/output/file/mips_flash.h>
 #include <srecord/output/file/mos_tech.h>
 #include <srecord/output/file/msbin.h>
 #include <srecord/output/file/needham.h>

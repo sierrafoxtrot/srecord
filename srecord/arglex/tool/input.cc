@@ -38,6 +38,7 @@
 #include <srecord/input/file/intel.h>
 #include <srecord/input/file/intel16.h>
 #include <srecord/input/file/mif.h>
+#include <srecord/input/file/mips_flash.h>
 #include <srecord/input/file/mos_tech.h>
 #include <srecord/input/file/motorola.h>
 #include <srecord/input/file/msbin.h>
@@ -107,6 +108,7 @@ srecord::arglex_tool::get_endian_by_token(int tok)
     case token_length_be:
     case token_maximum_be:
     case token_minimum_be:
+    case token_mips_flash_be:
     case token_spasm_be:
         return endian_big;
 
@@ -127,6 +129,7 @@ srecord::arglex_tool::get_endian_by_token(int tok)
     case token_maximum_le:
     case token_minimum_le:
     case token_msbin:
+    case token_mips_flash_le:
     case token_spasm_le:
         return endian_little;
 
@@ -352,6 +355,16 @@ srecord::arglex_tool::get_simple_input()
     case token_memory_initialization_file:
         token_next();
         ifp = input_file_mif::create(fn);
+        break;
+
+    case token_mips_flash_be:
+        token_next();
+        ifp = input_file_mips_flash::create_be(fn);
+        break;
+
+    case token_mips_flash_le:
+        token_next();
+        ifp = input_file_mips_flash::create_le(fn);
         break;
 
     case token_mos_tech:
