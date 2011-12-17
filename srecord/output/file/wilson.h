@@ -26,8 +26,14 @@ namespace srecord
 {
 
 /**
-  * The srecord::output_file_wilson class is used to
-  * represent an output file which is in Tektronix format.
+  * The srecord::output_file_wilson class is used to represent an output
+  * file which is in "wilson" format.  This file format was reverse
+  * engineered, it wasn't documented anywhere.  More information would
+  * be welcome.
+  *
+  * @sa
+  *     #srecord::output_file_motorola,
+  *     #srecord::output_file_idt,
   */
 class output_file_wilson:
     public output_file

@@ -111,6 +111,7 @@ public:
         token_guess,
         token_haval,
         token_hexdump,
+        token_idt,
         token_ignore_checksums,
         token_include,
         token_include_not,

@@ -34,6 +34,7 @@
 #include <srecord/output/file/forth.h>
 #include <srecord/output/file/four_packed_code.h>
 #include <srecord/output/file/hexdump.h>
+#include <srecord/output/file/idt.h>
 #include <srecord/output/file/intel.h>
 #include <srecord/output/file/intel16.h>
 #include <srecord/output/file/mif.h>
@@ -203,6 +204,11 @@ srecord::arglex_tool::get_output()
     case token_intel:
         token_next();
         ofp = srecord::output_file_intel::create(fn);
+        break;
+
+    case token_idt:
+        token_next();
+        ofp = srecord::output_file_idt::create(fn);
         break;
 
     case token_intel16:

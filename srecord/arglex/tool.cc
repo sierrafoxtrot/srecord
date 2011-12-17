@@ -107,6 +107,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-HAVal", token_haval, },
         { "-HEXadecimal_Dump", token_hexdump, },
         { "-HEXadecimal_STyle", token_style_hexadecimal, },
+        { "-Integrated_Device_Technology", token_idt, },
         { "-IGnore_Checksums", token_ignore_checksums, },
         { "-INCLude", token_include, },
         { "-INtel_HeXadecimal_16", token_intel16, },

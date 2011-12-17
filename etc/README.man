@@ -92,6 +92,9 @@ The Formatted Binary format is understood for both reading and writing.
 Four Packed Code (FPC)
 The FPC format is understood for both reading and writing.
 .TP 8n
+IDT/sim
+The IDT/sim binary file format is understood for both reading and writing.
+.TP 8n
 Intel
 The Intel hexadecimal format is understood for both reading and writing.
 (Also known as the Intel MCS\[hy]86 Object format.)

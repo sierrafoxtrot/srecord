@@ -48,8 +48,11 @@ public:
     /**
       * The write method is used to write a recordonto an output.
       * Derived classes must implement this method.
+      *
+      * @param rec
+      *     The record to be written.
       */
-    virtual void write(const record &) = 0;
+    virtual void write(const record &rec) = 0;
 
     /**
       * The write_header method is used to write a header record
@@ -78,8 +81,11 @@ public:
       * length of an output line, for those formats for which
       * this is a meaningful concept, and the line length is at
       * all controllable.  Derived classes must implement this method.
+      *
+      * @param cols
+      *     The page width in fixed width text columns.
       */
-    virtual void line_length_set(int) = 0;
+    virtual void line_length_set(int cols) = 0;
 
     /**
       * The address_length_set method is used to set the minimum
@@ -87,8 +93,11 @@ public:
       * for those formats for which this is a meaningful concept, and
       * the address length is at all controllable.  Derived classes
       * must implement this method.
+      *
+      * @param nbytes
+      *     The number of byte to use for the address (2..4).
       */
-    virtual void address_length_set(int) = 0;
+    virtual void address_length_set(int nbytes) = 0;
 
     /**
       * The preferred_block_size_get method is used to get the

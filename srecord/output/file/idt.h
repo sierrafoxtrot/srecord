@@ -1,58 +1,46 @@
 //
-// srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2001, 2002, 2005-2008, 2010, 2011 Peter Miller
+// srecord - Manipulate EPROM load files
+// Copyright (C) 2011 Peter Miller
 //
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
+// This program is free software; you can redistribute it and/or modify it
+// under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or (at your
+// option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Lesser General Public License for more details.
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+// more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SRECORD_OUTPUT_FILE_MOTOROLA_H
-#define SRECORD_OUTPUT_FILE_MOTOROLA_H
+#ifndef SRECORD_OUTPUT_FILE_IDT_H
+#define SRECORD_OUTPUT_FILE_IDT_H
 
 #include <srecord/output/file.h>
 
-namespace srecord
-{
+namespace srecord {
 
 /**
-  * The srecord::output_file_motorola class is used to represent an output
-  * file which emits Motorola S-Record format.
+  * The srecord::output_file_idt class is used to represent an output
+  * file which emits Integrated Device Technology (IDT) system
+  * integration module (IDT/sim) binary format.
   *
   * @sa
-  *     #srecord::output_file_idt,
+  *     #srecord::output_file_motorola,
   *     #srecord::output_file_wilson,
   */
-class output_file_motorola:
+class output_file_idt:
     public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~output_file_motorola();
+    virtual ~output_file_idt();
 
-private:
-    /**
-      * The constructor.
-      *
-      * @param file_name
-      *     The file name to open to write data to.  The name "-" is
-      *     understood to mean the standard output.
-      */
-    output_file_motorola(const std::string &file_name);
-
-public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
@@ -65,13 +53,13 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &rec);
 
     // See base class for documentation.
     void line_length_set(int);
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int nbytes);
 
     // See base class for documentation.
     int preferred_block_size_get(void) const;
@@ -80,12 +68,21 @@ protected:
     bool preferred_block_size_set(int nbytes);
 
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
-
-    // See base class for documentation.
     const char *format_name(void) const;
 
+    // See base class for documentation.
+    bool is_binary(void) const;
+
 private:
+    /**
+      * The constructor.
+      *
+      * @param file_name
+      *     The file name to open to write data to.  The name "-" is
+      *     understood to mean the standard output.
+      */
+    output_file_idt(const std::string &file_name);
+
     /**
       * The data_count instance variable is used to remember the total
       * number of ouput data lines have occurred to date.  Ths is used
@@ -105,18 +102,6 @@ private:
       * minimum number of address bytes to be emitted into output lines.
       */
     int address_length;
-
-    /**
-      * The address_shift method is used to remember how far to the left
-      * addresses need to be shifted to become byte addresses.
-      * The default is zero (0).
-      *
-      * This is because of some poorly though out "extentions" to this
-      * file format, for 16-bit and 32-bit data busses.  I say "poory
-      * thought out" because the no way (zero, zip, nada) of discovering
-      * this just by looking at the data.
-      */
-    int address_shift;
 
     /**
       * The data_count_written instance variable is used to remember
@@ -148,20 +133,29 @@ private:
       * @param data_nbytes
       *     The number of bytes of payload.
       */
-    void write_inner(int tag, unsigned long address, int address_nbytes,
-        const void *data, int data_nbytes);
+    void write_inner(int tag, unsigned long address, unsigned address_nbytes,
+        const unsigned char *data, size_t data_nbytes);
 
     /**
-      * The copy constructor.  Do not use.
+      * The default constructor.
+      * Do not use.
       */
-    output_file_motorola(const output_file_motorola &);
+    output_file_idt();
 
     /**
-      * The assignment operator.  Do not use.
+      * The copy constructor.
+      * Do not use.
       */
-    output_file_motorola &operator=(const output_file_motorola &);
+    output_file_idt(const output_file_idt &);
+
+    /**
+      * The assignment operator.
+      * Do not use.
+      */
+    output_file_idt &operator=(const output_file_idt &);
 };
 
 };
 
-#endif // SRECORD_OUTPUT_FILE_MOTOROLA_H
+// vim: set ts=8 sw=4 et :
+#endif // SRECORD_OUTPUT_FILE_IDT_H
