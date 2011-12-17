@@ -132,6 +132,10 @@ OS65V
 The Ohio Scientific hexadecimal format is understood for both reading
 and writing.
 .TP 8n
+PPB
+The Stag Prom Programmer binary format is understood for both reading
+and writing.
+.TP 8n
 PPX
 The Stag Prom Programmer hexadecimal format is understood for both
 reading and writing.

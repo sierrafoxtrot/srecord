@@ -272,7 +272,7 @@ private:
       * This instance variable is set by the get_fp method when it
       * opens the file.
       */
-    int is_text;
+    bool is_text;
 
     /**
       * The ignore_checksums instance variable is used to remember

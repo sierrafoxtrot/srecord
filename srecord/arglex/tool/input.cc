@@ -44,6 +44,7 @@
 #include <srecord/input/file/msbin.h>
 #include <srecord/input/file/needham.h>
 #include <srecord/input/file/os65v.h>
+#include <srecord/input/file/ppb.h>
 #include <srecord/input/file/ppx.h>
 #include <srecord/input/file/signetics.h>
 #include <srecord/input/file/spasm.h>
@@ -391,6 +392,11 @@ srecord::arglex_tool::get_simple_input(void)
     case token_ppx:
         token_next();
         ifp = input_file_ppx::create(fn);
+        break;
+
+    case token_ppb:
+        token_next();
+        ifp = input_file_ppb::create(fn);
         break;
 
     case token_signetics:

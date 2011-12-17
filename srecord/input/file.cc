@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2010 Peter Miller
+// Copyright (C) 1998-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -33,7 +33,7 @@ srecord::input_file::input_file() :
     prev_was_newline(false),
     vfp(stdin),
     checksum(0),
-    is_text(0),
+    is_text(false),
     ignore_checksums(ignore_checksums_default)
 {
 }
@@ -53,7 +53,7 @@ srecord::input_file::input_file(const std::string &a_file_name) :
     prev_was_newline(false),
     vfp(0),
     checksum(0),
-    is_text(0),
+    is_text(false),
     ignore_checksums(ignore_checksums_default)
 {
     if (file_name == "-")

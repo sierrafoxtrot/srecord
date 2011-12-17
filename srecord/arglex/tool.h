@@ -146,6 +146,7 @@ public:
         token_over,
         token_paren_begin,
         token_paren_end,
+        token_ppb,
         token_ppx,
         token_ram,
         token_random,

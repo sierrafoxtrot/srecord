@@ -56,6 +56,7 @@ The
 is specified by the argument \f[I]after\fP the file name.
 The format defaults to Motorola S\[hy]Record if not specified.
 The format specifiers are:
+.\" ----------  A  ---------------------------------------------------------
 .TP 8n
 \fB\-Absolute_Object_Module_Format\fP
 This option says to use the Intel Absolute Object Module Format (AOMF) to read
@@ -72,6 +73,7 @@ This option says to use the Atmel Generic format to read the file.
 See
 .IR srec_atmel_genetic (5)
 for a description of this file format.
+.\" ----------  B  ---------------------------------------------------------
 .TP 8n
 \fB\-Binary\fP
 This option says the file is a raw binary file, and should be read literally.
@@ -82,18 +84,22 @@ See \f[I]srec_binary\fP(5) for more information.
 This option says to use the Freescale MC68EZ328 Dragonball bootstrap
 b\[hy]record format to read the file.
 See \f[I]srec_brecord\fP(5) for a description of this file format.
+.\" ----------  C  ---------------------------------------------------------
 .TP 8n
 \fB\-COsmac\fP
 This option says to use the RCA Cosmac Elf format to read the file.
 See \f[I]srec_cosmac\fP(5) for a description of this file format.
+.\" ----------  D  ---------------------------------------------------------
 .TP 8n
 \fB\-Dec_Binary\fP
 This option says to use the DEC Binary (XXDP) format to read the file.
 See \f[I]srec_dec_binary\fP(5) for a description of this file format.
+.\" ----------  E  ---------------------------------------------------------
 .TP 8n
 \fB\-Elektor_Monitor52\fP
 This option says to use the EMON52 format to read the file.
 See \f[I]srec_emon52\fP(5) for a description of this file format.
+.\" ----------  F  ---------------------------------------------------------
 .TP 8n
 \fB\-FAIrchild\fP
 This option says to use the Fairchild Fairbug format to read the file.
@@ -110,11 +116,13 @@ See \f[I]srec_formatted_binary\fP(5) for a description of this file format.
 \fB\-Four_Packed_Code\fP
 This option says to use the FPC format to read the file.
 See \f[I]srec_fpc\fP(5) for a description of this file format.
+.\" ----------  G  ---------------------------------------------------------
 .TP 8n
 \fB\-Guess\fP
 This option may be used to ask the command to guess the input format.
 This is slower than specifying an explicit format,
 as it may open and scan and close the file a number of times.
+.\" ----------  H  ---------------------------------------------------------
 .TP 8n
 \fB\-HEX_Dump\fP
 This option says to try to read a hexadecimal dump file, more or less
@@ -122,6 +130,7 @@ in the style output by the same option.  This is not an exact reverse
 mapping, because if there are ASCII equivalents on the right hand side,
 these may be confused for data bytes.  Also, it doesn't understand white
 space representing holes in the data in the line.
+.\" ----------  I  ---------------------------------------------------------
 .TP 8n
 \fB\-Intel\fP
 This option says to use the Intel hex format to read the file.
@@ -134,6 +143,10 @@ This option says to use the Intel hex 16 (INHX16) format to read the file.
 See
 .IR srec_intel16 (5)
 for a description of this file format.
+.\" ----------  J  ---------------------------------------------------------
+.\" ----------  K  ---------------------------------------------------------
+.\" ----------  L  ---------------------------------------------------------
+.\" ----------  M  ---------------------------------------------------------
 .TP 8n
 \fB\-Memory_Initialization_File\fP
 This option says to use the Memory Initialization File (MIF) format by
@@ -171,19 +184,29 @@ Unlike most other parameters, this one cannot be guessed.
 This option says to use the Windows CE Binary Image Data Format to
 read the file.  See \f[I]srec_msbin\fP(5) for a description of this
 file format.
+.\" ----------  N  ---------------------------------------------------------
 .TP 8n
 \fB\-Needham_Hexadecimal\fP
 This option says to use the Needham Electronics ASCII file format to
 read the file.  See \f[I]srec_needham\fP(5) for a description of this
 file format.
+.\" ----------  O  ---------------------------------------------------------
 .TP 8n
 \fB\-Ohio_Scientific\fP
 This option says to use the Ohio Scientific format.
 See \f[I]srec_os65v\fP(5) for a description of this file format.
+.\" ----------  P  ---------------------------------------------------------
+.TP 8n
+\fB\-PPB\fP
+This option says to use the Stag Prom Programmer binary format.
+See \f[I]srec_ppb\fP(5) for a description of this file format.
 .TP 8n
 \fB\-PPX\fP
 This option says to use the Stag Prom Programmer hexadecimal format.
 See \f[I]srec_ppx\fP(5) for a description of this file format.
+.\" ----------  Q  ---------------------------------------------------------
+.\" ----------  R  ---------------------------------------------------------
+.\" ----------  S  ---------------------------------------------------------
 .TP 8n
 \fB\-SIGnetics\fP
 This option says to use the Signetics format.
@@ -203,6 +226,7 @@ This option says to use the Stewie binary format to read the file.
 See
 .IR srec_stewie (5)
 for a description of this file format.
+.\" ----------  T  ---------------------------------------------------------
 .TP 8n
 \fB\-Tektronix\fP
 This option says to use the Tektronix hex format to read the file.
@@ -232,16 +256,22 @@ for a description of this file format.
 This option says to use the Texas Instruments TXT (MSP430) format to
 read the file.  See \f[I]srec_ti_txt\fP(5) for a description of this
 file format.
+.\" ----------  U  ---------------------------------------------------------
+.\" ----------  V  ---------------------------------------------------------
 .TP 8n
 \fB\-VMem\fP
 This option says to use the Verilog VMEM format to read the file.
 See \f[I]srec_vmem\fP(5) for a description of this file format.
+.\" ----------  W  ---------------------------------------------------------
 .TP 8n
 \fB\-WILson\fP
 This option says to use the wilson format to read the file.
 See
 .IR srec_wilson (5)
 for a description of this file format.
+.\" ----------  X  ---------------------------------------------------------
+.\" ----------  Y  ---------------------------------------------------------
+.\" ----------  Z  ---------------------------------------------------------
 .SS Ignore Checksums
 .so man/man1/o_ignore_checksums.so
 .SS Generators

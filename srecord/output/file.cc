@@ -76,8 +76,16 @@ srecord::output_file::output_file(const std::string &a_file_name) :
 }
 
 
+bool
+srecord::output_file::is_binary(void)
+    const
+{
+    return false;
+}
+
+
 void *
-srecord::output_file::get_fp()
+srecord::output_file::get_fp(void)
 {
     if (!vfp)
     {
@@ -87,7 +95,7 @@ srecord::output_file::get_fp()
         // correctly.
         //
 #ifdef __CYGWIN__
-        if (line_termination == line_termination_native)
+        if (line_termination == line_termination_native && !is_binary())
         {
             vfp = fopen(file_name.c_str(), "w");
             if (!vfp)
@@ -131,7 +139,7 @@ void
 srecord::output_file::put_char(int c)
 {
     FILE *fp = (FILE *)get_fp();
-    if (c == '\n')
+    if (c == '\n' && !is_binary())
     {
         ++line_number;
         for (;;)

@@ -16,8 +16,8 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SRECORD_INPUT_FILE_PPX_H
-#define SRECORD_INPUT_FILE_PPX_H
+#ifndef SRECORD_INPUT_FILE_PPB_H
+#define SRECORD_INPUT_FILE_PPB_H
 
 #include <srecord/input/file.h>
 #include <srecord/record.h>
@@ -26,16 +26,16 @@ namespace srecord {
 
 /**
   * The input_file_hexdump class is used to represent the processing
-  * required to read in a Stag Prog Programmer hexadecimal file.
+  * required to read in a Stag Prom Programmer binary file.
   */
-class input_file_ppx:
+class input_file_ppb:
     public input_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~input_file_ppx();
+    virtual ~input_file_ppb();
 
     /**
       * The create class method is used to create new dynamically
@@ -53,6 +53,9 @@ protected:
     // See base class for documentation.
     const char *get_file_format_name(void) const;
 
+    // See base class for documentation.
+    const char *mode(void) const;
+
 private:
     /**
       * The constructor.
@@ -60,46 +63,7 @@ private:
       * @param filename
       *     The name of the file to be read.
       */
-    input_file_ppx(const std::string &filename);
-
-    /**
-      * The state instance variable is used to remember the current
-      * processing state as the file is progressively parsed.  The parse
-      * is, of course, interrupted to return data records when they are seen.
-      */
-    int state;
-
-    enum token_t
-    {
-        token_eof,
-        token_star,
-        token_address,
-        token_byte,
-        token_end,
-        token_sum,
-    };
-
-    /**
-      * The token instance variable is used to remember the kind of the
-      * most recent token seen.  Set by the #get_next_token method.
-      */
-    token_t token;
-
-    /**
-      * The token_value instance variable is used to remember the value
-      * of the most recent token_byte or token_address seen.
-      * Set by the #get_next_token method.
-      */
-    unsigned token_value;
-
-    /**
-      * The get_next_token method is used to read the next lexical token
-      * from the input.
-      * It will set #token with the kind of token seen.
-      * It will set the #token_value instance variable for token_byte
-      * and token_address
-      */
-    void get_next_token(void);
+    input_file_ppb(const std::string &filename);
 
     /**
       * The address instance variable is used to remember the current
@@ -117,46 +81,59 @@ private:
     bool data_seen;
 
     /**
-      * The syntax_error method is a convenience wrapper around
-      * #fatal_error to complain about syntax errors.
+      * The packet_address instance variable is used to remember the
+      * address of the first byte in the most recetly read packet.
       */
-    void syntax_error(void);
+    unsigned long packet_address;
 
     /**
-      * The dsum instance variable is used to remember the simple sum of
-      * the data bytes, and the data bytes alone.
+      * The packet instance variable is used to remember the most recent
+      * #packet_length data bytes read from the file in the most recent packet.
       */
-    unsigned short dsum;
+    record::data_t packet[8192];
 
     /**
-      * The buffer instance variable is used to remember the most recent
-      * #buffer_length data bytes read from the file.
+      * The packet_length instance variable is used to remember the
+      * number of data bytes in the #packet array.
       */
-    record::data_t buffer[record::max_data_length];
+    size_t packet_length;
 
     /**
-      * The buffer_length instance variable is used to remember the
-      * number of data bytes in the #buffer array.
+      * The packet_used instance variable is used to remember how many
+      * bytes of the most recently read packect have been consumed.
       */
-    size_t buffer_length;
+    size_t packet_used;
+
+    /**
+      * The get_packet method is used to read another packet, setting
+      * the #packet and #packet_length and #packet_address and
+      * #packet_used instance variables.
+      */
+    bool get_packet(void);
+
+    /**
+      * The packet_format_error method is used to issue a #fatal_error
+      * message when a packet is malformed.
+      */
+    void packet_format_error(void);
 
     /**
       * The default constructor.  Do not use.
       */
-    input_file_ppx();
+    input_file_ppb();
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_ppx(const input_file_ppx &);
+    input_file_ppb(const input_file_ppb &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_ppx &operator=(const input_file_ppx &);
+    input_file_ppb &operator=(const input_file_ppb &);
 };
 
 };
 
 // vim: set ts=8 sw=4 et :
-#endif // SRECORD_INPUT_FILE_PPX_H
+#endif // SRECORD_INPUT_FILE_PPB_H

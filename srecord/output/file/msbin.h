@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2009, 2010 Peter Miller
+// Copyright (C) 2009-2011 Peter Miller
 //
 // Code contribution by David Kozub <zub@linux.fjfi.cvut.cz>
 // Copyright assigned to Peter Miller 27-Jan-2010.
@@ -87,6 +87,9 @@ protected:
 
     // See base class for documentation.
     void notify_upper_bound(unsigned long addr);
+
+    // See base class for documentation.
+    bool is_binary(void) const;
 
 private:
     /**

@@ -197,3 +197,11 @@ srecord::output_file_dec_binary::format_name()
 {
     return "DEC-Binary";
 }
+
+
+bool
+srecord::output_file_dec_binary::is_binary(void)
+    const
+{
+    return true;
+}

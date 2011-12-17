@@ -402,6 +402,13 @@ private:
     void *get_fp(void);
 
     /**
+      * The is_binary method is used to to determine whether or not
+      * a file format is binary (true) of text (false).  The default
+      * implementation always returns false (text).
+      */
+    virtual bool is_binary(void) const;
+
+    /**
       * The copy constructor.  Do not use.
       */
     output_file(const output_file &);

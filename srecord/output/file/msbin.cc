@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2009, 2010 Peter Miller
+// Copyright (C) 2009-2011 Peter Miller
 //
 // Code contribution by David Kozub <zub@linux.fjfi.cvut.cz>
 // Copyright assigned to Peter Miller 27-Jan-2010.
@@ -315,4 +315,12 @@ srecord::output_file_msbin::format_name()
     const
 {
     return "Windows CE Binary Image Data Format";
+}
+
+
+bool
+srecord::output_file_msbin::is_binary(void)
+    const
+{
+    return true;
 }

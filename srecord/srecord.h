@@ -42,6 +42,7 @@
 #include <srecord/input/file/msbin.h>
 #include <srecord/input/file/needham.h>
 #include <srecord/input/file/os65v.h>
+#include <srecord/input/file/ppb.h>
 #include <srecord/input/file/ppx.h>
 #include <srecord/input/file/signetics.h>
 #include <srecord/input/file/spasm.h>
@@ -124,6 +125,7 @@
 #include <srecord/output/file/msbin.h>
 #include <srecord/output/file/needham.h>
 #include <srecord/output/file/os65v.h>
+#include <srecord/output/file/ppb.h>
 #include <srecord/output/file/ppx.h>
 #include <srecord/output/file/signetics.h>
 #include <srecord/output/file/spasm.h>

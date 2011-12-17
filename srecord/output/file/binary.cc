@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2001-2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 1998, 1999, 2001-2003, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -99,4 +99,12 @@ srecord::output_file_binary::format_name()
     const
 {
     return "Binary";
+}
+
+
+bool
+srecord::output_file_binary::is_binary(void)
+    const
+{
+    return true;
 }
