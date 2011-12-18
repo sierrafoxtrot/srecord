@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2001, 2006, 2007, 2009 Peter Miller
+.\"     Copyright (C) 2001, 2006, 2007, 2009, 2011 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ of bytes to be sent.  Address fields and checksums will add even more
 characters.  So the shorter the records, the more characters have to be
 sent to get the file across.
 .PP
-The FPC format helps to reduce the number of characters needed to
+The FPC format may be used to reduce the number of characters needed to
 send a file in ASCII format, although it still needs more characters
 than the actual bytes it sends.  FPC stands for "Four Packed Code".
 The reduction is accomplished by squeezing 4 real bytes into 5 ASCII

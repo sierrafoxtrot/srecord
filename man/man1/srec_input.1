@@ -606,7 +606,7 @@ http://en.wikipedia.org/wiki/Fletcher%27s_checksum
 .PP
 It is possible to select seed values for \f[I]sum1\fP and \f[I]sum2\fP
 in the algorithm, by adding seed values on the command line.  They each
-default to 0xFF if not explictly stated.  The default values (0) means
+default to 0xFF if not explicitly stated.  The default values (0) means
 that an empty EPROM (all 0x00 or all 0xFF) will sum to zero; by changing
 the seeds, an empty EPROM will always fail.
 .PP
@@ -648,7 +648,7 @@ If the data already contains bytes at the length location,
 you need to use an exclude filter, or this will generate errors.
 The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
-The width defaults to 1, and is divided into the actual lenght,
+The width defaults to 1, and is divided into the actual length,
 thus you can insert the width in units of words (2) or longs (4).
 .\"             big endian maximum
 .TP 8n
@@ -671,7 +671,7 @@ The number of bytes defaults to 4.
 .\"             bit reverse
 .TP 8n
 \fB\-bit_reverse\fP [ \f[I]width\fP ]
-This filter maye be used to reverse the order of the bits in each data byte.
+This filter may be used to reverse the order of the bits in each data byte.
 By specifying a width (in bytes) it is possible to reverse the order
 multi\[hy]byte values; this is implemented using the byte\[hy]swap filter.
 .\"             byte swap

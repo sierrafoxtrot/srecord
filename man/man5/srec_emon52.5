@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2001, 2006, 2007, 2009 Peter Miller
+.\"     Copyright (C) 2001, 2006, 2007, 2009, 2011 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 .XX "srec_emon52(5)" "Elektor Monitor (EMON52) file format"
 .\}
 .SH DESCRIPTION
-This format is used by the monitor EMON52, devolped by the European
+This format is used by the monitor EMON52, developed by the European
 electronics magazine Elektor (Elektuur in Holland).  Elektor wouldn't
 be Elektor if they didn't try to reinvent the wheel.  It's a mystery
 why they didn't use an existing format for the project.  Only the
@@ -43,7 +43,7 @@ The field are defined as follows:
 cc
 The byte count.
 A two digit hex value (1 byte), counting the actual data bytes in the record.
-The byte count is seperated from the next field by a space.
+The byte count is separated from the next field by a space.
 .TP 8n
 aaaa
 The address field.
@@ -51,16 +51,16 @@ A four hex digit (2 byte) number representing the first address to be
 used by this record.
 .TP 8n
 \fB:\fP
-The address field and the data field are seperated by a colon.
+The address field and the data field are separated by a colon.
 .TP 8n
 dd
 The actual data of this record.
 There can be 1 to 255 data bytes per record (see cc)
-All bytes in the record are seperated from each other (and the checksum)
+All bytes in the record are separated from each other (and the checksum)
 by a space.
 .TP 8n
 ssss
-Data Checksum, adding all bytes of the dataline together, forming a 16
+Data Checksum, adding all bytes of the data line together, forming a 16
 bit checksum.  Covers only all the data bytes of this record.
 .PP
 Please note that there is no End Of File record defined.
