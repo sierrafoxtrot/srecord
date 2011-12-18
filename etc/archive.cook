@@ -1,6 +1,6 @@
 /*
  * srecord - manipulate eprom load files
- * Copyright (C) 1998-2000, 2003, 2004, 2006-2010 Peter Miller
+ * Copyright (C) 1998-2000, 2003, 2004, 2006-2011 Peter Miller
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,12 +101,9 @@ Makefile.in: [source_files]
     if [not [verbose]] then
         function print GEN [target];
 
-    [aemakegen] -p [project] -c [change] -o [target].tmp
+    [aemakegen] -p [project] -c [change] -o [target]
         libdir/pkgconfig/[project_short].pc.in
         set meter;
-    [awk] -f [resolve etc/Makefile.awk] < [target].tmp > [target];
-    rm [target].tmp
-        set silent;
 }
 
 archive/[project_minus].tar.gz: [source_file_order]

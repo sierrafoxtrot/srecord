@@ -34,7 +34,7 @@ the sums.
 .if n *
 .if t \(bu
 .\" Change 19
-There is a new srec_cat \-enable=optional\[hy]address option to cause
+There is a new srec_cat \fB\-enable=optional\[hy]address\fP option to cause
 output formats capable of omitting addresses, to omit a leading
 zero address, as those formats usually default the address to
 zero, if no address information is seen before the first data
@@ -43,16 +43,16 @@ record.  Defaults to false (disabled).
 .if n *
 .if t \(bu
 .\" Change 18
-There is a new srec_cat \-output\[hy]block\[hy]packing option, that may
-be used to pack output records even when they cross internal
-SRecord boundaries.
+There is a new \f[I]srec_cat\fP(1) \fB\-output\[hy]block\[hy]packing\fP
+option, that may be used to pack output records even when they cross
+internal SRecord boundaries.
 .TP 2n
 .if n *
 .if t \(bu
 .\" Change 17
-There is a new srec_cat \-output\[hy]block\[hy]size so that you can
-specify the block size exactly, rather than implying it with the
-line length option.
+There is a new \f[I]srec_cat\fP(1) \fB\-output\[hy]block\[hy]size\fP so
+that you can specify the block size exactly, rather than implying it
+with the line length option.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.55 (2010-Feb-10)
