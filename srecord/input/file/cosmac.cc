@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2003, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -35,7 +35,7 @@ srecord::input_file_cosmac::input_file_cosmac(const std::string &a_file_name) :
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_cosmac::create(const std::string &a_file_name)
 {
     return pointer(new input_file_cosmac(a_file_name));
@@ -146,3 +146,14 @@ srecord::input_file_cosmac::get_file_format_name()
 {
     return "RCA Cosmac";
 }
+
+
+const char *
+srecord::input_file_cosmac::format_option_name(void)
+    const
+{
+    return "-COsmac";
+}
+
+
+// vim: set ts=8 sw=4 et :

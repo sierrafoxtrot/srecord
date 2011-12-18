@@ -195,6 +195,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-S_record", token_motorola, },
         { "-Stag_Binary", token_ppb, },
         { "-Stag_Hexadecimal", token_ppx, },
+        { "-Signed_BiNary", token_stewie, },
         { "-STewie", token_stewie, },
         { "-SUBtract", token_minus, },
         { "-Tektronix_Extended", token_tektronix_extended, },

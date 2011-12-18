@@ -31,6 +31,7 @@ srecord::input_file_ppb::input_file_ppb(const std::string &filename) :
     input_file(filename),
     address(0),
     data_seen(false),
+    packet_address(-1uL),
     packet_length(0),
     packet_used(0)
 {
@@ -41,14 +42,6 @@ srecord::input_file_ppb::pointer
 srecord::input_file_ppb::create(const std::string &filename)
 {
     return pointer(new input_file_ppb(filename));
-}
-
-
-const char *
-srecord::input_file_ppb::get_file_format_name(void)
-    const
-{
-    return "Stag Prom Programmer binary (PPB)";
 }
 
 
@@ -158,6 +151,22 @@ srecord::input_file_ppb::mode(void)
     const
 {
     return "rb";
+}
+
+
+const char *
+srecord::input_file_ppb::get_file_format_name(void)
+    const
+{
+    return "Stag Prom Programmer binary (PPB)";
+}
+
+
+const char *
+srecord::input_file_ppb::format_option_name(void)
+    const
+{
+    return "-Prom_Pogrammer_Binary";
 }
 
 

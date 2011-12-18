@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2004-2008, 2010 Peter Miller
+// Copyright (C) 2004-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -131,7 +131,7 @@ srecord::input_file_aomf::input_file_aomf(const std::string &a_filename) :
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_aomf::create(const std::string &a_filename)
 {
     return pointer(new srecord::input_file_aomf(a_filename));
@@ -317,3 +317,14 @@ srecord::input_file_aomf::get_file_format_name()
 {
     return "Intel Absolute Object Module Format (AOMF)";
 }
+
+
+const char *
+srecord::input_file_aomf::format_option_name(void)
+    const
+{
+    return "-Absolute_Object_Module_Format";
+}
+
+
+// vim: set ts=8 sw=4 et :

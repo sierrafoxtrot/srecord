@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2003, 2005-2008, 2010 Peter Miller
+// Copyright (C) 2000-2003, 2005-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -35,7 +35,7 @@ srecord::input_file_wilson::input_file_wilson(const std::string &a_file_name) :
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_wilson::create(const std::string &a_file_name)
 {
     return pointer(new input_file_wilson(a_file_name));
@@ -43,7 +43,7 @@ srecord::input_file_wilson::create(const std::string &a_file_name)
 
 
 int
-srecord::input_file_wilson::get_byte()
+srecord::input_file_wilson::get_byte(void)
 {
     int n = -1;
     int c = get_char();
@@ -212,7 +212,15 @@ srecord::input_file_wilson::read(record &record)
 
 
 const char *
-srecord::input_file_wilson::get_file_format_name()
+srecord::input_file_wilson::mode(void)
+    const
+{
+    return "rb";
+}
+
+
+const char *
+srecord::input_file_wilson::get_file_format_name(void)
     const
 {
     return "Wilson (anyone know this format's real name?)";
@@ -220,8 +228,11 @@ srecord::input_file_wilson::get_file_format_name()
 
 
 const char *
-srecord::input_file_wilson::mode()
+srecord::input_file_wilson::format_option_name(void)
     const
 {
-    return "rb";
+    return "-WILson";
 }
+
+
+// vim: set ts=8 sw=4 et :

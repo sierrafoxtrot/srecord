@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2003, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -37,16 +37,6 @@ public:
       */
     virtual ~input_file_formatted_binary();
 
-private:
-    /**
-      * The constructor.
-      *
-      * @param file_name
-      *     The name of the file to be read.
-      */
-    input_file_formatted_binary(const std::string &file_name);
-
-public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
@@ -63,12 +53,23 @@ protected:
     bool read (record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name(void) const;
 
     // See base class for documentation.
-    const char *mode() const;
+    const char *mode(void) const;
+
+    // See base class for documentation.
+    const char *format_option_name(void) const;
 
 private:
+    /**
+      * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be read.
+      */
+    input_file_formatted_binary(const std::string &file_name);
+
     /**
       * The header_seen instance variable is used to remember whether
       * the file header has been seen yet.

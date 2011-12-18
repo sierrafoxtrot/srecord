@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2006-2008, 2010 Peter Miller
+// Copyright (C) 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -39,7 +39,7 @@ srecord::input_file_ti_txt::input_file_ti_txt(const std::string &a_file_name) :
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_ti_txt::create(const std::string &a_file_name)
 {
     return pointer(new input_file_ti_txt(a_file_name));
@@ -47,7 +47,7 @@ srecord::input_file_ti_txt::create(const std::string &a_file_name)
 
 
 void
-srecord::input_file_ti_txt::get_next_token()
+srecord::input_file_ti_txt::get_next_token(void)
 {
     token_value = 0;
     for (;;)
@@ -193,8 +193,19 @@ srecord::input_file_ti_txt::read(record &result)
 
 
 const char *
-srecord::input_file_ti_txt::get_file_format_name()
+srecord::input_file_ti_txt::get_file_format_name(void)
     const
 {
     return "ti-txt (MSP430)";
 }
+
+
+const char *
+srecord::input_file_ti_txt::format_option_name(void)
+    const
+{
+    return "-Texas_Instruments_TeXT";
+}
+
+
+// vim: set ts=8 sw=4 et :

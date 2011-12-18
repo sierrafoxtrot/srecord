@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001-2003, 2005-2008, 2010 Peter Miller
+// Copyright (C) 2001-2003, 2005-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +27,8 @@ srecord::input_file_signetics::~input_file_signetics()
 
 
 srecord::input_file_signetics::input_file_signetics(
-        const std::string &a_filename) :
+    const std::string &a_filename
+) :
     srecord::input_file(a_filename),
     garbage_warning(false),
     seen_some_input(false)
@@ -35,7 +36,7 @@ srecord::input_file_signetics::input_file_signetics(
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_signetics::create(const std::string &a_file_name)
 {
     return pointer(new srecord::input_file_signetics(a_file_name));
@@ -140,8 +141,19 @@ srecord::input_file_signetics::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_signetics::get_file_format_name()
+srecord::input_file_signetics::get_file_format_name(void)
     const
 {
     return "Signetics";
 }
+
+
+const char *
+srecord::input_file_signetics::format_option_name(void)
+    const
+{
+    return "-SIGnetics";
+}
+
+
+// vim: set ts=8 sw=4 et :

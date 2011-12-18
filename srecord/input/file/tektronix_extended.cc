@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2000-2003, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +27,8 @@ srecord::input_file_tektronix_extended::~input_file_tektronix_extended()
 
 
 srecord::input_file_tektronix_extended::input_file_tektronix_extended(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::input_file(a_file_name),
     garbage_warning(false),
     seen_some_input(false),
@@ -36,7 +37,7 @@ srecord::input_file_tektronix_extended::input_file_tektronix_extended(
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_tektronix_extended::create(const std::string &a_file_name)
 {
     return pointer(new srecord::input_file_tektronix_extended(a_file_name));
@@ -189,8 +190,19 @@ srecord::input_file_tektronix_extended::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_tektronix_extended::get_file_format_name()
+srecord::input_file_tektronix_extended::get_file_format_name(void)
     const
 {
     return "Tektronix Extended";
 }
+
+
+const char *
+srecord::input_file_tektronix_extended::format_option_name(void)
+    const
+{
+    return "-Tektronix_Extended";
+}
+
+
+// vim: set ts=8 sw=4 et :

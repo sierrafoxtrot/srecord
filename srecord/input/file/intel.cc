@@ -42,7 +42,7 @@ srecord::input_file_intel::input_file_intel(const std::string &a_file_name) :
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_intel::create(const std::string &a_file_name)
 {
     return pointer(new srecord::input_file_intel(a_file_name));
@@ -420,3 +420,14 @@ srecord::input_file_intel::get_file_format_name()
 {
     return "Intel Hexadecimal (MCS-86)";
 }
+
+
+const char *
+srecord::input_file_intel::format_option_name(void)
+    const
+{
+    return "-Intel";
+}
+
+
+// vim: set ts=8 sw=4 et :

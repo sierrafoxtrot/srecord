@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2009, 2010 Peter Miller
+// Copyright (C) 2009-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -38,7 +38,7 @@ srecord::input_file_mif::input_file_mif(const std::string &a_file_name) :
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_mif::create(const std::string &a_file_name)
 {
     return pointer(new srecord::input_file_mif(a_file_name));
@@ -46,7 +46,7 @@ srecord::input_file_mif::create(const std::string &a_file_name)
 
 
 srecord::input_file_mif::token_t
-srecord::input_file_mif::lex_addr()
+srecord::input_file_mif::lex_addr(void)
 {
     lex_radix = lex_addr_radix;
     token_t result = lex();
@@ -56,7 +56,7 @@ srecord::input_file_mif::lex_addr()
 
 
 srecord::input_file_mif::token_t
-srecord::input_file_mif::lex_data()
+srecord::input_file_mif::lex_data(void)
 {
     lex_radix = lex_data_radix;
     token_t result = lex();
@@ -66,7 +66,7 @@ srecord::input_file_mif::lex_data()
 
 
 srecord::input_file_mif::token_t
-srecord::input_file_mif::lex()
+srecord::input_file_mif::lex(void)
 {
     for (;;)
     {
@@ -229,7 +229,7 @@ srecord::input_file_mif::syntax_error(const char *text)
 
 
 void
-srecord::input_file_mif::get_equals()
+srecord::input_file_mif::get_equals(void)
 {
     if (lex() != token_equals)
         syntax_error("equals (=) expected");
@@ -237,7 +237,7 @@ srecord::input_file_mif::get_equals()
 
 
 long
-srecord::input_file_mif::get_number()
+srecord::input_file_mif::get_number(void)
 {
     if (lex() != token_number)
         syntax_error("decimal number expected");
@@ -246,7 +246,7 @@ srecord::input_file_mif::get_number()
 
 
 void
-srecord::input_file_mif::get_semicolon()
+srecord::input_file_mif::get_semicolon(void)
 {
     if (lex() != token_semicolon)
         syntax_error("semicolon (;) expected");
@@ -254,7 +254,7 @@ srecord::input_file_mif::get_semicolon()
 
 
 void
-srecord::input_file_mif::get_colon()
+srecord::input_file_mif::get_colon(void)
 {
     if (lex() != token_colon)
         syntax_error("colon (:) expected");
@@ -262,7 +262,7 @@ srecord::input_file_mif::get_colon()
 
 
 int
-srecord::input_file_mif::get_radix()
+srecord::input_file_mif::get_radix(void)
 {
     switch (lex())
     {
@@ -457,8 +457,19 @@ srecord::input_file_mif::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_mif::get_file_format_name()
+srecord::input_file_mif::get_file_format_name(void)
     const
 {
     return "Memory Initialization File (MIF, Altera)";
 }
+
+
+const char *
+srecord::input_file_mif::format_option_name(void)
+    const
+{
+    return "-Memory_Initialization_File";
+}
+
+
+// vim: set ts=8 sw=4 et :

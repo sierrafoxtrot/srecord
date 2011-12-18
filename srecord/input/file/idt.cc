@@ -27,7 +27,8 @@ srecord::input_file_idt::~input_file_idt()
 
 
 srecord::input_file_idt::input_file_idt(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     input_file(a_file_name),
     data_count(0),
     seen_some_input(false)
@@ -35,7 +36,7 @@ srecord::input_file_idt::input_file_idt(
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_idt::create(const std::string &a_file_name)
 {
     return pointer(new input_file_idt(a_file_name));
@@ -241,6 +242,14 @@ srecord::input_file_idt::read(record &record)
 
 
 const char *
+srecord::input_file_idt::mode(void)
+    const
+{
+    return "rb";
+}
+
+
+const char *
 srecord::input_file_idt::get_file_format_name()
     const
 {
@@ -249,10 +258,10 @@ srecord::input_file_idt::get_file_format_name()
 
 
 const char *
-srecord::input_file_idt::mode(void)
+srecord::input_file_idt::format_option_name(void)
     const
 {
-    return "rb";
+    return "-Integrated_Device_Technology";
 }
 
 

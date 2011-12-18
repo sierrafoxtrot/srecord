@@ -28,7 +28,8 @@ srecord::input_file_ti_tagged_16::~input_file_ti_tagged_16()
 
 
 srecord::input_file_ti_tagged_16::input_file_ti_tagged_16(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     input_file(a_file_name),
     address(0),
     csum(0)
@@ -36,7 +37,7 @@ srecord::input_file_ti_tagged_16::input_file_ti_tagged_16(
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_ti_tagged_16::create(const std::string &a_file_name)
 {
     return pointer(new input_file_ti_tagged_16(a_file_name));
@@ -44,7 +45,7 @@ srecord::input_file_ti_tagged_16::create(const std::string &a_file_name)
 
 
 int
-srecord::input_file_ti_tagged_16::get_char()
+srecord::input_file_ti_tagged_16::get_char(void)
 {
     int c = inherited::get_char();
     if (c < 0 || c == '\n')
@@ -176,8 +177,19 @@ srecord::input_file_ti_tagged_16::read(record &result)
 
 
 const char *
-srecord::input_file_ti_tagged_16::get_file_format_name()
+srecord::input_file_ti_tagged_16::get_file_format_name(void)
     const
 {
     return "Texas Instruments SDSMAC (320)";
 }
+
+
+const char *
+srecord::input_file_ti_tagged_16::format_option_name(void)
+    const
+{
+    return "-Texas_Instruments_Tagged_16";
+}
+
+
+// vim: set ts=8 sw=4 et :

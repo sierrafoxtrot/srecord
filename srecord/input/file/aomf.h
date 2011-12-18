@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2004, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2004, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -65,10 +65,13 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name(void) const;
 
     // See base class for documentation.
-    const char *mode() const;
+    const char *mode(void) const;
+
+    // See base class for documentation.
+    const char *format_option_name(void) const;
 
 private:
     /**
@@ -76,15 +79,15 @@ private:
       * update the checksum.  We over-ride the base implementation,
       * because we use raw bytes rather than two hex digits.
       */
-    int get_byte();
+    int get_byte(void);
 
     /**
       * The get_word method is used to fetch a 16-bit word of input.
-      * It calls the get_byte() method twice.  We over-ride the base
+      * It calls the #get_byte method twice.  We over-ride the base
       * implementation, because it uses big-endian and this format
       * is little-endian.
       */
-    int get_word();
+    int get_word(void);
 
     /**
       * The current_buffer instance variable is used to remember the

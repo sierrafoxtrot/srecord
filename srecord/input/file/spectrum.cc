@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2003, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -29,7 +29,8 @@ srecord::input_file_spectrum::~input_file_spectrum()
 
 
 srecord::input_file_spectrum::input_file_spectrum(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::input_file(a_file_name),
     header_seen(false),
     trailer_seen(false),
@@ -38,7 +39,7 @@ srecord::input_file_spectrum::input_file_spectrum(
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_spectrum::create(const std::string &a_file_name)
 {
     return pointer(new srecord::input_file_spectrum(a_file_name));
@@ -175,9 +176,21 @@ srecord::input_file_spectrum::read(srecord::record &record)
     return true;
 }
 
+
 const char *
 srecord::input_file_spectrum::get_file_format_name ()
     const
 {
     return "Spectrum";
 }
+
+
+const char *
+srecord::input_file_spectrum::format_option_name(void)
+    const
+{
+    return "-SPEctrum";
+}
+
+
+// vim: set ts=8 sw=4 et :

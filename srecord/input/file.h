@@ -35,6 +35,8 @@ class input_file:
     public input
 {
 public:
+    typedef boost::shared_ptr<input_file> pointer;
+
     /**
       * The destructor.
       */
@@ -55,6 +57,13 @@ public:
       * --ignore-checksums command line option.
       */
     static void ignore_all_checksums(void) { ignore_checksums_default = true; }
+
+    /**
+      * The format_option_name method is used by the #srecord::input_file::guess
+      * class method to add a hint so the user may access the correct format
+      * next time.
+      */
+    virtual const char *format_option_name(void) const = 0;
 
 protected:
     // See base class for documentation.

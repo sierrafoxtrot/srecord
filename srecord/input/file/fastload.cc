@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001-2003, 2005-2008, 2010 Peter Miller
+// Copyright (C) 2001-2003, 2005-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -29,7 +29,8 @@ srecord::input_file_fastload::~input_file_fastload()
 
 
 srecord::input_file_fastload::input_file_fastload(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::input_file(a_file_name),
     seen_some_input(false),
     address(0)
@@ -37,7 +38,7 @@ srecord::input_file_fastload::input_file_fastload(
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_fastload::create(const std::string &a_file_name)
 {
     return pointer(new srecord::input_file_fastload(a_file_name));
@@ -45,7 +46,7 @@ srecord::input_file_fastload::create(const std::string &a_file_name)
 
 
 int
-srecord::input_file_fastload::get_digit()
+srecord::input_file_fastload::get_digit(void)
 {
     int c = get_char();
     switch (c)
@@ -143,7 +144,7 @@ srecord::input_file_fastload::get_number(int min_digits, int max_digits)
 
 
 void
-srecord::input_file_fastload::expect_white_space()
+srecord::input_file_fastload::expect_white_space(void)
 {
     switch (peek_char())
     {
@@ -308,8 +309,19 @@ srecord::input_file_fastload::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_fastload::get_file_format_name()
+srecord::input_file_fastload::get_file_format_name(void)
     const
 {
     return "LSI Logic Fast Load";
 }
+
+
+const char *
+srecord::input_file_fastload::format_option_name(void)
+    const
+{
+    return "-Fast_Load";
+}
+
+
+// vim: set ts=8 sw=4 et :

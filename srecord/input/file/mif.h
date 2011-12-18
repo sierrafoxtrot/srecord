@@ -36,17 +36,6 @@ public:
       */
     virtual ~input_file_mif();
 
-private:
-    /**
-      * The constructor.
-      * It is private on putpose, use the #create class method instead.
-      *
-      * @param file_name
-      *     The name of the file to be read.
-      */
-    input_file_mif(const std::string &file_name);
-
-public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
@@ -63,9 +52,21 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name(void) const;
+
+    // See base class for documentation.
+    const char *format_option_name(void) const;
 
 private:
+    /**
+      * The constructor.
+      * It is private on putpose, use the #create class method instead.
+      *
+      * @param file_name
+      *     The name of the file to be read.
+      */
+    input_file_mif(const std::string &file_name);
+
     enum state_t
     {
         state_header,
@@ -134,11 +135,11 @@ private:
       * The lex method is used to obtain the next lexical token from the
       * input stream.
       */
-    token_t lex();
+    token_t lex(void);
 
     /**
       * The token_value instance variable is used to remember the
-      * numeric value of token_number returns from lex().
+      * numeric value of token_number returns from #lex.
       */
     long token_value;
 
@@ -146,13 +147,13 @@ private:
       * The lex_addr method is used to obtain the next lexical token
       * from the input stream, using the address radix.
       */
-    token_t lex_addr();
+    token_t lex_addr(void);
 
     /**
       * The lex_data method is used to obtain the next lexical token
       * from the input stream, using the data radix.
       */
-    token_t lex_data();
+    token_t lex_data(void);
 
     /**
       * The syntax_error method is used to report parse errors when
@@ -163,11 +164,11 @@ private:
       */
     void syntax_error(const char *text);
 
-    void get_equals();
-    long get_number();
-    void get_semicolon();
-    int get_radix();
-    void get_colon();
+    void get_equals(void);
+    long get_number(void);
+    void get_semicolon(void);
+    int get_radix(void);
+    void get_colon(void);
 
     unsigned width;
     unsigned width_in_bytes;

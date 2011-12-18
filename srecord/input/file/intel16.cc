@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2003, 2005-2008, 2010 Peter Miller
+// Copyright (C) 2003, 2005-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -28,7 +28,8 @@ srecord::input_file_intel16::~input_file_intel16()
 
 
 srecord::input_file_intel16::input_file_intel16(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     srecord::input_file(a_file_name),
     data_record_count(0),
     garbage_warning(false),
@@ -42,7 +43,7 @@ srecord::input_file_intel16::input_file_intel16(
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_intel16::create(const std::string &a_file_name)
 {
     return pointer(new srecord::input_file_intel16(a_file_name));
@@ -355,3 +356,14 @@ srecord::input_file_intel16::get_file_format_name()
 {
     return "Intel Hexadecimal 16 (INHX16)";
 }
+
+
+const char *
+srecord::input_file_intel16::format_option_name(void)
+    const
+{
+    return "-INtel_HeXadecimal_16";
+}
+
+
+// vim: set ts=8 sw=4 et :

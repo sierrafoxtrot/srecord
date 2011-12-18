@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2009, 2010 Peter Miller
+// Copyright (C) 2009-2011 Peter Miller
 //
 // Code contribution by David Kozub <zub@linux.fjfi.cvut.cz>
 // Copyright assigned to Peter Miller 27-Jan-2010.
@@ -45,16 +45,6 @@ public:
       */
     virtual ~input_file_msbin();
 
-private:
-    /**
-      * The constructor.
-      *
-      * @param file_name
-      *     The name of the file to be read.
-      */
-    input_file_msbin(const std::string &file_name);
-
-public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
@@ -71,9 +61,20 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name(void) const;
+
+    // See base class for documentation.
+    const char *format_option_name(void) const;
 
 private:
+    /**
+      * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be read.
+      */
+    input_file_msbin(const std::string &file_name);
+
     /**
       * The header_read instance variable is used to remember whether
       * the file header was read already.
@@ -155,7 +156,7 @@ private:
       * The read_file_header method is used to read the (optional) magic
       * and the file header.
       */
-    void read_file_header();
+    void read_file_header(void);
 
     // Just to be sure we can fit uint32_t in address_t.
     BOOST_STATIC_ASSERT(sizeof(record::address_t) >= sizeof(uint32_t));
@@ -164,7 +165,7 @@ private:
       * The read_dword_le method is used to read a little endian double
       * word from the input.
       */
-    uint32_t read_dword_le();
+    uint32_t read_dword_le(void);
 
     /**
       * The checksum method is used to calculate the checksum of a given
@@ -181,7 +182,7 @@ private:
     static uint32_t checksum(const unsigned char *data, size_t len);
 
     // See base class for documentation.
-    const char *mode() const;
+    const char *mode(void) const;
 
     /**
       * The default constructor.  Do not use.

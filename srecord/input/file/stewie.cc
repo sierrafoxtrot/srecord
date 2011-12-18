@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2010 Peter Miller
+// Copyright (C) 1998-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -37,7 +37,7 @@ srecord::input_file_stewie::input_file_stewie(const std::string &a_file_name) :
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_stewie::create(const std::string &a_file_name)
 {
     return pointer(new input_file_stewie(a_file_name));
@@ -258,6 +258,14 @@ srecord::input_file_stewie::read(record &result)
 
 
 const char *
+srecord::input_file_stewie::mode()
+    const
+{
+    return "rb";
+}
+
+
+const char *
 srecord::input_file_stewie::get_file_format_name()
     const
 {
@@ -266,8 +274,11 @@ srecord::input_file_stewie::get_file_format_name()
 
 
 const char *
-srecord::input_file_stewie::mode()
+srecord::input_file_stewie::format_option_name(void)
     const
 {
-    return "rb";
+    return "-Signed_BiNary";
 }
+
+
+// vim: set ts=8 sw=4 et :

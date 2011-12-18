@@ -69,7 +69,7 @@ srecord::input_file_msbin::input_file_msbin(const std::string &a_file_name) :
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_msbin::create(const std::string &a_file_name)
 {
     return pointer(new input_file_msbin(a_file_name));
@@ -77,7 +77,7 @@ srecord::input_file_msbin::create(const std::string &a_file_name)
 
 
 uint32_t
-srecord::input_file_msbin::read_dword_le()
+srecord::input_file_msbin::read_dword_le(void)
 {
     unsigned char c[sizeof(uint32_t)];
 
@@ -96,7 +96,7 @@ srecord::input_file_msbin::read_dword_le()
 
 
 void
-srecord::input_file_msbin::read_file_header()
+srecord::input_file_msbin::read_file_header(void)
 {
     // Optional magic
     static const unsigned char Magic[7] =
@@ -300,7 +300,7 @@ srecord::input_file_msbin::read(record &result)
 
 
 const char *
-srecord::input_file_msbin::mode()
+srecord::input_file_msbin::mode(void)
     const
 {
     return "rb";
@@ -308,8 +308,19 @@ srecord::input_file_msbin::mode()
 
 
 const char *
-srecord::input_file_msbin::get_file_format_name()
+srecord::input_file_msbin::get_file_format_name(void)
     const
 {
     return "Windows CE Binary Image Data Format";
 }
+
+
+const char *
+srecord::input_file_msbin::format_option_name(void)
+    const
+{
+    return "-MsBin";
+}
+
+
+// vim: set ts=8 sw=4 et :

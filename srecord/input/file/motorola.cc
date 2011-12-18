@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2005-2010 Peter Miller
+// Copyright (C) 1998-2003, 2005-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -28,7 +28,8 @@ srecord::input_file_motorola::~input_file_motorola()
 
 
 srecord::input_file_motorola::input_file_motorola(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     input_file(a_file_name),
     data_count(0),
     garbage_warning(false),
@@ -40,7 +41,7 @@ srecord::input_file_motorola::input_file_motorola(
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_motorola::create(const std::string &a_file_name)
 {
     return pointer(new input_file_motorola(a_file_name));
@@ -334,8 +335,19 @@ srecord::input_file_motorola::read(record &record)
 
 
 const char *
-srecord::input_file_motorola::get_file_format_name()
+srecord::input_file_motorola::get_file_format_name(void)
     const
 {
     return "Motorola S-Record";
 }
+
+
+const char *
+srecord::input_file_motorola::format_option_name(void)
+    const
+{
+    return "-Motorola";
+}
+
+
+// vim: set ts=8 sw=4 et :

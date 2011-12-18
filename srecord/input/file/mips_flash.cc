@@ -40,14 +40,14 @@ srecord::input_file_mips_flash::input_file_mips_flash(
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_mips_flash::create_be(const std::string &a_file_name)
 {
     return pointer(new input_file_mips_flash(a_file_name, endian_big));
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_mips_flash::create_le(const std::string &a_file_name)
 {
     return pointer(new input_file_mips_flash(a_file_name, endian_little));
@@ -55,7 +55,7 @@ srecord::input_file_mips_flash::create_le(const std::string &a_file_name)
 
 
 void
-srecord::input_file_mips_flash::tokenizer()
+srecord::input_file_mips_flash::tokenizer(void)
 {
     for (;;)
     {
@@ -204,7 +204,7 @@ srecord::input_file_mips_flash::read(record &result)
 
 
 const char *
-srecord::input_file_mips_flash::get_file_format_name()
+srecord::input_file_mips_flash::get_file_format_name(void)
     const
 {
     return
@@ -214,6 +214,21 @@ srecord::input_file_mips_flash::get_file_format_name()
             "MIPS Flash (big-endian)"
         :
             "MIPS Flash (little-endian)"
+        );
+}
+
+
+const char *
+srecord::input_file_mips_flash::format_option_name(void)
+    const
+{
+    return
+        (
+            endian == endian_big
+        ?
+            "-Mips_Flash_BigEndian"
+        :
+            "-Mips_Flash_LittleEndian"
         );
 }
 

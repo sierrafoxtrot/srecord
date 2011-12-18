@@ -56,6 +56,9 @@ protected:
     // See base class for documentation.
     const char *mode(void) const;
 
+    // See base class for documentation.
+    const char *format_option_name(void) const;
+
 private:
     /**
       * The constructor.

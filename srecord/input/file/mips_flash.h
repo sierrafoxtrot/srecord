@@ -37,7 +37,6 @@ public:
       */
     virtual ~input_file_mips_flash();
 
-public:
     /**
       * The create_be class method is used to create new dynamically
       * allocated instances of this class, big-endian byte order.
@@ -66,7 +65,10 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name(void) const;
+
+    // See base class for documentation.
+    const char *format_option_name(void) const;
 
 private:
     /**

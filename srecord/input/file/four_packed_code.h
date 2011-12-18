@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001-2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2001-2003, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -38,17 +38,6 @@ public:
       */
     virtual ~input_file_four_packed_code();
 
-private:
-    /**
-      * The constructor.  The input will be read from the named file
-      * (or the standard input if the name is "-").
-      *
-      * @param file_name
-      *     The name of the file to be read.
-      */
-    input_file_four_packed_code(const std::string &file_name);
-
-public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
@@ -65,9 +54,21 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name(void) const;
+
+    // See base class for documentation.
+    const char *format_option_name(void) const;
 
 private:
+    /**
+      * The constructor.  The input will be read from the named file
+      * (or the standard input if the name is "-").
+      *
+      * @param file_name
+      *     The name of the file to be read.
+      */
+    input_file_four_packed_code(const std::string &file_name);
+
     /**
       * The read_inner method is used to read a record (one line)
       * from the input file.  Lines which don't start with "$"
@@ -81,13 +82,13 @@ private:
       * bytes) at a time.  The usual get_word (etc) continue to work
       * without additional modifications.
       */
-    int get_byte();
+    int get_byte(void);
 
     /**
       * The get_digit method is used to fetch one base85 digit from
       * the input.
       */
-    int get_digit();
+    int get_digit(void);
 
     /**
       * The get_byte_pos instance variable is used by the get_byte

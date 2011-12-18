@@ -1,6 +1,6 @@
 //
 // srecord - The "srecord" program.
-// Copyright (C) 2007, 2008, 2010 Peter Miller
+// Copyright (C) 2007, 2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -27,14 +27,15 @@ srecord::input_file_brecord::~input_file_brecord()
 
 
 srecord::input_file_brecord::input_file_brecord(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     input_file(a_file_name),
     seen_some_input(false)
 {
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_brecord::create(const std::string &a_file_name)
 {
     return pointer(new input_file_brecord(a_file_name));
@@ -85,8 +86,19 @@ srecord::input_file_brecord::read(record &result)
 
 
 const char *
-srecord::input_file_brecord::get_file_format_name()
+srecord::input_file_brecord::get_file_format_name(void)
     const
 {
     return "Motorola MC68EZ328 bootstrap b-record";
 }
+
+
+const char *
+srecord::input_file_brecord::format_option_name(void)
+    const
+{
+    return "-B_Record";
+}
+
+
+// vim: set ts=8 sw=4 et :

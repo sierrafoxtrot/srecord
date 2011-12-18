@@ -37,16 +37,6 @@ public:
       */
     virtual ~input_file_brecord();
 
-private:
-    /**
-      * The constructor.
-      *
-      * @param file_name
-      *     The name of the file to be read.
-      */
-    input_file_brecord(const std::string &file_name);
-
-public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
@@ -63,9 +53,20 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name(void) const;
+
+    // See base class for documentation.
+    const char *format_option_name(void) const;
 
 private:
+    /**
+      * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be read.
+      */
+    input_file_brecord(const std::string &file_name);
+
     /**
       * The read_inner method is used to read a record from the file.
       * The read method is a wrapper around it.

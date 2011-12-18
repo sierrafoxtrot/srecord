@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2003, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +27,8 @@ srecord::input_file_formatted_binary::~input_file_formatted_binary()
 
 
 srecord::input_file_formatted_binary::input_file_formatted_binary(
-        const std::string &a_file_name) :
+    const std::string &a_file_name
+) :
     input_file(a_file_name),
     header_seen(false),
     upper_bound(0),
@@ -38,7 +39,7 @@ srecord::input_file_formatted_binary::input_file_formatted_binary(
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_formatted_binary::create(const std::string &a_file_name)
 {
     return pointer(new input_file_formatted_binary(a_file_name));
@@ -162,7 +163,15 @@ srecord::input_file_formatted_binary::read(record &result)
 
 
 const char *
-srecord::input_file_formatted_binary::get_file_format_name()
+srecord::input_file_formatted_binary::mode(void)
+    const
+{
+    return "rb";
+}
+
+
+const char *
+srecord::input_file_formatted_binary::get_file_format_name(void)
     const
 {
     return "Formatted Binary";
@@ -170,8 +179,11 @@ srecord::input_file_formatted_binary::get_file_format_name()
 
 
 const char *
-srecord::input_file_formatted_binary::mode()
+srecord::input_file_formatted_binary::format_option_name(void)
     const
 {
-    return "rb";
+    return "-Formatted_Binary";
 }
+
+
+// vim: set ts=8 sw=4 et :

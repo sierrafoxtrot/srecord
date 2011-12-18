@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000, 2002, 2003, 2005-2008, 2010 Peter Miller
+// Copyright (C) 2000, 2002, 2003, 2005-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -30,7 +30,8 @@ srecord::input_file_ascii_hex::~input_file_ascii_hex()
 
 
 srecord::input_file_ascii_hex::input_file_ascii_hex(
-        const std::string &a_filename) :
+    const std::string &a_filename
+) :
     input_file(a_filename),
     garbage_warning(false),
     seen_some_input(false),
@@ -40,7 +41,7 @@ srecord::input_file_ascii_hex::input_file_ascii_hex(
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_ascii_hex::create(const std::string &a_filename)
 {
     return pointer(new input_file_ascii_hex(a_filename));
@@ -184,3 +185,14 @@ srecord::input_file_ascii_hex::get_file_format_name()
 {
     return "Ascii Hex";
 }
+
+
+const char *
+srecord::input_file_ascii_hex::format_option_name(void)
+    const
+{
+    return "-Ascii_Hexadecimal";
+}
+
+
+// vim: set ts=8 sw=4 et :

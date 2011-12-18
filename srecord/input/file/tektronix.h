@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 1998-2003, 2006-2008, 2010, 2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -37,16 +37,6 @@ public:
       */
     virtual ~input_file_tektronix();
 
-private:
-    /**
-      * The constructor.
-      *
-      * @param file_name
-      *     The name of the file to be read.
-      */
-    input_file_tektronix(const std::string &file_name);
-
-public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
@@ -63,22 +53,33 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name(void) const;
+
+    // See base class for documentation.
+    const char *format_option_name(void) const;
 
 private:
+    /**
+      * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be read.
+      */
+    input_file_tektronix(const std::string &file_name);
+
     /**
       * The get_nibble method gets a single hex-digit from input.
       * We override the one in the base class because the checksum is
       * nibble-based, not byte-based.
       */
-    int get_nibble();
+    int get_nibble(void);
 
     /**
       * The get_byte method gets a two hex-digit from input and assembles
       * them (big-endian) into a byte.  We override the one in the base
       * class because the checksum is nibble-based, not byte-based.
       */
-    int get_byte();
+    int get_byte(void);
 
     /**
       * The read_inner methos is used to read a single record from

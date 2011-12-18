@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2005-2010 Peter Miller
+// Copyright (C) 1998-2003, 2005-2011 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -28,7 +28,8 @@ srecord::input_file_tektronix::~input_file_tektronix()
 
 
 srecord::input_file_tektronix::input_file_tektronix(
-        const std::string &a_filename) :
+    const std::string &a_filename
+) :
     srecord::input_file(a_filename),
     data_record_count(0),
     garbage_warning(false),
@@ -38,7 +39,7 @@ srecord::input_file_tektronix::input_file_tektronix(
 }
 
 
-srecord::input::pointer
+srecord::input_file::pointer
 srecord::input_file_tektronix::create(const std::string &a_file_name)
 {
     return pointer(new srecord::input_file_tektronix(a_file_name));
@@ -46,7 +47,7 @@ srecord::input_file_tektronix::create(const std::string &a_file_name)
 
 
 int
-srecord::input_file_tektronix::get_nibble()
+srecord::input_file_tektronix::get_nibble(void)
 {
     int n = srecord::input_file::get_nibble();
     checksum_add(n);
@@ -55,7 +56,7 @@ srecord::input_file_tektronix::get_nibble()
 
 
 int
-srecord::input_file_tektronix::get_byte()
+srecord::input_file_tektronix::get_byte(void)
 {
     // this differs from the srecord::input_file method only in that we
     // don't add to the checksum.
@@ -207,8 +208,19 @@ srecord::input_file_tektronix::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_tektronix::get_file_format_name()
+srecord::input_file_tektronix::get_file_format_name(void)
     const
 {
     return "Tektronix (16-bit)";
 }
+
+
+const char *
+srecord::input_file_tektronix::format_option_name(void)
+    const
+{
+    return "-Tektronix";
+}
+
+
+// vim: set ts=8 sw=4 et :

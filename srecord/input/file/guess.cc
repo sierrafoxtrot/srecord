@@ -17,6 +17,8 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#include <cctype>
+
 #include <srecord/quit/exception.h>
 #include <srecord/input/file/aomf.h>
 #include <srecord/input/file/ascii_hex.h>
@@ -55,7 +57,7 @@
 #include <srecord/record.h>
 
 
-typedef srecord::input::pointer (*func_p)(const std::string &file_name);
+typedef srecord::input_file::pointer (*func_p)(const std::string &file_name);
 
 static func_p table[] =
 {
@@ -98,7 +100,41 @@ static func_p table[] =
 #define ENDOF(a) ((a) + SIZEOF(a))
 
 
-srecord::input::pointer
+static std::string
+abbreviate(const char *s)
+{
+    std::string result;
+    for (;;)
+    {
+        unsigned char c = *s++;
+        switch (c)
+        {
+        case '\0':
+            return result;
+
+        case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g':
+        case 'h': case 'i': case 'j': case 'k': case 'l': case 'm': case 'n':
+        case 'o': case 'p': case 'q': case 'r': case 's': case 't': case 'u':
+        case 'v': case 'w': case 'x': case 'y': case 'z': case '_':
+            break;
+
+        case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G':
+        case 'H': case 'I': case 'J': case 'K': case 'L': case 'M': case 'N':
+        case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T': case 'U':
+        case 'V': case 'W': case 'X': case 'Y': case 'Z':
+            c = tolower(c);
+            result += c;
+            break;
+
+        default:
+            result += c;
+            break;
+        }
+    }
+}
+
+
+srecord::input_file::pointer
 srecord::input_file::guess(const std::string &fn)
 {
     if (fn.empty() || fn == "-")
@@ -119,7 +155,7 @@ srecord::input_file::guess(const std::string &fn)
         // Create a new file reader
         //
         func_p func = *tp;
-        srecord::input::pointer ifp = func(fn);
+        srecord::input_file::pointer ifp = func(fn);
         try
         {
             //
@@ -135,20 +171,31 @@ srecord::input_file::guess(const std::string &fn)
             //
             if (ifp->read(record))
             {
+                const char *option = ifp->format_option_name();
+                quit_default.message
+                (
+                    "%s: the file format can be accessed directly with "
+                        "the %s command line option (%s)",
+                    fn.c_str(),
+                    option,
+                    abbreviate(option).c_str()
+                );
+
                 //
                 // It is necessary to nuke the old file reader.
-                // (a) Because it has the wrong quitter, but more
-                // importantly (b) because it is no longer positioned
-                // at the start of the file, and the user *will* miss
-                // some data, also (c) we need a chance to use the
-                // input::command_line() method.
+                // (a) Because it has the wrong quitter, but more importantly
+                // (b) because it is no longer positioned at the start of the
+                //     file, and the user *will* miss some data, also
+                // (c) we need a chance to use the input::command_line()
+                //     method.
                 //
                 ifp.reset();
 
                 //
                 // Return a brand-new file reader.
                 //
-                return func(fn);
+                ifp = func(fn);
+                return ifp;
             }
         }
         catch (quit_exception::vomit)
@@ -167,8 +214,11 @@ srecord::input_file::guess(const std::string &fn)
     //
     quit_default.warning
     (
-        "%s: unable to determine the file format, assuming binary",
+        "%s: unable to determine the file format, assuming -Binary",
         fn.c_str()
     );
     return srecord::input_file_binary::create(fn);
 }
+
+
+// vim: set ts=8 sw=4 et :

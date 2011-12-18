@@ -36,16 +36,6 @@ public:
       */
     virtual ~input_file_idt();
 
-private:
-    /**
-      * The constructor.
-      *
-      * @param file_name
-      *     The name of the file to be read.
-      */
-    input_file_idt(const std::string &file_name);
-
-public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
@@ -67,7 +57,18 @@ protected:
     // See base class for documentation.
     const char *mode(void) const;
 
+    // See base class for documentation.
+    const char *format_option_name(void) const;
+
 private:
+    /**
+      * The constructor.
+      *
+      * @param file_name
+      *     The name of the file to be read.
+      */
+    input_file_idt(const std::string &file_name);
+
     /**
       * The data_count instance variable is used to remember the number
       * of data lines has occurred fo far in the input file.
