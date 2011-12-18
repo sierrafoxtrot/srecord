@@ -33,17 +33,16 @@ srecord::input_file::input_file() :
     prev_was_newline(false),
     vfp(stdin),
     checksum(0),
-    is_text(false),
     ignore_checksums(ignore_checksums_default)
 {
 }
 
 
-const char *
-srecord::input_file::mode()
+bool
+srecord::input_file::is_binary(void)
     const
 {
-    return "r";
+    return false;
 }
 
 
@@ -53,7 +52,6 @@ srecord::input_file::input_file(const std::string &a_file_name) :
     prev_was_newline(false),
     vfp(0),
     checksum(0),
-    is_text(false),
     ignore_checksums(ignore_checksums_default)
 {
     if (file_name == "-")
@@ -65,7 +63,7 @@ srecord::input_file::input_file(const std::string &a_file_name) :
     {
         //
         // The call to fopen is deferred until the constructor has
-        // completed.  This is so that the virtual mode() method
+        // completed.  This is so that the virtual is_binary() method
         // is available (it isn't in the base class constructor).
         //
     }
@@ -73,22 +71,24 @@ srecord::input_file::input_file(const std::string &a_file_name) :
 
 
 void *
-srecord::input_file::get_fp()
+srecord::input_file::get_fp(void)
 {
     if (!vfp)
     {
         //
         // The call to fopen is deferred until the constructor has
-        // completed.  This is so that the virtual mode() method
+        // completed.  This is so that the virtual is_binary() method
         // is available (it isn't in the base class constructor).
         //
-        const char *the_mode = mode();
+        const char *the_mode = "r";
+        if (is_binary())
+        {
+            the_mode = "rb";
+            line_number = 0;
+        }
         vfp = fopen(file_name.c_str(), the_mode);
         if (!vfp)
-                fatal_error_errno("open");
-        is_text = !strchr(the_mode, 'b');
-        if (!is_text)
-            line_number = 0;
+            fatal_error_errno("open");
     }
     return vfp;
 }
@@ -103,7 +103,7 @@ srecord::input_file::~input_file()
 
 
 std::string
-srecord::input_file::filename()
+srecord::input_file::filename(void)
     const
 {
     return file_name;
@@ -111,13 +111,13 @@ srecord::input_file::filename()
 
 
 std::string
-srecord::input_file::filename_and_line()
+srecord::input_file::filename_and_line(void)
     const
 {
     if (!vfp)
         return file_name;
     char buffer[20];
-    if (is_text)
+    if (!is_binary())
         sprintf(buffer, ": %d", line_number);
     else
         sprintf(buffer, ": 0x%04X", line_number);
@@ -126,7 +126,7 @@ srecord::input_file::filename_and_line()
 
 
 int
-srecord::input_file::get_char()
+srecord::input_file::get_char(void)
 {
     FILE *fp = (FILE *)get_fp();
     if (prev_was_newline)
@@ -141,9 +141,9 @@ srecord::input_file::get_char()
         // If this is a text file, but the last character wasn't
         // a newline, insert one.
         //
-        c = ((is_text && !prev_was_newline) ? '\n' : -1);
+        c = ((!is_binary() && !prev_was_newline) ? '\n' : -1);
     }
-    else if (c == '\r' && is_text)
+    else if (c == '\r' && !is_binary())
     {
         //
         // If this is a text file, turn CRLF into LF.
@@ -162,9 +162,9 @@ srecord::input_file::get_char()
             c = '\r';
         }
     }
-    if (!is_text && c >= 0)
+    if (is_binary() && c >= 0)
         ++line_number;
-    prev_was_newline = (is_text && c == '\n');
+    prev_was_newline = (!is_binary() && c == '\n');
     return c;
 }
 
@@ -176,7 +176,7 @@ srecord::input_file::get_char_undo(int c)
     {
         FILE *fp = (FILE *)get_fp();
         prev_was_newline = false;
-        if (!is_text)
+        if (is_binary())
             --line_number;
         ungetc(c, fp);
     }
@@ -184,7 +184,7 @@ srecord::input_file::get_char_undo(int c)
 
 
 int
-srecord::input_file::peek_char()
+srecord::input_file::peek_char(void)
 {
     FILE *fp = (FILE *)get_fp();
     int c = getc(fp);
@@ -220,7 +220,7 @@ srecord::input_file::get_nibble_value(int c)
 
 
 int
-srecord::input_file::get_nibble()
+srecord::input_file::get_nibble(void)
 {
     int c = get_char();
     int n = get_nibble_value(c);
@@ -231,7 +231,7 @@ srecord::input_file::get_nibble()
 
 
 int
-srecord::input_file::get_byte()
+srecord::input_file::get_byte(void)
 {
     int c1 = get_nibble();
     int c2 = get_nibble();
@@ -242,7 +242,7 @@ srecord::input_file::get_byte()
 
 
 int
-srecord::input_file::get_word()
+srecord::input_file::get_word(void)
 {
     int b1 = get_byte();
     int b2 = get_byte();
@@ -251,7 +251,7 @@ srecord::input_file::get_word()
 
 
 unsigned long
-srecord::input_file::get_3bytes()
+srecord::input_file::get_3bytes(void)
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -261,7 +261,7 @@ srecord::input_file::get_3bytes()
 
 
 unsigned long
-srecord::input_file::get_4bytes()
+srecord::input_file::get_4bytes(void)
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -272,7 +272,7 @@ srecord::input_file::get_4bytes()
 
 
 int
-srecord::input_file::checksum_get()
+srecord::input_file::checksum_get(void)
     const
 {
     return (checksum & 0xFF);
@@ -280,7 +280,7 @@ srecord::input_file::checksum_get()
 
 
 int
-srecord::input_file::checksum_get16()
+srecord::input_file::checksum_get16(void)
     const
 {
     return (checksum & 0xFFFF);
@@ -288,7 +288,7 @@ srecord::input_file::checksum_get16()
 
 
 void
-srecord::input_file::checksum_reset()
+srecord::input_file::checksum_reset(void)
 {
     checksum = 0;
 }
@@ -302,7 +302,7 @@ srecord::input_file::checksum_add(unsigned char n)
 
 
 void
-srecord::input_file::seek_to_end()
+srecord::input_file::seek_to_end(void)
 {
     FILE *fp = (FILE *)get_fp();
     fseek(fp, 0L, SEEK_END);
@@ -310,7 +310,7 @@ srecord::input_file::seek_to_end()
 
 
 void
-srecord::input_file::disable_checksum_validation()
+srecord::input_file::disable_checksum_validation(void)
 {
     ignore_checksums = true;
 }

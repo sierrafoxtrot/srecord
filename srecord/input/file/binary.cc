@@ -77,11 +77,11 @@ srecord::input_file_binary::read(srecord::record &record)
 }
 
 
-const char *
-srecord::input_file_binary::mode()
+bool
+srecord::input_file_binary::is_binary(void)
     const
 {
-    return "rb";
+    return true;
 }
 
 

@@ -241,11 +241,11 @@ srecord::input_file_idt::read(record &record)
 }
 
 
-const char *
-srecord::input_file_idt::mode(void)
+bool
+srecord::input_file_idt::is_binary(void)
     const
 {
-    return "rb";
+    return true;
 }
 
 

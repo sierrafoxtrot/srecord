@@ -162,11 +162,11 @@ srecord::input_file_formatted_binary::read(record &result)
 }
 
 
-const char *
-srecord::input_file_formatted_binary::mode(void)
+bool
+srecord::input_file_formatted_binary::is_binary(void)
     const
 {
-    return "rb";
+    return true;
 }
 
 

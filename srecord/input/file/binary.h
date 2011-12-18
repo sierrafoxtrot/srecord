@@ -74,7 +74,7 @@ private:
     unsigned long address;
 
     // See base class for documentation.
-    const char *mode() const;
+    bool is_binary(void) const;
 
     /**
       * The default constructor.  Do not use.

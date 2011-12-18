@@ -55,7 +55,7 @@ protected:
     const char *get_file_format_name(void) const;
 
     // See base class for documentation.
-    const char *mode(void) const;
+    bool is_binary(void) const;
 
     // See base class for documentation.
     const char *format_option_name(void) const;

@@ -146,11 +146,11 @@ srecord::input_file_ppb::packet_format_error(void)
 }
 
 
-const char *
-srecord::input_file_ppb::mode(void)
+bool
+srecord::input_file_ppb::is_binary(void)
     const
 {
-    return "rb";
+    return true;
 }
 
 

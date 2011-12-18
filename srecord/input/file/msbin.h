@@ -182,7 +182,7 @@ private:
     static uint32_t checksum(const unsigned char *data, size_t len);
 
     // See base class for documentation.
-    const char *mode(void) const;
+    bool is_binary(void) const;
 
     /**
       * The default constructor.  Do not use.

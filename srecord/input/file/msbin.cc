@@ -299,11 +299,11 @@ srecord::input_file_msbin::read(record &result)
 }
 
 
-const char *
-srecord::input_file_msbin::mode(void)
+bool
+srecord::input_file_msbin::is_binary(void)
     const
 {
-    return "rb";
+    return true;
 }
 
 

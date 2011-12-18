@@ -257,11 +257,11 @@ srecord::input_file_stewie::read(record &result)
 }
 
 
-const char *
-srecord::input_file_stewie::mode()
+bool
+srecord::input_file_stewie::is_binary(void)
     const
 {
-    return "rb";
+    return true;
 }
 
 

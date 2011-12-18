@@ -157,11 +157,11 @@ srecord::input_file_dec_binary::read(srecord::record &record)
 }
 
 
-const char *
-srecord::input_file_dec_binary::mode()
+bool
+srecord::input_file_dec_binary::is_binary(void)
     const
 {
-    return "rb";
+    return true;
 }
 
 

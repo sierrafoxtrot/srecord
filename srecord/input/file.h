@@ -208,12 +208,11 @@ protected:
     void seek_to_end(void);
 
     /**
-      * The mode method is used to return a suitable mode string for
-      * an fopen call.  The default implementation is "r", assuming
-      * a text file.  Other file formats may need to override this
-      * if they have other needs (e.g. "rb" for binary).
+      * The is_binary method is used to to determine whether or not
+      * a file format is binary (true) of text (false).  The default
+      * implementation always returns false (text).
       */
-    virtual const char *mode(void) const;
+    virtual bool is_binary(void) const;
 
 private:
     /**
@@ -254,9 +253,9 @@ protected:
     /**
       * The checksum instance variable is used record the running
       * checksum.  NEVER access this variable directly.  Always use
-      * the checksum_reset() method to set it mack to its initial state.
+      * the #checksum_reset method to set it mack to its initial state.
       * Always use the checksum_add method to add a byte to it.
-      * Always use the checksum_get() or checksum_get16() methods to
+      * Always use the #checksum_get or #checksum_get16 methods to
       * read its value.
       */
     int checksum;
@@ -271,18 +270,6 @@ protected:
     bool use_checksums(void) const { return !ignore_checksums; }
 
 private:
-    /**
-      * The is_text instance variable is used remember if a file mode
-      * is text (true) or binary (false).  This information is  used
-      * by the get_char method to decide to increment the line number
-      * or not, and by the filename_and_line method to decide whether
-      * or not to include the line number in the location reported.
-      *
-      * This instance variable is set by the get_fp method when it
-      * opens the file.
-      */
-    bool is_text;
-
     /**
       * The ignore_checksums instance variable is used to remember
       * whether or not checksums should be ignored (true) or validated

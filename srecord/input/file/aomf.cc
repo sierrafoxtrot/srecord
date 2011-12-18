@@ -303,11 +303,11 @@ srecord::input_file_aomf::read(srecord::record &record)
 }
 
 
-const char *
-srecord::input_file_aomf::mode()
+bool
+srecord::input_file_aomf::is_binary(void)
     const
 {
-    return "rb";
+    return true;
 }
 
 

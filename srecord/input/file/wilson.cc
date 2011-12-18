@@ -211,11 +211,11 @@ srecord::input_file_wilson::read(record &record)
 }
 
 
-const char *
-srecord::input_file_wilson::mode(void)
+bool
+srecord::input_file_wilson::is_binary(void)
     const
 {
-    return "rb";
+    return true;
 }
 
 
