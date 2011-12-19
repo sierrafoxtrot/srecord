@@ -41,7 +41,9 @@ web-site =
     ]
     [fromto etc/%.png.uue archive/%.png
         [match_mask etc/%.png.uue [source_files]]
-    ];
+    ]
+    html-documentation
+    ;
 
 source_file_order =
     README
@@ -428,4 +430,18 @@ debian-package: archive/[project_minus].tar.gz
     rm -rf [project_minus] &&
     lintian -iIv --pedantic *.changes
     ;
+}
+
+
+archive/man/index.html: [stringset [html-documentation] - [target]]
+    etc/man-html-index.sh
+    set shallow
+{
+    if [not [verbose]] then
+        function print GEN [target];
+
+    sh [resolve etc/man-html-index.sh]
+        [stringset [need] - etc/man-html-index.sh]
+        > [target]
+        ;
 }

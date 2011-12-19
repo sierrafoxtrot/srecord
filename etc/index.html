@@ -79,7 +79,7 @@ href="windows.html" >do it yourself</a>, or you could consider upgrading
 to Linux.
 </blockquote>
 <p><br clear="all" />
-<table><tr><td valign="top" width="60%" rowspan=4 bgcolor="#ccffcc">
+<table><tr><td valign="top" width="60%" rowspan=5 bgcolor="#ccffcc">
 <p align=center>
 <img src="doc_chip.png" align="right" width=98 height=128 />
 <b>The File Formats</b></p>
@@ -305,6 +305,9 @@ If you have a description of other EPROM load file formats that SRecord
 does not yet understand, please <a href="mailto:pmiller@opensource.org.au"
 >let me know</a>, and they can be added.
 </dl>
+<p>
+The manual pages are also available <a href="man/index.html"
+>from this web site</a>.
 </td><td valign="top" width="40%" bgcolor="#ccccff">
 <p align=center>
 <img src="doc_cat.png" align="right" width=98 height=128 />
@@ -313,7 +316,7 @@ does not yet understand, please <a href="mailto:pmiller@opensource.org.au"
 A number of tools are include in the <i>SRecord</i> package.
 All of the tools understand all of the file formats, and all of the filters.
 <dl><dt>
-srec_cat
+<a href="man/man1/srec_cat.html" >srec_cat</a>
 <dd>
 The <i>srec_cat</i> program may be used to catenate (join) EPROM load
 files, or portions of EPROM load files, together.  Because it understands
@@ -322,17 +325,20 @@ files from one format to another.
 It also understands <i>filters</i>, see below.
 <p>
 <dt>
-srec_cmp
+<a href="man/man1/srec_cmp.html" >srec_cmp</a>
 <dd>
 The <i>srec_cmp</i> program may be used to compare EPROM load files,
 or portions of EPROM load files, for equality.
 <p>
 <dt>
-srec_info
+<a href="man/man1/srec_info.html" >srec_info</a>
 <dd>
 The <i>srec_info</i> program may be used to print summary information
 about EPROM load files.
 </dl>
+<p>
+The manual pages are also available <a href="man/index.html"
+>from this web site</a>.
 </td></tr>
 <tr><td bgcolor="#ffffcc">
 <p align=center>
@@ -415,8 +421,9 @@ More than one filter may be applied to each input file.
 Different filters may be applied to each input file.
 All filters may be applied to all file formats.
 <p>
-There are many more filters available, see the <i>srec_input</i>(1) man
-page for more information.
+There are many more filters available, see the <a
+href="man/man1/srec_input.html" ><i>srec_input</i>(1)</a> man page for
+more information.
 </td></tr>
 <tr><td bgcolor="#ffccff">
 <p align=center>
@@ -451,7 +458,20 @@ library is available <a href="srecord/index.html" >here on the web
 site</a>.  The shared library may be used to read and write all of the
 formats, and use all of the filters, in your own projects.
 It also makes the installed executables smaller.
-</td></tr></table>
+</td></tr>
+<tr><td bgcolor="ffffcc">
+<p align=center>
+<img src="doc_chip.png" align="right" width=98 height=128 />
+<b> Documentation </b></p>
+<p>
+<ul>
+<li> The complete project documentation, including all of the manual pages, is
+    <a href="srecord-\*(v).pdf" >available as a single PDF file</a>.
+<li> The Manual Pages are also <a href="man/index.html"
+     >available as individual HTML pages</a>.
+</ul>
+</td></tr>
+</table>
 
 <h2> See Also </h2>
 For a similar idea, applied to text files rather than EPROM load files,
@@ -459,6 +479,10 @@ see the <a href="http://uncia.sourceforge.net/" >Uncia</a> project.
 <br/>
 For a similar idea, applied to file systems rather than EPROM load files,
 see the <a href="http://plasticfs.sourceforge.net/" >PlasticFS</a> project.
+<br/>
+For a similar idea, applied to archive files (tar, cpio, ar) rather
+than EPROM load files, see the <a href="http://tardy.sourceforge.net/"
+>Tardy</a> project.
 .\" ------------------------------------------------------------------------
 <hr>
 <table border=0><tr><td valign="top">
