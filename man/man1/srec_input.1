@@ -1,6 +1,6 @@
 '\" t
 .\" srecord - The "srecord" program.
-.\" Copyright (C) 1998-2011 Peter Miller
+.\" Copyright (C) 1998-2012 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -484,6 +484,27 @@ The following additional modifiers are understood:
 .TP 8n
 \f[I]number\fP
 Set the polynomial to be used to the given number.
+.TP 8n
+\fB\-POLYnomial\fP \f[I]name\fP
+.RS
+This option may be used to set the CRC polynomial to be used, by name.
+The known names include:
+.RS
+.TS
+tab(;);
+l r.
+ibm;0x8005
+ansi;0x8005
+ccitt;0x1021
+t10\[hy]dif;0x8bb7
+dnp;0x3d65
+dect;0x0589
+.TE
+.RE
+.PP
+See http://en.wikipedia.org/wiki/Cyclic_redundancy_check for a table of
+names and values.
+.RE
 .TP 8n
 \fB\-Most_To_Least\fP
 The CRC calculation is performed with the most significant bit in each

@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2003, 2006-2010 Peter Miller
+// Copyright (C) 2000-2003, 2006-2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -85,6 +85,29 @@ srecord::input_filter_message_crc16::command_line(arglex_tool *cmdln)
         case arglex_tool::token_crc16_ccitt:
             seed_mode = crc16::seed_mode_ccitt;
             polynomial = crc16::polynomial_ccitt;
+            cmdln->token_next();
+            break;
+
+        case arglex_tool::token_polynomial:
+            // polynomial = crc16::polynomial_ansi;
+            switch (cmdln->token_next())
+            {
+            case arglex::token_number:
+                polynomial = cmdln->value_number();
+                break;
+
+            case arglex_tool::token_crc16_ccitt:
+                polynomial = crc16::polynomial_ccitt;
+                break;
+
+            case arglex::token_string:
+                polynomial =
+                    crc16::polynomial_by_name(cmdln->value_string().c_str());
+                break;
+
+            default:
+                fatal_error("expected --polynomial <name>");
+            }
             cmdln->token_next();
             break;
 

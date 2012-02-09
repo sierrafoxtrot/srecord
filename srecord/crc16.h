@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2003, 2006-2010 Peter Miller
+// Copyright (C) 2000-2003, 2006-2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -42,10 +42,42 @@ namespace srecord
 class crc16
 {
 public:
+    // See http://en.wikipedia.org/wiki/Cyclic_redundancy_check
+    // for table of polynomials.
     enum
     {
-        polynomial_ccitt = 0x1021 // also xmodem
+        /**
+          * X.25, V.41, HDLC, XMODEM, Bluetooth, SD, CRC-CCITT
+          */
+        polynomial_ccitt = 0x1021,
+
+        /**
+          * CRC-16-IBM, Bisync, Modbus, USB, ANSI X3.28, CRC-16-ANSI
+          */
+        polynomial_ansi = 0x8005,
+
+        /**
+          * CRC-16-DNP, DNP, IEC 870, M-Bus
+          */
+        polynomial_dnp = 0x3D65,
+
+        /**
+          * CRC-16-DECT
+          */
+        polynomial_dect = 0x0589,
+
+        /**
+          * CRC-16-T10-DIF, SCSI DIF
+          */
+        polynomial_t10_dif = 0x8BB7,
     };
+
+    /**
+      * The polynomial_by_name class method is used to take the name
+      * of a CRC-16 polynamlial, and return the value of the CRC-16
+      * polynomial corresponding to that name.
+      */
+    static int polynomial_by_name(const char *name);
 
     enum seed_mode_t
     {

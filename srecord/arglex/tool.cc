@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2011 Peter Miller
+// Copyright (C) 1998-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -165,6 +165,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-Output", token_output, },
         { "-Output_Words", token_output_word, },
         { "-OVer", token_over, },
+        { "-POLYnomial", token_polynomial },
         { "-Prom_Pogrammer_Binary", token_ppb, },
         { "-Prom_Pogrammer_heXadecimal", token_ppx, },
         { "-RAM", token_ram, },

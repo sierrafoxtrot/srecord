@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2002, 2006-2010 Peter Miller
+// Copyright (C) 2000-2002, 2006-2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -28,8 +28,13 @@
 // See test/01/t0150a.sh for test vectors.
 //
 
+#include <cstring>
+#include <string>
+
 #include <srecord/bitrev.h>
 #include <srecord/crc16.h>
+#include <srecord/quit.h>
+#include <srecord/sizeof.h>
 
 //
 // Use a seed of 0xFFFF when augmenting manually (i.e. augmenting by 16
@@ -301,4 +306,55 @@ srecord::crc16::print_table()
             printf("\n");
     }
     printf("};\n");
+}
+
+
+int
+srecord::crc16::polynomial_by_name(const char *name)
+{
+    struct table_t
+    {
+        const char *name;
+        int value;
+    };
+
+    static const table_t table[] =
+    {
+        { "ansi", polynomial_ansi },
+        { "bisync", polynomial_ansi },
+        { "bluetooth", polynomial_ccitt },
+        { "ccitt", polynomial_ccitt },
+        { "dnp", polynomial_dnp },
+        { "hdlc", polynomial_ccitt },
+        { "ibm", polynomial_ansi },
+        { "iec-870", polynomial_dnp },
+        { "m-bus", polynomial_dnp },
+        { "modbus", polynomial_ansi },
+        { "scsi-dif", polynomial_t10_dif },
+        { "sd", polynomial_ccitt },
+        { "t10-dif", polynomial_t10_dif },
+        { "usb", polynomial_ansi },
+        { "v.41", polynomial_ccitt },
+        { "x.25", polynomial_ccitt },
+        { "x3.28", polynomial_ansi },
+        { "xmodem", polynomial_ccitt },
+    };
+
+    std::string names;
+    for (const table_t *tp = table; tp < ENDOF(table); ++tp)
+    {
+        if (0 == strcasecmp(name, tp->name))
+            return tp->value;
+        if (!names.empty())
+            names += ", ";
+        names += tp->name;
+    }
+
+    quit_default.fatal_error
+    (
+        "CRC-16 polynomial name \"%s\" unknown (known names are %s)",
+        name,
+        names.c_str()
+    );
+    return polynomial_ccitt;
 }

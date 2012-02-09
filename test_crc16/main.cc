@@ -1,6 +1,6 @@
 //
 // srecord - The "srecord" program.
-// Copyright (C) 2007-2010 Peter Miller
+// Copyright (C) 2007-2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 
 
 static void
-usage()
+usage(void)
 {
     fprintf(stderr, "Usage: [ -av ] %s\n", srecord::progname_get());
     exit(1);
@@ -85,7 +85,12 @@ main(int argc, char **argv)
             break;
 
         case 'p':
-            polynomial = strtol(optarg, 0, 0);
+            {
+                char *ep = 0;
+                polynomial = strtol(optarg, &ep, 0);
+                if (ep == optarg || *ep)
+                    polynomial = srecord::crc16::polynomial_by_name(optarg);
+            }
             break;
 
         case 'r':
