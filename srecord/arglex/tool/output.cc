@@ -1,16 +1,16 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001-2004, 2006-2011 Peter Miller
+// Copyright (C) 2001-2004, 2006-2012 Peter Miller
 //
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or (at
-// your option) any later version.
+// This program is free software; you can redistribute it and/or modify it
+// under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or (at your
+// option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// General Public License for more details.
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+// more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
@@ -55,6 +55,7 @@
 #include <srecord/output/file/ti_tagged.h>
 #include <srecord/output/file/ti_tagged_16.h>
 #include <srecord/output/file/ti_txt.h>
+#include <srecord/output/file/trs80.h>
 #include <srecord/output/file/vhdl.h>
 #include <srecord/output/file/vmem.h>
 #include <srecord/output/file/wilson.h>
@@ -311,6 +312,11 @@ srecord::arglex_tool::get_output()
         ofp = srecord::output_file_ti_txt::create(fn);
         break;
 
+    case token_trs80:
+        token_next();
+        ofp = srecord::output_file_trs80::create(fn);
+        break;
+
     case token_vhdl:
         token_next();
         ofp = srecord::output_file_vhdl::create(fn);
@@ -338,3 +344,6 @@ srecord::arglex_tool::get_output()
     //
     return ofp;
 }
+
+
+// vim: set ts=8 sw=4 et :

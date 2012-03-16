@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2008, 2010, 2011 Peter Miller
+// Copyright (C) 2008, 2010-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -39,6 +39,35 @@ enum endian_t
   *     a C string
   */
 const char *endian_to_string(endian_t x);
+
+/**
+  * The decode_word_be function is used to decode a big-endian 2-byte
+  * data buffer into an unsigned short value.
+  *
+  * @param data
+  *     The data to be decoded
+  */
+unsigned short decode_word_be(const unsigned char *data);
+
+/**
+  * The decode_word_le function is used to decode a little-endian 2-byte
+  * data buffer into an unsigned short value.
+  *
+  * @param data
+  *     The data to be decoded
+  */
+unsigned short decode_word_le(const unsigned char *data);
+
+/**
+  * The decode_word_le function is used to decode a little-endian 2-byte
+  * data buffer into an unsigned short value.
+  *
+  * @param data
+  *     The data to be decoded
+  * @param order
+  *     The order of the bytes to be decoded.
+  */
+unsigned short endian_decode_word(const unsigned char *data, endian_t order);
 
 };
 

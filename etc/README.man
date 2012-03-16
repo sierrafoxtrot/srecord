@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2000-2004, 2006-2011 Peter Miller
+.\"     Copyright (C) 1998, 2000-2004, 2006-2012 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -166,6 +166,10 @@ Texas Instruments ti\[hy]txt
 The TI\[hy]TXT format is understood for reading and writing.  This format is
 used with the bootstrap loader of the Texas Instruments MSP430 family of
 processors.
+.TP 8n
+TRS\[hy]80
+The Radio Shack TRS\[hy]80 object file format is understood for reading
+and writing.
 .TP 8n
 VHDL
 It is possible to write VHDL file.
@@ -344,3 +348,4 @@ releases.  For excruciating and complete detail, and also credits for
 those of you who have generously sent me suggestions and bug reports,
 see the \fIetc/CHANGES.*\fP files.
 .so etc/new.so
+.\" vim: set ts=8 sw=4 et :

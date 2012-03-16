@@ -205,6 +205,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-Texas_Instruments_Tagged", token_ti_tagged, },
         { "-Texas_Instruments_TeXT", token_ti_txt, },
         { "-TIGer", token_tiger },
+        { "-TRS80", token_trs80 },
         { "-Un_Fill", token_unfill, },
         { "-UNIon", token_union, },
         { "-Un_SPlit", token_unsplit, },
@@ -354,3 +355,6 @@ srecord::arglex_tool::default_command_line_processing()
         break;
     }
 }
+
+
+// vim: set ts=8 sw=4 et :

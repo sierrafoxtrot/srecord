@@ -183,6 +183,7 @@ public:
         token_ti_tagged,
         token_ti_tagged_16,
         token_ti_txt,
+        token_trs80,
         token_unfill,
         token_union,
         token_unsplit,
@@ -451,4 +452,5 @@ private:
 
 };
 
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_ARGLEX_TOOL_H

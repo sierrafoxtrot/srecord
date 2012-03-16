@@ -1,6 +1,6 @@
 .\"
 .\" srecord - Manipulate EPROM load files
-.\" Copyright (C) 2009, 2010 Peter Miller
+.\" Copyright (C) 2009, 2010, 2012 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ Always use whole sentences in your Doxygen documentation,
 see existing code for examples.
 .PP
 Do not use upper case letters in file names.
-Do not use white space or shell special charaters in file names.
+Do not use white space or shell special characters in file names.
 .PP
 When sending a patch please use \[lq]diff \-Nur\[rq], as this will
 include your new files in the patch, and you will not need additional
@@ -47,7 +47,7 @@ See sources for examples of existing tests.
 .SH CONTRACT RATES
 It is possible to have the maintainer write your new file format or new
 filter for you.  However, if you want it done for nothing, you will be
-put at the end of a (verly) long queue of other \f[I]gratis\fP open
+put at the end of a (very) long queue of other \f[I]gratis\fP open
 source work the maintainer has yet to do.  You can jump the queue if you
 want to pay the maintainer to do the work for you.
 .PP
@@ -70,3 +70,4 @@ the issue of freeloaders is irrelevant.
 .PP
 Conversely, including contributions and patches is done \f[I]gratis\fP,
 and are usually done as promptly as time permits.
+.\" vim: set ts=8 sw=4 et :
