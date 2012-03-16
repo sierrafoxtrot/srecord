@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001, 2002, 2006-2011 Peter Miller
+// Copyright (C) 2001, 2002, 2006-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -60,7 +60,7 @@ srecord::output_file_spasm::write(const srecord::record &record)
 
     for (size_t j = 0; j < record.get_length(); j += 2)
     {
-        put_word(address / 2);
+        put_word_be(address / 2);
         put_char(' ');
         if (end == endian_big)
         {
@@ -121,3 +121,6 @@ srecord::output_file_spasm::format_name()
 {
     return "Spasm";
 }
+
+
+// vim: set ts=8 sw=4 et :

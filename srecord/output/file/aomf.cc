@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2004, 2006-2011 Peter Miller
+// Copyright (C) 2004, 2006-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -49,7 +49,7 @@ srecord::output_file_aomf::emit_record(int type, const unsigned char *data,
 {
     checksum_reset();
     put_byte(type);
-    put_word(length + 1);
+    put_word_le(length + 1);
     for (size_t j = 0; j < length; ++j)
         put_byte(data[j]);
     put_byte(-checksum_get());
@@ -123,14 +123,6 @@ srecord::output_file_aomf::put_byte(unsigned char n)
     checksum_add(n);
     put_char(n);
     byte_offset++;
-}
-
-
-void
-srecord::output_file_aomf::put_word(int n)
-{
-    put_byte(n);
-    put_byte(n >> 8);
 }
 
 
@@ -212,3 +204,6 @@ srecord::output_file_aomf::format_name()
 {
     return "AOMF";
 }
+
+
+// vim: set ts=8 sw=4 et :

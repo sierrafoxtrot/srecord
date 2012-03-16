@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2007-2011 Peter Miller
+// Copyright (C) 2007-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -75,7 +75,7 @@ void
 srecord::output_file_ti_tagged_16::put_eoln()
 {
     put_char('7');
-    put_word(-csum);
+    put_word_be(-csum);
     put_char('F');
     put_char('\n');
 }
@@ -125,7 +125,7 @@ srecord::output_file_ti_tagged_16::write(const srecord::record &record)
                 if (column + 5 > line_length)
                     put_eoln();
                 put_char('9');
-                put_word(address >> 1);
+                put_word_be(address >> 1);
             }
             size_t pos = 0;
             for (; pos + 2 <= record.get_length(); pos += 2)
@@ -210,3 +210,6 @@ srecord::output_file_ti_tagged_16::format_name()
 {
     return "TI-Tagged-16";
 }
+
+
+// vim: set ts=8 sw=4 et :

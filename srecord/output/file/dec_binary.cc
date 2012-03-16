@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001, 2002, 2006-2011 Peter Miller
+// Copyright (C) 2001, 2002, 2006-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -60,14 +60,6 @@ srecord::output_file_dec_binary::put_byte(unsigned char n)
 
 
 void
-srecord::output_file_dec_binary::put_word(int n)
-{
-    put_byte(n);
-    put_byte(n >> 8);
-}
-
-
-void
 srecord::output_file_dec_binary::write(const srecord::record &record)
 {
     switch (record.get_type())
@@ -105,9 +97,9 @@ srecord::output_file_dec_binary::write(const srecord::record &record)
         // Write the data out.
         //
         checksum_reset();
-        put_word(1);
-        put_word(record.get_length() + 6);
-        put_word(record.get_address());
+        put_word_le(1);
+        put_word_le(record.get_length() + 6);
+        put_word_le(record.get_address());
         for (size_t j = 0; j < record.get_length(); ++j)
             put_byte(record.get_data(j));
         put_byte(-checksum_get());
@@ -123,9 +115,9 @@ srecord::output_file_dec_binary::write(const srecord::record &record)
         if (enable_goto_addr_flag)
         {
             checksum_reset();
-            put_word(1);
-            put_word(6);
-            put_word(record.get_address());
+            put_word_le(1);
+            put_word_le(6);
+            put_word_le(record.get_address());
             put_byte(-checksum_get());
         }
         break;
@@ -205,3 +197,6 @@ srecord::output_file_dec_binary::is_binary(void)
 {
     return true;
 }
+
+
+// vim: set ts=8 sw=4 et :

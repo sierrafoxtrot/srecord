@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2002, 2005-2011 Peter Miller
+// Copyright (C) 1998-2002, 2005-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -207,7 +207,7 @@ srecord::output_file::put_byte(unsigned char n)
 
 
 void
-srecord::output_file::put_word(int n)
+srecord::output_file::put_word_be(int n)
 {
     put_byte(n >> 8);
     put_byte(n);
@@ -215,7 +215,15 @@ srecord::output_file::put_word(int n)
 
 
 void
-srecord::output_file::put_3bytes(unsigned long n)
+srecord::output_file::put_word_le(int n)
+{
+    put_byte(n);
+    put_byte(n >> 8);
+}
+
+
+void
+srecord::output_file::put_3bytes_be(unsigned long n)
 {
     put_byte(n >> 16);
     put_byte(n >> 8);
@@ -224,12 +232,31 @@ srecord::output_file::put_3bytes(unsigned long n)
 
 
 void
-srecord::output_file::put_4bytes(unsigned long n)
+srecord::output_file::put_3bytes_le(unsigned long n)
+{
+    put_byte(n);
+    put_byte(n >> 8);
+    put_byte(n >> 16);
+}
+
+
+void
+srecord::output_file::put_4bytes_be(unsigned long n)
 {
     put_byte(n >> 24);
     put_byte(n >> 16);
     put_byte(n >> 8);
     put_byte(n);
+}
+
+
+void
+srecord::output_file::put_4bytes_le(unsigned long n)
+{
+    put_byte(n);
+    put_byte(n >> 8);
+    put_byte(n >> 16);
+    put_byte(n >> 24);
 }
 
 
@@ -465,3 +492,6 @@ srecord::output_file::data_address_too_large(const srecord::record &record,
     }
     fatal_error("data address (0x%lX..0x%lX) too large", lo, hi);
 }
+
+
+// vim: set ts=8 sw=4 et :

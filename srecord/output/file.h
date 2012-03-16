@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2005-2011 Peter Miller
+// Copyright (C) 1998-2003, 2005-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -157,27 +157,50 @@ protected:
     virtual void put_byte(unsigned char value);
 
     /**
-      * The put_word method is used to send a 16-bit value to the
+      * The put_word_be method is used to send a 16-bit value to the
       * output.  The #put_byte method is called twice, and the two byte
       * values are sent big-endian (most significant byte first).
       */
-    virtual void put_word(int value);
+    virtual void put_word_be(int value);
 
     /**
-      * The put_3bytes method is used to send a 24-bit value to the
+      * The put_word_le method is used to send a 16-bit value to the
+      * output.  The #put_byte method is called twice, and the two byte
+      * values are sent little-endian (least significant byte first).
+      */
+    virtual void put_word_le(int value);
+
+    /**
+      * The put_3bytes_be method is used to send a 24-bit value to the
       * output.  The #put_byte method is called three times, and the
       * three byte values are sent big-endian (most significant byte
       * first).
       */
-    virtual void put_3bytes(unsigned long value);
+    virtual void put_3bytes_be(unsigned long value);
 
     /**
-      * The put_4bytes method is used to send a 32-bit value to the
+      * The put_3bytes_le method is used to send a 24-bit value to the
+      * output.  The #put_byte method is called three times, and the
+      * three byte values are sent little-endian (least significant byte
+      * first).
+      */
+    virtual void put_3bytes_le(unsigned long value);
+
+    /**
+      * The put_4bytes_be method is used to send a 32-bit value to the
       * output.  The #put_byte method is called four times, and the
       * four byte values are sent big-endian (most significant byte
       * first).
       */
-    virtual void put_4bytes(unsigned long value);
+    virtual void put_4bytes_be(unsigned long value);
+
+    /**
+      * The put_4bytes_le method is used to send a 32-bit value to the
+      * output.  The #put_byte method is called four times, and the
+      * four byte values are sent little-endian (least significant byte
+      * first).
+      */
+    virtual void put_4bytes_le(unsigned long value);
 
     /**
       * The checksum_reset method is used to set the running checksum to
@@ -421,4 +444,5 @@ private:
 
 };
 
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_OUTPUT_FILE_H

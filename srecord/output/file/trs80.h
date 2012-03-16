@@ -106,13 +106,6 @@ private:
     unsigned long byte_offset;
 
     /**
-      * See the base class for documentation.  We are over-riding the
-      * base class implementation, because it is big-endian and this
-      * format needs little-endian.
-      */
-    void put_word(int);
-
-    /**
       * The pref_block_size is used to remember the preferred
       * block size.  Set by the constructor.  Read by the
       * preferred_block_size_get() method.

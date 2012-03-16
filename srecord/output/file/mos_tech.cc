@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2002, 2006-2011 Peter Miller
+// Copyright (C) 2000-2002, 2006-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -28,12 +28,12 @@ srecord::output_file_mos_tech::~output_file_mos_tech()
         put_char(';');
         checksum_reset();
         put_byte(0);
-        put_word(data_record_count);
+        put_word_be(data_record_count);
         // In the only file example I have, the count is repeated
         // in the checksum, which would you make you think that the
         // address field is added as a 16-bit value, except that
         // only the data count line is wrong.  Sheesh.
-        put_word(data_record_count);
+        put_word_be(data_record_count);
         //put_word(checksum_get16());
         put_char('\n');
         data_record_count = 0;
@@ -77,10 +77,10 @@ srecord::output_file_mos_tech::write(const srecord::record &record)
         put_char(';');
         checksum_reset();
         put_byte(record.get_length());
-        put_word(record.get_address());
+        put_word_be(record.get_address());
         for (size_t j = 0; j < record.get_length(); ++j)
             put_byte(record.get_data(j));
-        put_word(checksum_get16());
+        put_word_be(checksum_get16());
         put_char('\n');
         ++data_record_count;
         break;
@@ -159,3 +159,6 @@ srecord::output_file_mos_tech::format_name()
 {
     return "MOS-Tech";
 }
+
+
+// vim: set ts=8 sw=4 et :

@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2004, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2004, 2006-2008, 2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -126,13 +126,6 @@ private:
     std::string module_name;
 
     /**
-      * See the base class for documentation.  We are over-riding
-      * the base class implementation, because it is big-endian
-      * and this format needs little-endian.
-      */
-    void put_word(int);
-
-    /**
       * The copy constructor.  Do not use.
       */
     output_file_aomf(const output_file_aomf &);
@@ -145,4 +138,5 @@ private:
 
 };
 
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_OUTPUT_FILE_AOMF_H

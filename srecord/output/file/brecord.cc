@@ -1,6 +1,6 @@
 //
 // srecord - The "srecord" program.
-// Copyright (C) 2007-2010 Peter Miller
+// Copyright (C) 2007-2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -48,7 +48,7 @@ srecord::output_file_brecord::write(const srecord::record &record)
     switch (record.get_type())
     {
     case srecord::record::type_execution_start_address:
-        put_4bytes(record.get_address());
+        put_4bytes_be(record.get_address());
         put_byte(0);
         put_char('\n');
         break;
@@ -58,7 +58,7 @@ srecord::output_file_brecord::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        put_4bytes(record.get_address());
+        put_4bytes_be(record.get_address());
         assert(record.get_length() <= BUFFER_MAXIMUM_MAXIMUM);
         put_byte(record.get_length());
         for (unsigned j = 0; j < record.get_length(); ++j)
@@ -114,3 +114,6 @@ srecord::output_file_brecord::format_name()
 {
     return "B-Record";
 }
+
+
+// vim: set ts=8 sw=4 et :

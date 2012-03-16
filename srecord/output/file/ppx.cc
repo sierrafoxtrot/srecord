@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2011 Peter Miller
+// Copyright (C) 2011, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -38,7 +38,7 @@ srecord::output_file_ppx::~output_file_ppx()
         }
     }
     put_string("$S");
-    put_word(dsum);
+    put_word_be(dsum);
     put_char('\n');
     column = 0;
 }
@@ -116,7 +116,7 @@ srecord::output_file_ppx::write(const srecord::record &record)
             }
             if (column == 0)
             {
-                put_word(address);
+                put_word_be(address);
                 put_char(' ');
                 column = 5;
             }

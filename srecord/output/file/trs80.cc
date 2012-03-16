@@ -29,7 +29,7 @@ srecord::output_file_trs80::~output_file_trs80()
     {
         put_byte(0x03);  // record type - END w/o transfer
         put_byte(0x02);  // length
-        put_word(0x0000);
+        put_word_le(0x0000);
     }
 }
 
@@ -56,14 +56,6 @@ srecord::output_file_trs80::put_byte(unsigned char n)
 {
     put_char(n);
     ++byte_offset;
-}
-
-
-void
-srecord::output_file_trs80::put_word(int n)
-{
-    put_byte(n);
-    put_byte(n >> 8);
 }
 
 
@@ -100,7 +92,7 @@ srecord::output_file_trs80::write(const srecord::record &record)
         //
         put_byte(0x01);
         put_byte((record.get_length() + 2) & 0xFF);
-        put_word(record.get_address());
+        put_word_le(record.get_address());
         for (size_t j = 0; j < record.get_length(); ++j)
             put_byte(record.get_data(j));
         break;
@@ -114,7 +106,7 @@ srecord::output_file_trs80::write(const srecord::record &record)
         {
             put_byte(0x02);  // record type - END w/ transfer
             put_byte(0x02);  // length
-            put_word(record.get_address());
+            put_word_le(record.get_address());
         }
         termination_seen = true;
         break;

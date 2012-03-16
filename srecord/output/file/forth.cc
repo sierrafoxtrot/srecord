@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2008-2010 Peter Miller
+// Copyright (C) 2008-2010, 2012 Peter Miller
 // Copyright (C) 2008 Torsten Sadowski
 //
 // This program is free software; you can redistribute it and/or modify
@@ -76,7 +76,7 @@ srecord::output_file_forth::write(const srecord::record &record)
             {
                 put_byte(record.get_data(j));
                 put_char(' ');
-                put_word(address);
+                put_word_be(address);
                 put_char(' ');
                 put_string(store_cmd);
                 ++address;
@@ -157,3 +157,6 @@ srecord::output_file_forth::preferred_block_size_get() const
 {
   return 16;
 }
+
+
+// vim: set ts=8 sw=4 et :

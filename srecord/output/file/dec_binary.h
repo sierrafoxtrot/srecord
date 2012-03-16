@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001, 2002, 2005-2008, 2010, 2011 Peter Miller
+// Copyright (C) 2001, 2002, 2005-2008, 2010-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -98,13 +98,6 @@ private:
     unsigned long byte_offset;
 
     /**
-      * See the base class for documentation.  We are over-riding the
-      * base class implementation, because it is big-endian and this
-      * format needs little-endian.
-      */
-    void put_word(int);
-
-    /**
       * The pref_block_size is used to remember the preferred
       * block size.  Set by the constructor.  Read by the
       * preferred_block_size_get() method.
@@ -135,4 +128,5 @@ private:
 
 };
 
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_OUTPUT_FILE_DEC_BINARY_H
