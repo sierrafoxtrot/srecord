@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2004, 2006-2008, 2010, 2011 Peter Miller
+// Copyright (C) 2004, 2006-2008, 2010-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -82,14 +82,6 @@ private:
     int get_byte(void);
 
     /**
-      * The get_word method is used to fetch a 16-bit word of input.
-      * It calls the #get_byte method twice.  We over-ride the base
-      * implementation, because it uses big-endian and this format
-      * is little-endian.
-      */
-    int get_word(void);
-
-    /**
       * The current_buffer instance variable is used to remember the
       * base of an array which buffers the current input record.
       */
@@ -155,4 +147,5 @@ private:
 
 };
 
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_INPUT_FILE_AOMF_H

@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000, 2002, 2003, 2005-2008, 2010, 2011 Peter Miller
+// Copyright (C) 2000, 2002, 2003, 2005-2008, 2010-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -92,9 +92,9 @@ srecord::input_file_mos_tech::read_inner(srecord::record &record)
             //
             // Only check the data count if it is present.
             //
-            int nrecs = get_word();
+            int nrecs = get_word_be();
             int csumX = checksum_get16();
-            int csum = get_word();
+            int csum = get_word_be();
             // In the only file example I have, the count is repeated
             // in the checksum, which would you make you think that the
             // address field is added as a 16-bit value, except that
@@ -118,12 +118,12 @@ srecord::input_file_mos_tech::read_inner(srecord::record &record)
         return false;
     }
 
-    unsigned long address = get_word();
+    unsigned long address = get_word_be();
     unsigned char buffer[256];
     for (int j = 0; j < length; ++j)
         buffer[j] = get_byte();
     int csumX = checksum_get16();
-    int csum = get_word();
+    int csum = get_word_be();
     if (use_checksums() && csumX != csum)
         fatal_error("checksum mismatch (%04X != %04X)", csumX, csum);
     if (get_char() != '\n')

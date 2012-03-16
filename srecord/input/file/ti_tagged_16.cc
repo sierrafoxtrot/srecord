@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000, 2002, 2003, 2006-2011 Peter Miller
+// Copyright (C) 2000, 2002, 2003, 2006-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -96,7 +96,7 @@ srecord::input_file_ti_tagged_16::read(record &result)
                 // 4 char: word count of the rest of the file (hex)
                 // 8 char: file name (ascii)
                 // we will ignore
-                get_word();
+                get_word_be();
                 for (int n = 0; n < 8; ++n)
                     get_char();
             }
@@ -106,7 +106,7 @@ srecord::input_file_ti_tagged_16::read(record &result)
             {
                 // checksum which the programmer verifies
                 int n = (-csum) & 0xFFFF;
-                int n2 = get_word();
+                int n2 = get_word_be();
                 if (n != n2)
                 {
                     fatal_error
@@ -121,12 +121,12 @@ srecord::input_file_ti_tagged_16::read(record &result)
 
         case '8':
             // a checksum which the programmer ignores.
-            get_word();
+            get_word_be();
             break;
 
         case '9':
             // load address which represents a word location.
-            address = get_word() * 2;
+            address = get_word_be() * 2;
             break;
 
         case 'B':
@@ -148,7 +148,7 @@ srecord::input_file_ti_tagged_16::read(record &result)
         case 'K':
             {
                 // file description
-                int n = get_word();
+                int n = get_word_be();
                 if (n < 5)
                 {
                     bad_desc:

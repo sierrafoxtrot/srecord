@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2011 Peter Miller
+// Copyright (C) 1998-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -241,8 +241,8 @@ srecord::input_file::get_byte(void)
 }
 
 
-int
-srecord::input_file::get_word(void)
+unsigned
+srecord::input_file::get_word_be(void)
 {
     int b1 = get_byte();
     int b2 = get_byte();
@@ -250,8 +250,17 @@ srecord::input_file::get_word(void)
 }
 
 
+unsigned
+srecord::input_file::get_word_le(void)
+{
+    int b1 = get_byte();
+    int b2 = get_byte();
+    return (b1 | (b2 << 8));
+}
+
+
 unsigned long
-srecord::input_file::get_3bytes(void)
+srecord::input_file::get_3bytes_be(void)
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -261,13 +270,34 @@ srecord::input_file::get_3bytes(void)
 
 
 unsigned long
-srecord::input_file::get_4bytes(void)
+srecord::input_file::get_3bytes_le(void)
+{
+    unsigned long b1 = get_byte();
+    unsigned long b2 = get_byte();
+    unsigned long b3 = get_byte();
+    return ((((b3 << 8) | b2) << 8) | b1);
+}
+
+
+unsigned long
+srecord::input_file::get_4bytes_be(void)
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
     unsigned long b3 = get_byte();
     unsigned long b4 = get_byte();
     return ((((((b1 << 8) | b2) << 8) | b3) << 8) | b4);
+}
+
+
+unsigned long
+srecord::input_file::get_4bytes_le(void)
+{
+    unsigned long b1 = get_byte();
+    unsigned long b2 = get_byte();
+    unsigned long b3 = get_byte();
+    unsigned long b4 = get_byte();
+    return ((((((b4 << 8) | b3) << 8) | b2) << 8) | b1);
 }
 
 
@@ -314,3 +344,6 @@ srecord::input_file::disable_checksum_validation(void)
 {
     ignore_checksums = true;
 }
+
+
+// vim: set ts=8 sw=4 et :

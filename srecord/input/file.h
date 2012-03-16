@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2008, 2010, 2011 Peter Miller
+// Copyright (C) 1998-2008, 2010-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -151,27 +151,51 @@ protected:
     virtual int get_byte(void);
 
     /**
-      * The get_word method is used to fetch a 16-bit value from the
+      * The get_word_be method is used to fetch a 16-bit value from the
       * input.  The get_byte method is called twice, and the two byte
-      * values are assembles big-endian (most significant byte first).
+      * values are assembled big-endian (most significant byte first).
       */
-    int get_word(void);
+    unsigned get_word_be(void);
 
     /**
-      * The get_3bytes method is used to fetch a 24-bit value from
+      * The get_word_le method is used to fetch a 16-bit value from
+      * the input.  The get_byte method is called twice, and the two
+      * byte values are assembled little-endian (least significant byte
+      * first).
+      */
+    unsigned get_word_le(void);
+
+    /**
+      * The get_3bytes_be method is used to fetch a 24-bit value from
       * the input.  The get_byte method is called three times,
       * and the three byte values are assembles big-endian (most
       * significant byte first).
       */
-    unsigned long get_3bytes(void);
+    unsigned long get_3bytes_be(void);
 
     /**
-      * The get_4bytes method is used to fetch a 32-bit value from
+      * The get_3bytes_le method is used to fetch a 24-bit value from
+      * the input.  The get_byte method is called three times, and the
+      * three byte values are assembled little-endian (least significant
+      * byte first).
+      */
+    unsigned long get_3bytes_le(void);
+
+    /**
+      * The get_4bytes_be method is used to fetch a 32-bit value from
       * the input.  The get_byte method is called four times,
-      * and the three byte values are assembles big-endian (most
+      * and the four byte values are assembled big-endian (most
       * significant byte first).
       */
-    unsigned long get_4bytes(void);
+    unsigned long get_4bytes_be(void);
+
+    /**
+      * The get_4bytes_le method is used to fetch a 32-bit value from
+      * the input.  The get_byte method is called four times, and the
+      * four byte values are assembled little-endian (least significant
+      * byte first).
+      */
+    unsigned long get_4bytes_le(void);
 
     /**
       * The checksum_get method is used to get the current value of
@@ -312,4 +336,5 @@ private:
 
 };
 
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_INPUT_FILE_H

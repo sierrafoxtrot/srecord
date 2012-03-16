@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001-2003, 2005-2008, 2010, 2011 Peter Miller
+// Copyright (C) 2001-2003, 2005-2008, 2010-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -187,7 +187,7 @@ srecord::input_file_four_packed_code::read_inner(srecord::record &record)
     checksum_reset();
     get_byte(); // discard the checksum byte
     int length = get_byte();
-    int format_code = get_word();
+    int format_code = get_word_be();
     switch (length)
     {
     case 0:
@@ -211,7 +211,7 @@ srecord::input_file_four_packed_code::read_inner(srecord::record &record)
         break;
     }
 
-    unsigned long address = get_4bytes();
+    unsigned long address = get_4bytes_be();
     switch (format_code)
     {
     case 0:

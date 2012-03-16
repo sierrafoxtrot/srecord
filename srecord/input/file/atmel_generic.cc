@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001-2003, 2006-2008, 2010, 2011 Peter Miller
+// Copyright (C) 2001-2003, 2006-2008, 2010-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -58,7 +58,7 @@ srecord::input_file_atmel_generic::read_inner(srecord::record &record)
     if (peek_char() < 0)
         return false;
 
-    int address = get_3bytes();
+    int address = get_3bytes_be();
     if (get_char() != ':')
         fatal_error("colon expected");
     unsigned char data[2];

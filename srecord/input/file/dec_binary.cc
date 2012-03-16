@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001-2003, 2005-2008, 2010, 2011 Peter Miller
+// Copyright (C) 2001-2003, 2005-2008, 2010-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -69,17 +69,6 @@ srecord::input_file_dec_binary::get_byte()
 }
 
 
-int
-srecord::input_file_dec_binary::get_word()
-{
-    // Little endian
-    unsigned char n1 = get_byte();
-    unsigned char n2 = get_byte();
-    unsigned short n = (n1 | (n2 << 8));
-    return n;
-}
-
-
 bool
 srecord::input_file_dec_binary::read(srecord::record &record)
 {
@@ -112,14 +101,14 @@ srecord::input_file_dec_binary::read(srecord::record &record)
             return false;
 
         checksum_reset();
-        int tag = get_word();
+        int tag = get_word_le();
         if (tag != 1)
             fatal_error("record type %d unknown", tag);
-        int length = get_word();
+        int length = get_word_le();
         if (length < 6)
             fatal_error("record length (%d) invalid", length);
         length -= 6;
-        current_address = get_word();
+        current_address = get_word_le();
         if (length == 0)
         {
             get_byte();

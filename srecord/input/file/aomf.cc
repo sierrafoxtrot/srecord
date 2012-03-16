@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2004-2008, 2010, 2011 Peter Miller
+// Copyright (C) 2004-2008, 2010-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -150,17 +150,6 @@ srecord::input_file_aomf::get_byte()
 
 
 int
-srecord::input_file_aomf::get_word()
-{
-    // Little endian
-    unsigned char n1 = get_byte();
-    unsigned char n2 = get_byte();
-    unsigned short n = (n1 | (n2 << 8));
-    return n;
-}
-
-
-int
 srecord::input_file_aomf::slurp()
 {
     current_pos = 0;
@@ -169,7 +158,7 @@ srecord::input_file_aomf::slurp()
         return -1;
     checksum_reset();
     int type = get_byte();
-    size_t length = get_word();
+    size_t length = get_word_le();
     if (length == 0)
         fatal_error("invalid record length");
     --length; // includes checksum byte

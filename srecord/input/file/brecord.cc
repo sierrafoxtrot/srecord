@@ -1,6 +1,6 @@
 //
 // srecord - The "srecord" program.
-// Copyright (C) 2007, 2008, 2010, 2011 Peter Miller
+// Copyright (C) 2007, 2008, 2010-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -48,7 +48,7 @@ srecord::input_file_brecord::read_inner(record &result)
     if (peek_char() < 0)
         return false;
 
-    unsigned long address = get_4bytes();
+    unsigned long address = get_4bytes_be();
     unsigned char length = get_byte();
     if (length & 0x20)
         fatal_error("read mode not supported");
