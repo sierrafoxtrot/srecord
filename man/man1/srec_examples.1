@@ -371,8 +371,8 @@ srec_cat                                                  \e
         \f[I]infile\fP \-exclude 0xFFF0 0x10000                      \e
         \-generate 0xFFF0 0xFFF8 \-repeat\[hy]string 'Bananas ' \e
     ')'                                                   \e
-    \-b\[hy]e\[hy]length 0xFFF8 4                                  \e
-    \-b\[hy]e\[hy]checksum\[hy]neg 0xFFFC 4 4                          \e
+    \-length\[hy]b\[hy]e 0xFFF8 4                                  \e
+    \-checksum\[hy]neg\[hy]b\[hy]e 0xFFFC 4 4                          \e
     \-o \f[I]outfile\fP
 .fi
 .ft R
@@ -640,8 +640,9 @@ A more peculiar example of striping is the
 Microchip dsPIC33F microcontroller, that
 has a weird memory storage pattern and they are able to store 3 bytes
 in an address that should only contain 2 bytes.
-The result is a hex file that has zero\[hy]filled the top byte (little endian),
-and all addresses are doubled from what they are in the chip.
+The result is a hex file that has zero\[hy]filled the top byte
+(little\[hy]endian), and all addresses are doubled from what they are in
+the chip.
 Here is an example:
 .PP
 .RS
@@ -938,7 +939,7 @@ shell variable in this example:
 .RS
 .nf
 .ft CW
-srec_cat \-generate 0x0008 0x000C \-l\[hy]e\[hy]constant $version 4 \e
+srec_cat \-generate 0x0008 0x000C \-constant\[hy]l\[hy]e $version 4 \e
     \f[I]infile\fP \-exclude 0x0008 0x000C \e
     \-o \f[I]outfile\fP
 .ft R
@@ -951,7 +952,7 @@ the version number goes, just in case the linker put something there.
 .SH DATA ABOUT THE DATA
 It is possible to add a variety of data about the data to the output.
 .SS Checksums
-The \fB\-big\[hy]endian\[hy]checksum\[hy]negative\fP filter may be used
+The \fB\-checksum\[hy]negative\[hy]big\[hy]endian\fP filter may be used
 to sum the data, and then insert the negative of the sum into the data.
 This has the effect of summing to zero when the checksum itself is
 summed across, provided the sum width matches the inserted value width.
@@ -962,7 +963,7 @@ summed across, provided the sum width matches the inserted value width.
 srec_cat \f[I]infile\fP \e
         \-crop 0 0xFFFFFC \e
         \-random\[hy]fill 0 0xFFFFFC \e
-        \-b\[hy]e\[hy]checksum\[hy]neg 0xFFFFFC 4 4 \e
+        \-checksum\[hy]neg\[hy]b\[hy]e 0xFFFFFC 4 4 \e
     \-o \f[I]outfile\fP
 .fi
 .ft R
@@ -972,9 +973,9 @@ In this example, we have an EPROM in the lowest megabyte of memory.
 The \-crop filter ensures we are only summing the data within
 the EPROM, and not anywhere else.  The \-random\[hy]fill filter
 fills any holes left in the data with random values.  Finally, the
-\-b\[hy]e\[hy]checksum\[hy]neg filter inserts a 32 bit (4 byte) checksum
+\-checksum\[hy]neg\[hy]b\[hy]e filter inserts a 32 bit (4 byte) checksum
 in big\[hy]endian format in the last 4 bytes of the EPROM image.
-Naturally, there is a little endian version of this filter as well.
+Naturally, there is a little\[hy]endian version of this filter as well.
 .PP
 Your embedded code can check the EPROM using C code similar to the following:
 .PP
@@ -994,7 +995,7 @@ if (sum != 0)
 .fi
 .RE
 .PP
-The \fB\-big\[hy]endian\[hy]checksum\[hy]bitnot\fP filter is similar,
+The \fB\-checksum\[hy]bitnot\[hy]big\[hy]endian\fP filter is similar,
 except that summing over the checksum should yield a value of
 all\[hy]one\[hy]bits (\[mi]1).
 For example, using shorts rather than longs:
@@ -1005,7 +1006,7 @@ For example, using shorts rather than longs:
 srec_cat \f[I]infile\fP \e
         \-crop 0 0xFFFFFE \e
         \-fill 0xCC 0x00000 0xFFFFFE \e
-        \-b\[hy]e\[hy]checksum\[hy]neg 0xFFFFFE 2 2 \e
+        \-checksum\[hy]neg\[hy]b\[hy]e 0xFFFFFE 2 2 \e
     \-o \f[I]outfile\fP
 .fi
 .ft R
@@ -1030,7 +1031,7 @@ if (sum != 0xFFFF)
 .fi
 .RE
 .PP
-There is also a \fB\-b\[hy]e\[hy]checksum\[hy]positive\fP filter, and
+There is also a \fB\-checksum\[hy]positive\[hy]b\[hy]e\fP filter, and
 a matching little\[hy]endian filter, which inserts the simple sum, and
 which would be checked in C using an equality test.
 .PP
@@ -1040,7 +1041,7 @@ which would be checked in C using an equality test.
 srec_cat \f[I]infile\fP \e
         \-crop 0 0xFFFFFF \e
         \-fill 0x00 0x00000 0xFFFFFF \e
-        \-b\[hy]e\[hy]checksum\[hy]neg 0xFFFFFF 1 1 \e
+        \-checksum\[hy]neg\[hy]b\[hy]e 0xFFFFFF 1 1 \e
     \-o \f[I]outfile\fP
 .fi
 .ft R
@@ -1079,7 +1080,7 @@ an \f[I]srec_cat\fP(1) command before immortalizing it in a script.
 srec_cat \f[I]infile\fP                        \e
         \-crop 0 0x10000             \e
         \-fill 0xFF 0x0000 0x10000   \e
-        \-b\[hy]e\[hy]checksum\[hy]neg 0x10000 4 \e
+        \-checksum\[hy]neg\[hy]b\[hy]e 0x10000 4 \e
         \-crop 0x10000 0x10004       \e
     \-o \- \-hex\[hy]dump
 .fi
@@ -1102,7 +1103,7 @@ problems.
 srec_cat \f[I]infile\fP                        \e
         \-crop 0 0xFFFFFC            \e
         \-fill 0x00 0x00000 0xFFFFFC \e
-        \-b\[hy]e\[hy]crc32 0xFFFFFC         \e
+        \-crc32\[hy]b\[hy]e 0xFFFFFC         \e
     \-o \f[I]outfile\fP
 .fi
 .ft R
@@ -1112,10 +1113,10 @@ In the above example, we have an EPROM in the lowest megabyte of memory.
 The \fB\-crop\fP filter ensures we are only summing the data within the EPROM,
 and not anywhere else.
 The \fB\-fill\fP filter fills any holes left in the data.
-Finally, the \fB\-b\[hy]e\[hy]checksum\[hy]neg\fP filter inserts a 32 bit (4
+Finally, the \fB\-checksum\[hy]neg\[hy]b\[hy]e\fP filter inserts a 32 bit (4
 byte) checksum in big\[hy]endian format in the last 4 bytes of the EPROM
 image.
-Naturally, there is a little endian version of this filter as well.
+Naturally, there is a little\[hy]endian version of this filter as well.
 .PP
 The checksum is calculated using the industry standard 32\[hy]bit CRC.
 Because SRecord is open source, you can always read the source code
@@ -1131,7 +1132,7 @@ There is also a 16\[hy]bit CRC available.
 srec_cat \f[I]infile\fP                        \e
         \-crop 0 0xFFFFFE            \e
         \-fill 0x00 0x00000 0xFFFFFE \e
-        \-b\[hy]e\[hy]crc16 0xFFFFFE         \e
+        \-crc16\[hy]b\[hy]e 0xFFFFFE         \e
     \-o \f[I]outfile\fP
 .fi
 .ft R
@@ -1152,7 +1153,7 @@ You can look at the CRC of your data, by using the
 srec_cat \f[I]infile\fP                      \e
         \-crop 0 0x10000           \e
         \-fill 0xFF 0x0000 0x10000 \e
-        \-b\[hy]e\[hy]crc16 0x10000        \e
+        \-crc16\[hy]b\[hy]e 0x10000        \e
         \-crop 0x10000 0x10002     \e
     \-o \- \-hex\[hy]dump
 .fi
@@ -1178,7 +1179,7 @@ insert into the data.
 .RS
 .ft CW
 .nf
-srec_cat \f[I]infile\fP \-b\[hy]e\[hy]minimum 0xFFFE 2 \-o \f[I]outfile\fP
+srec_cat \f[I]infile\fP \-minimum\[hy]b\[hy]e 0xFFFE 2 \-o \f[I]outfile\fP
 .fi
 .ft R
 .RE
@@ -1191,15 +1192,15 @@ filter.
 The number of bytes defaults to 4.
 .PP
 There is also a
-\fB\-l\[hy]e\[hy]minimum\fP filter for inserting little\[hy]endian values,
-and two more filters called \fB\-b\[hy]e\[hy]exclusive\[hy]minimum\fP and
-\fB\-l\[hy]e\[hy]exclusive\[hy]minimum\fP that do not include the minimum
+\fB\-minimum\[hy]l\[hy]e\fP filter for inserting little\[hy]endian values,
+and two more filters called \fB\-exclusive\[hy]minimum\[hy]b\[hy]e\fP and
+\fB\-exclusive\[hy]minimum\[hy]l\[hy]e\fP that do not include the minimum
 itself in the calculation of the minimum data address.
 .PP
 .RS
 .ft CW
 .nf
-srec_cat \f[I]infile\fP \-b\[hy]e\[hy]maximum 0xFFFFFC 4 \-o \f[I]outfile\fP
+srec_cat \f[I]infile\fP \-maximum\[hy]b\[hy]e 0xFFFFFC 4 \-o \f[I]outfile\fP
 .fi
 .ft R
 .RE
@@ -1212,16 +1213,16 @@ If the data already contains bytes at the given address,
 you need to use an \fB\-exclude\fP filter.
 The number of bytes defaults to 4.
 .PP
-There is also a \fB\-l\[hy]e\[hy]maximum\fP filter for
+There is also a \fB\-maximum\[hy]l\[hy]e\fP filter for
 inserting little\[hy]endian values, and two more
-filters called \fB\-b\[hy]e\[hy]exclusive\[hy]maximum\fP and
-\fB\-l\[hy]e\[hy]exclusive\[hy]maximum\fP that do not include the maximum
+filters called \fB\-exclusive\[hy]maximum\[hy]b\[hy]e\fP and
+\fB\-exclusive\[hy]maximum\[hy]l\[hy]e\fP that do not include the maximum
 itself in the calculation of the maximum data address.
 .PP
 .RS
 .ft CW
 .nf
-srec_cat \f[I]infile\fP \-b\[hy]e\[hy]length 0xFFFFFC 4 \-o \f[I]outfile\fP
+srec_cat \f[I]infile\fP \-length\[hy]b\[hy]e 0xFFFFFC 4 \-o \f[I]outfile\fP
 .fi
 .ft R
 .RE
@@ -1234,9 +1235,9 @@ If the data already contains bytes at the length location,
 you need to use an \fB\-exclude\fP filter.
 The number of bytes defaults to 4.
 .PP
-There is also a \fB\-l\[hy]e\[hy]length\fP filter for inserting a
-little\[hy]endian length, and the \fB\-b\[hy]e\[hy]exclusive\[hy]length\fP
-and \fB\-l\[hy]e\[hy]exclusive\[hy]length\fP filters that do not include the
+There is also a \fB\-length\[hy]l\[hy]e\fP filter for inserting a
+little\[hy]endian length, and the \fB\-exclusive\[hy]length\[hy]b\[hy]e\fP
+and \fB\-exclusive\[hy]length\[hy]l\[hy]e\fP filters that do not include the
 length itself in the calculation.
 .SS What Format Is This?
 You can obtain a variety of information about an EPROM load file

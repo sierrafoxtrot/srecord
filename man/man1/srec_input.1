@@ -156,9 +156,9 @@ This option says to use the Memory Initialization File (MIF) format by
 Altera to read the file.
 See \f[I]srec_mif\fP (5) for a description of this file format.
 .TP 8n
-\fB\-Mips_Flash_BigEndian\fP
+\fB\-Mips_Flash_Big_Endian\fP
 .TP 8n
-\fB\-Mips_Flash_LittleEndian\fP
+\fB\-Mips_Flash_Little_Endian\fP
 This option says to use the MIPS Flash file format to read the file.
 See \f[I]srec_mips_flash\fP (5) for a description of this file format.
 .TP 8n
@@ -216,11 +216,13 @@ This option says to use the Signetics format.
 See \f[I]srec_spasm\fP(5) for a description of this file format.
 .TP 8n
 \fB\-SPAsm\fP
+.TP 8n
+\fB\-SPAsm_Big_Endian\fP
 This option says to use the SPASM assembler output format (commonly used
 by PIC programmers).
 See \f[I]srec_spasm\fP(5) for a description of this file format.
 .TP 8n
-\fB\-SPAsm_LittleEndian\fP
+\fB\-SPAsm_Little_Endian\fP
 This option says to use the SPASM assembler output format (commonly used
 by PIC programmers).  But with the data the other way around.
 .TP 8n
@@ -384,7 +386,7 @@ This generator is a convenience wrapper around the \fB\-REPeat_Data\fP
 generator.  It can, of course, be combined with data from files.
 .RE
 .TP 8n
-\fB\-Big_Endian_CONSTant\fP \f[I]value\fP \f[I]width\fP
+\fB\-CONSTant_Big_Endian\fP \f[I]value\fP \f[I]width\fP
 .RS
 As above, but using big\[hy]endian byte ordering.
 .RE
@@ -403,7 +405,7 @@ Only existing data is altered, no holes are filled.
 .\" ----------  B  ---------------------------------------------------------
 .\"             big endian adler 16
 .TP 8n
-\fB\-Big_Endian_Adler_16\fP \f[I]address\fP
+\fB\-Adler_16_Big_Endian\fP \f[I]address\fP
 .RS
 This filter may be used to insert an \[lq]Adler\[rq] 16\[hy]bit checksum
 of the data into the data.
@@ -427,7 +429,7 @@ http://en.wikipedia.org/wiki/Adler\[hy]32
 .RE
 .\"             big endian adler 32
 .TP 8n
-\fB\-Big_Endian_Adler_32\fP \f[I]address\fP
+\fB\-Adler_32_Big_Endian\fP \f[I]address\fP
 .RS
 This filter may be used to insert a Adler 32\[hy]bit checksum
 of the data into the data.  Four bytes, big\[hy]endian order, are inserted
@@ -450,7 +452,7 @@ http://en.wikipedia.org/wiki/Adler\[hy]32
 .RE
 .\"             big endian checksum bitnot
 .TP 8n
-\fB\-Big_Endian_Checksum_BitNot\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
+\fB\-Checksum_BitNot_Big_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
 \f[I]width\fP ]]
 This filter may be used to insert the one's complement checksum of the
 data into the data, most significant byte first.
@@ -465,19 +467,19 @@ The number of bytes of resulting checksum defaults to 4.
 The width (the width in bytes of the values being summed) defaults to 1.
 .\"             big endian checksum negative
 .TP 8n
-\fB\-Big_Endian_Checksum_Negative\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
+\fB\-Checksum_Negative_Big_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
 \f[I]width\fP ]]
 This filter may be used to insert the two's complement (negative)
 checksum of the data into the data.  Otherwise similar to the above.
 .\"             big endian checksum positive
 .TP 8n
-\fB\-Big_Endian_Checksum_Positive\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
+\fB\-Checksum_Positive_Big_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
 \f[I]width\fP ]]
 This filter may be used to insert the simple checksum of the data into
 the data.  Otherwise similar to the above.
 .\"             big endian crc16
 .TP 8n
-\fB\-Big_Endian_CRC16\fP \f[I]address\fP [ \f[I]modifier\fP... ]
+\fB\-CRC16_Big_Endian\fP \f[I]address\fP [ \f[I]modifier\fP... ]
 .RS
 This filter may be used to insert an industry standard 16\[hy]bit CRC checksum
 of the data into the data.  Two bytes, big\[hy]endian order, are inserted
@@ -568,7 +570,7 @@ bug in the CRC16 calculation.
 .RE
 .\"             big endian crc32
 .TP 8n
-\fB\-Big_Endian_CRC32\fP \f[I]address\fP [ \f[I]modifier\fP... ]
+\fB\-CRC32_Big_Endian\fP \f[I]address\fP [ \f[I]modifier\fP... ]
 .RS
 This filter may be used to insert an industry standard 32\[hy]bit CRC checksum
 of the data into the data.  Four bytes, big\[hy]endian order, are inserted
@@ -590,23 +592,23 @@ The initial seed is all zero bits.
 .RE
 .\"             big endian exclusive length
 .TP 8n
-\fB\-Big_Endian_Exclusive_Length\fP \f[I]address\fP [ \f[I]nbytes\fP \
+\fB\-Exclusive_Length_Big_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP \
 [ \f[I]width\fP ]]
-The same as the \fB\-Big_Endian_Length\fP filter,
+The same as the \fB\-Length_Big_Endian\fP filter,
 except that the result does \f[B]not\fP include the length itself.
 .\"             big endian exclusive maximum
 .TP 8n
-\fB\-Big_Endian_Exclusive_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
-The same as the \fB\-Big_Endian_MAXimum\fP filter,
+\fB\-Exclusive_MAXimum_Big_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+The same as the \fB\-MAXimum_Big_Endian\fP filter,
 except that the result does \f[B]not\fP include the maximum itself.
 .\"             big endian exclusive minimum
 .TP 8n
-\fB\-Big_Endian_Exclusive_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
-The same as the \fB\-Big_Endian_MINimum\fP filter,
+\fB\-Exclusive_MINimum_Big_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+The same as the \fB\-MINimum_Big_Endian\fP filter,
 except that the result does \f[B]not\fP include the minimum itself.
 .\"             big endian fletcher 16
 .TP 8n
-\fB\-Big_Endian_Fletcher_16\fP \f[I]address\fP \
+\fB\-Fletcher_16_Big_Endian\fP \f[I]address\fP \
 [ \f[I]sum1\fP \f[I]sum2\fP [ \f[I]answer\fP ]]
 .RS
 This filter may be used to insert an Fletcher 16\[hy]bit checksum
@@ -643,7 +645,7 @@ No manipulation of the final value is performed if this value if not specified.
 .RE
 .\"             big endian fletcher 32
 .TP 8n
-\fB\-Big_Endian_Fletcher_32\fP \f[I]address\fP
+\fB\-Fletcher_32_Big_Endian\fP \f[I]address\fP
 .RS
 This filter may be used to insert a Fletcher 32\[hy]bit checksum
 of the data into the data.  Four bytes, big\[hy]endian order, are inserted
@@ -667,7 +669,7 @@ http://en.wikipedia.org/wiki/Fletcher%27s_checksum
 .RE
 .\"             big endian length
 .TP 8n
-\fB\-Big_Endian_Length\fP \f[I]address\fP [ \f[I]nbytes\fP [ \f[I]width\fP ]]
+\fB\-Length_Big_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP [ \f[I]width\fP ]]
 This filter may be used to insert the length of the data (high water
 minus low water) into the data.  This includes the length itself.
 If the data already contains bytes at the length location,
@@ -678,7 +680,7 @@ The width defaults to 1, and is divided into the actual length,
 thus you can insert the width in units of words (2) or longs (4).
 .\"             big endian maximum
 .TP 8n
-\fB\-Big_Endian_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+\fB\-MAXimum_Big_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP ]
 This filter may be used to insert the maximum address of the data (high water
  + 1) into the data.  This includes the maximum itself.
 If the data already contains bytes at the given address,
@@ -687,7 +689,7 @@ The value will be written with the most significant byte first.
 The number of bytes defaults to 4.
 .\"             big endian minimum
 .TP 8n
-\fB\-Big_Endian_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+\fB\-MINimum_Big_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP ]
 This filter may be used to insert the minimum address of the data (low
 water) into the data.  This includes the minimum itself.
 If the data already contains bytes at the given address,
@@ -742,7 +744,7 @@ to \f[I]value\fP.  The fill will only occur in the address range given.
 .\" ----------  L  ---------------------------------------------------------
 .\"             little endian adler 16
 .TP 8n
-\fB\-Little_Endian_Adler_16\fP \f[I]address\fP
+\fB\-Adler_16_Little_Endian\fP \f[I]address\fP
 .RS
 This filter may be used to insert an Adler 16\[hy]bit checksum
 of the data into the data.  Two bytes, in little\[hy]endian order, are inserted
@@ -765,7 +767,7 @@ http://en.wikipedia.org/wiki/Adler\[hy]32
 .RE
 .\"             little endian adler 32
 .TP 8n
-\fB\-Little_Endian_Adler_32\fP \f[I]address\fP
+\fB\-Adler_32_Little_Endian\fP \f[I]address\fP
 .RS
 This filter may be used to insert a Adler 32\[hy]bit checksum
 of the data into the data.  Four bytes, in little\[hy]endian order, are inserted
@@ -788,52 +790,52 @@ http://en.wikipedia.org/wiki/Adler\[hy]32
 .RE
 .\"             little endian checksum bitnot
 .TP 8n
-\fB\-Little_Endian_Checksum_BitNot\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
+\fB\-Checksum_BitNot_Little_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
 \f[I]width\fP ]]
 This filter may be used to insert the one's complement (bitnot)
 checksum of the data into the data, least significant byte first.
 Otherwise similar to the above.
 .\"             little endian checksum negative
 .TP 8n
-\fB\-Little_Endian_Checksum_Negative\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
+\fB\-Checksum_Negative_Little_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
 \f[I]width\fP ]]
 This filter may be used to insert the two's complement (negative)
 checksum of the data into the data.  Otherwise similar to the above.
 .\"             little endian checksum positive
 .TP 8n
-\fB\-Little_Endian_Checksum_Positive\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
+\fB\-Checksum_Positive_Little_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP [ \
 \f[I]width\fP ]]
 This filter may be used to insert the simple checksum of the data into
 the data.  Otherwise similar to the above.
 .\"             little endian crc16
 .TP 8n
-\fB\-Little_Endian_CRC16\fP \f[I]address\fP [ \f[I]modifier\fP... ]
-The same as the \fB\-Big_Endian_CRC16\fP filter,
+\fB\-CRC16_Little_Endian\fP \f[I]address\fP [ \f[I]modifier\fP... ]
+The same as the \fB\-CRC16_Big_Endian\fP filter,
 except little\[hy]endian order.
 .\"             little endian crc32
 .TP 8n
-\fB\-Little_Endian_CRC32\fP \f[I]address\fP
-The same as the \fB\-Big_Endian_CRC32\fP filter,
+\fB\-CRC32_Little_Endian\fP \f[I]address\fP
+The same as the \fB\-CRC32_Big_Endian\fP filter,
 except little\[hy]endian order.
 .\"             little endian exclusive length
 .TP 8n
-\fB\-Little_Endian_Exclusive_Length\fP \f[I]address\fP [ \f[I]nbytes\fP \
+\fB\-Exclusive_Length_Little_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP \
 [ \f[I]width\fP ]]
-The same as the \fB\-Little_Endian_Length\fP filter,
+The same as the \fB\-Length_Little_Endian\fP filter,
 except that the result does \f[B]not\fP include the length itself.
 .\"             little endian exclusive maximum
 .TP 8n
-\fB\-Little_Endian_Exclusive_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
-The same as the \fB\-Little_Endian_MAXimum\fP filter,
+\fB\-Exclusive_MAXimum_Little_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+The same as the \fB\-MAXimum_Little_Endian\fP filter,
 except that the result does \f[B]not\fP include the maximum itself.
 .\"             little endian exclusive minimum
 .TP 8n
-\fB\-Little_Endian_Exclusive_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
-The same as the \fB\-Little_Endian_MINimum\fP filter,
+\fB\-Exclusive_MINimum_Little_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+The same as the \fB\-MINimum_Little_Endian\fP filter,
 except that the result does \f[B]not\fP include the minimum itself.
 .\"             little endian fletcher 16
 .TP 8n
-\fB\-Little_Endian_Fletcher_16\fP \f[I]address\fP
+\fB\-Fletcher_16_Little_Endian\fP \f[I]address\fP
 .RS
 This filter may be used to insert an Fletcher 16\[hy]bit checksum
 of the data into the data.  Two bytes, in little\[hy]endian order, are inserted
@@ -857,7 +859,7 @@ http://en.wikipedia.org/wiki/Fletcher%27s_checksum
 .RE
 .\"             little endian fletcher 32
 .TP 8n
-\fB\-Little_Endian_Fletcher_32\fP \f[I]address\fP
+\fB\-Fletcher_32_Little_Endian\fP \f[I]address\fP
 .RS
 This filter may be used to insert a Fletcher 32\[hy]bit checksum
 of the data into the data.  Four bytes, in little\[hy]endian order, are inserted
@@ -881,18 +883,18 @@ http://en.wikipedia.org/wiki/Fletcher%27s_checksum
 .RE
 .\"             little endian length
 .TP 8n
-\fB\-Little_Endian_Length\fP \f[I]address\fP [ \f[I]nbytes\fP [ \f[I]width\fP ]]
-The same as the \fB\-Big_Endian_Length\fP filter,
+\fB\-Length_Little_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP [ \f[I]width\fP ]]
+The same as the \fB\-Length_Big_Endian\fP filter,
 except the value will be written with the least significant byte first.
 .\"             little endian maximum
 .TP 8n
-\fB\-Little_Endian_MAXimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
-The same as the \fB\-Big_Endian_MAXimum\fP filter,
+\fB\-MAXimum_Little_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+The same as the \fB\-MAXimum_Big_Endian\fP filter,
 except the value will be written with the least significant byte first.
 .\"             little endian minimum
 .TP 8n
-\fB\-Little_Endian_MINimum\fP \f[I]address\fP [ \f[I]nbytes\fP ]
-The same as the \fB\-Big_Endian_MINimum\fP filter,
+\fB\-MINimum_Little_Endian\fP \f[I]address\fP [ \f[I]nbytes\fP ]
+The same as the \fB\-MINimum_Big_Endian\fP filter,
 except the value will be written with the least significant byte first.
 .\" ----------  M  ---------------------------------------------------------
 .\"             message digest 2 -- place holder, gcrypt does not implement yet

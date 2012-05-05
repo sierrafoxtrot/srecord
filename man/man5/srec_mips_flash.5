@@ -1,6 +1,6 @@
 '\" t
 .\" srecord - Manipulate EPROM load files
-.\" Copyright (C) 2011 Peter Miller
+.\" Copyright (C) 2011, 2012 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -50,10 +50,10 @@ Special segments must unlocked (with the '!C' command) and locked again
 This file format contains no checksum mechanism.
 .PP
 .SS Command Line Options
-This format is specified using one of the \fB\-Mips\[hy]Flash\[hy]BigEndian\fP
-or \fB\-Mips\[hy]Flash\[hy]LittleEndian\fP options.  The endian\[hy]ness must be
-specified on the command line, because there is nothing in the file contents to
-indicate the endian\[hy]ness of the data it contains.
+This format is specified using one of the \fB\-Mips\[hy]Flash\[hy]Big_Endian\fP
+or \fB\-Mips\[hy]Flash\[hy]Little_Endian\fP options.  The endian\[hy]ness must
+be specified on the command line, because there is nothing in the file contents
+to indicate the endian\[hy]ness of the data it contains.
 .SS Size Multiplier
 In general, binary data will expand in sized by approximately 2.3 times
 when represented with this format (worse if you use shorter lines).
