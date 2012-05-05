@@ -53,7 +53,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &result);
 
     // See base class for documentation.
     const char *get_file_format_name(void) const;
@@ -92,6 +92,12 @@ private:
       * because we use raw bytes rather than two hex digits.
       */
     int get_byte(void);
+
+    /**
+      * The pending instance variable is used to remember the second
+      * half of large data packets, in the case where they must be splt.
+      */
+    record *pending;
 
     /**
       * The copy constructor.  Do not use.

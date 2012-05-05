@@ -79,7 +79,6 @@ static func_p table[] =
     srecord::input_file_mips_flash::create_be,
     srecord::input_file_mos_tech::create,
     srecord::input_file_motorola::create,
-    srecord::input_file_msbin::create,
     srecord::input_file_needham::create,
     srecord::input_file_os65v::create,
     srecord::input_file_ppb::create,
@@ -93,6 +92,7 @@ static func_p table[] =
     srecord::input_file_ti_tagged::create,
     srecord::input_file_ti_txt::create,
     srecord::input_file_trs80::create,
+    srecord::input_file_msbin::create, // test after trs80
     srecord::input_file_vmem::create,
     srecord::input_file_wilson::create,
     srecord::input_file_hexdump::create,

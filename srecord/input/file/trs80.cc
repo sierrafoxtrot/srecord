@@ -26,6 +26,8 @@
 
 srecord::input_file_trs80::~input_file_trs80()
 {
+    delete pending;
+    pending = 0;
 }
 
 
@@ -34,7 +36,8 @@ srecord::input_file_trs80::input_file_trs80(
 ) :
     srecord::input_file(a_file_name),
     termination_seen(false),
-    data_seen(false)
+    data_seen(false),
+    pending(0)
 {
 }
 
@@ -59,6 +62,14 @@ srecord::input_file_trs80::get_byte(void)
 bool
 srecord::input_file_trs80::read(srecord::record &result)
 {
+    if (pending)
+    {
+        result = *pending;
+        delete pending;
+        pending = 0;
+        return true;
+    }
+
     if (termination_seen)
         return false;
     for (;;)
@@ -73,22 +84,41 @@ srecord::input_file_trs80::read(srecord::record &result)
         // of zero to two are considered to be lengths of 256 to 258,
         // respectively.
         //
-        int rec_type = get_byte();
-        int length = get_byte();
-        if (rec_type == 0x01 && length <= 2)
-            length += 256;
-        unsigned char data[258];
-        for (int j = 0; j < length; ++j)
-            data[j] = get_byte();
+        unsigned rec_type = get_byte();
+        unsigned payload_size = get_byte();
+        if (rec_type == 0x01 && payload_size <= 2)
+            payload_size += 256;
+        unsigned char payload[258];
+        for (unsigned j = 0; j < payload_size; ++j)
+            payload[j] = get_byte();
 
         switch (rec_type)
         {
         case 0x01:
             // data
             {
-                long address = decode_word_le(data);
+                assert(payload_size > 2);
+                long address = decode_word_le(payload);
+                const unsigned char *data = payload + 2;
+                unsigned data_size = payload_size - 2;
                 record::type_t type = record::type_data;
-                result = srecord::record(type, address, data + 2, length - 2);
+                assert(data_size < 2 * record::max_data_length);
+                if (data_size > record::max_data_length)
+                {
+                    // We can't write long data records, but we *must*
+                    // be able to read them.
+                    unsigned half = data_size / 2;
+                    pending =
+                        new srecord::record
+                        (
+                            type,
+                            address + half,
+                            data + half,
+                            data_size - half
+                        );
+                    data_size = half;
+                }
+                result = srecord::record(type, address, data, data_size);
                 data_seen = true;
                 return true;
             }
@@ -98,9 +128,16 @@ srecord::input_file_trs80::read(srecord::record &result)
         case 0x03:
             // end w/o transfer
             {
-                if (length != 2)
-                    fatal_error("record length (%d) invalid", length);
-                long address = decode_word_le(data);
+                if (payload_size != 2)
+                {
+                    fatal_error
+                    (
+                        "record type 0x%02X: payload size %d invalid",
+                        rec_type,
+                        payload_size
+                    );
+                }
+                long address = decode_word_le(payload);
                 record::type_t type = record::type_execution_start_address;
                 result = srecord::record(type, address, 0, 0);
                 termination_seen = true;
@@ -114,15 +151,37 @@ srecord::input_file_trs80::read(srecord::record &result)
                 // Use the comment record type as a kind of header record,
                 // if it occurs early enough in the file.
                 long address = 0;
+
+                // Get rid of unprintable characters (especially NUL)
+                {
+                    const unsigned char *ip = payload;
+                    const unsigned char *end = ip + payload_size;
+                    unsigned char *op = payload;
+                    while (ip < end)
+                    {
+                        if (isprint(*ip))
+                            *op++ = *ip;
+                        ++ip;
+                    }
+                    payload_size = op - payload;
+                }
+
                 record::type_t type = record::type_header;
-                result = srecord::record(type, address, data, length);
+                if (payload_size > record::max_data_length)
+                    payload_size = record::max_data_length;
+                result = srecord::record(type, address, payload, payload_size);
                 return true;
             }
             break;
 
         default:
             // various, ignore
-            warning("record type 0x%02X unknown", rec_type);
+            warning
+            (
+                "record type 0x%02X unknown (payload size %u)",
+                rec_type,
+                payload_size
+            );
             break;
         }
     }
