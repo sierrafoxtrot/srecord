@@ -43,4 +43,7 @@ project_specific =
     },
 ];
 
+unchanged_file_develop_end_policy = error;
+unchanged_file_integrate_pass_policy = warning;
+
 # vim: set ts=8 sw=4 et :
