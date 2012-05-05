@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 1998-2003, 2006-2008, 2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -146,14 +146,14 @@ public:
       * the reader() method.  Once called, redundant and contradictory
       * settings generate warnings, rather than fatal errors.
       */
-    static void allow_overwriting();
+    static void allow_overwriting(void);
 
     /**
       * The get_header method is used to determine the value of the
       * header record set by either the reader() or set_header()
       * methods.  If neither has set a header, NULL is returned.
       */
-    record *get_header() const;
+    record *get_header(void) const;
 
     /**
       * The set_header method may be used to set the header command.
@@ -167,7 +167,7 @@ public:
       * reader() or set_execution_start_address() methods.  If neither
       * has set an execution start address, NULL is returned.
       */
-    record *get_execution_start_address() const;
+    record *get_execution_start_address(void) const;
 
     /**
       * The set_execution_start_address method may be used to set the
@@ -184,14 +184,28 @@ public:
       *     one hole), false if the memory data is continuous (has no
       *     holes).
       */
-    bool has_holes() const;
+    bool has_holes(void) const;
+
+    /**
+      * The is_well_aligned method is used to test whether or not
+      * all of the data in the memory buffer is well aligned, on the
+      * given byte boundary.
+      *
+      * @param multiple
+      *     The desired byte alignment.
+      *
+      * @note
+      *     This isn't about holes, it's about the beginnings and
+      *     endings of each consecitice run of bytes.
+      */
+    bool is_well_aligned(unsigned multiple) const;
 
     /**
       * The empty method is used to determine whether or not this memory
       * image has no data in it.
       */
     bool
-    empty()
+    empty(void)
         const
     {
         return (nchunks == 0);
@@ -274,7 +288,7 @@ private:
       * The clear method is used to discard all data, as if when
       * the instance was first constructed. Alsu used by the destructor.
       */
-    void clear();
+    void clear(void);
 
     /**
       * The copy method is used to copy the chunks from the `src' into
@@ -286,7 +300,7 @@ private:
       * The get_upper_bound method is used to obtain the upper bound
       * (maximum address plus one) of the memory image.
       */
-    unsigned long get_upper_bound() const;
+    unsigned long get_upper_bound(void) const;
 };
 
 };
@@ -303,4 +317,5 @@ bool operator == (const srecord::memory &, const srecord::memory &);
   */
 bool operator != (const srecord::memory &, const srecord::memory &);
 
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_MEMORY_H

@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2009-2011 Peter Miller
+// Copyright (C) 2009-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -39,6 +39,14 @@ srecord::input_filter_message::input_filter_message(
 }
 
 
+unsigned
+srecord::input_filter_message::get_minimum_alignment(void)
+    const
+{
+    return 0;
+}
+
+
 bool
 srecord::input_filter_message::read(record &result)
 {
@@ -50,18 +58,35 @@ srecord::input_filter_message::read(record &result)
     {
         buffer.reader(ifp, true);
 
+        unsigned multiple = get_minimum_alignment();
+        if (multiple >= 2 && !buffer.is_well_aligned(multiple))
+        {
+            warning
+            (
+                "The %s filter uses %u-byte alignment, but unaligned "
+                "data is present.  Use a \"--fill 0xNN --within <input> "
+                "--range-padding %u\" filter *before* the %s filter to fix "
+                "this problem.  "
+                "See srec_info(1) for how to see the data ranges.",
+                get_algorithm_name(),
+                multiple,
+                multiple,
+                get_algorithm_name()
+            );
+        }
+
         if (buffer.has_holes())
         {
             warning
             (
-                "The data presented for %s calculation has at least "
-                "one hole in it.  This is bad.  It means that the "
-                "in-memory calculation performed by your embedded "
-                "system will be different than the calculation "
-                "performed here.  You are strongly advised to use the "
-                "--fill 0xFF filter *before* this %s filter to ensure "
-                "both calculations are using the same byte values.  "
-                "See srecord::info(1) for how to see the holes.",
+                "The data presented for %s calculation has at least one hole "
+                "in it.  This is bad.  It means that the in-memory "
+                "calculation performed by your embedded system will be "
+                "different than the calculation performed here.  You are "
+                "strongly advised to use the \"--fill 0xFF --over <inoput>\" "
+                "filter *before* the %s filter to ensure both calculations are "
+                "using the same byte values.  "
+                "See srec_info(1) for how to see the holes.",
                 get_algorithm_name(),
                 get_algorithm_name()
             );

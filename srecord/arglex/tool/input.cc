@@ -73,6 +73,7 @@
 #include <srecord/input/filter/message/adler32.h>
 #include <srecord/input/filter/message/crc16.h>
 #include <srecord/input/filter/message/crc32.h>
+#include <srecord/input/filter/message/stm32.h>
 #include <srecord/input/filter/message/fletcher16.h>
 #include <srecord/input/filter/message/fletcher32.h>
 #include <srecord/input/filter/message/gcrypt.h>
@@ -113,6 +114,7 @@ srecord::arglex_tool::get_endian_by_token(int tok)
     case token_minimum_be:
     case token_mips_flash_be:
     case token_spasm_be:
+    case token_stm32_crc_be:
         return endian_big;
 
     case token_adler16_le:
@@ -134,6 +136,7 @@ srecord::arglex_tool::get_endian_by_token(int tok)
     case token_msbin:
     case token_mips_flash_le:
     case token_spasm_le:
+    case token_stm32_crc_le:
         return endian_little;
 
     default:
@@ -1019,6 +1022,18 @@ srecord::arglex_tool::get_input()
                         split_offset,
                         split_width
                     );
+            }
+            break;
+
+        case token_stm32_crc_be:
+        case token_stm32_crc_le:
+            {
+                const char *name = token_name();
+                endian_t endian = get_endian_by_token();
+                token_next();
+                unsigned long address = 0;
+                get_address(name, address);
+                ifp = input_filter_message_stm32::create(ifp, address, endian);
             }
             break;
 

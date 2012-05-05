@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2006-2011 Peter Miller
+// Copyright (C) 1998-2003, 2006-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,7 @@
 
 #include <srecord/input.h>
 #include <srecord/memory.h>
+#include <srecord/memory/walker/alignment.h>
 #include <srecord/memory/walker/compare.h>
 #include <srecord/memory/walker/continuity.h>
 #include <srecord/record.h>
@@ -41,7 +42,7 @@ srecord::memory::memory() :
 }
 
 
-srecord::memory::memory(const srecord::memory &arg) :
+srecord::memory::memory(const srecord::memory &rhs) :
     nchunks(0),
     nchunks_max(0),
     chunk(0),
@@ -50,17 +51,17 @@ srecord::memory::memory(const srecord::memory &arg) :
     header(0),
     execution_start_address(0)
 {
-    copy(arg);
+    copy(rhs);
 }
 
 
 srecord::memory &
-srecord::memory::operator=(const srecord::memory &arg)
+srecord::memory::operator=(const srecord::memory &rhs)
 {
-    if (&arg != this)
+    if (&rhs != this)
     {
         clear();
-        copy(arg);
+        copy(rhs);
     }
     return *this;
 }
@@ -91,29 +92,29 @@ srecord::memory::clear()
 
 
 void
-srecord::memory::copy(const srecord::memory &arg)
+srecord::memory::copy(const srecord::memory &rhs)
 {
     delete header;
     header = 0;
-    if (arg.header)
-        header = new srecord::record(*arg.header);
+    if (rhs.header)
+        header = new srecord::record(*rhs.header);
 
     delete execution_start_address;
     execution_start_address = 0;
-    if (arg.execution_start_address)
+    if (rhs.execution_start_address)
     {
         execution_start_address =
-            new srecord::record(*arg.execution_start_address);
+            new srecord::record(*rhs.execution_start_address);
     }
 
-    nchunks = arg.nchunks;
+    nchunks = rhs.nchunks;
     while (nchunks_max < nchunks)
         nchunks_max = nchunks_max * 2 + 4;
     chunk = new srecord::memory_chunk * [nchunks_max];
     for (int j = 0; j < nchunks; ++j)
     {
         // use copy-new to make the copies
-        chunk[j] = new srecord::memory_chunk(*(arg.chunk[j]));
+        chunk[j] = new srecord::memory_chunk(*(rhs.chunk[j]));
     }
 }
 
@@ -255,6 +256,7 @@ srecord::memory::walk(srecord::memory_walker::pointer w)
     w->observe_header(get_header());
     for (int j = 0; j < nchunks; ++j)
         chunk[j]->walk(w);
+    w->observe_end();
 
     // Only write an execution start address record if we were given one.
     if (execution_start_address)
@@ -464,3 +466,19 @@ srecord::memory::has_holes()
     walk(sniffer);
     return (!sniffer->is_continuous());
 }
+
+
+bool
+srecord::memory::is_well_aligned(unsigned multiple)
+    const
+{
+    if (multiple < 2)
+        return true;
+    srecord::memory_walker_alignment::pointer sniffer =
+        srecord::memory_walker_alignment::create(multiple);
+    walk(sniffer);
+    return sniffer->is_well_aligned();
+}
+
+
+// vim: set ts=8 sw=4 et :

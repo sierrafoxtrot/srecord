@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2005-2008, 2010 Peter Miller
+// Copyright (C) 1998-2003, 2005-2008, 2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -60,7 +60,7 @@ protected:
     /**
       * The constructor.  Only derived classes may call.
       *
-      * \param deeper
+      * @param deeper
       *     The deeper input to be filtered.
       */
     input_filter(input::pointer deeper);
@@ -91,4 +91,5 @@ private:
 
 };
 
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_INPUT_FILTER_H

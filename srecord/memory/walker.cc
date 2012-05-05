@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2002, 2003, 2006, 2007, 2010 Peter Miller
+// Copyright (C) 1998, 1999, 2002, 2003, 2006, 2007, 2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -34,16 +34,29 @@ srecord::memory_walker::~memory_walker()
 void
 srecord::memory_walker::notify_upper_bound(unsigned long)
 {
+    // Do nothing.
 }
 
 
 void
 srecord::memory_walker::observe_header(const srecord::record *)
 {
+    // Do nothing.
 }
 
 
 void
 srecord::memory_walker::observe_start_address(const srecord::record *)
 {
+    // Do nothing.
 }
+
+
+void
+srecord::memory_walker::observe_end(void)
+{
+    // Do nothing.
+}
+
+
+// vim: set ts=8 sw=4 et :

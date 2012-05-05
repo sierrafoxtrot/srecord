@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2002, 2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 1998, 1999, 2002, 2003, 2006-2008, 2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -56,6 +56,12 @@ public:
         int data_size) = 0;
 
     /**
+      * The observe_end method is called once all of the data blocks
+      * have been passed to the observer via the observe() method.
+      */
+    virtual void observe_end(void);
+
+    /**
       * The notify_upper_bound method is used to notify the walker of
       * the upper bound (highest address plus one) of the observe calls
       * to come.  Shall be called before the any observe calls are made.
@@ -104,4 +110,5 @@ private:
 
 };
 
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_MEMORY_WALKER_H

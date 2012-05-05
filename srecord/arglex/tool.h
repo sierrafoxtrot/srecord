@@ -173,6 +173,8 @@ public:
         token_spectrum,
         token_split,
         token_stewie,
+        token_stm32_crc_be,
+        token_stm32_crc_le,
         token_style_dot,
         token_style_hexadecimal,
         token_style_hexadecimal_not,
