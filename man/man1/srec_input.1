@@ -378,7 +378,7 @@ a command like
 .nf
 .in +0.25i
 .ft CW
-srec_cat \-generate 8 12 \-l\[hy]e\[hy]constant $VERSION 4 \e
+srec_cat \-generate 8 12 \-constant\[hy]l\[hy]e $VERSION 4 \e
     \-o version.srec
 .ft P
 .in -0.25i
@@ -1002,6 +1002,11 @@ STM32 hardware unit is just a CRC32 with a different polynomial and
 word\[hy]fed instead of byte\[hy]fed.
 .PP
 The \f[I]address\fP is where to place the 4\[hy]byte STM32 CRC.
+.PP
+The CRC used is documented in \[lq]RM0041, STM32F100xx reference manual\[rq],
+page 46, chapter \[lq]CRC Calculation Unit\[rq], which can be found at
+.br
+http://www.st.com/internet/mcu/product/216844.jsp
 .RE
 .\" ----------  T  ---------------------------------------------------------
 .\"             tiger
