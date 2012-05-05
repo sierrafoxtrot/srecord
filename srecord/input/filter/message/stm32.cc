@@ -21,8 +21,8 @@
 //      Subject: Re: patch for srecord 1.59
 //      Date: Sat, 05 May 2012 06:26:02 +0200 (05/05/12 14:26:02)
 //
-//      I hereby formally all copyright regarding the below mentioned
-//      patch to the author of srecord, Peter Miller.
+//      I hereby formally assign all copyright to the author of srecord,
+//      Peter Miller.
 //
 
 #include <srecord/arglex/tool.h>
