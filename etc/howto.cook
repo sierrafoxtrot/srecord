@@ -1,6 +1,6 @@
 /*
  *      srecord - manipulate eprom load files
- *      Copyright (C) 1998, 1999, 2001-2003, 2006-2010 Peter Miller
+ *      Copyright (C) 1998, 1999, 2001-2003, 2006-2010, 2012 Peter Miller
  *
  *      This program is free software; you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
@@ -24,6 +24,31 @@ set unlink;
 set time-adjust;
 
 awk = gawk;
+
+function apt-get-command =
+{
+    if [not [find_command [@1]]] then
+        sudo apt-get install -y [@1] < /dev/tty > /dev/tty 2>&1 || true;
+}
+
+function apt-get-library =
+{
+    if [not [collect dpkg -l | grep lib[@1]-dev | wc -l || true]] then
+        sudo apt-get install -y lib[@1]-dev;
+}
+
+/*
+ * Make sure the package we want are present
+ */
+if [find_command apt-get] then
+{
+    function apt-get-command gawk;
+    function apt-get-command groff;
+    function apt-get-command libtool;
+    function apt-get-command doxygen;
+    function apt-get-library gcrypt11;
+    function apt-get-library boost;
+}
 
 /*
  * See how verbose we have decided to be.
@@ -422,3 +447,5 @@ cascade man/man1/z_copyright.so = etc/version.so ;
 
 #include [resolve etc/doxygen.cook etc/metrics.cook etc/tags.cook ]
 #include [resolve test_hyphen/module.cook ]
+
+/* vim: set ts=8 sw=4 et : */
