@@ -1,21 +1,20 @@
 #!/bin/sh
 #
-#       srecord - Manipulate EPROM load files
-#       Copyright (C) 2008, 2011 Peter Miller
+# srecord - Manipulate EPROM load files
+# Copyright (C) 2008, 2011, 2012 Peter Miller
 #
-#       This program is free software; you can redistribute it and/or modify
-#       it under the terms of the GNU General Public License as published by
-#       the Free Software Foundation; either version 3 of the License, or
-#       (at your option) any later version.
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or (at
+# your option) any later version.
 #
-#       This program is distributed in the hope that it will be useful,
-#       but WITHOUT ANY WARRANTY; without even the implied warranty of
-#       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#       GNU General Public License for more details.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
 #
-#       You should have received a copy of the GNU General Public License
-#       along with this program. If not, see
-#       <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
 TEST_SUBJECT="exclusive filters"
@@ -30,7 +29,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-# ---------- be-excl-len ---------------------------------------------------
+# ---------- excl-len-be ---------------------------------------------------
 
 cat > test.ok << 'fubar'
 S00600004844521B
@@ -42,13 +41,13 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -beelen 0x200 -o test.out
+srec_cat test.in -elenbe 0x200 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
-# ---------- le-excl-len ---------------------------------------------------
+# ---------- excl-len-le ---------------------------------------------------
 
 cat > test.ok << 'fubar'
 S00600004844521B
@@ -60,13 +59,13 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -leelen 0x200 -o test.out
+srec_cat test.in -elenle 0x200 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
-# ---------- be-excl-max ---------------------------------------------------
+# ---------- excl-max-be ---------------------------------------------------
 
 cat > test.ok << 'fubar'
 S00600004844521B
@@ -78,13 +77,13 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -beemax 0x200 -o test.out
+srec_cat test.in -emaxbe 0x200 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
-# ---------- le-excl-max ---------------------------------------------------
+# ---------- excl-max-le ---------------------------------------------------
 
 cat > test.ok << 'fubar'
 S00600004844521B
@@ -96,13 +95,13 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -leemax 0x200 -o test.out
+srec_cat test.in -emaxle 0x200 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
-# ---------- be-excl-min ---------------------------------------------------
+# ---------- excl-min-be ---------------------------------------------------
 
 cat > test.ok << 'fubar'
 S00600004844521B
@@ -114,13 +113,13 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -beemin 0x200 -o test.out
+srec_cat test.in -eminbe 0x200 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
-# ---------- le-excl-min ---------------------------------------------------
+# ---------- excl-min-le ---------------------------------------------------
 
 cat > test.ok << 'fubar'
 S00600004844521B
@@ -132,7 +131,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -leemin 0x200 -o test.out
+srec_cat test.in -eminle 0x200 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2009, 2011 Peter Miller
+# Copyright (C) 2009, 2011, 2012 Peter Miller
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -b-e-adler32 0x100 -o test.out
+srec_cat test.in -adler32-b-e 0x100 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

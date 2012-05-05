@@ -63,11 +63,11 @@ A mystery format that requires reverse engineering may take \f[I]much\fP
 longer; ask again once you have figured it out.
 .PP
 All code written for you will be included in the project source
-tarball in its next release.  All formats written for you will be
+tarball in its next release.  All formats and filters written for you will be
 copyright Peter Miller, and they will be GNU GPL licensed.
 If you \f[I]need\fP a format or filter written, it has value to you;
 the issue of freeloaders is irrelevant.
 .PP
-Conversely, including contributions and patches is done \f[I]gratis\fP,
-and are usually done as promptly as time permits.
+Conversely, integrating complete open source contributions and patches
+is done \f[I]gratis\fP, and usually done as promptly as time permits.
 .\" vim: set ts=8 sw=4 et :

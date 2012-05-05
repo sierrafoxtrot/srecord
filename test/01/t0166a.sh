@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2008, 2011 Peter Miller
+# Copyright (C) 2008, 2011, 2012 Peter Miller
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,8 +43,8 @@ srec_cat                                                                 \
         -generate 0x02001000 0x02001004 -repeat-data 0xED 0xAC 0x01 0x23 \
         -generate 0x02001004 0x02001008 -repeat-data 0x21 0x22 0x23 0x24 \
     \)                                                                   \
-    --b-e-length 0x02001008 4                                            \
-    -b-e-checksum-neg 0x0200100C 4 4                                     \
+    --length-b-e 0x02001008 4                                            \
+    -checksum-neg_b-e 0x0200100C 4 4                                     \
     -o test.out
 if test $? -ne 0; then fail; fi
 

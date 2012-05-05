@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2009, 2011 Peter Miller
+# Copyright (C) 2009, 2011, 2012 Peter Miller
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-TEST_SUBJECT="generate b-e-const"
+TEST_SUBJECT="generate const-b-e"
 . test_prelude
 
 cat > test.ok << 'fubar'
@@ -28,7 +28,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat -generate 8 16 -b-e-const 0x04030201 4 -o test.out -header HDR -esa 0
+srec_cat -generate 8 16 -const-b-e 0x04030201 4 -o test.out -header HDR -esa 0
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

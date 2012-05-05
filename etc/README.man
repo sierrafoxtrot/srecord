@@ -216,7 +216,7 @@ byte swap
 The \fIbyte swap\fP filter may be used to swap pairs of add and even bytes.
 .TP 8n
 CRC
-The \fIcrc\fP filters may be used to insert a CRC into the data.
+The various \fIcrc\fP filters may be used to insert a CRC into the data.
 .TP
 checksum
 The \fIchecksum\fP filters may be used to insert a checksum into

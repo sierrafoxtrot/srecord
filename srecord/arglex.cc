@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2002, 2003, 2006-2011 Peter Miller
+// Copyright (C) 1998, 1999, 2002, 2003, 2006-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -16,6 +16,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
+#include <cassert>
 #include <cctype>
 #include <cstring>
 #include <cstdio>
@@ -350,6 +351,51 @@ default:
 }
 
 
+static bool
+starts_with(const std::string &haystack, const std::string &needle)
+{
+    return
+        (
+            haystack.size() >= needle.size()
+        &&
+            0 == memcmp(haystack.c_str(), needle.c_str(), needle.size())
+        );
+}
+
+
+static bool
+ends_with(const std::string &haystack, const std::string &needle)
+{
+    return
+        (
+            haystack.size() >= needle.size()
+        &&
+            (
+                0
+            ==
+                memcmp
+                (
+                    haystack.c_str() + haystack.size() - needle.size(),
+                    needle.c_str(),
+                    needle.size()
+                )
+            )
+        );
+}
+
+
+static void
+deprecated_warning(const char *deprecated_name, const char *preferred_name)
+{
+    srecord::quit_default.warning
+    (
+        "option \"%s\" is deprecated, please use \"%s\" instead",
+        deprecated_name,
+        preferred_name
+    );
+}
+
+
 //
 // NAME
 //      arglex
@@ -374,7 +420,7 @@ default:
 //
 
 int
-srecord::arglex::token_next()
+srecord::arglex::token_next(void)
 {
     const table_ty  *tp;
     const table_ty  *hit[20];
@@ -454,10 +500,38 @@ srecord::arglex::token_next()
         ++it
     )
     {
-        for (tp = *it; tp->name; tp++)
+        for (tp = *it; tp->name; ++tp)
         {
             if (compare(tp->name, arg.c_str()))
                 hit[nhit++] = tp;
+
+            // big endian deprecated variants
+            assert(!starts_with(tp->name, "-Big_Endian_"));
+            if (ends_with(tp->name, "_Big_Endian"))
+            {
+                std::string name2 =
+                    "-Big_Endian_" +
+                    std::string(tp->name + 1, strlen(tp->name) - 12);
+                if (compare(name2.c_str(), arg.c_str()))
+                {
+                    hit[nhit++] = tp;
+                    deprecated_warning(name2.c_str(), tp->name);
+                }
+            }
+
+            // little endian deprecated variants
+            assert(!starts_with(tp->name, "-Little_Endian_"));
+            if (ends_with(tp->name, "_Little_Endian"))
+            {
+                std::string name3 =
+                    "-Little_Endian_" +
+                    std::string(tp->name + 1, strlen(tp->name) - 15);
+                if (compare(name3.c_str(), arg.c_str()))
+                {
+                    hit[nhit++] = tp;
+                    deprecated_warning(name3.c_str(), tp->name);
+                }
+            }
         }
     }
 
@@ -539,12 +613,7 @@ srecord::arglex::check_deprecated(const std::string &actual)
         std::string formal = *it;
         if (compare(formal.c_str(), actual.c_str()))
         {
-            quit_default.warning
-            (
-                "option \"%s\" is deprecated, use \"%s\" instead",
-                formal.c_str(),
-                token_name(token)
-            );
+            deprecated_warning(formal.c_str(), token_name(token));
         }
     }
 }
@@ -605,7 +674,7 @@ srecord::arglex::help(const char *name)
 
 
 void
-srecord::arglex::version()
+srecord::arglex::version(void)
     const
 {
     print_version();
@@ -614,7 +683,7 @@ srecord::arglex::version()
 
 
 void
-srecord::arglex::license()
+srecord::arglex::license(void)
     const
 {
     help("srecord::license");
@@ -622,7 +691,7 @@ srecord::arglex::license()
 
 
 void
-srecord::arglex::bad_argument()
+srecord::arglex::bad_argument(void)
     const
 {
     switch (token_cur())
@@ -656,7 +725,7 @@ srecord::arglex::bad_argument()
 
 
 int
-srecord::arglex::token_first()
+srecord::arglex::token_first(void)
 {
     switch (token_next())
     {
@@ -693,7 +762,7 @@ srecord::arglex::usage_tail_set(const char *s)
 
 
 const char *
-srecord::arglex::usage_tail_get()
+srecord::arglex::usage_tail_get(void)
     const
 {
     if (!usage_tail_)
@@ -703,7 +772,7 @@ srecord::arglex::usage_tail_get()
 
 
 void
-srecord::arglex::usage()
+srecord::arglex::usage(void)
     const
 {
     std::cerr << "Usage: " << progname_get() << " [ <option>... ] "
@@ -717,7 +786,7 @@ srecord::arglex::usage()
 
 
 void
-srecord::arglex::default_command_line_processing()
+srecord::arglex::default_command_line_processing(void)
 {
     bad_argument();
 }

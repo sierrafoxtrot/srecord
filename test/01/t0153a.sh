@@ -1,21 +1,20 @@
 #!/bin/sh
 #
-#       srecord - The "srecord" program.
-#       Copyright (C) 2007, 2008, 2011 Peter Miller
+# srecord - The "srecord" program.
+# Copyright (C) 2007, 2008, 2011, 2012 Peter Miller
 #
-#       This program is free software; you can redistribute it and/or modify
-#       it under the terms of the GNU General Public License as published by
-#       the Free Software Foundation; either version 3 of the License, or
-#       (at your option) any later version.
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or (at
+# your option) any later version.
 #
-#       This program is distributed in the hope that it will be useful,
-#       but WITHOUT ANY WARRANTY; without even the implied warranty of
-#       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#       GNU General Public License for more details.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
 #
-#       You should have received a copy of the GNU General Public License
-#       along with this program. If not, see
-#       <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
 TEST_SUBJECT="CRC16 -no-aug"
@@ -38,7 +37,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -becrc16 0x100 -o test.out 2> LOG
+srec_cat test.in -crc16be 0x100 -o test.out 2> LOG
 if test $? -ne 0; then cat LOG; fail; fi
 
 diff test.ok test.out
@@ -52,7 +51,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -becrc16 0x100 -no-augment -o test.out 2> LOG
+srec_cat test.in -crc16be 0x100 -no-augment -o test.out 2> LOG
 if test $? -ne 0; then cat LOG; fail; fi
 
 diff test.ok test.out
@@ -77,7 +76,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -becrc16 0x100 -o test.out
+srec_cat test.in -crc16be 0x100 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -92,7 +91,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -becrc16 0x100 -no-augment -o test.out 2>/dev/null
+srec_cat test.in -crc16be 0x100 -no-augment -o test.out 2>/dev/null
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -117,7 +116,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -becrc16 0x100 -o test.out
+srec_cat test.in -crc16be 0x100 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -132,7 +131,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -becrc16 0x100 -no-augment -o test.out 2>/dev/null
+srec_cat test.in -crc16be 0x100 -no-augment -o test.out 2>/dev/null
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -171,7 +170,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -becrc16 0x100 -o test.out
+srec_cat test.in -crc16be 0x100 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -193,7 +192,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -becrc16 0x100 -no-augment -o test.out 2>/dev/null
+srec_cat test.in -crc16be 0x100 -no-augment -o test.out 2>/dev/null
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

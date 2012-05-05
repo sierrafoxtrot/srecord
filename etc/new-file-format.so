@@ -1,6 +1,6 @@
 .\"
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2001, 2002, 2004, 2006-2011 Peter Miller
+.\"     Copyright (C) 2001, 2002, 2004, 2006-2012 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -70,10 +70,14 @@ to make sure it hasn't been used yet.
 .RE
 .TP 8n
 test/\f[I]nn\fP/t\f[I]nnmm\fPa.sh
+.RS
 You may have noticed that SRecord comes with a lot of tests.  You are
 more likely to get the patch for your new format accepted rapidly if it
 comes with at least one test for its output class, and at least one test
 for its input class.
+.PP
+If your filter has endian\[hy]ness, add tests for each endian.
+.RE
 .SS Modified Files
 The following files need to be updated to mention the new format.
 .TP 8n
@@ -91,10 +95,20 @@ Mention the new format in the section of this file which describes
 the supported file formats.
 .TP 8n
 srecord/arglex/tool.h
+.RS
 Add the new format to the command line argument type enum.
+.PP
+If your filter has endian\[hy]ness, add one for each endian, using
+\[lq]_be\[rq] and \[lq]_le\[rq] suffixes.
+.RE
 .TP 8n
 srecord/arglex/tool.cc
+.RS
 Add the new format to the array of command line arguments types.
+.PP
+If your filter has endian\[hy]ness, add one for each endian, using
+\[lq]_Big_Endian\[rq] and \[lq]_Little_Endian\[rq] suffixes.
+.RE
 .TP 8n
 srecord/arglex/tool/input.cc
 Add the new format to the code which parses input formats.
@@ -122,6 +136,8 @@ You may have noticed that SRecord comes with a lot of tests.  You are
 more likely to get the patch for your new format accepted rapidly if it
 comes with at least one test for its output class, and at least one test
 for its input class.
+.PP
+If your filter has endian\[hy]ness, add tests for each endian.
 .SH IMPLEMENTATION ISSUES
 In implementing a new file format, there are a couple of philosophical
 issues which affect technical decisions:
@@ -249,3 +265,4 @@ l l l.
 Peter Miller;E\[hy]Mail:;pmiller@opensource.org.au
 \f(CW/\e/\e*\fP;WWW:;http://miller.emu.id.au/pmiller/
 .TE
+.\" vim: set ts=8 sw=4 et :
