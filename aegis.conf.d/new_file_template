@@ -1,6 +1,6 @@
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2010, 2011 Peter Miller
+# Copyright (C) 2010-2012 Peter Miller
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,6 +49,10 @@ file_template =
         {
                 pattern = [ "*.[1-9]" ];
                 body = "${read_file ${source etc/template/man abs}}";
+        },
+        {
+                pattern = [ "etc/new.*.so" ];
+                body = "${read_file ${source etc/template/etc-new-so abs}}";
         },
         {
                 /* This one must be last. */
