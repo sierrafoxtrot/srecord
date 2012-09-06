@@ -27,6 +27,7 @@
 #include <srecord/input/file/atmel_generic.h>
 #include <srecord/input/file/binary.h>
 #include <srecord/input/file/brecord.h>
+#include <srecord/input/file/coe.h>
 #include <srecord/input/file/cosmac.h>
 #include <srecord/input/file/dec_binary.h>
 #include <srecord/input/file/emon52.h>

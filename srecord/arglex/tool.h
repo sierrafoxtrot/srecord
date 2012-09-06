@@ -194,6 +194,7 @@ public:
         token_whirlpool,
         token_wilson,
         token_within,
+        token_xilinx_coefficient_file,
         token_xor,
         token_MAX
     };

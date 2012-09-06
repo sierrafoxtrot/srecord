@@ -92,6 +92,7 @@ The <i>SRecord</i> package understands a huge number of file formats:
 The Ascii-Hex format is understood for both reading and writing.
 (Also known as the Ascii-Space-Hex format.)
 <p>
+.\" ----------  A  ---------------------------------------------------------
 <dt>
 ASM
 <dd>
@@ -105,6 +106,7 @@ programs.
 This format is produced by the Atmel AVR assembler.
 It is understood for both reading and writing.
 <p>
+.\" ----------  B  ---------------------------------------------------------
 <dt>
 BASIC
 <dd>
@@ -122,6 +124,7 @@ Binary files can both be read and written.
 <dd>
 Files in Freescale Dragonball bootstrap b-record format can be read and written.
 <p>
+.\" ----------  C  ---------------------------------------------------------
 <dt>
 C Array
 <dd>
@@ -129,30 +132,32 @@ It is possible, for output only, to produce a C array definition containing
 the data.  This can be useful for embedding data into other programs.
 <p>
 <dt>
+<a href="man/man5/srec_coe.html" >Cosmac</a>
+<dd>
+The Xilinx Coefficient File Format (.coe) is understood for writing only.
+<p>
+<dt>
 <a href="man/man5/srec_cosmac.html" >Cosmac</a>
 <dd>
 The RCA Cosmac Elf format is understood for both reading and writing.
 <p>
+.\" ----------  D  ---------------------------------------------------------
 <dt>
 <a href="man/man5/srec_dec_binary.html" >DEC Binary</a>
 <dd>
 The DEC Binary (XXDP) format is understood for both reading and writing.
 <p>
+.\" ----------  E  ---------------------------------------------------------
 <dt>
 <a href="man/man5/srec_emon52.html" >Elektor Monitor</a> (EMON52)
 <dd>
 The EMON52 format is understood for both reading and writing.
 <p>
+.\" ----------  F  ---------------------------------------------------------
 <dt>
 <a href="man/man5/srec_fairchild.html" >Fairchild Fairbug</a>
 <dd>
 The Fairchild Fairbug format is understood for both reading and writing.
-<p>
-<dt>
-Hexdump
-<dd>
-It is possible, for output only, to produce a simple hexadecimal listing.
-This can be useful for developer debugging.
 <p>
 <dt>
 LSI Logic <a href="man/man5/srec_fastload.html" >Fast Load</a>
@@ -169,6 +174,15 @@ The Formatted Binary (XXDP) format is understood for both reading and writing.
 <dd>
 The FPC format is understood for both reading and writing.
 <p>
+.\" ----------  G  ---------------------------------------------------------
+.\" ----------  H  ---------------------------------------------------------
+<dt>
+Hexdump
+<dd>
+It is possible, for output only, to produce a simple hexadecimal listing.
+This can be useful for developer debugging.
+<p>
+.\" ----------  I  ---------------------------------------------------------
 <dt>
 <a href="man/man5/srec_idt.html" >IDT/sim</a>
 <dd>
@@ -192,6 +206,10 @@ reading and writing.
 The Intel hexadecimal 16 format is understood for both reading and writing.
 (Also known as the INHX16 file format.)
 <p>
+.\" ----------  J  ---------------------------------------------------------
+.\" ----------  K  ---------------------------------------------------------
+.\" ----------  L  ---------------------------------------------------------
+.\" ----------  M  ---------------------------------------------------------
 <dt>
 <a href="man/man5/srec_mif.html" >MIF</a>
 <dd>
@@ -222,18 +240,21 @@ and writing.
 The Windows CE Binary Image Data Format is supported both for reading
 and writing.
 <p>
+.\" ----------  N  ---------------------------------------------------------
 <dt>
 <a href="man/man5/srec_needham.html" >Needham Electronics</a>
 <dd>
 The Needham Electronics ASCII file format is understood for both reading
 and writing.
 <p>
+.\" ----------  O  ---------------------------------------------------------
 <dt>
 <a href="man/man5/srec_os65v.html" >Ohio Scientific</a> (OS65V)
 <dd>
 The Ohio Scientific hexadecimal format is understood for both reading
 and writing.
 <p>
+.\" ----------  P  ---------------------------------------------------------
 <dt>
 <a href="man/man5/srec_ppb.html" >PPB</a>
 <dd>
@@ -246,6 +267,9 @@ and writing.
 The Stag Prom Programmer hexadecimal format is understood for both reading
 and writing.
 <p>
+.\" ----------  Q  ---------------------------------------------------------
+.\" ----------  R  ---------------------------------------------------------
+.\" ----------  S  ---------------------------------------------------------
 <dt>
 <a href="man/man5/srec_signetics.html" >Signetics</a>
 <dd>
@@ -262,6 +286,7 @@ for both reading and writing.
 <dd>
 The Spectrum format is understood for both reading and writing.
 <p>
+.\" ----------  T  ---------------------------------------------------------
 <dt>
 <a href="man/man5/srec_tektronix.html" >Tektronix</a>
 (<a href="man/man5/srec_tektronix_extended.html" >Extended</a>)
@@ -289,6 +314,8 @@ processors.
 The Radio Shack TRS\[hy]80 object file format is understood for reading
 and writing.
 <p>
+.\" ----------  U  ---------------------------------------------------------
+.\" ----------  V  ---------------------------------------------------------
 <dt>
 VHDL
 <dd>
@@ -301,11 +328,16 @@ Verilog <a href="man/man5/srec_vmem.html" >VMEM</a>
 It is possible to write a Verilog VMEM file suitable for loading with
 \f[CW]$readmemh()\fP.  This format is supported for reading and writing.
 <p>
+.\" ----------  W  ---------------------------------------------------------
 <dt>
 <a href="man/man5/srec_wilson.html" >Wilson</a>
 <dd>
 The Wilson format is understood for both reading and writing.
 This mystery format was added for a mysterious type of EPROM writer.
+.\" ----------  X  ---------------------------------------------------------
+.\" ----------  Y  ---------------------------------------------------------
+.\" ----------  Z  ---------------------------------------------------------
+.\" ----------  End of Format Names  ---------------------------------------
 <dt>
 <p>
 If you have a description of other EPROM load file formats that SRecord
