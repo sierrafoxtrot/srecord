@@ -379,6 +379,12 @@ protected:
     void fatal_alignment_error(int alignment);
 
     /**
+      * The fatal_hole_error method is used to report problems with
+      * holes in the data, for formats that cannot cope with them.
+      */
+    void fatal_hole_error(unsigned long lo, unsigned long hi);
+
+    /**
       * The data_address_too_large method is used to report fatal
       * problems with data records, in the case where some or all of the
       * address span of a record falls outside the format's ability to

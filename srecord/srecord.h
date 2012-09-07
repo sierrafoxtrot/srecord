@@ -37,6 +37,7 @@
 #include <srecord/input/file/four_packed_code.h>
 #include <srecord/input/file/intel.h>
 #include <srecord/input/file/intel16.h>
+#include <srecord/input/file/mem.h>
 #include <srecord/input/file/mif.h>
 #include <srecord/input/file/mips_flash.h>
 #include <srecord/input/file/mos_tech.h>

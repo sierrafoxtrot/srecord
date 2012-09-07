@@ -123,6 +123,10 @@ LSI Logic Fast Load
 The LSI Logic Fast Load format is understood for both reading and writing.
 .\" ----------  M  ---------------------------------------------------------
 .TP 8n
+Memory Initialization Format
+The Memory Initialization Format (.mem) by Lattice Semiconductor is
+understood for writing only.
+.TP 8n
 MIF
 The Memory Initialization File format by Altera is supported for both
 reading and writing.

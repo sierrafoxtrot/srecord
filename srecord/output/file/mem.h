@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2012 Peter Miller
+// Copyright (C) 2009-2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -16,8 +16,8 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SRECORD_OUTPUT_FILE_COE_H
-#define SRECORD_OUTPUT_FILE_COE_H
+#ifndef SRECORD_OUTPUT_FILE_MEM_H
+#define SRECORD_OUTPUT_FILE_MEM_H
 
 #include <srecord/output/file.h>
 
@@ -25,17 +25,17 @@ namespace srecord
 {
 
 /**
-  * The srecord::output_file_coe class is used to represent the output state
-  * of a file in Coefficient File Format (Xilinx).
+  * The srecord::output_file_mem class is used to represent the output state
+  * of a file in Memory Initialization File Format (.mem Lattice).
   */
-class output_file_coe:
+class output_file_mem:
     public output_file
 {
 public:
     /**
       * The destructor.
       */
-    virtual ~output_file_coe();
+    virtual ~output_file_mem();
 
 private:
     /**
@@ -46,7 +46,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    output_file_coe(const std::string &file_name);
+    output_file_mem(const std::string &file_name);
 
 public:
     /**
@@ -141,30 +141,22 @@ private:
     void emit_header(void);
 
     /**
-      * The GotData instance variable is used to remember whether or not
-      * some data has been seen so far.  This is used to separate values
-      * with commas, but to suppress the first comma before the first
-      * data.
-      */
-    bool got_data;
-
-    /**
       * The default constructor.  Do not use.
       */
-    output_file_coe();
+    output_file_mem();
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_coe(const output_file_coe &);
+    output_file_mem(const output_file_mem &);
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_coe &operator=(const output_file_coe &);
+    output_file_mem &operator=(const output_file_mem &);
 };
 
 };
 
 // vim: set ts=8 sw=4 et :
-#endif // SRECORD_OUTPUT_FILE_COE_H
+#endif // SRECORD_OUTPUT_FILE_MEM_H

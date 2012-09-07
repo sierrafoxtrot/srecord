@@ -113,6 +113,7 @@ public:
         token_hexdump,
         token_idt,
         token_ignore_checksums,
+        token_lattice_memory_initialization_format,
         token_include,
         token_include_not,
         token_intel,

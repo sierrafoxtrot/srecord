@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2004, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2004, 2006-2008, 2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -75,7 +75,7 @@ srecord::output_file_stewie::write_inner(int tag, unsigned long address,
     {
         fatal_error
         (
-            "data length (%d+%d) too long",
+            "data length (%d + %d > 254) too long",
             address_nbytes,
             data_nbytes
         );
@@ -240,3 +240,6 @@ srecord::output_file_stewie::format_name()
 {
     return "Stewie";
 }
+
+
+// vim: set ts=8 sw=4 et :

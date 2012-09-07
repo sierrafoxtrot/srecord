@@ -436,6 +436,20 @@ srecord::output_file::set_is_regular()
 
 
 void
+srecord::output_file::fatal_hole_error(unsigned long lo, unsigned long hi)
+{
+    fatal_error
+    (
+        "The %s output format is unable to cope with holes in the data,"
+        "however there is a hole at 0x%04lX..0x%04lX.",
+        format_name(),
+        lo,
+        hi - 1
+    );
+}
+
+
+void
 srecord::output_file::fatal_alignment_error(int multiple)
 {
     if (multiple > 4)

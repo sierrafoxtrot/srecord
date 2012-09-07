@@ -39,6 +39,8 @@
 #include <srecord/output/file/intel.h>
 #include <srecord/output/file/intel16.h>
 #include <srecord/output/file/mif.h>
+#include <srecord/output/file/mem.h>
+#include <srecord/output/file/coe.h>
 #include <srecord/output/file/mips_flash.h>
 #include <srecord/output/file/mos_tech.h>
 #include <srecord/output/file/motorola.h>
@@ -216,6 +218,11 @@ srecord::arglex_tool::get_output()
     case token_intel16:
         token_next();
         ofp = srecord::output_file_intel16::create(fn);
+        break;
+
+    case token_lattice_memory_initialization_format:
+        token_next();
+        ofp = srecord::output_file_mem::create(fn);
         break;
 
     case token_memory_initialization_file:

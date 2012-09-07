@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2003, 2006-2008, 2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -56,7 +56,7 @@ srecord::output_file_intel16::write_inner(int tag, unsigned long address,
     // Make sure the line is not too long.
     //
     if (data_nbytes >= 255*2)
-        fatal_error("data length (%d) too long", data_nbytes);
+        fatal_error("data length (%d > %d) too long", data_nbytes, 255*2-1);
 
     //
     // Emit the line as hexadecimal text.
@@ -202,3 +202,6 @@ srecord::output_file_intel16::format_name()
 {
     return "Intel-16";
 }
+
+
+// vim: set ts=8 sw=4 et :

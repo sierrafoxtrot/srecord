@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2011 Peter Miller
+// Copyright (C) 2011, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -56,7 +56,7 @@ srecord::output_file_idt::write_inner(int tag, unsigned long address,
     {
         fatal_error
         (
-            "data length (%d+%ld) too long",
+            "data length (%d+%ld>254) too long",
             address_nbytes,
             (unsigned long)data_nbytes
         );

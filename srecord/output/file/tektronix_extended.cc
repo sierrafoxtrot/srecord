@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 2000-2003, 2006-2008, 2010, 2012 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -53,7 +53,14 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
     unsigned char buf[260];
     int record_length = (addr_nbytes + data_nbytes) * 2 + 1;
     if (record_length >= 256)
-            fatal_error("record too long (dmax=%d)", (254-2*addr_nbytes)/2);
+    {
+        fatal_error
+        (
+            "record too long (%d > 255, dmax=%d)",
+            record_length,
+            (254-2*addr_nbytes)/2
+        );
+    }
     int csum = 0;
     int pos = 0;
     csum += buf[pos++] = (record_length >> 4) & 15;
@@ -208,3 +215,6 @@ srecord::output_file_tektronix_extended::format_name()
 {
     return "Tektronix-Extended";
 }
+
+
+// vim: set ts=8 sw=4 et :
