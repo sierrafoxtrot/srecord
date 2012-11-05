@@ -1,6 +1,6 @@
 /*
  * srecord - manipulate eprom load files
- * Copyright (C) 1998-2000, 2003, 2004, 2006-2011 Peter Miller
+ * Copyright (C) 1998-2000, 2003, 2004, 2006-2012 Peter Miller
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -340,7 +340,7 @@ archive/srecord.ico:
     if [not [verbose]] then
         function print GEN [target];
 
-    png2ico [target] [resolve [need]];
+    convert [resolve [need]] -colors 256 [target];
 }
 
 
@@ -445,3 +445,6 @@ archive/man/index.html: [stringset [html-documentation] - [target]]
         > [target]
         ;
 }
+
+
+/* vim: set ts=8 sw=4 et : */
