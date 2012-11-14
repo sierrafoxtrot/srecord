@@ -1,6 +1,6 @@
 dnl
 dnl  srecord - manipulate eprom load files
-dnl  Copyright (C) 1998, 1999, 2002, 2006-2011 Peter Miller
+dnl  Copyright (C) 1998, 1999, 2002, 2006-2012 Peter Miller
 dnl
 dnl  This program is free software; you can redistribute it and/or modify
 dnl  it under the terms of the GNU General Public License as published by
@@ -227,19 +227,11 @@ eval "datarootdir=$datarootdir"
 eval "mandir=$mandir"
 eval "libdir=$libdir"
 eval "datadir=$datadir"
-case "$datadir" in
-    */srecord/* | */srecord )
-    ;;
-*)
-    datadir="${datadir}/srecord"
-    AC_MSG_RESULT([Rewriting --datadir=$datadir])
-;;
-esac
 
 
 AH_TOP([/*
  * srecord - manipulate eprom load files
- * Copyright (C) 1998-2002, 2006-2011 Peter Miller
+ * Copyright (C) 1998-2002, 2006-2012 Peter Miller
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -271,3 +263,4 @@ AH_BOTTOM([
 #endif /* LIB_CONFIG_H */])
 
 AC_OUTPUT(Makefile)
+dnl! vim: set ts=8 sw=4 et :

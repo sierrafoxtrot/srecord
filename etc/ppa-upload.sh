@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2010, 2011 Peter Miller
+# Copyright (C) 2010-2012 Peter Miller
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -55,11 +55,11 @@ do
     VERSION=`head -1 debian/changelog | awk '{print $2}' |
         sed -r -e 's/^\(//;s/\)$//'`
 
-    sed -i -r -e "1s/\) [^;]+; /~${release}) ${release}; /" debian/changelog
+    sed -i -r -e "1s/\) [^;]+; /~pm~${release}) ${release}; /" debian/changelog
     head -1 debian/changelog
     dpkg-buildpackage -S -sa
     ls -lho ..
-    dput $PPA ../${PACKAGE}_${VERSION}~${release}_source.changes
+    dput $PPA ../${PACKAGE}_${VERSION}~pm~${release}_source.changes
 
     cd /tmp
     rm -rf $tdir

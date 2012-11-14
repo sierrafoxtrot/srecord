@@ -346,22 +346,22 @@ cc_dep_files =
         ;
 }
 
-[arch]/bin/%: script/%
+[arch]/bin/%: script/%.sh
 {
-    cp script/% [target];
+    cat [resolve script/%] > [target];
     chmod a+rx [target];
 }
 
-[arch]/bin/%: [arch]/script/%
+[arch]/bin/%: [arch]/script/%.sh
 {
-    cp [arch]/script/% [target];
+    cat [resolve [arch]/script/%] > [target];
     chmod a+rx [target];
 }
 
 all +=
-    [fromto script/% [arch]/bin/%
-        [fromto %1/%2.in %1/%2
-            [match_mask script/% [source_files]]
+    [fromto [arch]/script/%.sh [arch]/bin/%
+        [fromto script/%.in [arch]/script/%
+            [match_mask script/%.sh.in [source_files]]
         ]
     ];
 
