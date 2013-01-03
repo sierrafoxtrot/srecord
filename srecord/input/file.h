@@ -49,6 +49,8 @@ public:
       *
       * @param file_name
       *     The name of the file to be opened.
+      * @param cmdln
+      *     The command line for context
       */
     static pointer guess(const std::string &file_name, arglex &cmdln);
 

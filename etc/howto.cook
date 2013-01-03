@@ -338,21 +338,21 @@ cc_dep_files =
 
 [arch]/bin/%: script/%.sh
 {
-    function if_quiet;
+    function if_quiet Copy;
     cat [resolve script/%] > [target];
     chmod a+rx [target];
 }
 
 [arch]/bin/%: [arch]/script/%.sh
 {
-    function if_quiet;
+    function if_quiet Copy;
     cat [resolve [arch]/script/%] > [target];
     chmod a+rx [target];
 }
 
 all +=
     [fromto [arch]/script/%.sh [arch]/bin/%
-        [fromto script/%.in [arch]/script/%
+        [fromto script/%.sh.in [arch]/script/%
             [match_mask script/%.sh.in [source_files]]
         ]
     ];
