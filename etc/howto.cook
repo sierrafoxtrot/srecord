@@ -28,7 +28,7 @@ awk = gawk;
  * See how verbose we have decided to be.
  */
 if [not [defined verbose]] then
-    verbose = 0;
+    verbose = [match %1D%2 [version]];
 quiet = [not [verbose]];
 libtool-quiet = ;
 if [quiet] then
@@ -336,13 +336,6 @@ cc_dep_files =
         ;
 }
 
-[arch]/bin/%: script/%.sh
-{
-    function if_quiet Copy;
-    cat [resolve script/%] > [target];
-    chmod a+rx [target];
-}
-
 [arch]/bin/%: [arch]/script/%.sh
 {
     function if_quiet Copy;
@@ -351,10 +344,8 @@ cc_dep_files =
 }
 
 all +=
-    [fromto [arch]/script/%.sh [arch]/bin/%
-        [fromto script/%.sh.in [arch]/bin/%
-            [match_mask script/%.sh.in [source_files]]
-        ]
+    [fromto script/%.sh.in [arch]/bin/%
+        [match_mask script/%.sh.in [source_files]]
     ];
 
 
