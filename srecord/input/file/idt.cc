@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2011 Peter Miller
+// Copyright (C) 2011, 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -257,11 +257,11 @@ srecord::input_file_idt::get_file_format_name()
 }
 
 
-const char *
-srecord::input_file_idt::format_option_name(void)
+int
+srecord::input_file_idt::format_option_number(void)
     const
 {
-    return "-Integrated_Device_Technology";
+    return arglex_tool::token_idt;
 }
 
 

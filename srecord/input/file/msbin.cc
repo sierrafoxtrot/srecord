@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2009-2011 Peter Miller
+// Copyright (C) 2009-2011, 2013 Peter Miller
 //
 // Code contribution by David Kozub <zub@linux.fjfi.cvut.cz>
 // Copyright assigned to Peter Miller 27-Jan-2010.
@@ -23,6 +23,7 @@
 #include <limits>
 #include <cstring>
 
+#include <srecord/arglex/tool.h>
 #include <srecord/input/file/msbin.h>
 
 
@@ -315,11 +316,11 @@ srecord::input_file_msbin::get_file_format_name(void)
 }
 
 
-const char *
-srecord::input_file_msbin::format_option_name(void)
+int
+srecord::input_file_msbin::format_option_number(void)
     const
 {
-    return "-MsBin";
+    return arglex_tool::token_msbin;
 }
 
 

@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2012 Peter Miller
+// Copyright (C) 2012, 2013 Peter Miller
 //
 // Code contribution by Eric Smith <eric@brouhaha.com>
 // Copyright assigned to Peter Miller 15-Mar-2012.
@@ -62,7 +62,7 @@ protected:
     bool is_binary(void) const;
 
     // See base class for documentation.
-    const char *format_option_name(void) const;
+    int format_option_number(void) const;
 
 private:
     /**

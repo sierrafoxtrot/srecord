@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2012 Peter Miller
+// Copyright (C) 2012, 2013 Peter Miller
 //
 // Code contribution by Eric Smith <eric@brouhaha.com>
 // Copyright assigned to Peter Miller 15-Mar-2012.
@@ -19,6 +19,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+#include <srecord/arglex/tool.h>
 #include <srecord/endian.h>
 #include <srecord/input/file/trs80.h>
 #include <srecord/record.h>
@@ -204,11 +205,11 @@ srecord::input_file_trs80::get_file_format_name(void)
 }
 
 
-const char *
-srecord::input_file_trs80::format_option_name(void)
+int
+srecord::input_file_trs80::format_option_number(void)
     const
 {
-    return "-TRS80";
+    return arglex_tool::token_trs80;
 }
 
 

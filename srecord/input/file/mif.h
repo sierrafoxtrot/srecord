@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2009-2011 Peter Miller
+// Copyright (C) 2009-2011, 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -55,7 +55,7 @@ protected:
     const char *get_file_format_name(void) const;
 
     // See base class for documentation.
-    const char *format_option_name(void) const;
+    int format_option_number(void) const;
 
 private:
     /**

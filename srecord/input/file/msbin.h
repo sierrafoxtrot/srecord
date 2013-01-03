@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2009-2011 Peter Miller
+// Copyright (C) 2009-2011, 2013 Peter Miller
 //
 // Code contribution by David Kozub <zub@linux.fjfi.cvut.cz>
 // Copyright assigned to Peter Miller 27-Jan-2010.
@@ -64,7 +64,7 @@ protected:
     const char *get_file_format_name(void) const;
 
     // See base class for documentation.
-    const char *format_option_name(void) const;
+    int format_option_number(void) const;
 
 private:
     /**
@@ -203,3 +203,4 @@ private:
 };
 
 #endif // SRECORD_INPUT_FILE_MSBIN_H
+// vim: set ts=8 sw=4 et :

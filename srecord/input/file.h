@@ -1,20 +1,19 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2008, 2010-2012 Peter Miller
+// Copyright (C) 1998-2008, 2010-2013 Peter Miller
 //
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
+// This program is free software; you can redistribute it and/or modify it
+// under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or (at your
+// option) any later version.
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Lesser General Public License for more details.
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+// License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
 #ifndef SRECORD_INPUT_FILE_H
@@ -25,6 +24,8 @@
 #include <srecord/input.h>
 
 namespace srecord {
+
+class arglex; // forward
 
 /**
   * The srecord::input_file class is used to represent an generic input
@@ -49,7 +50,7 @@ public:
       * @param file_name
       *     The name of the file to be opened.
       */
-    static pointer guess(const std::string &file_name);
+    static pointer guess(const std::string &file_name, arglex &cmdln);
 
     /**
       * The ignore_all_checksums method is used to set the global
@@ -59,11 +60,10 @@ public:
     static void ignore_all_checksums(void) { ignore_checksums_default = true; }
 
     /**
-      * The format_option_name method is used by the #srecord::input_file::guess
-      * class method to add a hint so the user may access the correct format
-      * next time.
+      * The format_option_number method is used to obtain the option number,
+      * which can then be turned into text via the #arglex::token_name method.
       */
-    virtual const char *format_option_name(void) const = 0;
+    virtual int format_option_number(void) const = 0;
 
 protected:
     // See base class for documentation.

@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2011 Peter Miller
+// Copyright (C) 2011, 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -18,6 +18,7 @@
 
 #include <cassert>
 
+#include <srecord/arglex/tool.h>
 #include <srecord/input/file/ppx.h>
 #include <srecord/record.h>
 
@@ -317,11 +318,11 @@ srecord::input_file_ppx::get_file_format_name(void)
 }
 
 
-const char *
-srecord::input_file_ppx::format_option_name(void)
+int
+srecord::input_file_ppx::format_option_number(void)
     const
 {
-    return "-Prom_Pogrammer_heXadecimal";
+    return arglex_tool::token_ppx;
 }
 
 
