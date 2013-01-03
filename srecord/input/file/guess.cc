@@ -102,40 +102,6 @@ static func_p table[] =
 #define ENDOF(a) ((a) + SIZEOF(a))
 
 
-static std::string
-abbreviate(const char *s)
-{
-    std::string result;
-    for (;;)
-    {
-        unsigned char c = *s++;
-        switch (c)
-        {
-        case '\0':
-            return result;
-
-        case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g':
-        case 'h': case 'i': case 'j': case 'k': case 'l': case 'm': case 'n':
-        case 'o': case 'p': case 'q': case 'r': case 's': case 't': case 'u':
-        case 'v': case 'w': case 'x': case 'y': case 'z': case '_':
-            break;
-
-        case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G':
-        case 'H': case 'I': case 'J': case 'K': case 'L': case 'M': case 'N':
-        case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T': case 'U':
-        case 'V': case 'W': case 'X': case 'Y': case 'Z':
-            c = tolower(c);
-            result += c;
-            break;
-
-        default:
-            result += c;
-            break;
-        }
-    }
-}
-
-
 srecord::input_file::pointer
 srecord::input_file::guess(const std::string &fn, arglex &cmdline)
 {
@@ -181,7 +147,7 @@ srecord::input_file::guess(const std::string &fn, arglex &cmdline)
                         "the %s command line option (%s)",
                     fn.c_str(),
                     option,
-                    abbreviate(option).c_str()
+                    srecord::arglex::abbreviate(option).c_str()
                 );
 
                 //

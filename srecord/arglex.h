@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2002, 2003, 2006-2008, 2010 Peter Miller
+// Copyright (C) 1998, 1999, 2002, 2003, 2006-2008, 2010, 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -144,6 +144,19 @@ public:
       * in it on return.
       */
     static bool compare(const char *formal, const char *actual);
+
+    /**
+      * The abbreviate class method is used to take an option's long
+      * name, and turn it into the minimum possible string for that
+      * option.
+      */
+    static std::string abbreviate(const char *text);
+
+    /**
+      * The test_ambiguous method is for debugging.  It verifies that
+      * all of the option names are unique.
+      */
+    void test_ambiguous(void) const;
 
 private:
     /**
@@ -370,3 +383,4 @@ protected:
 };
 
 #endif // LIB_ARGLEX_H
+// vim: set ts=8 sw=4 et :

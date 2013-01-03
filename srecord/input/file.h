@@ -61,7 +61,7 @@ public:
 
     /**
       * The format_option_number method is used to obtain the option number,
-      * which can then be turned into text via the #arglex::token_name method.
+      * which can then be turned into text via the arglex::token_name method.
       */
     virtual int format_option_number(void) const = 0;
 

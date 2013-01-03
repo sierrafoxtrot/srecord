@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2002, 2003, 2006-2012 Peter Miller
+// Copyright (C) 1998, 1999, 2002, 2003, 2006-2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -727,6 +727,12 @@ srecord::arglex::bad_argument(void)
 int
 srecord::arglex::token_first(void)
 {
+#if 1
+    // We probably don't need to do this all the time.
+    // How do we distinguish Peter's build from a package build?
+    test_ambiguous();
+#endif
+
     switch (token_next())
     {
     default:

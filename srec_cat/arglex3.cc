@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2008, 2010 Peter Miller
+//      Copyright (C) 2000-2008, 2010, 2013 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv) :
         { "-Execution_Start_Address", token_execution_start_address, },
         { "-GOTO", token_execution_start_address, },
         { "-HEAder", token_header, },
-        { "-Line_Length", token_line_length, },
+        { "-Line_LENGth", token_line_length, },
         { "-Line_Termination", token_line_termination, },
         { "-End_Of_Line", token_line_termination, },
         { "-Output_Block_Size", token_output_block_size, },
@@ -56,3 +56,6 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv) :
 srec_cat_arglex3::~srec_cat_arglex3()
 {
 }
+
+
+// vim: set ts=8 sw=4 et :
