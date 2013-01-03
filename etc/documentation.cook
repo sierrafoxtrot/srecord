@@ -1,20 +1,19 @@
 /*
- *      srecord - manipulate eprom load files
- *      Copyright (C) 1998-2001, 2003, 2006-2008, 2010-2012 Peter Miller
+ * srecord - manipulate eprom load files
+ * Copyright (C) 1998-2001, 2003, 2006-2008, 2010-2013 Peter Miller
  *
- *      This program is free software; you can redistribute it and/or modify
- *      it under the terms of the GNU General Public License as published by
- *      the Free Software Foundation; either version 3 of the License, or
- *      (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or (at
+ * your option) any later version.
  *
- *      This program is distributed in the hope that it will be useful,
- *      but WITHOUT ANY WARRANTY; without even the implied warranty of
- *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *      GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
  *
- *      You should have received a copy of the GNU General Public License
- *      along with this program. If not, see
- *      <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 all = [all] documentation;
@@ -39,8 +38,7 @@ cascade etc/srecord.html = etc/version.so(exists);
 man/cat%1/%2.%1: man/man%1/%2.%1
     etc/groff.sh
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     sh [resolve etc/groff.sh]
         [addprefix "-I" [search_list]]
@@ -52,8 +50,7 @@ man/cat%1/%2.%1: man/man%1/%2.%1
 archive/man/man%1/%2.html: man/man%1/%2.%1: etc/groff.sh
     set shallow
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Groff;
 
     sh [resolve etc/groff.sh]
         [addprefix "-I" [search_list]]
@@ -70,6 +67,7 @@ archive/man/man%1/%2.html: man/man%1/%2.%1: etc/groff.sh
 man/man%1/%2.%1.d: man/man%1/%2.%1
     set no-cascade
 {
+    function if_quiet Depends;
     [c_incl] -nc -ns -api -nrec
         --lang\=roff
         [addprefix "-I" [search_list]]
@@ -83,6 +81,7 @@ man/man%1/%2.%1.d: man/man%1/%2.%1
 man/man%1/%2.so.d: man/man%1/%2.so
     set no-cascade
 {
+    function if_quiet Depends;
     [c_incl] -nc -ns -api -nrec
         --lang\=roff
         [addprefix "-I" [search_list]]
@@ -96,6 +95,7 @@ man/man%1/%2.so.d: man/man%1/%2.so
 etc/%.so.d: etc/%.so
     set no-cascade
 {
+    function if_quiet Depends;
     [c_incl] -nc -ns -api -nrec
         --lang\=roff
         [addprefix "-I" [search_list]]
@@ -113,8 +113,7 @@ etc/%.so.d: etc/%.so
 etc/%.pdf: etc/%.man etc/page-list.awk
     etc/groff.sh
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Groff;
 
     sh [resolve etc/groff.sh]
         [addprefix "-I" [search_list]]
@@ -122,6 +121,7 @@ etc/%.pdf: etc/%.man etc/page-list.awk
         [resolve etc/%.man]
         > %.ps.tmp;
     psselect -p`awk -f [resolve etc/page-list.awk] %.ps.tmp`
+        ['if' [quiet] 'then' -q ]
         %.ps.tmp > %.ps;
     rm %.ps.tmp
         set silent;
@@ -135,8 +135,7 @@ cascade etc/reference.man = etc/ref-index.so etc/ref-parts.so;
 etc/ref-index.so: [match_mask man/man%1/%2.%1 [source_files]]
         etc/ref-ptx1.awk etc/ref-ptx.ignore etc/ref-ptx2.awk
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     [awk] -f [resolve etc/ref-ptx1.awk]
         [resolve [match_mask man/man%1/%2.%1 [source_files]]]
@@ -149,8 +148,7 @@ etc/ref-index.so: [match_mask man/man%1/%2.%1 [source_files]]
 etc/ref-parts.so: [match_mask man/man%1/%2.%1 [source_files]]
         etc/ref-ptx.sh
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     sh -f [resolve etc/ref-ptx.sh]
         [match_mask man/man%1/%2.%1 [source_files]]
@@ -160,10 +158,12 @@ etc/ref-parts.so: [match_mask man/man%1/%2.%1 [source_files]]
 #if [count [match_mask etc/new.%.so [source_files]]]
 etc/new.so: : etc/new.sh [match_mask etc/new.%.so [source_files]]
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     sh [resolve etc/new.sh] -r [match_mask etc/new.%.so [need]] > [target];
 }
 #include-cooked-nowarn etc/new.so.d
 #endif
+
+
+/* vim: set ts=8 sw=4 et : */

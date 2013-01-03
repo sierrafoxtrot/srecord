@@ -1,6 +1,6 @@
 /*
  * srecord - manipulate eprom load files
- * Copyright (C) 1998-2000, 2003, 2004, 2006-2012 Peter Miller
+ * Copyright (C) 1998-2000, 2003, 2004, 2006-2013 Peter Miller
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,8 +100,7 @@ aemakegen = aemakegen;
 
 Makefile.in: [source_files]
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Gneerate;
 
     [aemakegen] -p [project] -c [change] -o [target]
         libdir/pkgconfig/[project_short].pc.in
@@ -112,8 +111,7 @@ archive/[project_minus].tar.gz: [source_file_order]
         debian/control /* et al */
     set shallow
 {
-    if [not [verbose]] then
-        function print TAR [target];
+    function if_quiet Gneerate;
 
     tar cf - [resolve [source_file_order]]
         debian/changelog
@@ -135,8 +133,7 @@ archive/[project_minus].tar.gz: [source_file_order]
 archive/[project_minus].%: %
     set shallow
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Copy;
 
     cat [resolve [need]] > [target];
 }
@@ -144,16 +141,14 @@ archive/[project_minus].%: %
 archive/[project_minus].pdf: etc/reference.pdf
     set shallow
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Copy;
 
     cat [resolve [need]] > [target];
 }
 
 %: etc/%.man
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Groff;
 
     roffpp
         [prepost "-I" /[arch] [search_list]]
@@ -166,8 +161,7 @@ archive/[project_minus].pdf: etc/reference.pdf
 archive/%.txt: etc/%.man
     set shallow
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     roffpp
         [prepost "-I" /[arch] [search_list]]
@@ -204,8 +198,7 @@ archive/[project_minus]-1.i386.rpm archive/[project_minus]-1.src.rpm:
         archive/[project_minus].tar.gz etc/rpm-build.sh
     set shallow
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     sh [resolve etc/rpm-build.sh]
         RPM-temporary
@@ -222,8 +215,7 @@ archive/[project_minus]-1.i386.rpm archive/[project_minus]-1.src.rpm:
 
 [project_minus].spec: [source_files]
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     [aemakegen] --target\=rpm-spec -p [project] -c [change] -o [target]
         libdir/pkgconfig/[project_short].pc.in
@@ -262,8 +254,7 @@ etc/%.html.d: etc/%.html
 archive/%.html: etc/%.html: etc/ssp.awk etc/version.so
     set shallow
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Groff;
 
     roffpp
         [prepost "-I" /[arch] [search_list]]
@@ -294,8 +285,7 @@ etc/[project_short].lsm.d: etc/[project_short].lsm
 archive/[project_minus].lsm: etc/[project_short].lsm etc/ssp.awk
     set shallow
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     roffpp
         [prepost "-I" /[arch] [search_list]]
@@ -313,8 +303,7 @@ LICENSE: man/cat1/srec_license.1
 
 archive/%1-%2.png: archive/%1.png
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     if [find_command pngcrush] then
     {
@@ -337,8 +326,7 @@ archive/srecord.ico:
     archive/srecord-96.png
     archive/srecord-128.png
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     convert [resolve [need]] -colors 256 [target];
 }
@@ -352,21 +340,20 @@ check-tarball: etc/check-tarball.sh archive/[project_minus].tar.gz
 
 libdir/pkgconfig/[project_short].pc.in: [source_files]
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     [aemakegen] -p\=[project] -c\=[change] --target\=pkg-config
         > [target];
 }
 
 
+debian/changelog
 debian/control
-debian/srecord.install
-debian/changelog: [source_files]
+debian/rules
+debian/srecord.install: [source_files]
     set shallow
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     /* This actually makes more files than just debian/control */
     [aemakegen] -project\=[project] -change\=[change] --target\=debian
@@ -389,6 +376,7 @@ if [in [fromto %1D%2 %2 [version]] 001 002 003 004] then
 debian-package: archive/[project_minus].tar.gz
     debian/changelog
 {
+    function if_quiet Generate;
     local vsn = [collect head -1 [resolve debian/changelog]
                          | sed "'s|.*(\\([^()]*\\).*|\\1|'" ];
     vsn = [fromto %-1 % [vsn]];
@@ -437,8 +425,7 @@ archive/man/index.html: [stringset [html-documentation] - [target]]
     etc/man-html-index.sh
     set shallow
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     sh [resolve etc/man-html-index.sh]
         [stringset [need] - etc/man-html-index.sh]

@@ -1,20 +1,19 @@
 /*
- *      srecord - manipulate eprom load files
- *      Copyright (C) 1998, 2002, 2003, 2006, 2007, 2009, 2010 Peter Miller
+ * srecord - manipulate eprom load files
+ * Copyright (C) 1998, 2002, 2003, 2006, 2007, 2009, 2010, 2013 Peter Miller
  *
- *      This program is free software; you can redistribute it and/or modify
- *      it under the terms of the GNU General Public License as published by
- *      the Free Software Foundation; either version 3 of the License, or
- *      (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or (at
+ * your option) any later version.
  *
- *      This program is distributed in the hope that it will be useful,
- *      but WITHOUT ANY WARRANTY; without even the implied warranty of
- *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *      GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
  *
- *      You should have received a copy of the GNU General Public License
- *      along with this program. If not, see
- *      <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -39,10 +38,9 @@ if [not [defined cxx]] then
     cxx = ['if' [find_command g++] 'then' g++ 'else' c++];
 
 
-configure: etc/configure.ac install-sh
+configure: etc/configure.ac install-sh(exists)
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     if [not [exists install-sh]] then
     {
@@ -50,8 +48,9 @@ configure: etc/configure.ac install-sh
          * Cook says it is up-to-date, so it must be in the
          * baseline; autoconf needs it in the current directory.
          */
-        cp [resolve install-sh] .
+        cat [resolve install-sh] > install-sh
             set clearstat;
+        chmod a+rx install-sh;
     }
     autoconf [resolve etc/configure.ac] > [target];
     chmod 755 [target];
@@ -79,12 +78,13 @@ if [not [install-sh]] then
 
 install-sh: [install-sh]
 {
-    cp [need] [target];
+    cat [need] > [target];
+    cooktime -m 2-jan-1970 [target];
     chmod 755 [target];
 }
 
 
-[arch]/config.status: configure install-sh
+[arch]/config.status: configure install-sh(exists)
 {
     if [not [exists install-sh]] then
     {
@@ -92,10 +92,14 @@ install-sh: [install-sh]
          * Cook says it is up-to-date, so it must be in the
          * baseline; autoconf needs it in the current directory.
          */
-        cp [resolve install-sh] .
+        cat [resolve install-sh]  > install-sh
             set clearstat;
+        chmod a+rx install-sh;
     }
-    ./[resolve configure] --cache-file\=/dev/null --verbose --no-create;
+    ./[resolve configure] --cache-file\=/dev/null
+        ['if' [quiet] 'then' --quiet 'else' --verbose]
+        --no-create
+        ;
     mv config.status [arch]/config.status;
     if [exists config.log] then
         mv config.log [arch]/config.log;
@@ -103,8 +107,7 @@ install-sh: [install-sh]
 
 srecord/config.h.in: etc/configure.ac
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet Generate;
 
     autoheader [resolve etc/configure.ac] > [target];
 }
@@ -127,3 +130,6 @@ srecord/config.h.in: etc/configure.ac
 /* Sigh */
 cascade srecord/vsnprintf.cc = [arch]/srecord/config.h;
 cascade etc/srecord.lsm = etc/version.so;
+
+
+/* vim: set ts=8 sw=4 et : */

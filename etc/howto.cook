@@ -1,20 +1,19 @@
 /*
- *      srecord - manipulate eprom load files
- *      Copyright (C) 1998, 1999, 2001-2003, 2006-2010, 2012 Peter Miller
+ * srecord - manipulate eprom load files
+ * Copyright (C) 1998, 1999, 2001-2003, 2006-2010, 2012, 2013 Peter Miller
  *
- *      This program is free software; you can redistribute it and/or modify
- *      it under the terms of the GNU General Public License as published by
- *      the Free Software Foundation; either version 3 of the License, or
- *      (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or (at
+ * your option) any later version.
  *
- *      This program is distributed in the hope that it will be useful,
- *      but WITHOUT ANY WARRANTY; without even the implied warranty of
- *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *      GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
  *
- *      You should have received a copy of the GNU General Public License
- *      along with this program. If not, see
- *      <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "functions"
@@ -25,38 +24,14 @@ set time-adjust;
 
 awk = gawk;
 
-function apt-get-command =
-{
-    if [not [find_command [@1]]] then
-        sudo apt-get install -y [@1] < /dev/tty > /dev/tty 2>&1 || true;
-}
-
-function apt-get-library =
-{
-    if [not [collect dpkg -l | grep lib[@1]-dev | wc -l || true]] then
-        sudo apt-get install -y lib[@1]-dev;
-}
-
-/*
- * Make sure the package we want are present
- */
-if [find_command apt-get] then
-{
-    function apt-get-command gawk;
-    function apt-get-command groff;
-    function apt-get-command libtool;
-    function apt-get-command doxygen;
-    function apt-get-library gcrypt11;
-    function apt-get-library boost;
-}
-
 /*
  * See how verbose we have decided to be.
  */
 if [not [defined verbose]] then
     verbose = 0;
+quiet = [not [verbose]];
 libtool-quiet = ;
-if [not [verbose]] then
+if [quiet] then
 {
     set silent;
     libtool-quiet = --quiet;
@@ -64,9 +39,21 @@ if [not [verbose]] then
 }
 else
 {
-    set no-silent;
+    set no-silent tell-position;
     libtool-quiet = ;
     set star;
+}
+
+function if_quiet =
+{
+    if [quiet] then
+        function print /*[@1]*/ [target];
+    else if [in [count [younger]] 0] then
+        function print Building [target] because it doesn\'t exist yet;
+    else if [in [count [younger]] 0 1 2 3] then
+        function print Building [target] because of [younger];
+    else
+        function print Building [target] because of [wordlist 1 3 [younger]]...;
 }
 
 /*
@@ -105,6 +92,8 @@ loop
     search_name = [search_name]bl;
 }
 
+#include-cooked etc/apt-get-depends.cook
+
 /*
  * determine the short version:
  * no change or delta number
@@ -122,6 +111,7 @@ change_source_files = ;
 etc/cook/change_files.[version]:
     set shallow nodefault
 {
+    function if_quiet;
     echo "'change_source_files ='" > [target];
     aegis -l cf -p [project] -c [change] -terse >> [target];
     echo "';'" >> [target];
@@ -131,6 +121,7 @@ project_source_files = ;
 etc/cook/project_files.[version]:
     set shallow nodefault
 {
+    function if_quiet;
     echo "'project_source_files ='" > [target];
     aegis -l pf -p [project] -c [change] -terse >> [target];
     echo "';'" >> [target];
@@ -225,8 +216,7 @@ cascade %0%.lo = %0%.o %0.libs/%.lo;
 
 [arch]/%0%.lo [arch]/%0%.o [arch]/%0.libs/%.o: %0%.cc [arch]/srecord/config.h
 {
-    if [not [verbose]] then
-        function print CXX %0%.cc;
+    function if_quiet Compile;
 
     rm -f [arch]/%0%.lo [arch]/%0.libs/%.o [arch]/%0.libs/%.lo;
     libtool [libtool-quiet] --mode\=compile
@@ -245,6 +235,7 @@ c_incl = c_incl;
 %0%.h.d: %0%.h
     set no-cascade
 {
+    function if_quiet Depends;
     [c_incl] -nc -ns -nrec
         [cc_include_flags]
         [resolve %0%.h]
@@ -259,6 +250,7 @@ c_incl = c_incl;
 %0%.cc.d: %0%.cc
         set no-cascade
 {
+    function if_quiet Depends;
     [c_incl] -nc -ns -nrec
         [cc_include_flags]
         [resolve %0%.cc]
@@ -285,8 +277,7 @@ cc_dep_files =
     set gate-first shallow /* tests need them */
     if [defined [target]_obj]
 {
-    if [not [verbose]] then
-        function print LINK [target];
+    function if_quiet Link;
 
     rm -f bin/.libs/lt-%;
     libtool [libtool-quiet] --mode\=link
@@ -319,8 +310,7 @@ cc_dep_files =
         [[target]_obj]
     set unlink
 {
-    if [not [verbose]] then
-        function print LINK [target];
+    function if_quiet Link;
 
     /*
      * We include the "hidden" libtool output files because we need to
@@ -348,12 +338,14 @@ cc_dep_files =
 
 [arch]/bin/%: script/%.sh
 {
+    function if_quiet;
     cat [resolve script/%] > [target];
     chmod a+rx [target];
 }
 
 [arch]/bin/%: [arch]/script/%.sh
 {
+    function if_quiet;
     cat [resolve [arch]/script/%] > [target];
     chmod a+rx [target];
 }
@@ -394,8 +386,7 @@ all +=
 srecord/patchlevel.h:
     set shallow
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet;
 
     copyright_years =
         [collect
@@ -413,8 +404,7 @@ etc/version.so:
     set ['if' [or [not [defined baseline] ] [not [exists bl/etc/version.so
                 ] ] ] 'then' shallow]
 {
-    if [not [verbose]] then
-        function print GEN [target];
+    function if_quiet;
 
     copyright_years =
         [collect
