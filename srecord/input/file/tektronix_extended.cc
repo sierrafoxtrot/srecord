@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2003, 2006-2008, 2010, 2011 Peter Miller
+// Copyright (C) 2000-2003, 2006-2008, 2010, 2011, 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -72,10 +72,10 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
     }
     int length = get_byte();
     int tag = get_nibble();
-    int csum = ((length >> 4) & 15) + (length & 15) + tag;
+    unsigned char csum = ((length >> 4) & 15) + (length & 15) + tag;
     if (length < 2)
         fatal_error("line length invalid");
-    int csumX = get_byte();
+    unsigned char csumX = get_byte();
 
     int addr_len = get_nibble();
     csum += addr_len;
@@ -103,7 +103,14 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
         csum += ((n >> 4) & 15) + (n & 15);
     }
     if (csumX != csum)
-        fatal_error("checksum mismatch (%02X)", csum);
+    {
+        fatal_error
+        (
+            "checksum mismatch (file says 0x%02X, calculated 0x%02X)",
+            csumX,
+            csum
+        );
+    }
     if (get_char() != '\n')
         fatal_error("end-of-line expected");
 

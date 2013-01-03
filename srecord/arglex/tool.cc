@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2012 Peter Miller
+// Copyright (C) 1998-2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -206,7 +206,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-SUBtract", token_minus, },
         { "-S_record", token_motorola, },
         { "-Tektronix", token_tektronix, },
-        { "-Tektronix_Extended", token_tektronix_extended, },
+        { "-Tektronix_EXtended", token_tektronix_extended, },
         { "-Texas_Instruments_Tagged", token_ti_tagged, },
         { "-Texas_Instruments_Tagged_16", token_ti_tagged_16, },
         { "-Texas_Instruments_TeXT", token_ti_txt, },
