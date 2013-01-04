@@ -1,6 +1,6 @@
 .\"
 .\" srecord - Manipulate EPROM load files
-.\" Copyright (C) 2012, 2013 Peter Miller
+.\" Copyright (C) 2013 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify it
 .\" under the terms of the GNU General Public License as published by the Free
@@ -16,27 +16,16 @@
 .\" with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.TP 2n
-.if n *
-.if t \(bu
-.\" Change 19
-Izzet Ozcelik <izzetozcelik@cscope.co.uk> discovered a bug in the
-Tektronix\[hy]Extenden format line checksum calculations. The comparison
-should have been in 8 bits, not int.
-.TP 2n
-.if n *
-.if t \(bu
-.\" Change 15
-Daniel Anselmi <danselmi@gmx.ch> contributed a Memory
-Initialization Format by Lattice Semiconductor, for output only.
-.TP 2n
-.if n *
-.if t \(bu
-.\" Change 12
-Daniel Anselmi <danselmi@gmx.ch> contributed a Xilinx
-Coefficient File Format (.coe) output class.
+.\"
+.\" you can create the initial cut of this file using the
+.\"
+.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
+.\"             -p srecord.1 -c 61 -unf
+.\"
+.\" command, and then editing it to be more appropriate.
+.\"
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .ne 2i
-.SS Version 1.60 (2012\[hy]May\[hy]19)
+.SS Version 1.61 (2013\[hy]Jan\[hy]04)
 .\" vim: set ts=8 sw=4 et :
