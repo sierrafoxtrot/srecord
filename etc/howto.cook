@@ -339,7 +339,7 @@ cc_dep_files =
 [arch]/bin/%: [arch]/script/%.sh
 {
     function if_quiet Copy;
-    cat [resolve [arch]/script/%] > [target];
+    cat [resolve [arch]/script/%.sh] > [target];
     chmod a+rx [target];
 }
 

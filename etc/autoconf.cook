@@ -116,15 +116,21 @@ srecord/config.h.in: etc/configure.ac
 [arch]/%0%.h: %0%.h.in [arch]/config.status
     single-thread conftest.subs
 {
+    function if_quiet Generate;
     CONFIG_FILES\= CONFIG_HEADERS\=[target]\:[resolve %0%.h.in]
-        [resolve [arch]/config.status];
+        [resolve [arch]/config.status]
+        ['if' [quiet] 'then' --quiet]
+        ;
 }
 
 [arch]/%0%: %0%.in [arch]/config.status
     single-thread conftest.subs
 {
+    function if_quiet Generate;
     CONFIG_FILES\=[target]\:[resolve %0%.in] CONFIG_HEADERS\=
-        [resolve [arch]/config.status];
+        [resolve [arch]/config.status]
+        ['if' [quiet] 'then' --quiet]
+        ;
 }
 
 /* Sigh */
