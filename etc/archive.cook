@@ -410,10 +410,13 @@ debian-package: archive/[project_minus].tar.gz
     tar xzf ../[project_minus].tar.gz &&
     cd [project_minus] &&
 #if 0
-    dpkg-buildpackage -sgpg [key] -sa &&
+    dpkg-buildpackage -sgpg [key] -sa
 #else
-    debuild [key] -sa &&
+    debuild [key] -sa
+        --changes-option\=-DDistribution\=[collect
+            gawk -F\= "'/CODENAME/{print $2}'" /etc/lsb-release]
 #endif
+    &&
     cd .. &&
     rm -rf [project_minus] &&
     lintian -iIv --pedantic *.changes

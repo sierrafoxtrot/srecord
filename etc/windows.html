@@ -1,20 +1,19 @@
 .\"
-.\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 2003, 2006-2011 Peter Miller
+.\" srecord - manipulate eprom load files
+.\" Copyright (C) 2003, 2006-2011, 2013 Peter Miller
 .\"
-.\"     This program is free software; you can redistribute it and/or modify
-.\"     it under the terms of the GNU General Public License as published by
-.\"     the Free Software Foundation; either version 3 of the License, or
-.\"     (at your option) any later version.
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 3 of the License, or
+.\" (at your option) any later version.
 .\"
-.\"     This program is distributed in the hope that it will be useful,
-.\"     but WITHOUT ANY WARRANTY; without even the implied warranty of
-.\"     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-.\"     GNU General Public License for more details.
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
 .\"
-.\"     You should have received a copy of the GNU General Public License
-.\"     along with this program. If not, see
-.\"     <http://www.gnu.org/licenses/>.
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .ad l
 .hy 0
@@ -55,13 +54,15 @@ Once you have <a href="http://www.cygwin.com/" >Cygwin</a> or <a
 href="http://www.delorie.com/djgpp/" >DJGPP</a> installed, simply follow
 the instructions in the BUILDING file, as if it were Unix.
 <p>
-Pre-built windows binaries are available from <a
-href="https://sourceforge.net/project/showfiles.php?group_id=72866"
+Pre-built MS Windows binaries are available from <a
+href="http://sourceforge.net/projects/srecord/files/srecord-win32/"
 >sourceforge.net</a>, although they tend to lag behind the current release.
 <p>
 These instructions have been improved greatly with the assistance of
 <a href="mailto:jens@familie-heilig.net"
->Jens Heilig &lt;jens@familie-heilig.net&gt;</a>.
+>Jens Heilig &lt;jens@familie-heilig.net&gt;</a>,
+who is often the person who builds the MS Windows binaries you see on
+SourceForge.  Thank you, Jens.
 <h2>FAQ</h2>
 <img src="whining-64.png" align="right" />
 <i>Please, <b>please</b>, can you just build it for me?</i>
@@ -78,9 +79,18 @@ That means you can build it youself.
 <p>
 If you let the author know the URL to get your compiled binaries from,
 after some-one else confirms they work, he will upload them to <a
-href="http://sourceforge.net/projects/srecord/files/" >SourceForge</a>.
+href="http://sourceforge.net/projects/srecord/files/" >SourceForge</a>
+in the <a
+href="http://sourceforge.net/projects/srecord/files/srecord-win32/"
+>srecord-win32</a> directory.  If a Windows user has built the most
+recent SRecord version for windows, it will be available in the <a
+href="http://sourceforge.net/projects/srecord/files/srecord-win32/\*(v)/"
+>\*(v)</a> directory as the <a
+href="http://sourceforge.net/projects/srecord/files/srecord-win32/\*(v)/\
+srecord-\*(v)-win32.zip" >srecord-\*(v)-win32.zip</a> file.
+If the link is broken, it means no MS Windows user has built SRecord and
+sent the author a zip file for upload.
 <br clear="all" />
-
 
 <h2>Prerequisites</h2>
 There are three pieces of software that must be installed before you can
@@ -166,7 +176,7 @@ Now we can start the actual build process:
 Start configure for srecord:
 <blockquote>
 <pre>$ <b>CPPFLAGS="-static -I/include -I/usr/local/include" \
-LDFLAGS="-L/lib -L/usr/local/lib" \
+LDFLAGS=" -L/lib -L/usr/local/lib" \
 CC='gcc -static-libgcc' \
 CXX='g++ -static-libgcc -static-libstdc++' \
 ./configure</b>
@@ -209,7 +219,7 @@ everything else in the bin-directory.
 You should now have working SRecord tools.
 <p>
 This is how the executables on <a
-href="http://sourceforge.net/projects/srecord/files/"
+href="http://sourceforge.net/projects/srecord/files/srecord-win32/"
 >sourceforge.net</a> were built.
 
 .\" ------------------------------------------------------------------------
@@ -268,3 +278,6 @@ src="http://miller.emu.id.au/cgi-bin/web_hit_counter?pmiller_srecord_\*(v)_win"
 .nr y4 \n[yr]+1900
 \n[dy]-\*[MO\n[mo]]-\n[y4].
 </body></html>
+
+
+/* vim: set ts=8 sw=4 et : */
