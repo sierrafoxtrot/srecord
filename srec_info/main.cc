@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2002, 2005-2010 Peter Miller
+//      Copyright (C) 1998-2002, 2005-2010, 2013 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -17,17 +17,17 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
+#include <iostream>
+#include <cstdlib>
+#include <cstdio>
+#include <vector>
+
 #include <srecord/interval.h>
 #include <srecord/arglex/tool.h>
 #include <srecord/input/file.h>
 #include <srecord/memory.h>
 #include <srecord/record.h>
-
-#include <cctype>
-#include <iostream>
-#include <cstdlib>
-#include <cstdio>
-#include <vector>
+#include <srecord/string.h>
 
 
 int
@@ -68,7 +68,9 @@ main(int argc, char **argv)
             std::cout << std::endl;
             std::cout << ifp->filename() << ":" << std::endl;
         }
-        std::cout << "Format: " << ifp->get_file_format_name() << std::endl;
+        std::cout << "Format: "
+            << srecord::string_url_encode(ifp->get_file_format_name())
+            << std::endl;
         srecord::record record;
         srecord::interval range;
         while (ifp->read(record))
@@ -76,24 +78,17 @@ main(int argc, char **argv)
             switch (record.get_type())
             {
             case srecord::record::type_header:
-                if (record.get_length() < 1)
-                    break;
-                std::cout << "Header: \"";
-                for (size_t j = 0; j < record.get_length(); ++j)
                 {
-                    int c = record.get_data(j) & 127;
-                    if (c == '\\' || c == '"')
-                        std::cout << '\\' << (char)c;
-                    else if (isprint(c))
-                        std::cout << (char)c;
-                    else
-                    {
-                        char buf[16];
-                        snprintf(buf, sizeof(buf), "\\%03o", c);
-                        std::cout << buf;
-                    }
+                    if (record.get_length() < 1)
+                        break;
+                    std::cout << "Header: \"";
+                    std::string s(
+                        (const char *)record.get_data(),
+                        record.get_length()
+                    );
+                    s = srecord::string_url_encode(s);
+                    std::cout << s << "\"\n";
                 }
-                std::cout << "\"" << std::endl;
                 break;
 
             case srecord::record::type_data:
@@ -158,6 +153,8 @@ main(int argc, char **argv)
     //
     // success
     //
-    exit(0);
-    return 0;
+    return EXIT_SUCCESS;
 }
+
+
+// vim: set ts=8 sw=4 et :

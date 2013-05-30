@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2006-2012 Peter Miller
+// Copyright (C) 1998-2003, 2006-2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -25,6 +25,7 @@
 #include <srecord/memory/walker/compare.h>
 #include <srecord/memory/walker/continuity.h>
 #include <srecord/record.h>
+#include <srecord/string.h>
 
 
 bool srecord::memory::overwrite = false;
@@ -417,10 +418,11 @@ srecord::memory::get_header()
 
 
 void
-srecord::memory::set_header(const char *s)
+srecord::memory::set_header(const std::string &text)
 {
     delete header;
-    size_t len = strlen(s);
+    std::string s2 = string_url_encode(text);
+    size_t len = s2.size();
     if (len > srecord::record::max_data_length)
         len = srecord::record::max_data_length;
     header =
@@ -428,7 +430,7 @@ srecord::memory::set_header(const char *s)
         (
             srecord::record::type_header,
             0,
-            (srecord::record::data_t *)s,
+            (srecord::record::data_t *)s2.c_str(),
             len
         );
 }

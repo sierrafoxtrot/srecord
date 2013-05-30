@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2006-2008, 2010, 2012 Peter Miller
+// Copyright (C) 1998-2003, 2006-2008, 2010, 2012, 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -20,9 +20,12 @@
 #ifndef SRECORD_MEMORY_H
 #define SRECORD_MEMORY_H
 
+#include <string>
+
 #include <srecord/input.h>
 #include <srecord/memory/chunk.h>
 #include <srecord/memory/walker.h>
+#include <srecord/string.h>
 
 namespace srecord {
 
@@ -151,15 +154,19 @@ public:
     /**
       * The get_header method is used to determine the value of the
       * header record set by either the reader() or set_header()
-      * methods.  If neither has set a header, NULL is returned.
+      * methods.  If neither has set a header, a NULL is returned.
       */
     record *get_header(void) const;
 
     /**
       * The set_header method may be used to set the header command.
-      * The `value' is a NUL terminated C string.
+      *
+      * @param value
+      *     The `value' string, to set the header.  The user may use URL
+      *     encoding for of the more interesting non-printable byte values
+      *     (eg. "%3F").
       */
-    void set_header(const char *value);
+    void set_header(const std::string &value);
 
     /**
       * The get_execution_start_address method is used to determine the

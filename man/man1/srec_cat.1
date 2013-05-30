@@ -1,6 +1,6 @@
 '\" t
 .\" srecord - manipulate eprom load files
-.\" Copyright (C) 1998, 2000-2012 Peter Miller
+.\" Copyright (C) 1998, 2000-2013 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -537,9 +537,15 @@ If you need to control the maximum number of bytes in each output record,
 use the \fB\-\-Ouput_Block_Size\fP option.
 .TP 8n
 \fB\-HEAder\fP \f[I]string\fP
+.RS
 This option may be used to set the header comment,
 in those formats which support it.
 This option implies the \fB\-enable=header\fP option.
+.PP
+If you need to inject binary data into the header, use the URL encoding
+that uses % followed by two hexadeimal characters.  For example a
+backspace would be encoded as \[lq]%08\[rq].
+.RE
 .TP 8n
 \fB\-Execution_Start_Address\fP \f[I]number\fP
 .RS

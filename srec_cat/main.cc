@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2001-2008, 2010 Peter Miller
+// Copyright (C) 1998, 1999, 2001-2008, 2010, 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 #include <srecord/output/file.h>
 #include <srecord/output/filter/reblock.h>
 #include <srecord/record.h>
+#include <srecord/string.h>
 
 #include <srec_cat/arglex3.h>
 
@@ -171,6 +172,7 @@ main(int argc, char **argv)
             }
             header = cmdline.value_string();
             header_set = true;
+            header = srecord::string_url_decode(header);
             srecord::output_file::enable_header(true);
             break;
 
@@ -245,7 +247,7 @@ main(int argc, char **argv)
     //
     srecord::memory m;
     if (header_set)
-        m.set_header(header.c_str());
+        m.set_header(header);
     m.reader(infile, true);
     if (execution_start_address_set)
         m.set_execution_start_address(execution_start_address);
@@ -262,3 +264,6 @@ main(int argc, char **argv)
     //
     return 0;
 }
+
+
+// vim: set ts=8 sw=4 et :

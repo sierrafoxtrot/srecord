@@ -1,6 +1,6 @@
 '\" t
 .\" srecord - The "srecord" program.
-.\" Copyright (C) 1998-2012 Peter Miller
+.\" Copyright (C) 1998-2013 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -346,6 +346,10 @@ to be repeated is the text of the given string.
 For example, to fill the holes in an EPROM image \f[I]eprom.srec\fP with the
 text \(lqCopyright (C) 1812 Tchaikovsky\(rq, combine a generator and an
 \-exclude filter, such as the command
+.PP
+If you need to inject binary data into the string (e.g. a terminating NUL
+character), use the URL encoding that uses % followed by two hexadeimal
+characters.  For example a backspace would be encoded as \[lq]%08\[rq].
 .PP
 .nf
 .in +0.25i

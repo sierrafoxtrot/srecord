@@ -157,21 +157,41 @@ all: [all];
  * The files which are linked to form the common library for the programs.
  */
 [arch]/[project_short]/lib[project_short].la_obj =
-    [fromto %0%.cc [arch]/%0%.lo [match_mask srecord/%0%.cc [source_files]]]
-    ;
+    [addprefix [arch]/
+        [fromto %0%.cc %0%.lo
+            [match_mask srecord/%0%.cc [source_files]]
+        ]
+    ];
 
 /*
  * Generate lists of object files for programs
  */
-program_list = [fromto %1/%2 %1 [match_mask %/main.cc [source_files]]];
-loop program = [program_list]
+program_list =
+    [stringset /* remove duplicates */
+        [patsubst %0%/main.cc %0% [filter %0%/main.cc [source_files]]]
+    ];
+
+function prog-var-from-prog-path =
 {
-    [arch]/bin/[program]_obj =
-        [fromto %0%.cc [arch]/%0%.lo
-            [match_mask [program]/%0%.cc [source_files]]
-        ];
-    [arch]/bin/[program]_libs = [arch]/[project_short]/lib[project_short].la ;
-    all += [arch]/bin/[program] ;
+    local prog = [@1];
+    local prog_var =;
+    if [in [substr 1 5 [prog] ] "test/"] then
+        prog_var = [subst "/" "_" [prog]];
+    else
+        prog_var = [subst "/" "-" [prog]];
+    return [prog_var];
+}
+
+loop prog = [program_list]
+{
+    prog_var = [prog-var-from-prog-path [prog]];
+    [prog_var]_obj =
+        [patsubst %0%.cc     %0%.lo [filter [prog]/%0%.cc [source_files]]]
+        [patsubst %0%.y %0%.yacc.lo [filter [prog]/%0%.y  [source_files]]]
+        [patsubst %0%.l  %0%.lex.lo [filter [prog]/%0%.l  [source_files]]]
+        ;
+    [prog_var]_libs = [project_short]/lib[project_short].la;
+    all += [arch]/bin/[prog_var];
 }
 
 integration-build-targets = ;
@@ -271,11 +291,10 @@ cc_dep_files =
 
 #include-cooked-nowarn [cc_dep_files]
 
-[arch]/bin/% [arch]/bin/.libs/%: [[target]_obj] [defined-or-null [target]_libs]
-        [fromto %%0%%.la %%0.libs/%%.a  [defined-or-null [target]_libs]]
-        [fromto %%0%%.la %%0.libs/%%.so [defined-or-null [target]_libs]]
+[arch]/bin/% [arch]/bin/.libs/%:
+    [addprefix [arch]/ [%_obj] [defined-or-null %_libs]]
     set gate-first shallow /* tests need them */
-    if [defined [target]_obj]
+    if [defined %_obj]
 {
     function if_quiet Link;
 
@@ -284,7 +303,7 @@ cc_dep_files =
     [c++] -o [target]
         [cc_include_flags]
         [ld_flags]
-        [resolve [[target]_obj] [defined-or-null [target]_libs]]
+        [resolve [addprefix [arch]/ [%_obj] [defined-or-null %_libs]]]
         [libs]
         ;
 
@@ -308,7 +327,8 @@ cc_dep_files =
 
 [arch]/%/lib%.la [arch]/%/.libs/lib%.a [arch]/%/.libs/lib%.so:
         [[target]_obj]
-    set unlink
+    set unlink ingredients-fingerprint
+
 {
     function if_quiet Link;
 

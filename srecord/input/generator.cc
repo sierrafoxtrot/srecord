@@ -1,6 +1,6 @@
 //
 // srecord - The "srecord" program.
-// Copyright (C) 2007-2010 Peter Miller
+// Copyright (C) 2007-2010, 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -25,6 +25,7 @@
 #include <srecord/input/generator/random.h>
 #include <srecord/input/generator/repeat.h>
 #include <srecord/record.h>
+#include <srecord/string.h>
 
 
 srecord::input_generator::~input_generator()
@@ -257,6 +258,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
         {
             cmdln->token_next();
             std::string s = cmdln->get_string("--repeat-string");
+            s = srecord::string_url_decode(s);
             size_t len = s.size();
             switch (len)
             {
@@ -299,3 +301,6 @@ srecord::input_generator::disable_checksum_validation()
     // Do nothing.
     // None of the generators have checksums.
 }
+
+
+// vim: set ts=8 sw=4 et :

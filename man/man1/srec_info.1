@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2001, 2005-2009 Peter Miller
+.\"     Copyright (C) 1998, 2001, 2005-2009, 2013 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -40,6 +40,11 @@ The \fI\*(n)\fP program is used to obtain input about EPROM load files.
 It reads the files specified, and then presents statistics about them.
 These statistics include: the file header if any, the execution start
 address if any, and the address ranges covered by the data if any.
+.PP
+If there is binary data the header, it will be presented using the URL
+encoding that uses % followed by two hexadeimal characters.
+For example a backspace would be encoded as \[lq]%08\[rq].
+(This is symmetric with the srec_cat \[hy]\[hy]header opion).
 .so man/man1/o_input.so
 .br
 .ne 1i
@@ -68,3 +73,4 @@ All other options will produce a diagnostic error.
 .so man/man1/z_options.so
 .so man/man1/z_exit.so
 .so man/man1/z_copyright.so
+.\" vim: set ts=8 sw=4 et :
