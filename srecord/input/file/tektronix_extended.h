@@ -31,6 +31,9 @@ class input_file_tektronix_extended:
     public input_file
 {
 public:
+    // make the code around gt_nibble more readable.
+    typedef input_file inherited;
+
     /**
       * The destructor.
       */
@@ -56,6 +59,9 @@ protected:
 
     // See base class for documentation.
     int format_option_number(void) const;
+
+    // See base class for documentation.
+    int get_nibble(void);
 
 private:
     /**
@@ -102,6 +108,12 @@ private:
       * whether the termination record has been seen yet.
       */
     bool termination_seen;
+
+    /**
+      * The nibble_sum instance variable is usd to remember the running
+      * checksum, of each nibble on the record line.
+      */
+    unsigned char nibble_sum;
 
     /**
       * The default constructor.  Do not use.

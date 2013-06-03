@@ -134,7 +134,7 @@ protected:
       * are not hexadecimal digits will result in a fatal error,
       * and the method call will not return.
       */
-    int get_nibble(void);
+    virtual int get_nibble(void);
 
     /**
       * The get_byte method is used to fetch a byte value from the

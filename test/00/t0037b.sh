@@ -18,23 +18,28 @@
 #       <http://www.gnu.org/licenses/>.
 #
 
-TEST_SUBJECT="tekext format, write"
+TEST_SUBJECT="tekext format, read"
 . test_prelude
 
+#
+# Test reading this format
+#
 cat > test.in << 'fubar'
-S111000048656C6C6F2C20576F726C64210A7B
-S9030000FC
+%1A626810000000202020202020
+%0E81F810000000
 fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
-%2A6DE80000006B48656C6C6F2C20576F726C64210A
-%0E82F80000006B
+S00600004844521B
+S30B1000000020202020202024
+S5030001FB
+S70510000000EA
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -off 107 -o test.out -tekext 2> LOG
-if test $? -ne 0; then cat LOG; fail; fi
+srec_cat test.in -tekext -o test.out -header HDR
+if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
@@ -44,4 +49,5 @@ if test $? -ne 0; then fail; fi
 # No other guarantees are made.
 #
 pass
+
 # vim: set ts=8 sw=4 et :

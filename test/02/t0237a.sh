@@ -17,29 +17,21 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-TEST_SUBJECT="read -tek-ex csum bug"
+TEST_SUBJECT="Tec-ext format, read"
 . test_prelude
 
 cat > test.in << 'fubar'
-Hello, World!
-fubar
-if test $? -ne 0; then no_result; fi
-
-cat > test.in << 'fubar'
-%4E6E280000000054495041635953580D5953580600030001000E00050200000300000001595358
-%4E664800000020C0168311C0BB000077367735F7317726C4353C055A00BF0746674E5628008001
-%0E81E800000000
+%1561C3100202020202020
+%0E82F80000006B
 fubar
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
-Format: Tektronix Extended
-Execution Start Address: 00000000
-Data:   0000 - 003F
+00000100: 20 20 20 20 20 20                                #
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_info test.in -tex > test.out
+srec_cat test.in -tek-ext -o test.out -hexdump
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

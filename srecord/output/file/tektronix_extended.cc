@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2003, 2006-2008, 2010, 2012 Peter Miller
+// Copyright (C) 2000-2003, 2006-2008, 2010, 2012, 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -51,24 +51,24 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
     if (addr_nbytes < address_length)
         addr_nbytes = address_length;
     unsigned char buf[260];
-    int record_length = (addr_nbytes + data_nbytes) * 2 + 1;
+    int record_length = 6 + (addr_nbytes + data_nbytes) * 2;
     if (record_length >= 256)
     {
         fatal_error
         (
             "record too long (%d > 255, dmax=%d)",
             record_length,
-            (254-2*addr_nbytes)/2
+            (125 - 2 * addr_nbytes)/2
         );
     }
     int csum = 0;
     int pos = 0;
-    csum += buf[pos++] = (record_length >> 4) & 15;
-    csum += buf[pos++] =  record_length       & 15;
+    csum += buf[pos++] = 0; // lengh hi, fill in later
+    csum += buf[pos++] = 0; // lengh lo, fill in later
     csum += buf[pos++] = tag;
-            buf[pos++] = 0; // checksum hi, fill in later
-            buf[pos++] = 0; // checksum lo, fill in later
-    csum += buf[pos++] = addr_nbytes * 2;
+    csum += buf[pos++] = 0; // checksum hi, fill in later
+    csum += buf[pos++] = 0; // checksum lo, fill in later
+    csum += buf[pos++] = addr_nbytes * 2;  // size of addr, in nybbles
     int j;
     for (j = 0; j < 2 * addr_nbytes; ++j)
         csum += buf[pos++] = (addr >> (4 * (2*addr_nbytes-1 - j))) & 15;
@@ -78,6 +78,10 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
         csum += buf[pos++] = (data[j] >> 4) & 15;
         csum += buf[pos++] =  data[j]       & 15;
     }
+
+    // now insert the record length
+    csum += buf[0] = (pos >> 4) & 15;
+    csum += buf[1] =  pos       & 15;
 
     // now insert the checksum...
     buf[3] = (csum >> 4) & 15;

@@ -32,7 +32,8 @@ srecord::input_file_tektronix_extended::input_file_tektronix_extended(
     srecord::input_file(a_file_name),
     garbage_warning(false),
     seen_some_input(false),
-    termination_seen(false)
+    termination_seen(false),
+    nibble_sum(0)
 {
 }
 
@@ -44,94 +45,137 @@ srecord::input_file_tektronix_extended::create(const std::string &a_file_name)
 }
 
 
+int
+srecord::input_file_tektronix_extended::get_nibble(void)
+{
+    int n = inherited::get_nibble();
+    nibble_sum += n;
+    return n;
+}
+
+
 bool
 srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
 {
     for (;;)
     {
-        int c = get_char();
-        if (c < 0)
-            return false;
-        if (c == '%')
-            break;
-        if (c == '\n')
-            continue;
-        if (!garbage_warning)
-        {
-            warning("ignoring garbage lines");
-            garbage_warning = true;
-        }
         for (;;)
         {
-            c = get_char();
+            int c = get_char();
             if (c < 0)
                 return false;
-            if (c == '\n')
+            if (c == '%')
                 break;
+            if (c == '\n')
+                continue;
+            if (!garbage_warning)
+            {
+                warning("ignoring garbage lines");
+                garbage_warning = true;
+            }
+            for (;;)
+            {
+                c = get_char();
+                if (c < 0)
+                    return false;
+                if (c == '\n')
+                    break;
+            }
         }
-    }
-    int length = get_byte();
-    int tag = get_nibble();
-    unsigned char csum = ((length >> 4) & 15) + (length & 15) + tag;
-    if (length < 2)
-        fatal_error("line length invalid");
-    unsigned char csumX = get_byte();
+        nibble_sum = 0;
+        int length = get_byte();
+        if (length < 6)
+        {
+            // 2(length) + 1(tag) + 2(csum) + 1(addrlen)
+            fatal_error("line length invalid (%d < 6)", length);
+        }
+        length -= 2;
 
-    int addr_len = get_nibble();
-    csum += addr_len;
-    if (addr_len < 1 || addr_len > 8 || length < addr_len + 1)
-        fatal_error("address length invalid");
-    unsigned long address = 0;
-    --length;
-    while (addr_len > 0)
-    {
-        int n = get_nibble();
-        csum += n;
-        address = address * 16 + n;
-        --addr_len;
+        int tag = get_nibble();
         --length;
-    }
-    if (length & 1)
-        fatal_error("data length invalid");
-    length >>= 1;
 
-    unsigned char buffer[124];
-    for (int j = 0; j < length; ++j)
-    {
-        int n = get_byte();
-        buffer[j] = n;
-        csum += ((n >> 4) & 15) + (n & 15);
-    }
-    if (csumX != csum)
-    {
-        fatal_error
-        (
-            "checksum mismatch (file says 0x%02X, calculated 0x%02X)",
-            csumX,
-            csum
-        );
-    }
-    if (get_char() != '\n')
-        fatal_error("end-of-line expected");
+        unsigned char csum_expected = get_byte();
+        // except the checksum itself
+        nibble_sum -= ((csum_expected >> 4) & 15) + (csum_expected & 15);
+        length -= 2;
 
-    srecord::record::type_t type = srecord::record::type_unknown;
-    switch (tag)
-    {
-    default:
-        fatal_error("unknown tag (%X)", tag);
+        int addr_len = get_nibble();
+        if (addr_len == 0)
+            addr_len = 16;
+        --length;
+        int addr_len_max = 2 * sizeof(srecord::record::address_t);
+        if (addr_len > addr_len_max)
+        {
+            fatal_error
+            (
+                "address length too big (%d > %d)",
+                addr_len,
+                addr_len_max
+            );
+        }
+        if (length < addr_len)
+        {
+            fatal_error
+            (
+                "address length exceeds line length (%d > %d)",
+                addr_len,
+                length
+            );
+        }
 
-    case 6:
-        // data
-        type = srecord::record::type_data;
-        break;
+        unsigned long address = 0;
+        while (addr_len > 0)
+        {
+            int n = get_nibble();
+            address = address * 16 + n;
+            --addr_len;
+            --length;
+        }
+        if (length & 1)
+            fatal_error("data length invalid (%d is odd)", length);
 
-    case 8:
-        // termination
-        type = srecord::record::type_execution_start_address;
-        break;
+        unsigned char buffer[125];
+        for (int j = 0; j * 2 < length; ++j)
+        {
+            int n = get_byte();
+            buffer[j] = n;
+        }
+        if (csum_expected != nibble_sum)
+        {
+            fatal_error
+            (
+                "checksum mismatch (file says 0x%02X, expected 0x%02X)",
+                csum_expected,
+                nibble_sum
+            );
+        }
+        if (get_char() != '\n')
+            fatal_error("end-of-line expected");
+
+        srecord::record::type_t type = srecord::record::type_unknown;
+        switch (tag)
+        {
+        default:
+            fatal_error("unknown tag (%X)", tag);
+            continue;
+
+        case 3:
+            // symbol record, ignore
+            continue;
+
+        case 6:
+            // data
+            type = srecord::record::type_data;
+            break;
+
+        case 8:
+            // termination
+            type = srecord::record::type_execution_start_address;
+            break;
+        }
+        record = srecord::record(type, address, buffer, length >> 1);
+        return true;
     }
-    record = srecord::record(type, address, buffer, length);
-    return true;
 }
 
 
