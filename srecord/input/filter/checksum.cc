@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2001, 2002, 2006-2010 Peter Miller
+// Copyright (C) 1998, 1999, 2001, 2002, 2006-2010, 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -22,14 +22,19 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_checksum::input_filter_checksum(input::pointer a1,
-        int a2, int a3, endian_t a_end, int a5) :
-    input_filter(a1),
-    checksum_address(a2),
-    length(a3),
+srecord::input_filter_checksum::input_filter_checksum(
+    input::pointer a_input_filter,
+    int a_checksum_address,
+    int a_length,
+    endian_t a_end,
+    int a_width
+) :
+    input_filter(a_input_filter),
+    checksum_address(a_checksum_address),
+    length(a_length),
     end(a_end),
     sum(0),
-    width(a5)
+    width(a_width)
 {
     if (length < 0)
         length = 0;
@@ -97,3 +102,6 @@ srecord::input_filter_checksum::read(record &record)
     }
     return true;
 }
+
+
+// vim: set ts=8 sw=4 et :

@@ -62,12 +62,10 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-Checksum_Adler_16_Little_Endian", token_adler16_le, },
         { "-Checksum_Adler_32_Big_Endian", token_adler32_be, },
         { "-Checksum_Adler_32_Little_Endian", token_adler32_le, },
-        { "-Checksum_Big_Endian", token_checksum_be_bitnot, },
         { "-Checksum_BitNot_Big_Endian", token_checksum_be_bitnot, },
         { "-Checksum_BitNot_Little_Endian", token_checksum_le_bitnot, },
         { "-Checksum_Fletchers_16_Little_Endian", token_fletcher16_le, },
         { "-Checksum_Fletchers_32_Little_Endian", token_fletcher32_le, },
-        { "-Checksum_Little_Endian", token_checksum_le_bitnot, },
         { "-Checksum_Negative_Big_Endian", token_checksum_be_negative, },
         { "-Checksum_Negative_Little_Endian", token_checksum_le_negative, },
         { "-Checksum_Positive_Big_Endian", token_checksum_be_positive, },
@@ -230,6 +228,8 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
 
         // The deprecated options go at the end of the table, so that
         // the preferred name will always be earlier in the table.
+        { "-Checksum_Big_Endian", token_checksum_be_positive, },
+        { "-Checksum_Little_Endian", token_checksum_le_positive, },
         { "-INtel_16", token_intel16, },
         { "-MAximum", token_maximum_address, },
         { "-MInimum", token_minimum_address, },
@@ -238,6 +238,8 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
     };
 
     table_set(table);
+    deprecated_option("-Checksum_Big_Endian");
+    deprecated_option("-Checksum_Little_Endian");
     deprecated_option("-INtel_16");
     deprecated_option("-MAximum");
     deprecated_option("-MInimum");

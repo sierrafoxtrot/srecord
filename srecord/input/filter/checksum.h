@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2001, 2002, 2005-2008, 2010 Peter Miller
+// Copyright (C) 1998, 1999, 2001, 2002, 2005-2008, 2010, 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -94,7 +94,8 @@ protected:
 
     /**
       * The width instance variable is used to remember the swathe width
-      * as the incming bytes are added to the running sum.
+      * as the incoming bytes are added to the running sum.
+      * That is, now many bytes wide.
       */
     int width;
 
@@ -102,7 +103,7 @@ protected:
       * The calculate method is used to calculate the checksum to be
       * written into the output, based on the "sum" instance variable.
       */
-    virtual sum_t calculate() = 0;
+    virtual sum_t calculate(void) = 0;
 
     /**
       * The generate method is used to generate the final data record,
@@ -136,3 +137,4 @@ private:
 };
 
 #endif // SRECORD_INPUT_FILTER_CHECKSUM_H
+// vim: set ts=8 sw=4 et :
