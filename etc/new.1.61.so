@@ -16,14 +16,34 @@
 .\" with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ------------------------------------------------------------------------
-.\"
-.\" you can create the initial cut of this file using the
-.\"
-.\"     aereport -f /usr/local/share/aegis/report/chan_so.rpt \
-.\"             -p srecord.1 -c 61 -unf
-.\"
-.\" command, and then editing it to be more appropriate.
-.\"
+.TP 2n
+.if n *
+.if t \(bu
+.\" Change 16
+Luc Steynen <LucSteynen@edna.be> discovered that the
+\-hecksum\[hy]big\[hy]endian opion was a counter\[hy]intuitive alias for
+the the \-checksum\[hy]bitnot\[hy]big\[hy]endian option.
+The \-checksum\[hy]big\[hy]endian option is now deprecated, in favor
+of the \-checksum\[hy]bitnot\[hy]big\[hy]endian option; the code will warn
+uers of the old option they will need to change.
+Ditto little\[hy]endian variants
+.TP 2n
+.if n *
+.if t \(bu
+.\" Change 19
+Alin Pilkington <apilkington@moog.com> found that the Tektronics
+Extended format was calculating the record length incorrectory.
+Thanks you for the bug report.
+This has been fixed for both reading and writing.
+.TP 2n
+.if n *
+.if t \(bu
+.\" Change 17
+Dr. Benedikt Schmitt <Benedikt.Schmitt@safeintrain.de> suggested
+being able to inject arbitrary data into the file header (such as
+NUL termination characters). This change set adds URL\[hy]style
+escapes (e.g. %25) to the string on he command line. For example:
+\-header or \-generate \-string
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .ne 2i
