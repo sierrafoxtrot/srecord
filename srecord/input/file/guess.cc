@@ -35,6 +35,7 @@
 #include <srecord/input/file/idt.h>
 #include <srecord/input/file/intel.h>
 #include <srecord/input/file/intel16.h>
+#include <srecord/input/file/logisim.h>
 #include <srecord/input/file/mif.h>
 #include <srecord/input/file/mips_flash.h>
 #include <srecord/input/file/mos_tech.h>
@@ -75,6 +76,7 @@ static func_p table[] =
     srecord::input_file_idt::create,
     srecord::input_file_intel::create,
     srecord::input_file_intel16::create,
+    srecord::input_file_logisim::create,
     srecord::input_file_mif::create,
     srecord::input_file_mips_flash::create_be,
     srecord::input_file_mos_tech::create,

@@ -136,6 +136,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-Length", token_length, },
         { "-Length_Big_Endian", token_length_be, },
         { "-Length_Little_Endian", token_length_le, },
+        { "-LOGisim", token_logisim },
         { "-MAximum-Address", token_maximum_address, },
         { "-MAximum_Big_Endian", token_maximum_be, },
         { "-MAximum_Little_Endian", token_maximum_le, },

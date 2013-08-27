@@ -1,20 +1,19 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2000, 2002, 2003, 2005-2008, 2010 Peter Miller
+// Copyright (C) 1998-2000, 2002, 2003, 2005-2008, 2010, 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
+// it under the terms of the GNU Lesser General Public License as
+// published by the Free Software Foundation; either version 3 of the
+// License, or (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Lesser General Public License for more details.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program. If not, see
-// <http://www.gnu.org/licenses/>.
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
 #ifndef SRECORD_INPUT_H
@@ -104,7 +103,7 @@ public:
       * The filename method is used to get the name of the input file
       * being processed.  Derived classes must supply this method.
       */
-    virtual std::string filename() const = 0;
+    virtual std::string filename(void) const = 0;
 
     /**
       * The filename_and_line method is used to get the name
@@ -112,14 +111,14 @@ public:
       * implementation simply calls the filename method and returns
       * that.  Text formats should be cleverer.
       */
-    virtual std::string filename_and_line() const;
+    virtual std::string filename_and_line(void) const;
 
     /**
       * The get_file_format_name method is used to find out the name
       * of the file format being read.  Derived classes must supply
       * this method.
       */
-    virtual const char *get_file_format_name() const = 0;
+    virtual const char *get_file_format_name(void) const = 0;
 
     /**
       * The set_quit method is used to set the disposition of the
@@ -133,13 +132,13 @@ public:
       * The reset_quit method is used to cause the disposition of
       * the error messages, and the "exit" back to the default.
       */
-    void reset_quit();
+    void reset_quit(void);
 
     /**
       * The disable_checksum_validation method is used to have this
       * input stream ignore checksum errors.
       */
-    virtual void disable_checksum_validation() = 0;
+    virtual void disable_checksum_validation(void) = 0;
 
     /**
       * The command_line method is used by arglex_srec::get_input
@@ -181,4 +180,5 @@ private:
 
 };
 
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_INPUT_H

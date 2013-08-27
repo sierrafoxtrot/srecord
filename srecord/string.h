@@ -35,6 +35,8 @@ std::string string_url_encode(const std::string &text);
   */
 std::string string_url_decode(const std::string &text);
 
+std::string string_quote_c(const std::string &text);
+
 };
 
 // vim: set ts=8 sw=4 et :

@@ -37,6 +37,7 @@
 #include <srecord/input/file/idt.h>
 #include <srecord/input/file/intel.h>
 #include <srecord/input/file/intel16.h>
+#include <srecord/input/file/logisim.h>
 #include <srecord/input/file/mif.h>
 #include <srecord/input/file/mips_flash.h>
 #include <srecord/input/file/mos_tech.h>
@@ -131,6 +132,7 @@ srecord::arglex_tool::get_endian_by_token(int tok)
     case token_fletcher16_le:
     case token_fletcher32_le:
     case token_length_le:
+    case token_logisim:     // no way to tell (not documented)
     case token_maximum_le:
     case token_minimum_le:
     case token_msbin:
@@ -361,6 +363,11 @@ srecord::arglex_tool::get_simple_input(void)
     case token_intel16:
         token_next();
         ifp = input_file_intel16::create(fn);
+        break;
+
+    case token_logisim:
+        token_next();
+        ifp = input_file_logisim::create(fn);
         break;
 
     case token_memory_initialization_file:
