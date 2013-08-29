@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2000-2004, 2006-2012 Peter Miller
+.\"     Copyright (C) 1998, 2000-2004, 2006-2013 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -121,6 +121,10 @@ The Intel hexadecimal 16 format is understood for both reading and writing.
 .TP
 LSI Logic Fast Load
 The LSI Logic Fast Load format is understood for both reading and writing.
+.YP
+Logisim
+The Logisim format is understood for both reading and writing.
+See \f[I]srec_logisim\fP(5) for more information.
 .\" ----------  M  ---------------------------------------------------------
 .TP 8n
 Memory Initialization Format

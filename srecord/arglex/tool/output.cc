@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2001-2004, 2006-2012 Peter Miller
+// Copyright (C) 2001-2004, 2006-2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -38,6 +38,7 @@
 #include <srecord/output/file/idt.h>
 #include <srecord/output/file/intel.h>
 #include <srecord/output/file/intel16.h>
+#include <srecord/output/file/logisim.h>
 #include <srecord/output/file/mif.h>
 #include <srecord/output/file/mem.h>
 #include <srecord/output/file/coe.h>
@@ -218,6 +219,11 @@ srecord::arglex_tool::get_output()
     case token_intel16:
         token_next();
         ofp = srecord::output_file_intel16::create(fn);
+        break;
+
+    case token_logisim:
+        token_next();
+        ofp = srecord::output_file_logisim::create(fn);
         break;
 
     case token_lattice_memory_initialization_format:

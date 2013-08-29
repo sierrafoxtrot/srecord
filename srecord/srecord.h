@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2010-2012 Peter Miller
+// Copyright (C) 2010-2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -36,7 +36,7 @@
 #include <srecord/input/file/formatted_binary.h>
 #include <srecord/input/file/four_packed_code.h>
 #include <srecord/input/file/intel.h>
-#include <srecord/input/file/intel16.h>
+#include <srecord/input/file/logisim.h>
 #include <srecord/input/file/mem.h>
 #include <srecord/input/file/mif.h>
 #include <srecord/input/file/mips_flash.h>
@@ -122,6 +122,7 @@
 #include <srecord/output/file/hexdump.h>
 #include <srecord/output/file/intel.h>
 #include <srecord/output/file/intel16.h>
+#include <srecord/output/file/logisim.h>
 #include <srecord/output/file/mif.h>
 #include <srecord/output/file/mips_flash.h>
 #include <srecord/output/file/mos_tech.h>

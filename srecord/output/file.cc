@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2002, 2005-2012 Peter Miller
+// Copyright (C) 1998-2002, 2005-2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -440,7 +440,7 @@ srecord::output_file::fatal_hole_error(unsigned long lo, unsigned long hi)
 {
     fatal_error
     (
-        "The %s output format is unable to cope with holes in the data,"
+        "The %s output format is unable to cope with holes in the data, "
         "however there is a hole at 0x%04lX..0x%04lX.",
         format_name(),
         lo,
