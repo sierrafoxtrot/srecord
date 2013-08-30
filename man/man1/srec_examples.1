@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - The "srecord" program.
-.\"     Copyright (C) 2007-2012 Peter Miller
+.\"     Copyright (C) 2007-2013 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 .\"     <http://www.gnu.org/licenses/>.
 .\"
 .ds n) srec_cat
-.TH srec_examples 1 SRecord "Reference Manual"
+.TH srec_examples 1 SRecord "Reference Manual"i
 .SH NAME
 srec_examples \- examples of how to use SRecord
 .if require_index \{
@@ -358,6 +358,46 @@ srec_cat \f[I]infile1\fP \-spectrum \f[I]infile2\fP \-needham \e
 .PP
 These are all ancient formats, however it isn't uncommon to have to mix
 and match Intel and Motorola formats in the one project.
+.\" ......................................................................
+.SS Overlaying two data files
+It is common to want to \[lq]join\[rq] two hex files together, without
+any changes of adrress. on the assumption neither file intersects with
+the other.  This is a simple \[lq]layers\[rq], it is quite common for
+linkers to output the main code, and then a whole bunch of reloction and
+jump desination, by witing a two layered files.
+.RS
+.nf
+.ft CW
+srec_cat one.he two.hex \-o three.hex
+.ft R
+.fi
+.RE
+Almost always you see an error
+.RS
+    srec_cat: two.srec: 49282: contradictory 0x00000000 value (previous
+    = 0x00, this one = 0x80)
+.RS
+.PP
+This means that the file actuall intersect, they try to set the same location.
+You can turn the error into a warning, usanig \fB\-multiple\fP
+command line option.  But this will probably generate a bazillion warnings.
+.PP
+The necessary step is to crop the first file, to avoid the regions the second
+file is going o be overwriting.
+.RS
+.nf
+.ft CW
+srec_cat                               \
+    one.srec \exclude \within two.srec \
+    two.srec \exclude \within one.srec \
+    \-o three.hex
+.ft R
+.fi
+.RE
+.PP
+Depending on your linker this will have no errors (but if it wants
+another layer, more jiggery\[hy]pokery is required).
+.\" ......................................................................
 .SS Filtering After Joining
 There are times when you want to join two sets of data together,
 and then apply a filter to the joined result.  To do this you use
