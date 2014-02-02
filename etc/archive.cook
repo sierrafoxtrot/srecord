@@ -1,6 +1,6 @@
 /*
  * srecord - manipulate eprom load files
- * Copyright (C) 1998-2000, 2003, 2004, 2006-2013 Peter Miller
+ * Copyright (C) 1998-2000, 2003, 2004, 2006-2014 Peter Miller
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,11 +107,11 @@ Makefile.in: [source_files]
         set meter;
 }
 
-archive/[project_minus].tar.gz: [source_file_order]
+archive/[project_minus].tar.gz: [source_file_order] [arch]/bin/test_gecos
         debian/control /* et al */
     set shallow
 {
-    function if_quiet Gneerate;
+    function if_quiet Generate;
 
     tar cf - [resolve [source_file_order]]
         debian/changelog
@@ -120,7 +120,7 @@ archive/[project_minus].tar.gz: [source_file_order]
         debian/rules
         'debian/*.install'
     | tardy
-        -una Peter -gna Miller
+        [collect [arch]/bin/test_gecos]
         -unu 0 -gnu 0
         -ms 0644 -mc 07022
         -now

@@ -1,20 +1,19 @@
 '\" t
-.\"     srecord - manipulate eprom load files
-.\"     Copyright (C) 1998, 2001, 2003, 2006-2010 Peter Miller
+.\" srecord - manipulate eprom load files
+.\" Copyright (C) 1998, 2001, 2003, 2006-2010, 2014 Peter Miller
 .\"
-.\"     This program is free software; you can redistribute it and/or modify
-.\"     it under the terms of the GNU General Public License as published by
-.\"     the Free Software Foundation; either version 3 of the License, or
-.\"     (at your option) any later version.
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 3 of the License, or
+.\" (at your option) any later version.
 .\"
-.\"     This program is distributed in the hope that it will be useful,
-.\"     but WITHOUT ANY WARRANTY; without even the implied warranty of
-.\"     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-.\"     GNU General Public License for more details.
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
 .\"
-.\"     You should have received a copy of the GNU General Public License
-.\"     along with this program. If not, see
-.\"     <http://www.gnu.org/licenses/>.
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .TH Build SRecord SRecord "Reference Manual"
 .so etc/version.so
@@ -477,14 +476,14 @@ script, rather than attempting to do this by hand.
 If you need assistance with the
 .I SRecord
 package,
-please do not hesitate to contact the author at
+please post to the srecord\[hy]users mailing list
 .RS
 .ft CW
-Peter Miller <pmiller@opensource.org.au>
+srecord\[hy]users@lists.sourceforge.net
 .ft R
 .RE
-Any and all feedback is welcome.
-Please make sure \[lq]srecord\[rq] appears in the Subject: line.
+For information obout the srecord\[hy]users mailing list.
+http://srecord.sourceforge.net/mailing\[hy]list.html
 .PP
 When reporting problems,
 please include the version number
@@ -534,3 +533,4 @@ l r l.
 Peter Miller;E\[hy]Mail:;pmiller@opensource.org.au
 \f[CW]/\e/\e*\fP;WWW:;http://miller.emu.id.au/pmiller/
 .TE
+.\" vim: set ts=8 sw=4 et :
