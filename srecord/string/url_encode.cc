@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2013 Peter Miller
+// Copyright (C) 2013, 2014 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -28,14 +28,14 @@ nybble(unsigned x)
     x &= 0x0F;
     if (x < 10)
         return ('0' + x);
-    return ('A' + x - 10);
+    return (('A' - 10) + x);
 }
 
 
 static bool
 needs_quoting(unsigned char x)
 {
-    if (x =='%')
+    if (x == '%')
         return true;
     if (x >= 0x80)
         return true;

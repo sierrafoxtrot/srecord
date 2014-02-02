@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2002, 2005-2010, 2013 Peter Miller
+//      Copyright (C) 1998-2002, 2005-2010, 2013, 2014 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -81,13 +81,13 @@ main(int argc, char **argv)
                 {
                     if (record.get_length() < 1)
                         break;
-                    std::cout << "Header: \"";
+                    std::cout << "Header: ";
                     std::string s(
                         (const char *)record.get_data(),
                         record.get_length()
                     );
-                    s = srecord::string_url_encode(s);
-                    std::cout << s << "\"\n";
+                    s = srecord::string_quote_c(s);
+                    std::cout << s << '\n';
                 }
                 break;
 

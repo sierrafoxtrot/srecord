@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2001-2008, 2010, 2013 Peter Miller
+// Copyright (C) 1998, 1999, 2001-2008, 2010, 2013, 2014 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -166,13 +166,17 @@ main(int argc, char **argv)
         case srec_cat_arglex3::token_header:
             if (cmdline.token_next() != srecord::arglex::token_string)
             {
-                std::cerr << "the header option requires a string argument"
+                std::cerr << "the -header option requires a string argument"
                     << std::endl;
                 exit(1);
             }
             header = cmdline.value_string();
             header_set = true;
+
+            // The users may use %nn on the command line,
+            // but we store a byte 0xnn in the header.
             header = srecord::string_url_decode(header);
+
             srecord::output_file::enable_header(true);
             break;
 

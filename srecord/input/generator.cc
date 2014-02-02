@@ -1,6 +1,6 @@
 //
 // srecord - The "srecord" program.
-// Copyright (C) 2007-2010, 2013 Peter Miller
+// Copyright (C) 2007-2010, 2013, 2014 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -258,7 +258,11 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
         {
             cmdln->token_next();
             std::string s = cmdln->get_string("--repeat-string");
+
+            // The users may use %nn on the command line,
+            // but we store a byte 0xnn in the header.
             s = srecord::string_url_decode(s);
+
             size_t len = s.size();
             switch (len)
             {
