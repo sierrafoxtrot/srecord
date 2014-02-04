@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2006-2013 Peter Miller
+// Copyright (C) 1998-2003, 2006-2014 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -420,9 +420,11 @@ srecord::memory::get_header()
 void
 srecord::memory::set_header(const std::string &text)
 {
+    // We do NOT call string_url_encode here, we decoded the command
+    // line, so that weird characters can be placed into the header.  Such
+    // as a terminating NUL character.  Re-encoding defeats the purpose.
     delete header;
-    std::string s2 = string_url_encode(text);
-    size_t len = s2.size();
+    size_t len = text.size();
     if (len > srecord::record::max_data_length)
         len = srecord::record::max_data_length;
     header =
@@ -430,7 +432,7 @@ srecord::memory::set_header(const std::string &text)
         (
             srecord::record::type_header,
             0,
-            (srecord::record::data_t *)s2.c_str(),
+            (srecord::record::data_t *)text.c_str(),
             len
         );
 }

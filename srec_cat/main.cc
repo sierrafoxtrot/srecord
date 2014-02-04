@@ -85,7 +85,7 @@ main(int argc, char **argv)
             {
                 std::cerr << "the line length " << line_length << " is invalid"
                     << std::endl;
-                exit(1);
+                exit(EXIT_FAILURE);
             }
             break;
 
@@ -104,7 +104,7 @@ main(int argc, char **argv)
             {
                 std::cerr << "the block size " << output_block_size
                     << " is invalid" << std::endl;
-                exit(1);
+                exit(EXIT_FAILURE);
             }
             break;
 
@@ -118,7 +118,7 @@ main(int argc, char **argv)
             {
                 std::cerr << "the address length " << address_length
                     << " is invalid" << std::endl;
-                exit(1);
+                exit(EXIT_FAILURE);
             }
             break;
 
@@ -168,13 +168,16 @@ main(int argc, char **argv)
             {
                 std::cerr << "the -header option requires a string argument"
                     << std::endl;
-                exit(1);
+                exit(EXIT_FAILURE);
             }
             header = cmdline.value_string();
             header_set = true;
 
-            // The users may use %nn on the command line,
-            // but we store a byte 0xnn in the header.
+            //
+            // The users may use %nn on the command line, but we store
+            // a byte 0xnn in the header.  The motivation or this a use
+            // case that wanted to insert a trailing NUL character.
+            //
             header = srecord::string_url_decode(header);
 
             srecord::output_file::enable_header(true);
@@ -185,7 +188,7 @@ main(int argc, char **argv)
             {
                 std::cerr << "too many -execution-start-address options "
                     "specified" << std::endl;
-                exit(1);
+                exit(EXIT_FAILURE);
             }
             cmdline.token_next();
             execution_start_address =
@@ -235,7 +238,7 @@ main(int argc, char **argv)
         {
             std::cerr << "output block size " << output_block_size
                 << " was rejected by " << outfile->format_name() << std::endl;
-            exit(1);
+            exit(EXIT_FAILURE);
         }
     }
 
@@ -251,7 +254,12 @@ main(int argc, char **argv)
     //
     srecord::memory m;
     if (header_set)
+    {
+        // Only the first header is used, even if you have N input
+        // files.  Being set before reading any of the input files, the
+        // command line takes precedence.
         m.set_header(header);
+    }
     m.reader(infile, true);
     if (execution_start_address_set)
         m.set_execution_start_address(execution_start_address);
@@ -266,7 +274,7 @@ main(int argc, char **argv)
     //
     // success
     //
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 
