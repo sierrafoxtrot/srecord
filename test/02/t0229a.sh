@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2012 Peter Miller
+# Copyright (C) 2012, 2014 Peter Miller
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,21 +30,24 @@ if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
 #Format=Hex
-#Depth=14
-#Width=8
+#Depth=4
+#Width=32
 #AddrRadix=3
 #DataRadix=3
 #Data
 #
-# Generated automatically by srec_cat -o --MEM 8
+# Generated automatically by srec_cat -o --MEM 32
 #
 # HDR
-48 65 6C 6C 6F 2C 20 57 6F 72 6C 64 21 0A
+48656C6C
+6F2C2057
+6F726C64
+210A0000
 # execution start address = 0000
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -o test.out -mem
+srec_cat test.in --fill 0 0 16 -o test.out -mem 32
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

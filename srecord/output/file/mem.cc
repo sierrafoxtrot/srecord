@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2009, 2010, 2012 Peter Miller
+// Copyright (C) 2009, 2010, 2012, 2014 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -65,7 +65,7 @@ srecord::output_file_mem::command_line(srecord::arglex_tool *cmdln)
         {
         case 1:
         case 8:
-            width = 8;
+            width = 8; // ambiguous
             width_in_bytes = 1;
             break;
 
@@ -83,7 +83,7 @@ srecord::output_file_mem::command_line(srecord::arglex_tool *cmdln)
 
         case 64:
             width = 64;
-            width_in_bytes = 8;
+            width_in_bytes = 8; // ambiguous
             break;
 
         default:
@@ -128,13 +128,20 @@ srecord::output_file_mem::emit_header(void)
         // Comments may be added to any of the data, but never add
         // comments to the header.  The header ends here, so it is safe
         // to add some additional information.
+        //
+        // Note that some widths are ambiguous
+        //    8 bits, 1 byte
+        //   16 bits, 2 bytes
+        //   32 bits, 4 bytes
+        //   64 bits, 8 bytes
+        // thus "8" is ambiguous
         put_stringf
         (
             "#\n"
             "# Generated automatically by %s -o --MEM %d\n"
             "#\n",
             progname_get(),
-            width
+            (width == 8 ? 64 : width)
         );
     }
     header_done = true;
@@ -207,8 +214,8 @@ srecord::output_file_mem::write(const srecord::record &record)
             {
                 if (column > 0 && (j % width_in_bytes) == 0)
                 {
-                    put_char(' ');
-                    ++column;
+                    put_char('\n');
+                    column = 0;
                 }
                 put_byte(record.get_data(j));
                 column += 2;
@@ -216,7 +223,7 @@ srecord::output_file_mem::write(const srecord::record &record)
                 if
                 (
                     ((j + 1) % width_in_bytes) == 0
-                &&
+                ||
                     column + 1 + width_in_bytes * 2 > 80
                 )
                 {
