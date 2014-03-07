@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2012 Peter Miller
+# Copyright (C) 2012, 2014 Peter Miller
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 TEST_SUBJECT="crc-16-ansi"
 . test_prelude
 
-echo -n "123456789" > test.in
+echo "123456789" | dd bs=9 count=1 > test.in  2>/dev/null
 if test $? -ne 0; then no_result; fi
 
 # If anyone has the ANSI stantda test vectors,
