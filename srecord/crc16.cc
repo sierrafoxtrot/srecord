@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000-2002, 2006-2010, 2012 Peter Miller
+// Copyright (C) 2000-2002, 2006-2010, 2012, 2014 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -36,6 +36,21 @@
 #include <srecord/quit.h>
 #include <srecord/sizeof.h>
 
+
+//
+// The Chapter numbers come from Williams, N. (1993) "A painless guide
+// to CRC error detection algorithms"
+// http://www.repairfaq.org/filipg/LINK/F_crc_v3.html
+//
+#define IMPL_CH9   9
+#define IMPL_CH10 10
+#define IMPL_CH11 11    // doesn't work yet (i.e. not same results as 9 and 10)
+                        // but it "almost" works, according to test/01/t0150a.sh
+
+// So, for now we will be conservative, and use Chapter 10
+#define IMPL IMPL_CH10
+
+
 //
 // Use a seed of 0xFFFF when augmenting manually (i.e. augmenting by 16
 // zero bits by processing two zero bytes at the end of the data), but a
@@ -44,7 +59,7 @@
 //
 // The 0x1D0F value is calculated by using the manual augmentation
 // updcrc function:
-//     ubdcrc(0, updcrc(0, 0xFFFF))
+//     updcrc(0, updcrc(0, 0xFFFF))
 //
 static unsigned short const ccitt_seed = 0xFFFF;
 static unsigned short const broken_seed = 0x84CF;
@@ -52,7 +67,7 @@ static unsigned short const xmodem_seed = 0;
 
 
 void
-srecord::crc16::calculate_table()
+srecord::crc16::calculate_table(void)
 {
     if (polynomial == 0)
         polynomial = polynomial_ccitt;
@@ -109,6 +124,16 @@ srecord::crc16::crc16(
     polynomial(a_polynomial),
     bitdir(a_bitdir)
 {
+#if (IMPL == IMPL_CH11)
+  #if 1
+    // the "pre-augment" crc seed
+    state = 0x1D0F;
+  #else
+    // The above nukes the seed value the user may have provided,
+    // making this look more likely:
+    state = updcrc(0, updcrc(0, state));
+  #endif
+#endif
     calculate_table();
 }
 
@@ -145,11 +170,15 @@ srecord::crc16::~crc16()
 }
 
 
-#if 0
+#if (IMPL == IMPL_CH9)
 
 //
 // This is the simplest possible implementation.  It can be used to
 // validate the two following table-driven implementations.
+//
+// See "A painless guide to CRC error detection algorithms",
+// Chapter 9, http://www.repairfaq.org/filipg/LINK/F_crc_v33.html#CRCV_001
+// 'A Straightforward CRC Implementation', for an explanation.
 //
 
 inline unsigned short
@@ -186,8 +215,8 @@ srecord::crc16::updcrc(unsigned char c, unsigned short state)
     return state;
 }
 
-#endif
-#if 1
+#endif // IMPL_CH9
+#if (IMPL == IMPL_CH10)
 
 //
 // This version of updcrc doesn't augment automagically, you must
@@ -195,8 +224,8 @@ srecord::crc16::updcrc(unsigned char c, unsigned short state)
 // implementation than the "augmentation included" implementation below.
 //
 // See "A painless guide to CRC error detection algorithms",
-// chapter 10, http://www.repairfaq.org/filipg/LINK/F_crc_v33.html#CRCV_002
-// for an explanation.
+// Chapter 10, http://www.repairfaq.org/filipg/LINK/F_crc_v33.html#CRCV_002
+// 'A Table-Driven Implementation', for an explanation.
 //
 
 inline unsigned short
@@ -213,8 +242,8 @@ srecord::crc16::updcrc(unsigned char c, unsigned short state)
     }
 }
 
-#endif
-#if 0
+#endif // IMPL_CH10
+#if (IMPL == IMPL_CH11)
 
 //
 // This version of updcrc means that the 16-zero-bit augmentation has
@@ -223,8 +252,8 @@ srecord::crc16::updcrc(unsigned char c, unsigned short state)
 // XOR arithmetic.
 //
 // See "A painless guide to CRC error detection algorithms",
-// chapter 11, http://www.repairfaq.org/filipg/LINK/F_crc_v33.html#CRCV_003
-// for an explanation.
+// Chapter 11, http://www.repairfaq.org/filipg/LINK/F_crc_v33.html#CRCV_003
+// 'A Slightly Mangled Table-Driven Implementation', for an explanation.
 //
 
 inline unsigned short
@@ -234,10 +263,10 @@ srecord::crc16::updcrc(unsigned char c, unsigned short state)
     if (bitdir == bit_direction_least_to_most)
         return (state >> 8) ^ table[(state ^ c) & 0xFF];
     else
-        return (state << 8) ^ table[(state >> 8) ^ c];
+        return (state << 8) ^ table[((state >> 8) ^ c) & 0xFF];
 }
 
-#endif
+#endif // IMPL_CH11
 
 
 void
@@ -260,13 +289,16 @@ srecord::crc16::nextbuf(const void *data, size_t nbytes)
 
 
 unsigned short
-srecord::crc16::get()
+srecord::crc16::get(void)
     const
 {
+#if (IMPL < IMPL_CH11)
+    // The whole idea is that Ch.11 technique is "pre-auugmented"
     if (augment)
     {
         return updcrc(0, updcrc(0, state));
     }
+#endif
     return state;
 }
 
@@ -275,7 +307,7 @@ srecord::crc16::get()
 
 
 void
-srecord::crc16::print_table()
+srecord::crc16::print_table(void)
     const
 {
     printf("/*\n");
@@ -358,3 +390,6 @@ srecord::crc16::polynomial_by_name(const char *name)
     );
     return polynomial_ccitt;
 }
+
+
+// vim: set ts=8 sw=4 et :
