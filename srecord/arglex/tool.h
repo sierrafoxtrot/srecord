@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2013 Peter Miller
+// Copyright (C) 1998-2014 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -20,6 +20,7 @@
 #define SRECORD_ARGLEX_TOOL_H
 
 #include <srecord/arglex.h>
+#include <srecord/defcon.h>
 #include <srecord/endian.h>
 #include <srecord/input.h>
 #include <srecord/output.h>
@@ -70,6 +71,7 @@ public:
         token_constant_be,
         token_constant_le,
         token_constant_not,
+        token_contradictory_bytes,
         token_cosmac,
         token_crc16_augment,
         token_crc16_augment_not,
@@ -156,6 +158,7 @@ public:
         token_random,
         token_random_fill,
         token_range_padding,
+        token_redundant_bytes,
         token_repeat_data,
         token_repeat_string,
         token_rmd160,
@@ -221,7 +224,7 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    input::pointer get_input();
+    input::pointer get_input(void);
 
     /**
       * The get_output method is used to parse an output specification
@@ -231,7 +234,7 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    output::pointer get_output();
+    output::pointer get_output(void);
 
     /**
       * The get_number method is used to parse a numeric value from the
@@ -256,7 +259,7 @@ public:
       * The can_get_number method is used to determine if it is possible
       * to parse a number from the next token on the command line.
       */
-    bool can_get_number() const;
+    bool can_get_number(void) const;
 
     /**
       * The get_interval method is used to parse an interval
@@ -292,7 +295,10 @@ public:
     std::string get_string(const char *caption);
 
     // See base class for documentation.
-    void default_command_line_processing();
+    void default_command_line_processing(void);
+
+    defcon_t get_redundant_bytes(void) const { return redundant_bytes; }
+    defcon_t get_contradictory_bytes(void) const { return contradictory_bytes; }
 
 private:
     /**
@@ -412,7 +418,7 @@ private:
       * of the current token.
       */
     endian_t
-    get_endian_by_token()
+    get_endian_by_token(void)
         const
     {
         return get_endian_by_token(token_cur());
@@ -433,11 +439,25 @@ private:
       * or not the current token is inclusive or exclusive.
       */
     bool
-    get_inclusive_by_token()
+    get_inclusive_by_token(void)
         const
     {
         return get_inclusive_by_token(token_cur());
     }
+
+    /**
+      * The redundant_bytes instance variable is used to remember what
+      * to do when faced with multiple identical byte values for a
+      * memory address.
+      */
+    defcon_t redundant_bytes;
+
+    /**
+      * The vontradivtory_bytes instance variable is used to remember what
+      * to do when faced with multiple different byte values for a
+      * memory address.
+      */
+    defcon_t contradictory_bytes;
 
     /**
       * The default constructor.  Do not use.

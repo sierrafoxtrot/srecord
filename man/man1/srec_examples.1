@@ -1,6 +1,6 @@
 '\" t
 .\"     srecord - The "srecord" program.
-.\"     Copyright (C) 2007-2013 Peter Miller
+.\"     Copyright (C) 2007-2014 Peter Miller
 .\"
 .\"     This program is free software; you can redistribute it and/or modify
 .\"     it under the terms of the GNU General Public License as published by
@@ -378,9 +378,10 @@ Almost always you see an error
     = 0x00, this one = 0x80)
 .RS
 .PP
-This means that the file actuall intersect, they try to set the same location.
-You can turn the error into a warning, usanig \fB\-multiple\fP
-command line option.  But this will probably generate a bazillion warnings.
+This means that the file actuall intersect, they try to set
+the same location.  You can turn the error into a warning, using the
+\fB\-contradictory\[hy]bytes=warning\fP command line option.  But this
+will probably generate a bazillion warnings.
 .PP
 The necessary step is to crop the first file, to avoid the regions the second
 file is going o be overwriting.

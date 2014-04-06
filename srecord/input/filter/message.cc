@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2009-2012 Peter Miller
+// Copyright (C) 2009-2012, 2014 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -56,7 +56,7 @@ srecord::input_filter_message::read(record &result)
     //
     if (buffer.empty())
     {
-        buffer.reader(ifp, true);
+        buffer.reader(ifp, defcon_ignore, defcon_warning);
 
         unsigned multiple = get_minimum_alignment();
         if (multiple >= 2 && !buffer.is_well_aligned(multiple))

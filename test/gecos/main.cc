@@ -21,6 +21,7 @@
 #include <cstring>
 #include <pwd.h>
 #include <string>
+#include <unistd.h>
 #include <vector>
 
 #include <srecord/arglex.h>

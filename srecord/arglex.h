@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998, 1999, 2002, 2003, 2006-2008, 2010, 2013 Peter Miller
+// Copyright (C) 1998-2014 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -243,14 +243,14 @@ public:
       * It returns the type of the token; this value may also be
       * fetched using the token_cur method.
       */
-    int token_next();
+    int token_next(void);
 
     /**
       * The token_first method is used to fetch the fisrt command
       * like token (rather than use the token_next method).  This does
       * standard "help" and "version" options.
       */
-    int token_first();
+    int token_first(void);
 
     /**
       * The value_string method is used to get the string value of
@@ -318,7 +318,7 @@ public:
       * The default_command_line_processing method is used to process
       * command line arguments not handled by the derived class.
       */
-    virtual void default_command_line_processing();
+    virtual void default_command_line_processing(void);
 
 private:
     /**

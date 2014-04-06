@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 1998-2003, 2005-2008, 2010 Peter Miller
+//      Copyright (C) 1998-2003, 2005-2008, 2010, 2014 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -83,13 +83,23 @@ main(int argc, char **argv)
     // Read the first file into memory.
     //
     srecord::memory m1;
-    m1.reader(if1);
+    m1.reader
+    (
+        if1,
+        cmdline.get_redundant_bytes(),
+        cmdline.get_contradictory_bytes()
+    );
 
     //
     // Read the second file into memory.
     //
     srecord::memory m2;
-    m2.reader(if2);
+    m2.reader
+    (
+        if2,
+        cmdline.get_redundant_bytes(),
+        cmdline.get_contradictory_bytes()
+    );
 
     //
     // Error message and non-zero exit status if the files differ.
@@ -142,3 +152,6 @@ main(int argc, char **argv)
     //
     return 0;
 }
+
+
+// vim: set ts=8 sw=4 et :

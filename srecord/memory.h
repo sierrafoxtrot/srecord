@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2003, 2006-2008, 2010, 2012, 2013 Peter Miller
+// Copyright (C) 1998-2003, 2006-2008, 2010, 2012-2014 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -22,6 +22,7 @@
 
 #include <string>
 
+#include <srecord/defcon.h>
 #include <srecord/input.h>
 #include <srecord/memory/chunk.h>
 #include <srecord/memory/walker.h>
@@ -107,14 +108,19 @@ public:
       * header, the first header will be remembered, if set_header()
       * was not called previously.
       *
-      * If the value at any address is set more than once, a fatal
-      * error will be issued, informing the user of the address
-      * and the contradictory values.  If the allow_overwriting()
-      * method has been called previously, this will be a non-fatal
-      * warning, instead.  If `barf' is false, no checking of any
-      * kind is performed.
+      * @param redundant_bytes
+      *     ignore: do nothing
+      *     warning: issue a warning and continue (default)
+      *     error: issuse a atal error message, and exit failure.
+      * @param contradictory_bytes
+      *     If the value at any address is set more than once,
+      *     Thid argument controls what happeens.
+      *     ignore: do nothing
+      *     warning: issue a warning and continue (default)
+      *     error: issuse a atal error message, and exit failure (default).
       */
-    void reader(const input::pointer &input, bool barf = false);
+    void reader(const input::pointer &input, defcon_t redundant_bytes,
+        defcon_t contradictory_bytes);
 
     /**
       * The equal method may be used to determine if two memory
@@ -143,13 +149,6 @@ public:
       */
     bool find_next_data(unsigned long &address, void *data,
         size_t &nbytes) const;
-
-    /**
-      * The allow_overwriting controls the error message behaviour of
-      * the reader() method.  Once called, redundant and contradictory
-      * settings generate warnings, rather than fatal errors.
-      */
-    static void allow_overwriting(void);
 
     /**
       * The get_header method is used to determine the value of the
@@ -219,13 +218,6 @@ public:
     }
 
 private:
-    /**
-      * The overwrite static variable is used to remember whether
-      * or not we generate warnings when redundant or contradictory
-      * settings are deteccted by the reader() method.
-      */
-    static bool overwrite;
-
     /**
       * The nchunks instance variable is used to member how large
       * our pool of memory chunks is.  It is always <= nchunks_max;

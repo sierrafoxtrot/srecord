@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2013 Peter Miller
+// Copyright (C) 1998-2014 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -20,14 +20,15 @@
 
 #include <srecord/arglex/tool.h>
 #include <srecord/input/file.h>
-#include <srecord/memory.h>
 
 
 srecord::arglex_tool::arglex_tool(int argc, char **argv) :
     arglex(argc, argv),
     stdin_used(false),
     stdout_used(false),
-    issue_sequence_warnings(-1)
+    issue_sequence_warnings(-1),
+    redundant_bytes(srecord::defcon_warning),
+    contradictory_bytes(srecord::defcon_fatal_error)
 {
     static const table_ty table[] =
     {
@@ -77,6 +78,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-CONSTant", token_constant, },
         { "-CONSTant_Big_Endian", token_constant_be, },
         { "-CONSTant_Little_Endian", token_constant_le, },
+        { "-Contradictory_Bytes", token_contradictory_bytes },
         { "-COsmac", token_cosmac, },
         { "-CRop", token_crop, },
         { "-Cyclic_Redundancy_Check_16_Big_Endian", token_crc16_be, },
@@ -175,6 +177,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-Random_Fill", token_random_fill, },
         { "-RAnge_PADding", token_range_padding, },
         { "-RAw", token_binary, },
+        { "-Redundant_Bytes", token_redundant_bytes },
         { "-REPeat_Data", token_repeat_data, },
         { "-REPeat_String", token_repeat_string, },
         { "-Ripe_Message_Digest_160", token_rmd160 },
@@ -253,7 +256,7 @@ srecord::arglex_tool::~arglex_tool()
 
 
 bool
-srecord::arglex_tool::can_get_number()
+srecord::arglex_tool::can_get_number(void)
     const
 {
     switch (token_cur())
@@ -344,7 +347,7 @@ srecord::arglex_tool::get_address_nbytes_width(const char *name,
 
 
 void
-srecord::arglex_tool::default_command_line_processing()
+srecord::arglex_tool::default_command_line_processing(void)
 {
     switch (token_cur())
     {
@@ -352,24 +355,77 @@ srecord::arglex_tool::default_command_line_processing()
         arglex::default_command_line_processing();
         break;
 
-    case srecord::arglex_tool::token_ignore_checksums:
-        srecord::input_file::ignore_all_checksums();
+    case token_ignore_checksums:
+        input_file::ignore_all_checksums();
         token_next();
         break;
 
-    case srecord::arglex_tool::token_sequence_warnings_enable:
+    case token_sequence_warnings_enable:
         issue_sequence_warnings = 1;
         token_next();
         break;
 
-    case srecord::arglex_tool::token_sequence_warnings_disable:
+    case token_sequence_warnings_disable:
         issue_sequence_warnings = 0;
         token_next();
         break;
 
-    case srecord::arglex_tool::token_multiple:
-        srecord::memory::allow_overwriting();
+    case token_multiple:
+        // This one is intentionally not documented.
+        // Use one of the -rb or -cb options.
+        redundant_bytes = defcon_ignore;
+        contradictory_bytes = defcon_ignore;
         token_next();
+        break;
+
+    case token_redundant_bytes:
+        {
+            if (token_next() != token_string)
+            {
+                fatal_error
+                (
+                    "the %s option requires a string argument",
+                    token_name(token_redundant_bytes)
+                );
+            }
+            int x = defcon_from_text(value_string().c_str());
+            if (x < 0)
+            {
+                fatal_error
+                (
+                    "the %s=%s option value is unknown",
+                    token_name(token_redundant_bytes),
+                    value_string().c_str()
+                );
+            }
+            redundant_bytes = (defcon_t)x;
+            token_next();
+        }
+        break;
+
+    case token_contradictory_bytes:
+        {
+            if (token_next() != token_string)
+            {
+                fatal_error
+                (
+                    "the %s option requires a string argument",
+                    token_name(token_contradictory_bytes)
+                );
+            }
+            int x = defcon_from_text(value_string().c_str());
+            if (x < 0)
+            {
+                fatal_error
+                (
+                    "the %s=%s option value is unknown",
+                    token_name(token_contradictory_bytes),
+                    value_string().c_str()
+                );
+            }
+            contradictory_bytes = (defcon_t)x;
+            token_next();
+        }
         break;
     }
 }

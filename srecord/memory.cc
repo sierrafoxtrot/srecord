@@ -28,9 +28,6 @@
 #include <srecord/string.h>
 
 
-bool srecord::memory::overwrite = false;
-
-
 srecord::memory::memory() :
     nchunks(0),
     nchunks_max(0),
@@ -75,7 +72,7 @@ srecord::memory::~memory()
 
 
 void
-srecord::memory::clear()
+srecord::memory::clear(void)
 {
     delete header;
     header = 0;
@@ -240,7 +237,7 @@ srecord::memory::compare(const srecord::memory &lhs, const srecord::memory &rhs)
 
 
 unsigned long
-srecord::memory::get_upper_bound()
+srecord::memory::get_upper_bound(void)
     const
 {
     if (nchunks == 0)
@@ -266,7 +263,9 @@ srecord::memory::walk(srecord::memory_walker::pointer w)
 
 
 void
-srecord::memory::reader(const srecord::input::pointer &ifp, bool barf)
+srecord::memory::reader(const srecord::input::pointer &ifp,
+    defcon_t redundant_bytes,
+    defcon_t contradictory_bytes)
 {
     srecord::record record;
     while (ifp->read(record))
@@ -294,39 +293,67 @@ srecord::memory::reader(const srecord::input::pointer &ifp, bool barf)
             {
                 srecord::record::address_t address = record.get_address() + j;
                 int n = record.get_data(j);
-                if (barf && set_p(address))
+                if (set_p(address))
                 {
                     int old = get(address);
                     if (n == old)
                     {
-                        ifp->warning
-                        (
-                            "redundant 0x%08lX value (0x%02X)",
-                            (long)address,
-                            n
-                        );
-                    }
-                    else if (overwrite)
-                    {
-                        ifp->warning
-                        (
-                            "multiple 0x%08lX values (previous = 0x%02X, "
-                                "this one = 0x%02X)",
-                            (long)address,
-                            old,
-                            n
-                        );
+                        // duplicate
+                        switch (redundant_bytes)
+                        {
+                        default:
+                        case defcon_ignore:
+                            break;
+
+                        case defcon_warning:
+                            ifp->warning
+                            (
+                                "redundant 0x%08lX value (0x%02X)",
+                                (long)address,
+                                n
+                            );
+                            break;
+
+                        case defcon_fatal_error:
+                            ifp->fatal_error
+                            (
+                                "redundant 0x%08lX value (0x%02X)",
+                                (long)address,
+                                n
+                            );
+                            break;
+                        }
                     }
                     else
                     {
-                        ifp->fatal_error
-                        (
-                            "contradictory 0x%08lX value (previous = 0x%02X, "
-                                "this one = 0x%02X)",
-                            (long)address,
-                            old,
-                            n
-                        );
+                        // contradicts
+                        switch (contradictory_bytes)
+                        {
+                        case defcon_ignore:
+                            break;
+
+                        case defcon_warning:
+                            ifp->warning
+                            (
+                                "multiple 0x%08lX values (previous = 0x%02X, "
+                                    "this one = 0x%02X)",
+                                (long)address,
+                                old,
+                                n
+                            );
+                            break;
+
+                        case defcon_fatal_error:
+                            ifp->fatal_error
+                            (
+                                "multiple 0x%08lX values (previous = 0x%02X, "
+                                    "this one = 0x%02X)",
+                                (long)address,
+                                old,
+                                n
+                            );
+                            break;
+                        }
                     }
                 }
                 set(address, n);
@@ -402,15 +429,8 @@ srecord::memory::find_next_data(unsigned long &address, void *data,
 }
 
 
-void
-srecord::memory::allow_overwriting()
-{
-    overwrite = true;
-}
-
-
 srecord::record *
-srecord::memory::get_header()
+srecord::memory::get_header(void)
     const
 {
     return header;
@@ -439,7 +459,7 @@ srecord::memory::set_header(const std::string &text)
 
 
 srecord::record *
-srecord::memory::get_execution_start_address()
+srecord::memory::get_execution_start_address(void)
     const
 {
     return execution_start_address;
@@ -462,7 +482,7 @@ srecord::memory::set_execution_start_address(unsigned long addr)
 
 
 bool
-srecord::memory::has_holes()
+srecord::memory::has_holes(void)
     const
 {
     srecord::memory_walker_continuity::pointer sniffer =

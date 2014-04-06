@@ -260,7 +260,12 @@ main(int argc, char **argv)
         // command line takes precedence.
         m.set_header(header);
     }
-    m.reader(infile, true);
+    m.reader
+    (
+        infile,
+        cmdline.get_redundant_bytes(),
+        cmdline.get_contradictory_bytes()
+    );
     if (execution_start_address_set)
         m.set_execution_start_address(execution_start_address);
 

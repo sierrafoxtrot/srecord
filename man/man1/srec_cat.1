@@ -1,6 +1,6 @@
 '\" t
 .\" srecord - manipulate eprom load files
-.\" Copyright (C) 1998, 2000-2013 Peter Miller
+.\" Copyright (C) 1998, 2000-2014 Peter Miller
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ A fatal error will be issued if any address is set with
 contradictory values.
 To avoid this error use an \fB\-exclude \-within\fP filter
 (see \f[I]srec_input\fP(1)) or, to make it a warning, use the
-\fB\-multiple\fP option (see below).
+\fB\-contradictory\[hy]bytes\fP option (see below).
 .TP 2n
 \[bu]
 A warning will be issued for input files where the data records are not
@@ -450,6 +450,7 @@ for a description of this file format.)
 .\" -----   --output -Y*   -------------------------------------------------
 .\" -----   --output -Z*   -------------------------------------------------
 .RE
+.\" ----------  A  ---------------------------------------------------------
 .TP 8n
 \fB\-Address_Length\fP \f[I]number\fP
 This option many be used to specify the minimum number of bytes to be
@@ -457,11 +458,24 @@ used in the output to represent an address (padding with leading zeros
 if necessary).
 This helps when talking to imbecilic EPROM programmer devices which do not
 fully implement the format specification.
+.\" ----------  B  ---------------------------------------------------------
+.\" ----------  C  ---------------------------------------------------------
+.TP 8n
+.B \-CRLF
+This option is short\[hy]hand for the \fB\-line\[hy]termination=crlf\fP option.
+For use with hare\[hy]brained EPROM programmer devices which assume all the
+world uses Evil Bill's operating system's line termination.
+.\" ----------  D  ---------------------------------------------------------
 .TP 8n
 .B \-Data_Only
 This option implies the \fB\-disable=header\fP,
 \fB\-disable=data\[hy]count\fP, \fB\-disable=exec\[hy]start\[hy]address\fP and
 \fB\-disable=footer\fP options.
+.TP 8n
+.B \-DISable\fP \f[I]feature\[hy]name\fP
+This option is used to disable the output of a named feature.
+See the \fB\-enable\fP option for a description of the available features.
+.\" ----------  E  ---------------------------------------------------------
 .TP 8n
 .B \-ENable\fP \f[I]feature\[hy]name\fP
 .RS
@@ -472,15 +486,15 @@ This feature controls the presence of header records, records which
 appear before the data itself.
 Headers often, but not always, include descriptive text.
 .TP 8n
-Data_Count
-This feature controls the presence of data record count records, which
-appear aftre the data, and state how many data records preceeded them.
-Usually a data integrity mechanism.
-.TP 8n
 Execution_Start_Address
 This feature controls the presence of execution start address records,
 which is where the monitor will jump to and start executing code once
 the hex file has finished loading.
+.TP 8n
+Data_Count
+This feature controls the presence of data record count records, which
+appear aftre the data, and state how many data records preceeded them.
+Usually a data integrity mechanism.
 .TP 8n
 Footer
 This feature controls the presence of a file termination record,
@@ -499,18 +513,41 @@ Not all formats are able to optionally omit any or all the above features.
 Feature names may be abbreviated like command line option names.
 .RE
 .TP 8n
-.B \-DISable\fP \f[I]feature\[hy]name\fP
-This option is used to disable the output of a named feature.
-See the \fB\-enable\fP option for a description of the available features.
+\fB\-Execution_Start_Address\fP \f[I]number\fP
+.RS
+This option may be used to set the execution start address,
+in those formats which support it.
+The execution start address is where the monitor will jump to and start
+executing code once the hex file has finished loading,
+think of it as a \[lq]goto\[rq] address.
+Usually ignored by EPROM programmer devices.
+This option implies the \fB\-enable=exec\[hy]start\[hy]addr\fP option.
+.PP
+Please note: the execution start address is a different concept than the
+first address in memory of your data.  If you want to change where your
+data starts in memory, use the \fB\-offset\fP filter.
+.RE
+.\" ----------  F  ---------------------------------------------------------
+.\" ----------  G  ---------------------------------------------------------
+.\" ----------  H  ---------------------------------------------------------
+.TP 8n
+\fB\-HEAder\fP \f[I]string\fP
+.RS
+This option may be used to set the header comment,
+in those formats which support it.
+This option implies the \fB\-enable=header\fP option.
+.PP
+If you need to inject binary data into the header, use the URL encoding
+that uses % followed by two hexadeimal characters.  For example a
+backspace would be encoded as \[lq]%08\[rq].
+.RE
+.\" ----------  I  ---------------------------------------------------------
 .TP 8n
 \fB\-IGnore_Checksums\fP
 .so man/man1/o_ignore_checksums.so
-.so man/man1/o_sequence.so
-.TP 8n
-.B \-CRLF
-This option is short\[hy]hand for the \fB\-line\[hy]termination=crlf\fP option.
-For use with harebrained EPROM programmer devices which assume all the
-world uses Evil Bill's operating system's line termination.
+.\" ----------  J  ---------------------------------------------------------
+.\" ----------  K  ---------------------------------------------------------
+.\" ----------  L  ---------------------------------------------------------
 .TP
 \fB\-Line_Termination \f[I]style\[hy]name\fP
 .RS
@@ -532,6 +569,7 @@ Use the CR line termination style, typical of Apple Macintosh.
 All other line termination style names will produce a fatal error.
 Style names may be abbreviated like command line option names.
 .RE
+.\" ----------  L  ---------------------------------------------------------
 .TP 8n
 \fB\-Line_Length\fP \f[I]number\fP
 This option may be used to limit the length of the output lines to at
@@ -539,32 +577,9 @@ most \f[I]number\fP characters.  (Not meaningful for binary file format.)
 Defaults to something less than 80 characters, depending on the format.
 If you need to control the maximum number of bytes in each output record,
 use the \fB\-\-Ouput_Block_Size\fP option.
-.TP 8n
-\fB\-HEAder\fP \f[I]string\fP
-.RS
-This option may be used to set the header comment,
-in those formats which support it.
-This option implies the \fB\-enable=header\fP option.
-.PP
-If you need to inject binary data into the header, use the URL encoding
-that uses % followed by two hexadeimal characters.  For example a
-backspace would be encoded as \[lq]%08\[rq].
-.RE
-.TP 8n
-\fB\-Execution_Start_Address\fP \f[I]number\fP
-.RS
-This option may be used to set the execution start address,
-in those formats which support it.
-The execution start address is where the monitor will jump to and start
-executing code once the hex file has finished loading,
-think of it as a \[lq]goto\[rq] address.
-Usually ignored by EPROM programmer devices.
-This option implies the \fB\-enable=exec\[hy]start\[hy]addr\fP option.
-.PP
-Please note: the execution start address is a different concept than the
-first address in memory of your data.  If you want to change where your
-data starts in memory, use the \fB\-offset\fP filter.
-.RE
+.\" ----------  M  ---------------------------------------------------------
+.\" ----------  N  ---------------------------------------------------------
+.\" ----------  O  ---------------------------------------------------------
 .TP 8n
 \fB\-Output_Block_Size\fP \f[I]number\fP
 This option may be used to specify the exact number of data bytes to
@@ -579,12 +594,22 @@ records are spit unexpectedly on output.  This usually happens where
 record lengths are not a power of 2.  If this bothers you (or your
 comparison tools) this option may be used to repack the output so that
 SRecord's internal block boundaries are not visable in the output.
+.\" ----------  O  ---------------------------------------------------------
 .TP 8n
 \fB\-Output_Block_Alignment\fP
 This option is similar to the \fB\-Output_Block_Packing\fP option,
 except that short records are used after holes to cause subsequent
 records to be placed on a block size boundary.
-.so man/man1/o_multiple.so
+.\" ----------  R  ---------------------------------------------------------
+.\" ----------  S  ---------------------------------------------------------
+.so man/man1/o_sequence.so
+.\" ----------  T  ---------------------------------------------------------
+.\" ----------  U  ---------------------------------------------------------
+.\" ----------  V  ---------------------------------------------------------
+.\" ----------  W  ---------------------------------------------------------
+.\" ----------  X  ---------------------------------------------------------
+.\" ----------  Y  ---------------------------------------------------------
+.\" ----------  Z  ---------------------------------------------------------
 .PP
 All other options will produce a diagnostic error.
 .so man/man1/z_options.so

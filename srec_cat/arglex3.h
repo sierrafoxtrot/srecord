@@ -1,6 +1,6 @@
 //
 //      srecord - manipulate eprom load files
-//      Copyright (C) 2000-2008, 2010 Peter Miller
+//      Copyright (C) 2000-2008, 2010, 2014 Peter Miller
 //
 //      This program is free software; you can redistribute it and/or modify
 //      it under the terms of the GNU General Public License as published by
@@ -30,8 +30,8 @@ public:
     {
         token_line_length = srecord::arglex_tool::token_MAX,
         token_address_length,
-        token_data_only,
         token_crlf,
+        token_data_only,
         token_header,
         token_execution_start_address,
         token_enable,
@@ -71,3 +71,4 @@ private:
 };
 
 #endif // PROG_SREC_CAT_ARGLEX3_H
+// vim: set ts=8 sw=4 et :
