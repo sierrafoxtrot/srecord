@@ -1,6 +1,6 @@
 //
 // srecord - Manipulate EPROM load files
-// Copyright (C) 2013, 2014 Peter Miller
+// Copyright (C) 2013 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -54,7 +54,7 @@ quote_char(int c)
         return "EOF";
      if (c == '\0')
         return "\\0";
-     char buf[2] = { (char)c, '\0' };
+     char buf[2] = { static_cast<char>(c), '\0' };
      return srecord::string_quote_c(buf);
 }
 
