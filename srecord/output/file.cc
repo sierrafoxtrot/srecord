@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 1998-2002, 2005-2013 Peter Miller
+// Copyright (C) 1998-2002, 2005-2012, 2014 Peter Miller
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -34,6 +34,16 @@ bool srecord::output_file::enable_data_count_flag = true;
 bool srecord::output_file::enable_goto_addr_flag = true;
 bool srecord::output_file::enable_footer_flag = true;
 bool srecord::output_file::enable_optional_address_flag = false;
+
+
+srecord::output_file::~output_file()
+{
+    FILE *fp = (FILE *)get_fp();
+    if (fflush(fp))
+        fatal_error_errno("write");
+    if (fp != stdout && fclose(fp))
+        fatal_error_errno("close");
+}
 
 
 srecord::output_file::output_file() :
@@ -112,16 +122,6 @@ srecord::output_file::get_fp(void)
         set_is_regular();
     }
     return vfp;
-}
-
-
-srecord::output_file::~output_file()
-{
-    FILE *fp = (FILE *)get_fp();
-    if (fflush(fp))
-        fatal_error_errno("write");
-    if (fp != stdout && fclose(fp))
-        fatal_error_errno("close");
 }
 
 
@@ -261,21 +261,21 @@ srecord::output_file::put_4bytes_le(unsigned long n)
 
 
 int
-srecord::output_file::checksum_get()
+srecord::output_file::checksum_get(void)
 {
     return (checksum & 0xFF);
 }
 
 
 int
-srecord::output_file::checksum_get16()
+srecord::output_file::checksum_get16(void)
 {
     return (checksum & 0xFFFF);
 }
 
 
 void
-srecord::output_file::checksum_reset()
+srecord::output_file::checksum_reset(void)
 {
     checksum = 0;
 }
@@ -427,7 +427,7 @@ srecord::output_file::enable_by_name(const std::string &name, bool yesno)
 
 
 void
-srecord::output_file::set_is_regular()
+srecord::output_file::set_is_regular(void)
 {
     FILE *fp = (FILE *)vfp;
     struct stat st;
@@ -440,7 +440,7 @@ srecord::output_file::fatal_hole_error(unsigned long lo, unsigned long hi)
 {
     fatal_error
     (
-        "The %s output format is unable to cope with holes in the data, "
+        "The %s output format is unable to cope with holes in the data,"
         "however there is a hole at 0x%04lX..0x%04lX.",
         format_name(),
         lo,
