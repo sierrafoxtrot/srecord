@@ -359,6 +359,9 @@ debian/srecord.install: [source_files]
     [aemakegen] -project\=[project] -change\=[change] --target\=debian
         libdir/pkgconfig/[project_short].pc.in
         ;
+    local tempfile = [collect mktemp] ;
+    tr "\\\\t" "' '" < debian/changelog > [tempfile] ;
+    mv [tempfile] debian/changelog ;
 }
 
 
@@ -409,6 +412,7 @@ debian-package: archive/[project_minus].tar.gz
         | gzip -9 > [tarball] &&
     tar xzf ../[project_minus].tar.gz &&
     cd [project_minus] &&
+    cp etc/configure.ac . &&
 #if 0
     dpkg-buildpackage -sgpg [key] -sa
 #else
