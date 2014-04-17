@@ -2,6 +2,7 @@
 #
 # srecord - The "srecord" program.
 # Copyright (C) 2008, 2011, 2012 Peter Miller
+# Copyright (C) 2014 Scott Finneran
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -98,6 +99,34 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -crc16-b-e 0x100 -broken -augment -o test.out
+if test $? -ne 0; then fail; fi
+
+diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
+cat > test.ok << 'fubar'
+S00600004844521B
+S10E0000313233343536373839E5CC63
+S5030001FB
+S9030000FC
+fubar
+if test $? -ne 0; then no_result; fi
+
+srec_cat test.in -crc16-b-e -max-address test.in -o test.out
+if test $? -ne 0; then fail; fi
+
+diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
+cat > test.ok << 'fubar'
+S00600004844521B
+S10E0000313233343536373839CCE563
+S5030001FB
+S9030000FC
+fubar
+if test $? -ne 0; then no_result; fi
+
+srec_cat test.in -crc16-l-e -max-address test.in -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
