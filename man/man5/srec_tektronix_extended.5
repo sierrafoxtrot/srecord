@@ -44,8 +44,7 @@ lf(CW) l l l l l.
 .TP 8n
 Record Length
 The record length field is a 2 character (1 byte) field that specifies
-the number of characters (not bytes) in the record, excluding the percent,
-the length field, the type field and the checksum.
+the number of characters (not bytes) in the record, excluding the percent.
 .TP 8n
 Type
 The type field is a 1 character field that specifies whether
@@ -83,7 +82,7 @@ when represented with this format.
 .ne 2i
 .SH EXAMPLE
 Here is an example Tektronix extended file.
-It contains the data \[lq]Hello, World[rq] to be loaded at address 0x006B.
+It contains the data \[lq]Hello, World\[rq] to be loaded at address 0x006B.
 .RS
 .nf
 .ft CW
