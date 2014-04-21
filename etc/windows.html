@@ -161,15 +161,6 @@ You now have all the prerequisites required to build the srecord tools.
 
 <h2> Building SRecord </h2>
 cd to the directory where you unpacked the srecord source code.
-.\" <p>
-.\" Unfortunately, you need to edit the "configure" script.  I have not
-.\" found a way around this:  Open the file "configure" in a text editor
-.\" which preserves Unix line endings!
-.\" Change line 4163 from this:
-.\"   LIBS="-lgcrypt  $LIBS"
-.\" to this:
-.\"   LIBS="-lgcrypt  -lgpg-error $LIBS"
-.\" Save the file (preserving Unix line endings!).
 <p>
 Now we can start the actual build process:
 <p>
@@ -179,6 +170,7 @@ Start configure for srecord:
 LDFLAGS=" -L/lib -L/usr/local/lib" \
 CC='gcc -static-libgcc' \
 CXX='g++ -static-libgcc -static-libstdc++' \
+LIBS=-lgpg-error \
 ./configure</b>
 <i>lots of output</i>
 $</pre>
