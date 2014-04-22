@@ -2,6 +2,7 @@
 #
 #       srecord - manipulate eprom load files
 #       Copyright (C) 2004, 2006-2008 Peter Miller
+#       Copyright (C) 2014 Scott Finneran
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -63,7 +64,6 @@ if test $? -ne 0; then no_result; fi
 cat > ok << 'fubar'
 Format: Intel Absolute Object Module Format (AOMF)
 Header: "HDR"
-Execution Start Address: 00000000
 Data:   4321 - 432E
 fubar
 if test $? -ne 0; then no_result; fi
@@ -79,3 +79,5 @@ if test $? -ne 0; then fail; fi
 # No other guarantees are made.
 #
 pass
+
+# vim: set ts=8 sw=4 et :

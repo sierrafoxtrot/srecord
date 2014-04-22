@@ -1,6 +1,7 @@
 //
 // srecord - manipulate eprom load files
 // Copyright (C) 2004-2008, 2010-2013 Peter Miller
+// Copyright (C) 2014 Scott Finneran
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -243,15 +244,7 @@ srecord::input_file_aomf::read(srecord::record &record)
 
             case O96_Mod_End:
                 state = expecting_eof;
-                record =
-                    srecord::record
-                    (
-                        srecord::record::type_execution_start_address,
-                        0,
-                        0,
-                        0
-                    );
-                return true;
+                break;
 
             case O96_Content:
                 if (current_length < 3)

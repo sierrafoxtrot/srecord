@@ -2,6 +2,7 @@
 #
 #       srecord - manipulate eprom load files
 #       Copyright (C) 2004, 2006-2008 Peter Miller
+#       Copyright (C) 2014 Scott Finneran
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -94,7 +95,6 @@ S12302C075810B1202BCE582600302002C7900E94400601B7A00900308780075A000E49317
 S12302E0F2A308B8000205A0D9F4DAF275A0FF7800E84400600C7900900000E4F0A3D8FCED
 S10B0300D9FAF6D8FD02002C25
 S5030019E3
-S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
@@ -109,3 +109,5 @@ if test $? -ne 0; then fail; fi
 # No other guarantees are made.
 #
 pass
+
+# vim: set ts=8 sw=4 et :
