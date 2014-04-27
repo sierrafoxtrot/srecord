@@ -1,6 +1,7 @@
 '\" t
 .\" srecord - manipulate eprom load files
 .\" Copyright (C) 1998, 2000-2014 Peter Miller
+.\" Copyright (C) 2014 Scott Finneran
 .\"
 .\" This program is free software; you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -200,6 +201,14 @@ gaps will not be filled.
 \fB\-Output_Word\fP
 This option asks for an output which is in words not in
 bytes.  This is little endian, so you may need to
+.TP 8n
+\fB\-PREfix\fP \f[I]string\fP
+This option allows a string to be prepended to the array definition. This
+is commonly used for non\[hy]standard options common to cross compilers.
+.TP 8n
+\fB\-POSTfix\fP \f[I]string\fP
+This option allows a string to be appended to the array definition. This
+is commonly used for non\[hy]standard options common to cross compilers.
 .RE
 .TP 8n
 \fB\-COE\fP

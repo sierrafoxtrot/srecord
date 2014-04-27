@@ -1,6 +1,7 @@
 //
 // srecord - manipulate eprom load files
 // Copyright (C) 1998-2014 Peter Miller
+// Copyright (C) 2014 Scott Finneran
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -152,8 +153,10 @@ public:
         token_paren_begin,
         token_paren_end,
         token_polynomial,
+        token_postfix,
         token_ppb,
         token_ppx,
+        token_prefix,
         token_ram,
         token_random,
         token_random_fill,

@@ -1,6 +1,7 @@
 //
 // srecord - manipulate eprom load files
 // Copyright (C) 1998-2003, 2006-2010 Peter Miller
+// Copyright (C) 2014 Scott Finneran
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -440,6 +441,8 @@ build_include_file_name(const std::string &filename)
 srecord::output_file_c::output_file_c(const std::string &a_file_name) :
     srecord::output_file(a_file_name),
     prefix("eprom"),
+    header_prefix(""),
+    header_postfix(""),
     taddr(0),
     header_done(false),
     column(0),
@@ -516,6 +519,24 @@ srecord::output_file_c::command_line(srecord::arglex_tool *cmdln)
             hex_style = false;
             break;
 
+        case srecord::arglex_tool::token_prefix:
+            cmdln->token_next();
+            if (cmdln->token_cur() == arglex::token_string)
+            {
+                header_prefix = cmdln->value_string();
+                cmdln->token_next();
+            }
+            break;
+
+        case srecord::arglex_tool::token_postfix:
+            cmdln->token_next();
+            if (cmdln->token_cur() == arglex::token_string)
+            {
+                header_postfix = cmdln->value_string();
+                cmdln->token_next();
+            }
+            break;
+
         case srecord::arglex_tool::token_style_section:
         case srecord::arglex_tool::token_a430:
         case srecord::arglex_tool::token_cl430:
@@ -535,6 +556,12 @@ srecord::output_file_c::emit_header()
 {
     if (header_done)
         return;
+
+    if (header_prefix.length() > 0)
+    {
+        put_string(header_prefix.c_str());
+        put_string(" ");
+    }
     if (constant)
         put_stringf("const ");
     if (output_word)
@@ -543,7 +570,13 @@ srecord::output_file_c::emit_header()
         put_string("unsigned char");
     put_char(' ');
     put_string(prefix.c_str());
-    put_string("[] =\n{\n");
+    put_string("[] ");
+    if (header_postfix.length() > 0)
+    {
+        put_string(header_postfix.c_str());
+        put_string(" ");
+    }
+    put_string("=\n{\n");
     header_done = true;
     column = 0;
 }
@@ -776,3 +809,5 @@ srecord::output_file_c::format_name()
 {
     return (output_word ? "C-Array (16-bit)" : "C-Array (8-bit)");
 }
+
+// vim: set ts=8 sw=4 et :

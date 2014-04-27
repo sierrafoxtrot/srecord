@@ -1,6 +1,7 @@
 //
 // srecord - manipulate eprom load files
 // Copyright (C) 1998, 1999, 2001-2003, 2005-2008, 2010 Peter Miller
+// Copyright (C) 2014 Scott Finneran
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -88,6 +89,18 @@ private:
       * name prefix to be used in the output.
       */
     std::string prefix;
+
+    /**
+      * The prefix instance variable is used to remember the definition
+      * prefix to be emitted in the header.
+      */
+    std::string header_prefix;
+
+    /**
+      * The postfix instance variable is used to remember the definition
+      * postfix to be emitted in the header.
+      */
+    std::string header_postfix;
 
     /**
       * The taddr instance variable is used to remember the
@@ -220,4 +233,5 @@ private:
 
 };
 
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_OUTPUT_FILE_C_H
