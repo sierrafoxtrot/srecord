@@ -150,6 +150,20 @@ srecord::memory_chunk::get_upper_bound()
 }
 
 
+unsigned long
+srecord::memory_chunk::get_lower_bound()
+    const
+{
+    for (size_t j = 0; j < size; ++j)
+    {
+        if (set_p(j))
+            return (address * size + j);
+    }
+    // can't happen?
+    return (address * size);
+}
+
+
 bool
 srecord::operator == (const srecord::memory_chunk &lhs,
     const srecord::memory_chunk &rhs)
@@ -164,3 +178,6 @@ srecord::operator != (const srecord::memory_chunk &lhs,
 {
     return !srecord::memory_chunk::equal(lhs, rhs);
 }
+
+
+// vim: set ts=8 sw=4 et :

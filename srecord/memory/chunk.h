@@ -121,6 +121,13 @@ public:
       */
     unsigned long get_upper_bound() const;
 
+    /**
+      * The get_lower_bound method is used to determine the lower bound
+      * (offset of first byte with valid data) of the chunk.
+      * It returns a memory byte address, NOT the chunk offset.
+      */
+    unsigned long get_lower_bound() const;
+
 private:
     /**
       * The address of the memory chunk.  This is NOT the address of
@@ -151,4 +158,5 @@ bool operator != (const srecord::memory_chunk &, const srecord::memory_chunk &);
 
 };
 
+// vim: set ts=8 sw=4 et :
 #endif // SRECORD_MEMORY_CHUNK_H

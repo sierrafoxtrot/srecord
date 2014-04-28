@@ -193,6 +193,18 @@ public:
     bool has_holes(void) const;
 
     /**
+      * The get_lower_bound method is used to obtain the lower bound
+      * (lowest address) of the memory image.
+      */
+    unsigned long get_lower_bound() const;
+
+    /**
+      * The get_upper_bound method is used to obtain the upper bound
+      * (maximum address plus one) of the memory image.
+      */
+    unsigned long get_upper_bound() const;
+
+   /**
       * The is_well_aligned method is used to test whether or not
       * all of the data in the memory buffer is well aligned, on the
       * given byte boundary.
@@ -294,12 +306,6 @@ private:
       * this object.  Only to be used the the assignment operator.
       */
     void copy(const memory &src);
-
-    /**
-      * The get_upper_bound method is used to obtain the upper bound
-      * (maximum address plus one) of the memory image.
-      */
-    unsigned long get_upper_bound(void) const;
 };
 
 };

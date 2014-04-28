@@ -237,6 +237,16 @@ srecord::memory::compare(const srecord::memory &lhs, const srecord::memory &rhs)
 
 
 unsigned long
+srecord::memory::get_lower_bound()
+    const
+{
+    if (nchunks == 0)
+        return 0;
+    return chunk[0]->get_lower_bound();
+}
+
+
+unsigned long
 srecord::memory::get_upper_bound(void)
     const
 {
@@ -400,6 +410,11 @@ srecord::memory::find_next_chunk(unsigned long address)
         if (mcp->get_address() > address)
             find_next_chunk_index = 0;
     }
+    else
+    {
+        find_next_chunk_index = 0;
+    }
+
     while (find_next_chunk_index < nchunks)
     {
         srecord::memory_chunk *mcp = chunk[find_next_chunk_index];
