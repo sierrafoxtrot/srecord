@@ -108,6 +108,8 @@ public:
       * header, the first header will be remembered, if set_header()
       * was not called previously.
       *
+      * @param input
+      *     The source of the byte stream
       * @param redundant_bytes
       *     ignore: do nothing
       *     warning: issue a warning and continue (default)
