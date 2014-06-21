@@ -1,6 +1,7 @@
 dnl
 dnl  srecord - manipulate eprom load files
 dnl  Copyright (C) 1998, 1999, 2002, 2006-2012 Peter Miller
+dnl  Copyright (C) 2014 Scott Finneran
 dnl
 dnl  This program is free software; you can redistribute it and/or modify
 dnl  it under the terms of the GNU General Public License as published by
@@ -27,7 +28,6 @@ AC_PROG_RANLIB
 AC_CHECK_PROGS(GROFF, groff roff)
 AC_CHECK_PROGS(SOELIM, gsoelim soelim roffpp)
 AC_CHECK_FUNCS(snprintf vsnprintf)
-AC_CHECK_LIB(gcrypt, gcry_md_open)
 
 dnl! This is needed for MingGW build, but not for Unix or Linux, etc.
 AC_CHECK_LIB(gpg-error, main)
@@ -120,25 +120,43 @@ AC_DEFINE(HAVE_GCRY_MD_HD_T, 1, [Define this symbol if your
 operating system has a libgcrypt that defines the gcry_md_hd_t symbol.])
 AC_MSG_RESULT(yes),AC_MSG_RESULT(no))dnl
 
-dnl!
-dnl! Test to see if libgcrypt is sufficiently modern.
-dnl!
-AC_MSG_CHECKING([for gcrypt SHA224 support])
-AC_TRY_COMPILE([#include <gcrypt.h>],
-[return GCRY_MD_SHA224;],
-AC_DEFINE(HAVE_LIBGCRYPT_SHA224, 1, [Define this symbol if your
-operating system has a libgcrypt that supports SHA224.])
-AC_MSG_RESULT(yes),AC_MSG_RESULT(no))dnl
+AC_DEFUN(AC_GCRYPT_SETUP,
+[
+    dnl!
+    dnl! Test to see if libgcrypt is sufficiently modern.
+    dnl!
+    AC_MSG_CHECKING([for gcrypt SHA224 support])
+    AC_TRY_COMPILE([#include <gcrypt.h>],
+        [return GCRY_MD_SHA224;],
+        AC_DEFINE(HAVE_LIBGCRYPT_SHA224, 1, [Define this symbol if your
+        operating system has a libgcrypt that supports SHA224.])
+    AC_MSG_RESULT(yes),AC_MSG_RESULT(no))dnl
+
+    dnl!
+    dnl! Test to see if libgcrypt is sufficiently modern.
+    dnl!
+    AC_MSG_CHECKING([for gcrypt WHIRLPOOL support])
+    AC_TRY_COMPILE([#include <gcrypt.h>],
+    [return GCRY_MD_WHIRLPOOL;],
+    AC_DEFINE(HAVE_LIBGCRYPT_WHIRLPOOL, 1, [Define this symbol if your
+    operating system has a libgcrypt that supports WHIRLPOOL.])
+    AC_MSG_RESULT(yes),AC_MSG_RESULT(no))dnl
+
+    AC_CHECK_LIB(gcrypt, gcry_md_open,,
+        [AC_MSG_FAILURE([gcrypt test failed (--without-gcrypt to disable)])])
+])
 
 dnl!
-dnl! Test to see if libgcrypt is sufficiently modern.
+dnl! Test to see if libgcrypt is enabled(default) or disabled.
 dnl!
-AC_MSG_CHECKING([for gcrypt WHIRLPOOL support])
-AC_TRY_COMPILE([#include <gcrypt.h>],
-[return GCRY_MD_WHIRLPOOL;],
-AC_DEFINE(HAVE_LIBGCRYPT_WHIRLPOOL, 1, [Define this symbol if your
-operating system has a libgcrypt that supports WHIRLPOOL.])
-AC_MSG_RESULT(yes),AC_MSG_RESULT(no))dnl
+AC_ARG_WITH([gcrypt],
+            [AS_HELP_STRING([--without-gcrypt],
+                            [disable support for libgcrypt])],
+            [],
+            [with_gcrypt=yes])
+
+LIBGCRYPT=
+AS_IF([test "x$with_gcrypt" != xno], AC_GCRYPT_SETUP())
 
 dnl!
 dnl!  Now look for libtool.

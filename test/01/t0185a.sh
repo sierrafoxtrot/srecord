@@ -2,6 +2,7 @@
 #
 # srecord - Manipulate EPROM load files
 # Copyright (C) 2009, 2011 Peter Miller
+# Copyright (C) 2014 Scott Finneran
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,8 +38,28 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -sha384 0x100 -o test.out
-if test $? -ne 0; then fail; fi
+cat > ok2 << 'fubar'
+srec_cat: libgcrypt not available
+fubar
+if test $? -ne 0; then no_result; fi
+
+srec_cat test.in -sha384 0x100 -o test.out > LOG 2>&1
+if test $? -ne 0
+then
+    # if libgcrypt not available, pass by default
+    if diff ok2 LOG > /dev/null 2> /dev/null
+    then
+        echo
+        echo "    SRecord appears to have been compiled without the gcrypt"
+        echo "    library, this test is therefore declared to pass by default."
+        echo
+        pass
+    fi
+
+    # some other error
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
