@@ -39,7 +39,7 @@ Data:   0000 - 000D
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_info test.in -guess >  test.out
+srec_info test.in -guess > test.out 2>test.err
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -61,7 +61,7 @@ Data:   0000 - 000D
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_info test.in -guess >  test.out
+srec_info test.in -guess > test.out 2>test.err
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -81,7 +81,7 @@ Data:   0000 - 000D
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_info test.in -guess >  test.out
+srec_info test.in -guess > test.out 2>test.err
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -92,3 +92,5 @@ if test $? -ne 0; then fail; fi
 # No other guarantees are made.
 #
 pass
+
+# vim: set ts=8 sw=4 et :
