@@ -1,20 +1,19 @@
 '\" t
-.\"     srecord - The "srecord" program.
-.\"     Copyright (C) 2007-2014 Peter Miller
+.\" srecord - The "srecord" program.
+.\" Copyright (C) 2007-2014 Peter Miller
 .\"
-.\"     This program is free software; you can redistribute it and/or modify
-.\"     it under the terms of the GNU General Public License as published by
-.\"     the Free Software Foundation; either version 3 of the License, or
-.\"     (at your option) any later version.
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 3 of the License, or
+.\" (at your option) any later version.
 .\"
-.\"     This program is distributed in the hope that it will be useful,
-.\"     but WITHOUT ANY WARRANTY; without even the implied warranty of
-.\"     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-.\"     GNU General Public License for more details.
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
 .\"
-.\"     You should have received a copy of the GNU General Public License
-.\"     along with this program. If not, see
-.\"     <http://www.gnu.org/licenses/>.
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .ds n) srec_cat
 .TH srec_examples 1 SRecord "Reference Manual"i
@@ -193,7 +192,7 @@ which may be \fB\-disabled\fP or \fB\-enabled\fP separately.  See the
 \f[I]srec_cat\fP(1) man page for a description of the \fB\-disabled\fP
 and \f[B]\-enabled\fP options.
 .PP
-.\" stupid synonym: neanderthal
+.\" stupid synonym: Neanderthal
 For example, your neanderthal EPROM programmer requires Motorola hex
 with header records (S0), but without data count (S5) records.  Not
 using the \fB\-data\[hy]only\fP option has it barf on the data count
@@ -361,10 +360,10 @@ and match Intel and Motorola formats in the one project.
 .\" ......................................................................
 .SS Overlaying two data files
 It is common to want to \[lq]join\[rq] two hex files together, without
-any changes of adrress. on the assumption neither file intersects with
+any changes of address. on the assumption neither file intersects with
 the other.  This is a simple \[lq]layers\[rq], it is quite common for
-linkers to output the main code, and then a whole bunch of reloction and
-jump desination, by witing a two layered files.
+linkers to output the main code, and then a whole bunch of relocation and
+jump destination, by writing a two layered files.
 .RS
 .nf
 .ft CW
@@ -373,24 +372,28 @@ srec_cat one.he two.hex \-o three.hex
 .fi
 .RE
 Almost always you see an error
+.sp 0.25
 .RS
-    srec_cat: two.srec: 49282: contradictory 0x00000000 value (previous
-    = 0x00, this one = 0x80)
-.RS
+.fi
+srec_cat: two.srec: 49282: contradictory 0x00000000 value (previous = 0x00, \
+this one = 0x80)
+.RE
+.sp 0.25
 .PP
-This means that the file actuall intersect, they try to set
+This means that the files actually intersect, they try to set
 the same location.  You can turn the error into a warning, using the
 \fB\-contradictory\[hy]bytes=warning\fP command line option.  But this
 will probably generate a bazillion warnings.
 .PP
 The necessary step is to crop the first file, to avoid the regions the second
 file is going o be overwriting.
+.sp 0.25
 .RS
 .nf
 .ft CW
-srec_cat                               \
-    one.srec \exclude \within two.srec \
-    two.srec \exclude \within one.srec \
+srec_cat                               \e
+    one.srec \-exclude \-within two.srec \e
+    two.srec \-exclude \-within one.srec \e
     \-o three.hex
 .ft R
 .fi
@@ -403,7 +406,7 @@ another layer, more jiggery\[hy]pokery is required).
 There are times when you want to join two sets of data together,
 and then apply a filter to the joined result.  To do this you use
 parentheses.
-.PP
+.sp 0.25
 .RS
 .ft CW
 .nf
@@ -419,7 +422,7 @@ srec_cat                                                  \e
 .ft R
 .RE
 .PP
-The above example command catenates an input file (with the generated
+The above example command catenate an input file (with the generated
 data area excluded) with a constant string.  This catenated input is
 then filtered to add a 4\[hy]byte length, and a 4\[hy]byte checksum.
 .SS Joining End\[hy]to\[hy]End
@@ -724,7 +727,7 @@ S11300202A2C2D2E30313234353638393A3C3D3E87
 .PP
 Notice how the addresses are 3/4 the size, as well.
 You can reverse this using the \fB\-unsplit\fP and \fB\-fill=0\fP filters.
-.SS Unspliting Images
+.SS Unsplit ING Images
 The unsplit filter may be used to reverse the effects of the split filter.
 Note that the address range is expanded leaving holes between the stripes.
 By using all the stripes, the complete input is reassembled, without
