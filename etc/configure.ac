@@ -249,7 +249,8 @@ eval "datadir=$datadir"
 
 AH_TOP([/*
  * srecord - manipulate eprom load files
- * Copyright (C) 1998-2002, 2006-2012 Peter Miller
+ * Copyright (C) 1998-2002, 2006-2014 Peter Miller
+ * Copyright (C) 2014 Scott Finneran
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

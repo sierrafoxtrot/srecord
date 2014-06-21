@@ -512,6 +512,11 @@ Copyright
 .if n (C)
 .if t \(co
 \*(Y) Peter Miller
+.br
+Copyright
+.if n (C)
+.if t \(co
+\*(Y) SCott Finneran
 .PP
 The
 .I SRecord
@@ -530,7 +535,7 @@ file included with this distribution.
 .TS
 tab(;);
 l r l.
+Scott Finneran;E\[hy]Mail:;scottfinneran@yahoo.com.au
 Peter Miller;E\[hy]Mail:;pmiller@opensource.org.au
-\f[CW]/\e/\e*\fP;WWW:;http://miller.emu.id.au/pmiller/
 .TE
 .\" vim: set ts=8 sw=4 et :

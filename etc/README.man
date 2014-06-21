@@ -370,7 +370,12 @@ version \*(v)
 Copyright
 .if t \(co
 .if n (C)
-\*(Y) Peter Miller
+Scott Finneran <scottfinneran@yahoo.com.au>
+.br
+Copyright
+.if t \(co
+.if n (C)
+\*(Y) Peter Miller <pmiller@opensource.org.au>
 .PP
 This program is free software;
 you can redistribute it
