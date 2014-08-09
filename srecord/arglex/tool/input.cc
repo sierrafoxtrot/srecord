@@ -1,6 +1,7 @@
 //
 // srecord - manipulate eprom load files
 // Copyright (C) 1998-2013 Peter Miller
+// Copyright (C) 2014 Scott Finneran
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -197,6 +198,8 @@ srecord::input::pointer
 srecord::arglex_tool::get_simple_input(void)
 {
     std::string fn = "-";
+    input::pointer ifp;
+
     switch (token_cur())
     {
     case token_paren_begin:
@@ -230,8 +233,9 @@ srecord::arglex_tool::get_simple_input(void)
         }
 
     case token_generator:
-        // Don't need a file name,
-        // but do NOT discard this token, yet.
+        token_next();
+        ifp = input_generator::create(this);
+        return ifp;
         break;
 
     case token_string:
@@ -260,7 +264,6 @@ srecord::arglex_tool::get_simple_input(void)
     // determine the file format
     // and open the input file
     //
-    input::pointer ifp;
     switch (token_cur())
     {
     case token_motorola:
@@ -333,11 +336,6 @@ srecord::arglex_tool::get_simple_input(void)
     case token_four_packed_code:
         token_next();
         ifp = input_file_four_packed_code::create(fn);
-        break;
-
-    case token_generator:
-        token_next();
-        ifp = input_generator::create(this);
         break;
 
     case token_guess:
