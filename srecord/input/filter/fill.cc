@@ -57,6 +57,8 @@ srecord::input_filter_fill::generate(record &result)
     interval::data_t lo = range.get_lowest();
     size_t rec_len = record::maximum_data_length(lo);
     interval::data_t hi = lo + rec_len;
+    if (hi < lo)
+        hi = 0;
     interval chunk(lo, hi);
     chunk *= range;
     chunk.first_interval_only();
