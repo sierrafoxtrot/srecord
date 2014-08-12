@@ -53,8 +53,11 @@ srecord::input_generator::read(srecord::record &result)
     // Calculate the address range for this chunk of data.  Use the
     // biggest record size available.
     //
-    unsigned long addr = range.get_lowest();
-    interval partial(addr, addr + srecord::record::max_data_length);
+    interval::data_t addr = range.get_lowest();
+    interval::data_t end  = addr + srecord::record::max_data_length;
+    if (end < addr)
+        end = 0xFFFFFFFF;
+    interval partial(addr, end);
     partial *= range;
 
     //
