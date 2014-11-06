@@ -123,6 +123,9 @@ with this program. If not, see <http://www.gnu.org/licenses/>.
 .pdfinfo /Subject Detailed description of SRecord version \*(V) [\*(G)]
 .pdfinfo /Keywords SRecord srec_cat srec_cmp srec_info
 .\"
+.\" Request to display the outline by default.
+.pdfview /PageMode /UseOutlines
+.\"
 .\" ----------  Flush the pdfmark cache ---------------------------------------
 .\"
 .\" Before the TOC to avoid wrong output when moving the TOC up with psselect:
