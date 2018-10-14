@@ -1,0 +1,575 @@
+#
+#       srecord - Manipulate EPROM load files
+#       Copyright (C) 2018 Scott Finneran
+#
+#       This program is free software; you can redistribute it and/or modify
+#       it under the terms of the GNU General Public License as published by
+#       the Free Software Foundation; either version 3 of the License, or
+#       (at your option) any later version.
+#
+#       This program is distributed in the hope that it will be useful,
+#       but WITHOUT ANY WARRANTY; without even the implied warranty of
+#       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#       GNU General Public License for more details.
+#
+#       You should have received a copy of the GNU General Public License
+#       along with this program. If not, see
+#       <http://www.gnu.org/licenses/>.
+#
+
+#
+# @configure_input@
+#
+# The configure script generates 2 files:
+# 1. This Makefile
+# 2. srecord/config.h
+# If you change this Makefile, you may also need to change these files. To see
+# what is configured by the configure script, search for @ in the Makefile.in
+# file.
+#
+# If you wish to reconfigure the installations directories it is RECOMMENDED
+# that you re-run the configure script.
+#
+# Use "./configure --help" for a list of options.
+#
+
+#
+# directory containing the source
+#
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+#
+# the name of the install program to use
+#
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_DIR = @INSTALL@ -m 0755 -d
+
+#
+# The name of the C++ compiler to use.
+#
+CXX = @CXX@
+
+#
+# The C++ compiler flags to use.
+#
+CXXFLAGS = @CXXFLAGS@
+
+#
+# The C++ preprocessor flags to use.
+#
+CPPFLAGS = @CPPFLAGS@
+
+#
+# The linker flags to use
+#
+LDFLAGS = @LDFLAGS@
+
+#
+# prefix for installation path
+#
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+#
+# Where to put the executables.
+#
+# On a network, this would only be shared between machines of identical
+# cpu-hw-os flavour. It can be read-only.
+#
+# The $(DESTDIR) is for packaging.
+#
+bindir = $(DESTDIR)@bindir@
+
+#
+# Where to put the manuals.
+#
+# On a network, this would be shared between all machines on the network. It can
+# be read-only.
+#
+# The $(DESTDIR) is for packaging.
+#
+mandir = $(DESTDIR)@mandir@
+
+# define this to silence ./configure warning
+datarootdir = $(DESTDIR)@datarootdir@
+
+#
+# Where to put the supplementary package executables.
+#
+# On a network, this would be shared between all machines of identical
+# architecture. It can be read-only.
+#
+# The $(DESTDIR) is for packaging.
+#
+libdir = $(DESTDIR)@libdir@
+
+#
+# Where to put the include files for the library.
+#
+# On a network, this would be shared between all machines of identical
+# architecture. It can be read-only.
+#
+# The $(DESTDIR) is for packaging.
+#
+includedir = $(DESTDIR)@includedir@
+
+#
+# The name of the GNU Libtool command.
+#
+LIBTOOL = @LIBTOOL@
+
+#
+# extra libraries required for your system
+#
+LIBS = @LIBS@
+
+#
+# shell to use to run tests and commands
+#
+SH = @SH@
+
+#
+# Set GROFF to the name of the roff command on your system, usually "groff" or
+# "troff" or "nroff".
+#
+GROFF = @GROFF@
+
+#
+# Set SOELIM to the name of the roff proprocessor command on your system,
+# usually "soelim" or "gsoelim".
+#
+SOELIM = @SOELIM@
+
+#
+# The default target
+#
+the-default-target: all
+
+script/test_prelude.sh: .bin config.status script/test_prelude.sh.in
+	CONFIG_FILES=$@:script/test_prelude.sh.in CONFIG_HEADERS= $(SH) \
+		config.status
+
+bin/test_prelude: .bin script/test_prelude.sh
+	cp script/test_prelude.sh $@
+	chmod a+rx $@
+
+# Compile starts here
+print-%: ; @echo $* = $($*)
+
+# Recursive wildcard
+rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
+
+srecord_src = $(call rwildcard, srecord/, *.cc)
+srecord_obj = $(srecord_src:.cc=.o)
+srecord_lobj = $(srecord_src:.cc=.lo)
+srecord_dep = $(srecord_src:.cc=.d)
+
+# Generate dependencies of .ccp files on .h files
+-include $(subst .cc,.d,$(srecord_src))
+
+# Build dependencies
+%.d: %.cc
+	@$(CXX) -I . $(CPPFLAGS) $< -MM -MT $(@:.d=.o) >$@
+
+# Build objects
+%.lo %.o: %.cc
+	$(LIBTOOL) --mode=compile --tag=CXX $(CXX) $(CPPFLAGS) $(CXXFLAGS) -I. \
+		-c $< -o $@
+
+libsrecord: srecord/libsrecord.la
+
+srecord/libsrecord.la: $(srecord_lobj)
+	rm -f $@
+	echo $?
+	$(LIBTOOL) --mode=link --tag=CXX $(CXX) $(CPPFLAGS) $(CXXFLAGS) \
+		$(LDFLAGS) -o $@ $(srecord_lobj) $(LIBS) -rpath $(libdir) \
+		-version-info 0:0:0
+
+#
+# The srec_cat program.
+#
+srec_cat_src = $(call rwildcard, srec_cat/, *.cc)
+srec_cat_obj = $(srec_cat_src:.cc=.o)
+srec_cat_dep = $(srec_cat_src:.cc=.d)
+
+bin/srec_cat: $(srec_cat_obj) .bin srecord/libsrecord.la
+	$(LIBTOOL) --mode=link --tag=CXX $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ \
+		$(srec_cat_obj) srecord/libsrecord.la $(LDFLAGS) $(LIBS)
+
+#
+# The srec_cmp program.
+#
+srec_cmp_src = $(call rwildcard, srec_cmp/, *.cc)
+srec_cmp_obj = $(srec_cmp_src:.cc=.o)
+srec_cmp_dep = $(srec_cmp_src:.cc=.d)
+
+bin/srec_cmp: $(srec_cmp_obj) .bin srecord/libsrecord.la
+	$(LIBTOOL) --mode=link --tag=CXX $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ \
+		$(srec_cmp_obj) srecord/libsrecord.la $(LDFLAGS) $(LIBS)
+
+#
+# The srec_info program.
+#
+srec_info_src = $(call rwildcard, srec_info/, *.cc)
+srec_info_obj = $(srec_info_src:.cc=.o)
+srec_info_dep = $(srec_info_src:.cc=.d)
+
+bin/srec_info: $(srec_info_obj) .bin srecord/libsrecord.la
+	$(LIBTOOL) --mode=link --tag=CXX $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ \
+		$(srec_info_obj) srecord/libsrecord.la $(LDFLAGS) $(LIBS)
+
+#
+# The test_arglex_ambiguous program.
+#
+test_arglex_ambiguous_src = $(call rwildcard, test/arglex_ambiguous/, *.cc)
+test_arglex_ambiguous_obj = $(test_arglex_ambiguous_src:.cc=.o)
+test_arglex_ambiguous_dep = $(test_arglex_ambiguous_src:.cc=.d)
+
+bin/test_arglex_ambiguous: $(test_arglex_ambiguous_obj) .bin srecord/libsrecord.la
+	$(LIBTOOL) --mode=link --tag=CXX $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ \
+		$(test_arglex_ambiguous_obj) srecord/libsrecord.la $(LDFLAGS) $(LIBS)
+
+#
+# The test_crc16 program.
+#
+test_crc16_src = $(call rwildcard, test/crc16/, *.cc)
+test_crc16_obj = $(test_crc16_src:.cc=.o)
+test_crc16_dep = $(test_crc16_src:.cc=.d)
+
+bin/test_crc16: $(test_crc16_obj) .bin srecord/libsrecord.la
+	$(LIBTOOL) --mode=link --tag=CXX $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ \
+		$(test_crc16_obj) srecord/libsrecord.la $(LDFLAGS) $(LIBS)
+
+#
+# The test_fletcher16 program.
+#
+test_fletcher16_src = $(call rwildcard, test/fletcher16/, *.cc)
+test_fletcher16_obj = $(test_fletcher16_src:.cc=.o)
+test_fletcher16_dep = $(test_fletcher16_src:.cc=.d)
+
+bin/test_fletcher16: $(test_fletcher16_obj) .bin srecord/libsrecord.la
+	$(LIBTOOL) --mode=link --tag=CXX $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ \
+		$(test_fletcher16_obj) srecord/libsrecord.la $(LDFLAGS) $(LIBS)
+
+#
+# The test_gecos program.
+#
+test_gecos_src = $(call rwildcard, test/gecos/, *.cc)
+test_gecos_obj = $(test_gecos_src:.cc=.o)
+test_gecos_dep = $(test_gecos_src:.cc=.d)
+
+bin/test_gecos: $(test_gecos_obj) .bin srecord/libsrecord.la
+	$(LIBTOOL) --mode=link --tag=CXX $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ \
+		$(test_gecos_obj) srecord/libsrecord.la $(LDFLAGS) $(LIBS)
+
+#
+# The test_hyphen program.
+#
+test_hyphen_src = $(call rwildcard, test/hyphen/, *.cc)
+test_hyphen_obj = $(test_hyphen_src:.cc=.o)
+test_hyphen_dep = $(test_hyphen_src:.cc=.d)
+
+bin/test_hyphen: $(test_hyphen_obj) .bin srecord/libsrecord.la
+	$(LIBTOOL) --mode=link --tag=CXX $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ \
+		$(test_hyphen_obj) srecord/libsrecord.la $(LDFLAGS) $(LIBS)
+
+#
+# The test_url_decode program.
+#
+test_url_decode_src = $(call rwildcard, test/url_decode/, *.cc)
+test_url_decode_obj = $(test_url_decode_src:.cc=.o)
+test_url_decode_dep = $(test_url_decode_src:.cc=.d)
+
+bin/test_url_decode: $(test_url_decode_obj) .bin srecord/libsrecord.la
+	$(LIBTOOL) --mode=link --tag=CXX $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ \
+		$(test_url_decode_obj) srecord/libsrecord.la $(LDFLAGS) $(LIBS)
+
+#
+# Doco
+#
+change_log = etc/README.man etc/new.1.1.so etc/new.1.10.so etc/new.1.11.so \
+		etc/new.1.12.so etc/new.1.13.so etc/new.1.14.so \
+		etc/new.1.15.so etc/new.1.16.so etc/new.1.17.so \
+		etc/new.1.18.so etc/new.1.19.so etc/new.1.2.so etc/new.1.20.so \
+		etc/new.1.21.so etc/new.1.22.so etc/new.1.23.so \
+		etc/new.1.24.so etc/new.1.25.so etc/new.1.26.so \
+		etc/new.1.27.so etc/new.1.28.so etc/new.1.29.so etc/new.1.3.so \
+		etc/new.1.30.so etc/new.1.31.so etc/new.1.32.so \
+		etc/new.1.33.so etc/new.1.34.so etc/new.1.35.so \
+		etc/new.1.36.so etc/new.1.37.so etc/new.1.38.so \
+		etc/new.1.39.so etc/new.1.4.so etc/new.1.40.so etc/new.1.41.so \
+		etc/new.1.42.so etc/new.1.43.so etc/new.1.44.so \
+		etc/new.1.45.so etc/new.1.46.so etc/new.1.47.so \
+		etc/new.1.48.so etc/new.1.49.so etc/new.1.5.so etc/new.1.50.so \
+		etc/new.1.51.so etc/new.1.52.so etc/new.1.53.so \
+		etc/new.1.54.so etc/new.1.55.so etc/new.1.56.so \
+		etc/new.1.57.so etc/new.1.58.so etc/new.1.59.so etc/new.1.6.so \
+		etc/new.1.60.so etc/new.1.61.so etc/new.1.62.so \
+		etc/new.1.63.so etc/new.1.64.so etc/new.1.7.so etc/new.1.8.so \
+		etc/new.1.9.so
+
+
+
+etc/BUILDING.pdf: etc/BUILDING.man
+	$(GROFF) -Tps -s -I. -t -man etc/BUILDING.man > etc/BUILDING.ps
+	ps2pdf etc/BUILDING.ps $@
+	rm etc/BUILDING.ps
+
+etc/README.pdf: $(change_log)
+	$(GROFF) -Tps -s -I. -t -man etc/README.man > etc/README.ps
+	ps2pdf etc/README.ps $@
+	rm etc/README.ps
+
+etc/change_log.pdf: $(change_log)
+	$(GROFF) -Tps -s -I. -t -man etc/change_log.man > etc/change_log.ps
+	ps2pdf etc/change_log.ps $@
+	rm etc/change_log.ps
+
+%.png: %.png.uue
+	uudecode -o $@ $<
+
+etc/reference.pdf: $(change_log) \
+		etc/ref-toc.so etc/reference.man man/man1/o_at.so \
+		man/man1/o_ignore_checksums.so man/man1/o_input.so \
+		man/man1/o_multiple.so man/man1/o_sequence.so \
+		man/man1/srec_cat.1 man/man1/srec_cmp.1 \
+		man/man1/srec_examples.1 man/man1/srec_info.1 \
+		man/man1/srec_input.1 man/man1/srec_license.1 \
+		man/man1/z_copyright.so man/man1/z_exit.so \
+		man/man1/z_options.so man/man3/srecord.3 \
+		man/man3/srecord_license.3 man/man5/srec_aomf.5 \
+		man/man5/srec_ascii_hex.5 man/man5/srec_atmel_generic.5 \
+		man/man5/srec_binary.5 man/man5/srec_brecord.5 \
+		man/man5/srec_coe.5 man/man5/srec_cosmac.5 \
+		man/man5/srec_dec_binary.5 man/man5/srec_emon52.5 \
+		man/man5/srec_fairchild.5 man/man5/srec_fastload.5 \
+		man/man5/srec_formatted_binary.5 man/man5/srec_forth.5 \
+		man/man5/srec_fpc.5 man/man5/srec_idt.5 man/man5/srec_intel.5 \
+		man/man5/srec_intel16.5 man/man5/srec_logisim.5 \
+		man/man5/srec_mem.5 man/man5/srec_mif.5 \
+		man/man5/srec_mips_flash.5 man/man5/srec_mos_tech.5 \
+		man/man5/srec_motorola.5 man/man5/srec_msbin.5 \
+		man/man5/srec_needham.5 man/man5/srec_os65v.5 \
+		man/man5/srec_ppb.5 man/man5/srec_ppx.5 \
+		man/man5/srec_signetics.5 man/man5/srec_spasm.5 \
+		man/man5/srec_spectrum.5 man/man5/srec_stewie.5 \
+		man/man5/srec_tektronix.5 man/man5/srec_tektronix_extended.5 \
+		man/man5/srec_ti_tagged.5 man/man5/srec_ti_tagged_16.5 \
+		man/man5/srec_ti_txt.5 man/man5/srec_trs80.5 \
+		man/man5/srec_vmem.5 man/man5/srec_wilson.5
+	$(GROFF) -Tps -s -I. -t -man etc/reference.man > etc/reference.ps
+	ps2pdf etc/reference.ps $@
+	rm etc/reference.ps
+
+libdir/pkgconfig/srecord.pc: config.status libdir/pkgconfig/srecord.pc.in
+	CONFIG_FILES=$@:libdir/pkgconfig/srecord.pc.in CONFIG_HEADERS= $(SH) \
+		config.status
+
+man_z = $(wildcard man/**/z_*.so)
+man_o = $(wildcard man/**/o_*.so)
+man_common = $(man_z) $(man_o)
+
+man_pages  = $(call rwildcard, man/man1/, *.1)
+man_pages += $(call rwildcard, man/man3/, *.3)
+man_pages += $(call rwildcard, man/man5/, *.5)
+
+man/cat1/%.1: $(man_common)
+man/cat3/%.3: $(man_common)
+man/cat5/%.5: $(man_common)
+#$(man_pages) : $(man_common)
+
+man/cat1/%.1: man/man1/%.1
+	-mkdir -p $(@D)
+	GROFF_NO_SGR=-c $(GROFF) -I. -Tascii -t -man $< > $@
+
+man/cat3/%.3: man/man3/%.3
+	-mkdir -p $(@D)
+	GROFF_NO_SGR=-c $(GROFF) -I. -Tascii -t -man $< > $@
+
+man/cat5/%.5: man/man5/%.5
+	-mkdir -p $(@D)
+	GROFF_NO_SGR=-c $(GROFF) -I. -Tascii -t -man $< > $@
+
+# Install
+$(mandir)/man1/%.1: man/man1/%.1
+	$(SOELIM) -I. $< | sed '/^[.]XX ./d' > \
+		$<.tmp
+	$(INSTALL_DATA) $<.tmp $@
+	@rm -f $<.tmp
+
+$(mandir)/man3/%.3: man/man3/%.3
+	$(SOELIM) -I. $< | sed '/^[.]XX ./d' > \
+		$<.tmp
+	$(INSTALL_DATA) $<.tmp $@
+	@rm -f $<.tmp
+
+$(mandir)/man5/%.5: man/man5/%.5
+	$(SOELIM) -I. $< | sed '/^[.]XX ./d' > \
+		$<.tmp
+	$(INSTALL_DATA) $<.tmp $@
+	@rm -f $<.tmp
+
+$(bindir)/%: bin/%
+	-mkdir -p $(@D)
+	$(LIBTOOL) --mode=install $(INSTALL_PROGRAM) $< $@
+
+$(datarootdir)/doc/srecord/%.pdf: etc/%.pdf
+	-mkdir $(@D)
+	$(INSTALL_DATA) $< $@
+
+$(includedir)/srecord/%.h: srecord/%.h
+	-mkdir -p $(@D)
+	$(INSTALL_DATA) $< $@
+
+#
+# The install of the *.la file automatically causes "$(LIBTOOL) --mode=install"
+# to install the *.a and *.so* files as well, which is why you don't see them
+# explicitly mentioned here.
+#
+$(libdir)/%.la: srecord/%.la
+	$(LIBTOOL) --mode=install $(INSTALL_DATA) $< $@
+
+
+install: install-bin install-doc install-include install-libdir install-man
+
+install_bin = $(bindir)/srec_cat $(bindir)/srec_cmp $(bindir)/srec_info
+install-bin: $(install_bin)
+
+install_doc = $(datarootdir)/doc/srecord/BUILDING.pdf \
+		$(datarootdir)/doc/srecord/README.pdf \
+		$(datarootdir)/doc/srecord/change_log.pdf \
+		$(datarootdir)/doc/srecord/reference.pdf
+install-doc: $(install_doc)
+
+include_headers = $(call rwildcard, srecord/, *.h)
+install_include = $(patsubst srecord/%, $(includedir)/srecord/%, $(include_headers))
+install-include: $(install_include)
+
+uninstall:
+	rm -f $(install_bin) $(install_doc) $(install_include) $(install_man)
+
+#
+# The install of the *.la file automatically causes "$(LIBTOOL) --mode=install"
+# to install the *.a and *.so* files as well, which is why you don't see them
+# explicitly mentioned here.
+#
+install-libdir: $(libdir)/libsrecord.la #$(libdir)/pkgconfig/srecord.pc
+
+install_man = $(mandir)/man1/srec_cat.1 $(mandir)/man1/srec_cmp.1 \
+		$(mandir)/man1/srec_examples.1 $(mandir)/man1/srec_info.1 \
+		$(mandir)/man1/srec_input.1 $(mandir)/man1/srec_license.1 \
+		$(mandir)/man3/srecord.3 $(mandir)/man3/srecord_license.3 \
+		$(mandir)/man5/srec_aomf.5 $(mandir)/man5/srec_ascii_hex.5 \
+		$(mandir)/man5/srec_atmel_generic.5 \
+		$(mandir)/man5/srec_binary.5 $(mandir)/man5/srec_brecord.5 \
+		$(mandir)/man5/srec_coe.5 $(mandir)/man5/srec_cosmac.5 \
+		$(mandir)/man5/srec_dec_binary.5 $(mandir)/man5/srec_emon52.5 \
+		$(mandir)/man5/srec_fairchild.5 $(mandir)/man5/srec_fastload.5 \
+		$(mandir)/man5/srec_formatted_binary.5 \
+		$(mandir)/man5/srec_forth.5 $(mandir)/man5/srec_fpc.5 \
+		$(mandir)/man5/srec_idt.5 $(mandir)/man5/srec_intel.5 \
+		$(mandir)/man5/srec_intel16.5 $(mandir)/man5/srec_logisim.5 \
+		$(mandir)/man5/srec_mem.5 $(mandir)/man5/srec_mif.5 \
+		$(mandir)/man5/srec_mips_flash.5 \
+		$(mandir)/man5/srec_mos_tech.5 $(mandir)/man5/srec_motorola.5 \
+		$(mandir)/man5/srec_msbin.5 $(mandir)/man5/srec_needham.5 \
+		$(mandir)/man5/srec_os65v.5 $(mandir)/man5/srec_ppb.5 \
+		$(mandir)/man5/srec_ppx.5 $(mandir)/man5/srec_signetics.5 \
+		$(mandir)/man5/srec_spasm.5 $(mandir)/man5/srec_spectrum.5 \
+		$(mandir)/man5/srec_stewie.5 $(mandir)/man5/srec_tektronix.5 \
+		$(mandir)/man5/srec_tektronix_extended.5 \
+		$(mandir)/man5/srec_ti_tagged.5 \
+		$(mandir)/man5/srec_ti_tagged_16.5 \
+		$(mandir)/man5/srec_ti_txt.5 $(mandir)/man5/srec_trs80.5 \
+		$(mandir)/man5/srec_vmem.5 $(mandir)/man5/srec_wilson.5
+install-man: $(install_man)
+
+
+#
+# Testing
+#
+
+all_tests  = $(call rwildcard, test/00/, *.sh)
+all_tests += $(call rwildcard, test/01/, *.sh)
+all_tests += $(call rwildcard, test/02/, *.sh)
+
+all-test-targets = $(all_tests:.sh=.test)
+
+%.test: all %.sh
+	PATH=`pwd`/bin:$$PATH $(SH) $(subst .test,.sh,$@)
+
+sure: $(all-test-targets)
+
+all: subdirs all-bin all-doc
+
+all_bin = bin/srec_cat bin/srec_cmp bin/srec_info bin/test_arglex_ambiguous \
+		bin/test_crc16 bin/test_fletcher16 bin/test_gecos \
+		bin/test_hyphen bin/test_prelude bin/test_url_decode
+all-bin: $(all_bin)
+
+all_doc = etc/BUILDING.pdf etc/README.pdf etc/change_log.pdf etc/reference.pdf \
+		man/cat1/srec_cat.1 man/cat1/srec_cmp.1 \
+		man/cat1/srec_examples.1 man/cat1/srec_info.1 \
+		man/cat1/srec_input.1 man/cat1/srec_license.1 \
+		man/cat3/srecord.3 man/cat3/srecord_license.3 \
+		man/cat5/srec_aomf.5 man/cat5/srec_ascii_hex.5 \
+		man/cat5/srec_atmel_generic.5 man/cat5/srec_binary.5 \
+		man/cat5/srec_brecord.5 man/cat5/srec_coe.5 \
+		man/cat5/srec_cosmac.5 man/cat5/srec_dec_binary.5 \
+		man/cat5/srec_emon52.5 man/cat5/srec_fairchild.5 \
+		man/cat5/srec_fastload.5 man/cat5/srec_formatted_binary.5 \
+		man/cat5/srec_forth.5 man/cat5/srec_fpc.5 man/cat5/srec_idt.5 \
+		man/cat5/srec_intel.5 man/cat5/srec_intel16.5 \
+		man/cat5/srec_logisim.5 man/cat5/srec_mem.5 \
+		man/cat5/srec_mif.5 man/cat5/srec_mips_flash.5 \
+		man/cat5/srec_mos_tech.5 man/cat5/srec_motorola.5 \
+		man/cat5/srec_msbin.5 man/cat5/srec_needham.5 \
+		man/cat5/srec_os65v.5 man/cat5/srec_ppb.5 man/cat5/srec_ppx.5 \
+		man/cat5/srec_signetics.5 man/cat5/srec_spasm.5 \
+		man/cat5/srec_spectrum.5 man/cat5/srec_stewie.5 \
+		man/cat5/srec_tektronix.5 man/cat5/srec_tektronix_extended.5 \
+		man/cat5/srec_ti_tagged.5 man/cat5/srec_ti_tagged_16.5 \
+		man/cat5/srec_ti_txt.5 man/cat5/srec_trs80.5 \
+		man/cat5/srec_vmem.5 man/cat5/srec_wilson.5
+
+all-doc: $(all_doc)
+
+clean:
+	rm -f $(srecord_obj)
+	rm -f $(srecord_lobj)
+	rm -f $(srecord_dep)
+	rm -f $(all_doc)
+
+distclean: clean distclean-directories distclean-files
+
+distclean-files:
+	rm -f Makefile config.cache config.log config.status etc/Howto.conf
+	rm -f libdir/pkgconfig/srecord.pc script/test_prelude.sh
+	rm -f srecord/config.h
+
+distclean-directories:
+	rm -rf bin srec_cat/.libs srec_cmp/.libs srec_info/.libs srecord/.libs
+	rm -rf srecord/arglex/.libs srecord/arglex/tool/.libs
+	rm -rf srecord/endian/.libs srecord/input/.libs srecord/input/file/.libs
+	rm -rf srecord/input/filter/.libs srecord/input/filter/checksum/.libs
+	rm -rf srecord/input/filter/interval/.libs
+	rm -rf srecord/input/filter/message/.libs srecord/input/generator/.libs
+	rm -rf srecord/interval/.libs srecord/memory/.libs
+	rm -rf srecord/memory/walker/.libs srecord/output/.libs
+	rm -rf srecord/output/file/.libs srecord/output/filter/.libs
+	rm -rf srecord/quit/.libs srecord/string/.libs
+	rm -rf test/arglex_ambiguous/.libs test/crc16/.libs
+	rm -rf test/fletcher16/.libs test/gecos/.libs test/hyphen/.libs
+	rm -rf test/url_decode/.libs
+
+SUBDIRS = bin
+.PHONY: subdirs $(SUBDIRS)
+subdirs: $(SUBDIRS)
+$(SUBDIRS):
+	-mkdir -p $@
+
+.bin:
+	-mkdir -p $@
