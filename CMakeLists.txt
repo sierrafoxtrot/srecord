@@ -76,6 +76,7 @@ add_executable(test_url_decode ${TEST_URL_DECODE_SRC})
 target_link_libraries(test_url_decode srecord)
 
 configure_file(${CMAKE_SOURCE_DIR}/script/test_prelude.sh ${CMAKE_BINARY_DIR}/test_prelude COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/script/groff.sh ${CMAKE_BINARY_DIR}/groff.sh COPYONLY)
 
 # Tests
 enable_testing()
@@ -92,15 +93,7 @@ foreach(t ${SRECORD_TESTS})
 endforeach()
 
 # Documentation and man pages
-find_program(GROFF NAMES groff roff)
-find_program(SOELIM NAMES gsoelim soelim roffpp)
-
-#MESSAGE(r "  " ${GROFF} "  "  s "  " ${SOELIM})
-#set(ROFF_OPTS
-#  -D ${CMAKE_BINARY_DIR}
-#  -d manpage
-#  -f manpage
-#  )
+set(GROFF sh ${CMAKE_BINARY_DIR}/groff.sh)
 
 #FUNCTION(PREPEND var prefix)
 #  SET(listVar "")
@@ -232,8 +225,7 @@ file(GLOB_RECURSE MAN_COMMON RELATIVE ${CMAKE_SOURCE_DIR} "man/man*/[zo]_*.so")
 FOREACH(m_src ${MAN_PAGES})
   set(m_target ${CMAKE_BINARY_DIR}/${m_src})
   add_custom_command(OUTPUT ${m_src}
-#    COMMAND GROFF_NO_SGR=-c ${GROFF} -I${CMAKE_SOURCE_DIR} -Tascii -t -man ${m_src} > ${m_target}
-    COMMAND ${GROFF} -Tascii -t -man ${m_src} > ${m_target}
+    COMMAND ${GROFF} -I${CMAKE_SOURCE_DIR} -Tascii -t -man ${m_src} > ${m_target}
     DEPENDS ${m_src} ${MAN_COMMON}
     COMMENT "Building ${m_target}"
     VERBATIM)
