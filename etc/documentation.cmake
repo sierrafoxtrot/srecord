@@ -19,14 +19,6 @@
 # Build Documentation and man pages
 set(GROFF sh ${CMAKE_BINARY_DIR}/groff.sh)
 
-#FUNCTION(PREPEND var prefix)
-#  SET(listVar "")
-#  FOREACH(f ${ARGN})
-#    LIST(APPEND listVar "${prefix}/${f}")
-#  ENDFOREACH(f)
-#  SET(${var} "${listVar}" PARENT_SCOPE)
-#ENDFUNCTION(PREPEND)
-
 set(CHANGE_LOG "etc/README.man etc/new.1.1.so etc/new.1.10.so etc/new.1.11.so \
 		etc/new.1.12.so etc/new.1.13.so etc/new.1.14.so \
 		etc/new.1.15.so etc/new.1.16.so etc/new.1.17.so \
@@ -77,6 +69,8 @@ set(REFERENCE_FILES ${CHANGE_LOG}  "etc/ref-toc.so etc/reference.man man/man1/o_
 		man/man5/srec_ti_txt.5 man/man5/srec_trs80.5 \
 		man/man5/srec_vmem.5 man/man5/srec_wilson.5")
 
+set(DOC_TARGETS "")
+
 FUNCTION(ADD_DOC T S DEPS)
   set(TARGET ${CMAKE_BINARY_DIR}/doc/${T})
   set(SRC ${CMAKE_SOURCE_DIR}/etc/${S})
@@ -84,11 +78,11 @@ FUNCTION(ADD_DOC T S DEPS)
     COMMAND ${GROFF} -Tps -s -I${CMAKE_SOURCE_DIR} -t -man ${SRC} > ${TARGET}.ps
     COMMAND ps2pdf ${TARGET}.ps ${TARGET}
     COMMAND rm ${TARGET}.ps
-    DEPENDS ${SRC}
-    # WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    DEPENDS ${SRC} ${DEPS}
     COMMENT "Building ${TARGET}"
     VERBATIM)
-  LIST(APPEND listVar "${prefix}/${f}")
+  LIST(APPEND DOC_TARGETS ${TARGET})
+  set(DOC_TARGETS ${DOC_TARGETS} PARENT_SCOPE)
 ENDFUNCTION(ADD_DOC)
 
 #awk -f etc/ref-ptx1.awk man/man1/*.1 man/man3/*.3 man/man5/*.5 | ptx -O -r -w 1000 -ietc/ref-ptx.ignore | sort  -f -d -t'"' +5 -6 +3 -4 | awk -F'"' -f etc/ref-ptx2.awk > etc/ref-index.so
@@ -100,48 +94,12 @@ file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/man/man1)
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/man/man3)
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/man/man5)
 
-set(BUILDING_PDF ${CMAKE_BINARY_DIR}/doc/BUILDING.pdf)
-set(BUILDING_SRC ${CMAKE_SOURCE_DIR}/etc/BUILDING.man)
-add_custom_command(OUTPUT ${BUILDING_PDF}
-  COMMAND ${GROFF} -Tps -s -I${CMAKE_SOURCE_DIR} -t -man ${BUILDING_SRC} > ${BUILDING_PDF}.ps
-  COMMAND ps2pdf ${BUILDING_PDF}.ps ${BUILDING_PDF}
-  COMMAND rm ${BUILDING_PDF}.ps
-  DEPENDS ${BUILDING_SRC}
-#  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-  COMMENT "Building ${BUILDING_PDF}"
-  VERBATIM)
+ADD_DOC(BUILDING.pdf BUILDING.man "")
+ADD_DOC(README.pdf README.man "")
+ADD_DOC(change_log.pdf change_log.man "")
+ADD_DOC(reference.pdf reference.man "")
 
-set(README_PDF ${CMAKE_BINARY_DIR}/doc/README.pdf)
-set(README_SRC ${CMAKE_SOURCE_DIR}/etc/README.man)
-add_custom_command(OUTPUT ${README_PDF}
-  COMMAND ${GROFF} -Tps -s -I${CMAKE_SOURCE_DIR} -t -man ${README_SRC} > ${README_PDF}.ps
-  COMMAND ps2pdf ${README_PDF}.ps ${README_PDF}
-  COMMAND rm ${README_PDF}.ps
-  DEPENDS ${README_SRC} ${CHANGE_LOG_SRC}
-  COMMENT "Building ${README_PDF}"
-  VERBATIM)
-
-set(CHANGE_LOG_PDF ${CMAKE_BINARY_DIR}/doc/change_log.pdf)
-set(CHANGE_LOG_SRC ${CMAKE_SOURCE_DIR}/etc/change_log.man)
-add_custom_command(OUTPUT ${CHANGE_LOG_PDF}
-  COMMAND ${GROFF} -Tps -s -I${CMAKE_SOURCE_DIR} -t -man ${CHANGE_LOG_SRC} > ${CHANGE_LOG_PDF}.ps
-  COMMAND ps2pdf ${CHANGE_LOG_PDF}.ps ${CHANGE_LOG_PDF}
-  COMMAND rm ${CHANGE_LOG_PDF}.ps
-  DEPENDS ${CHANGE_LOG_SRC}
-  COMMENT "Building ${CHANGE_LOG_PDF}"
-  VERBATIM)
-
-set(REFERENCE_PDF ${CMAKE_BINARY_DIR}/doc/reference.pdf)
-set(REFERENCE_SRC ${CMAKE_SOURCE_DIR}/etc/reference.man)
-add_custom_command(OUTPUT ${REFERENCE_PDF}
-  COMMAND ${GROFF} -Tps -s -I${CMAKE_SOURCE_DIR} -t -man ${REFERENCE_SRC} > ${REFERENCE_PDF}.ps
-  COMMAND ps2pdf ${REFERENCE_PDF}.ps ${REFERENCE_PDF}
-  COMMAND rm ${REFERENCE_PDF}.ps
-  DEPENDS ${REFERENCE_SRC} ${REFERENCE_SRC}
-  COMMENT "Building ${REFERENCE_PDF}"
-  VERBATIM)
-
-add_custom_target(doco ALL DEPENDS ${BUILDING_PDF} ${README_PDF} ${CHANGE_LOG_PDF} ${REFERENCE_PDF})
+add_custom_target(doco ALL DEPENDS ${DOC_TARGETS})
 
 # man pages
 file(GLOB_RECURSE MAN_PAGES RELATIVE ${CMAKE_SOURCE_DIR} "man/man*/*.[135]")
