@@ -99,7 +99,4 @@ ADD_DOC(README.pdf README.man "")
 ADD_DOC(change_log.pdf change_log.man "${CMAKE_BINARY_DIR}/doc/new.so")
 ADD_DOC(reference.pdf reference.man "${CMAKE_BINARY_DIR}/doc/ref-parts.so;${CMAKE_BINARY_DIR}/doc/ref-index.so")
 
-# This needs to be improved...
-list(APPEND DOC_TARGETS ${REF_INDEX} ${REF_PARTS} ${NEW_CHANGES})
-
 add_custom_target(doco ALL DEPENDS ${DOC_TARGETS})
