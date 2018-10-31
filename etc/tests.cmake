@@ -42,7 +42,6 @@ add_executable(test_url_decode ${TEST_URL_DECODE_SRC})
 target_link_libraries(test_url_decode srecord)
 
 configure_file(${CMAKE_SOURCE_DIR}/script/test_prelude.sh ${CMAKE_BINARY_DIR}/test_prelude COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/script/groff.sh ${CMAKE_BINARY_DIR}/groff.sh COPYONLY)
 
 # Tests
 enable_testing()

@@ -113,7 +113,7 @@ with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" ----------  Include the Manual Pages  -------------------------------------
 .\"
-.so etc/ref-parts.so
+.so doc/ref-parts.so
 .\"
 .\" ----------  Include the Table of Contents  --------------------------------
 .\"
@@ -147,4 +147,4 @@ with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .bp
 .in 0
-.so etc/ref-index.so
+.so doc/ref-index.so
