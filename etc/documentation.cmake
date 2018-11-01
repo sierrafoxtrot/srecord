@@ -18,12 +18,14 @@
 
 # Build Documentation and man pages
 configure_file(${CMAKE_SOURCE_DIR}/script/groff.sh ${CMAKE_BINARY_DIR}/groff.sh COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/script/page_select.sh ${CMAKE_BINARY_DIR}/page_select.sh COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/etc/ref-ptx.sh  ${CMAKE_BINARY_DIR}/ref_ptx.sh COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/etc/new.sh  ${CMAKE_BINARY_DIR}/new.sh COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/etc/build_ref_index.sh
   ${CMAKE_BINARY_DIR}/build_ref_index.sh COPYONLY)
 
 set(GROFF sh ${CMAKE_BINARY_DIR}/groff.sh)
+set(PAGE_SELECT sh ${CMAKE_BINARY_DIR}/page_select.sh)
 set(NEW_CH sh ${CMAKE_BINARY_DIR}/new.sh)
 set(REF_PTX sh ${CMAKE_BINARY_DIR}/ref_ptx.sh)
 set(BUILD_REF_INDEX sh ${CMAKE_BINARY_DIR}/build_ref_index.sh)
@@ -77,9 +79,10 @@ FUNCTION(ADD_DOC T S DEPS)
   set(TARGET ${CMAKE_BINARY_DIR}/doc/${T})
   set(SRC ${CMAKE_SOURCE_DIR}/etc/${S})
   add_custom_command(OUTPUT ${TARGET}
-    COMMAND ${GROFF} -Tps -s -I${CMAKE_SOURCE_DIR} -I${CMAKE_BINARY_DIR} -t -man ${SRC} > ${TARGET}.ps
+    COMMAND ${GROFF} -Tps -s -I${CMAKE_SOURCE_DIR} -I${CMAKE_BINARY_DIR} -t -man ${SRC} > ${TARGET}.ps.tmp
+    COMMAND ${PAGE_SELECT} ${CMAKE_SOURCE_DIR}/etc/page-list.awk ${TARGET}.ps.tmp ${TARGET}.ps
     COMMAND ps2pdf ${TARGET}.ps ${TARGET}
-    COMMAND rm ${TARGET}.ps
+    COMMAND rm ${TARGET}.ps ${TARGET}.ps.tmp
     DEPENDS ${SRC} ${DEPS}
     COMMENT "Building ${TARGET}"
     VERBATIM)
