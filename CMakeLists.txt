@@ -33,7 +33,6 @@ file(GLOB_RECURSE LIB_SRECORD_SRC "srecord/*.cc")
 # Generate the shared library from the sources
 set (LIB_SRECORD libsrecord.so)
 link_directories( ~/work/srecord-cmake/build)
-#link_directories( ~/exploringBB/extras/cmake/studentlib_shared/build )
 add_library(srecord SHARED ${LIB_SRECORD_SRC})
 target_link_libraries(srecord -lgcrypt -lgpg-error)
 
