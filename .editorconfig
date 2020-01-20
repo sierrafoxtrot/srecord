@@ -1,0 +1,17 @@
+root = true
+
+[*]
+charset = utf-8
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+max_line_length = 80
+tab_width = 8
+trim_trailing_whitespace = true
+
+[*.cmake,CMakeLists.txt]
+indent_size = 2
+tab_width = 2
+
+[COMMIT_EDITMSG]
+max_line_length = 72
