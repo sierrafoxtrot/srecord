@@ -87,8 +87,8 @@ This document describing the SRecord program,
 and the SRecord program itself,
 are
 .ce 2
-Copyright \(o) 2014... Scott Finneran <scottfinneran@yahoo.com.au>
-Copyright \(o) Peter Miller <pmiller@opensource.org.au>
+Copyright \(co 2014... Scott Finneran <scottfinneran@yahoo.com.au>
+Copyright \(co Peter Miller <pmiller@opensource.org.au>
 .sp
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
