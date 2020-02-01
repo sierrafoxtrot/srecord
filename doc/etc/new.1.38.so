@@ -32,4 +32,3 @@ and override the default precedences.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.38 (2008-Jan-14)
-.\" vim: set ts=8 sw=4 et :

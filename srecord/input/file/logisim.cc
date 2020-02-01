@@ -304,6 +304,3 @@ srecord::input_file_logisim::datum_t::representation(void)
     );
     return buffer;
 }
-
-
-// vim: set ts=8 sw=4 et :

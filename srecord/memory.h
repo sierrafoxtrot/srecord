@@ -324,5 +324,4 @@ bool operator == (const srecord::memory &, const srecord::memory &);
   */
 bool operator != (const srecord::memory &, const srecord::memory &);
 
-// vim: set ts=8 sw=4 et :
 #endif // SRECORD_MEMORY_H

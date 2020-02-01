@@ -45,6 +45,3 @@ srecord::endian_decode_word(const unsigned char *data, endian_t order)
             decode_word_be(data)
         );
 }
-
-
-// vim: set ts=8 sw=4 et :

@@ -282,4 +282,3 @@ Marksu Heidelberg <markus.heidelberg@web.de> contributed a patch to fix a bug th
 Completely new build and config system to replace Aegis, Cook and autoconf with cmake & git. Integration with cpack to generate linux and windows packages. Integration with ctest to sustain the regression test suite.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.\" vim: set ts=8 sw=4 et :

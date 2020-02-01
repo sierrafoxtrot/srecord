@@ -344,6 +344,3 @@ srecord::input_file::disable_checksum_validation(void)
 {
     ignore_checksums = true;
 }
-
-
-// vim: set ts=8 sw=4 et :

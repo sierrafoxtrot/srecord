@@ -159,6 +159,3 @@ srecord::output_file_mos_tech::format_name()
 {
     return "MOS-Tech";
 }
-
-
-// vim: set ts=8 sw=4 et :

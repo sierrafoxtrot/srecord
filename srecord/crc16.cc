@@ -390,6 +390,3 @@ srecord::crc16::polynomial_by_name(const char *name)
     );
     return polynomial_ccitt;
 }
-
-
-// vim: set ts=8 sw=4 et :

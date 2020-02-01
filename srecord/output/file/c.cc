@@ -809,5 +809,3 @@ srecord::output_file_c::format_name()
 {
     return (output_word ? "C-Array (16-bit)" : "C-Array (8-bit)");
 }
-
-// vim: set ts=8 sw=4 et :

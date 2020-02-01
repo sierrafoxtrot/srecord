@@ -232,6 +232,3 @@ srecord::input_file_mips_flash::format_option_number(void)
             arglex_tool::token_mips_flash_le
         );
 }
-
-
-// vim: set ts=8 sw=4 et :

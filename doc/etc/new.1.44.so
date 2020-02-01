@@ -32,4 +32,3 @@ The \f[I]srec_cat\fP(1) command is now able to write FORTH output.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.44 (2008-Aug-29)
-.\" vim: set ts=8 sw=4 et :

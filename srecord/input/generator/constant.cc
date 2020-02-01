@@ -66,6 +66,3 @@ srecord::input_generator_constant::get_file_format_name()
 {
     return "constant";
 }
-
-
-// vim: set ts=8 sw=4 et :

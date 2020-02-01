@@ -168,6 +168,3 @@ srecord::input_file_dec_binary::format_option_number(void)
 {
     return arglex_tool::token_dec_binary;
 }
-
-
-// vim: set ts=8 sw=4 et :

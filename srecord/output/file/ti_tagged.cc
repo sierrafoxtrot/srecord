@@ -202,6 +202,3 @@ srecord::output_file_ti_tagged::format_name()
 {
     return "TI-Tagged";
 }
-
-
-// vim: set ts=8 sw=4 et :

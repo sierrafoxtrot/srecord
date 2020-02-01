@@ -147,6 +147,3 @@ srecord::bitrev64(unsigned long long value)
     // hi2 must have same type as return
     return ((hi2 << 32) | lo2);
 }
-
-
-// vim: set ts=8 sw=4 et :

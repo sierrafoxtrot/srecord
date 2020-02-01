@@ -807,5 +807,3 @@ srecord::arglex::fatal_error(const char *fmt, ...)
     // NOTREACHED
     va_end(ap);
 }
-
-// vim: set ts=8 sw=4 et :

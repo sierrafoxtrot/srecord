@@ -155,6 +155,3 @@ srecord::output_file_signetics::format_name()
 {
     return "Signetics";
 }
-
-
-// vim: set ts=8 sw=4 et :

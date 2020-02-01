@@ -145,5 +145,4 @@ private:
 
 };
 
-// vim: set ts=8 sw=4 et :
 #endif // SRECORD_OUTPUT_FILE_MIF_H

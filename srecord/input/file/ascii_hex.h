@@ -115,4 +115,3 @@ private:
 };
 
 #endif // SRECORD_INPUT_FILE_ASCII_HEX_H
-// vim: set ts=8 sw=4 et :

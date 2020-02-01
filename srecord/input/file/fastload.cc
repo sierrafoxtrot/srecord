@@ -322,6 +322,3 @@ srecord::input_file_fastload::format_option_number(void)
 {
     return arglex_tool::token_fast_load;
 }
-
-
-// vim: set ts=8 sw=4 et :

@@ -50,4 +50,3 @@ error
 A fatal error is issued when contradictory settings are observed, the
 fatal error message includes the problematic address and byte values.
 .RE
-.\" vim: set ts=8 sw=4 et :

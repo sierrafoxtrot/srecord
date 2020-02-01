@@ -86,5 +86,4 @@ private:
 
 };
 
-// vim: set ts=8 sw=4 et :
 #endif // SRECORD_ADLER32_H

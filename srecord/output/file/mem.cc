@@ -310,6 +310,3 @@ srecord::output_file_mem::format_name(void)
 {
     return "Lattice Memory Initialization Format (.mem)";
 }
-
-
-// vim: set ts=8 sw=4 et :

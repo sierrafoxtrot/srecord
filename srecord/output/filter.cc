@@ -94,6 +94,3 @@ srecord::output_filter::command_line(arglex_tool *cmdln)
 {
     deeper->command_line(cmdln);
 }
-
-
-// vim: set ts=8 sw=4 et :

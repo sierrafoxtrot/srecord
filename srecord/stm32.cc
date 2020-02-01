@@ -135,6 +135,3 @@ srecord::stm32::get(void)
 {
     return state;
 }
-
-
-// vim: set ts=8 sw=4 et :

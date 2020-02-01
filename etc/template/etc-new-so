@@ -30,4 +30,3 @@
 .\" Add new entries above this line.
 .ne 2i
 .SS Version ${project version} (${date %Y\\[hy]%b\\[hy]%d})
-.\" vim: set ts=8 sw=4 et :

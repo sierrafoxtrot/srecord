@@ -36,5 +36,4 @@ int defcon_from_text(const char *text);
 
 };
 
-// vim: set ts=8 sw=4 et :
 #endif // SRECORD_DEFCON_H

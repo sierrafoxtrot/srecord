@@ -38,4 +38,3 @@ and \-maximum\[hy]address, to avoid a command line grammar syntax problem.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.45 (2008\[hy]Sep\[hy]30)
-.\" vim: set ts=8 sw=4 et :

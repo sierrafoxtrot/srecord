@@ -276,6 +276,3 @@ srecord::input_file_four_packed_code::format_option_number(void)
 {
     return arglex_tool::token_four_packed_code;
 }
-
-
-// vim: set ts=8 sw=4 et :

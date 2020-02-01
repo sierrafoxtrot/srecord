@@ -192,6 +192,3 @@ srecord::input_file::guess(const std::string &fn, arglex &cmdline)
     );
     return srecord::input_file_binary::create(fn);
 }
-
-
-// vim: set ts=8 sw=4 et :

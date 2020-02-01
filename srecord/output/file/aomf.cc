@@ -204,6 +204,3 @@ srecord::output_file_aomf::format_name()
 {
     return "AOMF";
 }
-
-
-// vim: set ts=8 sw=4 et :

@@ -197,6 +197,3 @@ srecord::output_filter_reblock::flush_buffer(bool partial)
         memmove(buffer, buffer + p, buffer_pos);
     }
 }
-
-
-// vim: set ts=8 sw=4 et :

@@ -31,4 +31,3 @@ There are new Adler Checksum filters, both 32\[hy]bits and
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.47 (2009\[hy]Feb\[hy]19)
-.\" vim: set ts=8 sw=4 et :

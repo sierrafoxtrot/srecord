@@ -279,6 +279,3 @@ srecord::output_file_mips_flash::format_name(void)
             "MIPS-Flash (little-endian)"
         );
 }
-
-
-// vim: set ts=8 sw=4 et :

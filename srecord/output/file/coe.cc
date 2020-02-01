@@ -292,6 +292,3 @@ srecord::output_file_coe::format_name(void)
 {
     return "Coefficient (.COE) Files (Xilinx)";
 }
-
-
-// vim: set ts=8 sw=4 et :

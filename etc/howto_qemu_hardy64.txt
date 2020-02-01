@@ -19,4 +19,3 @@ qemu-img create hardy64.img 5G
 qemu-system-x86_64 -net nic -net user -m 1G \
     -cdrom /home/vault/iso/ubuntu-8.04.4-desktop-amd64.iso \
     -hda hardy-amd64.img
-# vim: set ts=8 sw=4 et :

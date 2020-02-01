@@ -279,6 +279,3 @@ srecord::output_file_intel::format_name()
 {
     return "Intel-Hex";
 }
-
-
-// vim: set ts=8 sw=4 et :

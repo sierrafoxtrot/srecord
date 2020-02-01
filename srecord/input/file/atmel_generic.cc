@@ -122,6 +122,3 @@ srecord::input_file_atmel_generic::format_option_number(void)
             arglex_tool::token_atmel_generic_le
         );
 }
-
-
-// vim: set ts=8 sw=4 et :

@@ -29,4 +29,3 @@ do
         echo ".so $f"
 done
 exit 0
-# vim: set ts=8 sw=4 et :

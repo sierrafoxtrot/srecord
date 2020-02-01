@@ -154,6 +154,3 @@ srecord::input_filter_message::read(record &result)
     //
     return false;
 }
-
-
-// vim: set ts=8 sw=4 et :

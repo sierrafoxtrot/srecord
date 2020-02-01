@@ -82,6 +82,3 @@ srecord::defcon_from_text(const char *text)
         return -1;
     return tp->value;
 }
-
-
-// vim: set ts=8 sw=4 et :

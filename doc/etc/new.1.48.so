@@ -33,4 +33,3 @@ A typo in the srec_input(1) man page has been fixed.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.48 (2009-Apr-19)
-.\" vim: set ts=8 sw=4 et :

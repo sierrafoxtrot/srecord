@@ -57,6 +57,3 @@ srecord::memory_walker::observe_end(void)
 {
     // Do nothing.
 }
-
-
-// vim: set ts=8 sw=4 et :

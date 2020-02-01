@@ -164,6 +164,3 @@ srecord::input_file_mos_tech::format_option_number(void)
 {
     return arglex_tool::token_mos_tech;
 }
-
-
-// vim: set ts=8 sw=4 et :

@@ -158,5 +158,4 @@ bool operator != (const srecord::memory_chunk &, const srecord::memory_chunk &);
 
 };
 
-// vim: set ts=8 sw=4 et :
 #endif // SRECORD_MEMORY_CHUNK_H

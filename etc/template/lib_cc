@@ -49,6 +49,3 @@ srecord::${id ${trim_dir ${trim_ext $fn}}}::operator=(const ${id ${trim_dir
     }
     return *this;
 }
-
-
-// vim: set ts=8 sw=4 et :

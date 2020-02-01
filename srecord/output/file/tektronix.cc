@@ -203,6 +203,3 @@ srecord::output_file_tektronix::format_name()
 {
     return "Tektronix";
 }
-
-
-// vim: set ts=8 sw=4 et :

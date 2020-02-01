@@ -131,6 +131,3 @@ srecord::input_file_spasm::format_option_number(void)
             arglex_tool::token_spasm_le
         );
 }
-
-
-// vim: set ts=8 sw=4 et :

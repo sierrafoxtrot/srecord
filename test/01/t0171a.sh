@@ -64,5 +64,3 @@ if test $? -ne 0; then fail; fi
 # No other guarantees are made.
 #
 pass
-
-# vim: set ts=8 sw=4 et :

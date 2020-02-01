@@ -23,5 +23,4 @@
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 #define ENDOF(a) ((a) + SIZEOF(a))
 
-// vim: set ts=8 sw=4 et :
 #endif // SRECORD_SIZEOF_H

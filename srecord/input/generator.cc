@@ -308,6 +308,3 @@ srecord::input_generator::disable_checksum_validation()
     // Do nothing.
     // None of the generators have checksums.
 }
-
-
-// vim: set ts=8 sw=4 et :

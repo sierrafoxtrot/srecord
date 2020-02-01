@@ -117,5 +117,3 @@ srec_cmp test.bin -bin test.out -logisim
 # No other guarantees are made.
 #
 pass
-
-# vim: set ts=8 sw=4 et :

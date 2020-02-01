@@ -157,6 +157,3 @@ srecord::output_file_forth::preferred_block_size_get() const
 {
   return 16;
 }
-
-
-// vim: set ts=8 sw=4 et :

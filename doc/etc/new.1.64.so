@@ -119,4 +119,3 @@ Added a regression test for calculated address for CRC
 (Sourceforge bug 19).
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
-.\" vim: set ts=8 sw=4 et :

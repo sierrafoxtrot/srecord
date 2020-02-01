@@ -507,6 +507,3 @@ srecord::output_file::data_address_too_large(const srecord::record &record,
     }
     fatal_error("data address (0x%lX..0x%lX) too large", lo, hi);
 }
-
-
-// vim: set ts=8 sw=4 et :

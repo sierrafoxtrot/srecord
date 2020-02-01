@@ -217,5 +217,3 @@ srecord::fletcher16::get()
 
     return (((sum1 & 0xFF) << 8) | (sum2 & 0xFF));
 }
-
-// vim: set ts=8 sw=4 et :

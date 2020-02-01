@@ -1151,6 +1151,3 @@ srecord::arglex_tool::get_input()
         ifp->command_line(this);
     }
 }
-
-
-// vim: set ts=8 sw=4 et :

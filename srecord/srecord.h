@@ -151,5 +151,4 @@
 #include <srecord/quit/prefix.h>
 #include <srecord/record.h>
 
-// vim: set ts=8 sw=4 et :
 #endif // SRECORD_SRECORD_H

@@ -187,6 +187,3 @@ main(int argc, char **argv)
     //
     return EXIT_SUCCESS;
 }
-
-
-// vim: set ts=8 sw=4 et :

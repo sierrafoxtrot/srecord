@@ -148,6 +148,3 @@ main(int argc, char **argv)
         printf("0x%04X\n", check.get());
     return 0;
 }
-
-
-// vim: set ts=8 sw=4 et :

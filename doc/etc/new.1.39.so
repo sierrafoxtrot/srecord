@@ -50,4 +50,3 @@ default CCITT (all bits on) initial state.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.39 (2008\[hy]Feb\[hy]04)
-.\" vim: set ts=8 sw=4 et :

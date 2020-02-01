@@ -120,6 +120,3 @@ srecord::output_file_atmel_generic::format_name()
 {
     return "Atmel-Generic";
 }
-
-
-// vim: set ts=8 sw=4 et :

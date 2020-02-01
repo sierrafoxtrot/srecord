@@ -114,4 +114,3 @@ private:
 };
 
 #endif // LIB_INPUT_FILE_HP64K
-// vim: set ts=8 sw=4 et :

@@ -177,6 +177,3 @@ srecord::output_file_logisim::format_name(void)
 {
     return "Logisim";
 }
-
-
-// vim: set ts=8 sw=4 et :
