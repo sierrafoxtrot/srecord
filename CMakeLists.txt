@@ -26,7 +26,6 @@ include_directories(./)
 # Pull in the rest of the pieces
 include(etc/configure.cmake)
 include(etc/documentation.cmake)
-#include(etc/tests.cmake)
 
 # libsrecord
 add_subdirectory(srecord)
@@ -37,4 +36,5 @@ add_subdirectory(srec_cmp)
 add_subdirectory(srec_info)
 
 # Tests & support tools
+enable_testing()
 add_subdirectory(test)

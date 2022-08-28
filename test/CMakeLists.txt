@@ -45,7 +45,7 @@ configure_file(${CMAKE_SOURCE_DIR}/script/test_prelude.sh ${CMAKE_BINARY_DIR}/te
 
 # Tests
 enable_testing()
-file(GLOB_RECURSE SRECORD_TESTS "0*/*.sh")
+file(GLOB_RECURSE SRECORD_TESTS "*/*.sh")
 foreach(t ${SRECORD_TESTS})
   # TODO: would be nice to extract test description from .sh file
   file(STRINGS ${t} test_subject REGEX ^TEST_SUBJECT)
@@ -58,5 +58,5 @@ foreach(t ${SRECORD_TESTS})
 
   #  set_tests_properties(testPyMyproj PROPERTIES
   #    ENVIRONMENT LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib:$ENV{LD_LIBRARY_PATH})
-  set_tests_properties(${t} PROPERTIES ENVIRONMENT PATH=$ENV{PATH}:${CMAKE_BINARY_DIR}:${CMAKE_SOURCE_DIR}/script)
+  set_tests_properties(${t} PROPERTIES ENVIRONMENT PATH=${CMAKE_BINARY_DIR}:${CMAKE_BINARY_DIR}/srec_cat:${CMAKE_BINARY_DIR}/srec_cmp:${CMAKE_BINARY_DIR}/srec_info:${CMAKE_BINARY_DIR}/test:${CMAKE_SOURCE_DIR}/script:$ENV{PATH})
 endforeach()
