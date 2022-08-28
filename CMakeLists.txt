@@ -1,6 +1,6 @@
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2018 Scott Finneran
+# Copyright (C) 2018 - 2022 Scott Finneran
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.22)
 project(srecord)
 set(CMAKE_BUILD_TYPE Release)
 
@@ -24,17 +24,19 @@ set(CMAKE_BUILD_TYPE Release)
 include_directories(./)
 
 # Pull in the rest of the pieces
+include(etc/configure.cmake)
 include(etc/documentation.cmake)
 include(etc/tests.cmake)
 
-# Pull in the libSrecord sources
-file(GLOB_RECURSE LIB_SRECORD_SRC "srecord/*.cc")
+add_subdirectory(srecord)
+# # Pull in the libSrecord sources
+# file(GLOB_RECURSE LIB_SRECORD_SRC "srecord/*.cc")
 
-# Generate the shared library from the sources
-set (LIB_SRECORD libsrecord.so)
-link_directories( ~/work/srecord-cmake/build)
-add_library(srecord SHARED ${LIB_SRECORD_SRC})
-target_link_libraries(srecord -lgcrypt -lgpg-error)
+# # Generate the shared library from the sources
+# set (LIB_SRECORD libsrecord.so)
+# link_directories( ~/work/srecord-cmake/build)
+# add_library(srecord SHARED ${LIB_SRECORD_SRC})
+# target_link_libraries(srecord -lgcrypt -lgpg-error)
 
 # Set the location for library installation -- i.e., /usr/lib in this case
 # not really necessary in this example. Use "sudo make install" to apply
@@ -43,12 +45,12 @@ target_link_libraries(srecord -lgcrypt -lgpg-error)
 # Build srecord executables
 file(GLOB_RECURSE SREC_CAT_SRC "srec_cat/*.cc")
 add_executable(srec_cat ${SREC_CAT_SRC})
-target_link_libraries(srec_cat srecord)
+target_link_libraries(srec_cat srecord ${LIB_GCRYPT})
 
 file(GLOB_RECURSE SREC_CMP_SRC "srec_cmp/*.cc")
 add_executable(srec_cmp ${SREC_CMP_SRC})
-target_link_libraries(srec_cmp srecord)
+target_link_libraries(srec_cmp srecord ${LIB_GCRYPT})
 
 file(GLOB_RECURSE SREC_INFO_SRC "srec_info/*.cc")
 add_executable(srec_info ${SREC_INFO_SRC})
-target_link_libraries(srec_info srecord)
+target_link_libraries(srec_info srecord ${LIB_GCRYPT})
