@@ -516,7 +516,7 @@ Copyright
 Copyright
 .if n (C)
 .if t \(co
-\*(Y) SCott Finneran
+\*(Y) Scott Finneran
 .PP
 The
 .I SRecord

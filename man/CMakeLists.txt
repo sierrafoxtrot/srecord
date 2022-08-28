@@ -21,8 +21,7 @@ configure_file(${CMAKE_SOURCE_DIR}/script/groff.sh ${CMAKE_BINARY_DIR}/groff.sh 
 configure_file(${CMAKE_SOURCE_DIR}/script/page_select.sh ${CMAKE_BINARY_DIR}/page_select.sh COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/etc/ref-ptx.sh  ${CMAKE_BINARY_DIR}/ref_ptx.sh COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/etc/new.sh  ${CMAKE_BINARY_DIR}/new.sh COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/etc/build_ref_index.sh
-  ${CMAKE_BINARY_DIR}/build_ref_index.sh COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/etc/build_ref_index.sh ${CMAKE_BINARY_DIR}/build_ref_index.sh COPYONLY)
 
 set(GROFF sh ${CMAKE_BINARY_DIR}/groff.sh)
 set(PAGE_SELECT sh ${CMAKE_BINARY_DIR}/page_select.sh)
