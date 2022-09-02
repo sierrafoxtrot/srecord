@@ -23,6 +23,9 @@ set(CMAKE_BUILD_TYPE Release)
 # Headers are all relative to project root
 include_directories(./)
 
+# Support standard install locations
+include(GNUInstallDirs)
+
 # Pull in the rest of the pieces
 include(etc/configure.cmake)
 #include(etc/documentation.cmake)
@@ -41,3 +44,9 @@ add_subdirectory(test)
 
 # Documentation & Man Pages
 add_subdirectory(man)
+
+# Installation
+if(NOT WIN32 AND CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+#  set(CMAKE_INSTALL_PREFIX "/opt/mycompany.com/${PROJECT_NAME}")
+  set(CMAKE_INSTALL_PREFIX "/usr")
+endif()

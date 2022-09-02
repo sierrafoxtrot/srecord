@@ -24,4 +24,5 @@ add_library(srecord STATIC ${LIB_SRECORD_SRC} ${LIB_GCRYPT})
 
 # Set the location for library installation -- i.e., /usr/lib in this case
 # not really necessary in this example. Use "sudo make install" to apply
-#install(TARGETS srecord DESTINATION /usr/lib)
+install(TARGETS srecord
+	DESTINATION ${CMAKE_INSTALL_LIBDIR})

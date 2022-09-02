@@ -20,3 +20,6 @@
 file(GLOB_RECURSE SREC_CAT_SRC "*.cc")
 add_executable(srec_cat ${SREC_CAT_SRC})
 target_link_libraries(srec_cat srecord ${LIB_GCRYPT})
+
+install(TARGETS srec_cat
+        DESTINATION ${CMAKE_INSTALL_BINDIR})

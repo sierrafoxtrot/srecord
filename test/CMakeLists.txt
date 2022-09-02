@@ -16,7 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-#Build test support executables
+# Build test support executables
 file(GLOB_RECURSE TEST_ARGLEX_AMBIGUOUS_SRC "arglex_ambiguous/*.cc")
 add_executable(test_arglex_ambiguous ${TEST_ARGLEX_AMBIGUOUS_SRC})
 target_link_libraries(test_arglex_ambiguous srecord ${LIB_GCRYPT})
