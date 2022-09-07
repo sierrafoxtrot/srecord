@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #       srecord - Manipulate EPROM load files
-#       Copyright (C) 2018 Scott Finneran
+#       Copyright (C) 2022 Scott Finneran
 #
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -19,13 +19,13 @@
 #
 #
 
-# Build the reference manual index. Would be nice to push this into etc/documentation.cmake
+# Build the reference manual index. Would be nice to push this into doc/CMakeLists.txt
 workingdir=$1
 shift
 target=$1
 shift
 manpages=$@
 cd $workingdir
-awk -f etc/ref-ptx1.awk $manpages | \
-    ptx -O -r -w 1000 -ietc/ref-ptx.ignore | \
-    sort  -f -d -t'"' +5 -6 +3 -4 | awk -F'"' -f doc/script/ref-ptx2.awk > $target
+awk -f script/ref-ptx1.awk $manpages | \
+    ptx -O -r -w 1000 -iscript/ref-ptx.ignore | \
+    sort  -f -d -t'"' +5 -6 +3 -4 | awk -F'"' -f script/ref-ptx2.awk > $target

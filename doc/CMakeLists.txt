@@ -51,7 +51,7 @@ add_custom_target(man ALL DEPENDS ${MAN_PAGE_OUTPUTS})
 # Reference Manual Components
 set(REF_INDEX ${CMAKE_BINARY_DIR}/doc/ref-index.so)
 add_custom_command(OUTPUT ${REF_INDEX}
-  COMMAND ${BUILD_REF_INDEX} ${CMAKE_SOURCE_DIR} ${REF_INDEX} ${MAN_PAGES}
+  COMMAND ${BUILD_REF_INDEX} ${CMAKE_CURRENT_SOURCE_DIR} ${REF_INDEX} ${MAN_PAGES}
   DEPENDS ${MAN_PAGES} ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.ignore ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx1.awk ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx2.awk
   COMMENT "Building ${REF_INDEX}"
   VERBATIM
@@ -97,9 +97,7 @@ file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man5)
 
 ADD_DOC(${CMAKE_BINARY_DIR}/doc/BUILDING.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/BUILDING.man "")
 ADD_DOC(${CMAKE_BINARY_DIR}/doc/README.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/README.man "")
-ADD_DOC(${CMAKE_BINARY_DIR}/doc/change_log.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/change_log.man
-        "${CMAKE_BINARY_DIR}/doc/new.so")
-ADD_DOC(${CMAKE_BINARY_DIR}/doc/reference.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/reference.man
-        "${CMAKE_BINARY_DIR}/doc/ref-parts.so;${CMAKE_BINARY_DIR}/doc/ref-index.so")
+ADD_DOC(${CMAKE_BINARY_DIR}/doc/change_log.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/change_log.man "${NEW_CHANGES}")
+ADD_DOC(${CMAKE_BINARY_DIR}/doc/reference.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/reference.man "${REF_PARTS};${REF_INDEX}")
 
 add_custom_target(doco ALL DEPENDS ${DOC_TARGETS})

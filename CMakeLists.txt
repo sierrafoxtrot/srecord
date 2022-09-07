@@ -43,7 +43,7 @@ enable_testing()
 add_subdirectory(test)
 
 # Documentation & Man Pages
-add_subdirectory(man)
+add_subdirectory(doc)
 
 # Installation
 if(NOT WIN32 AND CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
