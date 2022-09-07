@@ -52,7 +52,7 @@ add_custom_target(man ALL DEPENDS ${MAN_PAGE_OUTPUTS})
 set(REF_INDEX ${CMAKE_BINARY_DIR}/doc/ref-index.so)
 add_custom_command(OUTPUT ${REF_INDEX}
   COMMAND ${BUILD_REF_INDEX} ${CMAKE_SOURCE_DIR} ${REF_INDEX} ${MAN_PAGES}
-  DEPENDS ${MAN_PAGES} ${CMAKE_SOURCE_DIR}/etc/ref-ptx.ignore ${CMAKE_SOURCE_DIR}/etc/ref-ptx1.awk ${CMAKE_SOURCE_DIR}/etc/ref-ptx2.awk
+  DEPENDS ${MAN_PAGES} ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.ignore ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx1.awk ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx2.awk
   COMMENT "Building ${REF_INDEX}"
   VERBATIM
   )
@@ -60,7 +60,7 @@ add_custom_command(OUTPUT ${REF_INDEX}
 set(REF_PARTS ${CMAKE_BINARY_DIR}/doc/ref-parts.so)
 add_custom_command(OUTPUT ${REF_PARTS}
   COMMAND ${REF_PTX} ${MAN_PAGES} > ${REF_PARTS}
-  DEPENDS ${MAN_PAGES} ${CMAKE_SOURCE_DIR}/etc/ref-ptx.sh
+  DEPENDS ${MAN_PAGES} ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.sh
   COMMENT "Building ${REF_PARTS}"
   VERBATIM
   )
@@ -68,7 +68,7 @@ add_custom_command(OUTPUT ${REF_PARTS}
 set(NEW_CHANGES ${CMAKE_BINARY_DIR}/doc/new.so)
 add_custom_command(OUTPUT ${NEW_CHANGES}
   COMMAND ${NEW_CH} -r ${NEW_CHANGE_NOTES} > ${NEW_CHANGES}
-  DEPENDS ${NEW_CHANGE_NOTES} ${CMAKE_SOURCE_DIR}/etc/ref-ptx.sh
+  DEPENDS ${NEW_CHANGE_NOTES} ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.sh
   COMMENT "Building ${NEW_CHANGES}"
   VERBATIM
   )
@@ -76,18 +76,16 @@ add_custom_command(OUTPUT ${NEW_CHANGES}
 # Standalone Documents
 
 # Transform man page(s) (ie troff format files) into a PDF
-FUNCTION(ADD_DOC T S DEPS)
-  set(TARGET ${CMAKE_BINARY_DIR}/doc/${T})
-  set(SRC ${CMAKE_SOURCE_DIR}/etc/${S})
+FUNCTION(ADD_DOC TARGET SOURCE DEPS)
   add_custom_command(OUTPUT ${TARGET}
-    COMMAND ${GROFF} -Tps -s -I${CMAKE_SOURCE_DIR} -I${CMAKE_BINARY_DIR} -t -man ${SRC} > ${TARGET}.ps.tmp
-    COMMAND ${PAGE_SELECT} ${CMAKE_SOURCE_DIR}/etc/page-list.awk ${TARGET}.ps.tmp ${TARGET}.ps
+    COMMAND ${GROFF} -Tps -s -I${CMAKE_CURRENT_SOURCE_DIR} -I${CMAKE_BINARY_DIR} -t -man ${SOURCE} > ${TARGET}.ps.tmp
+    COMMAND ${PAGE_SELECT} ${CMAKE_CURRENT_SOURCE_DIR}/etc/page-list.awk ${TARGET}.ps.tmp ${TARGET}.ps
     COMMAND ps2pdf ${TARGET}.ps ${TARGET}
     COMMAND rm ${TARGET}.ps ${TARGET}.ps.tmp
-    DEPENDS ${SRC} ${DEPS}
+    DEPENDS ${SOURCE} ${DEPS}
     COMMENT "Building ${TARGET}"
     VERBATIM)
-  LIST(APPEND DOC_TARGETS ${TARGET})
+  list(APPEND DOC_TARGETS ${TARGET})
   set(DOC_TARGETS ${DOC_TARGETS} PARENT_SCOPE)
 ENDFUNCTION()
 
@@ -97,9 +95,11 @@ file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man1)
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man3)
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man5)
 
-ADD_DOC(BUILDING.pdf BUILDING.man "")
-ADD_DOC(README.pdf README.man "")
-ADD_DOC(change_log.pdf change_log.man "${CMAKE_BINARY_DIR}/doc/new.so")
-ADD_DOC(reference.pdf reference.man "${CMAKE_BINARY_DIR}/doc/ref-parts.so;${CMAKE_BINARY_DIR}/doc/ref-index.so")
+ADD_DOC(${CMAKE_BINARY_DIR}/doc/BUILDING.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/BUILDING.man "")
+ADD_DOC(${CMAKE_BINARY_DIR}/doc/README.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/README.man "")
+ADD_DOC(${CMAKE_BINARY_DIR}/doc/change_log.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/change_log.man
+        "${CMAKE_BINARY_DIR}/doc/new.so")
+ADD_DOC(${CMAKE_BINARY_DIR}/doc/reference.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/reference.man
+        "${CMAKE_BINARY_DIR}/doc/ref-parts.so;${CMAKE_BINARY_DIR}/doc/ref-index.so")
 
 add_custom_target(doco ALL DEPENDS ${DOC_TARGETS})
