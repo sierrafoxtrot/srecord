@@ -26,9 +26,14 @@ include_directories(./)
 # Support standard install locations
 include(GNUInstallDirs)
 
+# FHS compliant paths for Linux installation
+if(NOT WIN32 AND CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+#  set(CMAKE_INSTALL_PREFIX "/opt/${PROJECT_NAME}")
+  set(CMAKE_INSTALL_PREFIX "/usr")
+endif()
+
 # Pull in the rest of the pieces
 include(etc/configure.cmake)
-#include(etc/documentation.cmake)
 
 # libsrecord
 add_subdirectory(srecord)
@@ -44,9 +49,3 @@ add_subdirectory(test)
 
 # Documentation & Man Pages
 add_subdirectory(doc)
-
-# Installation
-if(NOT WIN32 AND CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-#  set(CMAKE_INSTALL_PREFIX "/opt/mycompany.com/${PROJECT_NAME}")
-  set(CMAKE_INSTALL_PREFIX "/usr")
-endif()

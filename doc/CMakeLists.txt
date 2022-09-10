@@ -36,7 +36,7 @@ file(GLOB_RECURSE MAN_PAGES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "man*/*.[135]")
 file(GLOB_RECURSE MAN_COMMON RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "man*/[zo]_*.so")
 file(GLOB_RECURSE NEW_CHANGE_NOTES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "etc/new.*.so")
 
-FOREACH(m_src ${MAN_PAGES})
+foreach(m_src ${MAN_PAGES})
   set(m_target ${CMAKE_BINARY_DIR}/doc/${m_src})
   add_custom_command(OUTPUT ${m_target}
     COMMAND ${GROFF} -I${CMAKE_CURRENT_SOURCE_DIR} -Tascii -t -man ${m_src} > ${m_target}
@@ -44,9 +44,19 @@ FOREACH(m_src ${MAN_PAGES})
     COMMENT "Building ${m_target}"
     VERBATIM)
   list(APPEND MAN_PAGE_OUTPUTS ${m_target})
-ENDFOREACH()
+endforeach()
 
 add_custom_target(man ALL DEPENDS ${MAN_PAGE_OUTPUTS})
+
+# Install all the man pages on not-windows
+if(NOT WIN32)
+  set(sections 1 3 5)
+  foreach(i ${sections})
+    install(DIRECTORY ${CMAKE_BINARY_DIR}/doc/man${i}/
+            DESTINATION ${CMAKE_INSTALL_MANDIR}/man${i}
+	    FILES_MATCHING PATTERN "*.${i}")
+  endforeach()
+endif()
 
 # Reference Manual Components
 set(REF_INDEX ${CMAKE_BINARY_DIR}/doc/ref-index.so)
@@ -99,5 +109,9 @@ ADD_DOC(${CMAKE_BINARY_DIR}/doc/BUILDING.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/BUI
 ADD_DOC(${CMAKE_BINARY_DIR}/doc/README.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/README.man "")
 ADD_DOC(${CMAKE_BINARY_DIR}/doc/change_log.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/change_log.man "${NEW_CHANGES}")
 ADD_DOC(${CMAKE_BINARY_DIR}/doc/reference.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/reference.man "${REF_PARTS};${REF_INDEX}")
+
+# Install all the PDFs
+install(FILES ${DOC_TARGETS}
+        DESTINATION ${CMAKE_INSTALL_DOCDIR})
 
 add_custom_target(doco ALL DEPENDS ${DOC_TARGETS})
