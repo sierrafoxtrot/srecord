@@ -39,7 +39,8 @@ file(GLOB_RECURSE NEW_CHANGE_NOTES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "etc/new
 foreach(m_src ${MAN_PAGES})
   set(m_target ${CMAKE_BINARY_DIR}/doc/${m_src})
   add_custom_command(OUTPUT ${m_target}
-    COMMAND ${GROFF} -I${CMAKE_CURRENT_SOURCE_DIR} -Tascii -t -man ${m_src} > ${m_target}
+#    COMMAND soelim -I${CMAKE_CURRENT_SOURCE_DIR}  ${m_src} | sed '/^[.]XX ./d' > ${m_target}
+    COMMAND soelim -I${CMAKE_CURRENT_SOURCE_DIR} ${m_src} > ${m_target}
     DEPENDS ${m_src} ${MAN_COMMON}
     COMMENT "Building ${m_target}"
     VERBATIM)
