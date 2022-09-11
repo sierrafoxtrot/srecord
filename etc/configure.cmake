@@ -16,10 +16,50 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-message(CHECK_START "Finding libgcrypt")
-find_library(LIB_GCRYPT NAMES gcrypt DOC "Try to find libgcrypt")
-if(LIB_GCRYPT)
-  message(CHECK_PASS "found")
-else()
-  message(CHECK_FAIL "not found")
+# Crypto library
+include(CheckIncludeFiles)
+check_include_files(gcrypt.h HAVE_GCRYPT_H)
+if (HAVE_GCRYPT_H)
+  set(LIBGCRYPT_HEADERS_FOUND TRUE)
+  find_library(LIB_GCRYPT NAMES gcrypt)
+  option(HAVE_LIBGCRYPT "libgcrypt" ON)
+  option(HAVE_LIBGCRYPT_SHA224 "libgcrypt SHA244" ON)
+  option(HAVE_LIBGCRYPT_WHIRLPOOL "libgcrypt whirlpool" ON)
+  option(HAVE_GCRY_MD_HD_T "libgcrypt HAVE_GCRY_MD_HD_T" ON)
+endif (HAVE_GCRYPT_H)
+
+# Boost library
+find_package(Boost 1.60 REQUIRED)
+set(HAVE_BOOST ${Boost_FOUND})
+
+# Stdlib functions
+include(CheckCXXSymbolExists)
+check_cxx_symbol_exists(snprintf string SNPRINTF_FOUND)
+if (SNPRINTF_FOUND)
+  option(HAVE_SNPRINTF "snprintf function" ON)
 endif()
+
+include(CheckCXXSymbolExists)
+check_cxx_symbol_exists(vsnprintf string VSNPRINTF_FOUND)
+if (VSNPRINTF_FOUND)
+  option(HAVE_VSNPRINTF "vsnprintf function" ON)
+endif()
+
+# Extensions
+# Support for sparse file seeking
+option(HAVE_SPARSE_LSEEK OFF)
+
+# Enable extensions on AIX 3, Interix.
+option(_ALL_SOURCE ON)
+
+# Enable GNU extensions on systems that have them.
+option(_GNU_SOURCE ON)
+
+# Enable threading extensions on Solaris.  */
+option(_POSIX_PTHREAD_SEMANTICS ON)
+
+# Enable extensions on HP NonStop.
+option(_TANDEM_SOURCE ON)
+
+# Enable general extensions on Solaris.
+option(__EXTENSIONS__ ON)

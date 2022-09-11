@@ -18,7 +18,7 @@
 //
 
 
-#include <srecord/config.h>
+#include <config.h>
 
 
 #ifndef HAVE_SNPRINTF

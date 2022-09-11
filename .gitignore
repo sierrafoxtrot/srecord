@@ -1,9 +1,4 @@
 ### SRecord specific##
-srecord/config.h
-**/*.pdf
-bin
-man/cat*
-**/.libs
 
 ### Autotools ###
 # http://www.gnu.org/software/automake

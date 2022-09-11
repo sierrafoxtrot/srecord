@@ -26,3 +26,7 @@ add_library(srecord STATIC ${LIB_SRECORD_SRC} ${LIB_GCRYPT})
 # not really necessary in this example. Use "sudo make install" to apply
 install(TARGETS srecord
 	DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+# Generate config.h to suit local environment
+configure_file(config.h.in config.h)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})

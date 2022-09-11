@@ -33,7 +33,8 @@ if(NOT WIN32 AND CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
 endif()
 
 # Pull in the rest of the pieces
-include(etc/configure.cmake)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/etc")
+include(configure)
 
 # libsrecord
 add_subdirectory(srecord)
