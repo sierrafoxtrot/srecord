@@ -41,7 +41,7 @@ file(GLOB_RECURSE TEST_URL_DECODE_SRC "url_decode/*.cc")
 add_executable(test_url_decode ${TEST_URL_DECODE_SRC})
 target_link_libraries(test_url_decode srecord)
 
-configure_file(${CMAKE_SOURCE_DIR}/script/test_prelude.sh ${CMAKE_BINARY_DIR}/test_prelude COPYONLY)
+configure_file(test_prelude.sh test_prelude COPYONLY)
 
 # Tests
 enable_testing()

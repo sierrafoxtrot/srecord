@@ -17,20 +17,20 @@
 #
 
 # Build Documentation and man pages
-configure_file(script/groff.sh ${CMAKE_BINARY_DIR}/groff.sh COPYONLY)
-configure_file(script/page_select.sh ${CMAKE_BINARY_DIR}/page_select.sh COPYONLY)
-configure_file(script/ref-ptx.sh  ${CMAKE_BINARY_DIR}/ref_ptx.sh COPYONLY)
-configure_file(script/new.sh  ${CMAKE_BINARY_DIR}/new.sh COPYONLY)
-configure_file(script/build_ref_index.sh ${CMAKE_BINARY_DIR}/build_ref_index.sh COPYONLY)
+configure_file(script/groff.sh script/groff.sh COPYONLY)
+configure_file(script/page_select.sh script/page_select.sh COPYONLY)
+configure_file(script/ref-ptx.sh  script/ref_ptx.sh COPYONLY)
+configure_file(script/new.sh  script/new.sh COPYONLY)
+configure_file(script/build_ref_index.sh script/build_ref_index.sh COPYONLY)
 configure_file(etc/version.so.in etc/version.so @ONLY)
 
 set(VERBOSE yep)
 
-set(GROFF sh ${CMAKE_BINARY_DIR}/groff.sh)
-set(PAGE_SELECT sh ${CMAKE_BINARY_DIR}/page_select.sh)
-set(NEW_CH sh ${CMAKE_BINARY_DIR}/new.sh)
-set(REF_PTX sh ${CMAKE_BINARY_DIR}/ref_ptx.sh)
-set(BUILD_REF_INDEX sh ${CMAKE_BINARY_DIR}/build_ref_index.sh)
+set(GROFF sh script/groff.sh)
+set(PAGE_SELECT sh script/page_select.sh)
+set(NEW_CH sh script/new.sh)
+set(REF_PTX sh script/ref_ptx.sh)
+set(BUILD_REF_INDEX sh script/build_ref_index.sh)
 
 # man pages
 file(GLOB_RECURSE MAN_PAGES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "man*/*.[135]")
