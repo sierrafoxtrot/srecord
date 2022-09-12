@@ -28,6 +28,6 @@ install(TARGETS srecord
 	DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # Generate config.h to suit local environment
-configure_file(config.h.in config.h)
-configure_file(patchlevel.h.in patchlevel.h)
+configure_file(config.h.in config.h @ONLY)
+configure_file(patchlevel.h.in patchlevel.h @ONLY)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})

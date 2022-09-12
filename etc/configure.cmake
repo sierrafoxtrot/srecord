@@ -18,6 +18,7 @@
 
 # Generated content
 
+# Get the git hash
 find_package(Git)
 if(Git_FOUND)
   message("Git found: ${GIT_EXECUTABLE}")
@@ -31,6 +32,17 @@ else()
 endif()
 
 message(STATUS "git status: GIT_SHA1 ${GIT_SHA1}")
+
+# Get a single list of copyright years for changes made to SRecord
+execute_process(
+  COMMAND "${GIT_EXECUTABLE}" log --reverse --date=format:%Y --pretty=format:%as
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+  OUTPUT_VARIABLE DATES
+  ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+string(REGEX MATCHALL "[0-9][0-9][0-9][0-9]" all_years ${DATES})
+list(REMOVE_DUPLICATES all_years)
+string(REPLACE ";" ", " COPYRIGHT_YEARS "${all_years}")
 
 # Autoconf-like tasks:
 # Crypto library
