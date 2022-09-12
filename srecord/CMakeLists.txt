@@ -29,4 +29,5 @@ install(TARGETS srecord
 
 # Generate config.h to suit local environment
 configure_file(config.h.in config.h)
+configure_file(patchlevel.h.in patchlevel.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})

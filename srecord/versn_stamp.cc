@@ -19,7 +19,7 @@
 #include <iostream>
 
 #include <srecord/versn_stamp.h>
-#include <srecord/patchlevel.h>
+#include <patchlevel.h>
 #include <srecord/progname.h>
 
 
@@ -36,11 +36,17 @@ srecord::copyright_years(void)
     return COPYRIGHT_YEARS;
 }
 
+const char *
+srecord::git_sha1(void)
+{
+    return GIT_SHA1;
+}
 
 void
 srecord::print_version(void)
 {
-    std::cout << progname_get() << " version " << version_stamp() << std::endl;
+    std::cout << progname_get() << " version " << version_stamp()
+              << " [git hash " << git_sha1() << "]"<< std::endl;
     std::cout << "Copyright (C) " << copyright_years() << " Peter Miller"
         << std::endl;
     std::cout << std::endl;

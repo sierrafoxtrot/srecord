@@ -16,6 +16,23 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+# Generated content
+
+find_package(Git)
+if(Git_FOUND)
+  message("Git found: ${GIT_EXECUTABLE}")
+  execute_process(COMMAND
+    "${GIT_EXECUTABLE}" describe --match=NeVeRmAtCh --always --abbrev=10 --dirty
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    OUTPUT_VARIABLE GIT_SHA1
+    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+else()
+  set(GIT_SHA1 "GIT Hash Not Found")
+endif()
+
+message(STATUS "git status: GIT_SHA1 ${GIT_SHA1}")
+
+# Autoconf-like tasks:
 # Crypto library
 include(CheckIncludeFiles)
 check_include_files(gcrypt.h HAVE_GCRYPT_H)
