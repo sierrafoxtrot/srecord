@@ -22,6 +22,7 @@ configure_file(script/page_select.sh ${CMAKE_BINARY_DIR}/page_select.sh COPYONLY
 configure_file(script/ref-ptx.sh  ${CMAKE_BINARY_DIR}/ref_ptx.sh COPYONLY)
 configure_file(script/new.sh  ${CMAKE_BINARY_DIR}/new.sh COPYONLY)
 configure_file(script/build_ref_index.sh ${CMAKE_BINARY_DIR}/build_ref_index.sh COPYONLY)
+configure_file(etc/version.so.in etc/version.so @ONLY)
 
 set(VERBOSE yep)
 

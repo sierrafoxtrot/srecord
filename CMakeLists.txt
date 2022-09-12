@@ -17,7 +17,7 @@
 #
 
 cmake_minimum_required(VERSION 3.22)
-project(srecord)
+project(srecord VERSION "1.64.3")
 set(CMAKE_BUILD_TYPE Release)
 
 # Headers are all relative to project root
