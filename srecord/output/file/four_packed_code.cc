@@ -173,13 +173,13 @@ srecord::output_file_four_packed_code::write_inner(unsigned long address,
         fatal_error("data length (%d) too long", data_nbytes);
 
     //
-    // Assemble the data for this line.
+    // Assemble the data for this line using format code zero
     //
-    unsigned char buffer[256];
-    buffer[0] = 0;
-    buffer[1] = 4 + data_nbytes;
-    buffer[2] = 0;
-    buffer[3] = 0;
+    unsigned char buffer[261]; // Worst case is 252 byte length plus header
+    buffer[0] = 0; // checksum field
+    buffer[1] = 4 + data_nbytes; // byte count field
+    buffer[2] = 0; // format code, first byte
+    buffer[3] = 0; // format code, second byte
     srecord::record::encode_big_endian(buffer + 4, address, 4);
     if (data_nbytes)
     {
