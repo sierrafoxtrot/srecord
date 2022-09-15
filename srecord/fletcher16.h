@@ -78,7 +78,7 @@ public:
       *     rather than a pure Fletcher-16 checksum.
       * @param end
       *     The endian-ness of the checksum.  This is needed to
-      *     manipulate the answer.  Ignored if #answer is ignored.
+      *     manipulate the answer.  Ignored if @p answer is ignored.
       */
     fletcher16(unsigned char sum1 = 0, unsigned char sum2 = 0,
         int answer = -1, endian_t end = endian_little);

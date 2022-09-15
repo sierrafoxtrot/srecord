@@ -18,6 +18,7 @@
 
 # libSrecord - Need to move away from globbing
 file(GLOB_RECURSE LIB_SRECORD_SRC "*.cc")
+file(GLOB_RECURSE LIB_SRECORD_HDR "*.h")
 
 message(STATUS "gcrypt location ${LIB_GCRYPT}")
 add_library(srecord STATIC ${LIB_SRECORD_SRC} ${LIB_GCRYPT})
@@ -31,3 +32,9 @@ install(TARGETS srecord
 configure_file(config.h.in config.h @ONLY)
 configure_file(patchlevel.h.in patchlevel.h @ONLY)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
+# Generate doxygen content
+doxygen_add_docs(
+  doxygen
+  ${LIB_SRECORD_HDR}
+  ALL)

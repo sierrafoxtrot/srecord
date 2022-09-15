@@ -37,7 +37,7 @@ namespace srecord
   * Note that you need to invoke this filter N times when you have N
   * swathes, once for each swathe.
   *
-  *                                                                        <pre>
+  * <pre>
   *           --> |    modulus    | <--
   * Input data:   |               |
   * ~-+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+-~
