@@ -30,7 +30,7 @@ echo "<ul>"
 for f in $*
 do
     base=$(basename $f .html)
-    section=$(echo $f | sed 's|.*/man\([0-9]\)/.*|\1|' )
+    section=$(echo $f | sed 's|.*man\([0-9]\)/.*|\1|' )
     if [ "$section" != "$oldsection" ]
     then
         echo "</ul>"
