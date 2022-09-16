@@ -16,16 +16,19 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+set(VERBOSE yep)
+
 # Build Documentation and man pages
+
+# Tools
 configure_file(script/groff.sh           script/groff.sh COPYONLY)
 configure_file(script/page_select.sh     script/page_select.sh COPYONLY)
 configure_file(script/ref-ptx.sh         script/ref_ptx.sh COPYONLY)
 configure_file(script/new.sh             script/new.sh COPYONLY)
 configure_file(script/build_ref_index.sh script/build_ref_index.sh COPYONLY)
 configure_file(script/man-html-index.sh  script/man-html-index.sh COPYONLY)
+configure_file(script/ssp.awk            script/ssp.awk COPYONLY)
 configure_file(etc/version.so.in         etc/version.so @ONLY)
-
-set(VERBOSE yep)
 
 set(GROFF sh script/groff.sh)
 set(PAGE_SELECT sh script/page_select.sh)
@@ -33,6 +36,18 @@ set(NEW_CH sh script/new.sh)
 set(REF_PTX sh script/ref_ptx.sh)
 set(BUILD_REF_INDEX sh script/build_ref_index.sh)
 set(MAN_HTML_INDEX sh script/man-html-index.sh)
+set(SSP awk -f script/ssp.awk)
+
+# Target directories
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man1)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man3)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man5)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html/man)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html/man/man1)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html/man/man3)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html/man/man5)
 
 # man pages
 file(GLOB_RECURSE MAN_PAGES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "man*/*.[135]")
@@ -51,7 +66,8 @@ foreach(m_src ${MAN_PAGES})
   list(APPEND MAN_PAGE_OUTPUTS ${m_target})
 
   # HTML formatted man pages for web viewing
-  set(m_target ${CMAKE_BINARY_DIR}/doc/html/${m_src}.html)
+  string(REGEX REPLACE [=[\.[0-9]]=] "" m_src_c ${m_src})
+  set(m_target ${CMAKE_BINARY_DIR}/doc/html/man/${m_src_c}.html)
   add_custom_command(OUTPUT ${m_target}
     COMMAND ${GROFF} -Thtml -t -man  -I${CMAKE_CURRENT_SOURCE_DIR} -I${CMAKE_CURRENT_BINARY_DIR} ${m_src} > ${m_target}
     DEPENDS ${m_src} ${MAN_COMMON}
@@ -62,7 +78,7 @@ foreach(m_src ${MAN_PAGES})
 endforeach()
 
 # Generate the index page for the HTML formatted man pages
-set(i_target ${CMAKE_BINARY_DIR}/doc/html/index.html)
+set(i_target ${CMAKE_BINARY_DIR}/doc/html/man/index.html)
 set(HTML_MAN_PAGE_INDEX ${i_target})
 add_custom_command(OUTPUT ${HTML_MAN_PAGE_INDEX}
   COMMAND ${MAN_HTML_INDEX} ${MAN_PAGES} > ${i_target}
@@ -73,15 +89,23 @@ add_custom_command(OUTPUT ${HTML_MAN_PAGE_INDEX}
 add_custom_target(man ALL DEPENDS ${MAN_PAGE_OUTPUTS})
 add_custom_target(man-html ALL DEPENDS ${HTML_MAN_PAGE_OUTPUTS} ${HTML_MAN_PAGE_INDEX})
 
-# Install all the man pages on not-windows
-if(NOT WIN32)
-  set(sections 1 3 5)
-  foreach(i ${sections})
-    install(DIRECTORY ${CMAKE_BINARY_DIR}/doc/man${i}/
-            DESTINATION ${CMAKE_INSTALL_MANDIR}/man${i}
-	    FILES_MATCHING PATTERN "*.${i}")
-  endforeach()
-endif()
+# The website
+file(GLOB_RECURSE WEBSITE_IMAGES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "html/*.png")
+foreach(i ${WEBSITE_IMAGES})
+  configure_file(${i} ${i} COPYONLY)
+endforeach()
+
+file(GLOB_RECURSE WEB_PAGES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "html/*.html")
+foreach(w_src ${WEB_PAGES})
+  set(w_target ${CMAKE_BINARY_DIR}/doc/${w_src})
+  add_custom_command(OUTPUT ${w_target}
+    COMMAND ${GROFF} -Tascii -t -P-bcu -man -I${CMAKE_CURRENT_SOURCE_DIR} ${w_src} | ${SSP} > ${w_target}
+    DEPENDS ${w_src}
+    COMMENT "Building ${w_target}"
+    VERBATIM)
+  list(APPEND WEB_PAGE_OUTPUTS ${w_target})
+endforeach()
+add_custom_target(web-site ALL DEPENDS ${WEB_PAGE_OUTPUTS})
 
 # Reference Manual Components
 set(REF_INDEX ${CMAKE_BINARY_DIR}/doc/ref-index.so)
@@ -124,23 +148,22 @@ FUNCTION(ADD_DOC TARGET SOURCE DEPS)
   set(DOC_TARGETS ${DOC_TARGETS} PARENT_SCOPE)
 ENDFUNCTION()
 
-# Target directories
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man1)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man3)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man5)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html/man1)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html/man3)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html/man5)
-
 ADD_DOC(${CMAKE_BINARY_DIR}/doc/BUILDING.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/BUILDING.man "")
 ADD_DOC(${CMAKE_BINARY_DIR}/doc/README.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/README.man "")
 ADD_DOC(${CMAKE_BINARY_DIR}/doc/change_log.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/change_log.man "${NEW_CHANGES}")
 ADD_DOC(${CMAKE_BINARY_DIR}/doc/reference.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/reference.man "${REF_PARTS};${REF_INDEX}")
+add_custom_target(doco ALL DEPENDS ${DOC_TARGETS})
 
+# Installation
 # Install all the PDFs
 install(FILES ${DOC_TARGETS}
         DESTINATION ${CMAKE_INSTALL_DOCDIR})
-
-add_custom_target(doco ALL DEPENDS ${DOC_TARGETS})
+# Install all the man pages on not-windows
+if(NOT WIN32)
+  set(sections 1 3 5)
+  foreach(i ${sections})
+    install(DIRECTORY ${CMAKE_BINARY_DIR}/doc/man${i}/
+            DESTINATION ${CMAKE_INSTALL_MANDIR}/man${i}
+	    FILES_MATCHING PATTERN "*.${i}")
+  endforeach()
+endif()
