@@ -90,7 +90,8 @@ add_custom_target(man ALL DEPENDS ${MAN_PAGE_OUTPUTS})
 add_custom_target(man-html ALL DEPENDS ${HTML_MAN_PAGE_OUTPUTS} ${HTML_MAN_PAGE_INDEX})
 
 # The website
-file(GLOB_RECURSE WEBSITE_IMAGES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "html/*.png")
+file(GLOB_RECURSE WEBSITE_IMAGES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+  "html/*.png" "html/*.ico")
 foreach(i ${WEBSITE_IMAGES})
   configure_file(${i} ${i} COPYONLY)
 endforeach()
