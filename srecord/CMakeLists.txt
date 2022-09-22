@@ -21,12 +21,17 @@ file(GLOB_RECURSE LIB_SRECORD_SRC "*.cc")
 file(GLOB_RECURSE LIB_SRECORD_HDR "*.h")
 
 message(STATUS "gcrypt location ${LIB_GCRYPT}")
-add_library(srecord STATIC ${LIB_SRECORD_SRC} ${LIB_GCRYPT})
+add_library(srecord STATIC ${LIB_SRECORD_SRC} ${LIB_SRECORD_HDR} ${LIB_GCRYPT})
 
-# Set the location for library installation -- i.e., /usr/lib in this case
-# not really necessary in this example. Use "sudo make install" to apply
+# Install the library
 install(TARGETS srecord
-	DESTINATION ${CMAKE_INSTALL_LIBDIR})
+        DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+# Install the development headers
+# A more modern approach would use a cmake 3.23 FILE SET
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        FILES_MATCHING PATTERN "*.h")
 
 # Generate config.h to suit local environment
 configure_file(config.h.in config.h @ONLY)
@@ -34,7 +39,6 @@ configure_file(patchlevel.h.in patchlevel.h @ONLY)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 # Generate doxygen content
-doxygen_add_docs(
-  doxygen
-  ${LIB_SRECORD_HDR}
-  ALL)
+doxygen_add_docs(doxygen
+                 ${LIB_SRECORD_HDR}
+		 ALL)

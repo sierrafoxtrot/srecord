@@ -66,6 +66,15 @@ set(CPACK_VERBATIM_VARIABLES YES)
 set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_LIST_DIR}/LICENSE)
 #set(CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_LIST_DIR}/Readme.txt)
 SET (CPACK_DEBIAN_PACKAGE_DEPENDS "libboost-dev")
+SET (CPACK_DEBIAN_PACKAGE_DEPENDS "libgcrypt-dev")
+
+set(CPACK_SOURCE_IGNORE_FILES
+  /\\.git/
+  \\.swp
+  \\.orig
+  /CMakeLists\\.txt\\.user
+  /build/
+)
 
 if(WIN32)
   message(STATUS "Packaging for Windows")

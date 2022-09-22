@@ -21,7 +21,7 @@
 # Get the git hash
 find_package(Git)
 if(Git_FOUND)
-  message("Git found: ${GIT_EXECUTABLE}")
+  message(STATUS "Git executable found: ${GIT_EXECUTABLE}")
   execute_process(COMMAND
     "${GIT_EXECUTABLE}" describe --match=NeVeRmAtCh --always --abbrev=10 --dirty
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
@@ -31,18 +31,24 @@ else()
   set(GIT_SHA1 "GIT Hash Not Found")
 endif()
 
-message(STATUS "git status: GIT_SHA1 ${GIT_SHA1}")
+if(GIT_SHA1)
+  # Get a single list of copyright years for changes made to SRecord
+  execute_process(
+    COMMAND "${GIT_EXECUTABLE}" log --reverse --date=format:%Y --pretty=format:%as
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    OUTPUT_VARIABLE DATES
+    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-# Get a single list of copyright years for changes made to SRecord
-execute_process(
-  COMMAND "${GIT_EXECUTABLE}" log --reverse --date=format:%Y --pretty=format:%as
-  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-  OUTPUT_VARIABLE DATES
-  ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-string(REGEX MATCHALL "[0-9][0-9][0-9][0-9]" all_years ${DATES})
-list(REMOVE_DUPLICATES all_years)
-string(REPLACE ";" ", " COPYRIGHT_YEARS "${all_years}")
+  string(REGEX MATCHALL "[0-9][0-9][0-9][0-9]" all_years ${DATES})
+  list(REMOVE_DUPLICATES all_years)
+  string(REPLACE ";" ", " COPYRIGHT_YEARS "${all_years}")
+else()
+  # In all likelihood, we are building from a source copy outside of the
+  # git repo so let's use some reasonable/meaningful defaults.
+  message(STATUS "Git is not installed or this is not a repository clone")
+  set(GIT_SHA1 "unknown")
+  set(COPYRIGHT_YEARS "1998...")
+endif()
 
 # Autoconf-like tasks:
 # Crypto library
