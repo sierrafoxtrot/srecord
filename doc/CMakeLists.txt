@@ -37,17 +37,18 @@ set(REF_PTX sh script/ref_ptx.sh)
 set(BUILD_REF_INDEX sh script/build_ref_index.sh)
 set(MAN_HTML_INDEX sh script/man-html-index.sh)
 set(SSP awk -f script/ssp.awk)
+set(PS2PDFEXE sh ${PS2PDF})
 
 # Target directories
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man1)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man3)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/man5)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html/man)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html/man/man1)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html/man/man3)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/doc/html/man/man5)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/man1)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/man3)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/man5)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/man)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/man/man1)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/man/man3)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/man/man5)
 
 # man pages
 file(GLOB_RECURSE MAN_PAGES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "man*/*.[135]")
@@ -56,7 +57,7 @@ file(GLOB_RECURSE NEW_CHANGE_NOTES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "etc/new
 
 foreach(m_src ${MAN_PAGES})
   # nroff formatted man pages
-  set(m_target ${CMAKE_BINARY_DIR}/doc/${m_src})
+  set(m_target ${CMAKE_CURRENT_BINARY_DIR}/${m_src})
   add_custom_command(OUTPUT ${m_target}
 #    COMMAND soelim -I${CMAKE_CURRENT_SOURCE_DIR}  ${m_src} | sed '/^[.]XX ./d' > ${m_target}
     COMMAND soelim -I${CMAKE_CURRENT_SOURCE_DIR} ${m_src} > ${m_target}
@@ -67,18 +68,17 @@ foreach(m_src ${MAN_PAGES})
 
   # HTML formatted man pages for web viewing
   string(REGEX REPLACE [=[\.[0-9]]=] "" m_src_c ${m_src})
-  set(m_target ${CMAKE_BINARY_DIR}/doc/html/man/${m_src_c}.html)
+  set(m_target ${CMAKE_CURRENT_BINARY_DIR}/html/man/${m_src_c}.html)
   add_custom_command(OUTPUT ${m_target}
     COMMAND ${GROFF} -Thtml -t -man  -I${CMAKE_CURRENT_SOURCE_DIR} -I${CMAKE_CURRENT_BINARY_DIR} ${m_src} > ${m_target}
     DEPENDS ${m_src} ${MAN_COMMON}
     COMMENT "Building ${m_target}"
     VERBATIM)
   list(APPEND HTML_MAN_PAGE_OUTPUTS ${m_target})
-  message(STATUS "${m_target}")
 endforeach()
 
 # Generate the index page for the HTML formatted man pages
-set(i_target ${CMAKE_BINARY_DIR}/doc/html/man/index.html)
+set(i_target ${CMAKE_CURRENT_BINARY_DIR}/html/man/index.html)
 set(HTML_MAN_PAGE_INDEX ${i_target})
 add_custom_command(OUTPUT ${HTML_MAN_PAGE_INDEX}
   COMMAND ${MAN_HTML_INDEX} ${MAN_PAGES} > ${i_target}
@@ -98,7 +98,7 @@ endforeach()
 
 file(GLOB_RECURSE WEB_PAGES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "html/*.html")
 foreach(w_src ${WEB_PAGES})
-  set(w_target ${CMAKE_BINARY_DIR}/doc/${w_src})
+  set(w_target ${CMAKE_CURRENT_BINARY_DIR}/${w_src})
   add_custom_command(OUTPUT ${w_target}
     COMMAND ${GROFF} -Tascii -t -P-bcu -man -I${CMAKE_CURRENT_SOURCE_DIR} ${w_src} | ${SSP} > ${w_target}
     DEPENDS ${w_src}
@@ -109,7 +109,7 @@ endforeach()
 add_custom_target(web-site ALL DEPENDS ${WEB_PAGE_OUTPUTS})
 
 # Reference Manual Components
-set(REF_INDEX ${CMAKE_BINARY_DIR}/doc/ref-index.so)
+set(REF_INDEX ${CMAKE_CURRENT_BINARY_DIR}/etc/ref-index.so)
 add_custom_command(OUTPUT ${REF_INDEX}
   COMMAND ${BUILD_REF_INDEX} ${CMAKE_CURRENT_SOURCE_DIR} ${REF_INDEX} ${MAN_PAGES}
   DEPENDS ${MAN_PAGES} ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.ignore ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx1.awk ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx2.awk
@@ -117,7 +117,7 @@ add_custom_command(OUTPUT ${REF_INDEX}
   VERBATIM
   )
 
-set(REF_PARTS ${CMAKE_BINARY_DIR}/doc/ref-parts.so)
+set(REF_PARTS ${CMAKE_CURRENT_BINARY_DIR}/etc/ref-parts.so)
 add_custom_command(OUTPUT ${REF_PARTS}
   COMMAND ${REF_PTX} ${MAN_PAGES} > ${REF_PARTS}
   DEPENDS ${MAN_PAGES} ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.sh
@@ -125,7 +125,7 @@ add_custom_command(OUTPUT ${REF_PARTS}
   VERBATIM
   )
 
-set(NEW_CHANGES ${CMAKE_BINARY_DIR}/doc/new.so)
+set(NEW_CHANGES ${CMAKE_CURRENT_BINARY_DIR}/etc/new.so)
 add_custom_command(OUTPUT ${NEW_CHANGES}
   COMMAND ${NEW_CH} -r ${NEW_CHANGE_NOTES} > ${NEW_CHANGES}
   DEPENDS ${NEW_CHANGE_NOTES} ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.sh
@@ -135,12 +135,32 @@ add_custom_command(OUTPUT ${NEW_CHANGES}
 
 # Standalone Documents
 
+# ...and now an aside on the subtle differences between linux/unix/posix
+# and Windows. Under Msys2, ost tools are able to cope with windows path
+# format filenames e.g. C:\msys2\bin. groff sadly, doesn't; specifically
+# when handling the -I option. So on Windows, let's give groff an assist
+# by using the cygpath tool to pass it in unix format.
+if(CYGPATH)
+  execute_process(COMMAND ${CYGPATH} -u ${CMAKE_CURRENT_SOURCE_DIR}
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    OUTPUT_VARIABLE CMAKE_CURRENT_SOURCE_DIR_UNIX_FORMAT
+    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+  execute_process(COMMAND ${CYGPATH} -u ${CMAKE_CURRENT_BINARY_DIR}
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+    OUTPUT_VARIABLE CMAKE_CURRENT_BINARY_DIR_UNIX_FORMAT
+    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+else()
+  set(CMAKE_CURRENT_SOURCE_DIR_UNIX_FORMAT ${CMAKE_CURRENT_SOURCE_DIR})
+  set(CMAKE_CURRENT_BINARY_DIR_UNIX_FORMAT ${CMAKE_CURRENT_BINARY_DIR})
+endif()
+
 # Transform man page(s) (ie troff format files) into a PDF
 FUNCTION(ADD_DOC TARGET SOURCE DEPS)
   add_custom_command(OUTPUT ${TARGET}
-    COMMAND ${GROFF} -Tps -s -I${CMAKE_CURRENT_SOURCE_DIR} -I${CMAKE_BINARY_DIR} -t -man ${SOURCE} > ${TARGET}.ps.tmp
+    COMMAND ${GROFF} -Tps -s -I${CMAKE_CURRENT_SOURCE_DIR_UNIX_FORMAT} -I${CMAKE_CURRENT_BINARY_DIR_UNIX_FORMAT} -t -man ${SOURCE} > ${TARGET}.ps.tmp
     COMMAND ${PAGE_SELECT} ${CMAKE_CURRENT_SOURCE_DIR}/etc/page-list.awk ${TARGET}.ps.tmp ${TARGET}.ps
-    COMMAND ps2pdf ${TARGET}.ps ${TARGET}
+    COMMAND ${PS2PDFEXE} ${TARGET}.ps ${TARGET}
     COMMAND rm ${TARGET}.ps ${TARGET}.ps.tmp
     DEPENDS ${SOURCE} ${DEPS}
     COMMENT "Building ${TARGET}"
@@ -149,10 +169,10 @@ FUNCTION(ADD_DOC TARGET SOURCE DEPS)
   set(DOC_TARGETS ${DOC_TARGETS} PARENT_SCOPE)
 ENDFUNCTION()
 
-ADD_DOC(${CMAKE_BINARY_DIR}/doc/BUILDING.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/BUILDING.man "")
-ADD_DOC(${CMAKE_BINARY_DIR}/doc/README.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/README.man "")
-ADD_DOC(${CMAKE_BINARY_DIR}/doc/change_log.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/change_log.man "${NEW_CHANGES}")
-ADD_DOC(${CMAKE_BINARY_DIR}/doc/reference.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/reference.man "${REF_PARTS};${REF_INDEX}")
+ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/BUILDING.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/BUILDING.man "")
+ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/README.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/README.man "")
+ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/change_log.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/change_log.man "${NEW_CHANGES}")
+ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/reference.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/reference.man "${REF_PARTS};${REF_INDEX}")
 add_custom_target(doco ALL DEPENDS ${DOC_TARGETS})
 
 # Installation
@@ -163,7 +183,7 @@ install(FILES ${DOC_TARGETS}
 if(NOT WIN32)
   set(sections 1 3 5)
   foreach(i ${sections})
-    install(DIRECTORY ${CMAKE_BINARY_DIR}/doc/man${i}/
+    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/man${i}/
             DESTINATION ${CMAKE_INSTALL_MANDIR}/man${i}
 	    FILES_MATCHING PATTERN "*.${i}")
   endforeach()

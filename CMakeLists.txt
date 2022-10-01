@@ -23,6 +23,9 @@ set(CMAKE_BUILD_TYPE Release)
 # Headers are all relative to project root
 include_directories(./)
 
+# Support for pulling in dependencies required for Windows install
+include(InstallRequiredSystemLibraries)
+
 # Support standard install locations
 include(GNUInstallDirs)
 
@@ -35,6 +38,9 @@ endif()
 # Pull in the rest of the pieces
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/etc")
 include(configure)
+
+# Packaging configuration
+include(packaging)
 
 # libsrecord
 add_subdirectory(srecord)
@@ -51,43 +57,5 @@ add_subdirectory(test)
 # Documentation & Man Pages
 add_subdirectory(doc)
 
-# Packaging
-set(CPACK_PACKAGE_NAME srecord)
-set(CPACK_PACKAGE_VENDOR "Scott Finneran")
-set(CPACK_PACKAGE_CONTACT "Scott Finneran <scottfinneran@yahoo.com.au>")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "SRecord - Manipulate EPROM Load Files")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
-set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(CPACK_VERBATIM_VARIABLES YES)
-#set(CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_LIST_DIR}/Description.txt)
-#set(CPACK_RESOURCE_FILE_WELCOME ${CMAKE_CURRENT_LIST_DIR}/Welcome.txt)
-set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_LIST_DIR}/LICENSE)
-#set(CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_LIST_DIR}/Readme.txt)
-SET (CPACK_DEBIAN_PACKAGE_DEPENDS "libboost-dev")
-SET (CPACK_DEBIAN_PACKAGE_DEPENDS "libgcrypt-dev")
-
-set(CPACK_SOURCE_IGNORE_FILES
-  /\\.git/
-  \\.swp
-  \\.orig
-  /CMakeLists\\.txt\\.user
-  /build/
-)
-
-if(WIN32)
-  message(STATUS "Packaging for Windows")
-  set(CPACK_GENERATOR ZIP WIX)
-elseif(APPLE)
-  message(STATUS "Packaging for Macintosh")
-  set(CPACK_GENERATOR TGZ productbuild)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  message(STATUS "Packaging for Linux")
-  set(CPACK_GENERATOR TGZ RPM DEB)
-else()
-  message(STATUS "OS not detected. Packaging default")
-  set(CPACK_GENERATOR TGZ)
-endif()
-
+# Package SRecord
 include(CPack)

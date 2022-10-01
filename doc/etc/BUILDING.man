@@ -79,6 +79,49 @@ The GNU FTP archives may be found at \f[CW]ftp.gnu.org\fP,
 and are mirrored around the world.
 .br
 .ne 1i
+.SH BUILD ENVIRONMENT SETUP - LINUX
+On systems using .deb packages such as Ubuntu or Debian, the following will
+install the necessary dependencies. Something similar will setup other
+distributions.
+.RS
+.ft CW
+.nf
+\f[B]% \fPsudo apt update
+\f[B]% \fPsudo apt install build-essential g++ doxygen psutils libgcrypt20-dev
+ghostscript groff cmake rpm
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+.PP
+.SH BUILD ENVIRONMENT SETUP - WINDOWS
+Windows builds are based on the MSYS2 environment. While based on Cygwin,
+MSYS2's is geared toward building native applications. This will allow you to
+compile SRecord, build its documentation and run its test on Windows 7 and
+later.
+.PP
+Download and run the installer as described on the MSYS2 homepage \f[CW]http://www.msys2.org\fP. Using the default installation locations is highly recommended.
+.PP
+Run the MINGW64 environment (giving a BASH prompt) and accept any updates. The
+first run will update the package database itself. Running it a second time
+will install updates flagged in the updated database.:
+.RS
+.ft CW
+.nf
+\f[B]% \fPpacman -Syu
+\f[I]\&...lots of output...\fP
+\f[B]% \fPpacman -Syu
+\f[I]\&...lots of output...\fP
+\f[B]% \fPpacman -S mingw-w64-x86_64-gcc groff mingw-w64-x86_64-boost
+\f[B]% \fPpacman -S mingw-w64-x86_64-libgcrypt mingw-w64-x86_64-cmake
+\f[B]% \fPpacman -S mingw-w64-x86_64-graphviz mingw-w64-x86_64-ninja
+\f[B]% \fPpacman -S mingw-w64-x86_64-doxygen mingw-w64-i686-ghostscript
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
 .SH SITE CONFIGURATION
 The
 .B SRecord
@@ -112,7 +155,7 @@ you just create and run cmake from a build directory
 .ft R
 .RE
 .PP
-By default,
+By default, on Linux systems,
 .I cmake
 will arrange to install the
 .B SRecord
@@ -150,7 +193,7 @@ so that they can be included in the next release.
 .br
 .ne 1i
 .SH BUILDING SRECORD
-All you should need to do is use the
+All you should need to is ensure you are in the build directory and use the
 .RS
 .ft CW
 .nf
@@ -169,7 +212,7 @@ and
 containing executables by the same name.
 .TP 8n
 .B srec_cat
-.The
+The
 .I srec_cat
 program is used to manipulate and convert EPROM load files.
 For more information, see
@@ -197,37 +240,6 @@ file.  This contains the README file, this BUILDING file,
 and all of the man pages.
 .PP
 The build directory can be deleted at any time.
-.SS Windows NT
-It is possible to build SRecord on MS Windows platforms, using the Cygwin
-(see \f[CW]www.cygwin.com\fP) or DJGPP (see
-\f[CW]www.delorie.com/djgpp\fP) environments.  This provides the
-\&\[lq]porting layer\[rq] necessary to run Unix programs on Windows.  The build
-process is exactly as described above.
-.PP
-You may need to pass in the include path to the Boost library.
-This is most simply done as
-.RS
-.ft CW
-.nf
-CC='gcc \-no\-cygwin' \e
-CXX='g++ \-mno\-cygwin \-I/usr/include/boost\-1_33_1' \e
-./configure
-.fi
-.ft R
-.RE
-.PP
-DJGPP always produces native binaries, however
-if you want to make native binaries with Cygwin (\f[I]i.e.\fP ones which
-work outside Cygwin) there is one extra step you need after running
-\f[CW]./configure\fP and before you run \f[CW]make\fP.  You need to
-edit the \f[I]Makefile\fP file, and add \f[CW]\-mno\-cygwin\fP to the end of
-the \f[CW]CXX=g++\fP line.
-.PP
-Once built (using either tool set) Windows binaries should be testable
-in the same way as described in the next section.
-However, there may be some CRLF issues in the text file comparisons
-which give false negatives, depending on the CRLF setting of your Cygwin
-file system when you unpacked the tarball.
 .br
 .ne 1i
 .SH TESTING SRECORD
@@ -263,7 +275,7 @@ should appear at the end.
 .SH INSTALLING SRECORD
 As explained in the
 .I "SITE CONFIGURATION"
-section, above,
+section, above, on Linux systems
 the
 .I SRecord
 package is installed under the
@@ -290,17 +302,42 @@ package is to use the
 .ft R
 .RE
 command.
-Control of the directories used may be found in the first
-few lines of the
-.I Makefile
-file and the other files written by the
-.I configure
-script;
-it is best to reconfigure using the
-.I configure
-script, rather than attempting to do this by hand.
 .br
 .ne 1i
+.SH PACKAGING SRECORD
+Installation packages can be created. On Linux platforms .deb, .rpm and .tar.gz
+are supported and tested. Packages are created with the following command:
+.RS
+.ft CW
+.nf
+\f[B]% \fPcpack -G DEB
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+or to build multiple packages:
+.RS
+.ft CW
+.nf
+\f[B]% \fPcpack -G "DEB;RPM;TGZ"
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+
+
+On Windows, ZIP archive is supported and is created similarly:
+.RS
+.ft CW
+.nf
+\f[B]% \fPcpack -G ZIP
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
 .SH GETTING HELP
 If you need assistance with the
 .I SRecord

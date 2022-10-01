@@ -19,27 +19,23 @@
 # Build test support executables
 file(GLOB_RECURSE TEST_ARGLEX_AMBIGUOUS_SRC "arglex_ambiguous/*.cc")
 add_executable(test_arglex_ambiguous ${TEST_ARGLEX_AMBIGUOUS_SRC})
-target_link_libraries(test_arglex_ambiguous srecord ${LIB_GCRYPT})
+target_link_libraries(test_arglex_ambiguous lib_srecord ${LIB_GCRYPT})
 
 file(GLOB_RECURSE TEST_CRC16_SRC "crc16/*.cc")
 add_executable(test_crc16 ${TEST_CRC16_SRC})
-target_link_libraries(test_crc16 srecord)
+target_link_libraries(test_crc16 lib_srecord)
 
 file(GLOB_RECURSE TEST_FLETCHER16_SRC "fletcher16/*.cc")
 add_executable(test_fletcher16 ${TEST_FLETCHER16_SRC})
-target_link_libraries(test_fletcher16 srecord)
-
-file(GLOB_RECURSE TEST_GECOS_SRC "gecos/*.cc")
-add_executable(test_gecos ${TEST_GECOS_SRC})
-target_link_libraries(test_gecos srecord)
+target_link_libraries(test_fletcher16 lib_srecord)
 
 file(GLOB_RECURSE TEST_HYPHEN_SRC "hyphen/*.cc")
 add_executable(test_hyphen ${TEST_HYPHEN_SRC})
-target_link_libraries(test_hyphen srecord)
+target_link_libraries(test_hyphen lib_srecord)
 
 file(GLOB_RECURSE TEST_URL_DECODE_SRC "url_decode/*.cc")
 add_executable(test_url_decode ${TEST_URL_DECODE_SRC})
-target_link_libraries(test_url_decode srecord)
+target_link_libraries(test_url_decode lib_srecord)
 
 configure_file(test_prelude.sh test_prelude COPYONLY)
 
@@ -56,7 +52,12 @@ foreach(t ${SRECORD_TESTS})
 
   add_test(NAME ${t} COMMAND $ENV{SHELL} ${t})
 
-  #  set_tests_properties(testPyMyproj PROPERTIES
-  #    ENVIRONMENT LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib:$ENV{LD_LIBRARY_PATH})
-  set_tests_properties(${t} PROPERTIES ENVIRONMENT PATH=${CMAKE_BINARY_DIR}:${CMAKE_BINARY_DIR}/srec_cat:${CMAKE_BINARY_DIR}/srec_cmp:${CMAKE_BINARY_DIR}/srec_info:${CMAKE_BINARY_DIR}/test:${CMAKE_SOURCE_DIR}/script:$ENV{PATH})
+  set_property(TEST ${t} APPEND PROPERTY
+      ENVIRONMENT_MODIFICATION
+      PATH=path_list_prepend:${CMAKE_BINARY_DIR}
+      PATH=path_list_prepend:${CMAKE_BINARY_DIR}/srec_cat
+      PATH=path_list_prepend:${CMAKE_BINARY_DIR}/srec_cmp
+      PATH=path_list_prepend:${CMAKE_BINARY_DIR}/srec_info
+      PATH=path_list_prepend:${CMAKE_BINARY_DIR}/test
+      PATH=path_list_prepend:${CMAKE_SOURCE_DIR}/script)
 endforeach()

@@ -67,6 +67,14 @@ endif (HAVE_GCRYPT_H)
 find_package(Boost 1.60 REQUIRED)
 set(HAVE_BOOST ${Boost_FOUND})
 
+# ps2pdf used in building the PDF version of the documentation
+find_program(PS2PDF ps2pdf)
+message(STATUS "PS2PDF ${PS2PDF}")
+
+# cygpath used in helping the build run on Windows
+find_program(CYGPATH cygpath)
+message(STATUS "CYGPATH ${CYGPATH}")
+
 # Stdlib functions
 include(CheckCXXSymbolExists)
 check_cxx_symbol_exists(snprintf string SNPRINTF_FOUND)

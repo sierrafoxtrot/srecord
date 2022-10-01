@@ -22,4 +22,4 @@
 .ad l
 .SH RELEASE NOTES
 This file details the various features and bug fixes of the various releases.
-.so doc/new.so
+.so etc/new.so
