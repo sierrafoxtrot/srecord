@@ -35,7 +35,7 @@ class output_filter_reblock:
     public output_filter
 {
 public:
-    typedef boost::shared_ptr<output_filter_reblock> pointer;
+    typedef std::shared_ptr<output_filter_reblock> pointer;
 
     /**
       * The destructor.

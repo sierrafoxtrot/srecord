@@ -19,6 +19,8 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
+#include <cassert>
+
 #include <srecord/output/file/msbin.h>
 
 
@@ -210,7 +212,7 @@ srecord::output_file_msbin::append_pending_record(const record &r)
             flush_pending_records(&r);
         }
         else
-            pending_records.push_back(boost::shared_ptr<record>(new record(r)));
+            pending_records.push_back(std::shared_ptr<record>(new record(r)));
     }
     else
     {
@@ -224,7 +226,7 @@ srecord::output_file_msbin::append_pending_record(const record &r)
             flush_pending_records(&r);
         }
         else
-            pending_records.push_back(boost::shared_ptr<record>(new record(r)));
+            pending_records.push_back(std::shared_ptr<record>(new record(r)));
     }
 }
 

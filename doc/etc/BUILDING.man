@@ -34,13 +34,6 @@ Your milage may vary.
 There are a few pieces of software you may want to
 fetch and install before you proceed with your installation of SRecord.
 .TP 8n
-Boost Library
-You will need the C++ Boost Library.
-If you are using a package based system, you will need the
-libboost\[hy]devel package, or one named something very similar.
-.br
-http://boost.org/
-.TP 8n
 Libgcrypt Library
 You will need the GNU Crypt library.
 If you are using a package based system, you will need the
@@ -113,10 +106,10 @@ will install updates flagged in the updated database.:
 \f[I]\&...lots of output...\fP
 \f[B]% \fPpacman -Syu
 \f[I]\&...lots of output...\fP
-\f[B]% \fPpacman -S mingw-w64-x86_64-gcc groff mingw-w64-x86_64-boost
-\f[B]% \fPpacman -S mingw-w64-x86_64-libgcrypt mingw-w64-x86_64-cmake
-\f[B]% \fPpacman -S mingw-w64-x86_64-graphviz mingw-w64-x86_64-ninja
-\f[B]% \fPpacman -S mingw-w64-x86_64-doxygen mingw-w64-i686-ghostscript
+\f[B]% \fPpacman -S mingw-w64-x86_64-gcc groff \\
+\f[B] \fP           mingw-w64-x86_64-libgcrypt mingw-w64-x86_64-cmake \\
+\f[B] \fP           mingw-w64-x86_64-graphviz mingw-w64-x86_64-ninja \\
+\f[B] \fP           mingw-w64-x86_64-doxygen mingw-w64-i686-ghostscript \\
 \f[I]\&...lots of output...\fP
 \f[B]%\fP
 .fi

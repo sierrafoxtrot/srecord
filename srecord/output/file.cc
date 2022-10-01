@@ -17,6 +17,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#include <cassert>
 #include <cerrno>
 #include <cstdio>
 #include <iostream>

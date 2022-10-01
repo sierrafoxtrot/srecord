@@ -36,7 +36,7 @@ class input_file:
     public input
 {
 public:
-    typedef boost::shared_ptr<input_file> pointer;
+    typedef std::shared_ptr<input_file> pointer;
 
     /**
       * The destructor.

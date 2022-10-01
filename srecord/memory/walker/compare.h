@@ -43,7 +43,7 @@ class memory_walker_compare:
     public memory_walker
 {
 public:
-    typedef boost::shared_ptr<memory_walker_compare> pointer;
+    typedef std::shared_ptr<memory_walker_compare> pointer;
 
     /**
       * The destructor.

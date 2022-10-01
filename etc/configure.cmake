@@ -63,10 +63,6 @@ if (HAVE_GCRYPT_H)
   option(HAVE_GCRY_MD_HD_T "libgcrypt HAVE_GCRY_MD_HD_T" ON)
 endif (HAVE_GCRYPT_H)
 
-# Boost library
-find_package(Boost 1.60 REQUIRED)
-set(HAVE_BOOST ${Boost_FOUND})
-
 # ps2pdf used in building the PDF version of the documentation
 find_program(PS2PDF ps2pdf)
 message(STATUS "PS2PDF ${PS2PDF}")

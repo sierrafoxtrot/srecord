@@ -33,7 +33,7 @@ class memory_walker_fletcher16:
     public memory_walker
 {
 public:
-    typedef boost::shared_ptr<memory_walker_fletcher16> pointer;
+    typedef std::shared_ptr<memory_walker_fletcher16> pointer;
 
     /**
       * The destructor.

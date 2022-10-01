@@ -21,7 +21,7 @@
 
 #include <string>
 #include <stdarg.h>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 #include <srecord/format_printf.h>
 
@@ -38,7 +38,7 @@ class quit; // forward
 class input
 {
 public:
-    typedef boost::shared_ptr<input> pointer;
+    typedef std::shared_ptr<input> pointer;
 
     /**
       * The destructor.

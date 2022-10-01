@@ -17,6 +17,8 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#include <cassert>
+
 #include <srecord/output/file/brecord.h>
 #include <srecord/record.h>
 

@@ -25,7 +25,6 @@
 #include <stdint.h>
 #include <srecord/input/file.h>
 #include <srecord/record.h>
-#include <boost/static_assert.hpp>
 
 namespace srecord {
 
@@ -159,7 +158,7 @@ private:
     void read_file_header(void);
 
     // Just to be sure we can fit uint32_t in address_t.
-    BOOST_STATIC_ASSERT(sizeof(record::address_t) >= sizeof(uint32_t));
+    static_assert(sizeof(record::address_t) >= sizeof(uint32_t));
 
     /**
       * The read_dword_le method is used to read a little endian double
