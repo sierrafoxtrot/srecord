@@ -205,6 +205,7 @@ srecord::output_file_coe::write(const srecord::record &record)
             )
                 fatal_alignment_error(width_in_bytes);
 
+            address += len;
             for (unsigned j = 0; j < len; ++j)
             {
                 if (got_data && (j % width_in_bytes) == 0)
