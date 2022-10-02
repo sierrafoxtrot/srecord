@@ -212,7 +212,7 @@ private:
     /**
       * Type holding copies of records.
       */
-    typedef std::vector<boost::shared_ptr<record> > record_vector;
+    typedef std::vector<std::shared_ptr<record> > record_vector;
 
     /**
       * The pending_records instance variable is used to keep pending

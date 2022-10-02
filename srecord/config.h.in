@@ -1,0 +1,100 @@
+/*
+ * srecord - manipulate eprom load files
+ * Copyright (C) 1998-2002, 2006-2014 Peter Miller
+ * Copyright (C) 2014-2022 Scott Finneran
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#ifndef LIB_CONFIG_H
+#define LIB_CONFIG_H
+
+/* Define to 1 if you have the `gcrypt' library (-lgcrypt). */
+#cmakedefine HAVE_LIBGCRYPT
+
+/* Define to 1 if you have a remotely recent `gcrypt' library (-lgcrypt). */
+#cmakedefine HAVE_GCRY_MD_HD_T
+
+/* Define this symbol if your operating system has a libgcrypt that supports
+   SHA224. */
+#cmakedefine HAVE_LIBGCRYPT_SHA224
+
+/* Define this symbol if your operating system has a libgcrypt that supports
+   WHIRLPOOL. */
+#cmakedefine HAVE_LIBGCRYPT_WHIRLPOOL
+
+/* Define to 1 if you have the `snprintf' function. */
+#cmakedefine HAVE_SNPRINTF
+
+/* Define this symbol if your operating system has support for sparse file
+   seeking. */
+#cmakedefine HAVE_SPARSE_LSEEK
+
+/* Define to 1 if you have the `vsnprintf' function. */
+#cmakedefine HAVE_VSNPRINTF
+
+/* Enable extensions on AIX 3, Interix.  */
+#cmakedefine _ALL_SOURCE
+
+/* Enable GNU extensions on systems that have them.  */
+#cmakedefine _GNU_SOURCE
+
+/* Enable threading extensions on Solaris.  */
+#cmakedefine _POSIX_PTHREAD_SEMANTICS
+
+/* Enable extensions on HP NonStop.  */
+#cmakedefine _TANDEM_SOURCE
+
+/* Enable general extensions on Solaris.  */
+#cmakedefine __EXTENSIONS__
+
+
+/* Define to 1 if on MINIX. */
+/* #undef _MINIX */
+
+/* Define to 2 if the system does not provide POSIX.1 features except with
+   this defined. */
+/* #undef _POSIX_1_SOURCE */
+
+/* If gcrypt is too old, there is no point trying to make it work. */
+#if defined(HAVE_LIBGCRYPT) && !defined(HAVE_GCRY_MD_HD_T)
+#undef HAVE_LIBGCRYPT
+#endif
+
+/* Make sure Solaris includes POSIX extensions. */
+#if (defined(__sun) || defined(__sun__) || defined(sun)) && \
+        (defined(__svr4__) || defined(svr4))
+
+#ifndef _POSIX_C_SOURCE
+#define _POSIX_C_SOURCE 1
+#endif
+
+#ifndef __EXTENSIONS__
+#define __EXTENSIONS__ 1
+#endif
+
+/* fix a glitch in Solaris's <sys/time.h>
+   which only show's up when you turn __EXTENSIONS__ on */
+#define _timespec timespec      // fix 2.4
+#define _tv_sec tv_sec          // fix 2.5.1
+
+#endif // sun
+
+/* Cygwin's mingw mode... */
+#if defined(__MSVCRT__)
+#define snprintf _snprintf
+#define vsnprintf _vsnprintf
+#endif
+
+#endif /* LIB_CONFIG_H */

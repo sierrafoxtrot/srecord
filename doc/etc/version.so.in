@@ -1,0 +1,4 @@
+.ds V) @srecord_VERSION@
+.ds v) @srecord_VERSION_MAJOR@.@srecord_VERSION_MINOR@
+.ds Y) @COPYRIGHT_YEARS@
+.ds C) @CMAKE_MINIMUM_REQUIRED_VERSION@

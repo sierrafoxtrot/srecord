@@ -1,0 +1,400 @@
+'\" t
+.\" srecord - manipulate eprom load files
+.\" Copyright (C) 1998, 2001, 2003, 2006-2010, 2014 Peter Miller
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 3 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program. If not, see <http://www.gnu.org/licenses/>.
+.\"
+.TH Build SRecord SRecord "Reference Manual"
+.so etc/version.so
+.if n .hy 0
+.if n .ad l
+.if n .nr IN 8n
+.SH NAME
+How to build SRecord
+.XX "" "How to build SRecord"
+.SH SPACE REQUIREMENTS
+You will need about 3MB to unpack and build the
+.I SRecord
+package.
+Your milage may vary.
+.br
+.ne 1i
+.SH BEFORE YOU START
+There are a few pieces of software you may want to
+fetch and install before you proceed with your installation of SRecord.
+.TP 8n
+Libgcrypt Library
+You will need the GNU Crypt library.
+If you are using a package based system, you will need the
+libgcrypt\[hy]devel package, or one named something very similar.
+.br
+http://directory.fsf.org/project/libgcrypt/
+.TP 8n
+GNU Libtool
+You will need the GNU Libtool software, used to build shared libraries
+on a variety of systems.
+.br
+http://www.gnu.org/software/libtool/
+.TP 8n
+CMake
+You will need CMake to build, test install SRecord from source.
+depend on a build tool. CMake
+version \*(C)
+or later is required
+.br
+http://cmake.org
+.TP 8n
+GNU Groff
+The documentation for the
+.I SRecord
+package was prepared using the GNU Groff package (version 1.14 or later).
+This distribution includes full documentation,
+which may be processed into PostScript or DVI files
+at install time \- if GNU Groff has been installed.
+.TP 8n
+GCC
+You may also want to consider fetching and installing the GNU C Compiler
+if you have not done so already.  This is not essential.
+SRecord was developed using the GNU C++ compiler, and the GNU C++ libraries.
+.PP
+The GNU FTP archives may be found at \f[CW]ftp.gnu.org\fP,
+and are mirrored around the world.
+.br
+.ne 1i
+.SH BUILD ENVIRONMENT SETUP - LINUX
+On systems using .deb packages such as Ubuntu or Debian, the following will
+install the necessary dependencies. Something similar will setup other
+distributions.
+.RS
+.ft CW
+.nf
+\f[B]% \fPsudo apt update
+\f[B]% \fPsudo apt install build-essential g++ doxygen psutils libgcrypt20-dev
+ghostscript groff cmake rpm
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+.PP
+.SH BUILD ENVIRONMENT SETUP - WINDOWS
+Windows builds are based on the MSYS2 environment. While based on Cygwin,
+MSYS2's is geared toward building native applications. This will allow you to
+compile SRecord, build its documentation and run its test on Windows 7 and
+later.
+.PP
+Download and run the installer as described on the MSYS2 homepage \f[CW]http://www.msys2.org\fP. Using the default installation locations is highly recommended.
+.PP
+Run the MINGW64 environment (giving a BASH prompt) and accept any updates. The
+first run will update the package database itself. Running it a second time
+will install updates flagged in the updated database.:
+.RS
+.ft CW
+.nf
+\f[B]% \fPpacman -Syu
+\f[I]\&...lots of output...\fP
+\f[B]% \fPpacman -Syu
+\f[I]\&...lots of output...\fP
+\f[B]% \fPpacman -S mingw-w64-x86_64-gcc groff \\
+\f[B] \fP           mingw-w64-x86_64-libgcrypt mingw-w64-x86_64-cmake \\
+\f[B] \fP           mingw-w64-x86_64-graphviz mingw-w64-x86_64-ninja \\
+\f[B] \fP           mingw-w64-x86_64-doxygen mingw-w64-i686-ghostscript \\
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+.SH SITE CONFIGURATION
+The
+.B SRecord
+package is configured using the
+.I cmake
+program.
+.PP
+.I cmake
+attempts to guess correct values for
+various system\[hy]dependent variables used during compilation,
+and creates the
+.I Makefile
+and
+.I lib/config.h
+files.
+It also creates a shell script
+.I config.status
+that you can run in the future to recreate the current configuration.
+.PP
+Normally, from the top-leve directory of the source package,
+you just create and run cmake from a build directory
+.RS
+.ft CW
+.nf
+\f[B]% \fPmkdir build
+\f[B]% \fPcd build
+\f[B]% \fPcmake ..
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+.PP
+By default, on Linux systems,
+.I cmake
+will arrange to install the
+.B SRecord
+package's files in
+.IR /usr/local/bin ,
+and
+.IR /usr/local/man .
+There are variables which allow you to control the placement
+of these files as well as many other options.
+.PP
+Here are the
+.I cmake
+variables that you might want to override with
+environment variables when running
+.IR configure .
+.TP 8n
+Variable: CXX
+C++ compiler programm. The default is determined by cmake according to the
+opeerating system and environment variables.
+.IR /usr/local .
+.TP 8n
+Variable: CMAKE_INSTALL_PREFIX
+The common root of the installation tree for the
+.ISRecord
+files
+The default is
+.IR /usr/local .
+.PP
+If you need to do unusual things to compile the package,
+the author encourages you to figure out how
+.I cmake
+could check whether to do them,
+and mail diffs or instructions to the author
+so that they can be included in the next release.
+.br
+.ne 1i
+.SH BUILDING SRECORD
+All you should need to is ensure you are in the build directory and use the
+.RS
+.ft CW
+.nf
+\f[B]% \fPcmake \-\-build .
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+command and wait.
+When this finishes you should see directories called
+.IR srec_cat ,
+.IR srec_cmp
+and
+.IR srec_info
+containing executables by the same name.
+.TP 8n
+.B srec_cat
+The
+.I srec_cat
+program is used to manipulate and convert EPROM load files.
+For more information, see
+.IR srec_cat (1).
+.TP 8n
+.B srec_cmp
+The
+.I srec_cmp
+program is used to compare EPROM load files.
+For more information, see
+.IR srec_cmp (1).
+.TP 8n
+.B srec_info
+The
+.I srec_info
+program is used to print information about EPROM load files.
+For more information, see
+.IR srec_info (1).
+.br
+.ne 1.5i
+.PP
+If you have GNU Groff installed, the build will also create a
+.I doc/REFERENCE.pdf
+file.  This contains the README file, this BUILDING file,
+and all of the man pages.
+.PP
+The build directory can be deleted at any time.
+.br
+.ne 1i
+.SH TESTING SRECORD
+The
+.I SRecord
+package comes with a test suite.
+To run this test suite, use the command
+.RS
+.ft CW
+.nf
+\f[B]% \fPctest
+\f[I]\&...lots of output...\fP
+.if n \f[B]100% tests passed, 0 tests failed out of 205\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+.PP
+The tests take a few seconds each,
+with a few very fast,
+and a couple very slow,
+but it varies greatly depending on your CPU.
+.PP
+If all went well, the message
+.RS
+.ft CW
+100% tests passed
+.ft R
+.RE
+should appear at the end.
+.br
+.ne 1i
+.SH INSTALLING SRECORD
+As explained in the
+.I "SITE CONFIGURATION"
+section, above, on Linux systems
+the
+.I SRecord
+package is installed under the
+.I /usr/local
+tree by default.
+Use the \f[CW]\-\-prefix=\fP\f[I]PATH\fP option to
+.I configure
+if you want some other path.
+More specific installation locations are assignable,
+use the \f[CW]\-\-help\fP option to
+.I configure
+for details.
+.PP
+All that is required to install the
+.I SRecord
+package is to use the
+.RS
+.ft CW
+.nf
+\f[B]% \fPcmake --install
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+command.
+.br
+.ne 1i
+.SH PACKAGING SRECORD
+Installation packages can be created. On Linux platforms .deb, .rpm and .tar.gz
+are supported and tested. Packages are created with the following command:
+.RS
+.ft CW
+.nf
+\f[B]% \fPcpack -G DEB
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+or to build multiple packages:
+.RS
+.ft CW
+.nf
+\f[B]% \fPcpack -G "DEB;RPM;TGZ"
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+
+
+On Windows, ZIP archive is supported and is created similarly:
+.RS
+.ft CW
+.nf
+\f[B]% \fPcpack -G ZIP
+\f[I]\&...lots of output...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+.SH GETTING HELP
+If you need assistance with the
+.I SRecord
+package,
+please post to the srecord\[hy]users mailing list
+.RS
+.ft CW
+srecord\[hy]users@lists.sourceforge.net
+.ft R
+.RE
+For information obout the srecord\[hy]users mailing list.
+http://srecord.sourceforge.net/mailing\[hy]list.html
+.PP
+When reporting problems,
+please include the version number
+given by the
+.RS
+.ft CW
+.nf
+\f[B]% \fPsrec_cat \-version
+.if n \f[B]srecord version\fP \f[I]\*(V)\fP
+.if t \f[CB]srecord version\fP \f[I]\*(V)\fP
+\f[I]\&...warranty disclaimer...\fP
+\f[B]%\fP
+.fi
+.ft R
+.RE
+command.
+Please do not send this example;
+run the program for the exact version number.
+.br
+.ne 2i
+.SH COPYRIGHT
+.I srecord
+version \*(v)
+.br
+Copyright
+.if n (C)
+.if t \(co
+\*(Y) Peter Miller
+.br
+Copyright
+.if n (C)
+.if t \(co
+\*(Y) Scott Finneran
+.PP
+The
+.I SRecord
+package is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
+.PP
+It should be in the
+.I LICENSE
+file included with this distribution.
+.br
+.ne 1i
+.SH AUTHOR
+.TS
+tab(;);
+l r l.
+Scott Finneran;E\[hy]Mail:;scottfinneran@yahoo.com.au
+Peter Miller;E\[hy]Mail:;pmiller@opensource.org.au
+.TE
+.\" vim: set ts=8 sw=4 et :

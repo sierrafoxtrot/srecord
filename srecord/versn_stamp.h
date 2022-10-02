@@ -38,6 +38,13 @@ const char *version_stamp(void);
 const char *copyright_years(void);
 
 /**
+  * The git_sha1 function is used to obtain the git hash as a string.
+  * This reflects git's idea of the version, so you can re-create that
+  * git version easily.
+  */
+const char *git_sha1(void);
+
+/**
   * The print_version function is used to print the program version, and
   * brief copyright notice, to the standard output.
   */

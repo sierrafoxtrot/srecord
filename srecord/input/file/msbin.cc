@@ -20,6 +20,7 @@
 //
 
 #include <algorithm>
+#include <cassert>
 #include <limits>
 #include <cstring>
 
@@ -115,13 +116,13 @@ srecord::input_file_msbin::read_file_header(void)
         buff[i] = j;
     }
 
-    BOOST_STATIC_ASSERT(sizeof(buff) >= sizeof(Magic));
+    static_assert(sizeof(buff) >= sizeof(Magic));
     if (memcmp(Magic, buff, sizeof(Magic)))
     {
         // Ok, there's no magic in the header. But it's optional anyway.
 
         // Fill up to two dwords
-        BOOST_STATIC_ASSERT(sizeof(buff) == 2 * sizeof(uint32_t));
+        static_assert(sizeof(buff) == 2 * sizeof(uint32_t));
         int j = get_char();
         if (j < 0)
             fatal_error("short input file");

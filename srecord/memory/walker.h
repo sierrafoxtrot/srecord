@@ -20,7 +20,7 @@
 #ifndef SRECORD_MEMORY_WALKER_H
 #define SRECORD_MEMORY_WALKER_H
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace srecord {
 
@@ -33,7 +33,7 @@ class record; // forward
 class memory_walker
 {
 public:
-    typedef boost::shared_ptr<memory_walker> pointer;
+    typedef std::shared_ptr<memory_walker> pointer;
 
     /**
       * The destructor.

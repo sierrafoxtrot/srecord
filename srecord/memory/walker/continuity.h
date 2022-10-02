@@ -34,7 +34,7 @@ class memory_walker_continuity:
     public memory_walker
 {
 public:
-    typedef boost::shared_ptr<memory_walker_continuity> pointer;
+    typedef std::shared_ptr<memory_walker_continuity> pointer;
 
     /**
       * The destructror.

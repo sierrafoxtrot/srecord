@@ -176,7 +176,7 @@ public:
       *
       * @param n
       *     The index into the data array, zero based.
-      *     Values when n is in excess of #length are undefined.
+      *     Values when n is in excess of @p length are undefined.
       */
     int get_data(size_t n) const { return data[n]; }
 
@@ -193,7 +193,7 @@ public:
       *
       * @param n
       *     The index into the data array, zero based.
-      *     Results when n is in excess of #length are undefined.
+      *     Results when n is in excess of @p length are undefined.
       * @param d
       *     The new data value.
       */
@@ -205,7 +205,7 @@ public:
       *
       * @param n
       *     The index into the data array, zero based.
-      *     If this is beyond #length, then #length will be extended.
+      *     If this is beyond @p length, then @p length will be extended.
       *     assert(n < max_data_length);
       * @param d
       *     The new data value.
