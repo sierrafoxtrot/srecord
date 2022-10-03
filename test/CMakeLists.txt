@@ -43,16 +43,15 @@ configure_file(test_prelude.sh test_prelude COPYONLY)
 enable_testing()
 file(GLOB_RECURSE SRECORD_TESTS "*/*.sh")
 foreach(t ${SRECORD_TESTS})
-  # TODO: would be nice to extract test description from .sh file
+  cmake_path(GET t FILENAME filename)
+
+  # Extract test description from .sh file
   file(STRINGS ${t} test_subject REGEX ^TEST_SUBJECT)
-#  message(${test_subject})
-#  string(REGEX REPLACE "TEST_SUBJECT\=" "" test_name ${test_subject})
-#  message(${test_name})
-#  add_test(NAME ${test_name} COMMAND $ENV{SHELL} ${t})
+  string(REGEX REPLACE "TEST_SUBJECT\=" "" subject ${test_subject})
+  set(test_name "${filename}: ${subject}")
 
-  add_test(NAME ${t} COMMAND $ENV{SHELL} ${t})
-
-  set_property(TEST ${t} APPEND PROPERTY
+  add_test(NAME ${test_name} COMMAND $ENV{SHELL} ${t})
+  set_property(TEST ${test_name} APPEND PROPERTY
       ENVIRONMENT_MODIFICATION
       PATH=path_list_prepend:${CMAKE_BINARY_DIR}
       PATH=path_list_prepend:${CMAKE_BINARY_DIR}/srec_cat
