@@ -17,6 +17,7 @@
 //      <http://www.gnu.org/licenses/>.
 //
 
+#include <iomanip>
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
@@ -37,6 +38,8 @@ main(int argc, char **argv)
     cmdline.token_first();
     typedef std::vector<srecord::input::pointer> infile_t;
     infile_t infile;
+    bool verbose = false;
+
     while (cmdline.token_cur() != srecord::arglex::token_eoln)
     {
         switch (cmdline.token_cur())
@@ -51,6 +54,10 @@ main(int argc, char **argv)
         case srecord::arglex_tool::token_generator:
             infile.push_back(cmdline.get_input());
             continue;
+
+        case srecord::arglex::token_verbose:
+            verbose = true;
+            break;
         }
         cmdline.token_next();
     }
@@ -125,6 +132,21 @@ main(int argc, char **argv)
             prec = 8;
         else if (range.get_highest() > (1L << 16))
             prec = 6;
+
+        unsigned long range_lowest  = range.get_lowest();
+        unsigned long range_highest = range.get_highest();
+        char buf[32];
+        if (verbose)
+        {
+            snprintf(buf, sizeof(buf), "%0*lX", prec, range_lowest);
+            std::cout << "Range:  " << buf << " - ";
+            snprintf(buf, sizeof(buf), "%0*lX", prec, range_highest);
+            std::cout << buf;
+            snprintf(buf, sizeof(buf), "%0*lX", prec, range_highest-range_lowest);
+            std::cout << " (" << buf << ")" << std::endl;
+        }
+        unsigned long number_bytes = 0L;
+
         bool first_line = true;
         for (;;)
         {
@@ -137,16 +159,34 @@ main(int argc, char **argv)
             }
             else
                 std::cout << "        ";
-            char buf[32];
             unsigned long lo = tmp.get_lowest();
             snprintf(buf, sizeof(buf), "%0*lX", prec, lo);
             std::cout << buf << " - ";
             unsigned long hi = tmp.get_highest() - 1;
+            number_bytes += hi - lo;
             snprintf(buf, sizeof(buf), "%0*lX", prec, hi);
-            std::cout << buf << std::endl;
+            std::cout << buf;
+            if(verbose)
+            {
+                snprintf(buf, sizeof(buf), "%0*lX", prec, hi - lo);
+                std::cout << " (" << buf << ")";
+            }
+            std::cout << std::endl;
+
             range -= tmp;
             if (range.empty())
                 break;
+        }
+
+        if (verbose)
+        {
+            snprintf(buf, sizeof(buf), "%0*lX", prec, number_bytes);
+            std::cout << "Filled: " << buf << std::endl;
+            double alloc_ratio = (double)number_bytes/(range_highest - range_lowest-1);
+            snprintf(buf, sizeof(buf), "%5.2f", alloc_ratio * 100);
+            std::cout << "Allocated: " << buf << "%";
+            snprintf(buf, sizeof(buf), "%5.2f", (1.0 - alloc_ratio) * 100);
+            std::cout << "   Holes: " << buf << "%" << std::endl;
         }
     }
 
