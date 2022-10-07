@@ -33,6 +33,11 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
         FILES_MATCHING PATTERN "*.h")
 
+# Install the Doxygen output for the website
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html
+        DESTINATION ${CMAKE_INSTALL_DOCDIR}/htdocs/srecord
+ 	COMPONENT website)
+
 # Generate config.h to suit local environment
 configure_file(config.h.in config.h @ONLY)
 configure_file(patchlevel.h.in patchlevel.h @ONLY)

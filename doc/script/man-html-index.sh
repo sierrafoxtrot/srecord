@@ -20,8 +20,8 @@
 echo "<html>"
 echo "<body>"
 echo '<h1 align="center">'
-echo '<img src="../srecord-64.png" align="left" />'
-echo '<img src="../srecord-64.png" align="right" />'
+echo '<img src="../srecord.png" align="left" />'
+echo '<img src="../srecord.png" align="right" />'
 echo "SRecord Manual Pages </h1>"
 oldsection=1
 echo '<br clear="all" />'

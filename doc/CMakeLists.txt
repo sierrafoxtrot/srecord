@@ -66,9 +66,8 @@ foreach(m_src ${MAN_PAGES})
     VERBATIM)
   list(APPEND MAN_PAGE_OUTPUTS ${m_target})
 
-  # HTML formatted man pages for web viewing
-  string(REGEX REPLACE [=[\.[0-9]]=] "" m_src_c ${m_src})
-  set(m_target ${CMAKE_CURRENT_BINARY_DIR}/html/man/${m_src_c}.html)
+# HTML formatted man pages for web viewing
+  set(m_target ${CMAKE_CURRENT_BINARY_DIR}/html/man/${m_src}.html)
   add_custom_command(OUTPUT ${m_target}
     COMMAND ${GROFF} -Thtml -t -man  -I${CMAKE_CURRENT_SOURCE_DIR} -I${CMAKE_CURRENT_BINARY_DIR} ${m_src} > ${m_target}
     DEPENDS ${m_src} ${MAN_COMMON}
@@ -172,13 +171,18 @@ ENDFUNCTION()
 ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/BUILDING.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/BUILDING.man "")
 ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/README.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/README.man "")
 ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/change_log.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/change_log.man "${NEW_CHANGES}")
-ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/reference.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/reference.man "${REF_PARTS};${REF_INDEX}")
+ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/reference-${srecord_VERSION_MAJOR}.${srecord_VERSION_MINOR}.pdf
+        ${CMAKE_CURRENT_SOURCE_DIR}/etc/reference.man "${REF_PARTS};${REF_INDEX}")
 add_custom_target(doco ALL DEPENDS ${DOC_TARGETS})
 
 # Installation
-# Install all the PDFs
+# A copy of the generated PDFs In the docdir for local reference
 install(FILES ${DOC_TARGETS}
-        DESTINATION ${CMAKE_INSTALL_DOCDIR})
+        DESTINATION ${CMAKE_INSTALL_DOCDIR}/)
+# Install a copy of the generated PDFs for the website
+install(FILES ${DOC_TARGETS}
+        DESTINATION ${CMAKE_INSTALL_DOCDIR}/htdocs)
+
 # Install all the man pages on not-windows
 if(NOT WIN32)
   set(sections 1 3 5)
@@ -189,7 +193,7 @@ if(NOT WIN32)
   endforeach()
 endif()
 
-message(STATUS "WEBPAGE_OUTPUTS ${WEBPAGE_OUTPUTS} ${WEBSITE_IMAGES}")
-install(FILES ${WEB_PAGE_OUTPUTS} ${WEBSITE_IMAGES}
-        DESTINATION ${CMAKE_INSTALL_DOCDIR}/html
-	COMPONENT website)
+# Install the website
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/
+        DESTINATION ${CMAKE_INSTALL_DOCDIR}/htdocs
+ 	COMPONENT website)
