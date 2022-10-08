@@ -70,8 +70,13 @@ set(CPACK_RESOURCE_FILE_LICENSE ${PROJECT_SOURCE_DIR}/LICENSE)
 #set(CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_LIST_DIR}/Readme.txt)
 SET (CPACK_DEBIAN_PACKAGE_DEPENDS "libgcrypt-dev")
 
+# Helper script to add the BUILDING instructions into the source distribution
+configure_file(etc/my_install_script.cmake.in my_install_script.cmake @ONLY)
+set(CPACK_INSTALL_SCRIPT "${CMAKE_BINARY_DIR}/my_install_script.cmake")
+
 set(CPACK_SOURCE_IGNORE_FILES
   /\\.git/
+  \\.gitignore
   \\.swp
   \\.orig
   /CMakeLists\\.txt\\.user

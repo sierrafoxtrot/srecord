@@ -1,0 +1,7 @@
+# Add the build instructions into the source distribution
+if(CPACK_SOURCE_INSTALLED_DIRECTORIES)
+  file(
+    INSTALL "@PROJECT_BINARY_DIR@/doc/BUILDING.pdf"
+    DESTINATION "${CMAKE_CURRENT_BINARY_DIR}"
+  )
+endif()
