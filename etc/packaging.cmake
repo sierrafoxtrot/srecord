@@ -68,7 +68,17 @@ set(CPACK_VERBATIM_VARIABLES YES)
 #set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_LIST_DIR}/LICENSE)
 set(CPACK_RESOURCE_FILE_LICENSE ${PROJECT_SOURCE_DIR}/LICENSE)
 #set(CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_LIST_DIR}/Readme.txt)
+
+# Debian Specifics
 SET (CPACK_DEBIAN_PACKAGE_DEPENDS "libgcrypt-dev")
+
+# Windows(NSIS) Specifics
+set(CPACK_NSIS_MUI_ICON ${CMAKE_CURRENT_SOURCE_DIR}/doc/html/srecord.ico)
+set(CPACK_NSIS_MUI_UNIICON ${CMAKE_CURRENT_SOURCE_DIR}/doc/html/srecord.ico)
+set(CPACK_NSIS_INSTALLED_ICON_NAME ${CMAKE_CURRENT_SOURCE_DIR}/doc/html/srecord.ico)
+set(CPACK_NSIS_DISPLAY_NAME "SRecord")
+set(CPACK_NSIS_PACKAGE_NAME "SRecord")
+set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL YES)
 
 # Helper script to add the BUILDING instructions into the source distribution
 configure_file(etc/my_install_script.cmake.in my_install_script.cmake @ONLY)
