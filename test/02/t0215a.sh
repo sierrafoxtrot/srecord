@@ -30,7 +30,7 @@ if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
 00000000: 01 00 00 00 0E 00 00 00 00 48 65 6C 6C 6F 2C 20  #.........Hello,
-00000010: 57 6F 72 6C 64 21 0A 8D 01 00 00 00 00 00 00 00  #World!..........
+00000010: 57 6F 72 6C 64 21 0A 7F 01 00 00 00 00 00 00 00  #World!..........
 00000020: 00 00                                            #..
 fubar
 if test $? -ne 0; then no_result; fi

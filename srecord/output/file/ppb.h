@@ -122,6 +122,11 @@ private:
     void put_bin_4be(unsigned long value);
 
     /**
+      * 8-bit checksum a 4 byte sequence.
+      */
+    unsigned char sum_ulong(unsigned long value, unsigned char sum);
+
+    /**
       * The default constructor.  Do not use.
       */
     output_file_ppb();

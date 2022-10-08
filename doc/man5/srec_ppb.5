@@ -26,25 +26,26 @@ srec_ppb \- Stag Prom Programmer binary format
 This is the native binary format of the Stag Prom Programmer.
 .SS Format
 The format is packet based.
-The packet is somposed of an 0x01 byte,
+The packet is composed of an 0x01 byte,
 the packet payload size (4 bytes, big\[hy]endian),
-the packet address size (4 bytes, big\[hy]endian),
+the packet address (4 bytes, big\[hy]endian),
 the packet data,
-and a one\[hy]byte simple sum of the payload data.
+and the negative of a one\[hy]byte simple sum of the payload size,
+address and payload data.
 .PP
 If the packet payload is more than 1024 bytes, there is an
-intermediate checksum after each 1024th payload pyte.
+intermediate checksum after each 1024th payload byte.
 .PP
 The end of file is indicated by a packet with a zero\[hy]length payload.
 .SS Command Line Option
 This format is specified using the \fB\-PPB\fP command line option.
 .SS Size Multiplier
-In general, binary data will expand in sized by approximately 1.002
+In general, binary data will expand in size by approximately 1.002
 times when represented with this format (worse if there are many short
 data regions).
 .\" ------------------------------------------------------------------------
 .SH SEE ALSO
-http://www.stag.co.uk/
+https://web.archive.org/web/20110417235840/http://www.stag.co.uk/
 .\" ------------------------------------------------------------------------
 .ds n) srec_cat
 .so man1/z_copyright.so

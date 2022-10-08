@@ -137,6 +137,18 @@ srecord::output_file_ppb::put_bin_4be(unsigned long value)
 }
 
 
+unsigned char
+srecord::output_file_ppb::sum_ulong(unsigned long value, unsigned char sum)
+{
+    sum += (value >> 24);
+    sum += (value >> 16);
+    sum += (value >> 8);
+    sum += (value);
+
+    return sum;
+}
+
+
 void
 srecord::output_file_ppb::packet(unsigned long address,
     const unsigned char *data, size_t data_size)
@@ -147,7 +159,10 @@ srecord::output_file_ppb::packet(unsigned long address,
     put_char(SOH);
     put_bin_4be(data_size);
     put_bin_4be(address);
-    unsigned char chksum = 0;
+
+    unsigned char chksum = sum_ulong(data_size, 0);
+    chksum = sum_ulong(address, chksum);
+
     for (size_t j = 0; j < data_size; ++j)
     {
         if (j > 0 && (j % CSLEN) == 0)

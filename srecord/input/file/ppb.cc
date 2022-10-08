@@ -49,19 +49,35 @@ srecord::input_file_ppb::create(const std::string &filename)
 bool
 srecord::input_file_ppb::get_packet(void)
 {
-    int c = get_char();
-    if (c < 0)
-        return false;
-    if (c != 0x01)
+    int c;
+
+    enum { SOH = 1 }; // Start of header marks begining of record
+
+    // Skip ASCII prologue (if any) and hunt for SOH
+    do{
+        c = get_char();
+        if (c < 0)
+            return false;
+        // tweak to original patch to handle CR/LF/CRLF
+//        if ((c == '\n') || (c == '\r'))
+//            continue;
+    }while(c != SOH && /*c >= ' ' &&*/ c < 0x7f);
+
+    if (c != SOH)
         packet_format_error();
+
     unsigned char hdr[8];
+    unsigned char csum = 0;
     for (int n = 0; n < 8; ++n)
     {
         c = get_char();
         if (c < 0)
             packet_format_error();
         hdr[n] = c;
+        csum += c;
     }
+
+    // 4 Byte data size for this block
     packet_length = record::decode_big_endian(hdr, 4);
     if (packet_length > sizeof(packet))
     {
@@ -72,8 +88,11 @@ srecord::input_file_ppb::get_packet(void)
             sizeof(packet)
         );
     }
+
+    // 4 Byte start address
     packet_address = record::decode_big_endian(hdr + 4, 4);
-    unsigned char csum = 0;
+
+    // Payload
     for (size_t j = 0; j < packet_length; ++j)
     {
         if (j > 0 && (j % 1024) == 0)
