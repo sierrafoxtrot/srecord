@@ -98,6 +98,9 @@ The FPC format is understood for both reading and writing.
 .TP
 Hexdump
 It is possible to get a simple hexdump as output.
+.TP
+HP64000 Absolute
+The HP64000 Absolute is understood for reading only.
 .\" ----------  I  ---------------------------------------------------------
 .TP 8n
 IDT/sim
@@ -413,6 +416,6 @@ Peter Miller;E\[hy]Mail:;pmiller@opensource.org.au
 This section details the various features and bug fixes of the various
 releases.  For excruciating and complete detail, and also credits for
 those of you who have generously sent me suggestions and bug reports,
-see the \f[I]etc/CHANGES.*\fP files.
+see the \f[I]/doc/etc/CHANGES.*\fP files.
 .so etc/new.so
 .\" vim: set ts=8 sw=4 et :
