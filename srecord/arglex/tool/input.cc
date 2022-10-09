@@ -35,6 +35,7 @@
 #include <srecord/input/file/formatted_binary.h>
 #include <srecord/input/file/four_packed_code.h>
 #include <srecord/input/file/hexdump.h>
+#include <srecord/input/file/hp64k.h>
 #include <srecord/input/file/idt.h>
 #include <srecord/input/file/intel.h>
 #include <srecord/input/file/intel16.h>
@@ -111,6 +112,7 @@ srecord::arglex_tool::get_endian_by_token(int tok)
     case token_exclusive_minimum_be:
     case token_fletcher16_be:
     case token_fletcher32_be:
+    case token_hp64k:
     case token_length_be:
     case token_maximum_be:
     case token_minimum_be:
@@ -346,6 +348,11 @@ srecord::arglex_tool::get_simple_input(void)
     case token_hexdump:
         token_next();
         ifp = input_file_hexdump::create(fn);
+        break;
+
+    case token_hp64k:
+        token_next();
+        ifp = input_file_hp64k::create(fn);
         break;
 
     case token_idt:

@@ -114,6 +114,7 @@ public:
         token_guess,
         token_haval,
         token_hexdump,
+        token_hp64k,
         token_idt,
         token_ignore_checksums,
         token_lattice_memory_initialization_format,

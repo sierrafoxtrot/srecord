@@ -126,6 +126,8 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-HAVal", token_haval, },
         { "-HEXadecimal_Dump", token_hexdump, },
         { "-HEXadecimal_STyle", token_style_hexadecimal, },
+        { "-HP64000_Absolute", token_hp64k, },
+        { "-HP64k", token_hp64k, },
         { "-IGnore_Checksums", token_ignore_checksums, },
         { "-INCLude", token_include, },
         { "-Integrated_Device_Technology", token_idt, },
