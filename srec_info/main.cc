@@ -136,17 +136,7 @@ main(int argc, char **argv)
         unsigned long range_lowest  = range.get_lowest();
         unsigned long range_highest = range.get_highest();
         char buf[32];
-        if (verbose)
-        {
-            snprintf(buf, sizeof(buf), "%0*lX", prec, range_lowest);
-            std::cout << "Range:  " << buf << " - ";
-            snprintf(buf, sizeof(buf), "%0*lX", prec, range_highest);
-            std::cout << buf;
-            snprintf(buf, sizeof(buf), "%0*lX", prec, range_highest-range_lowest);
-            std::cout << " (" << buf << ")" << std::endl;
-        }
         unsigned long number_bytes = 0L;
-
         bool first_line = true;
         for (;;)
         {
@@ -158,13 +148,15 @@ main(int argc, char **argv)
                 first_line = false;
             }
             else
+            {
                 std::cout << "        ";
+            }
             unsigned long lo = tmp.get_lowest();
             snprintf(buf, sizeof(buf), "%0*lX", prec, lo);
             std::cout << buf << " - ";
-            unsigned long hi = tmp.get_highest() - 1;
+            unsigned long hi = tmp.get_highest();
             number_bytes += hi - lo;
-            snprintf(buf, sizeof(buf), "%0*lX", prec, hi);
+            snprintf(buf, sizeof(buf), "%0*lX", prec, hi - 1);
             std::cout << buf;
             if(verbose)
             {
@@ -182,7 +174,7 @@ main(int argc, char **argv)
         {
             snprintf(buf, sizeof(buf), "%0*lX", prec, number_bytes);
             std::cout << "Filled: " << buf << std::endl;
-            double alloc_ratio = (double)number_bytes/(range_highest - range_lowest-1);
+            double alloc_ratio = (double)number_bytes/(range_highest - range_lowest);
             snprintf(buf, sizeof(buf), "%5.2f", alloc_ratio * 100);
             std::cout << "Allocated: " << buf << "%";
             snprintf(buf, sizeof(buf), "%5.2f", (1.0 - alloc_ratio) * 100);

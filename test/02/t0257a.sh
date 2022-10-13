@@ -880,21 +880,19 @@ test.in.2:
 Format: Motorola S-Record
 Header: "HDR"
 Execution Start Address: 00004000
-Range:  4000 - 7600 (3600)
-Data:   4000 - 75FF (35FF)
-Filled: 35FF
+Data:   4000 - 75FF (3600)
+Filled: 3600
 Allocated: 100.00%   Holes:  0.00%
 
 test.in.1:
 Format: Motorola S-Record
 Header: "HDR"
 Execution Start Address: 00000000
-Range:  0000 - 3600 (3600)
-Data:   0000 - 00FF (00FF)
-        0300 - 07FF (04FF)
-        0900 - 35FF (2CFF)
-Filled: 32FD
-Allocated: 94.43%   Holes:  5.57%
+Data:   0000 - 00FF (0100)
+        0300 - 07FF (0500)
+        0900 - 35FF (2D00)
+Filled: 3300
+Allocated: 94.44%   Holes:  5.56%
 fubar
 if test $? -ne 0; then no_result; fi
 
