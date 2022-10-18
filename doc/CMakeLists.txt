@@ -30,7 +30,7 @@ configure_file(script/man-html-index.sh  script/man-html-index.sh COPYONLY)
 configure_file(script/ssp.awk            script/ssp.awk COPYONLY)
 configure_file(etc/version.so.in         etc/version.so @ONLY)
 
-set(GROFF sh script/groff.sh)
+set(GROFF sh ${CMAKE_CURRENT_BINARY_DIR}/script/groff.sh)
 set(PAGE_SELECT sh script/page_select.sh)
 set(NEW_CH sh script/new.sh)
 set(REF_PTX sh script/ref_ptx.sh)
@@ -55,8 +55,28 @@ file(GLOB_RECURSE MAN_PAGES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "man*/*.[135]")
 file(GLOB_RECURSE MAN_COMMON RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "man*/[zo]_*.so")
 file(GLOB_RECURSE NEW_CHANGE_NOTES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "etc/new.*.so")
 
+# ...and now an aside on the subtle differences between linux/unix/posix
+# and Windows. Under Msys2, ost tools are able to cope with windows path
+# format filenames e.g. C:\msys2\bin. groff sadly, doesn't; specifically
+# when handling the -I option. So on Windows, let's give groff an assist
+# by using the cygpath tool to pass it in unix format.
+if(WIN32)
+  execute_process(COMMAND ${CYGPATH} -u ${CMAKE_CURRENT_SOURCE_DIR}
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    OUTPUT_VARIABLE CMAKE_CURRENT_SOURCE_DIR_UNIX_FORMAT
+    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+  execute_process(COMMAND ${CYGPATH} -u ${CMAKE_CURRENT_BINARY_DIR}
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+    OUTPUT_VARIABLE CMAKE_CURRENT_BINARY_DIR_UNIX_FORMAT
+    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+else()
+  set(CMAKE_CURRENT_SOURCE_DIR_UNIX_FORMAT ${CMAKE_CURRENT_SOURCE_DIR})
+  set(CMAKE_CURRENT_BINARY_DIR_UNIX_FORMAT ${CMAKE_CURRENT_BINARY_DIR})
+endif()
+
 foreach(m_src ${MAN_PAGES})
-  # nroff formatted man pages
+  # troff formatted man pages
   set(m_target ${CMAKE_CURRENT_BINARY_DIR}/${m_src})
   add_custom_command(OUTPUT ${m_target}
 #    COMMAND soelim -I${CMAKE_CURRENT_SOURCE_DIR}  ${m_src} | sed '/^[.]XX ./d' > ${m_target}
@@ -66,12 +86,15 @@ foreach(m_src ${MAN_PAGES})
     VERBATIM)
   list(APPEND MAN_PAGE_OUTPUTS ${m_target})
 
-# HTML formatted man pages for web viewing
+  # HTML formatted man pages for web viewing
   set(m_target ${CMAKE_CURRENT_BINARY_DIR}/html/man/${m_src}.html)
+  cmake_path(GET m_src STEM image_stem_name)
+  cmake_path(GET m_target PARENT_PATH m_target_path)
   add_custom_command(OUTPUT ${m_target}
-    COMMAND ${GROFF} -Thtml -t -man  -I${CMAKE_CURRENT_SOURCE_DIR} -I${CMAKE_CURRENT_BINARY_DIR} ${m_src} > ${m_target}
+    COMMAND ${GROFF} -Thtml -t -man -I${CMAKE_CURRENT_SOURCE_DIR_UNIX_FORMAT} -I${CMAKE_CURRENT_BINARY_DIR_UNIX_FORMAT} -P-I${image_stem_name} ${m_src} > ${m_target}
     DEPENDS ${m_src} ${MAN_COMMON}
-    COMMENT "Building ${m_target}"
+    WORKING_DIRECTORY ${m_target_path}
+    COMMENT "Building ${m_target} in ${m_target_path}"
     VERBATIM)
   list(APPEND HTML_MAN_PAGE_OUTPUTS ${m_target})
 endforeach()
@@ -86,7 +109,12 @@ add_custom_command(OUTPUT ${HTML_MAN_PAGE_INDEX}
   VERBATIM)
 
 add_custom_target(man ALL DEPENDS ${MAN_PAGE_OUTPUTS})
-add_custom_target(man-html ALL DEPENDS ${HTML_MAN_PAGE_OUTPUTS} ${HTML_MAN_PAGE_INDEX})
+if(NOT WIN32)
+  # groff which is used to generate HTML formatted man pages relies on underlying
+  # tools from the netpmb package which is as yet unsupported under MSYS2.
+  # For now, building HTML web pages only run
+  add_custom_target(man-html ALL DEPENDS ${HTML_MAN_PAGE_OUTPUTS} ${HTML_MAN_PAGE_INDEX})
+endif()
 
 # The website
 file(GLOB_RECURSE WEBSITE_IMAGES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
@@ -133,26 +161,6 @@ add_custom_command(OUTPUT ${NEW_CHANGES}
   )
 
 # Standalone Documents
-
-# ...and now an aside on the subtle differences between linux/unix/posix
-# and Windows. Under Msys2, ost tools are able to cope with windows path
-# format filenames e.g. C:\msys2\bin. groff sadly, doesn't; specifically
-# when handling the -I option. So on Windows, let's give groff an assist
-# by using the cygpath tool to pass it in unix format.
-if(CYGPATH)
-  execute_process(COMMAND ${CYGPATH} -u ${CMAKE_CURRENT_SOURCE_DIR}
-    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-    OUTPUT_VARIABLE CMAKE_CURRENT_SOURCE_DIR_UNIX_FORMAT
-    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-  execute_process(COMMAND ${CYGPATH} -u ${CMAKE_CURRENT_BINARY_DIR}
-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
-    OUTPUT_VARIABLE CMAKE_CURRENT_BINARY_DIR_UNIX_FORMAT
-    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-else()
-  set(CMAKE_CURRENT_SOURCE_DIR_UNIX_FORMAT ${CMAKE_CURRENT_SOURCE_DIR})
-  set(CMAKE_CURRENT_BINARY_DIR_UNIX_FORMAT ${CMAKE_CURRENT_BINARY_DIR})
-endif()
 
 # Transform man page(s) (ie troff format files) into a PDF
 FUNCTION(ADD_DOC TARGET SOURCE DEPS)
