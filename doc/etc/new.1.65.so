@@ -1,0 +1,285 @@
+.\"
+.\" srecord - Manipulate EPROM load files
+.\" Copyright (C) 2022 Scott Finneran
+.\"
+.\" This program is free software; you can redistribute it and/or modify it
+.\" under the terms of the GNU General Public License as published by the Free
+.\" Software Foundation; either version 3 of the License, or (at your option)
+.\" any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful, but
+.\" WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+.\" or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+.\" for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License along
+.\" with this program. If not, see <http://www.gnu.org/licenses/>.
+.\"
+.\" ------------------------------------------------------------------------
+.\"
+.ne 2i
+.SS Version 1.65 (2022\[hy]Oct\[hy]09)
+.PP
+.if n *
+.if t \(bu
+.\" commit 33cc3084f72b98cfdb7c6d8f2b783a6723496c8c
+.\" Author: fenugrec (doco write-up by Scott based on fenugrec's notes)
+.\" Date:   Sun Oct 9 14:34:29 2022 +1100
+HP64000 absolute file format contributed by fenugrec. Supports file input, tests and documentation.
+.PP
+.if n *
+.if t \(bu
+.\" commit 8801f6185d4512480082cb4b3219d9385b7b2daf
+.\" Author: dg1yfe
+.\" Date:   Sun Oct 9 09:59:42 2022 +1100
+Patch by dg1yfe as pulled from github via marcows. Updated man page for srec_ppb. Updated PPB output to match checksum range for output. Updated tests for PPB write and read including files containing holes. Tweaked patch to handle multi-line and arbirtary ascii before SOH. Added test for prolog stripping.
+.PP
+.if n *
+.if t \(bu
+.\" commit 8b24d5eb11dc070d4dec5dff731d16677aac5133
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sat Oct 8 14:13:00 2022 +1100
+Added NSIS installer build for Windows.
+.PP
+.if n *
+.if t \(bu
+.\" commit fc65f800eaeea192f0f2025128d9d45d7e1982ae
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sat Oct 8 13:10:48 2022 +1100
+.\" Add BUILDING.pdf to source distribution package
+.\" commit 2a664dfcf1885b5a60b14b0e262c899d4e3fed87
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Fri Oct 7 21:45:01 2022 +1100
+.\"     Clean-up and install all website components correctly including doxygen and html-man pages. Updated index page generation. Add major.minor version number to reference manual filename.
+.\"
+.\" commit d4d74629c9e1ccbb871d32a1ceb2ba97ac3a78dd
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Mon Oct 3 21:01:46 2022 +1100
+Verbose srec_info as suggested by Thomas. Display basic info on the proportion of input files which data/holes.
+.\" commit f729fc5c139b116a169c3082ace65eedf7508f7b
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Mon Oct 3 11:12:02 2022 +1100
+.\"     Add test subject extracted from test script to ctest name
+.\" .\" commit faa84cf4f742137baa8d42a150940b1e69fb3edc
+.\" Merge: c8cd8a3 84afd0a
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Mon Oct 3 10:21:13 2022 +1100
+.\"     Merge branch 'cmake'. Add cmake based build and configure system.
+.\" .\" commit c8cd8a315bae0c7fa61d1805dc94efb9b6874c0c
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Sun Oct 2 15:55:30 2022 +1100
+.\" Added NSIS installer build for Windows.
+.PP
+.if n *
+.if t \(bu
+Bug fix from xiretza for COE generation falsly detecting holes in input.
+.\" commit 84afd0aacce2252c20d3b757b92da44358f0a001
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sat Oct 1 22:27:29 2022 +1000
+.PP
+.if n *
+.if t \(bu
+Remove dependencies on boost moving to std shared_ptr and static_assert. Remove doc references to boost.
+.\" commit 1c41cfeb99a2e630b2eec6674bc9a0a759857d79
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sat Oct 1 19:51:15 2022 +1000
+.PP
+.if n *
+.if t \(bu
+Full Windows build, test and packaging supported under MSYS2. Build documentation updated to cover Windows and windows web page deprecated.
+.\" commit ea8c4d8e96a31f2e2a3a011ec1460b01d534b3e1
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Thu Sep 22 21:25:32 2022 +1000
+.\"     Package development headers for libSrecord. Fix dependency issues for deb packages. Generate source distribution packages
+.\" commit 427b186a083ef3658cbdf9d8b1644ad995738f8b
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sun Sep 18 13:58:26 2022 +1000
+.\" Updated building instructions to cover cmake including automatically updated reference to the minimum version of cmake required
+.\" commit e052d50a31a5cd3b7b97ea3631b5d57a0a5257ea
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sat Sep 17 21:52:25 2022 +1000
+.\" Add note to top of index.html
+.\" commit 17cdf81fd62e7b1a7bcb7351bb62de5a4670e111
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sat Sep 17 21:15:59 2022 +1000
+.\" Fix website icon
+.\"
+.\" commit dc420bb075c17215e29acc91dbc093fc918f4de4
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sat Sep 17 20:58:46 2022 +1000
+.\"
+.\" Tidy website index.html. Drop sourceforge hosted aegis instance generated stats. Retrieved Peter's photo from archive.org, Remove page counter
+.\"
+.\" commit 98ceff0b2bd5c42eecbe180ca1281864a5f3004f
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sat Sep 17 20:10:24 2022 +1000
+.\"
+.\"     Package web pages
+.\"
+.\" commit b9eab29703314aec9e1ee5d86d8c7837e49d91d0
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sat Sep 17 09:48:41 2022 +1000
+.\"
+.\"     Building as yet unpackaged website
+.\"
+.\" commit 9896bebb18eee106ebf7baf2b29dc39c4cd9c6cd
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Fri Sep 16 22:46:08 2022 +1000
+.\"
+.\"     Start on website restore. uudecode images. Generate HTML man pages
+.\"
+.\" commit 5787c9ef6ad1859b188c9c6edaec4d005253923a
+.\" Merge: eebfc7a 3206c9c
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Thu Sep 15 22:20:27 2022 +1000
+.\"
+.\"     Merge branch 'master' into cmake. Pull in bug fixes
+.\"
+.\" commit 3206c9cf9593f0955fd91d619ff6ccbb71226c4c
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Thu Sep 15 22:15:07 2022 +1000
+.PP
+.if n *
+.if t \(bu
+Fixed buffer overflow in four packed code output generator.
+.\" commit eebfc7a1248ad58627180468840187e3ef0d05f8
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Thu Sep 15 21:57:18 2022 +1000
+.\" Doxygen via cmake module including class doco and diagrams. Tidied warnings in doxygen generation
+.\" .\" commit 570a1a1a813a433ffe95153cbc5c5434f7441139
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Mon Sep 12 23:10:52 2022 +1000
+.\" Remove test_hyphen
+.\" .\" commit e0f86ffd4d28f928ffed8166691b3a296c4a1434
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Mon Sep 12 23:07:39 2022 +1000
+.\"     Tidy up configure_files
+.\" .\" commit 4968e2844426cfd0e864861ca3d44a88bf9d4008
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Mon Sep 12 19:46:49 2022 +1000
+.\"     Project versioning via CMake through to binaries and doco
+.\" .\" commit 2ece3108987a6d792096cea9c504e3136d42c9e9
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Mon Sep 12 17:28:58 2022 +1000
+.\"     CMake generated copyright years list for executables
+.\" .\" commit e954ba17139f34a491210f3c3cfcda27aa26aa48
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Mon Sep 12 15:36:31 2022 +1000
+.\"     Git version info in executables and library
+.\" .\" commit 961ad6e084d960a6142b0e0378c9f95c1eed1039
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Sun Sep 11 21:18:20 2022 +1000
+.\"     Replace autoconf with cmake config
+.\" .\" commit f533eeb9d29d4f6d1853eaa14ea09bcd682bc561
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Sat Sep 10 21:44:03 2022 +1000
+.\"     Begin packaging
+.\" .\" commit 9f0435f7223adb2262fe2b5cf6960da56408c94f
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Sat Sep 10 20:14:58 2022 +1000
+.\"     Fixed soelim parsing of man pages
+.\" .\" commit 15e4a70c0eab7bc8dc67b9608c8d9f49be6bc18d
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Sat Sep 10 17:26:52 2022 +1000
+.\"     Add man pages and docs to installer. Install as per FHS
+.\" .\" commit 007e9cce1c24f0a05721f205c321d0ef0c2cdd63
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Wed Sep 7 20:12:00 2022 +1000
+.\"     Get indexes building
+.\" .\" commit 66ed2fe42ddc3844645fbe933c86f39877411ceb
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Wed Sep 7 19:44:18 2022 +1000
+.\"     Get standalone docs compiling to bulid directory
+.\" commit 69ebff893b0032f241fbbd5480cf5aa6b652d30b
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Wed Sep 7 19:21:43 2022 +1000
+.\" Move documentation to doc directory. Get man pages compiling to bulid directory
+.\" commit be71aa0d26f2d4299b3cccc27ea169dd04efb17a
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Fri Sep 2 21:26:19 2022 +1000
+.\" Add installer for executables and libsrecord
+.\" commit e78e87c233136ac9c90f83c3f23d9dec342f94af
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sun Aug 28 19:58:36 2022 +1000
+.\" Documentation level CMakeLists.txt
+.\" commit 1885fc21db89686ef5d87ba83902ba62702321fe
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sun Aug 28 15:58:32 2022 +1000
+.\"     Tests working
+.\" .\" commit e41541dfb24135a7364f23648bdde6f29b89243e
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Sun Aug 28 14:37:00 2022 +1000
+.\"     Test directory toplevel CMakeLists.txt. Support tools building. Tests no longer running
+.\" .\" commit 96f4ce54ba8ab24d35e10c1a4aed9c2d9c13ce09
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Sun Aug 28 14:00:18 2022 +1000
+.\"     Add CMakeLists.txt for main executables
+.\" .\" commit a2fc94c99de23a09e6ecf5045607a7de4f66a83a
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Sun Aug 28 13:44:17 2022 +1000
+.\"     Remove -l args in libsrecord
+.\" .\" commit a2b7b5867588f437dd6719488fabe8c8a34259d5
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Wed Aug 17 20:31:21 2022 +1000
+.\"     added license and authors update
+.\" .\" commit 9917e27c75662496aa77978687da1c3d72af900a
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Sun Jun 23 21:26:39 2019 +1000
+.\"     General tidy. Removing legacy files
+.\" .\" commit 0dd23bce62659252f11710f08773b87bab9897e4
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Thu Nov 1 17:22:47 2018 +1100
+.\"     Implement the page select processing for doco
+.\" .\" commit d169efa54eda1b221440eaf5ef0f66eed869da7f
+.\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" .\" Date:   Wed Oct 31 17:52:47 2018 +1100
+.\"     Tidy dependecies
+.\" commit ebff9947741b08f10f918d49ad01e75191959e9c
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Wed Oct 31 17:46:55 2018 +1100
+.\" Continuing doco build system. Now creating reference manual autogenerated indexes etc. Dependencies still need work. The deeper I dig, the more I'm impressed with Peter's thoroughness
+.\" commit fc57b9905f6ddc7e58a3f863cefeb91b11c451ed
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Mon Oct 29 22:02:16 2018 +1100
+.\"
+.\"     Add generic document target function
+.\"
+.\" commit 992e506b6fb3275139df7d5b31dbdd4089c08c1f
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sun Oct 28 21:25:41 2018 +1100
+.\" Split out ever growing CMakeLists.txt file to doco and tests cmake include files. In future, we'll likely need one for building tarballs and distro archives
+.\" commit 75650247ab81fe2bfba34b4f0ba45d63c2763e4c
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Thu Oct 25 19:40:39 2018 +1100
+.\" Pulled in groff wrapper script to fix man page generation
+.\" commit 1573e4a7ab5ac8b16b896f8081f0e8ca7fbd2647
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Wed Oct 17 21:57:05 2018 +1100
+.\" First pass at CMake based build system. Building executables, tests, doco and man pages. All tests also run to completion. Still plenty to improve and generalise.
+.\" commit 6e305487ebcb9b3302d4dda6f0e2a99afdacf560
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Mon Oct 15 20:56:47 2018 +1100
+.\" Removed script/test_prelude.sh as it is a build target not source
+.\" commit c33d8e0a1ebd1e0e4c659329d49b8998fecd8d44
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sun Oct 14 14:46:41 2018 +1100
+.\" Added in test_prelude.sh for pre-build. Added .gitignore.
+.\"
+.\" commit fb1544c87e7b02dc2df4ee12d796d400c8fb9783
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Sun Oct 14 13:57:18 2018 +1100
+.\" Initial move from aegis and cook to git and autotools
+.\" commit 3a7c13a14955a307685301f82661141d8e198962
+.\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
+.\" Date:   Tue Aug 12 19:32:18 2014 +1000
+.PP
+.if n *
+.if t \(bu
+Marksu Heidelberg <markus.heidelberg@web.de> contributed a patch to fix a bug that he also found with the -generator which resulted in an endless loop.
+.PP
+.if n *
+.if t \(bu
+Completely new build and config system to replace Aegis, Cook and autoconf with cmake & git. Integration with cpack to generate linux and windows packages. Integration with ctest to sustain the regression test suite.
+.\" ------------------------------------------------------------------------
+.\" Add new entries above this line.
+.\" vim: set ts=8 sw=4 et :
