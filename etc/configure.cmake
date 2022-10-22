@@ -34,7 +34,7 @@ endif()
 if(GIT_SHA1)
   # Get a single list of copyright years for changes made to SRecord
   execute_process(
-    COMMAND "${GIT_EXECUTABLE}" log --reverse --date=format:%Y --pretty=format:%as
+    COMMAND "${GIT_EXECUTABLE}" log --reverse --date=format:%Y --pretty=format:%ad
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
     OUTPUT_VARIABLE DATES
     ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
