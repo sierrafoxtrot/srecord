@@ -19,36 +19,67 @@
 # Generated content
 
 # Get the git hash
-find_package(Git)
-if(Git_FOUND)
-  message(STATUS "Git executable found: ${GIT_EXECUTABLE}")
+function(get_git_hash)
+  if(NOT Git_FOUND)
+    return()
+  endif()
+
+  set(hash_length 10)
+  math(EXPR dirty_length "${hash_length} + 6")
+
   execute_process(COMMAND
-    "${GIT_EXECUTABLE}" describe --match=NeVeRmAtCh --always --abbrev=10 --dirty
+    "${GIT_EXECUTABLE}" describe --match=NeVeRmAtCh --always --abbrev=${hash_length} --dirty
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    RESULT_VARIABLE exitcode
     OUTPUT_VARIABLE GIT_SHA1
-    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-else()
-  set(GIT_SHA1 "GIT Hash Not Found")
-endif()
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET)
 
-if(GIT_SHA1)
-  # Get a single list of copyright years for changes made to SRecord
+  # String length shall either be equal to hash length or +6 for "-dirty" suffix
+  string(LENGTH "${GIT_SHA1}" length)
+
+  if(("${exitcode}" EQUAL "0") AND (("${length}" EQUAL "${hash_length}") OR ("${length}" EQUAL "${dirty_length}")))
+    message(STATUS "GIT_SHA1 ${GIT_SHA1}")
+    set(GIT_SHA1 "${GIT_SHA1}" PARENT_SCOPE)
+  endif()
+endfunction()
+
+# Get a single list of copyright years for changes made to SRecord
+function(get_copyright_years_from_git)
+  if(NOT DEFINED GIT_SHA1)
+    return()
+  endif()
+
   execute_process(
-    COMMAND "${GIT_EXECUTABLE}" log --reverse --date=format:%Y --pretty=format:%ad
+    COMMAND "${GIT_EXECUTABLE}" log --reverse --date=format:%Y --pretty=format:%ad%n%cd
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-    OUTPUT_VARIABLE DATES
-    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+    RESULT_VARIABLE exitcode
+    OUTPUT_VARIABLE all_years
+    ERROR_QUIET)
 
-  string(REGEX MATCHALL "[0-9][0-9][0-9][0-9]" all_years ${DATES})
-  list(REMOVE_DUPLICATES all_years)
-  string(REPLACE ";" ", " COPYRIGHT_YEARS "${all_years}")
-else()
+  if("${exitcode}" EQUAL "0")
+    string(REGEX MATCHALL "[[0-9][0-9][0-9][0-9]" all_years ${all_years})
+    if(NOT "${all_years}" STREQUAL "")
+      list(REMOVE_DUPLICATES all_years)
+      list(SORT all_years)
+      list(JOIN all_years ", " COPYRIGHT_YEARS)
+      set(COPYRIGHT_YEARS "${COPYRIGHT_YEARS}" PARENT_SCOPE)
+    endif()
+  endif()
+endfunction()
+
+find_package(Git)
+get_git_hash()
+get_copyright_years_from_git()
+
+if(NOT DEFINED COPYRIGHT_YEARS)
   # In all likelihood, we are building from a source copy outside of the
   # git repo so let's use some reasonable/meaningful defaults.
   message(STATUS "Git is not installed or this is not a repository clone")
   set(GIT_SHA1 "unknown")
   set(COPYRIGHT_YEARS "1998...")
 endif()
+message(STATUS "COPYRIGHT_YEARS ${COPYRIGHT_YEARS}")
 
 # Autoconf-like tasks:
 # Crypto library
