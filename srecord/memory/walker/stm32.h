@@ -35,7 +35,7 @@ namespace srecord
 {
 
 /**
-  * The memory_walker_stm32 class is a vistor for calculating the CRC used by
+  * The memory_walker_stm32 class is a visitor for calculating the CRC used by
   * the hardware CRC unit on the STM32 series of ARM MPUs. The algo used by the
   * STM32 hardware unit is just a CRC with a different polynomial and word-fed
   * instead of byte-fed.  The MPU is little endian but srecord will compute the

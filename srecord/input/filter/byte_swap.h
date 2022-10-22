@@ -43,7 +43,7 @@ private:
       * The constructor.
       *
       * @param deeper
-      *     The incoming data sourec to be byte-swapped.
+      *     The incoming data source to be byte-swapped.
       */
     input_filter_byte_swap(const input::pointer &deeper);
 
@@ -53,7 +53,7 @@ public:
       * allocated instances of this class.
       *
       * @param deeper
-      *     The incoming data sourec to be byte-swapped.
+      *     The incoming data source to be byte-swapped.
       */
     static pointer create(const input::pointer &deeper);
 
@@ -72,7 +72,7 @@ private:
     record buffer;
 
     /**
-      * The buffer_pos instance variable is used to remeber the byte
+      * The buffer_pos instance variable is used to remember the byte
       * position within the buffer instance variable.
       */
     size_t buffer_pos;

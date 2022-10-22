@@ -71,7 +71,7 @@ private:
 
     /**
       * The data_count instance variable is used to remember the number
-      * of data lines has occurred fo far in the input file.
+      * of data lines has occurred so far in the input file.
       */
     unsigned long data_count;
 

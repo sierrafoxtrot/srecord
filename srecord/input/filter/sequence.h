@@ -28,7 +28,7 @@ namespace srecord
 /**
   * The srecord::input_filter_sequence class is used to represent an input
   * filter which does not change the data in any way, but issues
-  * warnings if the data is not instrictly ascending address order.
+  * warnings if the data is not in strictly ascending address order.
   */
 class input_filter_sequence:
     public input_filter
@@ -72,7 +72,7 @@ private:
       *
       * We only issue a single warning, because the linker in some
       * embedded too chains emit zillions of these as they walk across
-      * object files updating segemnts in parallel.
+      * object files updating segments in parallel.
       */
     bool warned;
 

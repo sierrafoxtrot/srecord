@@ -26,7 +26,7 @@ namespace srecord
 
 /**
   * The adler16 class is used to represent the running value of a 16-bit
-  * Adler checksum of series of bytes.  (Using an algorith analogous to
+  * Adler checksum of series of bytes.  (Using an algorithm analogous to
   * Adler-32, but using mod 251 instead of 65521).
   */
 class adler16

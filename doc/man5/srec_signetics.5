@@ -67,7 +67,7 @@ it does not matter if you use a..f or A..F.
 .PP
 Unfortunately the colon was chosen for the Signetics file format, similar
 to the Intel format (see \fIsrec_intel\fP(5) for more information).
-However, SRecord is able to automatically detect the dofference between
+However, SRecord is able to automatically detect the difference between
 the two format, when you use the \fB\-Guess\fP format specifier.
 .SS Address Field
 This is the address where the first data byte of the record should be
@@ -100,7 +100,7 @@ The checksum is calculated by this algorithm:
 .nf
 checksum = 0
 for i = 1 to 3
-  checksum = checkum XOR byte
+  checksum = checksum XOR byte
   ROL checksum
 next i
 .fi

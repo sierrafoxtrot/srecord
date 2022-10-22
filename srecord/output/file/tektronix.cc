@@ -100,7 +100,7 @@ srecord::output_file_tektronix::write(const srecord::record &record)
     switch (record.get_type())
     {
     case srecord::record::type_header:
-        // This format can't do header reocrds
+        // This format can't do header records
         break;
 
     case srecord::record::type_data:
@@ -147,7 +147,7 @@ srecord::output_file_tektronix::line_length_set(int n)
 {
     //
     // Given the number of characters, figure the maximum number of
-    // data baytes.
+    // data bytes.
     //
     n = (n - 11) / 2;
 

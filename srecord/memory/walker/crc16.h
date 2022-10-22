@@ -37,7 +37,7 @@ public:
     typedef std::shared_ptr<memory_walker_crc16> pointer;
 
     /**
-      * The destructror.
+      * The destructor.
       */
     virtual ~memory_walker_crc16();
 

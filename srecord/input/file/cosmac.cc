@@ -75,7 +75,7 @@ srecord::input_file_cosmac::read(record &result)
             break;
 
         case 'M':
-            // either we want an address, or we want a simicolon (an
+            // either we want an address, or we want a semicolon (an
             // address will follow a semicolon)
             if (c == ';')
             {

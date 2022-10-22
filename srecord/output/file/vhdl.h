@@ -85,7 +85,7 @@ private:
     /**
       * The bytes_per_word instance variable is used to remember how
       * many bytes to emit per output row.  This is because words are
-      * packed into an arry of values larger than a single byte.
+      * packed into an array of values larger than a single byte.
       */
     unsigned bytes_per_word;
 

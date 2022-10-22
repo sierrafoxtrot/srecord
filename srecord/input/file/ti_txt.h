@@ -24,7 +24,7 @@
 namespace srecord {
 
 /**
-  * The srecord::input_file_ti_txt class is used to repesent the parse
+  * The srecord::input_file_ti_txt class is used to represent the parse
   * state when reading a ti_txt (MSP430) format input file.
   */
 class input_file_ti_txt:

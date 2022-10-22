@@ -275,7 +275,7 @@ Fixed buffer overflow in four packed code output generator.
 .PP
 .if n *
 .if t \(bu
-Marksu Heidelberg <markus.heidelberg@web.de> contributed a patch to fix a bug that he also found with the -generator which resulted in an endless loop.
+Markus Heidelberg <markus.heidelberg@web.de> contributed a patch to fix a bug that he also found with the -generator which resulted in an endless loop.
 .PP
 .if n *
 .if t \(bu

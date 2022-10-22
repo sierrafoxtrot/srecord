@@ -24,7 +24,7 @@
 namespace srecord {
 
 /**
-  * The srecord::input_file_tektronix_extended clas sis used to represent
+  * The srecord::input_file_tektronix_extended class is used to represent
   * the parse state of an input file in Tektronix Extended format.
   */
 class input_file_tektronix_extended:

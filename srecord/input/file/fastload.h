@@ -59,7 +59,7 @@ protected:
 private:
     /**
       * A constructor.  The input is read from the named file (or
-      * the standard input if the file anme is "-").
+      * the standard input if the file name is "-").
       *
       * @param file_name
       *     The name of the file to be read.
@@ -73,7 +73,7 @@ private:
     bool read_inner(record &);
 
     /**
-      * Get a singe base-64 digit.  Returns 0..63 for a valid digit.
+      * Get a single base-64 digit.  Returns 0..63 for a valid digit.
       * Fatal error if not a valid base-64 digit.
       */
     int get_digit(void);

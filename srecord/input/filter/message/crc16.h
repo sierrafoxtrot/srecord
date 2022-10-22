@@ -108,7 +108,7 @@ private:
     unsigned short polynomial;
 
     /**
-      * The bitdir instance variable is used to rememebr the bit
+      * The bitdir instance variable is used to remember the bit
       * direction of the CRC.
       */
     crc16::bit_direction_t bitdir;

@@ -97,7 +97,7 @@ private:
         const void *data, int data_len);
 
     /**
-      * The endia instance variable is used to remember whetehr this
+      * The endian instance variable is used to remember whether this
       * file is big-endian or little-endian.
       */
     endian_t endian;
@@ -109,14 +109,14 @@ private:
     unsigned long address;
 
     /**
-      * The base instance variable is used to remember teh base address
+      * The base instance variable is used to remember the base address
       * of the current flash segment.
       */
     unsigned long base;
 
     /**
       * The base_set instance variable is used to remember whether or
-      * not the #base instance varaible has been set yet.  This also
+      * not the #base instance variable has been set yet.  This also
       * implies no data has been seen yet.
       */
     bool base_set;
@@ -141,7 +141,7 @@ private:
     void buffer_flush(void);
 
     /**
-      * The buffer_flush_newline method is used to write the datam,
+      * The buffer_flush_newline method is used to write the data,
       * using the #buffer_flush method, and then issue a newline if the
       * output is not at the beginning of a new line.
       */
@@ -155,7 +155,7 @@ private:
     int line_length;
 
     /**
-      * The column instance variable is used to rememebr the current
+      * The column instance variable is used to remember the current
       * output column.  If zero, it means we are positioned at the
       * beginning of a new line of text.
       */

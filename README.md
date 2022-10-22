@@ -7,8 +7,8 @@ The SRecord package is a collection of powerful tools for manipulating EPROM loa
 The SRecord package understands a number of file formats:
 
 * **Ascii-Hex****: The ascii-hex format is understood for both reading and writing. (Also known as the ascii-space-hex format.)
-* **ASM**: It is possible, for output only, to produce a serices of DB statements containing the data. This can be useful for embedding data into assembler programs. This format cannot be read. Atmel Generic This format is produced by the Atmel AVR assembler. It is understood for both reading and writing.
-* **BASIC**: It is possible, for output only, to produce a serices of DATA statements cntaining the data. This can be useful for embedding data into BASIC programs. This format cannot be read.
+* **ASM**: It is possible, for output only, to produce a series of DB statements containing the data. This can be useful for embedding data into assembler programs. This format cannot be read. Atmel Generic This format is produced by the Atmel AVR assembler. It is understood for both reading and writing.
+* **BASIC**: It is possible, for output only, to produce a series of DATA statements cntaining the data. This can be useful for embedding data into BASIC programs. This format cannot be read.
 * **BinaryBinary**: files can both be read and written.
 * **B-Record**: Files in Freescale Dragonball bootstrap b-record format can be read and written.
 * **C**: It is also possible to write a C array declaration which contains the data. This can be useful when you want to embed download data into C programs. This format cannot be read.

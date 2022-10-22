@@ -80,7 +80,7 @@ protected:
 private:
     /**
       * The address instance variable is used to remember the start of
-      * the generated data, so that modulo arithmentic will align the
+      * the generated data, so that modulo arithmetic will align the
       * data repeats.
       */
     unsigned long address;
@@ -92,7 +92,7 @@ private:
     unsigned char *data;
 
     /**
-      * The length instance variable is used to remember the lenth of
+      * The length instance variable is used to remember the length of
       * the dynamically allocated array of data to be repeated.
       */
     size_t length;

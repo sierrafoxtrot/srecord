@@ -31,8 +31,8 @@
 namespace srecord {
 
 /**
-  * The arglex class is used to implement a lexical analizer for command
-  * line arguments.  Each comamnd line argument is analized to determine
+  * The arglex class is used to implement a lexical analyzer for command
+  * line arguments.  Each command line argument is analyzed to determine
   * if it is a number, a string (file name) or an option.
   */
 class arglex
@@ -82,14 +82,14 @@ public:
     };
 
     /**
-      * The table_ty struct is used to repesent a row of a
-      * commandline option table, used to match option names with
+      * The table_ty struct is used to represent a row of a
+      * command line option table, used to match option names with
       * their corresponding tokens.
       */
     struct table_ty
     {
         /**
-          * The name of the commen line option.
+          * The name of the command line option.
           */
         const char *name;
 
@@ -130,7 +130,7 @@ public:
       * This rather ugly feature is to support "-I./dir" type options.
       *
       * A backslash in a pattern nominates an exact match required, case
-      * must matche excatly here.  This rather ugly feature is to support
+      * must match exactly here.  This rather ugly feature is to support
       * "-I./dir" type options.
       *
       * For example: "-project" and "-P" both match "-Project", as does
@@ -246,7 +246,7 @@ public:
     int token_next(void);
 
     /**
-      * The token_first method is used to fetch the fisrt command
+      * The token_first method is used to fetch the first command
       * like token (rather than use the token_next method).  This does
       * standard "help" and "version" options.
       */
@@ -360,7 +360,7 @@ private:
 
     /**
       * The check_deprecated method is used to check an actual command
-      * line option agans the list of deprectaed options, and issue a
+      * line option against the list of deprecated options, and issue a
       * suitable warning of necessary.
       *
       * @param actual_use
@@ -371,10 +371,10 @@ private:
 protected:
     /**
       * The deprecated_option method is used to nominate option patterns
-      * that are deprected.
+      * that are deprecated.
       *
       * @param formal_name
-      *     The pattern that is deprected.  Must be an entry in one of
+      *     The pattern that is deprecated.  Must be an entry in one of
       *     the tables, otherwise users are going to be VERY confused.
       */
     void deprecated_option(const std::string &formal_name);

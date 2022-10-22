@@ -24,8 +24,8 @@
 namespace srecord {
 
 /**
-  * The srecord::input_file_wilson clas sis used to represent the parse state
-  * of an input file in Wilson format.  (Named after the person who wasked
+  * The srecord::input_file_wilson class is used to represent the parse state
+  * of an input file in Wilson format.  (Named after the person who asked
   * for it; I still don't have an official definition of this format,
   * but it is very much like a binary(ish) form of the Motorola format.)
   */

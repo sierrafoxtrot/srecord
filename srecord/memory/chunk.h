@@ -102,14 +102,14 @@ public:
     unsigned long get_address() const { return address; }
 
     /**
-      * The equal class method is used to determine wherther two memory
+      * The equal class method is used to determine whether two memory
       * chunks are equal.  The must have the same address, the same bit
       * mask, and the same byte values on the valid bytes.
       */
     static bool equal(const memory_chunk &, const memory_chunk &);
 
     /**
-      * The find_next_data method is used when iteratinbg across all of
+      * The find_next_data method is used when iterating across all of
       * the bytes set within the chunk.
       */
     bool find_next_data(unsigned long &, void *, size_t &) const;
@@ -137,7 +137,7 @@ private:
     unsigned long address;
 
     /**
-      * The data array is used to remember the valus of valid data bytes.
+      * The data array is used to remember the values of valid data bytes.
       */
     unsigned char data[size];
 

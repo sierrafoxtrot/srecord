@@ -78,7 +78,7 @@ private:
 
     /**
       * The read_inner method is used to read a single line of input.
-      * the raed method is a wrapper around this method.
+      * the read method is a wrapper around this method.
       */
     bool read_inner(record &);
 

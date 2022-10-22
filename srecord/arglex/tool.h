@@ -248,7 +248,7 @@ public:
 
     /**
       * The get_number method is used to parse a numeric value
-      * from the command line, and check it agains a specified range.
+      * from the command line, and check it against a specified range.
       *
       * @param caption
       *     for the error message, if necessary
@@ -272,7 +272,7 @@ public:
       *
       * Used by the get_input method to parse the address intervals used
       * by various filters.  It is the lowest precedence level, and
-      * handsles set union (the implicit operator) and set difference
+      * handles set union (the implicit operator) and set difference
       * (the - operator).
       *
       * If the parse is unsuccessful (is not present on command
@@ -390,7 +390,7 @@ private:
       * remember whether or not to issue data sequence warnings when
       * data records are not in strictly ascending address order.
       *
-      * Negative means not set from the command line, zero means diabled
+      * Negative means not set from the command line, zero means disabled
       * from the command line, positive means enabled on the command
       * line.
       */
@@ -413,7 +413,7 @@ private:
       * little-endian variants of filters and file formats.
       *
       * @param tok
-      *     the noken the endien-ness is required for.
+      *     the token the endian-ness is required for.
       */
     endian_t get_endian_by_token(int tok) const;
 
@@ -457,7 +457,7 @@ private:
     defcon_t redundant_bytes;
 
     /**
-      * The vontradivtory_bytes instance variable is used to remember what
+      * The contradictory_bytes instance variable is used to remember what
       * to do when faced with multiple different byte values for a
       * memory address.
       */

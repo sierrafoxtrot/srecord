@@ -102,7 +102,7 @@ private:
       * @param address_nbytes
       *     The number of bytes of address to emit.
       * @param data
-      *     The palyload of this line.
+      *     The payload of this line.
       * @param data_nbytes
       *     The number of bytes of payload.
       */

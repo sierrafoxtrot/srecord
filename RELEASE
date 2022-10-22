@@ -46,9 +46,9 @@ UPDATING THE CHANGE LOG
 
        now build and check that that
                 less archive/change_log.txt
-       reads well.  the same information is available in the refence manual,
+       reads well.  the same information is available in the reference manual,
 
-                evince arhive/srecord-*.pdf
+                evince archive/srecord-*.pdf
 
 UPDATE SOURCEFORGE AND WEBSITE
        The "archive" directory is actually the new contents of the web site.
@@ -61,7 +61,7 @@ UPDATE SOURCEFORGE AND WEBSITE
 
        My /home partition has a user called archives that owns all my projects
 
-           cd /home/arhives/srecord
+           cd /home/archives/srecord
 
        now we update the aegis.repo on sf.net
 
@@ -101,7 +101,7 @@ USEFUL TOOLS
            https://launchpad.net/~pmiller-opensource/+archive/ppa
 
        In my junkyard project/package is a mountain of crap
-       Incluing
+       Including
            copfix $(slecf)
                 for updating the copyright notices in source files
 

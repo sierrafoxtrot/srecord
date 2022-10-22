@@ -51,7 +51,7 @@ srecord::input_file_ppb::get_packet(void)
 {
     int c;
 
-    enum { SOH = 1 }; // Start of header marks begining of record
+    enum { SOH = 1 }; // Start of header marks beginning of record
 
     // Skip ASCII prologue (if any) and hunt for SOH
     do{

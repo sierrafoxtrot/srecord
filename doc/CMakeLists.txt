@@ -56,7 +56,7 @@ file(GLOB_RECURSE MAN_COMMON RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "man*/[zo]_*.s
 file(GLOB_RECURSE NEW_CHANGE_NOTES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "etc/new.*.so")
 
 # ...and now an aside on the subtle differences between linux/unix/posix
-# and Windows. Under Msys2, ost tools are able to cope with windows path
+# and Windows. Under Msys2, most tools are able to cope with windows path
 # format filenames e.g. C:\msys2\bin. groff sadly, doesn't; specifically
 # when handling the -I option. So on Windows, let's give groff an assist
 # by using the cygpath tool to pass it in unix format.

@@ -42,7 +42,7 @@ public:
 
     /**
       * The observe method is used by the memory walker to provide data.
-      * Derived classes are required to impliment this method, and do
+      * Derived classes are required to implement this method, and do
       * something with the data.
       *
       * @param address

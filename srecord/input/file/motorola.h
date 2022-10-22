@@ -71,7 +71,7 @@ private:
 
     /**
       * The data_count instance variable is used to remember the number
-      * of data lines has occurred fo far in the input file.
+      * of data lines has occurred so far in the input file.
       */
     unsigned long data_count;
 
@@ -110,8 +110,8 @@ private:
       * addresses need to be shifted to become byte addresses.
       * The default is zero (0).
       *
-      * This is because of some poorly though out "extentions" to the
-      * file format, for 16-bit and 32-bit data busses.  I say "poory
+      * This is because of some poorly though out "extensions" to the
+      * file format, for 16-bit and 32-bit data buses.  I say "poorly
       * thought out" because the no way (zero, zip, nada) of discovering
       * this just by looking at the first data line in the file (and if
       * the lines are jumbled just right, the first few lines are no

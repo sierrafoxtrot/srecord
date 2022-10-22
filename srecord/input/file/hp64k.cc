@@ -99,7 +99,7 @@ srecord::input_file_hp64k::read_datarec(record &result)
     }
     if (recsize > (2*128 + 5))
     {
-        fatal_error("bad recordsize");
+        fatal_error("bad record size");
         return false;
     }
     if (!read_u16be(&datasize))

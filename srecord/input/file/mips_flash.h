@@ -127,13 +127,13 @@ private:
 
     /**
       * The token instance variable is used to remember the kind of
-      * token was found by the preceeding #tokenizer call.
+      * token was found by the preceding #tokenizer call.
       */
     token_t token;
 
     /**
       * The token_value instance variable is used to remember the value
-      * of the number, if the preceeding #tokenizer call saw a number.
+      * of the number, if the preceding #tokenizer call saw a number.
       * Otherwise, its value is undefined.
       */
     unsigned long token_value;
@@ -155,7 +155,7 @@ private:
     input_file_mips_flash(const input_file_mips_flash &);
 
     /**
-      * The assigmne toperator.  Do not use.
+      * The assignment operator.  Do not use.
       */
     input_file_mips_flash &operator=(const input_file_mips_flash &);
 };

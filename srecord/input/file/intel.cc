@@ -178,7 +178,7 @@ srecord::input_file_intel::read_inner(srecord::record &record)
                     //
                     // If the record would cross a segment boundary,
                     // wrap around to the beginning of the segment.  We
-                    // do this by using "pushback" to remember additonal
+                    // do this by using "pushback" to remember additional
                     // data.
                     //
                     int split = (1L << 16) - address_field;
@@ -246,7 +246,7 @@ srecord::input_file_intel::read_inner(srecord::record &record)
             //
             // Set the base address and addressing mode,
             // and then loop for another record, this one
-            // isn't visable to the caller.
+            // isn't visible to the caller.
             //
             if (buffer[0] != 2)
                 fatal_error("length field must be 2");
@@ -286,7 +286,7 @@ srecord::input_file_intel::read_inner(srecord::record &record)
             //
             // Set the base address and addressing mode,
             // and then loop for another record, this one
-            // isn't visable to the caller.
+            // isn't visible to the caller.
             //
             if (buffer[0] != 2)
                 fatal_error("length field must be 2");

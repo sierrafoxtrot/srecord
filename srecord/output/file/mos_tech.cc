@@ -104,7 +104,7 @@ srecord::output_file_mos_tech::line_length_set(int linlen)
 {
     //
     // Given the number of characters, figure the maximum number of
-    // data baytes.
+    // data bytes.
     // ';' <len> <addr> ...data... <cs>
     // 1 +  2 +  4 +    2*n +      2       <= linlen
     //

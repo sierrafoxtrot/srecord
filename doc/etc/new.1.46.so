@@ -20,7 +20,7 @@
 .if n *
 .if t \(bu
 .\" Change 11, 12, 15, 16
-Memory Initialzation File (MIF) format by Altera is now supported for
+Memory Initialization File (MIF) format by Altera is now supported for
 reading and writing.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.

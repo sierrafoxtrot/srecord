@@ -32,7 +32,7 @@ namespace srecord
   * The crc16 class is used to represent the running value of a 16-bit
   * cyclic redundancy check of series of bytes.
   *
-  * Note: this CRC16 works for systems that process the leaast
+  * Note: this CRC16 works for systems that process the least
   * significant bit of each byte first, and working to wards the most
   * significant bit.
   *
@@ -74,7 +74,7 @@ public:
 
     /**
       * The polynomial_by_name class method is used to take the name
-      * of a CRC-16 polynamlial, and return the value of the CRC-16
+      * of a CRC-16 polynomial, and return the value of the CRC-16
       * polynomial corresponding to that name.
       */
     static int polynomial_by_name(const char *name);

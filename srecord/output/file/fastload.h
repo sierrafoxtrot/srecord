@@ -116,7 +116,7 @@ private:
 
     /**
       * The prev_was_command instance variable is used to track that was
-      * last output, bercase a newline must be thrown between commands
+      * last output, because a newline must be thrown between commands
       * and data, but not at any other time.
       */
     bool prev_was_command;

@@ -79,7 +79,7 @@ private:
     int data_record_count;
 
     /**
-      * The garbage_warning instance variable is used to remember wherther
+      * The garbage_warning instance variable is used to remember whether
       * or not a warning has already been issued about garbage lines
       * of input.
       */

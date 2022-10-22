@@ -103,7 +103,7 @@ srecord::output_file_logisim::write(const srecord::record &record)
         fatal_hole_error(address, record.get_address() - 1);
 #else
         // fill holes with 0x00
-        // this format has no provision for switching adddress mid stream.
+        // this format has no provision for switching address mid stream.
         int count = record.get_address() - address;
         if (count >= 512)
             count = 512;

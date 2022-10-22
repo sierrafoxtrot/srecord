@@ -89,7 +89,7 @@ private:
     std::string prefix;
 
     /**
-      * The taddr instance variabel is used to remember the
+      * The taddr instance variable is used to remember the
       * termination address, to be emitted in the footer.
       */
     unsigned long taddr;
@@ -107,7 +107,7 @@ private:
     int column;
 
     /**
-      * The current_address instance variabel is used to remember
+      * The current_address instance variable is used to remember
       * the current address that the file is positioned at.  This is
       * used to know whether we need to add padding.
       */
@@ -171,14 +171,14 @@ private:
       *
       * In non-section output, the output uses ORG (.org) directives to
       * place the code at the appropriate addresses.  In section output,
-      * tables of addresses and lenthgs are emitted, and the actual data
+      * tables of addresses and lengths are emitted, and the actual data
       * is intended to be relocated at run time.
       */
     bool section_style;
 
     /**
-      * The hex_style is used to reember whether or not we are using
-      * hexadecimal constatnts or decimal constants.
+      * The hex_style is used to remember whether or not we are using
+      * hexadecimal constants or decimal constants.
       */
     bool hex_style;
 

@@ -26,7 +26,7 @@ namespace srecord
 {
 
 /**
-  * The srecord::input_filter_xor clas sis used to represent the input state
+  * The srecord::input_filter_xor class is used to represent the input state
   * of a filter which bit-wise XORs all incoming data bytes with a fixed
   * value.
   */

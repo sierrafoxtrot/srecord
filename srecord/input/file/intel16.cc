@@ -213,7 +213,7 @@ srecord::input_file_intel16::read_inner(record &result)
             //
             // Set the base address and addressing mode,
             // and then loop for another record, this one
-            // isn't visable to the caller.
+            // isn't visible to the caller.
             //
             // (Does this make sense for INHX16?)
             //
@@ -252,7 +252,7 @@ srecord::input_file_intel16::read_inner(record &result)
             //
             // Set the base address and addressing mode,
             // and then loop for another record, this one
-            // isn't visable to the caller.
+            // isn't visible to the caller.
             //
             // (Does this make sense for INHX16?)
             //

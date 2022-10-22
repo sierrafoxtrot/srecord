@@ -255,7 +255,7 @@ srecord::output_file_motorola::line_length_set(int linlen)
 {
     //
     // Given the number of characters, figure the maximum number of
-    // data baytes.
+    // data bytes.
     // 'S' <tag> <size1:2> <addr1:8> ...data... <cs1:2>
     // 1 +  1 +  2 +       8 +       2*n +      2       <= linlen
     //

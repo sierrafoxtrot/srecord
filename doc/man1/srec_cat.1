@@ -181,10 +181,10 @@ If you get unexpected results \f[B]please\fP see the
 .TP 8n
 \fB\-C\[hy]Array\fP [ \f[I]identifier\fP ][ \-\f[I]option\fP... ]
 .RS
-A C array defintion will be written.
+A C array definition will be written.
 .PP
 The optional \f[I]identifier\fP is the name of the variable to be defined,
-or \f[CW]bugus\fP if not specified.
+or \f[CW]bogus\fP if not specified.
 .TP 8n
 \fB\-INClude\fP
 This option asks for an include file to be generated as well.
@@ -304,7 +304,7 @@ understood for writing only.  (A.k.a. \fB\-MEM\fP)
 (See \f[I]srec_mem\fP(5) for a description of this file format.)
 .TP 8n
 \fB\-LOGisim
-LOginsim logic simuator uses the format
+LOgisim logic simulator uses the format
 See \fB\-srec_logisim\fP(5) form more information.
 .\" -----   --output -M*   -------------------------------------------------
 .TP 8n
@@ -502,7 +502,7 @@ the hex file has finished loading.
 .TP 8n
 Data_Count
 This feature controls the presence of data record count records, which
-appear aftre the data, and state how many data records preceeded them.
+appears after the data, and state how many data records preceded them.
 Usually a data integrity mechanism.
 .TP 8n
 Footer
@@ -514,7 +514,7 @@ In formats that have the address and the data separated or partially
 separated (as opposed to having a complete address in every record) it
 is possible to disable emitting the first address where that address
 would be zero, as these format often default the address to zero if
-no address is seen beofre the first data record.  This is disabled by
+no address is seen before the first data record.  This is disabled by
 default, the zero address is always emitted.
 .PP
 Not all formats have all of the above features.
@@ -547,7 +547,7 @@ in those formats which support it.
 This option implies the \fB\-enable=header\fP option.
 .PP
 If you need to inject binary data into the header, use the URL encoding
-that uses % followed by two hexadeimal characters.  For example a
+that uses % followed by two hexadecimal characters.  For example a
 backspace would be encoded as \[lq]%08\[rq].
 .RE
 .\" ----------  I  ---------------------------------------------------------
@@ -585,7 +585,7 @@ This option may be used to limit the length of the output lines to at
 most \f[I]number\fP characters.  (Not meaningful for binary file format.)
 Defaults to something less than 80 characters, depending on the format.
 If you need to control the maximum number of bytes in each output record,
-use the \fB\-\-Ouput_Block_Size\fP option.
+use the \fB\-\-Output_Block_Size\fP option.
 .\" ----------  M  ---------------------------------------------------------
 .\" ----------  N  ---------------------------------------------------------
 .\" ----------  O  ---------------------------------------------------------
@@ -602,7 +602,7 @@ From time to time, with large files, you may notice that your data
 records are spit unexpectedly on output.  This usually happens where
 record lengths are not a power of 2.  If this bothers you (or your
 comparison tools) this option may be used to repack the output so that
-SRecord's internal block boundaries are not visable in the output.
+SRecord's internal block boundaries are not visible in the output.
 .\" ----------  O  ---------------------------------------------------------
 .TP 8n
 \fB\-Output_Block_Alignment\fP

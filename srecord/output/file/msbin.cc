@@ -206,7 +206,7 @@ srecord::output_file_msbin::append_pending_record(const record &r)
         if (pending_size + r.get_length() > MAX_PENDING_DATA_SIZE)
         {
             // cannot append the record due to max pending data size
-            // limit, but r immediatelly follows pending_records =>
+            // limit, but r immediately follows pending_records =>
             // flush (pending_records, r)
             warning("%s", warning_size_exceeded);
             flush_pending_records(&r);
@@ -221,7 +221,7 @@ srecord::output_file_msbin::append_pending_record(const record &r)
 
         if (r.get_length() > MAX_PENDING_DATA_SIZE)
         {
-            // r cannot be stored at all => write it out immediatelly
+            // r cannot be stored at all => write it out immediately
             warning("%s", warning_size_exceeded);
             flush_pending_records(&r);
         }

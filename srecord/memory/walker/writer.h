@@ -73,7 +73,7 @@ protected:
 
 private:
     /**
-      * The op instance variabel is used to remember where to send
+      * The op instance variable is used to remember where to send
       * the output.
       */
     output::pointer op;

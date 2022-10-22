@@ -60,7 +60,7 @@ protected:
 private:
     /**
       * The constructor.
-      * It is private on putpose, use the #create class method instead.
+      * It is private on purpose, use the #create class method instead.
       *
       * @param file_name
       *     The name of the file to be read.

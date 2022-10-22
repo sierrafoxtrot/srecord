@@ -87,16 +87,16 @@ private:
 
     /**
       * The align instance variable is used to remember whether or
-      * not to use shoirt writes after holds to force records to be
+      * not to use short writes after holds to force records to be
       * on block_size boundaries, rather than as tightly packed as
-      * pissible.
+      * possible.
       */
     bool align;
 
     /**
       * The block_size instance variable is used to remember the
       * block size (in bytes) we are packing to.  It is cache of the
-      * deeper->preferred_block_size_get() value, the cahce is updated
+      * deeper->preferred_block_size_get() value, the cache is updated
       * at strategic times, by calling the #track_block_size method.
       */
     unsigned block_size;
@@ -111,7 +111,7 @@ private:
     /**
       * The buffer instance variable is used to remember the base
       * address of a buffer allocated from dynamic memory.  The
-      * allocatred size may be found in the #buffer_max instance
+      * allocated size may be found in the #buffer_max instance
       * variable.
       *
       * assert(!buffer == !buffer_max);
@@ -140,7 +140,7 @@ private:
     void track_block_size(void);
 
     /**
-      * The flush_buffer method is used to write the accumulkated
+      * The flush_buffer method is used to write the accumulated
       * contents of the #buffer to the deeper output.
       *
       * @param partial

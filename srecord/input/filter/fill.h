@@ -94,7 +94,7 @@ private:
     interval range;
 
     /**
-      * The generate method is used to genetate fill records.
+      * The generate method is used to generate fill records.
       */
     bool generate(record &record);
 

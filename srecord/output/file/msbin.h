@@ -113,7 +113,7 @@ private:
       * data block.
       *
       * The checksum is additive, so:
-      *  checkum([Block1,Block2]) = checksum(Block1) + checksum(Block2)
+      *  checksum([Block1,Block2]) = checksum(Block1) + checksum(Block2)
       *
       * @param data
       *     The data to be check-summed.
@@ -147,7 +147,7 @@ private:
     void write_record_header(uint32_t addr, uint32_t length, uint32_t checksum);
 
     /**
-      * The write_data method is used to write the data contrained in
+      * The write_data method is used to write the data contained in
       * a record to the output.
       *
       * @param r
@@ -168,7 +168,7 @@ private:
     void flush_pending_records(const record *r = NULL);
 
     /**
-      * The append_pending_record handles addind a new record. If the
+      * The append_pending_record handles adding a new record. If the
       * new record could form a single continuous record in the output
       * file and this would fit in the MAX_PENDING_DATA_SIZE limit,
       * it's appended to the pending_records vector. Otherwise,

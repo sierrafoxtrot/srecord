@@ -59,7 +59,7 @@ protected:
 private:
     /**
       * A constructor.  The input is read from the named file (or
-      * the standard input if the file anme is "-").
+      * the standard input if the file name is "-").
       *
       * @param file_name
       *     The name of the file to be read.
@@ -74,7 +74,7 @@ private:
 
     /**
       * The garbage_warning instance variable is used to remember
-      * whther or not a warning has been issued about non-format
+      * whether or not a warning has been issued about non-format
       * lines in the file.  Only one warning per file is issued.
       */
     bool garbage_warning;

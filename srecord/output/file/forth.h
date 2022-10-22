@@ -34,7 +34,7 @@ class output_file_forth:
 {
 public:
     /**
-      * The destrutcor.
+      * The destructor.
       */
     virtual ~output_file_forth();
 

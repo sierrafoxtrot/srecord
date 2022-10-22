@@ -34,7 +34,7 @@ class output_file_ti_txt:
 {
 public:
     /**
-      * The destrutcor.
+      * The destructor.
       */
     virtual ~output_file_ti_txt();
 
@@ -119,7 +119,7 @@ private:
       * The line_length instance variable is used to remember how many
       * columns wide the line is allowed to be.
       *
-      * The format defintion says exactly 16 bytes per line (implying a
+      * The format definition says exactly 16 bytes per line (implying a
       * line length 47 characters).  We will allow some leeway.
       */
     int line_length;

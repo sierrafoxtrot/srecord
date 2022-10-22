@@ -101,7 +101,7 @@ srecord::output_file_signetics::line_length_set(int linlen)
 {
     //
     // Given the number of characters, figure the maximum number of
-    // data baytes.
+    // data bytes.
     //
     int             n = (linlen - 11) / 2;
 

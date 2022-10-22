@@ -27,7 +27,7 @@ namespace srecord
 /**
   * The quit_normal class is used to represent a quit handler which
   * behaves in the "normal" way: print error message son the standard
-  * error, and exit via the gloibal exit function.
+  * error, and exit via the global exit function.
   */
 class quit_normal:
     public quit

@@ -24,7 +24,7 @@
 namespace srecord {
 
 /**
-  * The srecord::input_file_ascii_hex class is used to repesent the parse
+  * The srecord::input_file_ascii_hex class is used to represent the parse
   * state when reading an Ascii-Hex format input file.
   */
 class input_file_ascii_hex:

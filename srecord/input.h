@@ -147,7 +147,7 @@ public:
       * default implementation does nothing.
       *
       * @param cmdln
-      *     Where to obtain information about the curreent parse state
+      *     Where to obtain information about the current parse state
       *     of the command line.
       */
     virtual void command_line(srecord::arglex_tool *cmdln);

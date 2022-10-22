@@ -404,7 +404,7 @@ deprecated_warning(const char *deprecated_name, const char *preferred_name)
 //      int arglex::token_next(void);
 //
 // DESCRIPTION
-//      The arglex function is used to perfom lexical analysis
+//      The arglex function is used to perform lexical analysis
 //      on the command line arguments.
 //
 //      Unrecognised options are returned as arglex_token_option
@@ -416,7 +416,7 @@ deprecated_warning(const char *deprecated_name, const char *preferred_name)
 //      When the end is reached, arglex_token_eoln is returned forever.
 //
 // CAVEAT
-//      Must call arglex_init befor this function is called.
+//      Must call arglex_init before this function is called.
 //
 
 int

@@ -63,8 +63,8 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
     }
     int csum = 0;
     int pos = 0;
-    csum += buf[pos++] = 0; // lengh hi, fill in later
-    csum += buf[pos++] = 0; // lengh lo, fill in later
+    csum += buf[pos++] = 0; // length hi, fill in later
+    csum += buf[pos++] = 0; // length lo, fill in later
     csum += buf[pos++] = tag;
     csum += buf[pos++] = 0; // checksum hi, fill in later
     csum += buf[pos++] = 0; // checksum lo, fill in later
@@ -155,7 +155,7 @@ srecord::output_file_tektronix_extended::line_length_set(int linlen)
 {
     //
     // Given the number of characters, figure the maximum number of
-    // data baytes.
+    // data bytes.
     //
     int n = (linlen - 15) / 2;
 

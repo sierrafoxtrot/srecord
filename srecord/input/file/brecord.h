@@ -89,7 +89,7 @@ private:
     input_file_brecord(const input_file_brecord &);
 
     /**
-      * The assigmne toperator.  Do not use.
+      * The assignment operator.  Do not use.
       */
     input_file_brecord &operator=(const input_file_brecord &);
 };

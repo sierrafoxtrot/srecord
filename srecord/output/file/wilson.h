@@ -106,7 +106,7 @@ private:
       * @param address
       *     The address of the first byte of data on the line.
       * @param data
-      *     The palyload of this line.
+      *     The payload of this line.
       * @param data_nbytes
       *     The number of bytes of payload.
       */

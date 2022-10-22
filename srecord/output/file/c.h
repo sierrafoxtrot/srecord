@@ -127,7 +127,7 @@ private:
     int column;
 
     /**
-      * The current_address instance variabel is used to remember
+      * The current_address instance variable is used to remember
       * the current address that the file is positioned at.  This is
       * used to know whether we need to add padding.
       */
@@ -140,7 +140,7 @@ private:
     int line_length;
 
     /**
-      * The address_length instance variable is used toremember how
+      * The address_length instance variable is used to remember how
       * many bytes to emit when emitting addresses.
       */
     int address_length;
@@ -182,7 +182,7 @@ private:
       *
       * In non-section output, padding of 0xFF is used to pad the data
       * for correct addressing.  In section output, tables of addresses
-      * and lenthgs are emitted, and the actual data is intended to be
+      * and lengths are emitted, and the actual data is intended to be
       * relocated at run time.
       */
     bool section_style;
@@ -211,7 +211,7 @@ private:
       * the hex_style and address_length instance variable settings.
       *
       * @param addr
-      *     The adress to be formatted
+      *     The address to be formatted
       */
     std::string format_address(unsigned long addr);
 

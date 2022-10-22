@@ -263,7 +263,7 @@ srecord::interval::valid()
 //      the end of an interval under construction.
 //
 // ARGUMENTS
-//      ipp     - pointer to inerval pointer.
+//      ipp     - pointer to interval pointer.
 //      datum   - value to append.
 //
 // CAVEAT
@@ -298,7 +298,7 @@ srecord::interval::append(data_t datum)
     }
 
     //
-    // remeber the datum
+    // remember the datum
     //
     data[length++] = datum;
 
@@ -330,7 +330,7 @@ srecord::interval::append(data_t datum)
 //      union of two intervals.
 //
 // ARGUMENTS
-//      left    - interval to be unioned with
+//      left    - interval to form the union with
 //      right   - another interval
 //
 // RETURNS

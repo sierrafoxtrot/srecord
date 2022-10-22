@@ -97,7 +97,7 @@ private:
 
     /**
       * The preferred_block_size instance variable is used to remember
-      * the prefrred block size for records.
+      * the preferred block size for records.
       */
     int preferred_block_size;
 

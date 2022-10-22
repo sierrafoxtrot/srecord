@@ -205,7 +205,7 @@ srecord::input_file_logisim::read_inner_job(void)
                 if (buffer == ep || *ep != '*')
                     fatal_error("malformed datum");
 
-                // The doco does not reveal a way to distingush
+                // The documentation does not reveal a way to distinguish
                 // 1-byte vs 2-byte or 4-byte items.  Also it
                 // doesn't specify endian-ness.
                 ep = 0;

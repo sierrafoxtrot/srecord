@@ -26,7 +26,7 @@ namespace srecord {
 
 /**
   * The srecord::input_file_atmel_generic class is used to represent the
-  * parse stat of an Atmel Genric formatted file.
+  * parse stat of an Atmel Generic formatted file.
   */
 class input_file_atmel_generic:
     public input_file
@@ -90,7 +90,7 @@ private:
     bool read_inner(record &);
 
     /**
-      * The seen_some_input instance variable is used to remember whther
+      * The seen_some_input instance variable is used to remember whether
       * any input data has been seen to date.
       */
     bool seen_some_input;
@@ -102,7 +102,7 @@ private:
     endian_t end;
 
     /**
-      * The deafult constructor.  Do not use.
+      * The default constructor.  Do not use.
       */
     input_file_atmel_generic();
 

@@ -161,7 +161,7 @@ srecord::output_file_wilson::line_length_set(int linlen)
 {
     //
     // Given the number of characters, figure the maximum number of
-    // data baytes.
+    // data bytes.
     // <tag> <size1:2> <addr4:8> ...data... <cs1:2>
     // 1 +   2 +       8 +       2*n +      2       <= linlen
     //

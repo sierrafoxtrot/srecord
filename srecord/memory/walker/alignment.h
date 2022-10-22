@@ -36,7 +36,7 @@ public:
     typedef std::shared_ptr<memory_walker_alignment> pointer;
 
     /**
-      * The destructror.
+      * The destructor.
       */
     virtual ~memory_walker_alignment();
 

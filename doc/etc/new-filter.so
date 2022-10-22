@@ -150,7 +150,7 @@ issuing a warning in the presence of holes.
 If the new filter is supposed to be its own inverse (\f[I]e.g.\fP
 byte\[hy]swap), or a pair of filters are supposed to be inverses
 (\f[I]e.g.\fP split and unsplit) be sure to write a test to confirm
-this.  The tests should exersize all of the boundary conditions
+this.  The tests should exercise all of the boundary conditions
 (\f[I]e.g.\fP around the edges of holes, extremes of data ranges).
 .so etc/coding-style.so
 .SH AUTHOR

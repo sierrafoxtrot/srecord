@@ -41,7 +41,7 @@ public:
     ~interval();
 
     /**
-      * The data_t type is used to parameterize the integr type used in
+      * The data_t type is used to parameterize the integer type used in
       * the interval.
       */
     typedef uint32_t data_t;
@@ -56,7 +56,7 @@ public:
       * The constructor.  The interval contains the single integer supplied.
       *
       * \param val
-      *    The interval is constructed to contain the single interger
+      *    The interval is constructed to contain the single integer
       *    value supplied.
       */
     interval(data_t val);
@@ -191,7 +191,7 @@ public:
     /**
       * The flatten method is used to convert an interval with holes
       * in it to a simple interval with no holes in it, by using the
-      * mimimum and maximum values.
+      * minimum and maximum values.
       */
     interval flatten() const;
 
@@ -200,7 +200,7 @@ public:
       * in bytes.
       *
       * @returns
-      *     The number of bytes cobered by the interval, NOT including
+      *     The number of bytes covered by the interval, NOT including
       *     holes.  Because the result could be 2**32, the 64-bit result
       *     is used so that this is representable.
       */
@@ -235,8 +235,8 @@ private:
 
     /**
       * The data instance variable is used to remember a pointer to
-      * the base of an array of interger values.  They come in [lo, hi)
-      * pairs.  As a sanity check, there is an extra item, wich contains
+      * the base of an array of integer values.  They come in [lo, hi)
+      * pairs.  As a sanity check, there is an extra item, which contains
       * the same value as the length instance variable.
       */
     data_t *data;

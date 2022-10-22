@@ -26,7 +26,7 @@ namespace srecord
 {
 
 /**
-  * The srecord::input_filter_offset class is used to represent a filetr
+  * The srecord::input_filter_offset class is used to represent a filter
   * where the addresses of the the deeper input source are offset by a
   * number of bytes.
   */
@@ -71,7 +71,7 @@ protected:
 private:
     /**
       * The nbytes instance variable is used to remember the number of
-      * bytes to affset the data by.
+      * bytes to offset the data by.
       */
     long nbytes;
 

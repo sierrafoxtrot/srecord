@@ -34,7 +34,7 @@ class record; // forward
 
 /**
   * The srecord::memory class is used to simulate memory contents.
-  * This allows staging of reord adta, and also validation of contents.
+  * This allows staging of record data, and also validation of contents.
   */
 class memory
 {
@@ -73,7 +73,7 @@ public:
       * The get method is used to fetch the value of the byte at
       * the given 'address'.
       *
-      * If you fo a get on an address which has not been set() yet,
+      * If you do a get on an address which has not been set() yet,
       * the results are undefined.
       *
       * Uses the find() method to locate the chunk, and then calls
@@ -113,13 +113,13 @@ public:
       * @param redundant_bytes
       *     ignore: do nothing
       *     warning: issue a warning and continue (default)
-      *     error: issuse a atal error message, and exit failure.
+      *     error: issue a fatal error message, and exit failure.
       * @param contradictory_bytes
       *     If the value at any address is set more than once,
-      *     Thid argument controls what happeens.
+      *     This argument controls what happens.
       *     ignore: do nothing
       *     warning: issue a warning and continue (default)
-      *     error: issuse a atal error message, and exit failure (default).
+      *     error: issue a fatal error message, and exit failure (default).
       */
     void reader(const input::pointer &input, defcon_t redundant_bytes,
         defcon_t contradictory_bytes);
@@ -144,7 +144,7 @@ public:
       *
       * If there is data, the `address' will be set to the start
       * address of the data block.      At most `nbytes' of data will
-      * be transfetrred into the `data' array.  Then `nbytes' wil
+      * be transferred into the `data' array.  Then `nbytes' will
       * be set to the number of bytes transferred.      Returns true.
       *
       * Calls the find_next_chunk() method.
@@ -216,7 +216,7 @@ public:
       *
       * @note
       *     This isn't about holes, it's about the beginnings and
-      *     endings of each consecitice run of bytes.
+      *     endings of each consecutive run of bytes.
       */
     bool is_well_aligned(unsigned multiple) const;
 
@@ -239,7 +239,7 @@ private:
     mutable int nchunks;
 
     /**
-      * The max_chunks instance variable is used to rememberf the
+      * The max_chunks instance variable is used to remember the
       * size of the chunk array, which holds the pool of memory chunks.
       */
     mutable int nchunks_max;
@@ -262,7 +262,7 @@ private:
     memory_chunk *find(unsigned long address) const;
 
     /**
-      * The cache instance variable is used to accellerate the find()
+      * The cache instance variable is used to accelerate the find()
       * method, based on the fact that most memory accesses are
       * sequential, in the same chunk.
       */
@@ -299,7 +299,7 @@ private:
 
     /**
       * The clear method is used to discard all data, as if when
-      * the instance was first constructed. Alsu used by the destructor.
+      * the instance was first constructed. Also used by the destructor.
       */
     void clear(void);
 

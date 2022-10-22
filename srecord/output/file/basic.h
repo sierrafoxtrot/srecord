@@ -60,16 +60,16 @@ public:
     static pointer create(const std::string &file_name);
 
 protected:
-    // See base class for docum,entation.
+    // See base class for documentation.
     void write(const record &);
 
-    // See base class for docum,entation.
+    // See base class for documentation.
     void line_length_set(int);
 
-    // See base class for docum,entation.
+    // See base class for documentation.
     void address_length_set(int);
 
-    // See base class for docum,entation.
+    // See base class for documentation.
     int preferred_block_size_get() const;
 
     // See base class for documentation.
@@ -80,7 +80,7 @@ protected:
 
 private:
     /**
-      * The taddr instance variabel is used to remember the
+      * The taddr instance variable is used to remember the
       * termination address, to be emitted in the footer.
       */
     unsigned long taddr;
@@ -98,7 +98,7 @@ private:
     int column;
 
     /**
-      * The current_address instance variabel is used to remember
+      * The current_address instance variable is used to remember
       * the current address that the file is positioned at.  This is
       * used to know whether we need to add padding.
       */

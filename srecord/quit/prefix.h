@@ -27,7 +27,7 @@ namespace srecord
 
 /**
   * The quit_prefix class is used to filter the messages issued to include
-  * a line prefix.  The message is then passed ot a deeper quit handler.
+  * a line prefix.  The message is then passed to a deeper quit handler.
   */
 class quit_prefix:
     public quit
@@ -66,7 +66,7 @@ private:
     std::string prefix;
 
     /**
-      * The deepr instance variable is used to remember which handler
+      * The deeper instance variable is used to remember which handler
       * is to be used to process the error messages once the refix
       * has been added.
       */
