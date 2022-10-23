@@ -351,6 +351,7 @@ default:
 }
 
 
+#ifndef NDEBUG // used only inside assert calls
 static bool
 starts_with(const std::string &haystack, const std::string &needle)
 {
@@ -361,6 +362,7 @@ starts_with(const std::string &haystack, const std::string &needle)
             0 == memcmp(haystack.c_str(), needle.c_str(), needle.size())
         );
 }
+#endif
 
 
 static bool
