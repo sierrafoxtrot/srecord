@@ -145,8 +145,8 @@ srecord::input_file_hp64k::read_datarec(record &result)
     return true;
 }
 
-#define HP64_MAGIC 0x8204U	//file signature, before header
-#define HP64_HDRLEN 16	//8 words
+#define HP64_MAGIC 0x8204U  //file signature, before header
+#define HP64_HDRLEN 16      //8 words
 bool
 srecord::input_file_hp64k::read_hdr(record &result)
 {
@@ -162,7 +162,7 @@ srecord::input_file_hp64k::read_hdr(record &result)
     }
 
     unsigned cnt;
-    unsigned len = HP64_HDRLEN;	//initial value assume full buffer.
+    unsigned len = HP64_HDRLEN; //initial value assume full buffer.
     uint8_t hdr[HP64_HDRLEN + 1];
 
     for (cnt=0; cnt < HP64_HDRLEN; cnt++)
@@ -178,8 +178,8 @@ srecord::input_file_hp64k::read_hdr(record &result)
             len = cnt;
         }
     }
-    len++;	//include 0-term
-    hdr[HP64_HDRLEN] = 0;	//ensure 0-term
+    len++;                  //include 0-term
+    hdr[HP64_HDRLEN] = 0;   //ensure 0-term
     result = record(record::type_header, 0, hdr, len);
     return true;
 }

@@ -36,7 +36,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 # Install the Doxygen output for the website
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html
         DESTINATION ${CMAKE_INSTALL_DOCDIR}/htdocs/srecord
- 	COMPONENT website)
+        COMPONENT website)
 
 # Generate config.h to suit local environment
 configure_file(config.h.in config.h @ONLY)
@@ -46,4 +46,4 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 # Generate doxygen content
 doxygen_add_docs(doxygen
                  ${LIB_SRECORD_HDR}
-		 ALL)
+                 ALL)
