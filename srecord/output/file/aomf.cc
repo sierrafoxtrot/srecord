@@ -83,10 +83,11 @@ void
 srecord::output_file_aomf::content_record(unsigned long address,
     const unsigned char *data, size_t len)
 {
-    size_t maxlen = 4 * srecord::record::max_data_length;
+    const size_t maxlen = 4 * srecord::record::max_data_length;
+    auto buffer = new unsigned char[maxlen + 3];
+
     while (len > 0)
     {
-        unsigned char buffer[maxlen + 3];
         buffer[0] = address >> 16; // this byte should be zero ;-)
         buffer[1] = address; // "offset" is little-endian
         buffer[2] = address >> 8;
@@ -97,6 +98,8 @@ srecord::output_file_aomf::content_record(unsigned long address,
         data += nbytes;
         len -= nbytes;
     }
+
+    delete [] buffer;
 }
 
 
