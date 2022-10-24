@@ -202,6 +202,3 @@ srecord::output_file_intel16::format_name()
 {
     return "Intel-16";
 }
-
-
-// vim: set ts=8 sw=4 et :

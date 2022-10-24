@@ -78,6 +78,3 @@ srecord::adler32::nextbuf(const void *data, size_t nbytes)
         --nbytes;
     }
 }
-
-
-// vim: set ts=8 sw=4 et :

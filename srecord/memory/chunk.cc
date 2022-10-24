@@ -178,6 +178,3 @@ srecord::operator != (const srecord::memory_chunk &lhs,
 {
     return !srecord::memory_chunk::equal(lhs, rhs);
 }
-
-
-// vim: set ts=8 sw=4 et :

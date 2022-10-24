@@ -71,5 +71,4 @@ unsigned short endian_decode_word(const unsigned char *data, endian_t order);
 
 };
 
-// vim: set ts=8 sw=4 et :
 #endif // SRECORD_ENDIAN_H

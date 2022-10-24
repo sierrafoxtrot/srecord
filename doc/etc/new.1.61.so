@@ -48,4 +48,3 @@ escapes (e.g. %25) to the string on he command line. For example:
 .\" Add new entries above this line.
 .ne 2i
 .SS Version 1.61 (2013\[hy]Jan\[hy]04)
-.\" vim: set ts=8 sw=4 et :

@@ -121,6 +121,3 @@ srecord::output_file_spasm::format_name()
 {
     return "Spasm";
 }
-
-
-// vim: set ts=8 sw=4 et :

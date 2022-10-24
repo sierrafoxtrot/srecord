@@ -53,6 +53,3 @@ srecord::input_filter_bitrev::read(srecord::record &record)
     }
     return true;
 }
-
-
-// vim: set ts=8 sw=4 et :

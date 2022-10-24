@@ -64,6 +64,3 @@ srecord::memory_walker_stm32::get(void)
 {
     return checksum.get();
 }
-
-
-// vim: set ts=8 sw=4 et :

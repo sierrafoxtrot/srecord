@@ -66,6 +66,3 @@ srecord::string_url_encode(const std::string &text)
     }
     return result.str();
 }
-
-
-// vim: set ts=8 sw=4 et :

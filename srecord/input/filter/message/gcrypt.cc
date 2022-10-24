@@ -382,6 +382,3 @@ srecord::input_filter_message_gcrypt::get_algorithm_name()
     return "libgcrypt not available";
 #endif
 }
-
-
-// vim: set ts=8 sw=4 et :

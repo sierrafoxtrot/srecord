@@ -41,5 +41,4 @@ std::string pretty_size(long long x, int width = 0);
 
 };
 
-// vim: set ts=8 sw=4 et :
 #endif // SRECORD_PRETTY_SIZE_H

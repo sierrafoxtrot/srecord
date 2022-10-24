@@ -116,6 +116,3 @@ srecord::output_file_brecord::format_name()
 {
     return "B-Record";
 }
-
-
-// vim: set ts=8 sw=4 et :

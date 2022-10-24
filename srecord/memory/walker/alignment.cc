@@ -81,6 +81,3 @@ srecord::memory_walker_alignment::observe_end(void)
     if (data_seen && current_address % multiple != 0)
         well_aligned = false;
 }
-
-
-// vim: set ts=8 sw=4 et :

@@ -80,6 +80,3 @@ srecord::arglex::test_ambiguous(void)
         exit(1);
     }
 }
-
-
-// vim: set ts=8 sw=4 et :

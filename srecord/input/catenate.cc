@@ -113,6 +113,3 @@ srecord::input_catenate::disable_checksum_validation()
         in1->disable_checksum_validation();
     in2->disable_checksum_validation();
 }
-
-
-// vim: set ts=8 sw=4 et :

@@ -61,5 +61,3 @@ srecord::input_generator_random::get_file_format_name()
 {
     return "random";
 }
-
-// vim: set ts=8 sw=4 et :

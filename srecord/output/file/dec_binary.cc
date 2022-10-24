@@ -197,6 +197,3 @@ srecord::output_file_dec_binary::is_binary(void)
 {
     return true;
 }
-
-
-// vim: set ts=8 sw=4 et :

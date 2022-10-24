@@ -128,4 +128,3 @@ private:
 };
 
 #endif // LIB_INPUT_FILE_STEWIE_H
-// vim: set ts=8 sw=4 et :

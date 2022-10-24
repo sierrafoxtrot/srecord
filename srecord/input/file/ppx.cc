@@ -324,6 +324,3 @@ srecord::input_file_ppx::format_option_number(void)
 {
     return arglex_tool::token_ppx;
 }
-
-
-// vim: set ts=8 sw=4 et :

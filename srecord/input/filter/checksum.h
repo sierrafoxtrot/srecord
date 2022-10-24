@@ -137,4 +137,3 @@ private:
 };
 
 #endif // SRECORD_INPUT_FILTER_CHECKSUM_H
-// vim: set ts=8 sw=4 et :

@@ -57,5 +57,3 @@ echo "</ul>"
 echo "</body>"
 echo "</html>"
 exit 0
-
-# vim: set ts=8 sw=4 et :

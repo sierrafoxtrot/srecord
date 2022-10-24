@@ -221,6 +221,3 @@ srecord::input_file_tektronix::format_option_number(void)
 {
     return arglex_tool::token_tektronix;
 }
-
-
-// vim: set ts=8 sw=4 et :

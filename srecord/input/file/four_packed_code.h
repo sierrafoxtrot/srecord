@@ -145,4 +145,3 @@ private:
 };
 
 #endif // SRECORD_INPUT_FILE_FOUR_PACKED_CODE_H
-// vim: set ts=8 sw=4 et :

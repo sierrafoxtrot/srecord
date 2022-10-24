@@ -59,4 +59,3 @@ All other options will produce a diagnostic error.
 .so z_options.so
 .so z_exit.so
 .so z_copyright.so
-.\" vim: set ts=8 sw=4 et :

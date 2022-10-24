@@ -81,6 +81,3 @@ srecord::input_filter_message_fletcher32::get_algorithm_name()
 {
     return "Fletcher-32";
 }
-
-
-// vim: set ts=8 sw=4 et :

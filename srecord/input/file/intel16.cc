@@ -364,6 +364,3 @@ srecord::input_file_intel16::format_option_number(void)
 {
     return arglex_tool::token_intel16;
 }
-
-
-// vim: set ts=8 sw=4 et :

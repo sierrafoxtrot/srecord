@@ -68,6 +68,3 @@ srecord::string_quote_c(const std::string &arg)
         }
     }
 }
-
-
-// vim: set ts=8 sw=4 et :

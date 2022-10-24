@@ -418,4 +418,3 @@ releases.  For excruciating and complete detail, and also credits for
 those of you who have generously sent me suggestions and bug reports,
 see the \f[I]/doc/etc/CHANGES.*\fP files.
 .so etc/new.so
-.\" vim: set ts=8 sw=4 et :

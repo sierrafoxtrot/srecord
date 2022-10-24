@@ -113,4 +113,3 @@ then
         $diffpath --strip-trailing-cr "$@"
     }
 fi
-# vim: set ts=8 sw=4 et :

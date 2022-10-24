@@ -51,5 +51,3 @@ srecord::memory_walker_fletcher32::get()
 {
     return checksum.get();
 }
-
-// vim: set ts=8 sw=4 et :

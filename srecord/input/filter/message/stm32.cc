@@ -101,6 +101,3 @@ srecord::input_filter_message_stm32::get_minimum_alignment(void)
 {
     return 4;
 }
-
-
-// vim: set ts=8 sw=4 et :

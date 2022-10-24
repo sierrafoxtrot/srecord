@@ -69,5 +69,3 @@ srecord::input_filter_interval::read(record &record)
     }
     return true;
 }
-
-// vim: set ts=8 sw=4 et :

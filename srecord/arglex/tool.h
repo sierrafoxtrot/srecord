@@ -481,5 +481,4 @@ private:
 
 };
 
-// vim: set ts=8 sw=4 et :
 #endif // SRECORD_ARGLEX_TOOL_H

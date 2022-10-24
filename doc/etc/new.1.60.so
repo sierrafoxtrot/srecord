@@ -39,4 +39,3 @@ Coefficient File Format (.coe) output class.
 .\" Add new entries above this line.
 .ne 2i
 .SS Version 1.60 (2012\[hy]May\[hy]19)
-.\" vim: set ts=8 sw=4 et :

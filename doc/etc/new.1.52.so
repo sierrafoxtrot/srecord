@@ -39,4 +39,3 @@ The code will build without libgcrypt.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.52 (2009-Sep-17)
-.\" vim: set ts=8 sw=4 et :

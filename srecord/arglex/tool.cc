@@ -434,6 +434,3 @@ srecord::arglex_tool::default_command_line_processing(void)
         break;
     }
 }
-
-
-// vim: set ts=8 sw=4 et :

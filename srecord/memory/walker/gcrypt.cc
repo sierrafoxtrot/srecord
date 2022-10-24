@@ -48,6 +48,3 @@ srecord::memory_walker_gcrypt::observe(unsigned long, const void *data,
     (void)length;
 #endif
 }
-
-
-// vim: set ts=8 sw=4 et :

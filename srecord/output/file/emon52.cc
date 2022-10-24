@@ -142,6 +142,3 @@ srecord::output_file_emon52::format_name()
 {
     return "Emon52";
 }
-
-
-// vim: set ts=8 sw=4 et :

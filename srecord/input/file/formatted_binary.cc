@@ -184,6 +184,3 @@ srecord::input_file_formatted_binary::format_option_number(void)
 {
     return arglex_tool::token_formatted_binary;
 }
-
-
-// vim: set ts=8 sw=4 et :

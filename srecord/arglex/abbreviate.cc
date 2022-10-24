@@ -51,6 +51,3 @@ srecord::arglex::abbreviate(const char *s)
         }
     }
 }
-
-
-// vim: set ts=8 sw=4 et :

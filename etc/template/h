@@ -51,5 +51,4 @@ public:
         ${trim_ext $fn}}} &);
 };
 
-// vim: set ts=8 sw=4 et :
 #endif // ${id ${upcase $fn}}

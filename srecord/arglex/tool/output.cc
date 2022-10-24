@@ -363,6 +363,3 @@ srecord::arglex_tool::get_output()
     //
     return ofp;
 }
-
-
-// vim: set ts=8 sw=4 et :

@@ -93,4 +93,3 @@ private:
 };
 
 #endif // SRECORD_INPUT_FILE_EMON52_H
-// vim: set ts=8 sw=4 et :

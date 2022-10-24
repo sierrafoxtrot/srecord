@@ -102,6 +102,3 @@ srecord::input_filter_checksum::read(record &record)
     }
     return true;
 }
-
-
-// vim: set ts=8 sw=4 et :

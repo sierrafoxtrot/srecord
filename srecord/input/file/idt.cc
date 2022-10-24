@@ -263,6 +263,3 @@ srecord::input_file_idt::format_option_number(void)
 {
     return arglex_tool::token_idt;
 }
-
-
-// vim: set ts=8 sw=4 et :

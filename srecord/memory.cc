@@ -518,6 +518,3 @@ srecord::memory::is_well_aligned(unsigned multiple)
     walk(sniffer);
     return sniffer->is_well_aligned();
 }
-
-
-// vim: set ts=8 sw=4 et :

@@ -24,4 +24,3 @@ A serious bug has been fixed in the generated Makefile.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.28 (2007-Mar-08)
-.\" vim: set ts=8 sw=4 et :

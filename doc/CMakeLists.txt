@@ -197,11 +197,11 @@ if(NOT WIN32)
   foreach(i ${sections})
     install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/man${i}/
             DESTINATION ${CMAKE_INSTALL_MANDIR}/man${i}
-	    FILES_MATCHING PATTERN "*.${i}")
+            FILES_MATCHING PATTERN "*.${i}")
   endforeach()
 endif()
 
 # Install the website
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/
         DESTINATION ${CMAKE_INSTALL_DOCDIR}/htdocs
- 	COMPONENT website)
+        COMPONENT website)

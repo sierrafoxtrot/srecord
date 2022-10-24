@@ -71,4 +71,3 @@ private:
 };
 
 #endif // PROG_SREC_CAT_ARGLEX3_H
-// vim: set ts=8 sw=4 et :

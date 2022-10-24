@@ -172,6 +172,3 @@ srecord::output_file_ppx::format_name(void)
 {
     return "Stag Prom Programmer Hexadecimal";
 }
-
-
-// vim: set ts=8 sw=4 et :

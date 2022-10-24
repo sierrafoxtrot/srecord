@@ -50,4 +50,3 @@ even when there is no execution start address passed in.
 .\" ------------------------------------------------------------------------
 .\" Add new entries above this line.
 .SS Version 1.42 (2008\[hy]Jun\[hy]01)
-.\" vim: set ts=8 sw=4 et :

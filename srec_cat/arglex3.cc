@@ -56,6 +56,3 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv) :
 srec_cat_arglex3::~srec_cat_arglex3()
 {
 }
-
-
-// vim: set ts=8 sw=4 et :

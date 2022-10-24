@@ -138,4 +138,3 @@ private:
 };
 
 #endif // LIB_INPUT_FILE_MOTOROLA_H
-// vim: set ts=8 sw=4 et :

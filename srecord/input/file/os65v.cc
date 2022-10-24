@@ -181,6 +181,3 @@ srecord::input_file_os65v::format_option_number(void)
 {
     return arglex_tool::token_ohio_scientific;
 }
-
-
-// vim: set ts=8 sw=4 et :

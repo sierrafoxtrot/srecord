@@ -191,6 +191,3 @@ srecord::input_file_ti_tagged::format_option_number(void)
 {
     return arglex_tool::token_ti_tagged;
 }
-
-
-// vim: set ts=8 sw=4 et :

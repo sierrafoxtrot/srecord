@@ -240,6 +240,3 @@ srecord::output_file_stewie::format_name()
 {
     return "Stewie";
 }
-
-
-// vim: set ts=8 sw=4 et :
