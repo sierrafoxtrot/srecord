@@ -25,7 +25,7 @@ namespace srecord {
 
 /**
   * The output_file_logisim class is used to represent
-  * the processing neccessry to write a Logisim ROM file.
+  * the processing necessary to write a Logisim ROM file.
   */
 class output_file_logisim:
     public output_file

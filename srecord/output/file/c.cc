@@ -134,7 +134,7 @@ srecord::output_file_c::~output_file_c()
 
         //
         // emit list of section word addresses
-        // (assuming memoryaddresses are word-wide).
+        // (assuming memory addresses are word-wide).
         //
         if (output_word)
         {

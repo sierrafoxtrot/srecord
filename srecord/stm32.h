@@ -86,7 +86,7 @@ public:
 private:
     /**
       * Run the generator on the filled buffer.  The generator assumes
-      * the incomming bytestream is in little-endian order, which is safe
+      * the incoming bytestream is in little-endian order, which is safe
       * considering this is for the STM32F series MPUs.
       */
     void generator(void);
@@ -103,7 +103,7 @@ private:
     size_t cnt;
 
     /**
-      * Buffer the incomming stream to build a word to feed to the
+      * Buffer the incoming stream to build a word to feed to the
       * CRC generator.
       */
     unsigned char buf[wordsize];

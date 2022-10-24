@@ -22,7 +22,7 @@
 .\" Change 17
 There is a new option for the \-\-\f[I]x\fP\[hy]e\[hy]length filters,
 they can now
-accept a width, and this is divided into the byte lenght, so
+accept a width, and this is divided into the byte length, so
 that you can insert the length in units of words (2) or longs (4).
 .TP 2n
 .if n *

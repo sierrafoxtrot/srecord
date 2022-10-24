@@ -30,7 +30,7 @@ namespace srecord {
 
 /**
   * The srecord::input_filter_checksum class is an abstraction of various
-  * checksums to be ammplied to input sources.
+  * checksums to be applied to input sources.
   */
 class input_filter_checksum:
     public input_filter
@@ -60,7 +60,7 @@ protected:
       * @param width
       *     The width of the values being summed.  Usually 1 byte, but
       *     wider combinations are possible.  If you use something
-      *     wider, it is assumed that they are alligned on multiples of
+      *     wider, it is assumed that they are aligned on multiples of
       *     that width, no provision for an offset is provided.
       */
     input_filter_checksum(input::pointer deeper, int address,

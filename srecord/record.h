@@ -159,7 +159,7 @@ public:
     }
 
     /**
-      * The get_data method is used to get a ponter to the baseof
+      * The get_data method is used to get a pointer to the base of
       * the record data.
       *
       * Note: Accessing beyond get_length() bytes will give an
@@ -170,7 +170,7 @@ public:
     /**
       * The get_data method is used to fetch the nth data value.
       *
-      * Note: For perfoemance reasons, no range checking is
+      * Note: For performance reasons, no range checking is
       * performed.  Accessing beyond get_length() bytes will give
       * an undefined value.
       *
@@ -181,7 +181,7 @@ public:
     int get_data(size_t n) const { return data[n]; }
 
     /**
-      * The is_all_zero method is used to determin if the record
+      * The is_all_zero method is used to determine if the record
       * contains data bytes which are all zero.
       */
     bool is_all_zero(void) const;
@@ -263,7 +263,7 @@ public:
 
     /**
       * The decode method is used to extract 'len' bytes
-      * from the given 'data' and assemble a valu
+      * from the given 'data' and assemble a value
       *
       * @param data
       *     The data to be decodes
@@ -289,7 +289,7 @@ public:
 
     /**
       * The encode_big_endian method is used to break down 'val' into
-      * 'len' bytes of 'data' orderdd big-endian (most significan
+      * 'len' bytes of 'data' ordered big-endian (most significant
       * byte first).
       *
       * @param data
@@ -304,8 +304,8 @@ public:
 
     /**
       * The encode_little_endian method is used to break down
-      * 'val' into 'len' bytes of 'data' orderdd big-endian (least
-      * significan byte first).
+      * 'val' into 'len' bytes of 'data' ordered big-endian (least
+      * significant byte first).
       *
       * @param data
       *     Where to place the encoded data

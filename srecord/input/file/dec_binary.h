@@ -64,7 +64,7 @@ protected:
 private:
     /**
       * A constructor.  The input is read from the named file (or
-      * the standard input if the file anme is "-").
+      * the standard input if the file name is "-").
       *
       * @param file_name
       *     The name of the file to be read.
@@ -79,9 +79,9 @@ private:
     int get_byte();
 
     /**
-      * This format has NUL characters for optional badding around
+      * This format has NUL characters for optional padding around
       * blocks.  This method is used to skip past such padding.
-      * Returns true if there is more inoput available, or false at
+      * Returns true if there is more input available, or false at
       * end of file.
       */
     bool skip_nul();
@@ -89,7 +89,7 @@ private:
     /**
       * The current_pos instance variable is used to track out
       * position within the current record.  We need todo this
-      * becase DEC Binary records can be significantly longer than
+      * because DEC Binary records can be significantly longer than
       * other formats.
       */
     unsigned long current_pos;
@@ -104,7 +104,7 @@ private:
     /**
       * The current_address instance variable is used to track the
       * load address of the current record.  It is updated each time
-      * we return a partial block, so that we alsoways return the
+      * we return a partial block, so that we always return the
       * correct load address.
       */
     unsigned long current_address;

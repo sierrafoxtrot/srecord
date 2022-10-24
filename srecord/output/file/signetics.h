@@ -29,7 +29,7 @@ class record; // forward
 
 /**
   * The srecord::output_file_signetics class is used to represent output to
-  * a file using the Signetiocs format.
+  * a file using the Signetics format.
   */
 class output_file_signetics:
     public output_file
@@ -96,7 +96,7 @@ private:
 
     /**
       * The last_address instance variable is used to remember the
-      * address immediatly beyond the last adress of data in the file.
+      * address immediately beyond the last address of data in the file.
       * This is used to write the file termination record.
       */
     unsigned long last_address;

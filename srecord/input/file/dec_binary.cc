@@ -94,8 +94,8 @@ srecord::input_file_dec_binary::read(srecord::record &record)
 
         //
         // You are allowed to have NUL characters between records.
-        // Presumably this is used to get recordss onto even
-        // byte boundardies and/or whole block boundaries.
+        // Presumably this is used to get records onto even
+        // byte boundaries and/or whole block boundaries.
         //
         if (!skip_nul())
             return false;

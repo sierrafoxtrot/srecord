@@ -74,8 +74,8 @@ private:
       *   !   have seen the ! character
       *   M   have seen the !M characters, want an address
       *   sp  have seen !Maaaa, want data bytes
-      *   ,   have seen , charcter, discarding to \n, then resume sp state
-      *   ;   have seen , charcter, discarding to \n, then resume M state
+      *   ,   have seen , character, discarding to \n, then resume sp state
+      *   ;   have seen , character, discarding to \n, then resume M state
       */
     char state;
 

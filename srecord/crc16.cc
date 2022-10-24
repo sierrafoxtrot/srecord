@@ -220,7 +220,7 @@ srecord::crc16::updcrc(unsigned char c, unsigned short state)
 
 //
 // This version of updcrc doesn't augment automagically, you must
-// do it explicitly in the get() method.  It is a more intuitave
+// do it explicitly in the get() method.  It is a more intuitive
 // implementation than the "augmentation included" implementation below.
 //
 // See "A painless guide to CRC error detection algorithms",
@@ -293,7 +293,7 @@ srecord::crc16::get(void)
     const
 {
 #if (IMPL < IMPL_CH11)
-    // The whole idea is that Ch.11 technique is "pre-auugmented"
+    // The whole idea is that Ch.11 technique is "pre-augmented"
     if (augment)
     {
         return updcrc(0, updcrc(0, state));

@@ -88,7 +88,7 @@ protected:
 private:
     /**
       * The data_count instance variable is used to remember the total
-      * number of ouput data lines have occurred to date.  Ths is used
+      * number of output data lines have occurred to date.  This is used
       * at the end of the file to emit an S5 record.
       */
     unsigned long data_count;
@@ -111,8 +111,8 @@ private:
       * addresses need to be shifted to become byte addresses.
       * The default is zero (0).
       *
-      * This is because of some poorly though out "extentions" to this
-      * file format, for 16-bit and 32-bit data busses.  I say "poory
+      * This is because of some poorly though out "extensions" to this
+      * file format, for 16-bit and 32-bit data buses.  I say "poorly
       * thought out" because the no way (zero, zip, nada) of discovering
       * this just by looking at the data.
       */
@@ -121,7 +121,7 @@ private:
     /**
       * The data_count_written instance variable is used to remember
       * whether or not we have written out the data count record.
-      * Usually this is done with the start arrdess record, but there
+      * Usually this is done with the start address record, but there
       * are circumstances where it will be needed when the file is
       * closed.
       */
@@ -144,7 +144,7 @@ private:
       * @param address_nbytes
       *     The number of bytes of address to emit.
       * @param data
-      *     The palyload of this line.
+      *     The payload of this line.
       * @param data_nbytes
       *     The number of bytes of payload.
       */

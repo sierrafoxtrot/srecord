@@ -209,7 +209,7 @@ srecord::output_file_vmem::write(const srecord::record &record)
             //
             // Each line starts with an address.
             // The addresses are actually divided by the memory width,
-            // rather than being byte adddresses.
+            // rather than being byte addresses.
             //
             // The presence of the @ character would seem to imply this
             // is optional.  It would be easy to figure out that an

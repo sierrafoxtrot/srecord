@@ -41,7 +41,7 @@ The ascii\[hy]hex format is understood for both reading and writing.
 (Also known as the ascii\[hy]space\[hy]hex format.)
 .TP
 ASM
-It is possible, for output only, to produce a serices of DB statements
+It is possible, for output only, to produce a series of DB statements
 containing the data.  This can be useful for embedding data into assembler
 programs.
 This format cannot be read.
@@ -52,7 +52,7 @@ It is understood for both reading and writing.
 .\" ----------  B  ---------------------------------------------------------
 .TP
 BASIC
-It is possible, for output only, to produce a serices of DATA statements
+It is possible, for output only, to produce a series of DATA statements
 containing the data.  This can be useful for embedding data into BASIC
 programs.
 This format cannot be read.

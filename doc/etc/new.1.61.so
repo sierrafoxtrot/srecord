@@ -21,7 +21,7 @@
 .if t \(bu
 .\" Change 16
 Luc Steynen <LucSteynen@edna.be> discovered that the
-\-hecksum\[hy]big\[hy]endian opion was a counter\[hy]intuitive alias for
+\-hecksum\[hy]big\[hy]endian option was a counter\[hy]intuitive alias for
 the the \-checksum\[hy]bitnot\[hy]big\[hy]endian option.
 The \-checksum\[hy]big\[hy]endian option is now deprecated, in favor
 of the \-checksum\[hy]bitnot\[hy]big\[hy]endian option; the code will warn

@@ -98,7 +98,7 @@ private:
 
     /**
       * The check_sum instance variable is used to remember the running
-      * sum of data baytes written to date.
+      * sum of data bytes written to date.
       */
     unsigned short check_sum;
 

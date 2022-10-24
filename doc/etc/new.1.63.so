@@ -22,7 +22,7 @@
 .if n *
 .if t \(bu
 .\" Changes 12 and 15
-The srec_tools now understand how to read and write Logisim formt.
+The srec_tools now understand how to read and write Logisim format.
 .PP
 .if n *
 .if t \(bu
@@ -55,13 +55,13 @@ Thank you for the bug report. This has been fixed.
 .if n *
 .if t \(bu
 .\" Change 23
-Simplification of selection code to choose which CRC16 implmentation
+Simplification of selection code to choose which CRC16 implementation
 is used.
 .PP
 .if n *
 .if t \(bu
 .\" Change 22
-Juliano MourÃ£o Vieira <juliano@utfpr.edu.br> discovered a
+Juliano Mour\[u00E3]o Vieira <juliano@utfpr.edu.br> discovered a
 problem with the srec_mif.5 description. This mistake is not
 present in the code.
 .PP

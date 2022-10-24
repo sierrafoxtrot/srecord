@@ -28,7 +28,7 @@ namespace srecord
 
 /**
   * The srecord::input_filter_split class is used to represent a filter
-  * which splits ints input source into piceces.  The data of each
+  * which splits ints input source into pieces.  The data of each
   * swathe then has the address adjusted to fill in the gaps.
   *
   * For example, this filter can be used to create each of the images
@@ -130,7 +130,7 @@ private:
 
     /**
       * The buffer_pos instance variable is used to remember where we
-      * are up to in the "buffer" instance varaible.
+      * are up to in the "buffer" instance variable.
       */
     size_t buffer_pos;
 

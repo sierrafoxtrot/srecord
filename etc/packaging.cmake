@@ -24,7 +24,7 @@ else()
 endif()
 
 FUNCTION(INSTALL_SRECORD_EXECUTABLE_TARGET target)
-  # Get runtime dependancies
+  # Get runtime dependencies
   install(TARGETS ${target}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT ${target}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT ${target}

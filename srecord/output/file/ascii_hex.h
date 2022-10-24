@@ -34,7 +34,7 @@ class output_file_ascii_hex:
 {
 public:
     /**
-      * The destrutcor.
+      * The destructor.
       */
     virtual ~output_file_ascii_hex();
 

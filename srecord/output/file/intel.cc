@@ -212,7 +212,7 @@ srecord::output_file_intel::line_length_set(int n)
 {
     //
     // Given the number of characters, figure the maximum number of
-    // data baytes.
+    // data bytes.
     //
     n = (n - 11) / 2;
 

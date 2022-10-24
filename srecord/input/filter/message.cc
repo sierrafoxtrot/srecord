@@ -83,7 +83,7 @@ srecord::input_filter_message::read(record &result)
                 "in it.  This is bad.  It means that the in-memory "
                 "calculation performed by your embedded system will be "
                 "different than the calculation performed here.  You are "
-                "strongly advised to use the \"--fill 0xFF --over <inoput>\" "
+                "strongly advised to use the \"--fill 0xFF --over <input>\" "
                 "filter *before* the %s filter to ensure both calculations are "
                 "using the same byte values.  "
                 "See srec_info(1) for how to see the holes.",

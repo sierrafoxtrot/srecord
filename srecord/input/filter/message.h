@@ -75,7 +75,7 @@ protected:
     virtual const char *get_algorithm_name() const = 0;
 
     /**
-      * The get_minimum_alignment method is used to obtain the minium
+      * The get_minimum_alignment method is used to obtain the minimum
       * require dbyte alignment.  Returns 0 if irrelevant.
       */
     virtual unsigned get_minimum_alignment(void) const;

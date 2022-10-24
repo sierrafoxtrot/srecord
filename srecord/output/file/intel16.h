@@ -80,7 +80,7 @@ protected:
 
 private:
     /**
-      * The write_inner method is used toi write a single line to the
+      * The write_inner method is used to write a single line to the
       * output file.
       */
     void write_inner(int, unsigned long, const void *, int);

@@ -46,7 +46,7 @@ public:
     virtual ~output();
 
     /**
-      * The write method is used to write a recordonto an output.
+      * The write method is used to write a record onto an output.
       * Derived classes must implement this method.
       *
       * @param rec
@@ -63,7 +63,7 @@ public:
 
     /**
       * The write_data method is used to write data to the output.
-      * A suitable data record wil be produced.  The #write method
+      * A suitable data record will be produced.  The #write method
       * will be called.
       */
     virtual void write_data(unsigned long, const void *, size_t);
@@ -101,14 +101,14 @@ public:
 
     /**
       * The preferred_block_size_get method is used to get the
-      * proferred block size of the output fformat.  Often, but not
-      * always, influenced by the line_lebgth_set method.  Derived
+      * preferred block size of the output format.  Often, but not
+      * always, influenced by the line_length_set method.  Derived
       * classes must implement this method.
       */
     virtual int preferred_block_size_get(void) const = 0;
 
     /**
-      * The preferred_block_size_set method is is to set a precific
+      * The preferred_block_size_set method is to set a specific
       * number of bytes for the preferred block size.
       *
       * @param nbytes
@@ -198,7 +198,7 @@ public:
       * implementation does nothing.
       *
       * @param cmdln
-      *     Where to obtain information about the curreent parse stat of
+      *     Where to obtain information about the current parse stat of
       *     the command line.
       */
     virtual void command_line(arglex_tool *cmdln);

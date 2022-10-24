@@ -90,7 +90,7 @@ private:
 
     /**
       * The seen_some_input instance variable is used to remember whether
-      * or not some valid inpout has been seen.
+      * or not some valid input has been seen.
       */
     bool seen_some_input;
 

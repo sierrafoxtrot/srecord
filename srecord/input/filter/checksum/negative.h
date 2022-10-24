@@ -52,7 +52,7 @@ private:
       * @param width
       *     The width of the values being summed.  Usually 1 byte, but
       *     wider combinations are possible.  If you use something
-      *     wider, it is assumed that they are alligned on multiples of
+      *     wider, it is assumed that they are aligned on multiples of
       *     that width, no provision for an offset is provided.
       */
     input_filter_checksum_negative(const input::pointer &deeper,
@@ -74,7 +74,7 @@ public:
       * @param width
       *     The width of the values being summed.  Usually 1 byte, but
       *     wider combinations are possible.  If you use something
-      *     wider, it is assumed that they are alligned on multiples of
+      *     wider, it is assumed that they are aligned on multiples of
       *     that width, no provision for an offset is provided.
       */
     static pointer create(const input::pointer &deeper, int address, int length,

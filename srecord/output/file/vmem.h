@@ -34,7 +34,7 @@ class output_file_vmem:
 {
 public:
     /**
-      * The destrutcor.
+      * The destructor.
       */
     virtual ~output_file_vmem();
 
@@ -118,7 +118,7 @@ private:
       * The width_mask instance variable is used to remember the lower
       * bits to the right of the addresses shift.  This is most frequently
       * used to determine the boundaries of memory-width chunks of bytes.
-      * This value is simply a pre-caluculation of ((1u << width_shift) - 1u).
+      * This value is simply a pre-calculation of ((1u << width_shift) - 1u).
       */
     unsigned width_mask;
 

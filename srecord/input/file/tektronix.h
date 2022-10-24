@@ -24,7 +24,7 @@
 namespace srecord {
 
 /**
-  * The srecord::input_file_tektronix clas sis used to represent the parse
+  * The srecord::input_file_tektronix class is used to represent the parse
   * state of an input file in Tektronix (non-extended) format.
   */
 class input_file_tektronix:
@@ -81,7 +81,7 @@ private:
     int get_byte(void);
 
     /**
-      * The read_inner methos is used to read a single record from
+      * The read_inner method is used to read a single record from
       * the input.  The read method is a wrapper around this method.
       */
     bool read_inner(record &);
@@ -99,7 +99,7 @@ private:
     bool garbage_warning;
 
     /**
-      * The seen_some_input instance variable is used to remember wheter
+      * The seen_some_input instance variable is used to remember whether
       * the file contains any data so far.
       */
     bool seen_some_input;

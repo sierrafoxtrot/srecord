@@ -27,7 +27,7 @@ How to build SRecord
 You will need about 3MB to unpack and build the
 .I SRecord
 package.
-Your milage may vary.
+Your mileage may vary.
 .br
 .ne 1i
 .SH BEFORE YOU START
@@ -134,7 +134,7 @@ It also creates a shell script
 .I config.status
 that you can run in the future to recreate the current configuration.
 .PP
-Normally, from the top-leve directory of the source package,
+Normally, from the top-level directory of the source package,
 you just create and run cmake from a build directory
 .RS
 .ft CW
@@ -166,8 +166,8 @@ environment variables when running
 .IR configure .
 .TP 8n
 Variable: CXX
-C++ compiler programm. The default is determined by cmake according to the
-opeerating system and environment variables.
+C++ compiler program. The default is determined by cmake according to the
+operating system and environment variables.
 .IR /usr/local .
 .TP 8n
 Variable: CMAKE_INSTALL_PREFIX
@@ -341,7 +341,7 @@ please post to the srecord\[hy]users mailing list
 srecord\[hy]users@lists.sourceforge.net
 .ft R
 .RE
-For information obout the srecord\[hy]users mailing list.
+For information about the srecord\[hy]users mailing list.
 http://srecord.sourceforge.net/mailing\[hy]list.html
 .PP
 When reporting problems,

@@ -29,7 +29,7 @@ There are six new filters (\-be\[hy]exclusive\[hy]length,
 \-le\[hy]exclusive\[hy]maximum, \-be\[hy]exclusive\[hy]minimum and
 \-le\[hy]exclusive\[hy]minimum) which are very similar to their
 non\[hy]exclusive equivalents, except that they do not include the
-adress range covered by their output in their output.
+address range covered by their output in their output.
 .TP 2n
 .if n *
 .if t \(bu

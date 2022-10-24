@@ -171,7 +171,7 @@ private:
       * data block.
       *
       * The checksum is additive, so:
-      *  checkum([Block1,Block2]) = checksum(Block1) + checksum(Block2)
+      *  checksum([Block1,Block2]) = checksum(Block1) + checksum(Block2)
       *
       * @param data
       *     The data to be check-summed.

@@ -60,7 +60,7 @@ protected:
 private:
     /**
       * A constructor.  The input is read from the named file (or
-      * the standard input if the file anme is "-").
+      * the standard input if the file name is "-").
       *
       * @param file_name
       *     The name of the file to be read.

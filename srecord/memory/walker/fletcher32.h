@@ -42,7 +42,7 @@ public:
 
 private:
     /**
-      * The default constructor.  It is private on putpose, use the
+      * The default constructor.  It is private on purpose, use the
       * #create method instead.
       */
     memory_walker_fletcher32();

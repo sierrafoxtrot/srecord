@@ -46,7 +46,7 @@ both reading and writing.
 .if n *
 .if t \(bu
 .\" Change 27
-The MIPS\[hy]Flash fiel format is now supported for both reading and
+The MIPS\[hy]Flash file format is now supported for both reading and
 writing.
 .TP 2n
 .if n *

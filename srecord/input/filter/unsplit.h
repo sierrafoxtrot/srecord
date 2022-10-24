@@ -28,9 +28,9 @@ namespace srecord
 
 /**
   * The srecord::input_filter_unsplit class is used to represent a filter
-  * whoch explosed the deeper input source.  This is the inverse of the
+  * which exposed the deeper input source.  This is the inverse of the
   * srecord::input_filter_split class.  This can be used to takes the images
-  * of thwo parallel EPROM images and create a unified image when they
+  * of two parallel EPROM images and create a unified image when they
   * are interleaved rather than consecutive.
   *
   * @sa
@@ -110,7 +110,7 @@ private:
 
     /**
       * The buffer_pos instance variable is used to remember where we
-      * are up to in the "buffer" instance varaible.
+      * are up to in the "buffer" instance variable.
       */
     size_t buffer_pos;
 

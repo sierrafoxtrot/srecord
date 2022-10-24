@@ -24,7 +24,7 @@
 namespace srecord {
 
 /**
-  * The srecord::input_filter_bitrev clas sis used to represent the input state
+  * The srecord::input_filter_bitrev class is used to represent the input state
   * of a filter which reverses the order of bits in each data byte.
   */
 class input_filter_bitrev:

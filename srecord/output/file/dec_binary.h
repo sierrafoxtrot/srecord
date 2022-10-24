@@ -42,7 +42,7 @@ private:
     /**
       * A constructor.  The input will be read from the named file (or
       * the standard input if the file name is "-"). It is private on
-      * purpose, use the create class method intead.
+      * purpose, use the create class method instead.
       *
       * @param file_name
       *     The name of the file to be written.

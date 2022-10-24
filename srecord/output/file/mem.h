@@ -92,7 +92,7 @@ private:
     unsigned long address;
 
     /**
-      * The column instance variable i sused to remember the output text
+      * The column instance variable is used to remember the output text
       * column.  This is used to know when ti wrap lines.
       */
     int column;

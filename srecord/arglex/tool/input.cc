@@ -487,7 +487,7 @@ srecord::arglex_tool::get_simple_input(void)
     // assert(ifp);
 
     //
-    // Process any additional format-specfic command line options.
+    // Process any additional format-specific command line options.
     //
     ifp->command_line(this);
 

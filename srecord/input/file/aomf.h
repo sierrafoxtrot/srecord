@@ -109,7 +109,7 @@ private:
     /**
       * The current_address instance variable is used to track the
       * load address of the current record.  It is updated each time
-      * we return a partial block, so that we alsoways return the
+      * we return a partial block, so that we always return the
       * correct load address.
       */
     unsigned long current_address;

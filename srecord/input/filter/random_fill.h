@@ -47,7 +47,7 @@ private:
       * @param deeper
       *     The incoming data source to be filtered
       * @param range
-      *     the addres srange to be filled.
+      *     the address range to be filled.
       */
     input_filter_random_fill(const input::pointer &deeper,
         const interval &range);
@@ -60,7 +60,7 @@ public:
       * @param deeper
       *     The incoming data source to be filtered
       * @param range
-      *     the addres srange to be filled.
+      *     the address range to be filled.
       */
     static pointer create(const input::pointer &deeper, const interval &range);
 
@@ -77,7 +77,7 @@ private:
     interval range;
 
     /**
-      * The generate method is used to genetate fill records.
+      * The generate method is used to generate fill records.
       */
     bool generate(record &record);
 

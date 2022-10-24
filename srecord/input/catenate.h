@@ -25,7 +25,7 @@ namespace srecord {
 
 /**
   * The srecord::input_catenate class is used to represent an input source
-  * which presents two inoput sources as if they were a single input
+  * which presents two input sources as if they were a single input
   * source.
   */
 class input_catenate:

@@ -132,7 +132,7 @@ private:
     unsigned short sum2;
 
     /**
-      * The anser instance variable is used to remember the desired
+      * The answer instance variable is used to remember the desired
       * outcome if the checksum includes the checksum itself.
       *
       * Set this to -1 to be completely ignored.

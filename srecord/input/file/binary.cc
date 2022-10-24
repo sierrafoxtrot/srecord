@@ -45,7 +45,7 @@ srecord::input_file_binary::read(srecord::record &record)
 {
 #ifdef HAVE_SPARSE_LSEEK
     //
-    // On Solaris, they have a couple of new lseek whences in order to
+    // On Solaris, they have a couple of new lseek whence in order to
     // navigate around holes in the file data.
     //
     //     fpathconf(fd, _PC_MIN_HOLE_SIZE);

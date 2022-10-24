@@ -88,7 +88,7 @@ private:
 
     /**
       * The data_record_count instance variable is used to remember the
-      * number of data records priesent in the output.  This is used
+      * number of data records present in the output.  This is used
       * when writing the end-of-file record.
       */
     int data_record_count;

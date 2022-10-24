@@ -76,7 +76,7 @@ srecord::input_filter_crop::read(srecord::record &record)
             case srecord::record::type_data:
                 //
                 // Data records are remembered, and
-                // doled out peicmeal, as they mask
+                // doled out piecemeal, as they mask
                 // against the clip region.
                 //
                 data_range =

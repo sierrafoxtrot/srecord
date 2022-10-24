@@ -28,7 +28,7 @@ namespace srecord {
 
 /**
   * The srecord::output_file class is used to represent a generic output file.
-  * It provides a numnber of services useful to many output file formats.
+  * It provides a number of services useful to many output file formats.
   */
 class output_file:
     public output
@@ -106,7 +106,7 @@ public:
       * @param name
       *     the name of the record type to enable or disable
       * @param yesno
-      *     true if should be enable, false if sjould be disabled
+      *     true if should be enable, false if should be disabled
       * @returns
       *     true if name understood, false if not (to trigger diagnostic
       *     error message)
@@ -149,7 +149,7 @@ protected:
       * The value of the byte will be added to the running checksum, via
       * the #checksum_add method.
       *
-      * Usually, this #put_byte method implemention is sufficient for
+      * Usually, this #put_byte method implementation is sufficient for
       * most output classes, however derived classes may over-ride it if
       * they have a special case.  Over-ride with caution, as it affects
       * many other methods.
@@ -213,7 +213,7 @@ protected:
       * the running checksum.
       *
       * The default implementation uses a simple addition.  Derived
-      * classesmay override if they need to.  Do this with caution, as
+      * classes may override if they need to.  Do this with caution, as
       * it affects other methods.
       */
     virtual void checksum_add(unsigned char n);
@@ -337,7 +337,7 @@ private:
     /**
       * The file_name instance variable is used by the #filename and
       * filename_and_line methods to report the name of the input
-      * file.  This makes for informative error mesages.
+      * file.  This makes for informative error messages.
       */
     std::string file_name;
 
@@ -350,7 +350,7 @@ private:
 
     /**
       * The vfp instance variable is used by the #get_fp method to
-      * remember the file pointer.  You need to cast it to FILE* befor
+      * remember the file pointer.  You need to cast it to FILE* before
       * you use it.  Never access this instance variable directly,
       * always go via the #get_fp method.  This ensures the file has
       * been opened first!
@@ -406,7 +406,7 @@ private:
     unsigned long position;
 
     /**
-      * The is_regular instance variable is used to remember whther
+      * The is_regular instance variable is used to remember whether
       * or not the file is a regular file.  This is set by the
       * set_is_regular method.  It is used by the seek_to method.
       */
@@ -414,7 +414,7 @@ private:
 
     /**
       * The set_is_regular method shall be used whenever vfp is assigned,
-      * to estanblish whther the output file is a regular file or a
+      * to establish whether the output file is a regular file or a
       * special file (like a pipe).
       */
     void set_is_regular(void);
@@ -422,7 +422,7 @@ private:
     /**
       * The get_fp method is used to get the stdio file pointer
       * associated with this input file.  (By avoiding a FILE*
-      * declaraion, we avoid having to include <stdio.h> for not
+      * declaration, we avoid having to include <stdio.h> for not
       * particularly good reason.  Take care when casting.)
       *
       * If the file has not been opened yet, it will be opened by this

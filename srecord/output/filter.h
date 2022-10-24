@@ -76,7 +76,7 @@ protected:
 
 private:
     /**
-      * The deeper instance vatiable is used to remember where to send
+      * The deeper instance variable is used to remember where to send
       * our filtered output.
       */
     output::pointer deeper;

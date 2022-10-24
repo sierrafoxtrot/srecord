@@ -78,14 +78,14 @@ private:
     /**
       * The data_seen instance variable is used to remember whether or
       * not any data has been seen in the file.  This is used to issue
-      * an error when there is aparrently no data in the file, and this
-      * helps #guess to figure out the file is notof this type.
+      * an error when there is apparently no data in the file, and this
+      * helps #guess to figure out the file is not of this type.
       */
     bool data_seen;
 
     /**
       * The packet_address instance variable is used to remember the
-      * address of the first byte in the most recetly read packet.
+      * address of the first byte in the most recently read packet.
       */
     unsigned long packet_address;
 
@@ -103,7 +103,7 @@ private:
 
     /**
       * The packet_used instance variable is used to remember how many
-      * bytes of the most recently read packect have been consumed.
+      * bytes of the most recently read packet have been consumed.
       */
     size_t packet_used;
 
