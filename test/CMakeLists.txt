@@ -37,7 +37,11 @@ file(GLOB_RECURSE TEST_URL_DECODE_SRC "url_decode/*.cc")
 add_executable(test_url_decode ${TEST_URL_DECODE_SRC})
 target_link_libraries(test_url_decode lib_srecord)
 
-configure_file(test_prelude.sh test_prelude COPYONLY)
+configure_file(test_prelude.sh test_prelude COPYONLY
+  FILE_PERMISSIONS
+    OWNER_READ OWNER_WRITE OWNER_EXECUTE
+    GROUP_READ GROUP_EXECUTE
+    WORLD_READ WORLD_EXECUTE)
 
 # Tests
 enable_testing()
@@ -50,7 +54,7 @@ foreach(t ${SRECORD_TESTS})
   string(REGEX REPLACE "TEST_SUBJECT\=" "" subject ${test_subject})
   set(test_name "${filename}: ${subject}")
 
-  add_test(NAME ${test_name} COMMAND $ENV{SHELL} ${t})
+  add_test(NAME ${test_name} COMMAND sh ${t})
   set_property(TEST ${test_name} APPEND PROPERTY
       ENVIRONMENT_MODIFICATION
       PATH=path_list_prepend:${CMAKE_BINARY_DIR}
