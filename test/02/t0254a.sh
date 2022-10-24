@@ -33,6 +33,21 @@ if test $? -ne 0; then fail; fi
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
+# use the last address
+
+cat > test.ok << 'fubar'
+S00600004844521B
+S306FFFFFFFFAB52
+S5030001FB
+fubar
+if test $? -ne 0; then no_result; fi
+
+srec_cat -generate 0xFFFFFFFF 0x100000000 -constant 0xAB -o test.out -header HDR
+if test $? -ne 0; then fail; fi
+
+diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
 #
 # The things tested here, worked.
 # No other guarantees are made.
