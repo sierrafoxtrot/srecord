@@ -50,7 +50,11 @@ srecord::input_filter_random_fill::generate(srecord::record &record)
     if (range.empty())
         return false;
     unsigned char buffer[srecord::record::max_data_length];
-    interval chunk(range.get_lowest(), range.get_lowest() + sizeof(buffer));
+    interval::data_t lo = range.get_lowest();
+    interval::data_t hi = lo + sizeof(buffer);
+    if (hi < lo)
+        hi = 0;
+    interval chunk(lo, hi);
     chunk *= range;
     chunk.first_interval_only();
     int nbytes = chunk.get_highest() - chunk.get_lowest();

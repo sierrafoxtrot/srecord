@@ -116,8 +116,8 @@ srecord::input_filter_crop::read(srecord::record &record)
         //
         // Construct the return record from the data held.
         //
-        unsigned long lo = fragment.get_lowest();
-        unsigned long hi = fragment.get_highest();
+        interval::data_t lo = fragment.get_lowest();
+        interval::data_t hi = fragment.get_highest();
         record =
             srecord::record
             (

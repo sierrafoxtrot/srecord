@@ -56,7 +56,7 @@ srecord::input_generator::read(srecord::record &result)
     interval::data_t addr = range.get_lowest();
     interval::data_t end  = addr + srecord::record::max_data_length;
     if (end < addr)
-        end = 0xFFFFFFFF;
+        end = 0;
     interval partial(addr, end);
     partial *= range;
 

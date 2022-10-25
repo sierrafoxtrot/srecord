@@ -17,17 +17,18 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-TEST_SUBJECT="generate near end of address space"
+TEST_SUBJECT="crop up to the last address"
 . test_prelude
 
 cat > test.ok << 'fubar'
 S00600004844521B
-S306FFFFFF02AB4F
+S306FFFFFFFE00FE
 S5030001FB
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat -generate 0xFFFFFF02 0xFFFFFF03 -constant 0xAB -o test.out -header HDR
+srec_cat -generate 0xFFFFFFE0 0x100000000 -constant 0 \
+        -crop 0xFFFFFFFE 0xFFFFFFFF -o test.out -header HDR
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -37,12 +38,13 @@ if test $? -ne 0; then fail; fi
 
 cat > test.ok << 'fubar'
 S00600004844521B
-S306FFFFFFFFAB52
+S306FFFFFFFF00FD
 S5030001FB
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat -generate 0xFFFFFFFF 0x100000000 -constant 0xAB -o test.out -header HDR
+srec_cat -generate 0xFFFFFFE0 0x100000000 -constant 0 \
+        -crop 0xFFFFFFFF 0x100000000 -o test.out -header HDR
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
