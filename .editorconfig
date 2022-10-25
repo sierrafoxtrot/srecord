@@ -9,7 +9,7 @@ max_line_length = 80
 tab_width = 8
 trim_trailing_whitespace = true
 
-[*.cmake,CMakeLists.txt]
+[*.yml;*.cmake;CMakeLists.txt]
 indent_size = 2
 tab_width = 2
 

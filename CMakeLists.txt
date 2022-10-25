@@ -46,9 +46,17 @@ include(packaging)
 add_subdirectory(srecord)
 
 # Build srecord executables
-add_subdirectory(srec_cat)
-add_subdirectory(srec_cmp)
-add_subdirectory(srec_info)
+add_custom_target(srecord-executables)
+add_custom_target(srecord-executables-version DEPENDS srecord-executables)
+foreach(p IN ITEMS srec_cat srec_cmp srec_info)
+  add_subdirectory("${p}")
+
+  add_dependencies(srecord-executables "${p}")
+  if(NOT CMAKE_CROSSCOMPILING)
+    add_custom_target("${p}-version" COMMAND "${p}" --version)
+    add_dependencies(srecord-executables-version "${p}-version")
+  endif()
+endforeach()
 
 # Tests & support tools
 enable_testing()
