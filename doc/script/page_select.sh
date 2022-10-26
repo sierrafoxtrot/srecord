@@ -21,10 +21,10 @@ as=$1
 in=$2
 out=$3
 
-pages=`awk -f $as $in`
+pages=$(awk -f "$as" "$in")
 es=$?
 test $es = 0 || exit $es
 
-psselect -p$pages $in > $out
+psselect "-p$pages" "$in" > "$out"
 es=$?
 test $es = 0 || exit $es

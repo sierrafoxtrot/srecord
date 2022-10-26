@@ -1,3 +1,4 @@
+#!/bin/sh
 #
 # srecord - manipulate eprom load files
 # Copyright (C) 1998, 2006-2008, 2010, 2011 Peter Miller
@@ -18,14 +19,13 @@
 
 sortflag=
 if test "$1" = "-r"; then
-        sortflag=-r
-        shift
+    sortflag=-r
+    shift
 fi
-echo $* |
-tr ' ' '\12' |
-sort $sortflag -V |
-while read f
-do
+echo "$*" |
+    tr ' ' '\12' |
+    sort $sortflag -V |
+    while read -r f; do
         echo ".so $f"
-done
+    done
 exit 0
