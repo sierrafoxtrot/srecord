@@ -21,7 +21,7 @@
 .SH COPYRIGHT
 .so etc/version.so
 .I \*(n)
-version \*(v)
+version \*(V)
 .br
 Copyright
 .if n (C)

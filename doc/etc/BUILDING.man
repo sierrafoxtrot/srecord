@@ -365,7 +365,7 @@ run the program for the exact version number.
 .ne 2i
 .SH COPYRIGHT
 .I srecord
-version \*(v)
+version \*(V)
 .br
 Copyright
 .if n (C)

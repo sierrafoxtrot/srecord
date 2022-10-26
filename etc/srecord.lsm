@@ -34,7 +34,7 @@
 .SH Title:
 SRecord
 .SH Version:
-\*(v)
+\*(V)
 .SH Entered-date:
 .ds MO1 JAN
 .ds MO2 FEB
@@ -103,21 +103,21 @@ pmiller@opensource.org.au (Peter Miller)
 http://srecord.sourceforge.net/
 .TS
 lf(CW) l.
-srecord-\*(v).README    Description, from the tar file
-srecord-\*(v).lsm       Description, LSM format
-srecord-\*(v).spec      RedHat package specification
-srecord-\*(v).tar.gz    The complete sources.
-srecord-\*(v).pdf       Reference Manual, Acrobat format
+srecord-\*(V).README    Description, from the tar file
+srecord-\*(V).lsm       Description, LSM format
+srecord-\*(V).spec      RedHat package specification
+srecord-\*(V).tar.gz    The complete sources.
+srecord-\*(V).pdf       Reference Manual, Acrobat format
 .TE
 .SH Secondary-site:
 metalab.unc.edu /pub/Linux/apps/circuits
 .TS
 lf(CW) l.
-srecord-\*(v).README    Description, from the tar file
-srecord-\*(v).lsm       Description, LSM format
-srecord-\*(v).spec      RedHat package specification
-srecord-\*(v).tar.gz    The complete sources.
-srecord-\*(v).pdf       Reference Manual, Acrobat format
+srecord-\*(V).README    Description, from the tar file
+srecord-\*(V).lsm       Description, LSM format
+srecord-\*(V).spec      RedHat package specification
+srecord-\*(V).tar.gz    The complete sources.
+srecord-\*(V).pdf       Reference Manual, Acrobat format
 .TE
 .SH Copying-policy:
 GPL 2.0

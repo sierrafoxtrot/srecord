@@ -345,11 +345,11 @@ l l s
 l l l.
 URL:;http://srecord.sourceforge.net/
 File:;index.html;# the SRecord page
-File:;srecord\-\*(v).README;# Description, from the tar file
-File:;srecord\-\*(v).lsm;# Description, LSM format
-File:;srecord\-\*(v).spec;# RedHat package specification
-File:;srecord\-\*(v).tar.gz;# the complete source
-File:;srecord\-\*(v).pdf;# Reference Manual
+File:;srecord\-\*(V).README;# Description, from the tar file
+File:;srecord\-\*(V).lsm;# Description, LSM format
+File:;srecord\-\*(V).spec;# RedHat package specification
+File:;srecord\-\*(V).tar.gz;# the complete source
+File:;srecord\-\*(V).pdf;# Reference Manual
 .TE
 .br
 .ne 1i
@@ -368,7 +368,7 @@ Windows binaries.
 .ne 1i
 .SH COPYRIGHT
 .I srecord
-version \*(v)
+version \*(V)
 .br
 Copyright
 .if t \(co

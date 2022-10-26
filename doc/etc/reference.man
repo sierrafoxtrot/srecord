@@ -76,7 +76,7 @@ Peter Miller <pmiller@opensource.org.au>
 .vs 14
 \&.
 .sp 2i
-This document describes SRecord version \*(v)
+This document describes SRecord version \*(V)
 .br
 and was prepared \*(DY.
 .br
