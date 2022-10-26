@@ -1,0 +1,23 @@
+# executables
+cmake
+cpack
+ctest
+
+# functions
+endforeach
+endfunction
+
+# function arguments
+COPYONLY
+MATCHALL
+STREQUAL
+
+# variables
+CMAKE_INSTALL_BINDIR
+CMAKE_INSTALL_INCLUDEDIR
+CMAKE_INSTALL_LIBDIR
+CROSSCOMPILING
+DOXYGEN_HIDE_UNDOC
+
+# keywords
+cmakedefine

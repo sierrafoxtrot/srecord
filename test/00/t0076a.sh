@@ -64,6 +64,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
+# cSpell:disable
 cat > test.ok << 'fubar'
 /AAAA
 Z8Zpc1H.Suwpzbqr8vvjRnzCVPgb6OeNdlouYzOfyZpmMg23MVijWiVdBRdY6V7Uq7LNxpu0VBEOgnRB
@@ -86,6 +87,7 @@ YpzXGbAebUpP0XxzH0rpe8BaMQ17nDbtylu8Atu13j1StlcC1MRMJJXIl7USgDDS22Hg/CG7n/KAA
 Vv0WQ8hx.8pNtaiKB17hCTOmVVc7He7wL24gAkmB4qB.,ONHaeMRtpi5QZ8YIqhLyP2iBBqQ9En,FUtI
 li3oFSXLXI,ubUVGJ4blP6mNinGKLHWkvGruun85AhVn/BDq/CC0B/AAAA/EAA
 fubar
+# cSpell:enable
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -o test.out -fastload
