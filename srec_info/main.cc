@@ -114,9 +114,9 @@ main(int argc, char **argv)
                 {
                     const uint32_t addr = record.get_address();
                     std::cout
-                      << "Execution Start Address: "
-                      << std::setfill('0') << std::setw(8) << addr
-                      << std::endl;
+                        << "Execution Start Address: "
+                        << std::setfill('0') << std::setw(8) << addr
+                        << std::endl;
                 }
                 break;
 
@@ -159,9 +159,9 @@ main(int argc, char **argv)
             const uint32_t hi = tmp.get_highest();
             const uint32_t hi_address = static_cast<uint32_t>(hi - 1U);
             std::cout
-              << std::setw(prec) << lo
-              << " - "
-              << std::setw(prec) << hi_address;
+                << std::setw(prec) << lo
+                << " - "
+                << std::setw(prec) << hi_address;
             const uint32_t interval_size = static_cast<uint32_t>(hi - lo);
             if(verbose)
             {
@@ -183,18 +183,24 @@ main(int argc, char **argv)
             else
                 std::cout << std::setw(prec) << number_bytes;
             std::cout << std::endl;
-            const uint32_t range_size = static_cast<uint32_t>(range_highest - range_lowest);
-            const double real_number_bytes = (number_bytes == 0UL) ? 4294967296.0 : number_bytes;
-            const double real_range_size = (range_size == 0UL) ? 4294967296.0 : range_size;
+
+            const uint32_t range_size
+                = static_cast<uint32_t>(range_highest - range_lowest);
+            const double real_number_bytes
+                = (number_bytes == 0UL) ? 4294967296.0 : number_bytes;
+            const double real_range_size
+                = (range_size == 0UL) ? 4294967296.0 : range_size;
             const double alloc_ratio = real_number_bytes/real_range_size;
             std::cout
                 << std::setfill(' ')
                 << std::fixed
                 << std::showpoint
                 << "Allocated: "
-                << std::setw(6) << std::setprecision(2) << (alloc_ratio * 100.0) << "%"
+                << std::setw(6) << std::setprecision(2)
+                << (alloc_ratio * 100.0) << "%"
                 << "    Holes: "
-                << std::setw(6) << std::setprecision(2) << ((1.0 - alloc_ratio) * 100.0) << "%"
+                << std::setw(6) << std::setprecision(2)
+                << ((1.0 - alloc_ratio) * 100.0) << "%"
                 << std::endl;
         }
     }

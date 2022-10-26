@@ -19,20 +19,29 @@
 
 /* This input filter works with some "HP 64000 Absolute" files.
  * The code is based on two documents:
- ** HP 64000 Logic Development System - File Format Reference Manual , #64980-90933, 1985
- ** HP 64700 Operating Environment - Absolute File Translator. HP Part No. B1471-97008, 1992
- * which disagree on some points, and also do not quite match the files I am working with
- * (firmware update files from early 90's equipment; probably generated from an unknown
- * MC68k toolchain). My other reference is a reflashing tool that parses these files.
+ *
+ * - HP 64000 Logic Development System - File Format Reference Manual,
+ *   #64980-90933, 1985
+ * - HP 64700 Operating Environment - Absolute File Translator.
+ *   HP Part No. B1471-97008, 1992
+ *
+ * which disagree on some points, and also do not quite match the files I am
+ * working with (firmware update files from early 90's equipment; probably
+ * generated from an unknown MC68k toolchain).
+ * My other reference is a reflashing tool that parses these files.
  *
  * The main points of disagreement are:
- * - two first bytes of the file, before any header or the "Processor Information Record",
- *   are not officially documented anywhere I can find. I did not check any 68k linker docs
- *   however. In my files they are set to "82 04", where 04 matches HP doc's "type" value
- *   of 4 for Absolute files.
- * - Header : only mentioned in B1471. 16 bytes of user data ? Present in my files.
- * - "recsize" (my terminology) : redundant field, before every record, giving length of
- *   its record minus 1, i.e. recsize == (DataRecord.numbytes + 6) - 1
+ *
+ * - two first bytes of the file, before any header or the
+ *   "Processor Information Record", are not officially documented anywhere I
+ *   can find. I did not check any 68k linker docs however.
+ *   In my files they are set to "82 04", where 04 matches HP doc's "type"
+ *   value of 4 for Absolute files.
+ * - Header : only mentioned in B1471. 16 bytes of user data ?
+ *   Present in my files.
+ * - "recsize" (my terminology) : redundant field, before every record,
+ *   giving length of its record minus 1,
+ *   i.e. recsize == (DataRecord.numbytes + 6) - 1
  */
 #include <srecord/arglex/tool.h>
 #include <srecord/input/file/hp64k.h>
