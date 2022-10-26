@@ -1,0 +1,31 @@
+---
+# Configuration file for MegaLinter
+
+DISABLE:
+  - ACTION # not relevant
+  - C # not relevant
+  - COPYPASTE
+DISABLE_LINTERS:
+  - REPOSITORY_CHECKOV # not relevant
+  - REPOSITORY_TRIVY # not relevant
+DISABLE_ERRORS_LINTERS:
+  - CPP_CPPLINT
+  - HTML_DJLINT
+  - HTML_HTMLHINT
+
+# Formatting problems shall be reported as errors
+FORMATTERS_DISABLE_ERRORS: false
+
+# BASH:
+# Test files use ". test_prelude.sh" which needs to be configured here
+BASH_SHELLCHECK_ARGUMENTS: --external-sources --source-path=test
+# Setup coding style
+BASH_SHFMT_ARGUMENTS: --posix --indent 4 --space-redirects --func-next-line
+
+# EDITORCONFIG:
+# EditorConfig itself is configured in .editorconfig
+EDITORCONFIG_EDITORCONFIG_CHECKER_ARGUMENTS: -disable-indent-size
+
+# SPELL:
+# cSpell is configured in .cspell.json
+SPELL_MISSPELL_FILTER_REGEX_EXCLUDE: "(t0216a.sh)"

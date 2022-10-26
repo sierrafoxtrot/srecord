@@ -5,11 +5,17 @@ charset = utf-8
 indent_size = 4
 indent_style = space
 insert_final_newline = true
-max_line_length = 80
+max_line_length = 120
 tab_width = 8
 trim_trailing_whitespace = true
 
-[*.yml;*.cmake;CMakeLists.txt]
+[*.{cc,h,h.in}]
+max_line_length = 80
+
+[*.{html,man,so}]
+max_line_length = 400
+
+[*.{yaml,yml}]
 indent_size = 2
 tab_width = 2
 

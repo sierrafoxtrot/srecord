@@ -1,3 +1,4 @@
+---
 name: CI
 on: [push, pull_request]
 
@@ -8,7 +9,6 @@ permissions:
   checks: write
 
 jobs:
-
   build:
     name: Build and Test
     runs-on: ${{ matrix.os }}
@@ -43,7 +43,10 @@ jobs:
         run: sudo apt install -y libgcrypt20-dev
 
       - name: Configure
-        run: SHELL=$(which sh) CXX=$(echo ${{ matrix.compiler }} | sed -E 's/^(g|clang)(cc)?/\1++/') cmake -G Ninja -S . -B build
+        run: |
+          export SHELL=$(which sh)
+          export CXX=$(echo ${{ matrix.compiler }} | sed -E 's/^(g|clang)(cc)?/\1++/')
+          cmake -G Ninja -S . -B build
 
       - name: Build
         working-directory: build
@@ -54,7 +57,6 @@ jobs:
         run: |
           ninja test_arglex_ambiguous test_crc16 test_fletcher16 test_hyphen test_url_decode
           ctest --output-junit ctest.junit.xml
-
 
   docs:
     name: Documentation
