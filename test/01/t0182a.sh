@@ -49,7 +49,7 @@ then
     then
         echo
         echo "    Your gcrypt library does not appear to have SHA224 support,"
-        echo "    this test is therefore declaraed to pass by default."
+        echo "    this test is therefore declared to pass by default."
         echo
         pass
     fi

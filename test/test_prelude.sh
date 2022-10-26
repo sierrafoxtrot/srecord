@@ -84,7 +84,7 @@ fail()
 # The no_result function (command) is used to declare a test to have
 # failed in an unexpected way, and exit.  This is used for any case
 # where the "scaffolding" of a test does no succeed, effectively making
-# the correctedness of the functionality being tested indeterminate.
+# the correctness of the functionality being tested indeterminate.
 # The exit code of 2 is dictated by Aegis, so Aegis can know the result
 # of running the test.
 #

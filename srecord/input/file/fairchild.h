@@ -25,7 +25,7 @@ namespace srecord {
 
 /**
   * The srecord::input_file_fairchild class is used to represent the parse
-  * stat ewhen reading a file in Fairchild Fairbug format.
+  * state when reading a file in Fairchild Fairbug format.
   */
 class input_file_fairchild:
     public input_file
@@ -88,7 +88,7 @@ private:
 
     /**
       * The address instance variable is used to member the address at
-      * the currebt point in the input file.
+      * the current point in the input file.
       */
     unsigned long address;
 

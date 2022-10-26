@@ -26,7 +26,7 @@ A number of gcc 4.4 build problems have been fixed.
 .if t \(bu
 .\" Change 12
 A bugs has been fixed in the Intel output format. When using the
-segemented format (address\[hy]length=2) records that span the end
+segmented format (address\[hy]length=2) records that span the end
 of segment boundary are tricky. The code now carefully splits
 such output records, to ensure the two parts are explicitly
 placed into separate segments.

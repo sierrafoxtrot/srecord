@@ -116,7 +116,7 @@ comes with at least one test.
 If your filter has endian\[hy]ness, add tests for each endian.
 .SH IMPLEMENTATION ISSUES
 In implementing a new filter, there are a couple of philosophical
-issues which affect technical decissions:
+issues which affect technical decisions:
 .TP 3n
 \(bu
 Be liberal in what you accept.  Where ever possible, consume the widest

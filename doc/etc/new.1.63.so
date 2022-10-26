@@ -48,7 +48,7 @@ bits.
 .if n *
 .if t \(bu
 .\" Change 25
-Hanspeter Niederstrasser disoverd some false negatives in the
+Hanspeter Niederstrasser discovered some false negatives in the
 test suite, when used on OSX.
 Thank you for the bug report. This has been fixed.
 .PP
@@ -69,7 +69,7 @@ present in the code.
 .if t \(bu
 .\" Change 16
 Liju Prasanth Nivas (RBEI/ECA1)
-<Liju.PrasanthNivas@in.bosch.com> suggsted another use case for
+<Liju.PrasanthNivas@in.bosch.com> suggested another use case for
 the examples. In the case of "joining" files that are meant to be
 \[lq]stacked in layers\[rq].
 Contributions for the examples are always appreciated. Thank you.
@@ -78,8 +78,8 @@ Contributions for the examples are always appreciated. Thank you.
 .if t \(bu
 .\" Change 51
 Added more comments to the code, so that the use
-of URL_deode for the command line is better explained. And
-comment to explain why not to do turl_encode when building
+of URL_decode for the command line is better explained. And
+comment to explain why not to do URL_encode when building
 header records.
 .PP
 .if n *

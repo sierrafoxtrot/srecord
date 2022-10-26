@@ -27,7 +27,7 @@ instead of \fB\-guess\fP for the exact format.
 .if n *
 .if t \(bu
 .\" Change 26
-The Intergated Device Technology (IDT) system integration
+The Integrated Device Technology (IDT) system integration
 manager (IDT/sim) binary format is now understood for both
 reading and writing.
 .TP 2n
@@ -40,7 +40,7 @@ reading and writing.
 .if n *
 .if t \(bu
 .\" Change 25
-The Stag Prom Programer hexadecimal format is now understood for
+The Stag Prom Programmer hexadecimal format is now understood for
 both reading and writing.
 .TP 2n
 .if n *
@@ -61,7 +61,7 @@ The backwards compatible option name has been reintroduced.
 .if n *
 .if t \(bu
 .\" Change 20
-The windows build instructions have been greatly imptoved, based
+The windows build instructions have been greatly improved, based
 on the experiences of Jens Heilig \f[CW]<jens@familie\[hy]heilig.net>\fP
 which he has generously shared.
 .TP 2n

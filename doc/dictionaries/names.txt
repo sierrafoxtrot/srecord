@@ -93,6 +93,7 @@ pmiller
 POSIX
 Prasanth
 primos
+Prom_Pogrammer_Binary
 Prom_Pogrammer_heXadecimal
 PTHREAD
 Quartus
@@ -124,7 +125,7 @@ Tektronix
 Telegraphique
 Telephonique
 Tewie
-textlive
+texlive
 tkdiff
 tkenc
 tmac

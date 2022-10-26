@@ -86,7 +86,7 @@ public:
 private:
     /**
       * Run the generator on the filled buffer.  The generator assumes
-      * the incoming bytestream is in little-endian order, which is safe
+      * the incoming byte stream is in little-endian order, which is safe
       * considering this is for the STM32F series MPUs.
       */
     void generator(void);

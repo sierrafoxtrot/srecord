@@ -21,7 +21,7 @@
 .if t \(bu
 .\" Change 19
 Izzet Ozcelik <izzetozcelik@cscope.co.uk> discovered a bug in the
-Tektronix\[hy]Extenden format line checksum calculations. The comparison
+Tektronix\[hy]Extended format line checksum calculations. The comparison
 should have been in 8 bits, not int.
 .TP 2n
 .if n *

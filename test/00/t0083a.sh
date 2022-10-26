@@ -104,7 +104,7 @@ diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
 #
-# now test reading the Cosmsc format
+# now test reading the Cosmac format
 #
 srec_cmp test.in test.out -cosmac
 if test $? -ne 0; then fail; fi
