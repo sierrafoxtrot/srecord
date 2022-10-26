@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="Signetics format"
-. test_prelude
+. test_prelude.sh
 
 # --------------------------------------------------------------------------
 #

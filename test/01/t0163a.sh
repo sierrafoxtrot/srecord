@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="motorola --disable=data-count"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 Hello, World!

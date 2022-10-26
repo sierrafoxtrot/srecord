@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="Needham Hex format"
-. test_prelude
+. test_prelude.sh
 
 # ------ test writing Needham Hex format -----------------------------------
 
@@ -35,7 +35,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -o test.out -nh > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
@@ -50,7 +53,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.out -nh -o test.out2 > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 diff test.ok2 test.out2
 if test $? -ne 0; then fail; fi

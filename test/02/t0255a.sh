@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="file ordering agnosticism"
-. test_prelude
+. test_prelude.sh
 
 cat > test1.in << 'fubar'
 S0220000687474703A2F2F737265636F72642E736F75726365666F7267652E6E65742F1D
@@ -115,21 +115,21 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test1.in test2.in test3.in test4.in -gen 0x100 0x104 \
-  -const-b-e 0x01020304 4 -o test.out 2>test.err
+    -const-b-e 0x01020304 4 -o test.out 2> test.err
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
-srec_cat test4.in test3.in  -gen 0x100 0x104 -const-b-e 0x01020304 4 \
-  test2.in test1.in -o test.out 2>test.err
+srec_cat test4.in test3.in -gen 0x100 0x104 -const-b-e 0x01020304 4 \
+    test2.in test1.in -o test.out 2> test.err
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
-srec_cat  -gen 0x100 0x104 -const-b-e 0x01020304 4 test3.in \
-  test1.in test4.in test2.in -o test.out 2>test.err
+srec_cat -gen 0x100 0x104 -const-b-e 0x01020304 4 test3.in \
+    test1.in test4.in test2.in -o test.out 2> test.err
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

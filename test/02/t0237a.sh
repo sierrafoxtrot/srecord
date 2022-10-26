@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="Tec-ext format, read"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 %1561C3100202020202020

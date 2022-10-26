@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="ancient Intel end-of-file records"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 :1000000012C02CC02BC02AC029C028C027C026C0BF
@@ -38,8 +38,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -intel -o test.out -intel > log 2>&1
-if test $? -ne 0
-then
+if test $? -ne 0; then
     cat log
     fail
 fi

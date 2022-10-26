@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="ppx hex read"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 *

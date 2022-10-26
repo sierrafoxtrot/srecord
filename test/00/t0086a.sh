@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="Spectrum format"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S0220000687474703A2F2F737265636F72642E736F75726365666F7267652E6E65742F1D

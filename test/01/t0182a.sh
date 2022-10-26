@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="SHA224"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B
@@ -42,11 +42,9 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -sha224 0x100 -o test.out > LOG 2>&1
-if test $? -ne 0
-then
+if test $? -ne 0; then
     # if SHA224 not available, pass by default
-    if diff ok2 LOG > /dev/null 2> /dev/null
-    then
+    if diff ok2 LOG > /dev/null 2> /dev/null; then
         echo
         echo "    Your gcrypt library does not appear to have SHA224 support,"
         echo "    this test is therefore declared to pass by default."
@@ -60,8 +58,7 @@ then
 fi
 
 diff test.ok test.out
-if test $? -ne 0
-then
+if test $? -ne 0; then
     fail
 fi
 

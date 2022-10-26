@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="-gen -repeat-string nnn"
-. test_prelude
+. test_prelude.sh
 
 cat > test.ok << 'fubar'
 00000000: 39 38 37 39 38 37 39 38 37 39 38 37 39 38 37 39  #9879879879879879

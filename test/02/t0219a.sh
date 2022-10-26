@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="option --guess"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 *
@@ -35,8 +35,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_info test.in --guess > test.out 2>&1
-if test $? -ne 0
-then
+if test $? -ne 0; then
     cat test.out
     fail
 fi

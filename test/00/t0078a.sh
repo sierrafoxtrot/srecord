@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="motorola S5"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B

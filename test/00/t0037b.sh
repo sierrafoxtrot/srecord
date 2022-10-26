@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="tekext format, read"
-. test_prelude
+. test_prelude.sh
 
 #
 # Test reading this format

@@ -20,7 +20,7 @@
 #
 
 TEST_SUBJECT="AOMF format"
-. test_prelude
+. test_prelude.sh
 
 # --------------------------------------------------------------------------
 #

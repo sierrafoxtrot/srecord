@@ -21,7 +21,7 @@
 #
 
 TEST_SUBJECT="msbin concatenate records"
-. test_prelude
+. test_prelude.sh
 
 # Generate a long enough test data
 srec_cat -generate 1 1048577 -repeat-string 'MsBinConcatenateRecordsTest' -execution-start-address=1 -o test.in

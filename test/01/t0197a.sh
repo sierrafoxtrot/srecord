@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="msbin read"
-. test_prelude
+. test_prelude.sh
 
 # Simple msbin file with three data records
 # 80000000: 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF

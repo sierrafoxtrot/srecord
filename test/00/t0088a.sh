@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="INHX16 format"
-. test_prelude
+. test_prelude.sh
 
 # --------------------------------------------------------------------------
 

@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="unsplit filter"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 Hello, World!
@@ -32,14 +32,23 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -bin -split 2 0 -o test.even > log 2>&1
-if test $? -ne 0; then cat log; fail; fi
+if test $? -ne 0; then
+    cat log
+    fail
+fi
 
 srec_cat test.in -bin -split 2 1 -o test.odd > log 2>&1
-if test $? -ne 0; then cat log; fail; fi
+if test $? -ne 0; then
+    cat log
+    fail
+fi
 
 srec_cat test.even -unsplit 2 0 test.odd -unsplit 2 1 \
-        -o test.out -bin > log 2>&1
-if test $? -ne 0; then cat log; fail; fi
+    -o test.out -bin > log 2>&1
+if test $? -ne 0; then
+    cat log
+    fail
+fi
 
 diff test.out test.ok
 

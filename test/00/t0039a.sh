@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="format guessing"
-. test_prelude
+. test_prelude.sh
 
 # --------------------------------------------------------------------------
 #
@@ -39,7 +39,7 @@ Data:   0000 - 000D
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_info test.in -guess > test.out 2>test.err
+srec_info test.in -guess > test.out 2> test.err
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -61,7 +61,7 @@ Data:   0000 - 000D
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_info test.in -guess > test.out 2>test.err
+srec_info test.in -guess > test.out 2> test.err
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -81,7 +81,7 @@ Data:   0000 - 000D
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_info test.in -guess > test.out 2>test.err
+srec_info test.in -guess > test.out 2> test.err
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

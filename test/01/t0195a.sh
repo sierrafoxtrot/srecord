@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="generate const-b-e"
-. test_prelude
+. test_prelude.sh
 
 cat > test.ok << 'fubar'
 S00600004844521B

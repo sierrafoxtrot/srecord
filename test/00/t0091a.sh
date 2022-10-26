@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="Verilog VMEM format"
-. test_prelude
+. test_prelude.sh
 
 # ---------- Test Writing (64-bit) -----------------------------------------
 

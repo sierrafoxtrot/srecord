@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="intel hex"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 :200000000000C0C1C1810140C30103C00280C241C60106C00780C7410500C5C1C4810440A0
@@ -64,8 +64,11 @@ cat > test.ok << 'fubar'
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -intel -offset 0x200000 -o test.out -inte > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+srec_cat test.in -intel -offset 0x200000 -o test.out -intel > LOG 2>&1
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi

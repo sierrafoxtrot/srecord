@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="read logisim"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 v2.0 raw

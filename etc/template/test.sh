@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="fill me in"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 Hello, World!

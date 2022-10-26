@@ -19,23 +19,23 @@
 #
 
 TEST_SUBJECT="CRC16"
-. test_prelude
+. test_prelude.sh
 
 #
 # Build the CRC16 test vectors
 #
 cp /dev/null zero.length.file
 test $? -eq 0 || no_result
-echo A | dd bs=1 count=1 2>/dev/null > single.a.file
+echo A | dd bs=1 count=1 2> /dev/null > single.a.file
 test $? -eq 0 || no_result
-echo 123456789 | dd bs=9 count=1 2>/dev/null > nine.digits.file
+echo 123456789 | dd bs=9 count=1 2> /dev/null > nine.digits.file
 test $? -eq 0 || no_result
 
 echo "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" |
-dd bs=64 count=1 2>/dev/null > upper-case-a.64.file
+    dd bs=64 count=1 2> /dev/null > upper-case-a.64.file
 test $? -eq 0 || no_result
 cat upper-case-a.64.file upper-case-a.64.file upper-case-a.64.file \
-        upper-case-a.64.file > upper-case-a.256.file
+    upper-case-a.64.file > upper-case-a.256.file
 test $? -eq 0 || no_result
 
 #

@@ -17,8 +17,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-TEST_SUBJECT="minimum filter";
-. test_prelude
+TEST_SUBJECT="minimum filter"
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B

@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="srec_cmp --verbose"
-. test_prelude
+. test_prelude.sh
 
 cat > test.one << 'fubar'
 S00600004844521B
@@ -57,7 +57,10 @@ srec_cmp -verbose test.one -offset 1 test.two > test.out 2>&1
 if test $? -ne 2; then fail; fi
 
 diff test.ok1 test.out > LOG 2>&1 || diff test.ok2 test.out >> LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 #
 # The things tested here, worked.

@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="srec_cat -o -coe 32 to test xiretza's patch"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B

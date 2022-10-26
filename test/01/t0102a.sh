@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="srec_output_file_asm"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B
@@ -43,8 +43,11 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -offset 100 test.in -offset 150 \
-        -o test.out -asm > log 2>&1
-if test $? -ne 0; then cat log; fail; fi
+    -o test.out -asm > log 2>&1
+if test $? -ne 0; then
+    cat log
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi

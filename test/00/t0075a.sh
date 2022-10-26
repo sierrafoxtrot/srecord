@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="DEC Binary format"
-. test_prelude
+. test_prelude.sh
 
 # -------------------------------------------------------------------------
 #
@@ -864,7 +864,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -decbin -o test.out -header HDR -multiple > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
@@ -874,10 +877,16 @@ if test $? -ne 0; then fail; fi
 # Test writing the format.
 #
 srec_cat test.in -decbin -o test.out -decbin -multi > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 srec_cmp -dsw test.in -decbin test.out -decbin -multi > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 #
 # The things tested here, worked.

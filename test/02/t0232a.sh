@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="options ambiguous"
-. test_prelude
+. test_prelude.sh
 
 test_arglex_ambiguous
 if test $? -ne 0; then fail; fi

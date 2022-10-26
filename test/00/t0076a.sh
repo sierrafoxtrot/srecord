@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="Fast Load format"
-. test_prelude
+. test_prelude.sh
 
 #
 # Test the Fast Load format

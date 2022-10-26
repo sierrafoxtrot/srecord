@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="fill near end of address space"
-. test_prelude
+. test_prelude.sh
 
 cat > test.ok << 'fubar'
 S00600004844521B
@@ -29,7 +29,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat -generate 0 1 -constant 0 -fill 0xFF 0xFFFFFFFE 0xFFFFFFFF \
-        -o test.out -header HDR
+    -o test.out -header HDR
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -46,7 +46,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat -generate 0 1 -constant 0 -fill 0xFF 0xFFFFFFFF 0x100000000 \
-        -o test.out -header HDR
+    -o test.out -header HDR
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

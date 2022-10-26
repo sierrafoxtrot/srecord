@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="read idt/sim"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in.2 << 'fubar'
 S00600004844521B

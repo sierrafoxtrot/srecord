@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="url_decode"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 Hello, World!%20%45

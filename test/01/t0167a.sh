@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="number from --minimum"
-. test_prelude
+. test_prelude.sh
 
 cat > x1.srec << 'fubar'
 S00600004844521B
@@ -46,9 +46,9 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat \
-        x1.srec \
-        x2.srec -fill 0 -maximum-address x1.srec -minimum-address x2.srec \
-        -o test.out
+    x1.srec \
+    x2.srec -fill 0 -maximum-address x1.srec -minimum-address x2.srec \
+    -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

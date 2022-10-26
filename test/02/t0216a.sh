@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="read stag prom prog bin"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in.1 << 'fubar'
 S00600004844521B
@@ -1304,8 +1304,6 @@ if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
-
-
 
 #
 # The things tested here, worked.

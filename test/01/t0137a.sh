@@ -18,8 +18,8 @@
 #       <http://www.gnu.org/licenses/>.
 #
 
-TEST_SUBJECT="vhdl alignment";
-. test_prelude
+TEST_SUBJECT="vhdl alignment"
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B
@@ -37,7 +37,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -o test.out -vhdl 2 > LOG 2>&1
-if test $? -ne 1; then cat LOG; fail; fi
+if test $? -ne 1; then
+    cat LOG
+    fail
+fi
 
 diff test.ok LOG
 if test $? -ne 0; then fail; fi

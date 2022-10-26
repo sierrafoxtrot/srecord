@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="read TRS-80"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in.in << 'fubar'
 05 03 48 44 52

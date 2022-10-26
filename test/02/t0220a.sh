@@ -18,9 +18,9 @@
 #
 
 TEST_SUBJECT="crc-16-ansi"
-. test_prelude
+. test_prelude.sh
 
-echo "123456789" | dd bs=9 count=1 > test.in  2>/dev/null
+echo "123456789" | dd bs=9 count=1 > test.in 2> /dev/null
 if test $? -ne 0; then no_result; fi
 
 # If anyone has the ANSI standard test vectors,

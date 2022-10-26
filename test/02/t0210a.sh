@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="write mips flash"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B

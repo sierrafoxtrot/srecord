@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="command line @file arguments"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S0220000687474703A2F2F737265636F72642E736F75726365666F7267652E6E65742F1D
@@ -43,7 +43,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat @args > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi

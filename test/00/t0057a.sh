@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="C-array output"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B

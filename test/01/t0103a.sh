@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="command line parsing"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00E00004170706C696361746D6F7473

@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="intel functionality"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 :10000000DB00E60F5F1600211100197ED300C3004C
@@ -38,7 +38,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -intel -o test.out -motorola -header HDR > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
@@ -62,7 +65,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -motorola -o test.out -intel > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
@@ -84,7 +90,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cmp test.in1 -intel test.in2 -intel > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 #
 # The things tested here, worked.

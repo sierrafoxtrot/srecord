@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="adler16"
-. test_prelude
+. test_prelude.sh
 
 # This test vector is from the Wikipedia page...
 cat > test.in << 'fubar'

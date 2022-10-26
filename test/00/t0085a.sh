@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="Formatted Binary format"
-. test_prelude
+. test_prelude.sh
 
 # ---------- test reading Formatted Binary ---------------------------------
 
