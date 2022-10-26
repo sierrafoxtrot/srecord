@@ -23,7 +23,7 @@
 
 
 static char
-nybble(unsigned x)
+nibble(unsigned x)
 {
     x &= 0x0F;
     if (x < 10)
@@ -56,8 +56,8 @@ srecord::string_url_encode(const std::string &text)
         if (needs_quoting(c))
         {
             result << '%';
-            result << nybble(c >> 4);
-            result << nybble(c);
+            result << nibble(c >> 4);
+            result << nibble(c);
         }
         else
         {
