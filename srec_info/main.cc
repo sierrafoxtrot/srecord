@@ -65,6 +65,8 @@ main(int argc, char **argv)
     if (infile.size() == 0U)
         infile.push_back(cmdline.get_input());
 
+    std::cout << std::hex << std::uppercase;
+
     //
     // Read each file and emit informative gumph.
     //
@@ -110,11 +112,11 @@ main(int argc, char **argv)
 
             case srecord::record::type_execution_start_address:
                 {
-                    std::cout << "Execution Start Address: ";
-                    uint32_t addr = record.get_address();
-                    char buf[16];
-                    snprintf(buf, sizeof(buf), "%08lX", addr);
-                    std::cout << buf << std::endl;
+                    const uint32_t addr = record.get_address();
+                    std::cout
+                      << "Execution Start Address: "
+                      << std::setfill('0') << std::setw(8) << addr
+                      << std::endl;
                 }
                 break;
 
@@ -136,8 +138,8 @@ main(int argc, char **argv)
             prec = 8;
         else if (range_highest > (1UL << 16))
             prec = 6;
+        std::cout << std::setfill('0');
 
-        char buf[32];
         uint32_t number_bytes = 0UL;
         bool first_line = true;
         for (;;)
@@ -154,17 +156,16 @@ main(int argc, char **argv)
                 std::cout << "        ";
             }
             const uint32_t lo = tmp.get_lowest();
-            snprintf(buf, sizeof(buf), "%0*lX", prec, lo);
-            std::cout << buf << " - ";
             const uint32_t hi = tmp.get_highest();
             const uint32_t hi_address = static_cast<uint32_t>(hi - 1U);
-            snprintf(buf, sizeof(buf), "%0*lX", prec, hi_address);
-            std::cout << buf;
+            std::cout
+              << std::setw(prec) << lo
+              << " - "
+              << std::setw(prec) << hi_address;
             const uint32_t interval_size = static_cast<uint32_t>(hi - lo);
             if(verbose)
             {
-                snprintf(buf, sizeof(buf), "%0*lX", prec, interval_size);
-                std::cout << " (" << buf << ")";
+                std::cout << " (" << std::setw(prec) << interval_size<< ")";
             }
             std::cout << std::endl;
 
@@ -176,23 +177,25 @@ main(int argc, char **argv)
 
         if (verbose)
         {
+            std::cout << "Filled: ";
             if (number_bytes == 0UL)
-            {
-                std::cout << "Filled Bytes: 100000000" << std::endl;
-            }
+                std::cout << "100000000";
             else
-            {
-                snprintf(buf, sizeof(buf), "%0*lX", prec, number_bytes);
-                std::cout << "Filled Bytes: " << buf << std::endl;
-            }
+                std::cout << std::setw(prec) << number_bytes;
+            std::cout << std::endl;
             const uint32_t range_size = static_cast<uint32_t>(range_highest - range_lowest);
             const double real_number_bytes = (number_bytes == 0UL) ? 4294967296.0 : number_bytes;
             const double real_range_size = (range_size == 0UL) ? 4294967296.0 : range_size;
             const double alloc_ratio = real_number_bytes/real_range_size;
-            snprintf(buf, sizeof(buf), "%5.2f", alloc_ratio * 100.0);
-            std::cout << "Allocated: " << buf << "%";
-            snprintf(buf, sizeof(buf), "%5.2f", (1.0 - alloc_ratio) * 100.0);
-            std::cout << "   Holes: " << buf << "%" << std::endl;
+            std::cout
+                << std::setfill(' ')
+                << std::fixed
+                << std::showpoint
+                << "Allocated: "
+                << std::setw(6) << std::setprecision(2) << (alloc_ratio * 100.0) << "%"
+                << "    Holes: "
+                << std::setw(6) << std::setprecision(2) << ((1.0 - alloc_ratio) * 100.0) << "%"
+                << std::endl;
         }
     }
 

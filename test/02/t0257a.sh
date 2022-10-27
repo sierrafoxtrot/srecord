@@ -882,7 +882,7 @@ Header: "HDR"
 Execution Start Address: 00004000
 Data:   4000 - 75FF (3600)
 Filled: 3600
-Allocated: 100.00%   Holes:  0.00%
+Allocated: 100.00%    Holes:   0.00%
 
 test.in.1:
 Format: Motorola S-Record
@@ -892,7 +892,7 @@ Data:   0000 - 00FF (0100)
         0300 - 07FF (0500)
         0900 - 35FF (2D00)
 Filled: 3300
-Allocated: 94.44%   Holes:  5.56%
+Allocated:  94.44%    Holes:   5.56%
 fubar
 if test $? -ne 0; then no_result; fi
 
