@@ -45,7 +45,7 @@ cat > test.ok << 'fubar'
 Format: Motorola S-Record
 Header: "HDR"
 Execution Start Address: 00000000
-Data:   0000 - 0000
+Data:   00000000 - 00000000
         FFFFFFFF - FFFFFFFF
 fubar
 if test $? -ne 0; then no_result; fi

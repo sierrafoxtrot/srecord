@@ -132,7 +132,7 @@ main(int argc, char **argv)
         const uint32_t range_lowest  = range.get_lowest();
         const uint32_t range_highest = range.get_highest();
         int prec = 4;
-        if (range_highest > (1UL << 24))
+        if ((range_highest > (1UL << 24)) || (range_highest == 0UL))
             prec = 8;
         else if (range_highest > (1UL << 16))
             prec = 6;
