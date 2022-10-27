@@ -176,10 +176,19 @@ main(int argc, char **argv)
 
         if (verbose)
         {
-            snprintf(buf, sizeof(buf), "%0*lX", prec, number_bytes);
-            std::cout << "Filled: " << buf << std::endl;
+            if (number_bytes == 0UL)
+            {
+                std::cout << "Filled Bytes: 100000000" << std::endl;
+            }
+            else
+            {
+                snprintf(buf, sizeof(buf), "%0*lX", prec, number_bytes);
+                std::cout << "Filled Bytes: " << buf << std::endl;
+            }
             const uint32_t range_size = static_cast<uint32_t>(range_highest - range_lowest);
-            const double alloc_ratio = static_cast<double>(number_bytes)/range_size;
+            const double real_number_bytes = (number_bytes == 0UL) ? 4294967296.0 : number_bytes;
+            const double real_range_size = (range_size == 0UL) ? 4294967296.0 : range_size;
+            const double alloc_ratio = real_number_bytes/real_range_size;
             snprintf(buf, sizeof(buf), "%5.2f", alloc_ratio * 100.0);
             std::cout << "Allocated: " << buf << "%";
             snprintf(buf, sizeof(buf), "%5.2f", (1.0 - alloc_ratio) * 100.0);
