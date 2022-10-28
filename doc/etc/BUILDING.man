@@ -39,13 +39,15 @@ You will need the GNU Crypt library.
 If you are using a package based system, you will need the
 libgcrypt\[hy]devel package, or one named something very similar.
 .br
-http://directory.fsf.org/project/libgcrypt/
+.UR http://directory.fsf.org/project/libgcrypt/
+.UE
 .TP 8n
 GNU Libtool
 You will need the GNU Libtool software, used to build shared libraries
 on a variety of systems.
 .br
-http://www.gnu.org/software/libtool/
+.UR http://www.gnu.org/software/libtool/
+.UE
 .TP 8n
 CMake
 You will need CMake to build, test install SRecord from source.
@@ -53,7 +55,8 @@ depend on a build tool. CMake
 version \*(C)
 or later is required
 .br
-http://cmake.org
+.UR http://cmake.org
+.UE
 .TP 8n
 GNU Groff
 The documentation for the
@@ -94,7 +97,10 @@ MSYS2's is geared toward building native applications. This will allow you to
 compile SRecord, build its documentation and run its test on Windows 7 and
 later.
 .PP
-Download and run the installer as described on the MSYS2 homepage \f[CW]http://www.msys2.org\fP. Using the default installation locations is highly recommended.
+Download and run the installer as described on the MSYS2 homepage
+.UR http://www.msys2.org
+.UE
+. Using the default installation locations is highly recommended.
 .PP
 Run the MINGW64 environment (giving a BASH prompt) and accept any updates. The
 first run will update the package database itself. Running it a second time
@@ -342,7 +348,8 @@ srecord\[hy]users@lists.sourceforge.net
 .ft R
 .RE
 For information about the srecord\[hy]users mailing list.
-http://srecord.sourceforge.net/mailing\[hy]list.html
+.UR http://srecord.sourceforge.net/mailing-list.html
+.UE
 .PP
 When reporting problems,
 please include the version number
