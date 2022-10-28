@@ -139,7 +139,7 @@ add_custom_target(web-site ALL DEPENDS ${WEB_PAGE_OUTPUTS})
 set(REF_INDEX ${CMAKE_CURRENT_BINARY_DIR}/etc/ref-index.so)
 add_custom_command(OUTPUT ${REF_INDEX}
   COMMAND ${BUILD_REF_INDEX} ${CMAKE_CURRENT_SOURCE_DIR} ${REF_INDEX} ${MAN_PAGES}
-  DEPENDS ${MAN_PAGES} ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.ignore ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx1.awk ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx2.awk
+  DEPENDS ${MAN_PAGES} ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.ignore ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx1.awk
   COMMENT "Building ${REF_INDEX}"
   VERBATIM
   )

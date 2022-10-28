@@ -28,4 +28,4 @@ manpages=$@
 cd $workingdir
 awk -f script/ref-ptx1.awk $manpages | \
     ptx -O -r -w 1000 -iscript/ref-ptx.ignore | \
-    sort  -f -d -t'"' +5 -6 +3 -4 | awk -F'"' -f script/ref-ptx2.awk > $target
+    sort  -f -d -t'"' +5 -6 +3 -4  > $target
