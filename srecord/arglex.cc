@@ -686,7 +686,7 @@ void
 srecord::arglex::license(void)
     const
 {
-    help("srecord::license");
+    help("srec_license");
 }
 
 
