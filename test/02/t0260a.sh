@@ -40,14 +40,13 @@ diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
 # use the last address
-# -> buggy srec_info output is a different issue
 
 cat > test.ok << 'fubar'
 Format: Motorola S-Record
 Header: "HDR"
 Execution Start Address: 00000000
-Data:   0000 - 0000
-        FFFFFFFF - FFFFFFFFFFFFFFFF
+Data:   00000000 - 00000000
+        FFFFFFFF - FFFFFFFF
 fubar
 if test $? -ne 0; then no_result; fi
 
