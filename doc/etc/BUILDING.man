@@ -116,6 +116,7 @@ will install updates flagged in the updated database.:
 \f[B] \fP           mingw-w64-x86_64-libgcrypt mingw-w64-x86_64-cmake \\
 \f[B] \fP           mingw-w64-x86_64-graphviz mingw-w64-x86_64-ninja \\
 \f[B] \fP           mingw-w64-x86_64-doxygen mingw-w64-i686-ghostscript \\
+\f[B] \fP           mingw-w64-x86_64-texlive-bin \\
 \f[I]\&...lots of output...\fP
 \f[B]%\fP
 .fi
