@@ -136,14 +136,6 @@ endforeach()
 add_custom_target(web-site ALL DEPENDS ${WEB_PAGE_OUTPUTS})
 
 # Reference Manual Components
-set(REF_INDEX ${CMAKE_CURRENT_BINARY_DIR}/etc/ref-index.so)
-add_custom_command(OUTPUT ${REF_INDEX}
-  COMMAND ${BUILD_REF_INDEX} ${CMAKE_CURRENT_SOURCE_DIR} ${REF_INDEX} ${MAN_PAGES}
-  DEPENDS ${MAN_PAGES} ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.ignore ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx1.awk
-  COMMENT "Building ${REF_INDEX}"
-  VERBATIM
-  )
-
 set(REF_PARTS ${CMAKE_CURRENT_BINARY_DIR}/etc/ref-parts.so)
 add_custom_command(OUTPUT ${REF_PARTS}
   COMMAND ${REF_PTX} ${MAN_PAGES} > ${REF_PARTS}
@@ -180,7 +172,7 @@ ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/BUILDING.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc
 ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/README.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/README.man "${NEW_CHANGES}")
 ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/change_log.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/change_log.man "${NEW_CHANGES}")
 ADD_DOC(${CMAKE_CURRENT_BINARY_DIR}/reference-${srecord_VERSION_MAJOR}.${srecord_VERSION_MINOR}.pdf
-        ${CMAKE_CURRENT_SOURCE_DIR}/etc/reference.man "${REF_PARTS};${REF_INDEX};${NEW_CHANGES}")
+        ${CMAKE_CURRENT_SOURCE_DIR}/etc/reference.man "${REF_PARTS};${NEW_CHANGES}")
 add_custom_target(doco ALL DEPENDS ${DOC_TARGETS})
 
 # Installation
