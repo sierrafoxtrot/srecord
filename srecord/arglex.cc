@@ -671,7 +671,7 @@ srecord::arglex::token_name(int n)
 
 void
 srecord::arglex::help(const char *name)
-    const
+    
 {
     if (!name) {
         name = progname_get();
@@ -685,7 +685,7 @@ srecord::arglex::help(const char *name)
 
 void
 srecord::arglex::version()
-    const
+    
 {
     print_version();
     exit(0);

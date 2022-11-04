@@ -124,7 +124,7 @@ private:
     /**
       * 8-bit checksum a 4 byte sequence.
       */
-    auto sum_ulong(unsigned long value, unsigned char sum) -> unsigned char;
+    static auto sum_ulong(unsigned long value, unsigned char sum) -> unsigned char;
 
     /**
       * The default constructor.  Do not use.

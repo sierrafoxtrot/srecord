@@ -76,7 +76,7 @@ protected:
     auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation
-    auto mode() const -> const char *;
+    static auto mode() -> const char *;
 
     // See base class for documentation.
     auto format_name() const -> const char * override;

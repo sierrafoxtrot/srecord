@@ -109,7 +109,7 @@ public:
       * @note
       *     This method never returns.
       */
-    void fatal_error(const char *fmt, ...)                  FORMAT_PRINTF(2, 3);
+    static void fatal_error(const char *fmt, ...)                  FORMAT_PRINTF(2, 3);
 
     /**
       * The compare class method is used to compare a command line string
@@ -288,12 +288,12 @@ public:
     /**
       * The help method is used to print a help message.
       */
-    void help(const char * = nullptr) const;
+    static void help(const char * = nullptr) ;
 
     /**
       * The version method is used to print a version message.
       */
-    void version() const;
+    static void version() ;
 
     /**
       * The license method is used to print the license conditions
