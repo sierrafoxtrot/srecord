@@ -65,7 +65,7 @@ srecord::input_filter_fill::generate(record &result) -> bool
     chunk *= range;
     chunk.first_interval_only();
     size_t fill_block_size = 256;
-    if (!filler_block)
+    if (filler_block == nullptr)
     {
         filler_block = new unsigned char [fill_block_size];
         memset(filler_block, filler_value, fill_block_size);

@@ -184,7 +184,7 @@ void
 srecord::output_file_mips_flash::buffer_flush_newline()
 {
     buffer_flush();
-    if (column)
+    if (column != 0)
     {
         put_char('\n');
         column = 0;
@@ -195,7 +195,7 @@ srecord::output_file_mips_flash::buffer_flush_newline()
 void
 srecord::output_file_mips_flash::buffer_flush()
 {
-    if (!buffer_length) {
+    if (buffer_length == 0u) {
         return;
 }
     if ((buffer_length & 3) != 0) {
@@ -204,7 +204,7 @@ srecord::output_file_mips_flash::buffer_flush()
     const unsigned char *end = buffer + buffer_length;
     for (const unsigned char *bp = buffer; bp < end; bp += 4)
     {
-        if (column)
+        if (column != 0)
         {
             if (column + 9 > line_length)
             {

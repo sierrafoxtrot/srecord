@@ -57,7 +57,7 @@ srecord::input_file_needham::read(srecord::record &record) -> bool
 }
             return false;
         }
-        if (isxdigit(c))
+        if (isxdigit(c) != 0)
         {
             unsigned char c = get_byte();
             record =

@@ -37,7 +37,7 @@ read_one_line(const char *filename, FILE *fp, std::string &result) -> bool
         int c = getc(fp);
         if (c == EOF)
         {
-            if (ferror(fp))
+            if (ferror(fp) != 0)
             {
                 srecord::quit_default.fatal_error_errno("read %s", filename);
             }
@@ -55,7 +55,7 @@ static void
 check(const char *filename)
 {
     FILE *fp = fopen(filename, "r");
-    if (!fp) {
+    if (fp == nullptr) {
         srecord::quit_default.fatal_error_errno("open %s", filename);
 }
     int line_number = 0;

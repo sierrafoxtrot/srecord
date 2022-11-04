@@ -85,7 +85,7 @@ stm32_crc(unsigned long crc, unsigned long data) -> unsigned long
     crc ^= data;
     for (int j = 0; j < 32; ++j)
     {
-        if (crc & 0x80000000) {
+        if ((crc & 0x80000000) != 0u) {
             crc = (crc << 1) ^ POLYNOMIAL;
         } else {
             crc = (crc << 1);

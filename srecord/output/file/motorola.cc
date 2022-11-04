@@ -115,7 +115,7 @@ srecord::output_file_motorola::write_inner(int tag, unsigned long address,
     int line_length = address_nbytes + data_nbytes + 1;
     buffer[0] = line_length;
     srecord::record::encode_big_endian(buffer + 1, address, address_nbytes);
-    if (data_nbytes) {
+    if (data_nbytes != 0) {
         memcpy(buffer + 1 + address_nbytes, data, data_nbytes);
 }
 
@@ -167,9 +167,9 @@ srecord::output_file_motorola::write(const srecord::record &record)
     // FIXME: cope with this more elegantly.
     //
     unsigned long shifted_address = record.get_address();
-    if (address_shift)
+    if (address_shift != 0)
     {
-        if (shifted_address & ((1 << address_shift) - 1))
+        if ((shifted_address & ((1 << address_shift) - 1)) != 0u)
         {
             fatal_error
             (

@@ -34,11 +34,11 @@ srecord::progname_set(char *s)
         char            *cp2;
 
         cp1 = strrchr(s, '/');
-        if (!cp1) {
+        if (cp1 == nullptr) {
             cp1 = s;
         } else
         {
-            if (!cp1[1])
+            if (cp1[1] == 0)
             {
                 *cp1 = 0;
                 continue;
@@ -47,11 +47,11 @@ srecord::progname_set(char *s)
         }
 
         cp2 = strrchr(s, '\\');
-        if (!cp2) {
+        if (cp2 == nullptr) {
             cp2 = s;
         } else
         {
-            if (!cp2[1])
+            if (cp2[1] == 0)
             {
                 *cp2 = 0;
                 continue;
@@ -85,5 +85,5 @@ srecord::progname_set(char *s)
 auto
 srecord::progname_get() -> const char *
 {
-    return (progname ? progname : "???");
+    return (progname != nullptr ? progname : "???");
 }

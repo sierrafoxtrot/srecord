@@ -50,7 +50,7 @@ srecord::input_file_brecord::read_inner(record &result) -> bool
 
     unsigned long address = get_4bytes_be();
     unsigned char length = get_byte();
-    if (length & 0x20) {
+    if ((length & 0x20) != 0) {
         fatal_error("read mode not supported");
 }
     length &= 0x1F;

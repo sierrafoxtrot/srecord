@@ -25,7 +25,7 @@
 
 srecord::output_file_ti_tagged_16::~output_file_ti_tagged_16()
 {
-    if (column) {
+    if (column != 0) {
         put_eoln();
 }
     if (enable_footer_flag)
@@ -96,7 +96,7 @@ srecord::output_file_ti_tagged_16::write(const srecord::record &record)
             while (cp < ep)
             {
                 unsigned char c = *cp++;
-                if (!isprint(c)) {
+                if (isprint(c) == 0) {
                     c = ' ';
 }
                 put_char(c);
@@ -117,7 +117,7 @@ srecord::output_file_ti_tagged_16::write(const srecord::record &record)
             // we can't start at an odd address,
             // but don't test for odd lengths
             //
-            if (record.get_address() & 1) {
+            if ((record.get_address() & 1) != 0u) {
                 fatal_alignment_error(2);
 }
 
@@ -195,7 +195,7 @@ srecord::output_file_ti_tagged_16::preferred_block_size_set(int nbytes) -> bool
     if (nbytes < 2 || nbytes > record::max_data_length) {
         return false;
 }
-    if (nbytes & 1) {
+    if ((nbytes & 1) != 0) {
         return false;
 }
     line_length = 5 * (nbytes / 2);

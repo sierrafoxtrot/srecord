@@ -123,7 +123,7 @@ srecord::input_file_tektronix::read_inner(srecord::record &record) -> bool
             buffer[3]
         );
     }
-    if (buffer[2])
+    if (buffer[2] != 0u)
     {
         checksum_reset();
         for (int j = 0; j < buffer[2]; ++j) {

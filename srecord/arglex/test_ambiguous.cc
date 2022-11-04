@@ -34,14 +34,14 @@ srecord::arglex::test_ambiguous()
         ++it1
     )
     {
-        for (const table_ty *tp1 = *it1; tp1->name; ++tp1)
+        for (const table_ty *tp1 = *it1; tp1->name != nullptr; ++tp1)
         {
             std::string abbrev = abbreviate(tp1->name);
 
             for
             (auto tp2 : tables)
             {
-                for (; tp2->name; ++tp2)
+                for (; tp2->name != nullptr; ++tp2)
                 {
                     if
                     (

@@ -157,7 +157,7 @@ srecord::output_filter_reblock::flush_buffer(bool partial)
     if (align)
     {
         unsigned residual = (buffer_address % block_size);
-        if (residual)
+        if (residual != 0u)
         {
             size_t size = block_size - residual;
             if (size > buffer_pos)

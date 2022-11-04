@@ -53,7 +53,7 @@ srecord::input_file_intel::create(const std::string &a_file_name) -> srecord::in
 auto
 srecord::input_file_intel::read_inner(srecord::record &record) -> bool
 {
-    if (pushback)
+    if (pushback != nullptr)
     {
         record = *pushback;
         delete pushback;

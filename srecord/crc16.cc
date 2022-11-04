@@ -78,7 +78,7 @@ srecord::crc16::calculate_table()
         {
             unsigned short v = b << 8;
             for (unsigned j = 0; j < 8; ++j) {
-                v = (v & 0x8000) ? ((v << 1) ^ polynomial) : (v << 1);
+                v = (v & 0x8000) != 0 ? ((v << 1) ^ polynomial) : (v << 1);
 }
             table[b] = v;
         }
@@ -90,7 +90,7 @@ srecord::crc16::calculate_table()
         {
             unsigned short v = b;
             for (unsigned j = 0; j < 8; ++j) {
-                v = (v & 1) ? ((v >> 1) ^ polynomial) : (v >> 1);
+                v = (v & 1) != 0 ? ((v >> 1) ^ polynomial) : (v >> 1);
 }
             table[b] = v;
         }

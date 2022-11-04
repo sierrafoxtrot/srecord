@@ -63,13 +63,13 @@ srecord::input_file_vmem::read(srecord::record &record) -> bool
             {
                 address = (address << 4) + get_nibble();
                 c = peek_char();
-                if (c < 0 || !isxdigit((unsigned char)c)) {
+                if (c < 0 || (isxdigit((unsigned char)c) == 0)) {
                     break;
 }
             }
             continue;
         }
-        if (isspace((unsigned char)c)) {
+        if (isspace((unsigned char)c) != 0) {
             continue;
 }
 
@@ -130,7 +130,7 @@ srecord::input_file_vmem::read(srecord::record &record) -> bool
         {
             value[nbytes++] = get_byte();
             c = peek_char();
-            if (c < 0 || !isxdigit((unsigned char)c)) {
+            if (c < 0 || (isxdigit((unsigned char)c) == 0)) {
                 break;
 }
         }

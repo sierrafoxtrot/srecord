@@ -23,7 +23,7 @@
 
 srecord::output_file_needham::~output_file_needham()
 {
-    if (column)
+    if (column != 0)
     {
         put_char('\n');
         column = 0;
@@ -70,7 +70,7 @@ srecord::output_file_needham::write(const srecord::record &record)
                 put_char('\n');
                 column = 0;
             }
-            else if (column) {
+            else if (column != 0) {
                 put_char(' ');
 }
             address = record.get_address();
@@ -89,7 +89,7 @@ srecord::output_file_needham::write(const srecord::record &record)
         }
         for (size_t j = 0; j < record.get_length(); ++j)
         {
-            if (column) {
+            if (column != 0) {
                 put_char(' ');
 }
             put_byte(record.get_data(j));

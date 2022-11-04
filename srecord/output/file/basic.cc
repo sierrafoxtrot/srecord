@@ -30,7 +30,7 @@ srecord::output_file_basic::~output_file_basic()
     if (range.empty()) {
         emit_byte(0xFF);
 }
-    if (column) {
+    if (column != 0) {
         put_char('\n');
 }
 
@@ -70,12 +70,12 @@ srecord::output_file_basic::emit_byte(int n)
     char buffer[8];
     sprintf(buffer, "%d", (unsigned char)n);
     int len = strlen(buffer);
-    if (column && column + 1 + len > line_length)
+    if ((column != 0) && column + 1 + len > line_length)
     {
         put_char('\n');
         column = 0;
     }
-    if (!column)
+    if (column == 0)
     {
         put_string("DATA ");
         column = 5;
@@ -118,7 +118,7 @@ srecord::output_file_basic::write(const srecord::record &record)
             if (bol) {
                 put_string("REM ");
 }
-            if (isprint(c)) {
+            if (isprint(c) != 0) {
                 put_char(c);
 }
             bol = false;

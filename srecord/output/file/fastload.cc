@@ -23,7 +23,7 @@
 
 srecord::output_file_fastload::~output_file_fastload()
 {
-    if (bytes_since_checksum)
+    if (bytes_since_checksum != 0)
     {
         put_command('C', checksum_get16(), 3);
         bytes_since_checksum = 0;
@@ -31,7 +31,7 @@ srecord::output_file_fastload::~output_file_fastload()
     if (enable_footer_flag) {
         put_command('E', 0, 2);
 }
-    if (column)
+    if (column != 0)
     {
         put_char('\n');
         column = 0;
@@ -66,7 +66,7 @@ srecord::output_file_fastload::put_number(unsigned long n, int min_digits)
 {
     unsigned char buffer[20];
     unsigned char *bp = buffer;
-    while (n || min_digits > 0)
+    while ((n != 0u) || min_digits > 0)
     {
         *bp++ = n & 63;
         --min_digits;
@@ -87,7 +87,7 @@ static auto
 number_width(unsigned long n) -> int
 {
     int result = 0;
-    while (n)
+    while (n != 0u)
     {
         result++;
         n >>= 6;
@@ -190,7 +190,7 @@ srecord::output_file_fastload::write(const srecord::record &record)
     case srecord::record::type_execution_start_address:
         if (enable_goto_addr_flag)
         {
-            if (bytes_since_checksum)
+            if (bytes_since_checksum != 0)
             {
                 put_command('C', checksum_get16(), 3);
                 bytes_since_checksum = 0;

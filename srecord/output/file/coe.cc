@@ -180,7 +180,7 @@ srecord::output_file_coe::write(const srecord::record &record)
                     put_string("\n; ");
                     continue;
                 }
-                if (!isprint(c)) {
+                if (isprint(c) == 0) {
                     c = ' ';
 }
                 put_char(c);
@@ -193,7 +193,7 @@ srecord::output_file_coe::write(const srecord::record &record)
         {
             unsigned long addr = record.get_address();
             unsigned len = record.get_length();
-            if ((addr % width_in_bytes) || (len % width_in_bytes)) {
+            if (((addr % width_in_bytes) != 0u) || ((len % width_in_bytes) != 0u)) {
                 fatal_alignment_error(width_in_bytes);
 }
             emit_header();

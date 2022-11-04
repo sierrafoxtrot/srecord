@@ -182,10 +182,10 @@ srecord::output_file_four_packed_code::write_inner(unsigned long address,
     buffer[2] = 0; // format code, first byte
     buffer[3] = 0; // format code, second byte
     srecord::record::encode_big_endian(buffer + 4, address, 4);
-    if (data_nbytes)
+    if (data_nbytes != 0)
     {
         memcpy(buffer + 8, data, data_nbytes);
-        while (data_nbytes & 3) {
+        while ((data_nbytes & 3) != 0) {
             buffer[8 + data_nbytes++] = 0;
 }
     }

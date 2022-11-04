@@ -76,7 +76,7 @@ void
 srecord::arglex::read_arguments_file(const char *filename)
 {
     FILE *fp = fopen(filename, "r");
-    if (!fp) {
+    if (fp == nullptr) {
         quit_default.fatal_error_errno("open \"%s\"", filename);
 }
     for (;;)
@@ -90,7 +90,7 @@ srecord::arglex::read_arguments_file(const char *filename)
         //
         // Ignore white space between words.
         //
-        if (isspace(c)) {
+        if (isspace(c) != 0) {
             continue;
 }
 
@@ -120,7 +120,7 @@ srecord::arglex::read_arguments_file(const char *filename)
                 break;
 }
             c = sc;
-            if (isspace(c)) {
+            if (isspace(c) != 0) {
                 break;
 }
             if (c == '#')
@@ -160,14 +160,14 @@ srecord::arglex::compare(const char *formal, const char *actual) -> bool
     for (;;)
     {
         unsigned char ac = *actual++;
-        if (isupper(ac)) {
+        if (isupper(ac) != 0) {
             ac = tolower(ac);
 }
         unsigned char fc = *formal++;
         switch (fc)
         {
         case 0:
-            return !ac;
+            return ac == 0u;
 
         case '_':
             if (ac == '-') {
@@ -192,7 +192,7 @@ srecord::arglex::compare(const char *formal, const char *actual) -> bool
             // skip forward to next
             // mandatory character, or after '_'
             //
-            while (islower(*formal)) {
+            while (islower(*formal) != 0) {
                 ++formal;
 }
             if (*formal == '_')
@@ -211,7 +211,7 @@ srecord::arglex::compare(const char *formal, const char *actual) -> bool
             // check for a match match of the stuff after
             // the '*', too, a la glob.
             //
-            if (!ac) {
+            if (ac == 0u) {
                 return false;
 }
             partial = actual - 1;
@@ -299,7 +299,7 @@ is_a_number(const char *s, long &n) -> int
     switch (*s)
     {
     case '0':
-        if ((s[1] == 'x' || s[1] == 'X') && s[2])
+        if ((s[1] == 'x' || s[1] == 'X') && (s[2] != 0))
         {
             s += 2;
             for (;;)
@@ -360,7 +360,7 @@ is_a_number(const char *s, long &n) -> int
 default:
         return 0;
     }
-    if (*s) {
+    if (*s != 0) {
         return 0;
 }
     n *= sign;
@@ -471,7 +471,7 @@ srecord::arglex::token_next() -> int
         if (arg[0] == '-' && arg[1] != '=')
         {
             const char *eqp = strchr(arg.c_str(), '=');
-            if (eqp)
+            if (eqp != nullptr)
             {
                 pushback.emplace_back(eqp + 1);
                 arg = std::string(arg.c_str(), eqp - arg.c_str());
@@ -490,7 +490,7 @@ srecord::arglex::token_next() -> int
         &&
             arg[1] == '-'
         &&
-            !is_a_number(arg.c_str() + 1, value_number_)
+            (is_a_number(arg.c_str() + 1, value_number_) == 0)
         ) {
             arg = std::string(arg.c_str() + 1);
 }
@@ -500,7 +500,7 @@ srecord::arglex::token_next() -> int
     //
     // see if it is a number
     //
-    if (is_a_number(arg.c_str(), value_number_))
+    if (is_a_number(arg.c_str(), value_number_) != 0)
     {
         token = arglex::token_number;
         return token;
@@ -514,7 +514,7 @@ srecord::arglex::token_next() -> int
     for
     (auto & table : tables)
     {
-        for (tp = table; tp->name; ++tp)
+        for (tp = table; tp->name != nullptr; ++tp)
         {
             if (compare(tp->name, arg.c_str())) {
                 hit[nhit++] = tp;
@@ -595,7 +595,7 @@ srecord::arglex::token_next() -> int
         // fall through...
 
     case 1:
-        if (partial)
+        if (partial != nullptr)
         {
             pushback.emplace_back(partial);
             partial = nullptr;
@@ -658,7 +658,7 @@ srecord::arglex::token_name(int n)
     for
     (auto tp : tables)
     {
-        for (; tp->name; ++tp)
+        for (; tp->name != nullptr; ++tp)
         {
             if (tp->token == n) {
                 return tp->name;
@@ -673,7 +673,7 @@ void
 srecord::arglex::help(const char *name)
     
 {
-    if (!name) {
+    if (name == nullptr) {
         name = progname_get();
 }
     const char *cmd[3] = { "man", name, nullptr };
@@ -784,7 +784,7 @@ auto
 srecord::arglex::usage_tail_get()
     const -> const char *
 {
-    if (!usage_tail_) {
+    if (usage_tail_ == nullptr) {
         usage_tail_ = "<filename>...";
 }
     return usage_tail_;

@@ -150,7 +150,7 @@ srecord::output_file_vhdl::write(const srecord::record &record)
                     put_string("\n-- ");
                     continue;
                 }
-                if (!isprint(c)) {
+                if (isprint(c) == 0) {
                     c = ' ';
 }
                 put_char(c);
@@ -168,9 +168,9 @@ srecord::output_file_vhdl::write(const srecord::record &record)
             bytes_per_word > 1
         &&
             (
-                (record.get_address() % bytes_per_word)
+                ((record.get_address() % bytes_per_word) != 0u)
             ||
-                (record.get_length() % bytes_per_word)
+                ((record.get_length() % bytes_per_word) != 0u)
             )
         )
         {

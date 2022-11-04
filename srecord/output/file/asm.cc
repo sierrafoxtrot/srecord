@@ -36,7 +36,7 @@ srecord::output_file_asm::~output_file_asm()
             emit_byte(0xFF);
 }
     }
-    if (column)
+    if (column != 0)
     {
         put_char('\n');
         column = 0;
@@ -74,7 +74,7 @@ srecord::output_file_asm::~output_file_asm()
 }
             long len = strlen(buffer);
 
-            if (column && column + len + 2 > line_length)
+            if ((column != 0) && column + len + 2 > line_length)
             {
                 put_char('\n');
                 column = 0;
@@ -96,7 +96,7 @@ srecord::output_file_asm::~output_file_asm()
             put_string(buffer);
             column += len;
         }
-        if (column)
+        if (column != 0)
         {
             put_char('\n');
             column = 0;
@@ -141,7 +141,7 @@ srecord::output_file_asm::~output_file_asm()
                 snprintf(buffer, sizeof(buffer), "%lu", slen);
 }
             long len = strlen(buffer);
-            if (column && column + len + 2 > line_length)
+            if ((column != 0) && column + len + 2 > line_length)
             {
                 put_char('\n');
                 column = 0;
@@ -163,7 +163,7 @@ srecord::output_file_asm::~output_file_asm()
             put_string(buffer);
             column += len;
         }
-        if (column)
+        if (column != 0)
         {
             put_char('\n');
             column = 0;
@@ -303,12 +303,12 @@ srecord::output_file_asm::emit_byte(int n)
         sprintf(buffer, "%u", (unsigned char)n);
 }
     int len = strlen(buffer);
-    if (column && (column + 1 + len) > line_length)
+    if ((column != 0) && (column + 1 + len) > line_length)
     {
         put_char('\n');
         column = 0;
     }
-    if (!column)
+    if (column == 0)
     {
         if (dot_style)
         {
@@ -342,12 +342,12 @@ srecord::output_file_asm::emit_word(unsigned int n)
         snprintf(buffer, sizeof(buffer), "%u", (unsigned short)n);
 }
     int len = strlen(buffer);
-    if (column && (column + 1 + len) > line_length)
+    if ((column != 0) && (column + 1 + len) > line_length)
     {
         put_char('\n');
         column = 0;
     }
-    if (!column)
+    if (column == 0)
     {
         if (dot_style)
         {
@@ -398,7 +398,7 @@ srecord::output_file_asm::write(const srecord::record & record)
                 if (bol) {
                     put_string("; ");
 }
-                if (isprint(c)) {
+                if (isprint(c) != 0) {
                     put_char(c);
 }
                 bol = false;
@@ -439,7 +439,7 @@ srecord::output_file_asm::write(const srecord::record & record)
 
             if (!section_style)
             {
-                if (column)
+                if (column != 0)
                 {
                     put_char('\n');
                     column = 0;
@@ -472,7 +472,7 @@ srecord::output_file_asm::write(const srecord::record & record)
         if (output_word)
         {
             int len = record.get_length();
-            if (len & 1) {
+            if ((len & 1) != 0) {
                 fatal_alignment_error(2);
 }
             range += interval(record.get_address(), record.get_address() + len);
@@ -510,7 +510,7 @@ srecord::output_file_asm::write(const srecord::record & record)
         taddr = record.get_address();
         if (enable_goto_addr_flag)
         {
-            if (column)
+            if (column != 0)
             {
                 put_char('\n');
                 column = 0;

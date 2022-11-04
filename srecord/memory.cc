@@ -89,13 +89,13 @@ srecord::memory::copy(const srecord::memory &rhs)
 {
     delete header;
     header = nullptr;
-    if (rhs.header) {
+    if (rhs.header != nullptr) {
         header = new srecord::record(*rhs.header);
 }
 
     delete execution_start_address;
     execution_start_address = nullptr;
-    if (rhs.execution_start_address)
+    if (rhs.execution_start_address != nullptr)
     {
         execution_start_address =
             new srecord::record(*rhs.execution_start_address);
@@ -121,7 +121,7 @@ srecord::memory::find(unsigned long address)
     //
     // Speed things up if we've been there recently.
     //
-    if (cache && cache->get_address() == address) {
+    if ((cache != nullptr) && cache->get_address() == address) {
         return cache;
 }
 
@@ -274,7 +274,7 @@ srecord::memory::walk(srecord::memory_walker::pointer w)
     w->observe_end();
 
     // Only write an execution start address record if we were given one.
-    if (execution_start_address) {
+    if (execution_start_address != nullptr) {
         w->observe_start_address(get_execution_start_address());
 }
 }
@@ -291,7 +291,7 @@ srecord::memory::reader(const srecord::input::pointer &ifp,
         switch (record.get_type())
         {
         case srecord::record::type_header:
-            if (!header)
+            if (header == nullptr)
             {
                 header = new srecord::record(record);
             }
@@ -379,7 +379,7 @@ srecord::memory::reader(const srecord::input::pointer &ifp,
             break;
 
         case srecord::record::type_execution_start_address:
-            if (!execution_start_address)
+            if (execution_start_address == nullptr)
             {
                 execution_start_address = new srecord::record(record);
             }
@@ -444,7 +444,7 @@ srecord::memory::find_next_data(unsigned long &address, void *data,
     for (;;)
     {
         srecord::memory_chunk *mcp = find_next_chunk(address_hi);
-        if (!mcp) {
+        if (mcp == nullptr) {
             return false;
 }
         if (mcp->find_next_data(address, data, nbytes)) {

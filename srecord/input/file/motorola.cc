@@ -235,7 +235,7 @@ srecord::input_file_motorola::read_inner(record &result) -> bool
         );
     }
     long tmp_addr = record::decode_big_endian(buffer, naddr);
-    if (address_shift && type != record::type_data_count) {
+    if ((address_shift != 0u) && type != record::type_data_count) {
         tmp_addr <<= address_shift;
 }
     result = record(type, tmp_addr, buffer + naddr, line_length - naddr);
@@ -294,7 +294,7 @@ srecord::input_file_motorola::read(record &record) -> bool
             if (header_seen) {
                 warning("redundant header record");
 }
-            if (record.get_address())
+            if (record.get_address() != 0u)
             {
                 warning("address in header record ignored");
                 record.set_address(0);

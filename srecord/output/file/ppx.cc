@@ -24,7 +24,7 @@
 
 srecord::output_file_ppx::~output_file_ppx()
 {
-    if (column)
+    if (column != 0)
     {
         if (column + 7 > line_length)
         {
@@ -95,14 +95,14 @@ srecord::output_file_ppx::write(const srecord::record &record)
 
             if (data_address != address)
             {
-                if (column)
+                if (column != 0)
                 {
                     put_char('\n');
                     column = 0;
                 }
                 address = data_address;
             }
-            if (column)
+            if (column != 0)
             {
                 if (column + 3 > line_length)
                 {

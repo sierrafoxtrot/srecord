@@ -33,10 +33,10 @@ toupper(const std::string &s) -> std::string
     char *buffer = new char[s.size() + 1];
     char *bp = buffer;
     const char *cp = s.c_str();
-    while (*cp)
+    while (*cp != 0)
     {
         unsigned char c = *cp++;
-        if (islower(c)) {
+        if (islower(c) != 0) {
             *bp++ = toupper(c);
         } else {
             *bp++ = c;
@@ -54,12 +54,12 @@ identifier(const std::string &s) -> std::string
     char *buffer = new char[s.size() + 1];
     char *bp = buffer;
     const char *cp = s.c_str();
-    while (*cp)
+    while (*cp != 0)
     {
         unsigned char c = *cp++;
-        if (islower(c)) {
+        if (islower(c) != 0) {
             *bp++ = toupper(c);
-        } else if (isalnum(c)) {
+        } else if (isalnum(c) != 0) {
             *bp++ = c;
         } else {
             *bp++ = '_';
@@ -85,7 +85,7 @@ srecord::output_file_c::~output_file_c()
             emit_byte(0xFF);
 }
     }
-    if (column)
+    if (column != 0)
     {
         put_char('\n');
         column = 0;
@@ -114,12 +114,12 @@ srecord::output_file_c::~output_file_c()
             std::string s = format_address(address);
             int len = s.size();
 
-            if (column && column + len + 2 > line_length)
+            if ((column != 0) && column + len + 2 > line_length)
             {
                 put_char('\n');
                 column = 0;
             }
-            if (column)
+            if (column != 0)
             {
                 put_char(' ');
                 ++column;
@@ -129,7 +129,7 @@ srecord::output_file_c::~output_file_c()
             put_char(',');
             ++column;
         }
-        if (column)
+        if (column != 0)
         {
             put_char('\n');
             column = 0;
@@ -158,12 +158,12 @@ srecord::output_file_c::~output_file_c()
                 std::string s = format_address(address);
                 int len = s.size();
 
-                if (column && column + len + 2 > line_length)
+                if ((column != 0) && column + len + 2 > line_length)
                 {
                     put_char('\n');
                     column = 0;
                 }
-                if (column)
+                if (column != 0)
                 {
                     put_char(' ');
                     ++column;
@@ -173,7 +173,7 @@ srecord::output_file_c::~output_file_c()
                 put_char(',');
                 ++column;
             }
-            if (column)
+            if (column != 0)
             {
                 put_char('\n');
                 column = 0;
@@ -207,12 +207,12 @@ srecord::output_file_c::~output_file_c()
             std::string s = format_address(length);
             int len = s.size();
 
-            if (column && column + len + 2 > line_length)
+            if ((column != 0) && column + len + 2 > line_length)
             {
                 put_char('\n');
                 column = 0;
             }
-            if (column)
+            if (column != 0)
             {
                 put_char(' ');
                 ++column;
@@ -222,7 +222,7 @@ srecord::output_file_c::~output_file_c()
             put_char(',');
             ++column;
         }
-        if (column)
+        if (column != 0)
         {
             put_char('\n');
             column = 0;
@@ -330,7 +330,7 @@ srecord::output_file_c::~output_file_c()
     {
         std::string insulation = identifier(include_file_name);
         FILE *fp = fopen(include_file_name.c_str(), "w");
-        if (!fp) {
+        if (fp == nullptr) {
             fatal_error_errno("open %s", include_file_name.c_str());
 }
         fprintf(fp, "#ifndef %s\n", insulation.c_str());
@@ -413,7 +413,7 @@ srecord::output_file_c::~output_file_c()
         fprintf(fp, "\n");
         fprintf(fp, "#endif /* %s */\n", insulation.c_str());
 
-        if (fclose(fp)) {
+        if (fclose(fp) != 0) {
             fatal_error_errno("write %s", include_file_name.c_str());
 }
     }
@@ -423,14 +423,14 @@ srecord::output_file_c::~output_file_c()
 static auto
 memrchr(const char *data, char c, size_t len) -> const char *
 {
-    if (!data) {
+    if (data == nullptr) {
         return nullptr;
 }
     const char *result = nullptr;
     while (len > 0)
     {
         const char *p = (const char *)memchr(data, c, len);
-        if (!p) {
+        if (p == nullptr) {
             break;
 }
         result = p;
@@ -448,20 +448,20 @@ build_include_file_name(const std::string &filename) -> std::string
     const char *fn = filename.c_str();
     // Watch out for out base class adding a line number.
     const char *colon = strstr(fn, ": ");
-    if (!colon) {
+    if (colon == nullptr) {
         colon = fn + strlen(fn);
 }
     const char *slash = memrchr(fn, '/', colon - fn);
-    if (!slash) {
+    if (slash == nullptr) {
         slash = memrchr(fn, '\\', colon - fn);
 }
-    if (slash) {
+    if (slash != nullptr) {
         slash++;
     } else {
         slash = fn;
 }
     const char *ep = memrchr(slash, '.', colon - slash);
-    if (!ep) {
+    if (ep == nullptr) {
         ep = colon;
 }
     return (std::string(fn, ep - fn) + ".h");
@@ -626,12 +626,12 @@ srecord::output_file_c::emit_byte(int n)
 }
     int len = strlen(buffer);
 
-    if (column && column + 2 + len > line_length)
+    if ((column != 0) && column + 2 + len > line_length)
     {
         put_char('\n');
         column = 0;
     }
-    if (column)
+    if (column != 0)
     {
         put_char(' ');
         ++column;
@@ -654,12 +654,12 @@ srecord::output_file_c::emit_word(unsigned int n)
 }
     int len = strlen(buffer);
 
-    if (column && column + 2 + len > line_length)
+    if ((column != 0) && column + 2 + len > line_length)
     {
         put_char('\n');
         column = 0;
     }
-    if (column)
+    if (column != 0)
     {
         put_char(' ');
         ++column;
@@ -707,7 +707,7 @@ srecord::output_file_c::write(const srecord::record &record)
             while (cp < ep)
             {
                 unsigned char c = *cp++;
-                if (isprint(c) || isspace(c)) {
+                if ((isprint(c) != 0) || (isspace(c) != 0)) {
                     put_char(c);
                 } else {
                     put_stringf("\\%o", c);
@@ -725,7 +725,7 @@ srecord::output_file_c::write(const srecord::record &record)
         emit_header();
         if (output_word)
         {
-            if ((record.get_address() & 1) || (record.get_length() & 1)) {
+            if (((record.get_address() & 1) != 0u) || ((record.get_length() & 1) != 0u)) {
                 fatal_alignment_error(2);
 }
 
@@ -823,7 +823,7 @@ srecord::output_file_c::preferred_block_size_set(int nbytes) -> bool
     if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
 }
-    if (output_word && (nbytes & 1)) {
+    if (output_word && ((nbytes & 1) != 0)) {
         return false;
 }
     return true;

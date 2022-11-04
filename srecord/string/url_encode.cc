@@ -42,7 +42,7 @@ needs_quoting(unsigned char x) -> bool
     if (x >= 0x80) {
         return true;
 }
-    return !isprint(x);
+    return isprint(x) == 0;
 }
 
 

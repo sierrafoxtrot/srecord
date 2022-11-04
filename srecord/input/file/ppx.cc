@@ -238,7 +238,7 @@ srecord::input_file_ppx::read(record &result) -> bool
             case token_end:
                 state = 1;
 
-                if (buffer_length)
+                if (buffer_length != 0u)
                 {
                     return_data_record:
                     result =

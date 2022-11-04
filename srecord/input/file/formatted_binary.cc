@@ -55,7 +55,7 @@ srecord::input_file_formatted_binary::read(record &result) -> bool
         for (;;)
         {
             c = get_char();
-            if (c) {
+            if (c != 0) {
                 break;
 }
         }

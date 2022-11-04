@@ -55,7 +55,7 @@ srecord::string_quote_c(const std::string &arg) -> std::string
             break;
 
         default:
-            if (isprint((unsigned char)c)) {
+            if (isprint((unsigned char)c) != 0) {
                 result += c;
             } else
             {

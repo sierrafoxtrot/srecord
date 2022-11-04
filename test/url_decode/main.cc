@@ -46,11 +46,11 @@ test_url_decode()
     for (;;)
     {
         char buf[1000];
-        if (!fgets(buf, sizeof(buf), stdin)) {
+        if (fgets(buf, sizeof(buf), stdin) == nullptr) {
             break;
 }
         size_t len = strlen(buf);
-        while (len > 0 && isspace((unsigned char)buf[len - 1])) {
+        while (len > 0 && (isspace((unsigned char)buf[len - 1]) != 0)) {
             --len;
 }
         std::string s(buf, len);
@@ -65,11 +65,11 @@ test_url_encode()
     for (;;)
     {
         char buf[1000];
-        if (!fgets(buf, sizeof(buf), stdin)) {
+        if (fgets(buf, sizeof(buf), stdin) == nullptr) {
             break;
 }
         size_t len = strlen(buf);
-        while (len > 0 && isspace((unsigned char)buf[len - 1])) {
+        while (len > 0 && (isspace((unsigned char)buf[len - 1]) != 0)) {
             --len;
 }
         std::string s(buf, len);
@@ -119,7 +119,7 @@ main(int argc, char **argv) -> int
             return EXIT_FAILURE;
         }
     }
-    if (!func) {
+    if (func == nullptr) {
         usage();
 }
     switch (argc - optind)
@@ -128,7 +128,7 @@ main(int argc, char **argv) -> int
         break;
 
     case 2:
-        if (!freopen(argv[optind + 1], "w", stdout))
+        if (freopen(argv[optind + 1], "w", stdout) == nullptr)
         {
             perror(argv[optind + 1]);
             return EXIT_FAILURE;
@@ -136,7 +136,7 @@ main(int argc, char **argv) -> int
         // fall through...
 
     case 1:
-        if (!freopen(argv[optind], "r", stdin))
+        if (freopen(argv[optind], "r", stdin) == nullptr)
         {
             perror(argv[optind]);
             return EXIT_FAILURE;

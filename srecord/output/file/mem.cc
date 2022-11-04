@@ -25,7 +25,7 @@
 srecord::output_file_mem::~output_file_mem()
 {
     emit_header();
-    if (column) {
+    if (column != 0) {
         put_char('\n');
 }
     if (enable_header_flag && actual_depth != depth) {
@@ -180,7 +180,7 @@ srecord::output_file_mem::write(const srecord::record &record)
                     column = 0;
                     continue;
                 }
-                if (!isprint(c)) {
+                if (isprint(c) == 0) {
                     c = ' ';
 }
                 if (column == 0)
@@ -212,7 +212,7 @@ srecord::output_file_mem::write(const srecord::record &record)
             if (address != addr) {
                 fatal_hole_error(address, addr);
 }
-            if ((addr % width_in_bytes) || (len % width_in_bytes)) {
+            if (((addr % width_in_bytes) != 0u) || ((len % width_in_bytes) != 0u)) {
                 fatal_alignment_error(width_in_bytes);
 }
             emit_header();
@@ -299,7 +299,7 @@ srecord::output_file_mem::preferred_block_size_set(int nbytes) -> bool
     if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
 }
-    if (nbytes % width_in_bytes) {
+    if ((nbytes % width_in_bytes) != 0u) {
         return false;
 }
     pref_blk_sz = nbytes;

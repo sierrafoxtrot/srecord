@@ -68,7 +68,7 @@ srecord::input_file_ti_tagged_16::read(record &result) -> bool
         default:
             fatal_error
             (
-                (isprint(c) ? "unknown tag '%c'" : "unknown tag (%02X)"),
+                (isprint(c) != 0 ? "unknown tag '%c'" : "unknown tag (%02X)"),
                 c
             );
 

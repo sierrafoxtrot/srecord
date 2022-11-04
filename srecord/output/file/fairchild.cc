@@ -79,7 +79,7 @@ srecord::output_file_fairchild::write(const srecord::record &record)
         {
             int len = record.get_length();
             unsigned long new_addr = record.get_address();
-            if ((new_addr & 7) || (len & 7)) {
+            if (((new_addr & 7) != 0u) || ((len & 7) != 0)) {
                 fatal_alignment_error(8);
 }
             if (address != new_addr)

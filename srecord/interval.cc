@@ -57,7 +57,7 @@ srecord::interval::interval()
 static inline auto
 promote(srecord::interval::data_t datum, size_t pos) -> srecord::interval::long_data_t
 {
-    if (datum == 0 && (pos & 1)) {
+    if (datum == 0 && ((pos & 1) != 0u)) {
         return ((srecord::interval::long_data_t)1 << 32);
 }
     return datum;
@@ -132,7 +132,7 @@ srecord::interval::interval(const interval &arg)
     size = length;
     scan_index = 0;
     scan_next_datum = 0;
-    if (size)
+    if (size != 0u)
     {
         data = new data_t[size + 1];
         for (size_t j = 0; j <= length; ++j) {
@@ -151,7 +151,7 @@ srecord::interval::operator=(const interval &arg) -> srecord::interval &
 {
     if (this != &arg)
     {
-        if (data)
+        if (data != nullptr)
         {
             delete [] data;
             data = nullptr;
@@ -161,7 +161,7 @@ srecord::interval::operator=(const interval &arg) -> srecord::interval &
         size = length;
         scan_index = 0;
         scan_next_datum = 0;
-        if (size)
+        if (size != 0u)
         {
             data = new data_t[size + 1];
             for (size_t j = 0; j <= length; ++j) {
@@ -195,7 +195,7 @@ srecord::interval::operator=(const interval &arg) -> srecord::interval &
 srecord::interval::~interval()
 {
     // assert(valid());
-    if (data)
+    if (data != nullptr)
     {
         delete [] data;
         data = nullptr;
@@ -233,7 +233,7 @@ srecord::interval::valid()
     if (length > size) {
         return false;
 }
-    if (length & 1) {
+    if ((length & 1) != 0u) {
         return false;
 }
     if ((size == 0) != (data == nullptr)) {
@@ -301,7 +301,7 @@ srecord::interval::append(data_t datum)
     {
         size = size * 2 + 8;
         auto *tmp = new data_t[size + 1];
-        if (data)
+        if (data != nullptr)
         {
             for (size_t k = 0; k < length; ++k) {
                 tmp[k] = data[k];
@@ -380,18 +380,18 @@ srecord::interval::union_(const interval &left, const interval &right) -> srecor
                     promote(right.data[right_pos], right_pos);
                 if (left_val < right_val)
                 {
-                    count += (left_pos & 1 ? -1 : 1);
+                    count += ((left_pos & 1) != 0u ? -1 : 1);
                     place = left.data[left_pos++];
                 }
                 else
                 {
-                    count += (right_pos & 1 ? -1 : 1);
+                    count += ((right_pos & 1) != 0u ? -1 : 1);
                     place = right.data[right_pos++];
                 }
             }
             else
             {
-                count += (left_pos & 1 ? -1 : 1);
+                count += ((left_pos & 1) != 0u ? -1 : 1);
                 place = left.data[left_pos++];
             }
         }
@@ -399,7 +399,7 @@ srecord::interval::union_(const interval &left, const interval &right) -> srecor
         {
             if (right_pos < right.length)
             {
-                count += (right_pos & 1 ? -1 : 1);
+                count += ((right_pos & 1) != 0u ? -1 : 1);
                 place = right.data[right_pos++];
             }
             else {
@@ -410,7 +410,7 @@ srecord::interval::union_(const interval &left, const interval &right) -> srecor
             result.append(place);
 }
     }
-    if (result.length) {
+    if (result.length != 0u) {
         result.data[result.length] = result.length;
 }
     // assert(result.valid());
@@ -466,18 +466,18 @@ srecord::interval::intersection(const interval &left, const interval &right) -> 
                     promote(right.data[right_pos], right_pos);
                 if (left_val < right_val)
                 {
-                    count += (left_pos & 1 ? -1 : 1);
+                    count += ((left_pos & 1) != 0u ? -1 : 1);
                     place = left.data[left_pos++];
                 }
                 else
                 {
-                    count += (right_pos & 1 ? -1 : 1);
+                    count += ((right_pos & 1) != 0u ? -1 : 1);
                     place = right.data[right_pos++];
                 }
             }
             else
             {
-                count += (left_pos & 1 ? -1 : 1);
+                count += ((left_pos & 1) != 0u ? -1 : 1);
                 place = left.data[left_pos++];
             }
         }
@@ -485,7 +485,7 @@ srecord::interval::intersection(const interval &left, const interval &right) -> 
         {
             if (right_pos < right.length)
             {
-                count += (right_pos & 1 ? -1 : 1);
+                count += ((right_pos & 1) != 0u ? -1 : 1);
                 place = right.data[right_pos++];
             }
             else {
@@ -496,7 +496,7 @@ srecord::interval::intersection(const interval &left, const interval &right) -> 
             result.append(place);
 }
     }
-    if (result.length) {
+    if (result.length != 0u) {
         result.data[result.length] = result.length;
 }
     // assert(result.valid());
@@ -550,18 +550,18 @@ srecord::interval::difference(const interval &left, const interval &right) -> sr
                     promote(right.data[right_pos], right_pos);
                 if (left_val < right_val)
                 {
-                    count += (left_pos & 1 ? -1 : 1);
+                    count += ((left_pos & 1) != 0u ? -1 : 1);
                     place = left.data[left_pos++];
                 }
                 else
                 {
-                    count -= (right_pos & 1 ? -1 : 1);
+                    count -= ((right_pos & 1) != 0u ? -1 : 1);
                     place = right.data[right_pos++];
                 }
             }
             else
             {
-                count += (left_pos & 1 ? -1 : 1);
+                count += ((left_pos & 1) != 0u ? -1 : 1);
                 place = left.data[left_pos++];
             }
         }
@@ -569,7 +569,7 @@ srecord::interval::difference(const interval &left, const interval &right) -> sr
         {
             if (right_pos < right.length)
             {
-                count -= (right_pos & 1 ? -1 : 1);
+                count -= ((right_pos & 1) != 0u ? -1 : 1);
                 place = right.data[right_pos++];
             }
             else {
@@ -580,7 +580,7 @@ srecord::interval::difference(const interval &left, const interval &right) -> sr
             result.append(place);
 }
     }
-    if (result.length) {
+    if (result.length != 0u) {
         result.data[result.length] = result.length;
 }
     // assert(result.valid());
@@ -657,7 +657,7 @@ srecord::interval::scan_begin()
     // assert(valid());
     // assert(!scan_index);
     scan_index = 1;
-    if (length) {
+    if (length != 0u) {
         scan_next_datum = data[0];
     } else {
         scan_next_datum = 0;
@@ -793,7 +793,7 @@ srecord::interval::print(std::ostream &os)
 }
     for (size_t j = 0; j < length; j += 2)
     {
-        if (j) {
+        if (j != 0u) {
             os << ", ";
 }
         os << data[j];
@@ -833,7 +833,7 @@ srecord::interval::representation()
     result += '(';
     for (size_t j = 0; j < length; j += 2)
     {
-        if (j) {
+        if (j != 0u) {
             result += ", ";
 }
         result += to_string(data[j]);

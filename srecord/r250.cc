@@ -84,7 +84,7 @@ r250_init()
     // make sure the bits are linearly independent
     //
     unsigned long bit;
-    for (bit = 1, bp = buf + 3; bit; bp += 11, bit <<= 1)
+    for (bit = 1, bp = buf + 3; bit != 0u; bp += 11, bit <<= 1)
     {
         if (bp >= ENDOF(buf)) {
             bp -= SIZEOF(buf);

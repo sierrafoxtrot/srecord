@@ -149,7 +149,7 @@ srecord::output_file_msbin::flush_pending_records(const record *r)
 
         const record::address_t end =
             (
-                r
+                r != nullptr
             ?
                 r->get_address_end()
             :
@@ -162,7 +162,7 @@ srecord::output_file_msbin::flush_pending_records(const record *r)
             chksum += checksum((*it)->get_data(), (*it)->get_length());
 }
 
-        if (r) {
+        if (r != nullptr) {
             chksum += checksum(r->get_data(), r->get_length());
 }
 
@@ -173,7 +173,7 @@ srecord::output_file_msbin::flush_pending_records(const record *r)
             write_data(*(*it));
 }
 
-        if (r) {
+        if (r != nullptr) {
             write_data(*r);
 }
 

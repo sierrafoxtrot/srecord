@@ -23,7 +23,7 @@
 
 srecord::output_file_mos_tech::~output_file_mos_tech()
 {
-    if (data_record_count && enable_data_count_flag)
+    if ((data_record_count != 0) && enable_data_count_flag)
     {
         put_char(';');
         checksum_reset();

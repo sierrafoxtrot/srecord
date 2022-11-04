@@ -26,7 +26,7 @@
 
 srecord::output_file_ti_tagged::~output_file_ti_tagged()
 {
-    if (column) {
+    if (column != 0) {
         put_eoln();
 }
     if (enable_footer_flag)
@@ -96,7 +96,7 @@ srecord::output_file_ti_tagged::write(const srecord::record &record)
             while (cp < ep)
             {
                 unsigned char c = *cp++;
-                if (!isprint(c)) {
+                if (isprint(c) == 0) {
                     c = ' ';
 }
                 put_char(c);
@@ -186,7 +186,7 @@ srecord::output_file_ti_tagged::preferred_block_size_set(int nbytes) -> bool
     if (nbytes < 2 || nbytes > record::max_data_length) {
         return false;
 }
-    if (nbytes & 1) {
+    if ((nbytes & 1) != 0) {
         return false;
 }
     line_length = (nbytes / 2) * 5;

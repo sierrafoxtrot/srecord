@@ -98,7 +98,7 @@ srecord::output_file_intel16::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if ((record.get_address() & 1) || (record.get_length() & 1)) {
+        if (((record.get_address() & 1) != 0u) || ((record.get_length() & 1) != 0u)) {
             fatal_alignment_error(2);
 }
         if ((record.get_address() & 0xFFFE0000) != address_base)
@@ -188,7 +188,7 @@ srecord::output_file_intel16::preferred_block_size_set(int nbytes) -> bool
     if (nbytes < 2 || nbytes > record::max_data_length) {
         return false;
 }
-    if (nbytes & 1) {
+    if ((nbytes & 1) != 0) {
         return false;
 }
     pref_block_size = nbytes;

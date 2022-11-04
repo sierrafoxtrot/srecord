@@ -64,7 +64,7 @@ srecord::input_file_trs80::get_byte() -> int
 auto
 srecord::input_file_trs80::read(srecord::record &result) -> bool
 {
-    if (pending)
+    if (pending != nullptr)
     {
         result = *pending;
         delete pending;
@@ -164,7 +164,7 @@ srecord::input_file_trs80::read(srecord::record &result) -> bool
                     unsigned char *op = payload;
                     while (ip < end)
                     {
-                        if (isprint(*ip)) {
+                        if (isprint(*ip) != 0) {
                             *op++ = *ip;
 }
                         ++ip;

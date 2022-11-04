@@ -187,7 +187,7 @@ srecord::input_file_mif::lex() -> srecord::input_file_mif::token_t
                 const char *cp = id.c_str();
                 char *ep = nullptr;
                 token_value = strtol(cp, &ep, lex_radix);
-                if (ep != cp && !*ep) {
+                if (ep != cp && (*ep == 0)) {
                     return token_number;
 }
 

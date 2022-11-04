@@ -30,7 +30,7 @@
 static auto
 execution_start_addresses_differ(srecord::record *rp1, srecord::record *rp2) -> bool
 {
-    return (rp1 && rp2 && rp1->get_address() != rp2->get_address());
+    return ((rp1 != nullptr) && (rp2 != nullptr) && rp1->get_address() != rp2->get_address());
 }
 
 

@@ -55,12 +55,12 @@ srecord::output_file_ti_txt::create(const std::string &a_file_name) -> srecord::
 void
 srecord::output_file_ti_txt::put_byte_wrap(unsigned char c)
 {
-    if (column && column + 3 > line_length)
+    if ((column != 0) && column + 3 > line_length)
     {
         put_char('\n');
         column = 0;
     }
-    if (column)
+    if (column != 0)
     {
         put_char(' ');
         ++column;

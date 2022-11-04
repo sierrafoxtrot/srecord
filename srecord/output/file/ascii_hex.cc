@@ -56,7 +56,7 @@ srecord::output_file_ascii_hex::emit_end_of_file()
         return;
 }
 
-    if (column)
+    if (column != 0)
     {
         if (column + 2 > line_length) {
             put_char('\n');
@@ -128,7 +128,7 @@ srecord::output_file_ascii_hex::write(const srecord::record &record)
                 put_char('\n');
                 column = 0;
             }
-            else if (column)
+            else if (column != 0)
             {
                 put_char(' ');
                 ++column;
@@ -143,7 +143,7 @@ srecord::output_file_ascii_hex::write(const srecord::record &record)
         }
         for (size_t j = 0; j < record.get_length(); ++j)
         {
-            if (column)
+            if (column != 0)
             {
                 if (column + 3 > line_length)
                 {

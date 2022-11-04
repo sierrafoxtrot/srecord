@@ -26,7 +26,7 @@
 
 srecord::output_file_vmem::~output_file_vmem()
 {
-    if (column) {
+    if (column != 0) {
         put_char('\n');
 }
 }
@@ -170,7 +170,7 @@ srecord::output_file_vmem::write(const srecord::record &record)
                 unsigned char c = *cp++;
                 if (c == '\n') {
                     put_stringf("\n * ");
-                } else if (isprint(c) || isspace(c)) {
+                } else if ((isprint(c) != 0) || (isspace(c) != 0)) {
                     put_char(c);
                 } else {
                     put_stringf("\\%o", c);
@@ -193,9 +193,9 @@ srecord::output_file_vmem::write(const srecord::record &record)
         //
         if
         (
-            (record.get_address() & width_mask)
+            ((record.get_address() & width_mask) != 0u)
         ||
-            (record.get_length() & width_mask)
+            ((record.get_length() & width_mask) != 0u)
         ) {
             fatal_alignment_error(1u << width_shift);
 }
@@ -206,7 +206,7 @@ srecord::output_file_vmem::write(const srecord::record &record)
         //
         if (address != record.get_address())
         {
-            if (column)
+            if (column != 0)
             {
                 put_char('\n');
                 column = 0;

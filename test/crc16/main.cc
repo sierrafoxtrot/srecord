@@ -89,7 +89,7 @@ main(int argc, char **argv) -> int
             {
                 char *ep = nullptr;
                 polynomial = strtol(optarg, &ep, 0);
-                if (ep == optarg || *ep) {
+                if (ep == optarg || (*ep != 0)) {
                     polynomial = srecord::crc16::polynomial_by_name(optarg);
 }
             }
@@ -133,7 +133,7 @@ main(int argc, char **argv) -> int
         if (n < 0) {
             srecord::quit_default.fatal_error_errno("read stdin");
 }
-        if (!n) {
+        if (n == 0) {
             break;
 }
         if (h_flag)

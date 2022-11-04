@@ -108,7 +108,7 @@ srecord::output::warning_v(const char *fmt, va_list ap)
 void
 srecord::output::write_header(const srecord::record *rp)
 {
-    if (rp)
+    if (rp != nullptr)
     {
         // Make sure we are writing a header record
         srecord::record record(*rp);
@@ -157,7 +157,7 @@ srecord::output::write_data(unsigned long address, const void *data,
 void
 srecord::output::write_execution_start_address(const srecord::record *rp)
 {
-    if (rp)
+    if (rp != nullptr)
     {
         // Make sure we are writing an execution start address record
         srecord::record record(*rp);

@@ -41,10 +41,10 @@ bool srecord::output_file::enable_optional_address_flag = false;
 srecord::output_file::~output_file()
 {
     FILE *fp = (FILE *)get_fp();
-    if (fflush(fp)) {
+    if (fflush(fp) != 0) {
         fatal_error_errno("write");
 }
-    if (fp != stdout && fclose(fp)) {
+    if (fp != stdout && (fclose(fp) != 0)) {
         fatal_error_errno("close");
 }
 }
@@ -101,7 +101,7 @@ srecord::output_file::is_binary()
 auto
 srecord::output_file::get_fp() -> void *
 {
-    if (!vfp)
+    if (vfp == nullptr)
     {
         //
         // The call to fopen is deferred until the constructor has
@@ -120,7 +120,7 @@ srecord::output_file::get_fp() -> void *
 #endif
         {
             vfp = fopen(file_name.c_str(), "wb");
-            if (!vfp) {
+            if (vfp == nullptr) {
                 fatal_error_errno("open");
 }
         }
@@ -158,7 +158,7 @@ srecord::output_file::put_char(int c)
             case line_termination_primos:
                 putc('\n', fp);
                 ++position;
-                if (position & 1)
+                if ((position & 1) != 0u)
                 {
                     putc(0, fp);
                     ++position;
@@ -190,7 +190,7 @@ srecord::output_file::put_char(int c)
         putc(c, fp);
         ++position;
     }
-    if (ferror(fp)) {
+    if (ferror(fp) != 0) {
         fatal_error_errno("write");
 }
 }
@@ -341,7 +341,7 @@ srecord::output_file::seek_to(unsigned long address)
 void
 srecord::output_file::put_string(const char *s)
 {
-    while (*s) {
+    while (*s != 0) {
         put_char(*s++);
 }
 }

@@ -142,7 +142,7 @@ srecord::input_file_hp64k::read_datarec(record &result) -> bool
         }
         buf[cnt] = (uint8_t) c;
     }
-    if (datasize & 1)
+    if ((datasize & 1) != 0)
     {
         //read dummy byte to maintain u16 alignment
         int c = get_char();

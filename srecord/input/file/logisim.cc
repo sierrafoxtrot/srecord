@@ -88,7 +88,7 @@ srecord::input_file_logisim::read_inner_one()
         break;
     }
     *bp = '\0';
-    if (strcmp(buffer, "v2.0 raw")) {
+    if (strcmp(buffer, "v2.0 raw") != 0) {
         fatal_error("bad magic number");
 }
     state = state_line_two;
@@ -203,7 +203,7 @@ srecord::input_file_logisim::read_inner_job()
 
             // now push it on the back of the jobs list
             {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{
-            if (seen_star)
+            if (seen_star != nullptr)
             {
                 char *ep = nullptr;
                 long count = strtol(buffer, &ep, 10);

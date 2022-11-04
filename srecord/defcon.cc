@@ -78,7 +78,7 @@ srecord::defcon_from_text(const char *text) -> int
     auto *tp =
         (table_t *)
         bsearch(&key, table, SIZEOF(table), sizeof(table_t), compare);
-    if (!tp) {
+    if (tp == nullptr) {
         return -1;
 }
     return tp->value;

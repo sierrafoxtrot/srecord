@@ -215,7 +215,7 @@ srecord::input_file_stewie::read(record &result) -> bool
             if (header_seen) {
                 warning("redundant header record");
 }
-            if (result.get_address())
+            if (result.get_address() != 0u)
             {
                 warning("address in header record ignored");
                 result.set_address(0);

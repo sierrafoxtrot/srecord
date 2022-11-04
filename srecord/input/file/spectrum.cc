@@ -57,10 +57,10 @@ srecord::input_file_spectrum::get_decimal() -> int
             format_error:
             fatal_error("decimal number expected");
         }
-        if (isspace((unsigned char)c)) {
+        if (isspace((unsigned char)c) != 0) {
             continue;
 }
-        if (!isdigit((unsigned char)c)) {
+        if (isdigit((unsigned char)c) == 0) {
             goto format_error;
 }
         break;
@@ -72,7 +72,7 @@ srecord::input_file_spectrum::get_decimal() -> int
         if (c < 0) {
             break;
 }
-        if (!isdigit((unsigned char)c))
+        if (isdigit((unsigned char)c) == 0)
         {
             get_char_undo(c);
             break;
@@ -102,7 +102,7 @@ srecord::input_file_spectrum::get_binary() -> int
             format_error:
             fatal_error("binary number expected");
         }
-        if (isspace((unsigned char)c)) {
+        if (isspace((unsigned char)c) != 0) {
             continue;
 }
         if (!is_binary_digit((unsigned char)c)) {
@@ -170,7 +170,7 @@ srecord::input_file_spectrum::read(srecord::record &record) -> bool
             trailer_seen = true;
             return false;
         }
-        if (isspace((unsigned char)c)) {
+        if (isspace((unsigned char)c) != 0) {
             continue;
 }
         get_char_undo(c);

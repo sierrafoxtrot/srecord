@@ -136,7 +136,7 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record) -> b
             --addr_len;
             --length;
         }
-        if (length & 1) {
+        if ((length & 1) != 0) {
             fatal_error("data length invalid (%d is odd)", length);
 }
 

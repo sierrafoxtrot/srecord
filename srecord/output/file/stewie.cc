@@ -89,7 +89,7 @@ srecord::output_file_stewie::write_inner(int tag, unsigned long address,
     int line_length = address_nbytes + data_nbytes + 1;
     buffer[0] = line_length;
     srecord::record::encode_big_endian(buffer + 1, address, address_nbytes);
-    if (data_nbytes) {
+    if (data_nbytes != 0) {
         memcpy(buffer + 1 + address_nbytes, data, data_nbytes);
 }
 

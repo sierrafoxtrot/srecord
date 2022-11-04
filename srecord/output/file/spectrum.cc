@@ -54,9 +54,9 @@ srecord::output_file_spectrum::put_decimal(unsigned long n)
 void
 srecord::output_file_spectrum::put_binary(unsigned char n)
 {
-    for (unsigned char bit = 0x80; bit; bit >>= 1)
+    for (unsigned char bit = 0x80; bit != 0u; bit >>= 1)
     {
-        put_char((n & bit) ? '1' : '0');
+        put_char((n & bit) != 0 ? '1' : '0');
     }
 }
 

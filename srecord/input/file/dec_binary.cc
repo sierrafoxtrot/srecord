@@ -49,7 +49,7 @@ srecord::input_file_dec_binary::skip_nul() -> bool
         if (c < 0) {
             return false;
 }
-        if (c) {
+        if (c != 0) {
             return true;
 }
         get_char();
@@ -79,11 +79,11 @@ srecord::input_file_dec_binary::read(srecord::record &record) -> bool
     //
     if (current_pos >= current_length)
     {
-        if (current_length)
+        if (current_length != 0u)
         {
             // Verify the checksum at end of the record.
             get_byte();
-            if (use_checksums() && checksum_get())
+            if (use_checksums() && (checksum_get() != 0))
             {
                 fatal_error("checksum mismatch (%02X)", checksum_get());
             }
@@ -115,7 +115,7 @@ srecord::input_file_dec_binary::read(srecord::record &record) -> bool
         if (length == 0)
         {
             get_byte();
-            if (use_checksums() && checksum_get())
+            if (use_checksums() && (checksum_get() != 0))
             {
                 fatal_error("checksum mismatch (%02X)", checksum_get());
             }

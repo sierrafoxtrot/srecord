@@ -99,7 +99,7 @@ srecord::input_filter_message::read(record &result) -> bool
     {
         have_forwarded_header = true;
         record *rp = buffer.get_header();
-        if (rp)
+        if (rp != nullptr)
         {
             result = *rp;
             return true;
@@ -141,7 +141,7 @@ srecord::input_filter_message::read(record &result) -> bool
     {
         have_forwarded_start_address = true;
         record *rp = buffer.get_execution_start_address();
-        if (rp)
+        if (rp != nullptr)
         {
             result = *rp;
             return true;

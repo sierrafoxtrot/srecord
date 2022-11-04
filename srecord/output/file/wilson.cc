@@ -107,7 +107,7 @@ srecord::output_file_wilson::write_inner(int tag, unsigned long address,
     int line_length = data_nbytes + 5;
     buffer[0] = line_length;
     srecord::record::encode_big_endian(buffer + 1, address, 4);
-    if (data_nbytes) {
+    if (data_nbytes != 0) {
         memcpy(buffer + 5, data, data_nbytes);
 }
 

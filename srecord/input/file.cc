@@ -74,7 +74,7 @@ srecord::input_file::input_file(std::string a_file_name) :
 auto
 srecord::input_file::get_fp() -> void *
 {
-    if (!vfp)
+    if (vfp == nullptr)
     {
         //
         // The call to fopen is deferred until the constructor has
@@ -88,7 +88,7 @@ srecord::input_file::get_fp() -> void *
             line_number = 0;
         }
         vfp = fopen(file_name.c_str(), the_mode);
-        if (!vfp) {
+        if (vfp == nullptr) {
             fatal_error_errno("open");
 }
     }
@@ -99,7 +99,7 @@ srecord::input_file::get_fp() -> void *
 srecord::input_file::~input_file()
 {
     FILE *fp = (FILE *)get_fp();
-    if (fp != stdin && fclose(fp)) {
+    if (fp != stdin && (fclose(fp) != 0)) {
         fatal_error_errno("close");
 }
 }
@@ -117,7 +117,7 @@ auto
 srecord::input_file::filename_and_line()
     const -> std::string
 {
-    if (!vfp) {
+    if (vfp == nullptr) {
         return file_name;
 }
     char buffer[20];
@@ -140,7 +140,7 @@ srecord::input_file::get_char() -> int
     int c = getc(fp);
     if (c == EOF)
     {
-        if (ferror(fp)) {
+        if (ferror(fp) != 0) {
             fatal_error_errno("read");
 }
 
@@ -159,7 +159,7 @@ srecord::input_file::get_char() -> int
         c = getc(fp);
         if (c == EOF)
         {
-            if (ferror(fp)) {
+            if (ferror(fp) != 0) {
                 fatal_error_errno("read");
 }
             c = '\r';
@@ -200,7 +200,7 @@ srecord::input_file::peek_char() -> int
     int c = getc(fp);
     if (c == EOF)
     {
-        if (ferror(fp)) {
+        if (ferror(fp) != 0) {
             fatal_error_errno("read");
 }
         c = -1;

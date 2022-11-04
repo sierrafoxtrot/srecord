@@ -26,7 +26,7 @@
 
 srecord::output_file_logisim::~output_file_logisim()
 {
-    if (column) {
+    if (column != 0) {
         put_char('\n');
 }
 }
