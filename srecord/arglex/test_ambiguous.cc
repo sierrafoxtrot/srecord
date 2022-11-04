@@ -39,13 +39,9 @@ srecord::arglex::test_ambiguous(void)
             std::string abbrev = abbreviate(tp1->name);
 
             for
-            (
-                table_ptr_vec_t::const_iterator it2 = tables.begin();
-                it2 != tables.end();
-                ++it2
-            )
+            (auto tp2 : tables)
             {
-                for (const table_ty *tp2 = *it2; tp2->name; ++tp2)
+                for (; tp2->name; ++tp2)
                 {
                     if
                     (

@@ -83,14 +83,14 @@ srecord::input_file_msbin::read_dword_le(void)
 {
     unsigned char c[sizeof(uint32_t)];
 
-    for (size_t i = 0; i < sizeof(c); ++i)
+    for (unsigned char & i : c)
     {
         int j = get_char();
         if (j < 0)
             fatal_error("short input file");
 
         assert(j <= std::numeric_limits<unsigned char>::max());
-        c[i] = (unsigned char)j;
+        i = (unsigned char)j;
     }
 
     return record::decode_little_endian(c, sizeof(c));

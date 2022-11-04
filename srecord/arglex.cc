@@ -494,13 +494,9 @@ srecord::arglex::token_next(void)
     nhit = 0;
     partial = 0;
     for
-    (
-        table_ptr_vec_t::iterator it = tables.begin();
-        it != tables.end();
-        ++it
-    )
+    (auto & table : tables)
     {
-        for (tp = *it; tp->name; ++tp)
+        for (tp = table; tp->name; ++tp)
         {
             if (compare(tp->name, arg.c_str()))
                 hit[nhit++] = tp;
@@ -604,13 +600,8 @@ srecord::arglex::check_deprecated(const std::string &actual)
     const
 {
     for
-    (
-        deprecated_options_t::const_iterator it = deprecated_options.begin();
-        it != deprecated_options.end();
-        ++it
-    )
+    (auto formal : deprecated_options)
     {
-        std::string formal = *it;
         if (compare(formal.c_str(), actual.c_str()))
         {
             deprecated_warning(formal.c_str(), token_name(token));
@@ -644,13 +635,9 @@ srecord::arglex::token_name(int n)
         break;
     }
     for
-    (
-        table_ptr_vec_t::const_iterator it = tables.begin();
-        it != tables.end();
-        ++it
-    )
+    (auto tp : tables)
     {
-        for (const table_ty *tp = *it; tp->name; ++tp)
+        for (; tp->name; ++tp)
         {
             if (tp->token == n)
                 return tp->name;

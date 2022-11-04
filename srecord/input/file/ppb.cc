@@ -68,12 +68,12 @@ srecord::input_file_ppb::get_packet(void)
 
     unsigned char hdr[8];
     unsigned char csum = 0;
-    for (int n = 0; n < 8; ++n)
+    for (unsigned char & n : hdr)
     {
         c = get_char();
         if (c < 0)
             packet_format_error();
-        hdr[n] = c;
+        n = c;
         csum += c;
     }
 
