@@ -2,12 +2,6 @@
 name: CI
 on: [push, pull_request]
 
-# Write permissions needed for Test report
-# (may be fixed by https://github.com/dorny/test-reporter/pull/174)
-permissions:
-  statuses: write
-  checks: write
-
 jobs:
   build:
     name: Build and Test
@@ -26,50 +20,56 @@ jobs:
           - clang-14
 
     steps:
-      - uses: actions/checkout@v3
-
       - name: Install prerequisites
-        run: |
-          sudo apt install -y cmake ninja-build
-          sudo apt install -y doxygen graphviz
+        run: >-
+          sudo apt-get install -y
+          libgcrypt20-dev
+          ${{ matrix.compiler }}
+          cmake
+          ninja-build
+          doxygen
+          graphviz
 
-      - name: Install compiler (Linux)
-        if: ${{ startsWith(matrix.os,'ubuntu-') }}
-        run: |
-          sudo apt install -y ${{ matrix.compiler }}
-
-      - name: Install libgcrypt
-        if: ${{ startsWith(matrix.os,'ubuntu-') }}
-        run: sudo apt install -y libgcrypt20-dev
+      - uses: actions/checkout@v3
 
       - name: Configure
         run: |
-          export SHELL=$(which sh)
           export CXX=$(echo ${{ matrix.compiler }} | sed -E 's/^(g|clang)(cc)?/\1++/')
           cmake -G Ninja -S . -B build
 
       - name: Build
         working-directory: build
+        run: ninja srecord-executables
+
+      - name: Smoke test
+        working-directory: build
         run: ninja srecord-executables-version
+
+      - name: Build test prerequisites
+        working-directory: build
+        run: ninja prepare-test
 
       - name: Test
         working-directory: build
-        run: |
-          ninja test_arglex_ambiguous test_crc16 test_fletcher16 test_hyphen test_url_decode
-          ctest --output-junit ctest.junit.xml
+        run: ctest --output-on-failure --output-junit ctest.junit.xml
 
   docs:
     name: Documentation
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v3
-
       - name: Install prerequisites
-        run: |
-          sudo apt install -y cmake ninja-build
-          sudo apt install -y doxygen graphviz
-          sudo apt install -y groff psutils ghostscript
+        run: >-
+          sudo apt-get install -y
+          cmake
+          ninja-build
+          doxygen
+          graphviz
+          groff
+          psutils
+          ghostscript
+
+      - uses: actions/checkout@v3
 
       - name: Configure
         run: cmake -G Ninja -S . -B build
@@ -78,13 +78,13 @@ jobs:
         working-directory: build
         run: ninja man
 
-      - name: Doxygen
-        working-directory: build
-        run: ninja doxygen
-
       - name: PDF
         working-directory: build
         run: ninja doco
+
+      - name: Doxygen
+        working-directory: build
+        run: ninja doxygen
 
       - name: Web Site
         working-directory: build

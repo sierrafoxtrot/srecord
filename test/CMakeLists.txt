@@ -37,6 +37,16 @@ file(GLOB_RECURSE TEST_URL_DECODE_SRC "url_decode/*.cc")
 add_executable(test_url_decode ${TEST_URL_DECODE_SRC})
 target_link_libraries(test_url_decode lib_srecord)
 
+add_custom_target(prepare-test
+    DEPENDS
+        srecord-executables
+        test_arglex_ambiguous
+        test_crc16
+        test_fletcher16
+        test_hyphen
+        test_url_decode
+)
+
 # Tests
 enable_testing()
 file(GLOB_RECURSE SRECORD_TESTS "*/*.sh")
