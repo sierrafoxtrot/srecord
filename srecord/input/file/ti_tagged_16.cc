@@ -17,6 +17,7 @@
 //
 
 #include <cctype>
+#include <cstddef>
 
 #include <srecord/arglex/tool.h>
 #include <srecord/input/file/ti_tagged_16.h>
@@ -129,7 +130,7 @@ srecord::input_file_ti_tagged_16::read(record &result) -> bool
 
         case '9':
             // load address which represents a word location.
-            address = get_word_be() * 2;
+            address = static_cast<unsigned long>(get_word_be() * )2;
             break;
 
         case 'B':

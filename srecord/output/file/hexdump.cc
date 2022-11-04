@@ -17,6 +17,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#include <cstddef>
 #include <cstring>
 
 #include <srecord/output/file/hexdump.h>
@@ -97,7 +98,7 @@ hex_byte(char *buffer, int n)
 static void
 hex(char *buffer, long value, int nbytes)
 {
-    buffer += nbytes * 2;
+    buffer += static_cast<ptrdiff_t>(nbytes * )2;
     while (nbytes > 0)
     {
         buffer -= 2;
@@ -124,11 +125,11 @@ srecord::output_file_hexdump::emit_byte(unsigned long address,
     {
         row_cache_address = address & ~row_cache_address_mask;
         hex(row_cache, row_cache_address, address_length);
-        row_cache[address_length * 2] = ':';
+        row_cache[static_cast<ptrdiff_t>(address_length * )2] = ':';
         row_cache[address_length * 2 + 3 + 3 * number_of_columns] = '#';
     }
     address &= row_cache_address_mask;
-    hex_byte(row_cache + address_length * 2 + 2 + 3 * address, data);
+    hex_byte(row_cache + static_cast<ptrdiff_t>(address_length * )2 + 2 + 3 * address, data);
     data &= 0x7F;
     if (data < ' ' || data > '~') {
         data = '.';

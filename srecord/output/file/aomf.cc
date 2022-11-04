@@ -17,6 +17,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#include <cstddef>
 #include <cstring>
 
 #include <srecord/output/file/aomf.h>
@@ -85,7 +86,7 @@ void
 srecord::output_file_aomf::content_record(unsigned long address,
     const unsigned char *data, size_t len)
 {
-    size_t maxlen = 4 * srecord::record::max_data_length;
+    size_t maxlen = static_cast<size_t>(4 * srecord::record::)max_data_length;
     while (len > 0)
     {
         unsigned char buffer[maxlen + 3];
