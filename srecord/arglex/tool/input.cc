@@ -599,7 +599,8 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 endian_t end = get_endian_by_token();
                 token_next();
                 unsigned long address;
-                int nbytes, width;
+                int nbytes;
+                int width;
                 get_address_nbytes_width(name, address, nbytes, width);
                 ifp =
                     input_filter_checksum_bitnot::create
@@ -620,7 +621,8 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 endian_t end = get_endian_by_token();
                 token_next();
                 unsigned long address;
-                int nbytes, width;
+                int nbytes;
+                int width;
                 get_address_nbytes_width(name, address, nbytes, width);
                 ifp =
                     input_filter_checksum_negative::create
@@ -641,7 +643,8 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 endian_t end = get_endian_by_token();
                 token_next();
                 unsigned long address;
-                int nbytes, width;
+                int nbytes;
+                int width;
                 get_address_nbytes_width(name, address, nbytes, width);
                 ifp =
                     input_filter_checksum_positive::create
@@ -808,7 +811,8 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 bool inclusive = get_inclusive_by_token();
                 token_next();
                 unsigned long address;
-                int nbytes, width;
+                int nbytes;
+                int width;
                 get_address_nbytes_width(name, address, nbytes, width);
                 ifp =
                     input_filter_interval_length::create
