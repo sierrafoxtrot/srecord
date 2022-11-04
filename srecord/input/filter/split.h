@@ -63,7 +63,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_split();
+    ~input_filter_split() override;
 
 private:
     /**
@@ -100,7 +100,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
 private:
     /**

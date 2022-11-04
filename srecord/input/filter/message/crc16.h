@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_message_crc16();
+    ~input_filter_message_crc16() override;
 
 private:
     /**
@@ -71,13 +71,13 @@ public:
 
 protected:
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    void process(const memory &input, record &output);
+    void process(const memory &input, record &output) override;
 
     // See base class for documentation.
-    const char *get_algorithm_name() const;
+    const char *get_algorithm_name() const override;
 
 private:
     /**

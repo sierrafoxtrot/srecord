@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_filter();
+    ~output_filter() override;
 
 protected:
     /**
@@ -48,31 +48,31 @@ protected:
     output_filter(output::pointer deeper);
 
     // See base class for documentation.
-    void write(const record &r);
+    void write(const record &r) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const std::string filename() const;
+    const std::string filename() const override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
     // See base class for documentation.
-    void notify_upper_bound(unsigned long addr);
+    void notify_upper_bound(unsigned long addr) override;
 
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
 private:
     /**

@@ -41,7 +41,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file();
+    ~input_file() override;
 
     /**
       * The guess class method is used to open a file of an unknown
@@ -69,13 +69,13 @@ public:
 
 protected:
     // See base class for documentation.
-    virtual std::string filename() const;
+    std::string filename() const override;
 
     // See base class for documentation.
-    virtual std::string filename_and_line() const;
+    std::string filename_and_line() const override;
 
     // See base class for documentation.
-    void disable_checksum_validation();
+    void disable_checksum_validation() override;
 
 protected:
     /**

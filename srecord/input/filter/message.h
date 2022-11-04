@@ -42,7 +42,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_message();
+    ~input_filter_message() override;
 
 protected:
     /**
@@ -57,7 +57,7 @@ protected:
     input_filter_message(const input::pointer &deeper, bool naked = false);
 
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     /**
       * The process method is used to process the data from the input.

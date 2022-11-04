@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_checksum_negative();
+    ~input_filter_checksum_negative() override;
 
 private:
     /**
@@ -82,7 +82,7 @@ public:
 
 protected:
     // See base class for document.
-    sum_t calculate();
+    sum_t calculate() override;
 
 private:
     /**

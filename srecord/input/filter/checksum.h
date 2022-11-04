@@ -39,11 +39,11 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_checksum();
+    ~input_filter_checksum() override;
 
 protected:
     // See bas class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     /**
       * The constructor.

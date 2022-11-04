@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_dec_binary();
+    ~output_file_dec_binary() override;
 
 private:
     /**
@@ -62,25 +62,25 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
 private:
     /**
@@ -89,7 +89,7 @@ private:
       * method also tracks the byte_offset, so that we can align to
       * specific boundaries.  Calls the checksum_add() method.
       */
-    void put_byte(unsigned char);
+    void put_byte(unsigned char) override;
 
     /**
       * The byte_offset instance variable is used to track the location

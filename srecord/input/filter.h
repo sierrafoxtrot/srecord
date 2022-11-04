@@ -39,22 +39,22 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter();
+    ~input_filter() override;
 
     // See base class for documentation.
-    bool read(class record &record);
+    bool read(class record &record) override;
 
     // See base class for documentation.
-    std::string filename() const;
+    std::string filename() const override;
 
     // See base class for documentation.
-    std::string filename_and_line() const;
+    std::string filename_and_line() const override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    void disable_checksum_validation();
+    void disable_checksum_validation() override;
 
 protected:
     /**

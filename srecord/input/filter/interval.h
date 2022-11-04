@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_interval();
+    ~input_filter_interval() override;
 
 protected:
     /**
@@ -71,7 +71,7 @@ protected:
     const interval &get_range() const { return range; }
 
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
 private:
     /**

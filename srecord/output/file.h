@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file();
+    ~output_file() override;
 
     /**
       * The default constructor.
@@ -55,7 +55,7 @@ public:
     output_file(std::string file_name);
 
     // See base class for documentation.
-    virtual const std::string filename() const;
+    const std::string filename() const override;
 
     /**
       * The enable_header class method is used to enable or disable

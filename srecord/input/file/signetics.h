@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_signetics();
+    ~input_file_signetics() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,19 +49,19 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
     /**
       * See base class for documentation.  We over-ride this method
       * because signetics uses its own XOR-ROL checksum algorithm.
       */
-    void checksum_add(unsigned char);
+    void checksum_add(unsigned char) override;
 
 private:
     /**

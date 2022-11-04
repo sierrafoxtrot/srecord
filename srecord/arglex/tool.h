@@ -211,7 +211,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~arglex_tool();
+    ~arglex_tool() override;
 
     /**
       * The constructor.  Pass the argc and argv as given to main;
@@ -299,7 +299,7 @@ public:
     std::string get_string(const char *caption);
 
     // See base class for documentation.
-    void default_command_line_processing();
+    void default_command_line_processing() override;
 
     defcon_t get_redundant_bytes() const { return redundant_bytes; }
     defcon_t get_contradictory_bytes() const { return contradictory_bytes; }

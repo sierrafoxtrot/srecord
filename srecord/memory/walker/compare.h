@@ -48,7 +48,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_compare();
+    ~memory_walker_compare() override;
 
 private:
     /**
@@ -77,7 +77,7 @@ public:
     static pointer create(const memory &other, bool check_wrong);
 
     // See base class for documentation.
-    virtual void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
     /**
       * The print method is used to print the results of the comparison

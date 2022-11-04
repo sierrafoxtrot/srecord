@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_ppb();
+    ~input_file_ppb() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -48,16 +48,16 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(class record &rec);
+    bool read(class record &rec) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**

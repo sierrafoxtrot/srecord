@@ -39,7 +39,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_adler32();
+    ~memory_walker_adler32() override;
 
 private:
     /**
@@ -63,7 +63,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
 private:
     /**

@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_ti_tagged_16();
+    ~output_file_ti_tagged_16() override;
 
 private:
     /**
@@ -61,25 +61,25 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    void put_char(int);
+    void put_char(int) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     typedef output_file inherited;

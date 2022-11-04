@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_and();
+    ~input_filter_and() override;
 
 private:
     /**
@@ -63,7 +63,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
 private:
     /**

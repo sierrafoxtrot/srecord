@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_byte_swap();
+    ~input_filter_byte_swap() override;
 
 private:
     /**
@@ -59,10 +59,10 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
 private:
     /**

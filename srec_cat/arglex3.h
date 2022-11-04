@@ -46,7 +46,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~srec_cat_arglex3();
+    ~srec_cat_arglex3() override;
 
     /**
       * The constructor.

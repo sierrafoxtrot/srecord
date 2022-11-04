@@ -51,7 +51,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_stm32();
+    ~memory_walker_stm32() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -68,7 +68,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
 private:
     /**

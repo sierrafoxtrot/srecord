@@ -43,7 +43,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_unsplit();
+    ~input_filter_unsplit() override;
 
 private:
     /**
@@ -80,7 +80,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
 private:
     /**

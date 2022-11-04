@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_generator();
+    ~input_generator() override;
 
     /**
       * The constructor.
@@ -58,10 +58,10 @@ public:
 
 protected:
     // See base class for documentation
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation
-    void disable_checksum_validation();
+    void disable_checksum_validation() override;
 
     /**
       * The generate_data method is used to manufacture data for a

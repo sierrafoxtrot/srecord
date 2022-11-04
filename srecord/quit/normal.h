@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~quit_normal();
+    ~quit_normal() override;
 
     /**
       * The default constructor.
@@ -45,10 +45,10 @@ public:
 
 protected:
     // see base class for documentation
-    virtual void exit(int);
+    void exit(int) override;
 
     // see base class for documentation
-    virtual void message_v(const char *, va_list);
+    void message_v(const char *, va_list) override;
 
 private:
     /**

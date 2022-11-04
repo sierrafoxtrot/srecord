@@ -84,7 +84,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_logisim();
+    ~input_file_logisim() override;
 
     static input_file::pointer create(const std::string &file_name);
 
@@ -97,13 +97,13 @@ public:
 
 protected:
     // See base class for documentation
-    bool read(srecord::record &rec);
+    bool read(srecord::record &rec) override;
 
     // See base class for documentation
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation
-    int format_option_number() const;
+    int format_option_number() const override;
 
     /**
       * The constructor.

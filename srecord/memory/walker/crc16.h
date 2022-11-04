@@ -39,7 +39,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_crc16();
+    ~memory_walker_crc16() override;
 
 private:
     /**
@@ -83,7 +83,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
 private:
     /**

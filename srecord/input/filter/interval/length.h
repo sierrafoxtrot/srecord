@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_interval_length();
+    ~input_filter_interval_length() override;
 
 private:
     /**
@@ -83,7 +83,7 @@ public:
 
 protected:
     // See base class for documentation.
-    long calculate_result() const;
+    long calculate_result() const override;
 
 private:
     /**

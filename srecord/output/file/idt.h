@@ -39,7 +39,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_idt();
+    ~output_file_idt() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -53,25 +53,25 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &rec);
+    void write(const record &rec) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int nbytes);
+    void address_length_set(int nbytes) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
 private:
     /**

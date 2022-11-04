@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_fletcher16();
+    ~memory_walker_fletcher16() override;
 
 private:
     /**
@@ -90,7 +90,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long address, const void *data, int data_size);
+    void observe(unsigned long address, const void *data, int data_size) override;
 
 private:
     /**

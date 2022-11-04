@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_alignment();
+    ~memory_walker_alignment() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -60,10 +60,10 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
     // See base class for documentation.
-    void observe_end();
+    void observe_end() override;
 
 private:
     /**
