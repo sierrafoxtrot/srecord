@@ -471,8 +471,7 @@ build_include_file_name(const std::string &filename) -> std::string
 srecord::output_file_c::output_file_c(const std::string &a_file_name) :
     srecord::output_file(a_file_name),
     prefix("eprom"),
-    header_prefix(""),
-    header_postfix(""),
+    
     taddr(0),
     header_done(false),
     column(0),
