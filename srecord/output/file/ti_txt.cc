@@ -23,8 +23,9 @@
 
 srecord::output_file_ti_txt::~output_file_ti_txt()
 {
-    if (column > 0)
+    if (column > 0) {
         put_char('\n');
+}
     put_stringf("q\n");
     column = 0;
 }
@@ -77,8 +78,9 @@ srecord::output_file_ti_txt::write(const srecord::record &record)
     {
     case srecord::record::type_header:
         // All header data is discarded
-        if (enable_optional_address_flag)
+        if (enable_optional_address_flag) {
             address_set = true;
+}
         break;
 
     case srecord::record::type_data:
@@ -94,12 +96,15 @@ srecord::output_file_ti_txt::write(const srecord::record &record)
             address_set = true;
 
             int width = 2;
-            if (address >= 0x1000000)
+            if (address >= 0x1000000) {
                 width = 4;
-            if (address >= 0x10000)
+}
+            if (address >= 0x10000) {
                 width = 3;
-            if (width < address_length)
+}
+            if (width < address_length) {
                 width = address_length;
+}
             width *= 2;
             put_stringf("@%0*lX\n", width, address);
         }
@@ -127,10 +132,12 @@ void
 srecord::output_file_ti_txt::line_length_set(int linlen)
 {
     int n = (linlen + 1) / 3;
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    if (n > srecord::record::max_data_length)
+}
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
     line_length = pref_block_size * 3 - 1;
 }
@@ -139,10 +146,12 @@ srecord::output_file_ti_txt::line_length_set(int linlen)
 void
 srecord::output_file_ti_txt::address_length_set(int n)
 {
-    if (n < 2)
+    if (n < 2) {
         n = 2;
-    if (n > 4)
+}
+    if (n > 4) {
         n = 4;
+}
     address_length = n;
 }
 
@@ -150,8 +159,9 @@ srecord::output_file_ti_txt::address_length_set(int n)
 auto
 srecord::output_file_ti_txt::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
+}
     pref_block_size = nbytes;
     line_length = pref_block_size * 3 - 1;
     return true;

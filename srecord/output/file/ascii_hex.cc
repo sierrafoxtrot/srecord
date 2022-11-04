@@ -52,15 +52,17 @@ srecord::output_file_ascii_hex::create(const std::string &a_file_name) -> srecor
 void
 srecord::output_file_ascii_hex::emit_end_of_file()
 {
-    if (end_code_emitted)
+    if (end_code_emitted) {
         return;
+}
 
     if (column)
     {
-        if (column + 2 > line_length)
+        if (column + 2 > line_length) {
             put_char('\n');
-        else
+        } else {
             put_char(' ');
+}
     }
     put_char(3);
     put_char('\n');
@@ -95,8 +97,9 @@ srecord::output_file_ascii_hex::write(const srecord::record &record)
             ++column;
             start_code_emitted = true;
 
-            if (!enable_optional_address_flag)
+            if (!enable_optional_address_flag) {
                 address = (unsigned long)-1L;
+}
         }
         if (address != record.get_address())
         {
@@ -105,12 +108,15 @@ srecord::output_file_ascii_hex::write(const srecord::record &record)
             //
             address = record.get_address();
             int address_width = 2;
-            if (address >= 0x1000000)
+            if (address >= 0x1000000) {
                 address_width = 4;
-            if (address >= 0x10000)
+}
+            if (address >= 0x10000) {
                 address_width = 3;
-            if (address_width < address_length)
+}
+            if (address_width < address_length) {
                 address_width = address_length;
+}
             address_width *= 2;
 
             //
@@ -174,10 +180,12 @@ void
 srecord::output_file_ascii_hex::line_length_set(int linlen)
 {
     int n = (linlen + 1) / 3;
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    if (n > srecord::record::max_data_length)
+}
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
     line_length = pref_block_size * 3 - 1;
 }
@@ -186,8 +194,9 @@ srecord::output_file_ascii_hex::line_length_set(int linlen)
 auto
 srecord::output_file_ascii_hex::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > srecord::record::max_data_length)
+    if (nbytes < 1 || nbytes > srecord::record::max_data_length) {
         return false;
+}
     pref_block_size = nbytes;
     line_length = pref_block_size * 3 - 1;
     return true;
@@ -197,10 +206,12 @@ srecord::output_file_ascii_hex::preferred_block_size_set(int nbytes) -> bool
 void
 srecord::output_file_ascii_hex::address_length_set(int n)
 {
-    if (n < 2)
+    if (n < 2) {
         n = 2;
-    if (n > 4)
+}
+    if (n > 4) {
         n = 4;
+}
     address_length = n;
 }
 

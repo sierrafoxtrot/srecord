@@ -72,8 +72,9 @@ srecord::input_file_fairchild::read(record &result) -> bool
         for (;;)
         {
             int c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 fatal_error("format error");
+}
             if (c == 'S')
             {
                 get_char_undo(c);
@@ -96,8 +97,9 @@ srecord::input_file_fairchild::read(record &result) -> bool
             fatal_error("no * end record");
 
         case '*':
-            if (!file_contains_data)
+            if (!file_contains_data) {
                 fatal_error("file contains no data");
+}
             get_char_undo(c);
             return false;
 
@@ -109,8 +111,9 @@ srecord::input_file_fairchild::read(record &result) -> bool
             {
                 checksum_reset();
                 unsigned char data[8];
-                for (unsigned char & j : data)
+                for (unsigned char & j : data) {
                     j = get_byte();
+}
                 result = record(record::type_data, address, data, 8);
                 address += 8;
                 file_contains_data = true;
@@ -120,8 +123,9 @@ srecord::input_file_fairchild::read(record &result) -> bool
                 //
                 int sum1 = checksum_get() & 0xF;
                 int sum2 = get_nibble();
-                if (use_checksums() && sum1 != sum2)
+                if (use_checksums() && sum1 != sum2) {
                     fatal_error("checksum error (%d != %d)", sum1, sum2);
+}
             }
             return true;
 

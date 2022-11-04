@@ -64,8 +64,9 @@ main(int argc, char **argv) -> int
     for (;;)
     {
         int c = getopt_long(argc, argv, "abchp:rtVx", options, nullptr);
-        if (c == EOF)
+        if (c == EOF) {
             break;
+}
         switch (c)
         {
         case 'a':
@@ -88,8 +89,9 @@ main(int argc, char **argv) -> int
             {
                 char *ep = nullptr;
                 polynomial = strtol(optarg, &ep, 0);
-                if (ep == optarg || *ep)
+                if (ep == optarg || *ep) {
                     polynomial = srecord::crc16::polynomial_by_name(optarg);
+}
             }
             break;
 
@@ -114,8 +116,9 @@ main(int argc, char **argv) -> int
             // NOTREACHED
         }
     }
-    if (optind != argc)
+    if (optind != argc) {
         usage();
+}
 
     srecord::crc16 check(seed_mode, augment, polynomial, bitdir);
     if (print_table)
@@ -127,14 +130,17 @@ main(int argc, char **argv) -> int
     {
         char buffer[1024];
         int n = read(0, buffer, sizeof(buffer));
-        if (n < 0)
+        if (n < 0) {
             srecord::quit_default.fatal_error_errno("read stdin");
-        if (!n)
+}
+        if (!n) {
             break;
+}
         if (h_flag)
         {
-            for (int j = 0; j < n; ++j)
+            for (int j = 0; j < n; ++j) {
                 buffer[j] = srecord::bitrev8(buffer[j]);
+}
         }
         check.nextbuf(buffer, n);
     }
@@ -142,9 +148,10 @@ main(int argc, char **argv) -> int
     // The h_flags is use to validate the crc16 least-to-most code.
     // Because that code calculate the CRC bit reversed, we bit reverse
     // here so that we can test for identical-ness.
-    if (h_flag)
+    if (h_flag) {
         printf("0x%04X\n", srecord::bitrev16(check.get()));
-    else
+    } else {
         printf("0x%04X\n", check.get());
+}
     return 0;
 }

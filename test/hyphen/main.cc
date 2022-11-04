@@ -43,8 +43,9 @@ read_one_line(const char *filename, FILE *fp, std::string &result) -> bool
             }
             return !result.empty();
         }
-        if (c == '\n')
+        if (c == '\n') {
             return true;
+}
         result += (unsigned char)c;
     }
 }
@@ -54,14 +55,16 @@ static void
 check(const char *filename)
 {
     FILE *fp = fopen(filename, "r");
-    if (!fp)
+    if (!fp) {
         srecord::quit_default.fatal_error_errno("open %s", filename);
+}
     int line_number = 0;
     for (;;)
     {
         std::string line;
-        if (!read_one_line(filename, fp, line))
+        if (!read_one_line(filename, fp, line)) {
             break;
+}
         ++line_number;
         switch (line.c_str()[0])
         {
@@ -169,14 +172,16 @@ main(int argc, char **argv) -> int
         }
         break;
     }
-    if (optind >= argc)
+    if (optind >= argc) {
         usage();
+}
     for (;;)
     {
         check(argv[optind]);
         ++optind;
-        if (optind >= argc)
+        if (optind >= argc) {
             break;
+}
     }
     if (number_of_errors > 0)
     {

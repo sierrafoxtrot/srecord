@@ -48,8 +48,9 @@ void
 srecord::output_file_tektronix_extended::write_inner(int tag,
     unsigned long addr, int addr_nbytes, const void *data_p, int data_nbytes)
 {
-    if (addr_nbytes < address_length)
+    if (addr_nbytes < address_length) {
         addr_nbytes = address_length;
+}
     unsigned char buf[260];
     int record_length = 6 + (addr_nbytes + data_nbytes) * 2;
     if (record_length >= 256)
@@ -70,8 +71,9 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
     csum += buf[pos++] = 0; // checksum lo, fill in later
     csum += buf[pos++] = addr_nbytes * 2;  // size of addr, in nibbles
     int j;
-    for (j = 0; j < 2 * addr_nbytes; ++j)
+    for (j = 0; j < 2 * addr_nbytes; ++j) {
         csum += buf[pos++] = (addr >> (4 * (2*addr_nbytes-1 - j))) & 15;
+}
     const auto *data = (const unsigned char *)data_p;
     for (j = 0; j < data_nbytes; ++j)
     {
@@ -89,8 +91,9 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
 
     // emit the line
     put_char('%');
-    for (j = 0; j < pos; ++j)
+    for (j = 0; j < pos; ++j) {
         put_nibble(buf[j]);
+}
     put_char('\n');
 }
 
@@ -98,10 +101,12 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
 static auto
 addr_width(unsigned long n) -> int
 {
-    if (n < (1uL << 16))
+    if (n < (1uL << 16)) {
         return 2;
-    if (n < (1uL << 24))
+}
+    if (n < (1uL << 24)) {
         return 3;
+}
     return 4;
 }
 
@@ -167,17 +172,19 @@ srecord::output_file_tektronix_extended::line_length_set(int linlen)
     // ((255 - 9)/2) bytes of data is the safest maximum.  We could
     // make it based on the address, but that's probably overkill.
     //
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    else if (n > 123)
+    } else if (n > 123) {
         n = 123;
+}
 
     //
     // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srecord::record::max_data_length)
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
 }
 
@@ -185,10 +192,12 @@ srecord::output_file_tektronix_extended::line_length_set(int linlen)
 void
 srecord::output_file_tektronix_extended::address_length_set(int n)
 {
-    if (n < 2)
+    if (n < 2) {
         n = 2;
-    if (n > 4)
+}
+    if (n > 4) {
         n = 4;
+}
     address_length = n;
 }
 
@@ -196,10 +205,12 @@ srecord::output_file_tektronix_extended::address_length_set(int n)
 auto
 srecord::output_file_tektronix_extended::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if (nbytes > 123)
+}
+    if (nbytes > 123) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }

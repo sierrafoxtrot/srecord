@@ -72,12 +72,15 @@ srecord::input_file_tektronix::read_inner(srecord::record &record) -> bool
     for (;;)
     {
         int c = get_char();
-        if (c < 0)
+        if (c < 0) {
             return false;
-        if (c == '/')
+}
+        if (c == '/') {
             break;
-        if (c == '\n')
+}
+        if (c == '\n') {
             continue;
+}
         if (!garbage_warning)
         {
             warning("ignoring garbage lines");
@@ -86,10 +89,12 @@ srecord::input_file_tektronix::read_inner(srecord::record &record) -> bool
         for (;;)
         {
             c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 return false;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 break;
+}
         }
     }
 
@@ -121,8 +126,9 @@ srecord::input_file_tektronix::read_inner(srecord::record &record) -> bool
     if (buffer[2])
     {
         checksum_reset();
-        for (int j = 0; j < buffer[2]; ++j)
+        for (int j = 0; j < buffer[2]; ++j) {
             buffer[4 + j] = get_byte();
+}
         int data_checksum_calc = checksum_get();
         int data_checksum_file = get_byte();
         if (use_checksums() && data_checksum_calc != data_checksum_file)
@@ -135,8 +141,9 @@ srecord::input_file_tektronix::read_inner(srecord::record &record) -> bool
             );
         }
     }
-    if (get_char() != '\n')
+    if (get_char() != '\n') {
         fatal_error("end-of-line expected");
+}
 
     record =
         srecord::record
@@ -163,10 +170,12 @@ srecord::input_file_tektronix::read(srecord::record &record) -> bool
     {
         if (!read_inner(record))
         {
-            if (!seen_some_input && garbage_warning)
+            if (!seen_some_input && garbage_warning) {
                 fatal_error("file contains no data");
-            if (data_record_count <= 0)
+}
+            if (data_record_count <= 0) {
                 fatal_error("file contains no data");
+}
             if (!termination_seen)
             {
                 warning("no execution start address record");
@@ -196,8 +205,9 @@ srecord::input_file_tektronix::read(srecord::record &record) -> bool
             break;
 
         case srecord::record::type_execution_start_address:
-            if (termination_seen)
+            if (termination_seen) {
                 warning("redundant execution start address record");
+}
             termination_seen = true;
             break;
         }

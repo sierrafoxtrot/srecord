@@ -65,18 +65,21 @@ srecord::output_file_signetics::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (record.get_length() < 1)
+        if (record.get_length() < 1) {
             return;
-        if (!record.address_range_fits_into_n_bits(16))
+}
+        if (!record.address_range_fits_into_n_bits(16)) {
             data_address_too_large(record, 16);
+}
         put_char(':');
         checksum_reset();
         put_word_be(record.get_address());
         put_byte(record.get_length());
         put_byte(checksum_get());
         checksum_reset();
-        for (size_t j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j) {
             put_byte(record.get_data(j));
+}
         put_byte(checksum_get());
         put_char('\n');
         last_address = record.get_address() + record.get_length();
@@ -108,17 +111,19 @@ srecord::output_file_signetics::line_length_set(int linlen)
     //
     // Constrain based on the file format.
     //
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    else if (n > 255)
+    } else if (n > 255) {
         n = 255;
+}
 
     //
     // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srecord::record::max_data_length)
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
 }
 
@@ -133,10 +138,12 @@ srecord::output_file_signetics::address_length_set(int)
 auto
 srecord::output_file_signetics::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if (nbytes > 255)
+}
+    if (nbytes > 255) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }

@@ -51,8 +51,9 @@ srecord::input_file_ascii_hex::create(const std::string &a_filename) -> srecord:
 auto
 srecord::input_file_ascii_hex::read_inner(record &result) -> bool
 {
-    if (state == state_ignore)
+    if (state == state_ignore) {
         return false;
+}
 
     if (state == state_initial)
     {
@@ -89,8 +90,9 @@ srecord::input_file_ascii_hex::read_inner(record &result) -> bool
             unsigned char c = get_byte();
             result = record(record::type_data, address, &c, 1);
             int sep = get_char();
-            if (sep >= 0 && !isspace((unsigned char)sep))
+            if (sep >= 0 && !isspace((unsigned char)sep)) {
                 fatal_error("not execution character");
+}
             ++address;
             switch (peek_char())
             {
@@ -129,8 +131,9 @@ srecord::input_file_ascii_hex::read_inner(record &result) -> bool
             {
                 value = (value << 4) + get_nibble();
                 int c = get_char();
-                if (c == ',' || c == '.')
+                if (c == ',' || c == '.') {
                     break;
+}
                 get_char_undo(c);
             }
             switch (command)
@@ -170,8 +173,9 @@ srecord::input_file_ascii_hex::read(record &result) -> bool
 {
     if (!read_inner(result))
     {
-        if (!seen_some_input)
+        if (!seen_some_input) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;

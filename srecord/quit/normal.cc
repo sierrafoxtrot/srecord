@@ -56,20 +56,24 @@ srecord::quit_normal::message_v(const char *fmt, va_list ap)
     for (;;)
     {
         unsigned char c = *cp++;
-        if (!c)
+        if (!c) {
             break;
-        if (isspace(c) || !isprint(c))
+}
+        if (isspace(c) || !isprint(c)) {
             continue;
+}
 
         std::string word;
         for (;;)
         {
             word += c;
             c = *cp;
-            if (!c)
+            if (!c) {
                 break;
-            if (isspace(c) || !isprint(c))
+}
+            if (isspace(c) || !isprint(c)) {
                 break;
+}
             ++cp;
         }
         if (!column)

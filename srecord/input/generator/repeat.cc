@@ -35,8 +35,9 @@ srecord::input_generator_repeat::input_generator_repeat(
 {
     // assert(length > 0);
     data = new unsigned char [length];
-    for (size_t j = 0; j < length; ++j)
+    for (size_t j = 0; j < length; ++j) {
         data[j] = a_data[j];
+}
 }
 
 

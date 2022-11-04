@@ -43,12 +43,14 @@ srecord::input_filter_xor::create(const input::pointer &a_deeper, int a_mask) ->
 auto
 srecord::input_filter_xor::read(srecord::record &record) -> bool
 {
-    if (!srecord::input_filter::read(record))
+    if (!srecord::input_filter::read(record)) {
         return false;
+}
     if (record.get_type() == srecord::record::type_data)
     {
-        for (size_t j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j) {
             record.set_data(j, record.get_data(j) ^ value);
+}
     }
     return true;
 }

@@ -77,8 +77,9 @@ srecord::output_file_os65v::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (seen_start_address)
+        if (seen_start_address) {
             fatal_error("more data following execution start address (bug)");
+}
         if
         (
             address != record.get_address()

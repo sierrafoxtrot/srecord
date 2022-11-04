@@ -81,12 +81,14 @@ srecord::input_file_hp64k::read_u16be(uint16_t *dest) -> bool
 {
     uint16_t tmp;
     int c = get_char();
-    if (c < 0)
+    if (c < 0) {
         return false;
+}
     tmp = (c & 0xFF) << 8;
     c = get_char();
-    if (c < 0)
+    if (c < 0) {
         return false;
+}
     tmp = tmp | (c & 0xFF);
     *dest = tmp;
     return true;

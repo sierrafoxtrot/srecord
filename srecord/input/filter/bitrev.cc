@@ -43,12 +43,14 @@ srecord::input_filter_bitrev::create(const srecord::input::pointer &a_deeper) ->
 auto
 srecord::input_filter_bitrev::read(srecord::record &record) -> bool
 {
-    if (!srecord::input_filter::read(record))
+    if (!srecord::input_filter::read(record)) {
         return false;
+}
     if (record.get_type() == srecord::record::type_data)
     {
-        for (size_t j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j) {
             record.set_data(j, bitrev8(record.get_data(j)));
+}
     }
     return true;
 }

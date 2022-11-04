@@ -55,23 +55,26 @@ srecord::input_file_ppb::get_packet() -> bool
     // Skip ASCII prologue (if any) and hunt for SOH
     do{
         c = get_char();
-        if (c < 0)
+        if (c < 0) {
             return false;
+}
         // tweak to original patch to handle CR/LF/CRLF
 //        if ((c == '\n') || (c == '\r'))
 //            continue;
     }while(c != SOH && /*c >= ' ' &&*/ c < 0x7f);
 
-    if (c != SOH)
+    if (c != SOH) {
         packet_format_error();
+}
 
     unsigned char hdr[8];
     unsigned char csum = 0;
     for (unsigned char & n : hdr)
     {
         c = get_char();
-        if (c < 0)
+        if (c < 0) {
             packet_format_error();
+}
         n = c;
         csum += c;
     }
@@ -97,8 +100,9 @@ srecord::input_file_ppb::get_packet() -> bool
         if (j > 0 && (j % 1024) == 0)
         {
             c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 packet_format_error();
+}
             if (c != (unsigned char)-csum && use_checksums())
             {
                 fatal_error
@@ -110,14 +114,16 @@ srecord::input_file_ppb::get_packet() -> bool
             }
         }
         c = get_char();
-        if (c < 0)
+        if (c < 0) {
             packet_format_error();
+}
         packet[j] = c;
         csum += c;
     }
     c = get_char();
-    if (c < 0)
+    if (c < 0) {
         packet_format_error();
+}
     if (c != (unsigned char)-csum && use_checksums())
     {
         fatal_error
@@ -137,14 +143,17 @@ srecord::input_file_ppb::read(record &result) -> bool
 {
     if (packet_used >= packet_length)
     {
-        if (!get_packet())
+        if (!get_packet()) {
             return false;
-        if (packet_length == 0)
+}
+        if (packet_length == 0) {
             return false;
+}
     }
     size_t size = packet_length - packet_used;
-    if (size > record::max_data_length)
+    if (size > record::max_data_length) {
         size = record::max_data_length;
+}
     result =
         record
         (

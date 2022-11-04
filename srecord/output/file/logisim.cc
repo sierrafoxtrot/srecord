@@ -26,8 +26,9 @@
 
 srecord::output_file_logisim::~output_file_logisim()
 {
-    if (column)
+    if (column) {
         put_char('\n');
+}
 }
 
 
@@ -55,10 +56,11 @@ srecord::output_file_logisim::emit(int count, int value)
 {
     assert(count > 0);
     char buffer[100];
-    if (count == 1)
+    if (count == 1) {
         snprintf(buffer, sizeof(buffer), "%X", value);
-    else
+    } else {
         snprintf(buffer, sizeof(buffer), "%d*%X", count, value);
+}
     int buffer_length = strlen(buffer);
 
     address += count;
@@ -90,11 +92,13 @@ void
 srecord::output_file_logisim::write(const srecord::record &record)
 {
     // This format can't do header records or termination records
-    if (record.get_type() != srecord::record::type_data)
+    if (record.get_type() != srecord::record::type_data) {
         return;
+}
 
-    if (!record.address_range_fits_into_n_bits(16))
+    if (!record.address_range_fits_into_n_bits(16)) {
         data_address_too_large(record, 16);
+}
 
     assert (address <= record.get_address());
     while (address < record.get_address())
@@ -127,8 +131,9 @@ srecord::output_file_logisim::write(const srecord::record &record)
              ++count;
         }
         // Logisim only uses counts when the runs are longer than 4.
-        if (count < 4)
+        if (count < 4) {
             count = 1;
+}
         j += count - 1;
 
         emit(count, value);

@@ -47,11 +47,13 @@ test_url_decode()
     for (;;)
     {
         char buf[1000];
-        if (!fgets(buf, sizeof(buf), stdin))
+        if (!fgets(buf, sizeof(buf), stdin)) {
             break;
+}
         size_t len = strlen(buf);
-        while (len > 0 && isspace((unsigned char)buf[len - 1]))
+        while (len > 0 && isspace((unsigned char)buf[len - 1])) {
             --len;
+}
         std::string s(buf, len);
         printf("%s\n", srecord::string_url_decode(s).c_str());
     }
@@ -64,11 +66,13 @@ test_url_encode()
     for (;;)
     {
         char buf[1000];
-        if (!fgets(buf, sizeof(buf), stdin))
+        if (!fgets(buf, sizeof(buf), stdin)) {
             break;
+}
         size_t len = strlen(buf);
-        while (len > 0 && isspace((unsigned char)buf[len - 1]))
+        while (len > 0 && isspace((unsigned char)buf[len - 1])) {
             --len;
+}
         std::string s(buf, len);
         printf("%s\n", srecord::string_url_encode(s).c_str());
     }
@@ -92,8 +96,9 @@ main(int argc, char **argv) -> int
             { nullptr, 0, nullptr,0 }
         };
         int c = getopt_long(argc, argv, "deV", options, nullptr);
-        if (c == -1)
+        if (c == -1) {
             break;
+}
 
         switch ((unsigned char)c)
         {
@@ -115,8 +120,9 @@ main(int argc, char **argv) -> int
             return EXIT_FAILURE;
         }
     }
-    if (!func)
+    if (!func) {
         usage();
+}
     switch (argc - optind)
     {
     case 0:

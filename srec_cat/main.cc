@@ -62,24 +62,28 @@ main(int argc, char **argv) -> int
         case srecord::arglex_tool::token_generator:
             {
                 srecord::input::pointer ip = cmdline.get_input();
-                if (infile)
+                if (infile) {
                     infile = srecord::input_catenate::create(infile, ip);
-                else
+                } else {
                     infile = ip;
+}
             }
             continue;
 
         case srecord::arglex_tool::token_output:
-            if (outfile)
+            if (outfile) {
                 cmdline.usage();
+}
             outfile = cmdline.get_output();
             continue;
 
         case srec_cat_arglex3::token_line_length:
-            if (line_length > 0)
+            if (line_length > 0) {
                 cmdline.usage();
-            if (cmdline.token_next() != srecord::arglex::token_number)
+}
+            if (cmdline.token_next() != srecord::arglex::token_number) {
                 cmdline.usage();
+}
             line_length = cmdline.value_number();
             if (line_length <= 0)
             {
@@ -90,10 +94,12 @@ main(int argc, char **argv) -> int
             break;
 
         case srec_cat_arglex3::token_output_block_size:
-            if (output_block_size > 0)
+            if (output_block_size > 0) {
                 cmdline.usage();
-            if (cmdline.token_next() != srecord::arglex::token_number)
+}
+            if (cmdline.token_next() != srecord::arglex::token_number) {
                 cmdline.usage();
+}
             output_block_size = cmdline.value_number();
             if
             (
@@ -109,10 +115,12 @@ main(int argc, char **argv) -> int
             break;
 
         case srec_cat_arglex3::token_address_length:
-            if (address_length > 0)
+            if (address_length > 0) {
                 cmdline.usage();
-            if (cmdline.token_next() != srecord::arglex::token_number)
+}
+            if (cmdline.token_next() != srecord::arglex::token_number) {
                 cmdline.usage();
+}
             address_length = cmdline.value_number();
             if (address_length <= 0 || address_length > (int)sizeof(long))
             {
@@ -207,10 +215,12 @@ main(int argc, char **argv) -> int
         }
         cmdline.token_next();
     }
-    if (!infile)
+    if (!infile) {
         infile = cmdline.get_input();
-    if (!outfile)
+}
+    if (!outfile) {
         outfile = cmdline.get_output();
+}
 
     if (output_block_packing || output_block_align)
     {
@@ -228,10 +238,12 @@ main(int argc, char **argv) -> int
             srecord::output_filter_reblock::create(outfile, output_block_align);
     }
 
-    if (address_length > 0)
+    if (address_length > 0) {
         outfile->address_length_set(address_length);
-    if (line_length > 0)
+}
+    if (line_length > 0) {
         outfile->line_length_set(line_length);
+}
     if (output_block_size > 0)
     {
         if (!outfile->preferred_block_size_set(output_block_size))
@@ -266,8 +278,9 @@ main(int argc, char **argv) -> int
         cmdline.get_redundant_bytes(),
         cmdline.get_contradictory_bytes()
     );
-    if (execution_start_address_set)
+    if (execution_start_address_set) {
         m.set_execution_start_address(execution_start_address);
+}
 
     //
     // Write the remembered data out to the output.

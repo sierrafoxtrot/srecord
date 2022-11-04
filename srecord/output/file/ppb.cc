@@ -24,10 +24,12 @@
 
 srecord::output_file_ppb::~output_file_ppb()
 {
-    if (!seen_some_data)
+    if (!seen_some_data) {
         fatal_error("no data records");
-    if (buffer_length > 0)
+}
+    if (buffer_length > 0) {
         buffer_flush();
+}
     packet(0, nullptr, 0);
 }
 
@@ -76,8 +78,9 @@ srecord::output_file_ppb::write(const srecord::record &record)
             }
             buffer[buffer_length++] = data;
             ++address;
-            if (buffer_length >= sizeof(buffer))
+            if (buffer_length >= sizeof(buffer)) {
                 buffer_flush();
+}
             seen_some_data = true;
         }
         break;
@@ -165,8 +168,9 @@ srecord::output_file_ppb::packet(unsigned long address,
 
     for (size_t j = 0; j < data_size; ++j)
     {
-        if (j > 0 && (j % CSLEN) == 0)
+        if (j > 0 && (j % CSLEN) == 0) {
             put_char(-chksum);
+}
         put_char(data[j]);
         chksum += data[j];
     }

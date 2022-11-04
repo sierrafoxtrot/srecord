@@ -63,8 +63,9 @@ srecord::input_filter_message_fletcher16::command_line(
         sum1 = 0xFF & cmdln->get_number("sum1");
         sum2 = 0xFF & cmdln->get_number("sum2");
 
-        if (cmdln->token_cur() == arglex::token_number)
+        if (cmdln->token_cur() == arglex::token_number) {
             answer = 0xFFFF & cmdln->get_number("answer");
+}
     }
 }
 

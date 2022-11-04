@@ -26,8 +26,9 @@
 
 srecord::output_file_vmem::~output_file_vmem()
 {
-    if (column)
+    if (column) {
         put_char('\n');
+}
 }
 
 
@@ -60,26 +61,34 @@ calc_width_shift(int x) -> unsigned
     // (But the range is limited to those values not easily confused
     // with a number of bits.)
     //
-    if (x == 1)
+    if (x == 1) {
         return 0;
-    if (x == 2)
+}
+    if (x == 2) {
         return 1;
-    if (x == 4)
+}
+    if (x == 4) {
         return 2;
+}
 
     //
     // Number of bits.
     //
-    if (x == 8)
+    if (x == 8) {
         return 0;
-    if (x == 16)
+}
+    if (x == 16) {
         return 1;
-    if (x == 32)
+}
+    if (x == 32) {
         return 2;
-    if (x == 64)
+}
+    if (x == 64) {
         return 3;
-    if (x == 128)
+}
+    if (x == 128) {
         return 4;
+}
 
     //
     // The default number of bits is 32.
@@ -159,20 +168,23 @@ srecord::output_file_vmem::write(const srecord::record &record)
             while (cp < ep)
             {
                 unsigned char c = *cp++;
-                if (c == '\n')
+                if (c == '\n') {
                     put_stringf("\n * ");
-                else if (isprint(c) || isspace(c))
+                } else if (isprint(c) || isspace(c)) {
                     put_char(c);
-                else
+                } else {
                     put_stringf("\\%o", c);
+}
                 // make sure we don't end the comment
-                if (c == '*' && cp < ep && *cp == '/')
+                if (c == '*' && cp < ep && *cp == '/') {
                     put_char(' ');
+}
             }
             put_string(" */\n");
         }
-        if (!enable_optional_address_flag)
+        if (!enable_optional_address_flag) {
             address = (unsigned long)-1L;
+}
         break;
 
     case srecord::record::type_data:
@@ -184,8 +196,9 @@ srecord::output_file_vmem::write(const srecord::record &record)
             (record.get_address() & width_mask)
         ||
             (record.get_length() & width_mask)
-        )
+        ) {
             fatal_alignment_error(1u << width_shift);
+}
 
         //
         // If we need to advance the address, it has to be at the start
@@ -215,8 +228,9 @@ srecord::output_file_vmem::write(const srecord::record &record)
             // is optional.  It would be easy to figure out that an
             // address is an address, and not a data byte.
             //
-            if (column == 0)
+            if (column == 0) {
                 put_stringf("@%08lX", address >> width_shift);
+}
 
             //
             // Put a space between each word
@@ -264,10 +278,12 @@ srecord::output_file_vmem::line_length_set(int linlen)
 {
     int nwords = (linlen - 9) / (bytes_per_word * 2 + 1);
     int max_words = srecord::record::max_data_length >> width_shift;
-    if (nwords > max_words)
+    if (nwords > max_words) {
         nwords = max_words;
-    if (nwords < 1)
+}
+    if (nwords < 1) {
         nwords = 1;
+}
     pref_block_size = nwords * bytes_per_word;
 }
 
@@ -282,10 +298,12 @@ srecord::output_file_vmem::address_length_set(int)
 auto
 srecord::output_file_vmem::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if (bytes_per_word > 1 && 0 != (nbytes % bytes_per_word))
+}
+    if (bytes_per_word > 1 && 0 != (nbytes % bytes_per_word)) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }

@@ -37,8 +37,9 @@ main(int argc, char **argv) -> int
     unsigned char sum1 = 0xFF;
     unsigned char sum2 = 0xFF;
     int answer = -1;
-    if (argc == 2 && argv[1][0] == '-')
+    if (argc == 2 && argv[1][0] == '-') {
         return 0;
+}
     switch (argc)
     {
     case 4:
@@ -63,8 +64,9 @@ main(int argc, char **argv) -> int
     {
         char buffer[1024];
         int n = read(0, buffer, sizeof(buffer));
-        if (n <= 0)
+        if (n <= 0) {
             break;
+}
         checksum.nextbuf(buffer, n);
         checksum1.nextbuf(buffer, n);
     }

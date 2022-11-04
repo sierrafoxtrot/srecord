@@ -38,22 +38,26 @@ srecord::pretty_size(long long x, int width) -> std::string
         tmp /= 1024;
         ++suffix;
     }
-    if (*suffix == ' ')
+    if (*suffix == ' ') {
         suffix = "";
-    else
+    } else {
         --width;
-    if (width < 1)
+}
+    if (width < 1) {
         width = 1;
-    if (negative)
+}
+    if (negative) {
         tmp = -tmp;
+}
     char buffer[20];
     int prec = 0;
-    if (tmp >= 100)
+    if (tmp >= 100) {
         prec = 0;
-    else if (tmp >= 10)
+    } else if (tmp >= 10) {
         prec = 1;
-    else
+    } else {
         prec = 2;
+}
     snprintf(buffer, sizeof(buffer), "%*.*f%.1s", width, prec, tmp, suffix);
     return buffer;
 }

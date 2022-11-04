@@ -57,18 +57,21 @@ srecord::input_file_spectrum::get_decimal() -> int
             format_error:
             fatal_error("decimal number expected");
         }
-        if (isspace((unsigned char)c))
+        if (isspace((unsigned char)c)) {
             continue;
-        if (!isdigit((unsigned char)c))
+}
+        if (!isdigit((unsigned char)c)) {
             goto format_error;
+}
         break;
     }
     int result = c - '0';
     for (;;)
     {
         c = get_char();
-        if (c < 0)
+        if (c < 0) {
             break;
+}
         if (!isdigit((unsigned char)c))
         {
             get_char_undo(c);
@@ -99,10 +102,12 @@ srecord::input_file_spectrum::get_binary() -> int
             format_error:
             fatal_error("binary number expected");
         }
-        if (isspace((unsigned char)c))
+        if (isspace((unsigned char)c)) {
             continue;
-        if (!is_binary_digit((unsigned char)c))
+}
+        if (!is_binary_digit((unsigned char)c)) {
             goto format_error;
+}
         break;
     }
     int result = c - '0';
@@ -132,8 +137,9 @@ srecord::input_file_spectrum::read(srecord::record &record) -> bool
         for (;;)
         {
             int c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 fatal_error("no start character");
+}
             if (c == 2)
             {
                 header_seen = true;
@@ -150,20 +156,23 @@ srecord::input_file_spectrum::read(srecord::record &record) -> bool
     //
     // Check for the file trailer.
     //
-    if (trailer_seen)
+    if (trailer_seen) {
         return false;
+}
     for (;;)
     {
         int c = get_char();
         if (c < 0 || c == 3)
         {
-            if (!file_contains_data)
+            if (!file_contains_data) {
                 fatal_error("file contains no data");
+}
             trailer_seen = true;
             return false;
         }
-        if (isspace((unsigned char)c))
+        if (isspace((unsigned char)c)) {
             continue;
+}
         get_char_undo(c);
         break;
     }

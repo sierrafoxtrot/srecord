@@ -43,8 +43,9 @@ srecord::memory_walker_continuity::observe(unsigned long addr, const void *,
 {
     if (data_seen)
     {
-        if (current_address != addr)
+        if (current_address != addr) {
             ++nholes;
+}
     }
     else
     {

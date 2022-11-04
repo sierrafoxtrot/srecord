@@ -55,11 +55,13 @@ srecord::memory_walker_compare::observe(unsigned long addr, const void *p,
     {
         if (other.set_p(addr + j))
         {
-            if (check_wrong && data[j] != other.get(addr + j))
+            if (check_wrong && data[j] != other.get(addr + j)) {
                 wrongTemp += interval(addr + j);
+}
         }
-        else
+        else {
             unsetTemp += interval(addr + j);
+}
     }
 
     wrong += wrongTemp;
@@ -100,8 +102,9 @@ srecord::memory_walker_compare::print(const char *caption)
                     std::ios::oct
             )
         );
-    if (!wrong.empty())
+    if (!wrong.empty()) {
         std::cout << "Different:      " << wrong << std::endl;
+}
     if (!unset.empty())
     {
         std::string s(caption);

@@ -68,8 +68,9 @@ srecord::output_file_tektronix::write_inner(unsigned long address,
     //
     // Make sure the line is not too long.
     //
-    if (data_nbytes >= 256)
+    if (data_nbytes >= 256) {
         fatal_error("data length (%d > 255) too long", data_nbytes);
+}
 
     //
     // Emit the line as hexadecimal text.
@@ -86,8 +87,9 @@ srecord::output_file_tektronix::write_inner(unsigned long address,
     {
         checksum_reset();
         const auto *data_p = (const unsigned char *)data;
-        for (int j = 0; j < data_nbytes; ++j)
+        for (int j = 0; j < data_nbytes; ++j) {
             put_byte(data_p[j]);
+}
         put_byte(checksum_get());
     }
     put_char('\n');
@@ -104,10 +106,12 @@ srecord::output_file_tektronix::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (record.get_length() == 0)
+        if (record.get_length() == 0) {
                 break; // ignore
-        if (!record.address_range_fits_into_n_bits(16))
+}
+        if (!record.address_range_fits_into_n_bits(16)) {
             data_address_too_large(record, 16);
+}
         write_inner
         (
             record.get_address(),
@@ -155,17 +159,19 @@ srecord::output_file_tektronix::line_length_set(int n)
     // Constrain based on the file format.
     // (255 is the largest that will fit in the data length field)
     //
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    else if (n > 255)
+    } else if (n > 255) {
         n = 255;
+}
 
     //
     // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srecord::record::max_data_length)
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
 }
 
@@ -180,10 +186,12 @@ srecord::output_file_tektronix::address_length_set(int)
 auto
 srecord::output_file_tektronix::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if (nbytes > 255)
+}
+    if (nbytes > 255) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }

@@ -63,6 +63,7 @@ srecord::quit_prefix::message_v(const char *fmt, va_list ap)
             buf
         );
     }
-    else
+    else {
         deeper.message_v(fmt, ap);
+}
 }

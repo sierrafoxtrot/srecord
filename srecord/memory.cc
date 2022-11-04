@@ -71,10 +71,12 @@ srecord::memory::clear()
     header = nullptr;
     delete execution_start_address;
     execution_start_address = nullptr;
-    for (int j = 0; j < nchunks; ++j)
+    for (int j = 0; j < nchunks; ++j) {
         delete chunk[j];
-    if (chunk)
+}
+    if (chunk) {
         delete [] chunk;
+}
     nchunks = 0;
     nchunks_max = 0;
     chunk = nullptr;
@@ -87,8 +89,9 @@ srecord::memory::copy(const srecord::memory &rhs)
 {
     delete header;
     header = nullptr;
-    if (rhs.header)
+    if (rhs.header) {
         header = new srecord::record(*rhs.header);
+}
 
     delete execution_start_address;
     execution_start_address = nullptr;
@@ -99,8 +102,9 @@ srecord::memory::copy(const srecord::memory &rhs)
     }
 
     nchunks = rhs.nchunks;
-    while (nchunks_max < nchunks)
+    while (nchunks_max < nchunks) {
         nchunks_max = nchunks_max * 2 + 4;
+}
     chunk = new srecord::memory_chunk * [nchunks_max];
     for (int j = 0; j < nchunks; ++j)
     {
@@ -117,8 +121,9 @@ srecord::memory::find(unsigned long address)
     //
     // Speed things up if we've been there recently.
     //
-    if (cache && cache->get_address() == address)
+    if (cache && cache->get_address() == address) {
         return cache;
+}
 
     //
     // Binary chop to find the appropriate chunk.
@@ -135,10 +140,11 @@ srecord::memory::find(unsigned long address)
             cache = mcp;
             return cache;
         }
-        if (address < mcp->get_address())
+        if (address < mcp->get_address()) {
             max = mid - 1;
-        else
+        } else {
             min = mid + 1;
+}
     }
 
     //
@@ -149,8 +155,9 @@ srecord::memory::find(unsigned long address)
         nchunks_max = nchunks_max * 2 + 4;
         auto **tmp =
             new srecord::memory_chunk * [nchunks_max];
-        for (int j = 0; j < nchunks; ++j)
+        for (int j = 0; j < nchunks; ++j) {
             tmp[j] = chunk[j];
+}
         delete [] chunk;
         chunk = tmp;
     }
@@ -159,8 +166,9 @@ srecord::memory::find(unsigned long address)
     // Insert the new chunk.
     //
     mcp = new srecord::memory_chunk(address);
-    for (int up = nchunks; up > min; --up)
+    for (int up = nchunks; up > min; --up) {
         chunk[up] = chunk[up - 1];
+}
     ++nchunks;
     chunk[min] = mcp;
 
@@ -204,11 +212,14 @@ srecord::memory::set_p(unsigned long address)
 auto
 srecord::memory::equal(const srecord::memory &lhs, const srecord::memory &rhs) -> bool
 {
-    if (lhs.nchunks != rhs.nchunks)
+    if (lhs.nchunks != rhs.nchunks) {
         return false;
-    for (int j = 0; j < lhs.nchunks; ++j)
-        if (lhs.chunk[j][0] != rhs.chunk[j][0])
+}
+    for (int j = 0; j < lhs.nchunks; ++j) {
+        if (lhs.chunk[j][0] != rhs.chunk[j][0]) {
             return false;
+}
+}
     return true;
 }
 
@@ -233,8 +244,9 @@ auto
 srecord::memory::get_lower_bound()
     const -> unsigned long
 {
-    if (nchunks == 0)
+    if (nchunks == 0) {
         return 0;
+}
     return chunk[0]->get_lower_bound();
 }
 
@@ -243,8 +255,9 @@ auto
 srecord::memory::get_upper_bound()
     const -> unsigned long
 {
-    if (nchunks == 0)
+    if (nchunks == 0) {
         return 0;
+}
     return chunk[nchunks - 1]->get_upper_bound();
 }
 
@@ -255,13 +268,15 @@ srecord::memory::walk(srecord::memory_walker::pointer w)
 {
     w->notify_upper_bound(get_upper_bound());
     w->observe_header(get_header());
-    for (int j = 0; j < nchunks; ++j)
+    for (int j = 0; j < nchunks; ++j) {
         chunk[j]->walk(w);
+}
     w->observe_end();
 
     // Only write an execution start address record if we were given one.
-    if (execution_start_address)
+    if (execution_start_address) {
         w->observe_start_address(get_execution_start_address());
+}
 }
 
 
@@ -400,8 +415,9 @@ srecord::memory::find_next_chunk(unsigned long address)
     if (find_next_chunk_index < nchunks)
     {
         srecord::memory_chunk *mcp = chunk[find_next_chunk_index];
-        if (mcp->get_address() > address)
+        if (mcp->get_address() > address) {
             find_next_chunk_index = 0;
+}
     }
     else
     {
@@ -411,8 +427,9 @@ srecord::memory::find_next_chunk(unsigned long address)
     while (find_next_chunk_index < nchunks)
     {
         srecord::memory_chunk *mcp = chunk[find_next_chunk_index];
-        if (mcp->get_address() >= address)
+        if (mcp->get_address() >= address) {
             return mcp;
+}
         find_next_chunk_index++;
     }
     return nullptr;
@@ -427,10 +444,12 @@ srecord::memory::find_next_data(unsigned long &address, void *data,
     for (;;)
     {
         srecord::memory_chunk *mcp = find_next_chunk(address_hi);
-        if (!mcp)
+        if (!mcp) {
             return false;
-        if (mcp->find_next_data(address, data, nbytes))
+}
+        if (mcp->find_next_data(address, data, nbytes)) {
             return true;
+}
         address_hi = mcp->get_address() + 1;
         address = address_hi * srecord::memory_chunk::size;
     }
@@ -453,8 +472,9 @@ srecord::memory::set_header(const std::string &text)
     // as a terminating NUL character.  Re-encoding defeats the purpose.
     delete header;
     size_t len = text.size();
-    if (len > srecord::record::max_data_length)
+    if (len > srecord::record::max_data_length) {
         len = srecord::record::max_data_length;
+}
     header =
         new srecord::record
         (
@@ -504,8 +524,9 @@ auto
 srecord::memory::is_well_aligned(unsigned multiple)
     const -> bool
 {
-    if (multiple < 2)
+    if (multiple < 2) {
         return true;
+}
     srecord::memory_walker_alignment::pointer sniffer =
         srecord::memory_walker_alignment::create(multiple);
     walk(sniffer);

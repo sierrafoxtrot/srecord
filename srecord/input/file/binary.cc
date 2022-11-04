@@ -57,18 +57,21 @@ srecord::input_file_binary::read(srecord::record &record) -> bool
 #endif
 
     int c = get_char();
-    if (c < 0)
+    if (c < 0) {
         return false;
+}
     int length = 0;
     unsigned char data[srecord::record::max_data_length];
     for (;;)
     {
         data[length++] = c;
-        if (length >= (int)sizeof(data))
+        if (length >= (int)sizeof(data)) {
             break;
+}
         c = get_char();
-        if (c < 0)
+        if (c < 0) {
             break;
+}
     }
     record = srecord::record(srecord::record::type_data, address, data, length);
     address += length;

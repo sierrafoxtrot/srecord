@@ -33,8 +33,9 @@ srecord::output_file_wilson::output_file_wilson(
     srecord::output_file(a_file_name),
     pref_block_size(32)
 {
-    if (line_termination == line_termination_native)
+    if (line_termination == line_termination_native) {
         line_termination = line_termination_binary;
+}
 }
 
 
@@ -95,8 +96,9 @@ srecord::output_file_wilson::write_inner(int tag, unsigned long address,
     //
     // Make sure the line is not too long.
     //
-    if (data_nbytes > 250)
+    if (data_nbytes > 250) {
         fatal_error("data length (%d > 250) too long", data_nbytes);
+}
 
     //
     // Assemble the data for this line.
@@ -105,16 +107,18 @@ srecord::output_file_wilson::write_inner(int tag, unsigned long address,
     int line_length = data_nbytes + 5;
     buffer[0] = line_length;
     srecord::record::encode_big_endian(buffer + 1, address, 4);
-    if (data_nbytes)
+    if (data_nbytes) {
         memcpy(buffer + 5, data, data_nbytes);
+}
 
     //
     // Emit the line as hexadecimal text.
     //
     put_char(tag);
     checksum_reset();
-    for (int j = 0; j < line_length; ++j)
+    for (int j = 0; j < line_length; ++j) {
         put_byte(buffer[j]);
+}
     put_byte(~checksum_get());
     put_char('\n');
 }
@@ -144,8 +148,9 @@ srecord::output_file_wilson::write(const srecord::record &record)
         break;
 
     case srecord::record::type_execution_start_address:
-        if (enable_goto_addr_flag)
+        if (enable_goto_addr_flag) {
             write_inner('\'', record.get_address(), nullptr, 0);
+}
         break;
 
     case srecord::record::type_unknown:
@@ -174,17 +179,19 @@ srecord::output_file_wilson::line_length_set(int linlen)
     // size (1 byte), thus 250 (255 - 4 - 1) bytes of data is
     // the safest maximum.
     //
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    else if (n > 250)
+    } else if (n > 250) {
         n = 250;
+}
 
     //
     // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srecord::record::max_data_length)
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
 }
 
@@ -200,10 +207,12 @@ srecord::output_file_wilson::address_length_set(int)
 auto
 srecord::output_file_wilson::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if (nbytes > 250)
+}
+    if (nbytes > 250) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }

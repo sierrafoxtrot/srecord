@@ -27,10 +27,12 @@
 
 srecord::output_file_basic::~output_file_basic()
 {
-    if (range.empty())
+    if (range.empty()) {
         emit_byte(0xFF);
-    if (column)
+}
+    if (column) {
         put_char('\n');
+}
 
     if (enable_footer_flag)
     {
@@ -113,32 +115,38 @@ srecord::output_file_basic::write(const srecord::record &record)
                 bol = true;
                 continue;
             }
-            if (bol)
+            if (bol) {
                 put_string("REM ");
-            if (isprint(c))
+}
+            if (isprint(c)) {
                 put_char(c);
+}
             bol = false;
             }
-            if (!bol)
+            if (!bol) {
             put_char('\n');
+}
         }
         break;
 
     case srecord::record::type_data:
-        if (range.empty())
+        if (range.empty()) {
             current_address = record.get_address();
+}
         range +=
             interval
             (
                 record.get_address(),
                 record.get_address() + record.get_length()
             );
-        while (current_address < record.get_address())
+        while (current_address < record.get_address()) {
             emit_byte(0xFF);
+}
         for (size_t j = 0; j < record.get_length(); ++j)
         {
-            if (record.get_address() + j < current_address)
+            if (record.get_address() + j < current_address) {
                 continue;
+}
             emit_byte(record.get_data(j));
         }
         break;

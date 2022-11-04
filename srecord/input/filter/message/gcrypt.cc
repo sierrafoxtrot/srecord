@@ -322,8 +322,9 @@ srecord::input_filter_message_gcrypt::algorithm_from_name(const char *name) -> i
     for (const int *tp = table; tp < ENDOF(table); ++tp)
     {
         int algo = *tp;
-        if (0 == strcasecmp(name, gcry_md_algo_name(algo)))
+        if (0 == strcasecmp(name, gcry_md_algo_name(algo))) {
             return algo;
+}
     }
 #endif
     quit_default.fatal_error("gcrypt algorithm \"%s\" unknown", name);
@@ -338,12 +339,14 @@ srecord::input_filter_message_gcrypt::process(const memory &input,
 #ifdef HAVE_LIBGCRYPT
     // allocate the message digest handle
     unsigned int flags = 0;
-    if (hmac)
+    if (hmac) {
         flags |= GCRY_MD_FLAG_HMAC;
+}
     gcry_md_hd_t handle = nullptr;
     gcry_error_t err = gcry_md_open(&handle, algo, flags);
-    if (err)
+    if (err) {
         fatal_error("gcry_md_open: %s", gcry_strerror(err));
+}
 
     // traverse the memory
     memory_walker::pointer w = memory_walker_gcrypt::create(handle);

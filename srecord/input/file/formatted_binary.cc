@@ -55,8 +55,9 @@ srecord::input_file_formatted_binary::read(record &result) -> bool
         for (;;)
         {
             c = get_char();
-            if (c)
+            if (c) {
                 break;
+}
         }
         if (c != 0x08)
         {
@@ -65,43 +66,51 @@ srecord::input_file_formatted_binary::read(record &result) -> bool
             // NOTREACHED
         }
         c = get_char();
-        if (c != 0x1C)
+        if (c != 0x1C) {
             goto format_error;
+}
         c = get_char();
         int len = 4;
         if (c == 0x2A)
         {
             c = get_char();
-            if (c != 0x49)
+            if (c != 0x49) {
                 goto format_error;
+}
         }
         else if (c == 0x3E)
         {
             c = get_char();
-            if (c != 0x6B)
+            if (c != 0x6B) {
                 goto format_error;
+}
             len = 8;
         }
-        else
+        else {
             goto format_error;
+}
         c = get_char();
-        if (c != 0x08)
+        if (c != 0x08) {
             goto format_error;
+}
         c = get_char();
-        if (c != 0x00)
+        if (c != 0x00) {
             goto format_error;
+}
         upper_bound = 0;
         while (len > 0)
         {
             c = get_char();
-            if (c < 0 || c >= 16)
+            if (c < 0 || c >= 16) {
                 goto format_error;
+}
             upper_bound = (upper_bound << 4) + c;
             --len;
         }
         c = get_char();
-        if (c != 0xFF)
+        if (c != 0xFF) {
             goto format_error;
+}
         header_seen = true;
         address = 0;
     }
@@ -109,16 +118,20 @@ srecord::input_file_formatted_binary::read(record &result) -> bool
     {
         if (!trailer_seen)
         {
-            if (get_char() != 0)
+            if (get_char() != 0) {
                 goto format_error;
-            if (get_char() != 0)
+}
+            if (get_char() != 0) {
                 goto format_error;
+}
             int c1 = get_char();
-            if (c1 < 0)
+            if (c1 < 0) {
                 goto format_error;
+}
             int c2 = get_char();
-            if (c2 < 0)
+            if (c2 < 0) {
                 goto format_error;
+}
             int x = (c1 << 8) + c2;
             if ((check_sum & 0xFFFF) != (x & 0xFFFF))
             {
@@ -133,10 +146,12 @@ srecord::input_file_formatted_binary::read(record &result) -> bool
             {
                 // skip trailing NULs
                 int c = get_char();
-                if (c < 0)
+                if (c < 0) {
                     break;
-                if (c != 0)
+}
+                if (c != 0) {
                     goto format_error;
+}
             }
             trailer_seen = true;
         }
@@ -144,14 +159,16 @@ srecord::input_file_formatted_binary::read(record &result) -> bool
     }
 
     long datalen = upper_bound - address;
-    if (datalen > record::max_data_length)
+    if (datalen > record::max_data_length) {
         datalen = record::max_data_length;
+}
     unsigned char data[record::max_data_length];
     for (long j = 0; j < datalen; ++j)
     {
         int c = get_char();
-        if (c < 0)
+        if (c < 0) {
             goto format_error;
+}
         data[j] = c;
         check_sum += c;
     }

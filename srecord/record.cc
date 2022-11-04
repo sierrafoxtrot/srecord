@@ -36,8 +36,9 @@ srecord::record::record(const srecord::record &arg) :
     address(arg.address),
     length(arg.length)
 {
-    if (arg.length > 0)
+    if (arg.length > 0) {
         memcpy(data, arg.data, arg.length);
+}
 }
 
 
@@ -63,8 +64,9 @@ srecord::record::record(type_t a1, address_t a2, const data_t *a3, size_t a4) :
     length(a4)
 {
     assert(length <= max_data_length);
-    if (length > 0)
+    if (length > 0) {
         memcpy(data, a3, length);
+}
 }
 
 
@@ -76,8 +78,9 @@ srecord::record::operator=(const srecord::record &arg) -> srecord::record &
         type = arg.type;
         address = arg.address;
         length = arg.length;
-        if (arg.length > 0)
+        if (arg.length > 0) {
             memcpy(data, arg.data, arg.length);
+}
     }
     return *this;
 }
@@ -91,10 +94,12 @@ auto
 srecord::record::maximum_data_length(address_t address) -> size_t
 {
     // FIXME: this is format specific
-    if (address < ((address_t)1 << 16))
+    if (address < ((address_t)1 << 16)) {
         return 252;
-    if (address < ((address_t)1 << 24))
+}
+    if (address < ((address_t)1 << 24)) {
         return 251;
+}
     return 250;
 }
 
@@ -104,8 +109,9 @@ srecord::record::decode_big_endian(const data_t *buffer, size_t length) -> sreco
 {
     assert(length <= sizeof(address_t));
     address_t result = 0;
-    while (length-- > 0)
+    while (length-- > 0) {
         result = (result << 8) | *buffer++;
+}
     return result;
 }
 
@@ -157,9 +163,11 @@ auto
 srecord::record::is_all_zero()
     const -> bool
 {
-    for (size_t j = 0; j < length; ++j)
-        if (data[j])
+    for (size_t j = 0; j < length; ++j) {
+        if (data[j]) {
             return false;
+}
+}
     return true;
 }
 
@@ -171,8 +179,9 @@ srecord::record::set_data_extend(size_t n, data_t d)
     if (n < max_data_length)
     {
         data[n] = d;
-        if (length <= n)
+        if (length <= n) {
             length = n + 1;
+}
     }
 }
 

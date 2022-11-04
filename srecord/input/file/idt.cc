@@ -53,31 +53,38 @@ auto
 srecord::input_file_idt::read_inner(record &result) -> bool
 {
     int c = get_char();
-    if (c < 0)
+    if (c < 0) {
         return false;
-    if (c != 'S')
+}
+    if (c != 'S') {
         record_format_error();
+}
     int tag = get_nibble();
-    if (tag < 0)
+    if (tag < 0) {
         record_format_error();
+}
     unsigned char csum = 0;
     int line_length = get_char();
-    if (line_length < 0)
+    if (line_length < 0) {
         record_format_error();
+}
     csum += line_length;
-    if (line_length < 1)
+    if (line_length < 1) {
         fatal_error("line length invalid");
+}
     record::data_t buffer[256];
     for (int j = 0; j < line_length; ++j)
     {
         int c = get_char();
-        if (c < 0)
+        if (c < 0) {
             record_format_error();
+}
         buffer[j] = c;
         csum += c;
     }
-    if (use_checksums() && csum != 0xFF)
+    if (use_checksums() && csum != 0xFF) {
         fatal_error("checksum mismatch (%02X != FF)", csum);
+}
     --line_length;
 
     int naddr = 2;
@@ -123,8 +130,9 @@ srecord::input_file_idt::read_inner(record &result) -> bool
         // generates records with 4 address bytes.  We cope
         // with this silently.
         //
-        if (line_length >= 2 && line_length <= 4)
+        if (line_length >= 2 && line_length <= 4) {
             naddr = line_length;
+}
         break;
 
     case 6:
@@ -135,8 +143,9 @@ srecord::input_file_idt::read_inner(record &result) -> bool
         // trick, we cope with address size crap the same as S5.
         //
         naddr = 3;
-        if (line_length == 4)
+        if (line_length == 4) {
             naddr = line_length;
+}
         break;
 
     case 7:
@@ -179,8 +188,9 @@ srecord::input_file_idt::read(record &record) -> bool
     {
         if (!read_inner(record))
         {
-            if (!seen_some_input)
+            if (!seen_some_input) {
                 fatal_error("file contains no data");
+}
             return false;
         }
         seen_some_input = true;
@@ -211,8 +221,9 @@ srecord::input_file_idt::read(record &record) -> bool
             {
                 record::address_t addr = record.get_address();
                 record::address_t mask = 0xFFFF;
-                while (addr > mask)
+                while (addr > mask) {
                     mask = ~(~mask << 8);
+}
                 mask &= data_count;
                 if (addr != mask)
                 {

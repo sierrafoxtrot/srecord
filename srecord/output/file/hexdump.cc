@@ -62,14 +62,17 @@ srecord::output_file_hexdump::command_line(srecord::arglex_tool *)
 void
 srecord::output_file_hexdump::row_cache_print()
 {
-    if (row_cache_address == (unsigned long)(-1))
+    if (row_cache_address == (unsigned long)(-1)) {
         return;
+}
     char *cp = row_cache;
     char *ep = cp + row_cache_size;
-    while (ep > cp && ep[-1] == ' ')
+    while (ep > cp && ep[-1] == ' ') {
         --ep;
-    while (cp < ep)
+}
+    while (cp < ep) {
         put_char(*cp++);
+}
     put_char('\n');
     memset(row_cache, ' ', row_cache_size);
     row_cache_address = (unsigned long)-1;
@@ -127,8 +130,9 @@ srecord::output_file_hexdump::emit_byte(unsigned long address,
     address &= row_cache_address_mask;
     hex_byte(row_cache + address_length * 2 + 2 + 3 * address, data);
     data &= 0x7F;
-    if (data < ' ' || data > '~')
+    if (data < ' ' || data > '~') {
         data = '.';
+}
     row_cache[address_length * 2 + 4 + 3 * number_of_columns + address] = data;
 }
 
@@ -149,8 +153,9 @@ srecord::output_file_hexdump::write(const srecord::record &record)
     case srecord::record::type_data:
         {
             unsigned long a = record.get_address();
-            for (size_t j = 0; j < record.get_length(); ++j)
+            for (size_t j = 0; j < record.get_length(); ++j) {
                 emit_byte(a + j, record.get_data(j));
+}
         }
         break;
 
@@ -174,8 +179,9 @@ void
 srecord::output_file_hexdump::line_length_set(int line_length)
 {
     int n = 8;
-    while (columns_to_line_length(n << 1) <= line_length)
+    while (columns_to_line_length(n << 1) <= line_length) {
         n <<= 1;
+}
     number_of_columns = n;
     delete [] row_cache;
     row_cache_size = columns_to_line_length(number_of_columns);
@@ -188,10 +194,12 @@ srecord::output_file_hexdump::line_length_set(int line_length)
 auto
 srecord::output_file_hexdump::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 2 || nbytes > record::max_data_length)
+    if (nbytes < 2 || nbytes > record::max_data_length) {
         return false;
-    if ((nbytes & -nbytes) != nbytes)
+}
+    if ((nbytes & -nbytes) != nbytes) {
         return false;
+}
     number_of_columns = nbytes;
     row_cache_address_mask = number_of_columns - 1;
     return true;

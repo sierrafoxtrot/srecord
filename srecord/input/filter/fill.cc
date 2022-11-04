@@ -52,13 +52,15 @@ srecord::input_filter_fill::create(const input::pointer &a_deeper,
 auto
 srecord::input_filter_fill::generate(record &result) -> bool
 {
-    if (range.empty())
+    if (range.empty()) {
         return false;
+}
     interval::data_t lo = range.get_lowest();
     size_t rec_len = record::maximum_data_length(lo);
     interval::data_t hi = lo + rec_len;
-    if (hi < lo)
+    if (hi < lo) {
         hi = 0;
+}
     interval chunk(lo, hi);
     chunk *= range;
     chunk.first_interval_only();
@@ -79,8 +81,9 @@ srecord::input_filter_fill::generate(record &result) -> bool
 auto
 srecord::input_filter_fill::read(record &result) -> bool
 {
-    if (!input_filter::read(result))
+    if (!input_filter::read(result)) {
         return generate(result);
+}
     if (result.get_type() == record::type_data)
     {
         range -=

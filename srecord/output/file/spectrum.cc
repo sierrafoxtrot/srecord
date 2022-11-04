@@ -23,8 +23,9 @@
 
 srecord::output_file_spectrum::~output_file_spectrum()
 {
-    if (enable_footer_flag)
+    if (enable_footer_flag) {
         put_char(3);
+}
 }
 
 
@@ -66,8 +67,9 @@ srecord::output_file_spectrum::write(const srecord::record &record)
     switch (record.get_type())
     {
     case srecord::record::type_header:
-        if (enable_header_flag)
+        if (enable_header_flag) {
             put_char(2);
+}
         break;
 
     case srecord::record::type_data:

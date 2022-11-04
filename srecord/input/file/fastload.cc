@@ -248,10 +248,12 @@ srecord::input_file_fastload::read_inner(srecord::record &record) -> bool
                 for (;;)
                 {
                     int c = get_char();
-                    if (c < 0)
+                    if (c < 0) {
                         fatal_error("end-of-input in symbol");
-                    if (c == ',')
+}
+                    if (c == ',') {
                         break;
+}
                 }
                 get_number(1, 6);
                 expect_white_space();
@@ -260,8 +262,9 @@ srecord::input_file_fastload::read_inner(srecord::record &record) -> bool
             case 'Z':
                 n = get_number(1, 6);
                 expect_white_space();
-                if (n >= srecord::record::max_data_length)
+                if (n >= srecord::record::max_data_length) {
                     fatal_error("clearing too many bytes (%lu)", n);
+}
                 memset(data, 0, n);
                 type = srecord::record::type_data;
                 record = srecord::record(type, address, data, n);
@@ -274,8 +277,9 @@ srecord::input_file_fastload::read_inner(srecord::record &record) -> bool
             break;
 
         default:
-            if (data_length + 3 > srecord::record::max_data_length)
+            if (data_length + 3 > srecord::record::max_data_length) {
                 goto got_a_record;
+}
             n = get_number(4, 4);
             the_byte = n >> 16;
             data[data_length++] = the_byte;
@@ -298,8 +302,9 @@ srecord::input_file_fastload::read(srecord::record &record) -> bool
 {
     if (!read_inner(record))
     {
-        if (!seen_some_input)
+        if (!seen_some_input) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;

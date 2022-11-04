@@ -102,8 +102,9 @@ srecord::input_file_mips_flash::tokenizer()
 
         case '>':
             // throw away 8 characters
-            for (int j = 0; j < 8; ++j)
+            for (int j = 0; j < 8; ++j) {
                 get_char();
+}
             break;
 
         case '0': case '1': case '2': case '3': case '4':
@@ -113,8 +114,9 @@ srecord::input_file_mips_flash::tokenizer()
             // get 8 digit hex number
             get_char_undo(c);
             token_value = 0;
-            for (int j = 0; j < 8; ++j)
+            for (int j = 0; j < 8; ++j) {
                 token_value = (token_value << 4) | get_nibble();
+}
             token = token_number;
             return;
 
@@ -132,8 +134,9 @@ srecord::input_file_mips_flash::read_inner(record &result) -> bool
     if (!seen_reset)
     {
         tokenizer();
-        if (token != token_reset)
+        if (token != token_reset) {
             fatal_error("not a MIPS-Flash format file");
+}
         seen_reset = true;
         tokenizer();
     }
@@ -146,8 +149,9 @@ srecord::input_file_mips_flash::read_inner(record &result) -> bool
 
         case token_at:
             tokenizer();
-            if (token != token_number)
+            if (token != token_number) {
                 fatal_error("@ must be followed by a number");
+}
             address = token_value;
             tokenizer();
             break;
@@ -194,8 +198,9 @@ srecord::input_file_mips_flash::read(record &result) -> bool
 {
     if (!read_inner(result))
     {
-        if (!seen_some_input)
+        if (!seen_some_input) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;

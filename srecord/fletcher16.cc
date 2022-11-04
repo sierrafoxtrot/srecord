@@ -43,16 +43,20 @@ srecord::fletcher16::fletcher16(
     end(a_end)
 {
     // because 0 == 255 mod 255, adjust accordingly
-    if (sum1 == 0xFF)
+    if (sum1 == 0xFF) {
         sum1 = 0;
-    if (sum2 == 0xFF)
+}
+    if (sum2 == 0xFF) {
         sum2 = 0;
+}
     if (answer >= 0)
     {
-        if ((answer & 0x00FF) == 0x00FF)
+        if ((answer & 0x00FF) == 0x00FF) {
             answer &= 0xFF00;
-        if ((answer & 0xFF00) == 0xFF00)
+}
+        if ((answer & 0xFF00) == 0xFF00) {
             answer &= 0x00FF;
+}
     }
 }
 
@@ -124,8 +128,9 @@ srecord::fletcher16::nextbuf(const void *vdata, size_t nbytes)
             sum1 += *data++;
             sum2 += sum1;
             --tlen;
-            if (!tlen)
+            if (!tlen) {
                 break;
+}
         }
         sum1 = (sum1 & 0xFF) + (sum1 >> 8);
         sum2 = (sum2 & 0xFF) + (sum2 >> 8);

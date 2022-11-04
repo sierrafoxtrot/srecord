@@ -34,9 +34,9 @@ srecord::progname_set(char *s)
         char            *cp2;
 
         cp1 = strrchr(s, '/');
-        if (!cp1)
+        if (!cp1) {
             cp1 = s;
-        else
+        } else
         {
             if (!cp1[1])
             {
@@ -47,9 +47,9 @@ srecord::progname_set(char *s)
         }
 
         cp2 = strrchr(s, '\\');
-        if (!cp2)
+        if (!cp2) {
             cp2 = s;
-        else
+        } else
         {
             if (!cp2[1])
             {
@@ -61,8 +61,9 @@ srecord::progname_set(char *s)
 
         progname = (cp1 > cp2 ? cp1 : cp2);
         // avoid some libtool nonsense
-        if (0 == memcmp(progname, "lt-", 3))
+        if (0 == memcmp(progname, "lt-", 3)) {
             progname += 3;
+}
         size_t len = strlen(progname);
         if
         (
@@ -73,8 +74,9 @@ srecord::progname_set(char *s)
             (progname[len - 2] == 'x' || progname[len - 2] == 'X')
         &&
             (progname[len - 1] == 'e' || progname[len - 1] == 'E')
-        )
+        ) {
             progname[len - 4] = '\0';
+}
         return;
     }
 }

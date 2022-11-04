@@ -65,8 +65,9 @@ srecord::output_file_fairchild::write(const srecord::record &record)
     switch (record.get_type())
     {
     case srecord::record::type_header:
-        if (!enable_optional_address_flag)
+        if (!enable_optional_address_flag) {
             address = (unsigned long)-1L;
+}
         break;
 
     case srecord::record::type_unknown:
@@ -78,8 +79,9 @@ srecord::output_file_fairchild::write(const srecord::record &record)
         {
             int len = record.get_length();
             unsigned long new_addr = record.get_address();
-            if ((new_addr & 7) || (len & 7))
+            if ((new_addr & 7) || (len & 7)) {
                 fatal_alignment_error(8);
+}
             if (address != new_addr)
             {
                 put_stringf("S%4.4lX\n", new_addr);

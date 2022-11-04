@@ -46,10 +46,12 @@ srecord::input_file_dec_binary::skip_nul() -> bool
     for (;;)
     {
         int c = peek_char();
-        if (c < 0)
+        if (c < 0) {
             return false;
-        if (c)
+}
+        if (c) {
             return true;
+}
         get_char();
     }
 }
@@ -59,8 +61,9 @@ auto
 srecord::input_file_dec_binary::get_byte() -> int
 {
     int c = get_char();
-    if (c < 0)
+    if (c < 0) {
         fatal_error("premature end-of-file");
+}
     checksum_add(c);
     return c;
 }
@@ -94,16 +97,19 @@ srecord::input_file_dec_binary::read(srecord::record &record) -> bool
         // Presumably this is used to get records onto even
         // byte boundaries and/or whole block boundaries.
         //
-        if (!skip_nul())
+        if (!skip_nul()) {
             return false;
+}
 
         checksum_reset();
         int tag = get_word_le();
-        if (tag != 1)
+        if (tag != 1) {
             fatal_error("record type %d unknown", tag);
+}
         int length = get_word_le();
-        if (length < 6)
+        if (length < 6) {
             fatal_error("record length (%d) invalid", length);
+}
         length -= 6;
         current_address = get_word_le();
         if (length == 0)
@@ -127,10 +133,12 @@ srecord::input_file_dec_binary::read(srecord::record &record) -> bool
     //
     unsigned char buffer[srecord::record::max_data_length];
     int nbytes = srecord::record::max_data_length;
-    if (current_pos + nbytes > current_length)
+    if (current_pos + nbytes > current_length) {
         nbytes = current_length - current_pos;
-    for (int j = 0; j < nbytes; ++j)
+}
+    for (int j = 0; j < nbytes; ++j) {
         buffer[j] = get_byte();
+}
 
     //
     // Create a data record and return.

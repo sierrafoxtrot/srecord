@@ -154,8 +154,9 @@ public:
     void
     set_length(size_t arg)
     {
-        if (arg < length)
+        if (arg < length) {
             length = arg;
+}
     }
 
     /**
@@ -334,10 +335,11 @@ public:
     static void
     encode(data_t *data, address_t val, size_t len, endian_t end)
     {
-        if (end == endian_big)
+        if (end == endian_big) {
             encode_big_endian(data, val, len);
-        else
+        } else {
             encode_little_endian(data, val, len);
+}
     }
 
     enum {

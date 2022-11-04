@@ -62,8 +62,9 @@ srecord::output_file_brecord::write(const srecord::record &record)
         put_4bytes_be(record.get_address());
         assert(record.get_length() <= BUFFER_MAXIMUM_MAXIMUM);
         put_byte(record.get_length());
-        for (unsigned j = 0; j < record.get_length(); ++j)
+        for (unsigned j = 0; j < record.get_length(); ++j) {
             put_byte(record.get_data(j));
+}
         put_char('\n');
         break;
     }
@@ -74,10 +75,11 @@ void
 srecord::output_file_brecord::line_length_set(int w)
 {
     int x = (w - 10) / 2;
-    if (x < 2)
+    if (x < 2) {
         x = 2;
-    else if (x > BUFFER_MAXIMUM_MAXIMUM)
+    } else if (x > BUFFER_MAXIMUM_MAXIMUM) {
         x = BUFFER_MAXIMUM_MAXIMUM;
+}
     block_size = x;
 }
 
@@ -94,8 +96,9 @@ srecord::output_file_brecord::address_length_set(int)
 auto
 srecord::output_file_brecord::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 2 || nbytes > BUFFER_MAXIMUM_MAXIMUM)
+    if (nbytes < 2 || nbytes > BUFFER_MAXIMUM_MAXIMUM) {
         return false;
+}
     block_size = nbytes;
     return true;
 }

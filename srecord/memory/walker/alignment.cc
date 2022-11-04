@@ -57,15 +57,17 @@ srecord::memory_walker_alignment::observe(unsigned long address, const void *,
     if (data_seen && address != current_address)
     {
         // Check end.
-        if (current_address % multiple != 0)
+        if (current_address % multiple != 0) {
             well_aligned = false;
+}
     }
 
     if (!data_seen || address != current_address)
     {
         // Check beginning.
-        if (address % multiple != 0)
+        if (address % multiple != 0) {
             well_aligned = false;
+}
     }
 
     current_address = address + data_size;
@@ -77,6 +79,7 @@ void
 srecord::memory_walker_alignment::observe_end()
 {
     // Check last end.
-    if (data_seen && current_address % multiple != 0)
+    if (data_seen && current_address % multiple != 0) {
         well_aligned = false;
+}
 }

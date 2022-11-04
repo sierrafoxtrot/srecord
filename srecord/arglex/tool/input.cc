@@ -503,8 +503,9 @@ srecord::arglex_tool::get_simple_input() -> srecord::input::pointer
     //
     // warn about data record sequences, if asked to
     //
-    if (issue_sequence_warnings != 0)
+    if (issue_sequence_warnings != 0) {
         ifp = input_filter_sequence::create(ifp);
+}
 
     //
     // report success

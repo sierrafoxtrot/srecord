@@ -37,16 +37,18 @@ srecord::input_filter_interval::input_filter_interval(
     length(a_length <= 1 ? 1 : a_length >= 8 ? 8 : a_length),
     end(a_end)
 {
-    if (inclusive)
+    if (inclusive) {
         range = interval(address, address + length);
+}
 }
 
 
 auto
 srecord::input_filter_interval::generate(record &result) -> bool
 {
-    if (length <= 0)
+    if (length <= 0) {
         return false;
+}
     long value = calculate_result();
     unsigned char chunk[8];
     record::encode(chunk, value, length, end);
@@ -59,8 +61,9 @@ srecord::input_filter_interval::generate(record &result) -> bool
 auto
 srecord::input_filter_interval::read(record &record) -> bool
 {
-    if (!input_filter::read(record))
+    if (!input_filter::read(record)) {
         return generate(record);
+}
     if (record.get_type() == record::type_data)
     {
         interval i(record.get_address(), record.get_address_end());

@@ -54,12 +54,14 @@ srecord::input_file_atmel_generic::create(const std::string &a_file_name,
 auto
 srecord::input_file_atmel_generic::read_inner(srecord::record &record) -> bool
 {
-    if (peek_char() < 0)
+    if (peek_char() < 0) {
         return false;
+}
 
     int address = get_3bytes_be();
-    if (get_char() != ':')
+    if (get_char() != ':') {
         fatal_error("colon expected");
+}
     unsigned char data[2];
     if (end == endian_big)
     {
@@ -71,8 +73,9 @@ srecord::input_file_atmel_generic::read_inner(srecord::record &record) -> bool
         data[0] = get_byte();
         data[1] = get_byte();
     }
-    if (get_char() != '\n')
+    if (get_char() != '\n') {
         fatal_error("end of line expected");
+}
 
     record = srecord::record(srecord::record::type_data, address * 2, data, 2);
     return true;
@@ -84,8 +87,9 @@ srecord::input_file_atmel_generic::read(srecord::record &record) -> bool
 {
     if (!read_inner(record))
     {
-        if (!seen_some_input)
+        if (!seen_some_input) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;

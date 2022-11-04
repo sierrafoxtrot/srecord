@@ -30,8 +30,9 @@ srecord::output_file_binary::output_file_binary(
 ) :
     srecord::output_file(a_file_name)
 {
-    if (line_termination == line_termination_native)
+    if (line_termination == line_termination_native) {
         line_termination = line_termination_binary;
+}
 }
 
 
@@ -46,13 +47,15 @@ void
 srecord::output_file_binary::write(const srecord::record &record)
 {
     // This format can't do header records or termination records
-    if (record.get_type() != srecord::record::type_data)
+    if (record.get_type() != srecord::record::type_data) {
         return;
+}
     seek_to(record.get_address());
     const unsigned char *data = record.get_data();
     int length = record.get_length();
-    while (length-- > 0)
+    while (length-- > 0) {
         put_char(*data++);
+}
 }
 
 

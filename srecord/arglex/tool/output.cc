@@ -71,8 +71,9 @@ srecord::arglex_tool::get_output() -> srecord::output::pointer
     //
     // skip the -output token
     //
-    if (token_cur() == token_output)
+    if (token_cur() == token_output) {
         token_next();
+}
 
     //
     // determine the file name

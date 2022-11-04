@@ -26,8 +26,9 @@ static auto
 nibble(unsigned x) -> char
 {
     x &= 0x0F;
-    if (x < 10)
+    if (x < 10) {
         return ('0' + x);
+}
     return (('A' - 10) + x);
 }
 
@@ -35,10 +36,12 @@ nibble(unsigned x) -> char
 static auto
 needs_quoting(unsigned char x) -> bool
 {
-    if (x == '%')
+    if (x == '%') {
         return true;
-    if (x >= 0x80)
+}
+    if (x >= 0x80) {
         return true;
+}
     return !isprint(x);
 }
 

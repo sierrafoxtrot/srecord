@@ -102,12 +102,15 @@ srecord::input_file_motorola::read_inner(record &result) -> bool
     for (;;)
     {
         int c = get_char();
-        if (c < 0)
+        if (c < 0) {
             return false;
-        if (c == 'S')
+}
+        if (c == 'S') {
             break;
-        if (c == '\n')
+}
+        if (c == '\n') {
             continue;
+}
         if (!garbage_warning)
         {
             warning("ignoring garbage lines");
@@ -116,28 +119,34 @@ srecord::input_file_motorola::read_inner(record &result) -> bool
         for (;;)
         {
             c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 return false;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 break;
+}
         }
     }
     int tag = get_nibble();
     checksum_reset();
     int line_length = get_byte();
-    if (line_length < 1)
+    if (line_length < 1) {
         fatal_error("line length invalid");
+}
     unsigned char buffer[256];
-    for (int j = 0; j < line_length; ++j)
+    for (int j = 0; j < line_length; ++j) {
         buffer[j] = get_byte();
+}
     if (use_checksums())
     {
         int n = checksum_get();
-        if (n != 0xFF)
+        if (n != 0xFF) {
             fatal_error("checksum mismatch (%02X != FF)", n);
+}
     }
-    if (get_char() != '\n')
+    if (get_char() != '\n') {
         fatal_error("end-of-line expected");
+}
     --line_length;
 
     int naddr = 2;
@@ -180,8 +189,9 @@ srecord::input_file_motorola::read_inner(record &result) -> bool
         // generates records with 4 address bytes.  We cope
         // with this silently.
         //
-        if (line_length >= 2 && line_length <= 4)
+        if (line_length >= 2 && line_length <= 4) {
             naddr = line_length;
+}
         break;
 
     case 6:
@@ -192,8 +202,9 @@ srecord::input_file_motorola::read_inner(record &result) -> bool
         // trick, we cope with address size crap the same as S5.
         //
         naddr = 3;
-        if (line_length == 4)
+        if (line_length == 4) {
             naddr = line_length;
+}
         break;
 
     case 7:
@@ -224,8 +235,9 @@ srecord::input_file_motorola::read_inner(record &result) -> bool
         );
     }
     long tmp_addr = record::decode_big_endian(buffer, naddr);
-    if (address_shift && type != record::type_data_count)
+    if (address_shift && type != record::type_data_count) {
         tmp_addr <<= address_shift;
+}
     result = record(type, tmp_addr, buffer + naddr, line_length - naddr);
     return true;
 }
@@ -238,15 +250,17 @@ srecord::input_file_motorola::read(record &record) -> bool
     {
         if (!read_inner(record))
         {
-            if (!seen_some_input && garbage_warning)
+            if (!seen_some_input && garbage_warning) {
                 fatal_error("file contains no data");
+}
             if (!header_seen)
             {
                 warning("no header record");
                 header_seen = true;
             }
-            if (data_count <= 0)
+            if (data_count <= 0) {
                 warning("file contains no data");
+}
             if (!termination_seen)
             {
                 warning("no execution start address record");
@@ -277,8 +291,9 @@ srecord::input_file_motorola::read(record &record) -> bool
             break;
 
         case record::type_header:
-            if (header_seen)
+            if (header_seen) {
                 warning("redundant header record");
+}
             if (record.get_address())
             {
                 warning("address in header record ignored");
@@ -300,8 +315,9 @@ srecord::input_file_motorola::read(record &record) -> bool
             {
                 record::address_t addr = record.get_address();
                 record::address_t mask = 0xFFFF;
-                while (addr > mask)
+                while (addr > mask) {
                     mask = ~(~mask << 8);
+}
                 mask &= data_count;
                 if (addr != mask)
                 {
@@ -321,8 +337,9 @@ srecord::input_file_motorola::read(record &record) -> bool
                 warning("data in termination record ignored");
                 record.set_length(0);
             }
-            if (termination_seen)
+            if (termination_seen) {
                 warning("redundant termination record");
+}
             termination_seen = true;
             break;
         }

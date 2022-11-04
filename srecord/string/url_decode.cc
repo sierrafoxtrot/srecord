@@ -49,11 +49,13 @@ static auto
 unhex_byte(const char *text, char &retval) -> bool
 {
     int c1 = 0;
-    if (!unhex_nibble(text[0], c1))
+    if (!unhex_nibble(text[0], c1)) {
         return false;
+}
     int c2 = 0;
-    if (!unhex_nibble(text[1], c2))
+    if (!unhex_nibble(text[1], c2)) {
         return false;
+}
     retval = ((c1 << 4) | c2);
     return true;
 }

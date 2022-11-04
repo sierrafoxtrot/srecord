@@ -62,8 +62,9 @@ main(int argc, char **argv) -> int
         }
         cmdline.token_next();
     }
-    if (infile.size() == 0U)
+    if (infile.size() == 0U) {
         infile.push_back(cmdline.get_input());
+}
 
     std::cout << std::hex << std::uppercase;
 
@@ -89,8 +90,9 @@ main(int argc, char **argv) -> int
             {
             case srecord::record::type_header:
                 {
-                    if (record.get_length() < 1U)
+                    if (record.get_length() < 1U) {
                         break;
+}
                     std::cout << "Header: ";
                     std::string s(
                         (const char *)record.get_data(),
@@ -134,10 +136,11 @@ main(int argc, char **argv) -> int
         const uint32_t range_lowest  = range.get_lowest();
         const uint32_t range_highest = range.get_highest();
         int prec = 4;
-        if ((range_highest > (1UL << 24)) || (range_highest == 0UL))
+        if ((range_highest > (1UL << 24)) || (range_highest == 0UL)) {
             prec = 8;
-        else if (range_highest > (1UL << 16))
+        } else if (range_highest > (1UL << 16)) {
             prec = 6;
+}
         std::cout << std::setfill('0');
 
         uint32_t number_bytes = 0UL;
@@ -171,17 +174,19 @@ main(int argc, char **argv) -> int
 
             number_bytes += interval_size;
             range -= tmp;
-            if (range.empty())
+            if (range.empty()) {
                 break;
+}
         }
 
         if (verbose)
         {
             std::cout << "Filled: ";
-            if (number_bytes == 0UL)
+            if (number_bytes == 0UL) {
                 std::cout << "100000000";
-            else
+            } else {
                 std::cout << std::setw(prec) << number_bytes;
+}
             std::cout << std::endl;
             const auto range_size
                 = static_cast<uint32_t>(range_highest - range_lowest);

@@ -57,8 +57,9 @@ srecord::output_file_needham::write(const srecord::record &record)
     {
     case srecord::record::type_header:
         // ignore
-        if (!enable_optional_address_flag)
+        if (!enable_optional_address_flag) {
             address = (unsigned long)-1L;
+}
         break;
 
     case srecord::record::type_data:
@@ -69,23 +70,28 @@ srecord::output_file_needham::write(const srecord::record &record)
                 put_char('\n');
                 column = 0;
             }
-            else if (column)
+            else if (column) {
                 put_char(' ');
+}
             address = record.get_address();
             int width = 2;
-            if (address >= 0x1000000)
+            if (address >= 0x1000000) {
                 width = 4;
-            if (address >= 0x10000)
+}
+            if (address >= 0x10000) {
                 width = 3;
-            if (width < address_length)
+}
+            if (width < address_length) {
                 width = address_length;
+}
             put_stringf("$A%0*lX,\n", width * 2, address);
             column = 0;
         }
         for (size_t j = 0; j < record.get_length(); ++j)
         {
-            if (column)
+            if (column) {
                 put_char(' ');
+}
             put_byte(record.get_data(j));
             ++address;
             ++column;
@@ -115,10 +121,12 @@ void
 srecord::output_file_needham::line_length_set(int linlen)
 {
     int n = (linlen + 1) / 3;
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    if (n > srecord::record::max_data_length)
+}
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
 }
 
@@ -126,10 +134,12 @@ srecord::output_file_needham::line_length_set(int linlen)
 void
 srecord::output_file_needham::address_length_set(int n)
 {
-    if (n < 2)
+    if (n < 2) {
         n = 2;
-    if (n > 4)
+}
+    if (n > 4) {
         n = 4;
+}
     address_length = n;
 }
 
@@ -137,8 +147,9 @@ srecord::output_file_needham::address_length_set(int n)
 auto
 srecord::output_file_needham::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }

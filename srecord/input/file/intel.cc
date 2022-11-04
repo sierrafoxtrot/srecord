@@ -23,8 +23,9 @@
 
 srecord::input_file_intel::~input_file_intel()
 {
-    if (pushback)
+    if (pushback) {
         delete pushback;
+}
 }
 
 
@@ -73,14 +74,16 @@ srecord::input_file_intel::read_inner(srecord::record &record) -> bool
         //
         // end of file means we are done
         //
-        if (c < 0)
+        if (c < 0) {
             return false;
+}
 
         //
         // quietly ignore blank lines
         //
-        if (c == '\n')
+        if (c == '\n') {
             continue;
+}
 
         //
         // If it doesn't start with a colon, it's a garbage line.
@@ -96,10 +99,12 @@ srecord::input_file_intel::read_inner(srecord::record &record) -> bool
             for (;;)
             {
                 c = get_char();
-                if (c < 0)
+                if (c < 0) {
                     return false;
-                if (c == '\n')
+}
+                if (c == '\n') {
                     break;
+}
             }
             continue;
         }
@@ -113,16 +118,19 @@ srecord::input_file_intel::read_inner(srecord::record &record) -> bool
         buffer[1] = get_byte();
         buffer[2] = get_byte();
         buffer[3] = get_byte();
-        for (int j = 0; j <= buffer[0]; ++j)
+        for (int j = 0; j <= buffer[0]; ++j) {
             buffer[4 + j] = get_byte();
+}
         if (use_checksums())
         {
             int n = checksum_get();
-            if (n != 0)
+            if (n != 0) {
                 fatal_error("checksum mismatch (%02X != 00)", n);
+}
         }
-        if (get_char() != '\n')
+        if (get_char() != '\n') {
             fatal_error("end-of-line expected");
+}
 
         srecord::record::address_t address_field =
             srecord::record::decode_big_endian(buffer + 1, 2);
@@ -204,8 +212,9 @@ srecord::input_file_intel::read_inner(srecord::record &record) -> bool
             //
             // end-of-file record
             //
-            if (buffer[0] != 0)
+            if (buffer[0] != 0) {
                 fatal_error("EOF data length field must be zero");
+}
             end_seen = true;
             seek_to_end();
             switch (mode)
@@ -248,10 +257,12 @@ srecord::input_file_intel::read_inner(srecord::record &record) -> bool
             // and then loop for another record, this one
             // isn't visible to the caller.
             //
-            if (buffer[0] != 2)
+            if (buffer[0] != 2) {
                 fatal_error("length field must be 2");
-            if (address_field != 0)
+}
+            if (address_field != 0) {
                 fatal_error("address field must be zero");
+}
             address_field =
                 srecord::record::decode_big_endian(buffer + 4, 2);
             address_base = address_field << 4;
@@ -262,10 +273,12 @@ srecord::input_file_intel::read_inner(srecord::record &record) -> bool
             //
             // start segment address record
             //
-            if (buffer[0] != 4)
+            if (buffer[0] != 4) {
                 fatal_error("length field must be 4");
-            if (address_field != 0)
+}
+            if (address_field != 0) {
                 fatal_error("address field must be zero");
+}
             address_field =
                 srecord::record::decode_big_endian(buffer + 4, 2) * 16 +
                 srecord::record::decode_big_endian(buffer + 6, 2);
@@ -288,10 +301,12 @@ srecord::input_file_intel::read_inner(srecord::record &record) -> bool
             // and then loop for another record, this one
             // isn't visible to the caller.
             //
-            if (buffer[0] != 2)
+            if (buffer[0] != 2) {
                 fatal_error("length field must be 2");
-            if (address_field != 0)
+}
+            if (address_field != 0) {
                 fatal_error("address field must be zero");
+}
             address_field =
                 srecord::record::decode_big_endian(buffer + 4, 2);
             address_base = address_field << 16;
@@ -302,10 +317,12 @@ srecord::input_file_intel::read_inner(srecord::record &record) -> bool
             //
             // start linear address record
             //
-            if (buffer[0] != 4)
+            if (buffer[0] != 4) {
                 fatal_error("length field must be 4");
-            if (address_field != 0)
+}
+            if (address_field != 0) {
                 fatal_error("address field must be zero");
+}
             address_field = srecord::record::decode_big_endian(buffer + 4, 4);
             record =
                 srecord::record
@@ -342,10 +359,12 @@ srecord::input_file_intel::read(srecord::record &record) -> bool
     {
         if (!read_inner(record))
         {
-            if (!seen_some_input && garbage_warning)
+            if (!seen_some_input && garbage_warning) {
                 fatal_error("file contains no data");
-            if (data_record_count <= 0)
+}
+            if (data_record_count <= 0) {
                 fatal_error("file contains no data");
+}
             if (!termination_seen)
             {
                 //
@@ -403,8 +422,9 @@ srecord::input_file_intel::read(srecord::record &record) -> bool
             break;
 
         case srecord::record::type_execution_start_address:
-            if (termination_seen)
+            if (termination_seen) {
                 warning("redundant execution start address record");
+}
             termination_seen = true;
             break;
         }

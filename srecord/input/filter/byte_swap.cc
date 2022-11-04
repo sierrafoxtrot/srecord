@@ -55,8 +55,9 @@ srecord::input_filter_byte_swap::read(srecord::record &record) -> bool
             buffer_pos >= buffer.get_length()
         )
         {
-            if (!srecord::input_filter::read(buffer))
+            if (!srecord::input_filter::read(buffer)) {
                 return false;
+}
             if (buffer.get_type() != srecord::record::type_data)
             {
                 record = buffer;

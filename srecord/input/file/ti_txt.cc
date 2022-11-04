@@ -126,14 +126,16 @@ srecord::input_file_ti_txt::read(record &result) -> bool
         {
         case token_start_up:
             get_next_token();
-            if (token != token_at)
+            if (token != token_at) {
                 fatal_error("data must start with an address record");
+}
             break;
 
         case token_at:
             get_next_token();
-            if (token != token_number)
+            if (token != token_number) {
                 fatal_error("@ must be followed by an address");
+}
             address = token_value;
 #if 0
             //
@@ -159,14 +161,17 @@ srecord::input_file_ti_txt::read(record &result) -> bool
                 size_t n = 0;
                 for (;;)
                 {
-                    if (token_value >= 256)
+                    if (token_value >= 256) {
                         fatal_error("byte value (%ld) too large", token_value);
+}
                     buffer[n++] = token_value;
                     get_next_token();
-                    if (n >= record::max_data_length)
+                    if (n >= record::max_data_length) {
                         break;
-                    if (token != token_number)
+}
+                    if (token != token_number) {
                         break;
+}
                 }
                 if (address >= (1 << 20) && !address_warning)
                 {
@@ -180,8 +185,9 @@ srecord::input_file_ti_txt::read(record &result) -> bool
 
         case token_q:
         case token_end_of_file:
-            if (!seen_some_input)
+            if (!seen_some_input) {
                 fatal_error("file contains no data");
+}
             return false;
 
         case token_junk:

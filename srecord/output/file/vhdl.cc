@@ -62,8 +62,9 @@ srecord::output_file_vhdl::command_line(srecord::arglex_tool *cmdln)
         if (a1 > 0)
         {
             auto a2 = (unsigned)a1;
-            if (a2 > sizeof(unsigned long))
+            if (a2 > sizeof(unsigned long)) {
                 a2 = sizeof(unsigned long);
+}
             bytes_per_word = a2;
         }
     }
@@ -78,8 +79,9 @@ srecord::output_file_vhdl::command_line(srecord::arglex_tool *cmdln)
 void
 srecord::output_file_vhdl::emit_header()
 {
-    if (header_done)
+    if (header_done) {
         return;
+}
     if (enable_header_flag)
     {
         put_stringf
@@ -148,8 +150,9 @@ srecord::output_file_vhdl::write(const srecord::record &record)
                     put_string("\n-- ");
                     continue;
                 }
-                if (!isprint(c))
+                if (!isprint(c)) {
                     c = ' ';
+}
                 put_char(c);
             }
             put_char('\n');
@@ -178,8 +181,9 @@ srecord::output_file_vhdl::write(const srecord::record &record)
         for (size_t j = 0; j < record.get_length(); j += bytes_per_word)
         {
             srecord::record::address_t current_word = 0;
-            for (unsigned k = 0; k < bytes_per_word; ++k)
+            for (unsigned k = 0; k < bytes_per_word; ++k) {
                 current_word = (current_word << 8) + record.get_data(j + k);
+}
             put_stringf
             (
                 "  %lu => %s_entry(%lu),\n",
@@ -218,10 +222,12 @@ srecord::output_file_vhdl::address_length_set(int)
 auto
 srecord::output_file_vhdl::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes > 1 || nbytes > record::max_data_length)
+    if (nbytes > 1 || nbytes > record::max_data_length) {
         return false;
-    if (bytes_per_word > 1 && 0 != (nbytes % bytes_per_word))
+}
+    if (bytes_per_word > 1 && 0 != (nbytes % bytes_per_word)) {
         return false;
+}
     return true;
 }
 
@@ -235,8 +241,9 @@ srecord::output_file_vhdl::preferred_block_size_get()
     // word size.
     //
     int n = srecord::record::max_data_length;
-    if (bytes_per_word > 1)
+    if (bytes_per_word > 1) {
         n -= (n % bytes_per_word);
+}
     return n;
 }
 

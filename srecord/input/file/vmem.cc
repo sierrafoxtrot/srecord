@@ -50,8 +50,9 @@ srecord::input_file_vmem::read(srecord::record &record) -> bool
         int c = get_char();
         if (c < 0)
         {
-            if (!seen_some_input)
+            if (!seen_some_input) {
                 fatal_error("file contains no data");
+}
             return false;
         }
         if (c == '@')
@@ -62,13 +63,15 @@ srecord::input_file_vmem::read(srecord::record &record) -> bool
             {
                 address = (address << 4) + get_nibble();
                 c = peek_char();
-                if (c < 0 || !isxdigit((unsigned char)c))
+                if (c < 0 || !isxdigit((unsigned char)c)) {
                     break;
+}
             }
             continue;
         }
-        if (isspace((unsigned char)c))
+        if (isspace((unsigned char)c)) {
             continue;
+}
 
         if (c == '/')
         {
@@ -78,8 +81,9 @@ srecord::input_file_vmem::read(srecord::record &record) -> bool
                 for (;;)
                 {
                     c = get_char();
-                    if (c == '\n' || c < 0)
+                    if (c == '\n' || c < 0) {
                         break;
+}
                 }
                 continue;
             }
@@ -95,19 +99,23 @@ srecord::input_file_vmem::read(srecord::record &record) -> bool
                             eof_within_comment:
                             fatal_error("end-of-file within comment");
                         }
-                        if (c == '*')
+                        if (c == '*') {
                             break;
+}
                     }
                     for (;;)
                     {
                         c = get_char();
-                        if (c < 0)
+                        if (c < 0) {
                             goto eof_within_comment;
-                        if (c != '*')
+}
+                        if (c != '*') {
                             break;
+}
                     }
-                    if (c =='/')
+                    if (c =='/') {
                         break;
+}
                 }
                 continue;
             }
@@ -122,8 +130,9 @@ srecord::input_file_vmem::read(srecord::record &record) -> bool
         {
             value[nbytes++] = get_byte();
             c = peek_char();
-            if (c < 0 || !isxdigit((unsigned char)c))
+            if (c < 0 || !isxdigit((unsigned char)c)) {
                 break;
+}
         }
         switch (nbytes)
         {

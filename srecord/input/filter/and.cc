@@ -43,12 +43,14 @@ srecord::input_filter_and::create(const input::pointer &a_deeper, int a_mask) ->
 auto
 srecord::input_filter_and::read(record &result) -> bool
 {
-    if (!input_filter::read(result))
+    if (!input_filter::read(result)) {
         return false;
+}
     if (result.get_type() == record::type_data)
     {
-        for (size_t j = 0; j < result.get_length(); ++j)
+        for (size_t j = 0; j < result.get_length(); ++j) {
             result.set_data(j, result.get_data(j) & value);
+}
     }
     return true;
 }

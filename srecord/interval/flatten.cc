@@ -24,7 +24,8 @@ auto
 srecord::interval::flatten()
     const -> srecord::interval
 {
-    if (length <= 2)
+    if (length <= 2) {
         return *this;
+}
     return {get_lowest(), get_highest()};
 }

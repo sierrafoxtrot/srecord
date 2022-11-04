@@ -61,12 +61,15 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record) -> b
         for (;;)
         {
             int c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 return false;
-            if (c == '%')
+}
+            if (c == '%') {
                 break;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 continue;
+}
             if (!garbage_warning)
             {
                 warning("ignoring garbage lines");
@@ -75,10 +78,12 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record) -> b
             for (;;)
             {
                 c = get_char();
-                if (c < 0)
+                if (c < 0) {
                     return false;
-                if (c == '\n')
+}
+                if (c == '\n') {
                     break;
+}
             }
         }
         nibble_sum = 0;
@@ -99,8 +104,9 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record) -> b
         length -= 2;
 
         int addr_len = get_nibble();
-        if (addr_len == 0)
+        if (addr_len == 0) {
             addr_len = 16;
+}
         --length;
         int addr_len_max = 2 * sizeof(srecord::record::address_t);
         if (addr_len > addr_len_max)
@@ -130,8 +136,9 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record) -> b
             --addr_len;
             --length;
         }
-        if (length & 1)
+        if (length & 1) {
             fatal_error("data length invalid (%d is odd)", length);
+}
 
         unsigned char buffer[125];
         for (int j = 0; j * 2 < length; ++j)
@@ -148,8 +155,9 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record) -> b
                 nibble_sum
             );
         }
-        if (get_char() != '\n')
+        if (get_char() != '\n') {
             fatal_error("end-of-line expected");
+}
 
         srecord::record::type_t type = srecord::record::type_unknown;
         switch (tag)
@@ -185,8 +193,9 @@ srecord::input_file_tektronix_extended::read(srecord::record &record) -> bool
     {
         if (!read_inner(record))
         {
-            if (!seen_some_input)
+            if (!seen_some_input) {
                 fatal_error("file contains no data");
+}
             if (!termination_seen)
             {
                 warning("no execution start address record");
@@ -228,8 +237,9 @@ srecord::input_file_tektronix_extended::read(srecord::record &record) -> bool
                 warning("data in execution start address record ignored");
                 record.set_length(0);
             }
-            if (termination_seen)
+            if (termination_seen) {
                 warning("redundant execution start address record");
+}
             termination_seen = true;
             break;
         }

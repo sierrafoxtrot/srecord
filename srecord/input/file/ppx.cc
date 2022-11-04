@@ -91,8 +91,9 @@ srecord::input_file_ppx::get_next_token()
                 for (;;)
                 {
                     int sc = get_char();
-                    if (sc < 0)
+                    if (sc < 0) {
                         break;
+}
                     c = sc;
                     switch (c)
                     {
@@ -188,8 +189,9 @@ srecord::input_file_ppx::read(record &result) -> bool
             switch (token)
             {
             case token_address:
-                if (address != token_value)
+                if (address != token_value) {
                     assert(buffer_length == 0);
+}
                 address = token_value;
                 get_next_token();
                 state = 3;
@@ -259,8 +261,9 @@ srecord::input_file_ppx::read(record &result) -> bool
                 get_next_token();
                 data_seen = true;
 
-                if (buffer_length >= sizeof(buffer))
+                if (buffer_length >= sizeof(buffer)) {
                     goto return_data_record;
+}
                 break;
 
             default:
@@ -296,8 +299,9 @@ srecord::input_file_ppx::read(record &result) -> bool
             switch (token)
             {
             case token_eof:
-                if (!data_seen)
+                if (!data_seen) {
                     fatal_error("no data seen");
+}
                 return false;
 
             default:

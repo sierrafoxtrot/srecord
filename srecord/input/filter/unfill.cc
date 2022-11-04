@@ -56,8 +56,9 @@ srecord::input_filter_unfill::read(srecord::record &record) -> bool
             buffer_pos >= buffer.get_length()
         )
         {
-            if (!srecord::input_filter::read(buffer))
+            if (!srecord::input_filter::read(buffer)) {
                 return false;
+}
             if (buffer.get_type() != srecord::record::type_data)
             {
                 record = buffer;
@@ -80,8 +81,9 @@ srecord::input_filter_unfill::read(srecord::record &record) -> bool
             while (buffer_pos < buffer.get_length())
             {
                 c = buffer.get_data(buffer_pos);
-                if (c != fill_value)
+                if (c != fill_value) {
                     break;
+}
                 ++buffer_pos;
             }
             if (buffer_pos - first_pos < fill_minimum)
@@ -105,8 +107,9 @@ srecord::input_filter_unfill::read(srecord::record &record) -> bool
             while (buffer_pos < buffer.get_length())
             {
                 c = buffer.get_data(buffer_pos);
-                if (c == fill_value)
+                if (c == fill_value) {
                     break;
+}
                 ++buffer_pos;
             }
             record =

@@ -70,11 +70,13 @@ srecord::memory_chunk::walk(srecord::memory_walker::pointer w)
 {
     for (int j = 0; j < size; ++j)
     {
-        if (!set_p(j))
+        if (!set_p(j)) {
             continue;
+}
         int k;
-        for (k = j + 1; k < size && set_p(k); ++k)
+        for (k = j + 1; k < size && set_p(k); ++k) {
             ;
+}
         w->observe(address * size + j, data + j, k - j);
         j = k;
     }
@@ -88,14 +90,17 @@ srecord::memory_chunk::find_next_data(unsigned long &ret_addr, void *ret_data,
 {
     for (unsigned j = ret_addr % size; j < size; ++j)
     {
-        if (!set_p(j))
+        if (!set_p(j)) {
             continue;
+}
         size_t max = j + nbytes;
-        if (max > size)
+        if (max > size) {
             max = size;
+}
         unsigned k;
-        for (k = j + 1; k < max && set_p(k); ++k)
+        for (k = j + 1; k < max && set_p(k); ++k) {
             ;
+}
         nbytes = k - j;
         memcpy(ret_data, data + j, nbytes);
         ret_addr = address * size + j;
@@ -141,8 +146,9 @@ srecord::memory_chunk::get_upper_bound()
 {
     for (size_t j = size; j > 0; --j)
     {
-        if (set_p(j - 1))
+        if (set_p(j - 1)) {
             return (address * size + j);
+}
     }
     // can't happen?
     return (address * size);
@@ -155,8 +161,9 @@ srecord::memory_chunk::get_lower_bound()
 {
     for (size_t j = 0; j < size; ++j)
     {
-        if (set_p(j))
+        if (set_p(j)) {
             return (address * size + j);
+}
     }
     // can't happen?
     return (address * size);

@@ -46,17 +46,18 @@ srecord::input_file_wilson::get_byte() -> int
 {
     int n = -1;
     int c = get_char();
-    if (c >= 0x40 && c < 0xE0)
+    if (c >= 0x40 && c < 0xE0) {
         n = (c - 0x40);
-    else if (c >= 0xE0)
+    } else if (c >= 0xE0) {
         n = c;
-    else if (c >= 0x3A && c < 0x3E)
+    } else if (c >= 0x3A && c < 0x3E)
     {
         int c2 = get_char();
-        if (c2 >= 0x30 && c2 < 0x40)
+        if (c2 >= 0x30 && c2 < 0x40) {
             n = ((c - 0x30) << 4) + (c2 - 0x30);
-        else
+        } else {
             goto bomb;
+}
     }
     else
     {
@@ -76,12 +77,15 @@ srecord::input_file_wilson::read_inner(record &result) -> bool
     for (;;)
     {
         c = get_char();
-        if (c < 0)
+        if (c < 0) {
             return false;
-        if (c == '#' || c == '\'')
+}
+        if (c == '#' || c == '\'') {
             break;
-        if (c == '\n')
+}
+        if (c == '\n') {
             continue;
+}
         if (!garbage_warning)
         {
             warning("ignoring garbage lines");
@@ -90,28 +94,34 @@ srecord::input_file_wilson::read_inner(record &result) -> bool
         for (;;)
         {
             c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 return false;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 break;
+}
         }
     }
     int tag = c;
     checksum_reset();
     int line_length = get_byte();
-    if (line_length < 1)
+    if (line_length < 1) {
         fatal_error("line length invalid");
+}
     unsigned char buffer[256];
-    for (int j = 0; j < line_length; ++j)
+    for (int j = 0; j < line_length; ++j) {
         buffer[j] = get_byte();
+}
     if (use_checksums())
     {
         int n = checksum_get();
-        if (n != 0xFF)
+        if (n != 0xFF) {
             fatal_error("checksum mismatch (%02X != FF)", n);
+}
     }
-    if (get_char() != '\n')
+    if (get_char() != '\n') {
         fatal_error("end-of-line expected");
+}
     --line_length;
 
     int naddr = 4;
@@ -157,8 +167,9 @@ srecord::input_file_wilson::read(record &record) -> bool
     {
         if (!read_inner(record))
         {
-                if (!seen_some_input)
+                if (!seen_some_input) {
                         fatal_error("file contains no data");
+}
                 if (!termination_seen)
                 {
                         warning("no execution start address record");
@@ -199,8 +210,9 @@ srecord::input_file_wilson::read(record &record) -> bool
                     warning("data in execution start address record ignored");
                     record.set_length(0);
             }
-            if (termination_seen)
+            if (termination_seen) {
                     warning("redundant execution start address record");
+}
             termination_seen = true;
             break;
         }

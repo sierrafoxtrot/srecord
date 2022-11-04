@@ -56,12 +56,15 @@ srecord::input_file_signetics::read_inner(srecord::record &record) -> bool
     for (;;)
     {
         int c = get_char();
-        if (c < 0)
+        if (c < 0) {
             return false;
-        if (c == ':')
+}
+        if (c == ':') {
             break;
-        if (c == '\n')
+}
+        if (c == '\n') {
             continue;
+}
         if (!garbage_warning)
         {
             warning("ignoring garbage lines");
@@ -70,10 +73,12 @@ srecord::input_file_signetics::read_inner(srecord::record &record) -> bool
         for (;;)
         {
             c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 return false;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 break;
+}
         }
     }
     checksum_reset();
@@ -82,8 +87,9 @@ srecord::input_file_signetics::read_inner(srecord::record &record) -> bool
     if (length == 0)
     {
         // this is the end indicator
-        if (get_char() != '\n')
+        if (get_char() != '\n') {
             fatal_error("end-of-line expected");
+}
         return false;
     }
 
@@ -101,8 +107,9 @@ srecord::input_file_signetics::read_inner(srecord::record &record) -> bool
 
     checksum_reset();
     unsigned char buffer[256];
-    for (int j = 0; j < length; ++j)
+    for (int j = 0; j < length; ++j) {
         buffer[j] = get_byte();
+}
 
     running_checksum = checksum_get();
     csum = get_byte();
@@ -116,8 +123,9 @@ srecord::input_file_signetics::read_inner(srecord::record &record) -> bool
         );
     }
 
-    if (get_char() != '\n')
+    if (get_char() != '\n') {
         fatal_error("end-of-line expected");
+}
 
     srecord::record::type_t type = srecord::record::type_data;
     record = srecord::record(type, address, buffer, length);
@@ -130,8 +138,9 @@ srecord::input_file_signetics::read(srecord::record &record) -> bool
 {
     if (!read_inner(record))
     {
-        if (!seen_some_input && garbage_warning)
+        if (!seen_some_input && garbage_warning) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;

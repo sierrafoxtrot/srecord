@@ -47,8 +47,9 @@ auto
 srecord::input_file_stewie::get_byte() -> int
 {
     int n = get_char();
-    if (n < 0)
+    if (n < 0) {
         fatal_error("premature end-of-file");
+}
     checksum_add(n);
     return n;
 }
@@ -57,11 +58,13 @@ srecord::input_file_stewie::get_byte() -> int
 auto
 srecord::input_file_stewie::read_inner(record &result) -> bool
 {
-    if (termination_seen)
+    if (termination_seen) {
         return false;
+}
     int c = get_char();
-    if (c < 0)
+    if (c < 0) {
         return false;
+}
     if (c != 'S')
     {
         fatal_error("'S' expected");
@@ -73,8 +76,9 @@ srecord::input_file_stewie::read_inner(record &result) -> bool
     case 0:
         // Header records are not like, Motorola hex.
         // The header record is literally "S003"
-        if (get_char() != '0' || get_char() != '3')
+        if (get_char() != '0' || get_char() != '3') {
             fatal_error("format error");
+}
         result = record(record::type_header, 0, nullptr, 0);
         return true;
 
@@ -86,16 +90,19 @@ srecord::input_file_stewie::read_inner(record &result) -> bool
     }
     checksum_reset();
     int line_length = get_byte();
-    if (line_length < 1)
+    if (line_length < 1) {
         fatal_error("record length invalid");
+}
     unsigned char buffer[256];
-    for (int j = 0; j < line_length; ++j)
+    for (int j = 0; j < line_length; ++j) {
         buffer[j] = get_byte();
+}
     if (use_checksums())
     {
         int n = checksum_get();
-        if (n != 0xFF)
+        if (n != 0xFF) {
             fatal_error("checksum mismatch (%02X != FF)", n);
+}
     }
     --line_length;
 
@@ -127,8 +134,9 @@ srecord::input_file_stewie::read_inner(record &result) -> bool
         // Just in case some smarty-pants uses the Green Hills trick, we
         // cope with address size crap the same as Motorola S-Record.
         //
-        if (line_length >= 2 && line_length <= 4)
+        if (line_length >= 2 && line_length <= 4) {
             naddr = line_length;
+}
         break;
 
     case 6:
@@ -139,8 +147,9 @@ srecord::input_file_stewie::read_inner(record &result) -> bool
         // cope with address size crap the same as Motorola S-Record.
         //
         naddr = 3;
-        if (line_length == 4)
+        if (line_length == 4) {
             naddr = line_length;
+}
         break;
     }
     if (line_length < naddr)
@@ -172,15 +181,17 @@ srecord::input_file_stewie::read(record &result) -> bool
     {
         if (!read_inner(result))
         {
-            if (!seen_some_input && garbage_warning)
+            if (!seen_some_input && garbage_warning) {
                 fatal_error("file contains no data");
+}
             if (!header_seen)
             {
                 warning("no header record");
                 header_seen = true;
             }
-            if (data_count <= 0)
+            if (data_count <= 0) {
                 warning("file contains no data");
+}
             if (!termination_seen)
             {
                 warning("no execution start address record");
@@ -201,8 +212,9 @@ srecord::input_file_stewie::read(record &result) -> bool
             break;
 
         case record::type_header:
-            if (header_seen)
+            if (header_seen) {
                 warning("redundant header record");
+}
             if (result.get_address())
             {
                 warning("address in header record ignored");
@@ -224,8 +236,9 @@ srecord::input_file_stewie::read(record &result) -> bool
             {
                 record::address_t addr = result.get_address();
                 record::address_t mask = 0xFFFF;
-                while (addr > mask)
+                while (addr > mask) {
                     mask = ~(~mask << 8);
+}
                 mask &= data_count;
                 if (addr != mask)
                 {
@@ -245,8 +258,9 @@ srecord::input_file_stewie::read(record &result) -> bool
                 warning("data in termination record ignored");
                 result.set_length(0);
             }
-            if (termination_seen)
+            if (termination_seen) {
                 warning("redundant termination record");
+}
             termination_seen = true;
             break;
         }

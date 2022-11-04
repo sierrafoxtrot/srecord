@@ -47,15 +47,18 @@ void
 srecord::output_file_atmel_generic::write(const srecord::record &record)
 {
     // This format can't do header records or termination records
-    if (record.get_type() != srecord::record::type_data)
+    if (record.get_type() != srecord::record::type_data) {
         return;
+}
 
-    if (!record.address_range_fits_into_n_bits(17))
+    if (!record.address_range_fits_into_n_bits(17)) {
         data_address_too_large(record, 17);
+}
 
     long address = record.get_address();
-    if ((address & 1) || (record.get_length() & 1))
+    if ((address & 1) || (record.get_length() & 1)) {
         fatal_alignment_error(2);
+}
     for (size_t j = 0; j < record.get_length(); j += 2)
     {
         put_3bytes_be(address / 2);

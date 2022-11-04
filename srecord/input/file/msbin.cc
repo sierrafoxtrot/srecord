@@ -86,8 +86,9 @@ srecord::input_file_msbin::read_dword_le() -> uint32_t
     for (unsigned char & i : c)
     {
         int j = get_char();
-        if (j < 0)
+        if (j < 0) {
             fatal_error("short input file");
+}
 
         assert(j <= std::numeric_limits<unsigned char>::max());
         i = (unsigned char)j;
@@ -109,8 +110,9 @@ srecord::input_file_msbin::read_file_header()
     for (size_t i = 0; i < sizeof(Magic); ++i)
     {
         int j = get_char();
-        if (j < 0)
+        if (j < 0) {
             fatal_error("short input file");
+}
 
         assert(j <= std::numeric_limits<unsigned char>::max());
         buff[i] = j;
@@ -124,8 +126,9 @@ srecord::input_file_msbin::read_file_header()
         // Fill up to two dwords
         static_assert(sizeof(buff) == 2 * sizeof(uint32_t));
         int j = get_char();
-        if (j < 0)
+        if (j < 0) {
             fatal_error("short input file");
+}
         buff[sizeof(buff) - 1] = j;
 
         // Read first dword
@@ -157,8 +160,9 @@ srecord::input_file_msbin::checksum(const unsigned char *data, size_t len) -> ui
 {
     uint32_t sum = 0;
 
-    for (size_t i = 0; i < len; ++i)
+    for (size_t i = 0; i < len; ++i) {
         sum += data[i];
+}
 
     return sum;
 }
@@ -182,8 +186,9 @@ srecord::input_file_msbin::read(record &result) -> bool
         if (peek_char() < 0)
         {
             // Check if we have seen the execution start address record.
-            if (!execution_start_record_seen)
+            if (!execution_start_record_seen) {
                 warning("input file is missing the execution start record");
+}
 
             return false; // end of file
         }
@@ -266,8 +271,9 @@ srecord::input_file_msbin::read(record &result) -> bool
     {
         assert(c <= std::numeric_limits<unsigned char>::max());
         data[read++] = c;
-        if (read >= to_read)
+        if (read >= to_read) {
             break;
+}
         c = get_char();
         if (c < 0)
         {

@@ -45,8 +45,9 @@ srecord::input_generator::read(srecord::record &result) -> bool
     // If there is not data left to generate,
     // signal end-of-file
     //
-    if (range.empty())
+    if (range.empty()) {
         return false;
+}
 
     //
     // Calculate the address range for this chunk of data.  Use the
@@ -54,8 +55,9 @@ srecord::input_generator::read(srecord::record &result) -> bool
     //
     interval::data_t addr = range.get_lowest();
     interval::data_t end  = addr + srecord::record::max_data_length;
-    if (end < addr)
+    if (end < addr) {
         end = 0;
+}
     interval partial(addr, end);
     partial *= range;
 
@@ -237,8 +239,9 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln) -> srecord::input:
                 // If there are no more numbers on the command line, we
                 // are done.
                 //
-                if (!cmdln->can_get_number())
+                if (!cmdln->can_get_number()) {
                     break;
+}
             }
 
             //

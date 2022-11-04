@@ -25,10 +25,12 @@
 srecord::output_file_mem::~output_file_mem()
 {
     emit_header();
-    if (column)
+    if (column) {
         put_char('\n');
-    if (enable_header_flag && actual_depth != depth)
+}
+    if (enable_header_flag && actual_depth != depth) {
         put_stringf("#Depth=%lu;\n", actual_depth / width_in_bytes);
+}
 }
 
 
@@ -105,8 +107,9 @@ srecord::output_file_mem::notify_upper_bound(unsigned long addr)
 void
 srecord::output_file_mem::emit_header()
 {
-    if (header_done)
+    if (header_done) {
         return;
+}
     if (enable_header_flag)
     {
         if (column != 0)
@@ -170,14 +173,16 @@ srecord::output_file_mem::write(const srecord::record &record)
                 unsigned char c = *cp++;
                 if (c == '\n')
                 {
-                    if (column == 0)
+                    if (column == 0) {
                         put_char('#');
+}
                     put_char('\n');
                     column = 0;
                     continue;
                 }
-                if (!isprint(c))
+                if (!isprint(c)) {
                     c = ' ';
+}
                 if (column == 0)
                 {
                     put_string("# ");
@@ -204,10 +209,12 @@ srecord::output_file_mem::write(const srecord::record &record)
         {
             unsigned long addr = record.get_address();
             unsigned len = record.get_length();
-            if (address != addr)
+            if (address != addr) {
                 fatal_hole_error(address, addr);
-            if ((addr % width_in_bytes) || (len % width_in_bytes))
+}
+            if ((addr % width_in_bytes) || (len % width_in_bytes)) {
                 fatal_alignment_error(width_in_bytes);
+}
             emit_header();
 
             for (unsigned j = 0; j < len; ++j)
@@ -233,8 +240,9 @@ srecord::output_file_mem::write(const srecord::record &record)
             }
 
             address = addr + len;
-            if (actual_depth < address)
+            if (actual_depth < address) {
                 actual_depth = address;
+}
         }
         break;
 
@@ -271,8 +279,9 @@ void
 srecord::output_file_mem::line_length_set(int len)
 {
     int pref_mult = (len - 6) / (1 + 2 * width_in_bytes);
-    if (pref_mult < 1)
+    if (pref_mult < 1) {
         pref_mult = 1;
+}
     pref_blk_sz = pref_mult * width_in_bytes;
 }
 
@@ -287,10 +296,12 @@ srecord::output_file_mem::address_length_set(int)
 auto
 srecord::output_file_mem::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if (nbytes % width_in_bytes)
+}
+    if (nbytes % width_in_bytes) {
         return false;
+}
     pref_blk_sz = nbytes;
     return true;
 }

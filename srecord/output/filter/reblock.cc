@@ -25,8 +25,9 @@
 
 srecord::output_filter_reblock::~output_filter_reblock()
 {
-    if (buffer_pos != 0)
+    if (buffer_pos != 0) {
         flush_buffer(false);
+}
     delete [] buffer;
 }
 
@@ -97,8 +98,9 @@ srecord::output_filter_reblock::preferred_block_size_get()
 auto
 srecord::output_filter_reblock::preferred_block_size_set(int nbytes) -> bool
 {
-    if (!output_filter::preferred_block_size_set(nbytes))
+    if (!output_filter::preferred_block_size_set(nbytes)) {
         return false;
+}
     track_block_size();
     return true;
 }
@@ -113,8 +115,9 @@ srecord::output_filter_reblock::write(const record &r)
         output_filter::write(r);
         return;
     }
-    if (r.get_length() == 0)
+    if (r.get_length() == 0) {
         return;
+}
     if (buffer_pos != 0)
     {
         if (r.get_address() != buffer_address + buffer_pos)
@@ -146,8 +149,9 @@ srecord::output_filter_reblock::write(const record &r)
 void
 srecord::output_filter_reblock::flush_buffer(bool partial)
 {
-    if (buffer_pos == 0)
+    if (buffer_pos == 0) {
         return;
+}
 
     size_t p = 0;
     if (align)
@@ -176,8 +180,9 @@ srecord::output_filter_reblock::flush_buffer(bool partial)
         size_t size = block_size;
         if (p + size > buffer_pos)
         {
-            if (partial)
+            if (partial) {
                 break;
+}
             size = buffer_pos - p;
         }
         record r2(record::type_data, buffer_address + p, buffer + p, size);

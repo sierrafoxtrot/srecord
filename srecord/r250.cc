@@ -76,8 +76,9 @@ r250_init()
     // initialise contents of array
     //
     unsigned long *bp;
-    for (bp = buf; bp < ENDOF(buf); ++bp)
+    for (bp = buf; bp < ENDOF(buf); ++bp) {
         *bp = rand32();
+}
 
     //
     // make sure the bits are linearly independent
@@ -85,8 +86,9 @@ r250_init()
     unsigned long bit;
     for (bit = 1, bp = buf + 3; bit; bp += 11, bit <<= 1)
     {
-        if (bp >= ENDOF(buf))
+        if (bp >= ENDOF(buf)) {
             bp -= SIZEOF(buf);
+}
         *bp = (*bp & ~(bit - 1)) | bit;
     }
 }
@@ -95,14 +97,17 @@ r250_init()
 auto
 srecord::r250() -> unsigned long
 {
-    if (!ready)
+    if (!ready) {
         r250_init();
+}
     unsigned long *other = pos + 103;
-    if (other >= ENDOF(buf))
+    if (other >= ENDOF(buf)) {
         other -= SIZEOF(buf);
+}
     *pos ^= *other;
     unsigned long result = *pos++;
-    if (pos >= ENDOF(buf))
+    if (pos >= ENDOF(buf)) {
         pos = buf;
+}
     return result;
 }

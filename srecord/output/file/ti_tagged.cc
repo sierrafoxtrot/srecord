@@ -26,8 +26,9 @@
 
 srecord::output_file_ti_tagged::~output_file_ti_tagged()
 {
-    if (column)
+    if (column) {
         put_eoln();
+}
     if (enable_footer_flag)
     {
         put_char(':');
@@ -95,35 +96,41 @@ srecord::output_file_ti_tagged::write(const srecord::record &record)
             while (cp < ep)
             {
                 unsigned char c = *cp++;
-                if (!isprint(c))
+                if (!isprint(c)) {
                     c = ' ';
+}
                 put_char(c);
             }
         }
-        if (!enable_optional_address_flag)
+        if (!enable_optional_address_flag) {
             address = (unsigned long)-1;
+}
         break;
 
     case srecord::record::type_data:
         {
-            if (!record.address_range_fits_into_n_bits(16))
+            if (!record.address_range_fits_into_n_bits(16)) {
                 data_address_too_large(record, 16);
+}
             assert(record.get_length() > 0);
-            if (record.get_length() == 0)
+            if (record.get_length() == 0) {
                 break;
+}
             if (address != record.get_address())
             {
                 address = record.get_address();
-                if (column + 5 > line_length)
+                if (column + 5 > line_length) {
                     put_eoln();
+}
                 put_char('9');
                 put_word_be(address);
             }
             size_t pos = 0;
             for (; pos + 2 <= record.get_length(); pos += 2)
             {
-                if (column + 5 > line_length)
+                if (column + 5 > line_length) {
                     put_eoln();
+}
                 put_char('B');
                 put_byte(record.get_data(pos));
                 put_byte(record.get_data(pos + 1));
@@ -131,8 +138,9 @@ srecord::output_file_ti_tagged::write(const srecord::record &record)
             }
             for (; pos < record.get_length(); ++pos)
             {
-                if (column + 3 > line_length)
+                if (column + 3 > line_length) {
                     put_eoln();
+}
                 put_char('*');
                 put_byte(record.get_data(pos));
                 ++address;
@@ -159,8 +167,9 @@ srecord::output_file_ti_tagged::line_length_set(int linlen)
     line_length = linlen - 6;
 
     // make sure the line is long enough to do anything useful
-    if (line_length < 5)
+    if (line_length < 5) {
         line_length = 5;
+}
 }
 
 
@@ -174,10 +183,12 @@ srecord::output_file_ti_tagged::address_length_set(int)
 auto
 srecord::output_file_ti_tagged::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 2 || nbytes > record::max_data_length)
+    if (nbytes < 2 || nbytes > record::max_data_length) {
         return false;
-    if (nbytes & 1)
+}
+    if (nbytes & 1) {
         return false;
+}
     line_length = (nbytes / 2) * 5;
     return true;
 }
@@ -188,10 +199,12 @@ srecord::output_file_ti_tagged::preferred_block_size_get()
     const -> int
 {
     int n = (line_length / 5) * 2;
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    if (n > srecord::record::max_data_length)
+}
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     return n;
 }
 

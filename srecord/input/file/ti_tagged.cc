@@ -48,10 +48,11 @@ auto
 srecord::input_file_ti_tagged::get_char() -> int
 {
     int c = inherited::get_char();
-    if (c < 0 || c == '\n')
+    if (c < 0 || c == '\n') {
         csum = 0;
-    else
+    } else {
         csum += c;
+}
     return c;
 }
 
@@ -86,8 +87,9 @@ srecord::input_file_ti_tagged::read(record &result) -> bool
 
         case ':':
             // end of file
-            while (get_char() >= 0)
+            while (get_char() >= 0) {
                 ;
+}
             return false;
 
         case '0':
@@ -97,8 +99,9 @@ srecord::input_file_ti_tagged::read(record &result) -> bool
                 // 8 char: file name (ascii)
                 // we will ignore
                 get_word_be();
-                for (int n = 0; n < 8; ++n)
+                for (int n = 0; n < 8; ++n) {
                     get_char();
+}
             }
             break;
 
@@ -141,8 +144,9 @@ srecord::input_file_ti_tagged::read(record &result) -> bool
 
         case 'F':
             // denotes the end of a data record.
-            if (get_char() != '\n')
+            if (get_char() != '\n') {
                 fatal_error("end of line expected");
+}
             break;
 
         case 'K':
@@ -160,13 +164,16 @@ srecord::input_file_ti_tagged::read(record &result) -> bool
                 for (int j = 0; j < n; ++j)
                 {
                     c = get_char();
-                    if (c < 0 || c == '\n')
+                    if (c < 0 || c == '\n') {
                             goto bad_desc;
-                    if (j < max)
+}
+                    if (j < max) {
                             buffer[j] = c;
+}
                 }
-                if (n > max)
+                if (n > max) {
                     n = max;
+}
                 result = record(record::type_header, 0, buffer, n);
                 delete [] buffer;
             }

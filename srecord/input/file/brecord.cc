@@ -44,19 +44,23 @@ srecord::input_file_brecord::create(const std::string &a_file_name) -> srecord::
 auto
 srecord::input_file_brecord::read_inner(record &result) -> bool
 {
-    if (peek_char() < 0)
+    if (peek_char() < 0) {
         return false;
+}
 
     unsigned long address = get_4bytes_be();
     unsigned char length = get_byte();
-    if (length & 0x20)
+    if (length & 0x20) {
         fatal_error("read mode not supported");
+}
     length &= 0x1F;
     unsigned char data[32];
-    for (unsigned j = 0; j < length; ++j)
+    for (unsigned j = 0; j < length; ++j) {
         data[j] = get_byte();
-    if (get_char() != '\n')
+}
+    if (get_char() != '\n') {
         fatal_error("end of line expected");
+}
 
     if (length == 0)
     {
@@ -75,8 +79,9 @@ srecord::input_file_brecord::read(record &result) -> bool
 {
     if (!read_inner(result))
     {
-        if (!seen_some_input)
+        if (!seen_some_input) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;

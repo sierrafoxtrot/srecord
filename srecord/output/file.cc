@@ -41,10 +41,12 @@ bool srecord::output_file::enable_optional_address_flag = false;
 srecord::output_file::~output_file()
 {
     FILE *fp = (FILE *)get_fp();
-    if (fflush(fp))
+    if (fflush(fp)) {
         fatal_error_errno("write");
-    if (fp != stdout && fclose(fp))
+}
+    if (fp != stdout && fclose(fp)) {
         fatal_error_errno("close");
+}
 }
 
 
@@ -118,8 +120,9 @@ srecord::output_file::get_fp() -> void *
 #endif
         {
             vfp = fopen(file_name.c_str(), "wb");
-            if (!vfp)
+            if (!vfp) {
                 fatal_error_errno("open");
+}
         }
         set_is_regular();
     }
@@ -187,8 +190,9 @@ srecord::output_file::put_char(int c)
         putc(c, fp);
         ++position;
     }
-    if (ferror(fp))
+    if (ferror(fp)) {
         fatal_error_errno("write");
+}
 }
 
 
@@ -299,11 +303,13 @@ srecord::output_file::seek_to(unsigned long address)
     //
     if (!is_regular)
     {
-        while (position < address)
+        while (position < address) {
             put_char(0);
+}
     }
-    if (address == position)
+    if (address == position) {
         return;
+}
 
     //
     // We'll have to try a seek.
@@ -335,8 +341,9 @@ srecord::output_file::seek_to(unsigned long address)
 void
 srecord::output_file::put_string(const char *s)
 {
-    while (*s)
+    while (*s) {
         put_char(*s++);
+}
 }
 
 
@@ -345,8 +352,9 @@ srecord::output_file::put_string(const std::string &s)
 {
     const char *cp = s.c_str();
     const char *ep = cp + s.size();
-    while (cp < ep)
+    while (cp < ep) {
         put_char(*cp++);
+}
 }
 
 

@@ -91,8 +91,9 @@ srecord::input_filter_crop::read(srecord::record &record) -> bool
                 // Discard execution start address records which do not
                 // fall into the clip region.
                 //
-                if (!range.member(data.get_address()))
+                if (!range.member(data.get_address())) {
                     continue;
+}
                 record = data;
                 return true;
             }

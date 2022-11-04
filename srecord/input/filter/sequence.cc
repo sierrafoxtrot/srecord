@@ -44,8 +44,9 @@ srecord::input_filter_sequence::create(srecord::input::pointer arg) -> srecord::
 auto
 srecord::input_filter_sequence::read(srecord::record &record) -> bool
 {
-    if (!srecord::input_filter::read(record))
+    if (!srecord::input_filter::read(record)) {
         return false;
+}
     if (record.get_type() == srecord::record::type_data)
     {
 #if 0

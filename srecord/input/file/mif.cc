@@ -71,8 +71,9 @@ srecord::input_file_mif::lex() -> srecord::input_file_mif::token_t
     for (;;)
     {
         int c = get_char();
-        if (c < 0)
+        if (c < 0) {
             return token_eof;
+}
         switch (c)
         {
         case ' ':
@@ -83,10 +84,12 @@ srecord::input_file_mif::lex() -> srecord::input_file_mif::token_t
 
         case '.':
             c = get_char();
-            if (c == '.')
+            if (c == '.') {
                 return token_dotdot;
-            if (c >= 0)
+}
+            if (c >= 0) {
                 get_char_undo(c);
+}
             return token_dot;
 
         case '=':
@@ -102,8 +105,9 @@ srecord::input_file_mif::lex() -> srecord::input_file_mif::token_t
             for (;;)
             {
                 c = get_char();
-                if (c < 0 || c == '%')
+                if (c < 0 || c == '%') {
                     break;
+}
             }
             continue;
 
@@ -113,8 +117,9 @@ srecord::input_file_mif::lex() -> srecord::input_file_mif::token_t
                 for (;;)
                 {
                     c = get_char();
-                    if (c < 0 || c == '\n')
+                    if (c < 0 || c == '\n') {
                         break;
+}
                 }
                 continue;
             }
@@ -143,8 +148,9 @@ srecord::input_file_mif::lex() -> srecord::input_file_mif::token_t
                 {
                     id += (char)c;
                     c = get_char();
-                    if (c < 0)
+                    if (c < 0) {
                         break;
+}
                     switch (c)
                     {
                     case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
@@ -181,36 +187,49 @@ srecord::input_file_mif::lex() -> srecord::input_file_mif::token_t
                 const char *cp = id.c_str();
                 char *ep = nullptr;
                 token_value = strtol(cp, &ep, lex_radix);
-                if (ep != cp && !*ep)
+                if (ep != cp && !*ep) {
                     return token_number;
+}
 
                 //
                 // See if it is a known identifier.
                 //
-                if (id == "ADDRESS_RADIX")
+                if (id == "ADDRESS_RADIX") {
                     return token_address_radix;
-                if (id == "BEGIN")
+}
+                if (id == "BEGIN") {
                     return token_begin;
-                if (id == "BIN")
+}
+                if (id == "BIN") {
                     return token_bin;
-                if (id == "CONTENT")
+}
+                if (id == "CONTENT") {
                     return token_content;
-                if (id == "DATA_RADIX")
+}
+                if (id == "DATA_RADIX") {
                     return token_data_radix;
-                if (id == "DEC")
+}
+                if (id == "DEC") {
                     return token_dec;
-                if (id == "DEPTH")
+}
+                if (id == "DEPTH") {
                     return token_depth;
-                if (id == "END")
+}
+                if (id == "END") {
                     return token_end;
-                if (id == "HEX")
+}
+                if (id == "HEX") {
                     return token_hex;
-                if (id == "OCT")
+}
+                if (id == "OCT") {
                     return token_oct;
-                if (id == "UNS")
+}
+                if (id == "UNS") {
                     return token_dec;
-                if (id == "WIDTH")
+}
+                if (id == "WIDTH") {
                     return token_width;
+}
             }
             return token_junk;
 
@@ -231,16 +250,18 @@ srecord::input_file_mif::syntax_error(const char *text)
 void
 srecord::input_file_mif::get_equals()
 {
-    if (lex() != token_equals)
+    if (lex() != token_equals) {
         syntax_error("equals (=) expected");
+}
 }
 
 
 auto
 srecord::input_file_mif::get_number() -> long
 {
-    if (lex() != token_number)
+    if (lex() != token_number) {
         syntax_error("decimal number expected");
+}
     return token_value;
 }
 
@@ -248,16 +269,18 @@ srecord::input_file_mif::get_number() -> long
 void
 srecord::input_file_mif::get_semicolon()
 {
-    if (lex() != token_semicolon)
+    if (lex() != token_semicolon) {
         syntax_error("semicolon (;) expected");
+}
 }
 
 
 void
 srecord::input_file_mif::get_colon()
 {
-    if (lex() != token_colon)
+    if (lex() != token_colon) {
         syntax_error("colon (:) expected");
+}
 }
 
 
@@ -315,8 +338,9 @@ srecord::input_file_mif::read(srecord::record &record) -> bool
             case token_width:
                 get_equals();
                 width = get_number();
-                if (width < 1 || width > sizeof(buffer) * 8)
+                if (width < 1 || width > sizeof(buffer) * 8) {
                     syntax_error("width out of range");
+}
                 width_in_bytes = (width + 7) / 8;
                 get_semicolon();
                 break;
@@ -334,8 +358,9 @@ srecord::input_file_mif::read(srecord::record &record) -> bool
                 break;
 
             case token_content:
-                if (lex() != token_begin)
+                if (lex() != token_begin) {
                     syntax_error("BEGIN expected");
+}
                 state = state_address;
                 break;
             }
@@ -361,22 +386,28 @@ srecord::input_file_mif::read(srecord::record &record) -> bool
 
             case token_bracket_left:
                 {
-                    if (lex_addr() != token_number)
+                    if (lex_addr() != token_number) {
                         syntax_error("start of address range expected");
+}
                     unsigned long address_lo = token_value;
-                    if (lex_addr() != token_dotdot)
+                    if (lex_addr() != token_dotdot) {
                         syntax_error("dot dot (..) expected");
-                    if (lex_addr() != token_number)
+}
+                    if (lex_addr() != token_number) {
                         syntax_error("end of address range expected");
+}
                     unsigned long address_hi = token_value;
-                    if (address_hi < address_lo)
+                    if (address_hi < address_lo) {
                         syntax_error("address range backwards");
+}
                     address_range = address_hi + 1 - address_lo;
                     address_range *= width_in_bytes;
-                    if (address_range > sizeof(buffer))
+                    if (address_range > sizeof(buffer)) {
                         syntax_error("address range too large");
-                    if (lex_addr() != token_bracket_right)
+}
+                    if (lex_addr() != token_bracket_right) {
                         syntax_error("right bracket ']' expected");
+}
                     get_colon();
                     address = address_lo;
                     state = state_data;
@@ -402,8 +433,9 @@ srecord::input_file_mif::read(srecord::record &record) -> bool
                 address += width_in_bytes;
                 if (bufpos + width_in_bytes > sizeof(buffer))
                 {
-                    if (address_range != 0)
+                    if (address_range != 0) {
                         syntax_error("data too large for address range");
+}
                     record =
                         srecord::record
                         (
@@ -422,8 +454,9 @@ srecord::input_file_mif::read(srecord::record &record) -> bool
                 {
                     if (address_range != 0)
                     {
-                        if (bufpos > address_range)
+                        if (bufpos > address_range) {
                             syntax_error("too much data for address range");
+}
                         if (bufpos > 0 && bufpos < address_range)
                         {
                             // deliberately memcpy onto self
@@ -432,8 +465,9 @@ srecord::input_file_mif::read(srecord::record &record) -> bool
                             const unsigned char *end = buffer + address_range;
                             const unsigned char *in = buffer;
                             unsigned char *out = buffer + bufpos;
-                            while (out < end)
+                            while (out < end) {
                                 *out++ = *in++;
+}
                             bufpos += nbytes;
                             address += nbytes;
                         }

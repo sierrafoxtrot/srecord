@@ -49,21 +49,26 @@ srecord::input_file_mos_tech::read_inner(srecord::record &record) -> bool
     for (;;)
     {
         int c = get_char();
-        if (c < 0)
+        if (c < 0) {
             return false;
+}
         if (c == 0x11)
         {
             // XOFF in the file also indicates end-of-file
-            while (get_char() >= 0)
+            while (get_char() >= 0) {
                 ;
+}
             return false;
         }
-        if (c == '\0')
+        if (c == '\0') {
             continue;
-        if (c == ';')
+}
+        if (c == ';') {
             break;
-        if (c == '\n')
+}
+        if (c == '\n') {
             continue;
+}
         if (!garbage_warning)
         {
             warning("ignoring garbage lines");
@@ -72,10 +77,12 @@ srecord::input_file_mos_tech::read_inner(srecord::record &record) -> bool
         for (;;)
         {
             c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 return false;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 break;
+}
         }
     }
     checksum_reset();
@@ -98,8 +105,9 @@ srecord::input_file_mos_tech::read_inner(srecord::record &record) -> bool
             // in the checksum, which would you make you think that the
             // address field is added as a 16-bit value, except that
             // only the data count line is wrong.  Sheesh.
-            if (use_checksums() && csumX != csum && csum != nrecs)
+            if (use_checksums() && csumX != csum && csum != nrecs) {
                 fatal_error("checksum mismatch (%04X != %04X)", csumX, csum);
+}
             if (nrecs != data_record_count)
             {
                 fatal_error
@@ -110,23 +118,28 @@ srecord::input_file_mos_tech::read_inner(srecord::record &record) -> bool
                 );
             }
         }
-        if (get_char() != '\n')
+        if (get_char() != '\n') {
             fatal_error("end-of-line expected");
-        while (get_char() >= 0)
+}
+        while (get_char() >= 0) {
             ;
+}
         return false;
     }
 
     unsigned long address = get_word_be();
     unsigned char buffer[256];
-    for (int j = 0; j < length; ++j)
+    for (int j = 0; j < length; ++j) {
         buffer[j] = get_byte();
+}
     int csumX = checksum_get16();
     int csum = get_word_be();
-    if (use_checksums() && csumX != csum)
+    if (use_checksums() && csumX != csum) {
         fatal_error("checksum mismatch (%04X != %04X)", csumX, csum);
-    if (get_char() != '\n')
+}
+    if (get_char() != '\n') {
         fatal_error("end-of-line expected");
+}
 
     srecord::record::type_t type = srecord::record::type_data;
     record = srecord::record(type, address, buffer, length);
@@ -140,8 +153,9 @@ srecord::input_file_mos_tech::read(srecord::record &record) -> bool
 {
     if (!read_inner(record))
     {
-        if (!seen_some_input && garbage_warning)
+        if (!seen_some_input && garbage_warning) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;

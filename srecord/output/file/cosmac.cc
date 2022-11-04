@@ -56,10 +56,11 @@ srecord::output_file_cosmac::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (record.get_address() >= (1uL << 24) && address_length < 8)
+        if (record.get_address() >= (1uL << 24) && address_length < 8) {
             address_length = 8;
-        else if (record.get_address() >= (1uL << 16) && address_length < 6)
+        } else if (record.get_address() >= (1uL << 16) && address_length < 6) {
             address_length = 6;
+}
 
         if (header_required)
         {
@@ -68,8 +69,9 @@ srecord::output_file_cosmac::write(const srecord::record &record)
             column = address_length + 3;
             header_required = false;
 
-            if (!enable_optional_address_flag)
+            if (!enable_optional_address_flag) {
                 address = (unsigned long)-1L;
+}
         }
         if (address != record.get_address())
         {
@@ -113,10 +115,12 @@ void
 srecord::output_file_cosmac::address_length_set(int x)
 {
     x *= 2;
-    if (x < 4)
+    if (x < 4) {
         x = 4;
-    if (x > 8)
+}
+    if (x > 8) {
         x = 8;
+}
     address_length = x;
 }
 
@@ -124,8 +128,9 @@ srecord::output_file_cosmac::address_length_set(int x)
 auto
 srecord::output_file_cosmac::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
+}
     line_length = 2 * nbytes + 1;
     return true;
 }
@@ -136,8 +141,9 @@ srecord::output_file_cosmac::preferred_block_size_get()
     const -> int
 {
     int n = ((line_length - 1) / 2);
-    if (n > record::max_data_length)
+    if (n > record::max_data_length) {
         n = record::max_data_length;
+}
     return n;
 }
 

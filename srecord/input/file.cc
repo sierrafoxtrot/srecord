@@ -88,8 +88,9 @@ srecord::input_file::get_fp() -> void *
             line_number = 0;
         }
         vfp = fopen(file_name.c_str(), the_mode);
-        if (!vfp)
+        if (!vfp) {
             fatal_error_errno("open");
+}
     }
     return vfp;
 }
@@ -98,8 +99,9 @@ srecord::input_file::get_fp() -> void *
 srecord::input_file::~input_file()
 {
     FILE *fp = (FILE *)get_fp();
-    if (fp != stdin && fclose(fp))
+    if (fp != stdin && fclose(fp)) {
         fatal_error_errno("close");
+}
 }
 
 
@@ -115,13 +117,15 @@ auto
 srecord::input_file::filename_and_line()
     const -> std::string
 {
-    if (!vfp)
+    if (!vfp) {
         return file_name;
+}
     char buffer[20];
-    if (!is_binary())
+    if (!is_binary()) {
         sprintf(buffer, ": %d", line_number);
-    else
+    } else {
         sprintf(buffer, ": 0x%04X", line_number);
+}
     return (file_name + buffer);
 }
 
@@ -130,13 +134,15 @@ auto
 srecord::input_file::get_char() -> int
 {
     FILE *fp = (FILE *)get_fp();
-    if (prev_was_newline)
+    if (prev_was_newline) {
         ++line_number;
+}
     int c = getc(fp);
     if (c == EOF)
     {
-        if (ferror(fp))
+        if (ferror(fp)) {
             fatal_error_errno("read");
+}
 
         //
         // If this is a text file, but the last character wasn't
@@ -153,8 +159,9 @@ srecord::input_file::get_char() -> int
         c = getc(fp);
         if (c == EOF)
         {
-            if (ferror(fp))
+            if (ferror(fp)) {
                 fatal_error_errno("read");
+}
             c = '\r';
         }
         else if (c != '\n')
@@ -163,8 +170,9 @@ srecord::input_file::get_char() -> int
             c = '\r';
         }
     }
-    if (is_binary() && c >= 0)
+    if (is_binary() && c >= 0) {
         ++line_number;
+}
     prev_was_newline = (!is_binary() && c == '\n');
     return c;
 }
@@ -177,8 +185,9 @@ srecord::input_file::get_char_undo(int c)
     {
         FILE *fp = (FILE *)get_fp();
         prev_was_newline = false;
-        if (is_binary())
+        if (is_binary()) {
             --line_number;
+}
         ungetc(c, fp);
     }
 }
@@ -191,12 +200,14 @@ srecord::input_file::peek_char() -> int
     int c = getc(fp);
     if (c == EOF)
     {
-        if (ferror(fp))
+        if (ferror(fp)) {
             fatal_error_errno("read");
+}
         c = -1;
     }
-    else
+    else {
         ungetc(c, fp);
+}
     return c;
 }
 
@@ -225,8 +236,9 @@ srecord::input_file::get_nibble() -> int
 {
     int c = get_char();
     int n = get_nibble_value(c);
-    if (n < 0)
+    if (n < 0) {
         fatal_error("hexadecimal digit expected");
+}
     return n;
 }
 

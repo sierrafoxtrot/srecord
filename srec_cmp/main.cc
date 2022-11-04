@@ -55,11 +55,11 @@ main(int argc, char **argv) -> int
         case srecord::arglex_tool::token_string:
         case srecord::arglex_tool::token_stdio:
         case srecord::arglex_tool::token_generator:
-            if (!if1)
+            if (!if1) {
                 if1 = cmdline.get_input();
-            else if (!if2)
+            } else if (!if2) {
                 if2 = cmdline.get_input();
-            else
+            } else
             {
                 std::cerr << argv[0] << ": too many input files specified"
                     << std::endl;
@@ -123,8 +123,9 @@ main(int argc, char **argv) -> int
                 << "." << std::dec << std::endl;
             different = true;
         }
-        if (different)
+        if (different) {
             exit(2);
+}
         std::cerr << argv[0] << ": files \"" << if1->filename() << "\" and \""
             << if2->filename() << "\" are the same." << std::endl;
     }

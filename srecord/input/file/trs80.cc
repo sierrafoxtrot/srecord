@@ -54,8 +54,9 @@ auto
 srecord::input_file_trs80::get_byte() -> int
 {
     int c = get_char();
-    if (c < 0)
+    if (c < 0) {
         fatal_error("premature end-of-file");
+}
     return c;
 }
 
@@ -71,8 +72,9 @@ srecord::input_file_trs80::read(srecord::record &result) -> bool
         return true;
     }
 
-    if (termination_seen)
+    if (termination_seen) {
         return false;
+}
     for (;;)
     {
         //
@@ -87,11 +89,13 @@ srecord::input_file_trs80::read(srecord::record &result) -> bool
         //
         unsigned rec_type = get_byte();
         unsigned payload_size = get_byte();
-        if (rec_type == 0x01 && payload_size <= 2)
+        if (rec_type == 0x01 && payload_size <= 2) {
             payload_size += 256;
+}
         unsigned char payload[258];
-        for (unsigned j = 0; j < payload_size; ++j)
+        for (unsigned j = 0; j < payload_size; ++j) {
             payload[j] = get_byte();
+}
 
         switch (rec_type)
         {
@@ -160,16 +164,18 @@ srecord::input_file_trs80::read(srecord::record &result) -> bool
                     unsigned char *op = payload;
                     while (ip < end)
                     {
-                        if (isprint(*ip))
+                        if (isprint(*ip)) {
                             *op++ = *ip;
+}
                         ++ip;
                     }
                     payload_size = op - payload;
                 }
 
                 record::type_t type = record::type_header;
-                if (payload_size > record::max_data_length)
+                if (payload_size > record::max_data_length) {
                     payload_size = record::max_data_length;
+}
                 result = srecord::record(type, address, payload, payload_size);
                 return true;
             }

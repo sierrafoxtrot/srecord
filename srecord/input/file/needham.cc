@@ -52,8 +52,9 @@ srecord::input_file_needham::read(srecord::record &record) -> bool
         int c = peek_char();
         if (c < 0)
         {
-            if (!seen_some_input)
+            if (!seen_some_input) {
                 fatal_error("file contains no data");
+}
             return false;
         }
         if (isxdigit(c))
@@ -89,8 +90,9 @@ srecord::input_file_needham::read(srecord::record &record) -> bool
             fatal_error("illegal character");
 
         case '$':
-            if (get_char() != 'A')
+            if (get_char() != 'A') {
                 fatal_error("unknown command");
+}
             address = 0;
             int n = 0;
             for (n = 0; n < 4 && peek_char() != ','; ++n)
@@ -98,10 +100,12 @@ srecord::input_file_needham::read(srecord::record &record) -> bool
                 int b = get_byte();
                 address = (address << 8) + b;
             }
-            if (n < 2)
+            if (n < 2) {
                 fatal_error("short address");
-            if (get_char() != ',')
+}
+            if (get_char() != ',') {
                 fatal_error("comma expected");
+}
             break;
         }
     }

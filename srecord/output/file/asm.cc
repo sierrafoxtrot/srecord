@@ -30,10 +30,11 @@ srecord::output_file_asm::~output_file_asm()
 {
     if (!section_style && range.empty())
     {
-        if (output_word)
+        if (output_word) {
             emit_word(0xFFFF);
-        else
+        } else {
             emit_byte(0xFF);
+}
     }
     if (column)
     {
@@ -48,10 +49,11 @@ srecord::output_file_asm::~output_file_asm()
     {
         // address
         put_char('\n');
-        if (dot_style)
+        if (dot_style) {
             put_stringf("        .global %s_address\n", prefix.c_str());
-        else
+        } else {
             put_stringf("        PUBLIC  %s_address\n", prefix.c_str());
+}
         put_stringf("%s_address\n", prefix.c_str());
         interval x = range;
         while (!x.empty())
@@ -65,10 +67,11 @@ srecord::output_file_asm::~output_file_asm()
             // We do it this way, rather than just making argument 3 a
             // (?:) conditional, so that the compiler can tell us when
             // we get the types wrong.  (Besides, it will optimize.)
-            if (hex_style)
+            if (hex_style) {
                 snprintf(buffer, sizeof(buffer), "0x%8.8lX", val);
-            else
+            } else {
                 snprintf(buffer, sizeof(buffer), "%lu", val);
+}
             long len = strlen(buffer);
 
             if (column && column + len + 2 > line_length)
@@ -78,10 +81,11 @@ srecord::output_file_asm::~output_file_asm()
             }
             if (column == 0)
             {
-                if (dot_style)
+                if (dot_style) {
                     put_stringf("        .long   ");
-                else
+                } else {
                     put_stringf("        DL      ");
+}
                 column = 16;
             }
             else
@@ -127,13 +131,15 @@ srecord::output_file_asm::~output_file_asm()
             ++nsections;
 
             unsigned long slen = x2.get_highest() - x2.get_lowest();
-            if (output_word)
+            if (output_word) {
                 slen /= 2;
+}
             char buffer[30];
-            if (hex_style)
+            if (hex_style) {
                 snprintf(buffer, sizeof(buffer), "0x%8.8lX", slen);
-            else
+            } else {
                 snprintf(buffer, sizeof(buffer), "%lu", slen);
+}
             long len = strlen(buffer);
             if (column && column + len + 2 > line_length)
             {
@@ -142,10 +148,11 @@ srecord::output_file_asm::~output_file_asm()
             }
             if (column == 0)
             {
-                if (dot_style)
+                if (dot_style) {
                     put_stringf("        .long   ");
-                else
+                } else {
                     put_stringf("        DL      ");
+}
                 column = 16;
             }
             else
@@ -164,19 +171,22 @@ srecord::output_file_asm::~output_file_asm()
 
         // sections
         put_char('\n');
-        if (dot_style)
+        if (dot_style) {
             put_stringf("        .global %s_sections\n", prefix.c_str());
-        else
+        } else {
             put_stringf("        PUBLIC  %s_sections\n", prefix.c_str());
+}
         put_stringf("%s_sections\n", prefix.c_str());
-        if (dot_style)
+        if (dot_style) {
             put_string("        .long   ");
-        else
+        } else {
             put_string("        DL      ");
-        if (hex_style)
+}
+        if (hex_style) {
             put_stringf("0x%4.4lX\n", nsections);
-        else
+        } else {
             put_stringf("%lu\n", nsections);
+}
     }
 
 
@@ -192,10 +202,11 @@ srecord::output_file_asm::~output_file_asm()
 
     if (section_style)
     {
-        if (dot_style)
+        if (dot_style) {
             put_stringf("        .end\n");
-        else
+        } else {
             put_stringf("        END\n");
+}
     }
 }
 
@@ -286,10 +297,11 @@ void
 srecord::output_file_asm::emit_byte(int n)
 {
     char buffer[8];
-    if (hex_style)
+    if (hex_style) {
         sprintf(buffer, "0x%2.2X", (unsigned char)n);
-    else
+    } else {
         sprintf(buffer, "%u", (unsigned char)n);
+}
     int len = strlen(buffer);
     if (column && (column + 1 + len) > line_length)
     {
@@ -324,10 +336,11 @@ void
 srecord::output_file_asm::emit_word(unsigned int n)
 {
     char buffer[16];
-    if (hex_style)
+    if (hex_style) {
         snprintf(buffer, sizeof(buffer), "0x%4.4X", (unsigned short)n);
-    else
+    } else {
         snprintf(buffer, sizeof(buffer), "%u", (unsigned short)n);
+}
     int len = strlen(buffer);
     if (column && (column + 1 + len) > line_length)
     {
@@ -382,14 +395,17 @@ srecord::output_file_asm::write(const srecord::record & record)
                     bol = true;
                     continue;
                 }
-                if (bol)
+                if (bol) {
                     put_string("; ");
-                if (isprint(c))
+}
+                if (isprint(c)) {
                     put_char(c);
+}
                 bol = false;
             }
-            if (!bol)
+            if (!bol) {
                 put_char('\n');
+}
         }
         break;
 
@@ -412,8 +428,9 @@ srecord::output_file_asm::write(const srecord::record & record)
                 put_stringf("%s\n", prefix.c_str());
             }
 
-            if (!enable_optional_address_flag)
+            if (!enable_optional_address_flag) {
                 current_address = (unsigned long)-1L;
+}
         }
 
         if (current_address != record.get_address())
@@ -455,8 +472,9 @@ srecord::output_file_asm::write(const srecord::record & record)
         if (output_word)
         {
             int len = record.get_length();
-            if (len & 1)
+            if (len & 1) {
                 fatal_alignment_error(2);
+}
             range += interval(record.get_address(), record.get_address() + len);
 
             //
@@ -521,10 +539,12 @@ srecord::output_file_asm::address_length_set(int)
 auto
 srecord::output_file_asm::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes <= 0)
+    if (nbytes <= 0) {
         return false;
-    if (!output_word)
+}
+    if (!output_word) {
         return true;
+}
     return ((nbytes & 1) == 0);
 }
 
@@ -536,8 +556,9 @@ srecord::output_file_asm::preferred_block_size_get()
     //
     // Use the largest we can get.
     //
-    if (output_word)
+    if (output_word) {
         return (srecord::record::max_data_length & ~1);
+}
     return srecord::record::max_data_length;
 }
 

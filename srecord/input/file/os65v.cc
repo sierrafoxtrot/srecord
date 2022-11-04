@@ -47,8 +47,9 @@ srecord::input_file_os65v::read_inner(srecord::record &record) -> bool
 {
     for (;;)
     {
-        if (ignore_the_rest)
+        if (ignore_the_rest) {
             return false;
+}
         int c = get_char();
         switch (c)
         {
@@ -128,15 +129,18 @@ srecord::input_file_os65v::read_inner(srecord::record &record) -> bool
             return true;
 
         case '\r':
-            if (state == '/')
+            if (state == '/') {
                 ++address;
-            if (peek_char() == '\n')
+}
+            if (peek_char() == '\n') {
                 get_char();
+}
             continue;
 
         case '\n':
-            if (state == '/')
+            if (state == '/') {
                 ++address;
+}
             continue;
 
         case '.':
@@ -157,8 +161,9 @@ srecord::input_file_os65v::read(srecord::record &record) -> bool
 {
     if (!read_inner(record))
     {
-        if (!seen_some_input)
+        if (!seen_some_input) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;

@@ -46,19 +46,22 @@ srecord::input_filter_random_fill::create(const input::pointer &a_deeper,
 auto
 srecord::input_filter_random_fill::generate(srecord::record &record) -> bool
 {
-    if (range.empty())
+    if (range.empty()) {
         return false;
+}
     unsigned char buffer[srecord::record::max_data_length];
     interval::data_t lo = range.get_lowest();
     interval::data_t hi = lo + sizeof(buffer);
-    if (hi < lo)
+    if (hi < lo) {
         hi = 0;
+}
     interval chunk(lo, hi);
     chunk *= range;
     chunk.first_interval_only();
     int nbytes = chunk.get_highest() - chunk.get_lowest();
-    for (int j = 0; j < nbytes; ++j)
+    for (int j = 0; j < nbytes; ++j) {
         buffer[j] = r250();
+}
     record =
         srecord::record
         (
@@ -75,8 +78,9 @@ srecord::input_filter_random_fill::generate(srecord::record &record) -> bool
 auto
 srecord::input_filter_random_fill::read(srecord::record &record) -> bool
 {
-    if (!srecord::input_filter::read(record))
+    if (!srecord::input_filter::read(record)) {
         return generate(record);
+}
     if (record.get_type() == srecord::record::type_data)
     {
         range -=

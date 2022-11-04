@@ -53,8 +53,9 @@ srecord::input_file_cosmac::read(record &result) -> bool
             // want another command
             if (c < 0)
             {
-                if (!seen_some_input)
+                if (!seen_some_input) {
                     fatal_error("file contains no data");
+}
                 return false;
             }
             if (c != '!')
@@ -68,8 +69,9 @@ srecord::input_file_cosmac::read(record &result) -> bool
 
         case '!':
             // want the 2nd half of "!M"
-            if (c != 'M')
+            if (c != 'M') {
                 goto format_error;
+}
             state = c;
             break;
 
@@ -81,16 +83,18 @@ srecord::input_file_cosmac::read(record &result) -> bool
                 state = c;
                 continue;
             }
-            if (c == ' ')
+            if (c == ' ') {
                 continue;
+}
 
             address = 0;
             for (int n = 0; ; ++n)
             {
                 // Check the length of the address.  The RCA Cosmac only
                 // had 16-bit addresses, but we'll allow 32.
-                if (n >= 8)
+                if (n >= 8) {
                     goto format_error;
+}
 
                 get_char_undo(c);
                 address = (address << 4) + get_nibble();
@@ -109,17 +113,21 @@ srecord::input_file_cosmac::read(record &result) -> bool
             }
 
         case ';':
-            if (c < 0)
+            if (c < 0) {
                 goto format_error;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 state = 'M';
+}
             break;
 
         case ',':
-            if (c < 0)
+            if (c < 0) {
                 goto format_error;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 state = ' ';
+}
             break;
 
         case ' ':

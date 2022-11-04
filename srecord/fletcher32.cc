@@ -95,8 +95,9 @@ srecord::fletcher32::nextbuf(const void *vdata, size_t nbytes)
             sum1 += *data++;
             sum2 += sum1;
             --tlen;
-            if (!tlen)
+            if (!tlen) {
                 break;
+}
         }
         sum1 = (sum1 & 0xFFFF) + (sum1 >> 16);
         sum2 = (sum2 & 0xFFFF) + (sum2 >> 16);

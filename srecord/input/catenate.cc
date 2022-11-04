@@ -67,8 +67,9 @@ srecord::input_catenate::read(srecord::record &record) -> bool
     for (;;)
     {
         bool ok = in2->read(record);
-        if (!ok)
+        if (!ok) {
             return false;
+}
         switch (record.get_type())
         {
         case srecord::record::type_unknown:
@@ -109,7 +110,8 @@ srecord::input_catenate::get_file_format_name()
 void
 srecord::input_catenate::disable_checksum_validation()
 {
-    if (in1)
+    if (in1) {
         in1->disable_checksum_validation();
+}
     in2->disable_checksum_validation();
 }
