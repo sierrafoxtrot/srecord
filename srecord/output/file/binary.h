@@ -84,17 +84,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_binary();
+    output_file_binary() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_binary(const output_file_binary &);
+    output_file_binary(const output_file_binary &) = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_binary &operator=(const output_file_binary &);
+    output_file_binary &operator=(const output_file_binary &) = delete;
 };
 
 };

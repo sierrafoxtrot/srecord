@@ -84,17 +84,17 @@ private:
       * The default constructor.
       * Do not use.
       */
-    memory_walker_alignment();
+    memory_walker_alignment() = delete;
 
     /**
       * The copy constructor.  No not use.
       */
-    memory_walker_alignment(const memory_walker_alignment &);
+    memory_walker_alignment(const memory_walker_alignment &) = delete;
 
     /**
       * The assignment operator.  No not use.
       */
-    memory_walker_alignment &operator=(const memory_walker_alignment &);
+    memory_walker_alignment &operator=(const memory_walker_alignment &) = delete;
 };
 
 };

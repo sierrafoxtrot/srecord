@@ -122,17 +122,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_motorola();
+    input_file_motorola() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_motorola(const input_file_motorola &);
+    input_file_motorola(const input_file_motorola &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_motorola &operator=(const input_file_motorola &);
+    input_file_motorola &operator=(const input_file_motorola &) = delete;
 };
 
 };

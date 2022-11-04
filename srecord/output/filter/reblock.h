@@ -153,17 +153,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_filter_reblock();
+    output_filter_reblock() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_filter_reblock(const output_filter_reblock &);
+    output_filter_reblock(const output_filter_reblock &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_filter_reblock &operator=(const output_filter_reblock &);
+    output_filter_reblock &operator=(const output_filter_reblock &) = delete;
 };
 
 };

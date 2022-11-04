@@ -85,17 +85,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_brecord();
+    output_file_brecord() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_brecord(const output_file_brecord &);
+    output_file_brecord(const output_file_brecord &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_brecord &operator=(const output_file_brecord &);
+    output_file_brecord &operator=(const output_file_brecord &) = delete;
 };
 
 };

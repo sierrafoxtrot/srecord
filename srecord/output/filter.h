@@ -84,17 +84,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_filter();
+    output_filter() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_filter(const output_filter &);
+    output_filter(const output_filter &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_filter &operator=(const output_filter &);
+    output_filter &operator=(const output_filter &) = delete;
 };
 
 };

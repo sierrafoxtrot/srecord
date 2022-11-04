@@ -85,17 +85,17 @@ private:
     /**
       * The default constructor.
       */
-    input_generator();
+    input_generator() = delete;
 
     /**
       * The copy constructor.
       */
-    input_generator(const input_generator &);
+    input_generator(const input_generator &) = delete;
 
     /**
       * The assignment operator.
       */
-    input_generator &operator=(const input_generator &);
+    input_generator &operator=(const input_generator &) = delete;
 };
 
 };

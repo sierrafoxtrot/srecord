@@ -131,17 +131,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_ascii_hex();
+    output_file_ascii_hex() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_ascii_hex(const output_file_ascii_hex &);
+    output_file_ascii_hex(const output_file_ascii_hex &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_ascii_hex &operator=(const output_file_ascii_hex &);
+    output_file_ascii_hex &operator=(const output_file_ascii_hex &) = delete;
 };
 
 };

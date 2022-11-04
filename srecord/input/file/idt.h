@@ -96,17 +96,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_idt();
+    input_file_idt() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_idt(const input_file_idt &);
+    input_file_idt(const input_file_idt &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_idt &operator=(const input_file_idt &);
+    input_file_idt &operator=(const input_file_idt &) = delete;
 };
 
 };

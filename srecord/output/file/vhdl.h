@@ -110,17 +110,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_vhdl();
+    output_file_vhdl() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_vhdl(const output_file_vhdl &);
+    output_file_vhdl(const output_file_vhdl &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_vhdl &operator=(const output_file_vhdl &);
+    output_file_vhdl &operator=(const output_file_vhdl &) = delete;
 };
 
 };

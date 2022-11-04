@@ -76,17 +76,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter();
+    input_filter() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter(const input_filter &);
+    input_filter(const input_filter &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter &operator=(const input_filter &);
+    input_filter &operator=(const input_filter &) = delete;
 };
 
 };

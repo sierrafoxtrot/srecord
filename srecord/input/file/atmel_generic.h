@@ -104,17 +104,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_atmel_generic();
+    input_file_atmel_generic() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_atmel_generic(const input_file_atmel_generic &);
+    input_file_atmel_generic(const input_file_atmel_generic &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_atmel_generic &operator=(const input_file_atmel_generic &);
+    input_file_atmel_generic &operator=(const input_file_atmel_generic &) = delete;
 };
 
 };

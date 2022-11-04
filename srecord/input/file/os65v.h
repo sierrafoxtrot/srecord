@@ -70,17 +70,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_os65v();
+    input_file_os65v() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_os65v(const input_file_os65v &);
+    input_file_os65v(const input_file_os65v &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_os65v &operator=(const input_file_os65v &);
+    input_file_os65v &operator=(const input_file_os65v &) = delete;
 
     /**
       * The read_inner method is used by the read method to get

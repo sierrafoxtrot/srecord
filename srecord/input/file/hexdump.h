@@ -111,17 +111,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_hexdump();
+    input_file_hexdump() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_hexdump(const input_file_hexdump &);
+    input_file_hexdump(const input_file_hexdump &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_hexdump &operator=(const input_file_hexdump &);
+    input_file_hexdump &operator=(const input_file_hexdump &) = delete;
 };
 
 };

@@ -218,17 +218,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_c();
+    output_file_c() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_c(const output_file_c &);
+    output_file_c(const output_file_c &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_c &operator=(const output_file_c &);
+    output_file_c &operator=(const output_file_c &) = delete;
 };
 
 };

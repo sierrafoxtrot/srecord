@@ -100,12 +100,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker(const memory_walker &);
+    memory_walker(const memory_walker &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker &operator=(const memory_walker &);
+    memory_walker &operator=(const memory_walker &) = delete;
 };
 
 };

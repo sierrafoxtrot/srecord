@@ -81,17 +81,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    memory_walker_writer();
+    memory_walker_writer() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_writer(const memory_walker_writer &);
+    memory_walker_writer(const memory_walker_writer &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_writer &operator=(const memory_walker_writer &);
+    memory_walker_writer &operator=(const memory_walker_writer &) = delete;
 };
 
 }

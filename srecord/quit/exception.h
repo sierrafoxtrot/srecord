@@ -58,12 +58,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    quit_exception(const quit_exception &);
+    quit_exception(const quit_exception &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    quit_exception &operator=(const quit_exception &);
+    quit_exception &operator=(const quit_exception &) = delete;
 };
 
 };

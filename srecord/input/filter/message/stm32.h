@@ -107,17 +107,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_message_stm32();
+    input_filter_message_stm32() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_message_stm32(const input_filter_message_stm32 &);
+    input_filter_message_stm32(const input_filter_message_stm32 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_message_stm32 &operator=(const input_filter_message_stm32 &);
+    input_filter_message_stm32 &operator=(const input_filter_message_stm32 &) = delete;
 };
 
 };

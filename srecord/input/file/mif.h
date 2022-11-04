@@ -176,17 +176,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_mif();
+    input_file_mif() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_mif(const input_file_mif &);
+    input_file_mif(const input_file_mif &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_mif &operator=(const input_file_mif &);
+    input_file_mif &operator=(const input_file_mif &) = delete;
 };
 
 };

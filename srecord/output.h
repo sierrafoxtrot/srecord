@@ -213,12 +213,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    output(const output &);
+    output(const output &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output &operator=(const output &);
+    output &operator=(const output &) = delete;
 };
 
 };

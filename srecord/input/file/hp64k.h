@@ -98,17 +98,17 @@ private:
     /**
      * The default constructor.  Do not use.
      */
-    input_file_hp64k();
+    input_file_hp64k() = delete;
 
     /**
      * The copy constructor.  Do not use.
      */
-    input_file_hp64k(const input_file_hp64k &);
+    input_file_hp64k(const input_file_hp64k &) = delete;
 
     /**
      * The assignment operator.  Do not use.
      */
-    input_file_hp64k &operator=(const input_file_hp64k &);
+    input_file_hp64k &operator=(const input_file_hp64k &) = delete;
 };
 
 };

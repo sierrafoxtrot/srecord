@@ -150,7 +150,7 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    memory_chunk();
+    memory_chunk() = delete;
 };
 
 bool operator == (const srecord::memory_chunk &, const srecord::memory_chunk &);

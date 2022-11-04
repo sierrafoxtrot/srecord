@@ -93,17 +93,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_catenate();
+    input_catenate() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_catenate(const input_catenate &);
+    input_catenate(const input_catenate &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_catenate &operator=(const input_catenate &);
+    input_catenate &operator=(const input_catenate &) = delete;
 };
 
 };

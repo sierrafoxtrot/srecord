@@ -71,17 +71,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_generator_constant();
+    input_generator_constant() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_generator_constant(const input_generator_constant &);
+    input_generator_constant(const input_generator_constant &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_generator_constant &operator=(const input_generator_constant &);
+    input_generator_constant &operator=(const input_generator_constant &) = delete;
 };
 
 };

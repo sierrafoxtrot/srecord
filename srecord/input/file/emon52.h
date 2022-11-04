@@ -77,17 +77,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_emon52();
+    input_file_emon52() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_emon52(const input_file_emon52 &);
+    input_file_emon52(const input_file_emon52 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_emon52 &operator=(const input_file_emon52 &);
+    input_file_emon52 &operator=(const input_file_emon52 &) = delete;
 };
 
 };

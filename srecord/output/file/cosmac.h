@@ -112,17 +112,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_cosmac();
+    output_file_cosmac() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_cosmac(const output_file_cosmac &);
+    output_file_cosmac(const output_file_cosmac &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_cosmac &operator=(const output_file_cosmac &);
+    output_file_cosmac &operator=(const output_file_cosmac &) = delete;
 };
 
 };

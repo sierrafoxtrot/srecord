@@ -137,17 +137,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_split();
+    input_filter_split() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_split(const input_filter_split &);
+    input_filter_split(const input_filter_split &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_split &operator=(const input_filter_split &);
+    input_filter_split &operator=(const input_filter_split &) = delete;
 };
 
 };

@@ -89,18 +89,18 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_checksum_bitnot();
+    input_filter_checksum_bitnot() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_checksum_bitnot(const input_filter_checksum_bitnot &);
+    input_filter_checksum_bitnot(const input_filter_checksum_bitnot &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
     input_filter_checksum_bitnot &operator=(
-            const input_filter_checksum_bitnot &);
+            const input_filter_checksum_bitnot &) = delete;
 };
 
 };

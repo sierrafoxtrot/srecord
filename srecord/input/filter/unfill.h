@@ -107,17 +107,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_unfill();
+    input_filter_unfill() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_unfill(const input_filter_unfill &);
+    input_filter_unfill(const input_filter_unfill &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_unfill &operator=(const input_filter_unfill &);
+    input_filter_unfill &operator=(const input_filter_unfill &) = delete;
 };
 
 };

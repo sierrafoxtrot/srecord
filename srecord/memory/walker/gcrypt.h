@@ -81,17 +81,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    memory_walker_gcrypt();
+    memory_walker_gcrypt() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_gcrypt(const memory_walker_gcrypt &);
+    memory_walker_gcrypt(const memory_walker_gcrypt &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_gcrypt &operator=(const memory_walker_gcrypt &);
+    memory_walker_gcrypt &operator=(const memory_walker_gcrypt &) = delete;
 };
 
 };

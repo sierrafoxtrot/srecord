@@ -117,17 +117,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_intel();
+    output_file_intel() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_intel(const output_file_intel &);
+    output_file_intel(const output_file_intel &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_intel &operator=(const output_file_intel &);
+    output_file_intel &operator=(const output_file_intel &) = delete;
 };
 
 };

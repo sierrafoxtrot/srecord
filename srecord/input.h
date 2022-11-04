@@ -170,12 +170,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    input(const input &);
+    input(const input &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input &operator=(const input &);
+    input &operator=(const input &) = delete;
 };
 
 };

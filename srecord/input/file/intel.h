@@ -131,17 +131,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_intel();
+    input_file_intel() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_intel(const input_file_intel &);
+    input_file_intel(const input_file_intel &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_intel &operator=(const input_file_intel &);
+    input_file_intel &operator=(const input_file_intel &) = delete;
 };
 
 };

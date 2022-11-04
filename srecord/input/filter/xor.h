@@ -76,17 +76,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_xor();
+    input_filter_xor() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_xor(const input_filter_xor &);
+    input_filter_xor(const input_filter_xor &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_xor &operator=(const input_filter_xor &);
+    input_filter_xor &operator=(const input_filter_xor &) = delete;
 };
 
 };

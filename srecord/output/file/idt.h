@@ -140,19 +140,19 @@ private:
       * The default constructor.
       * Do not use.
       */
-    output_file_idt();
+    output_file_idt() = delete;
 
     /**
       * The copy constructor.
       * Do not use.
       */
-    output_file_idt(const output_file_idt &);
+    output_file_idt(const output_file_idt &) = delete;
 
     /**
       * The assignment operator.
       * Do not use.
       */
-    output_file_idt &operator=(const output_file_idt &);
+    output_file_idt &operator=(const output_file_idt &) = delete;
 };
 
 };

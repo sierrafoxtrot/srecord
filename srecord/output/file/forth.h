@@ -96,17 +96,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_forth();
+    output_file_forth() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_forth(const output_file_forth &);
+    output_file_forth(const output_file_forth &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_forth &operator=(const output_file_forth &);
+    output_file_forth &operator=(const output_file_forth &) = delete;
 };
 
 };

@@ -151,17 +151,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_coe();
+    output_file_coe() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_coe(const output_file_coe &);
+    output_file_coe(const output_file_coe &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_coe &operator=(const output_file_coe &);
+    output_file_coe &operator=(const output_file_coe &) = delete;
 };
 
 };

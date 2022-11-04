@@ -104,17 +104,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_spasm();
+    input_file_spasm() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_spasm(const input_file_spasm &);
+    input_file_spasm(const input_file_spasm &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_spasm &operator=(const input_file_spasm &);
+    input_file_spasm &operator=(const input_file_spasm &) = delete;
 };
 
 };

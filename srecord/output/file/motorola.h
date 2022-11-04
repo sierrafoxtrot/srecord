@@ -154,12 +154,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_motorola(const output_file_motorola &);
+    output_file_motorola(const output_file_motorola &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_motorola &operator=(const output_file_motorola &);
+    output_file_motorola &operator=(const output_file_motorola &) = delete;
 };
 
 };

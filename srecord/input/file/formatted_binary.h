@@ -102,17 +102,17 @@ private:
     /**
       * The default constructor.
       */
-    input_file_formatted_binary();
+    input_file_formatted_binary() = delete;
 
     /**
       * The copy constructor.
       */
-    input_file_formatted_binary(const input_file_formatted_binary &);
+    input_file_formatted_binary(const input_file_formatted_binary &) = delete;
 
     /**
       * The assignment operator.
       */
-    input_file_formatted_binary &operator=(const input_file_formatted_binary &);
+    input_file_formatted_binary &operator=(const input_file_formatted_binary &) = delete;
 };
 
 };

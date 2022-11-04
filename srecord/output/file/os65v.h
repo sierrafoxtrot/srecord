@@ -106,17 +106,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_os65v();
+    output_file_os65v() = delete;
 
     /**
       * Copy constructor.  Do not use.
       */
-    output_file_os65v(const output_file_os65v &);
+    output_file_os65v(const output_file_os65v &) = delete;
 
     /**
       * Assignment operator.  Do not use.
       */
-    output_file_os65v &operator=(const output_file_os65v &);
+    output_file_os65v &operator=(const output_file_os65v &) = delete;
 };
 
 };

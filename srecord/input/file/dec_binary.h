@@ -112,12 +112,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_dec_binary(const input_file_dec_binary &);
+    input_file_dec_binary(const input_file_dec_binary &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_dec_binary &operator=(const input_file_dec_binary &);
+    input_file_dec_binary &operator=(const input_file_dec_binary &) = delete;
 };
 
 };

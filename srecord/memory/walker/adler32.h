@@ -75,12 +75,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_adler32(const memory_walker_adler32 &);
+    memory_walker_adler32(const memory_walker_adler32 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_adler32 &operator=(const memory_walker_adler32 &);
+    memory_walker_adler32 &operator=(const memory_walker_adler32 &) = delete;
 };
 
 };

@@ -101,18 +101,18 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_message_fletcher16();
+    input_filter_message_fletcher16() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_message_fletcher16(const input_filter_message_fletcher16 &);
+    input_filter_message_fletcher16(const input_filter_message_fletcher16 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
     input_filter_message_fletcher16 &operator=(
-        const input_filter_message_fletcher16 &);
+        const input_filter_message_fletcher16 &) = delete;
 };
 
 };

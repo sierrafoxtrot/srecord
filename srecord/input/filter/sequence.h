@@ -79,17 +79,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_sequence();
+    input_filter_sequence() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_sequence(const input_filter_sequence &);
+    input_filter_sequence(const input_filter_sequence &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_sequence &operator=(const input_filter_sequence &);
+    input_filter_sequence &operator=(const input_filter_sequence &) = delete;
 };
 
 };

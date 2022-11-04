@@ -147,17 +147,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_mips_flash();
+    input_file_mips_flash() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_mips_flash(const input_file_mips_flash &);
+    input_file_mips_flash(const input_file_mips_flash &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_mips_flash &operator=(const input_file_mips_flash &);
+    input_file_mips_flash &operator=(const input_file_mips_flash &) = delete;
 };
 
 };

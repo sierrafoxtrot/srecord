@@ -84,18 +84,18 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_interval_minimum();
+    input_filter_interval_minimum() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_interval_minimum(const input_filter_interval_minimum &);
+    input_filter_interval_minimum(const input_filter_interval_minimum &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
     input_filter_interval_minimum &operator=(
-        const input_filter_interval_minimum &);
+        const input_filter_interval_minimum &) = delete;
 };
 
 };

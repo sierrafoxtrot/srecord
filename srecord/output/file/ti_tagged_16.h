@@ -119,17 +119,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_ti_tagged_16();
+    output_file_ti_tagged_16() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_ti_tagged_16(const output_file_ti_tagged_16 &);
+    output_file_ti_tagged_16(const output_file_ti_tagged_16 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_ti_tagged_16 &operator=(const output_file_ti_tagged_16 &);
+    output_file_ti_tagged_16 &operator=(const output_file_ti_tagged_16 &) = delete;
 };
 
 };

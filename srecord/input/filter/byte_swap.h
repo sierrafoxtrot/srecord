@@ -87,17 +87,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_byte_swap();
+    input_filter_byte_swap() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_byte_swap(const input_filter_byte_swap &);
+    input_filter_byte_swap(const input_filter_byte_swap &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_byte_swap &operator=(const input_filter_byte_swap &);
+    input_filter_byte_swap &operator=(const input_filter_byte_swap &) = delete;
 };
 
 };

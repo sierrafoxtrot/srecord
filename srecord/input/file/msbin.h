@@ -186,17 +186,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_msbin();
+    input_file_msbin() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_msbin(const input_file_msbin &);
+    input_file_msbin(const input_file_msbin &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_msbin &operator=(const input_file_msbin &);
+    input_file_msbin &operator=(const input_file_msbin &) = delete;
 };
 
 };

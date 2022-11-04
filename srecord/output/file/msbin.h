@@ -225,17 +225,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_msbin();
+    output_file_msbin() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_msbin(const output_file_msbin &);
+    output_file_msbin(const output_file_msbin &) = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_msbin &operator=(const output_file_msbin &);
+    output_file_msbin &operator=(const output_file_msbin &) = delete;
 };
 
 };

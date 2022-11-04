@@ -78,17 +78,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_offset();
+    input_filter_offset() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_offset(const input_filter_offset &);
+    input_filter_offset(const input_filter_offset &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_offset &operator=(const input_filter_offset &);
+    input_filter_offset &operator=(const input_filter_offset &) = delete;
 };
 
 };

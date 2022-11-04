@@ -146,17 +146,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_ppx();
+    input_file_ppx() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_ppx(const input_file_ppx &);
+    input_file_ppx(const input_file_ppx &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_ppx &operator=(const input_file_ppx &);
+    input_file_ppx &operator=(const input_file_ppx &) = delete;
 };
 
 };

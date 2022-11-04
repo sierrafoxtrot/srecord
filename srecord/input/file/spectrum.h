@@ -99,17 +99,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_spectrum();
+    input_file_spectrum() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_spectrum(const input_file_spectrum &);
+    input_file_spectrum(const input_file_spectrum &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_spectrum &operator=(const input_file_spectrum &);
+    input_file_spectrum &operator=(const input_file_spectrum &) = delete;
 };
 
 };

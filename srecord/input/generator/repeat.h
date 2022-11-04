@@ -100,17 +100,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_generator_repeat();
+    input_generator_repeat() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_generator_repeat(const input_generator_repeat &);
+    input_generator_repeat(const input_generator_repeat &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_generator_repeat &operator=(const input_generator_repeat &);
+    input_generator_repeat &operator=(const input_generator_repeat &) = delete;
 };
 
 };

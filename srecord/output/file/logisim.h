@@ -81,19 +81,19 @@ private:
       * The default constructor.
       * Do not use.
       */
-    output_file_logisim();
+    output_file_logisim() = delete;
 
     /**
       * The copy constructor.
       * Do not use.
       */
-    output_file_logisim(const output_file_logisim &rhs);
+    output_file_logisim(const output_file_logisim &rhs) = delete;
 
     /**
       * The assignment operator.
       * Do not use.
       */
-    output_file_logisim &operator=(const output_file_logisim &rhs);
+    output_file_logisim &operator=(const output_file_logisim &rhs) = delete;
 };
 
 };

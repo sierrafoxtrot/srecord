@@ -78,17 +78,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_binary();
+    input_file_binary() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_binary(const input_file_binary &);
+    input_file_binary(const input_file_binary &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_binary &operator=(const input_file_binary &);
+    input_file_binary &operator=(const input_file_binary &) = delete;
 };
 
 };

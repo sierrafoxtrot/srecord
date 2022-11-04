@@ -143,17 +143,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_hexdump();
+    output_file_hexdump() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_hexdump(const output_file_hexdump &);
+    output_file_hexdump(const output_file_hexdump &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_hexdump &operator=(const output_file_hexdump &);
+    output_file_hexdump &operator=(const output_file_hexdump &) = delete;
 };
 
 };

@@ -121,17 +121,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_checksum();
+    input_filter_checksum() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_checksum(const input_filter_checksum &);
+    input_filter_checksum(const input_filter_checksum &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_checksum &operator=(const input_filter_checksum &);
+    input_filter_checksum &operator=(const input_filter_checksum &) = delete;
 };
 
 };

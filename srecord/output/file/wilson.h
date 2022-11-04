@@ -116,17 +116,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_wilson();
+    output_file_wilson() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_wilson(const output_file_wilson &);
+    output_file_wilson(const output_file_wilson &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_wilson &operator=(const output_file_wilson &);
+    output_file_wilson &operator=(const output_file_wilson &) = delete;
 };
 
 };

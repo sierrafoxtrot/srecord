@@ -113,17 +113,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_tektronix();
+    input_file_tektronix() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_tektronix(const input_file_tektronix &);
+    input_file_tektronix(const input_file_tektronix &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_tektronix &operator=(const input_file_tektronix &);
+    input_file_tektronix &operator=(const input_file_tektronix &) = delete;
 };
 
 };

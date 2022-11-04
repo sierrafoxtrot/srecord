@@ -129,17 +129,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_four_packed_code();
+    input_file_four_packed_code() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_four_packed_code(const input_file_four_packed_code &);
+    input_file_four_packed_code(const input_file_four_packed_code &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_four_packed_code &operator=(const input_file_four_packed_code &);
+    input_file_four_packed_code &operator=(const input_file_four_packed_code &) = delete;
 };
 
 };

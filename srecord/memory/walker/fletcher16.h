@@ -102,17 +102,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    memory_walker_fletcher16();
+    memory_walker_fletcher16() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_fletcher16(const memory_walker_fletcher16 &);
+    memory_walker_fletcher16(const memory_walker_fletcher16 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_fletcher16 &operator=(const memory_walker_fletcher16 &);
+    memory_walker_fletcher16 &operator=(const memory_walker_fletcher16 &) = delete;
 };
 
 };

@@ -107,17 +107,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_tektronix();
+    output_file_tektronix() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_tektronix(const output_file_tektronix &);
+    output_file_tektronix(const output_file_tektronix &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_tektronix &operator=(const output_file_tektronix &);
+    output_file_tektronix &operator=(const output_file_tektronix &) = delete;
 };
 
 };

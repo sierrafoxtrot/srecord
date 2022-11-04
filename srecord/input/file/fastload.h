@@ -108,17 +108,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_fastload();
+    input_file_fastload() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_fastload(const input_file_fastload &);
+    input_file_fastload(const input_file_fastload &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_fastload &operator=(const input_file_fastload &);
+    input_file_fastload &operator=(const input_file_fastload &) = delete;
 };
 
 };

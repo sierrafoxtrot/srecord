@@ -94,17 +94,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_mos_tech();
+    input_file_mos_tech() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_mos_tech(const input_file_mos_tech &);
+    input_file_mos_tech(const input_file_mos_tech &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_mos_tech &operator=(const input_file_mos_tech &);
+    input_file_mos_tech &operator=(const input_file_mos_tech &) = delete;
 };
 
 };

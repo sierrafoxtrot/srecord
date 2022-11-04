@@ -108,17 +108,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_ppx();
+    output_file_ppx() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_ppx(const output_file_ppx &);
+    output_file_ppx(const output_file_ppx &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_ppx &operator=(const output_file_ppx &);
+    output_file_ppx &operator=(const output_file_ppx &) = delete;
 };
 
 };

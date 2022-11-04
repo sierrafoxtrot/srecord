@@ -112,18 +112,18 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_tektronix_extended();
+    output_file_tektronix_extended() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_tektronix_extended(const output_file_tektronix_extended &);
+    output_file_tektronix_extended(const output_file_tektronix_extended &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
     output_file_tektronix_extended &operator=(
-        const output_file_tektronix_extended &);
+        const output_file_tektronix_extended &) = delete;
 };
 
 };

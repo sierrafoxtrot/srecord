@@ -65,17 +65,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_generator_random();
+    input_generator_random() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_generator_random(const input_generator_random &);
+    input_generator_random(const input_generator_random &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_generator_random &operator=(const input_generator_random &);
+    input_generator_random &operator=(const input_generator_random &) = delete;
 };
 
 };

@@ -54,12 +54,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    quit_normal(const quit_normal &);
+    quit_normal(const quit_normal &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    quit_normal &operator=(const quit_normal &);
+    quit_normal &operator=(const quit_normal &) = delete;
 };
 
 };

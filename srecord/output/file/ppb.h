@@ -129,17 +129,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_ppb();
+    output_file_ppb() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_ppb(const output_file_ppb &);
+    output_file_ppb(const output_file_ppb &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_ppb &operator=(const output_file_ppb &);
+    output_file_ppb &operator=(const output_file_ppb &) = delete;
 };
 
 };

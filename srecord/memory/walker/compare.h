@@ -124,17 +124,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    memory_walker_compare();
+    memory_walker_compare() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_compare(const memory_walker_compare &);
+    memory_walker_compare(const memory_walker_compare &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_compare &operator=(const memory_walker_compare &);
+    memory_walker_compare &operator=(const memory_walker_compare &) = delete;
 };
 
 };

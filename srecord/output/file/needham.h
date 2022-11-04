@@ -106,17 +106,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_needham();
+    output_file_needham() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_needham(const output_file_needham &);
+    output_file_needham(const output_file_needham &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_needham &operator=(const output_file_needham &);
+    output_file_needham &operator=(const output_file_needham &) = delete;
 };
 
 };

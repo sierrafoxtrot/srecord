@@ -109,17 +109,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_stewie();
+    output_file_stewie() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_stewie(const output_file_stewie &);
+    output_file_stewie(const output_file_stewie &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_stewie &operator=(const output_file_stewie &);
+    output_file_stewie &operator=(const output_file_stewie &) = delete;
 };
 
 };

@@ -94,18 +94,18 @@ private:
     /**
       * The default constructor.
       */
-    input_filter_interval_length();
+    input_filter_interval_length() = delete;
 
     /**
       * The copy constructor.
       */
-    input_filter_interval_length(const input_filter_interval_length &);
+    input_filter_interval_length(const input_filter_interval_length &) = delete;
 
     /**
       * The assignment operator.
       */
     input_filter_interval_length &operator=(
-        const input_filter_interval_length &);
+        const input_filter_interval_length &) = delete;
 };
 
 };

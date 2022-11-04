@@ -99,17 +99,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_ascii_hex();
+    input_file_ascii_hex() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_ascii_hex(const input_file_ascii_hex &);
+    input_file_ascii_hex(const input_file_ascii_hex &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_ascii_hex &operator=(const input_file_ascii_hex &);
+    input_file_ascii_hex &operator=(const input_file_ascii_hex &) = delete;
 };
 
 };

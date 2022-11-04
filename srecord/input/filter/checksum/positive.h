@@ -88,18 +88,18 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_checksum_positive();
+    input_filter_checksum_positive() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_checksum_positive(const input_filter_checksum_positive &);
+    input_filter_checksum_positive(const input_filter_checksum_positive &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
     input_filter_checksum_positive &operator=(
-        const input_filter_checksum_positive &);
+        const input_filter_checksum_positive &) = delete;
 };
 
 };

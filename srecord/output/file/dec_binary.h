@@ -113,17 +113,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_dec_binary();
+    output_file_dec_binary() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_dec_binary(const output_file_dec_binary &);
+    output_file_dec_binary(const output_file_dec_binary &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_dec_binary &operator=(const output_file_dec_binary &);
+    output_file_dec_binary &operator=(const output_file_dec_binary &) = delete;
 };
 
 };

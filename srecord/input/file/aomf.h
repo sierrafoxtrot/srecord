@@ -136,12 +136,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_aomf(const input_file_aomf &);
+    input_file_aomf(const input_file_aomf &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_aomf &operator=(const input_file_aomf &);
+    input_file_aomf &operator=(const input_file_aomf &) = delete;
 };
 
 };

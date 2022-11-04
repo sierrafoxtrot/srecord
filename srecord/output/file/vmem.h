@@ -125,17 +125,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_vmem();
+    output_file_vmem() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_vmem(const output_file_vmem &);
+    output_file_vmem(const output_file_vmem &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_vmem &operator=(const output_file_vmem &);
+    output_file_vmem &operator=(const output_file_vmem &) = delete;
 };
 
 };

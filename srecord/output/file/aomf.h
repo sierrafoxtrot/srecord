@@ -128,12 +128,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_aomf(const output_file_aomf &);
+    output_file_aomf(const output_file_aomf &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_aomf &operator=(const output_file_aomf &);
+    output_file_aomf &operator=(const output_file_aomf &) = delete;
 };
 
 };

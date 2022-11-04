@@ -85,18 +85,18 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_interval_maximum();
+    input_filter_interval_maximum() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_interval_maximum(const input_filter_interval_maximum &);
+    input_filter_interval_maximum(const input_filter_interval_maximum &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
     input_filter_interval_maximum &operator=(
-        const input_filter_interval_maximum &);
+        const input_filter_interval_maximum &) = delete;
 };
 
 };

@@ -124,17 +124,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_ti_txt();
+    input_file_ti_txt() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_ti_txt(const input_file_ti_txt &);
+    input_file_ti_txt(const input_file_ti_txt &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_ti_txt &operator=(const input_file_ti_txt &);
+    input_file_ti_txt &operator=(const input_file_ti_txt &) = delete;
 };
 
 };

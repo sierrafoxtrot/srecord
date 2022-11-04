@@ -76,12 +76,12 @@ private:
     /**
       * The copy constructor.  No not use.
       */
-    memory_walker_continuity(const memory_walker_continuity &);
+    memory_walker_continuity(const memory_walker_continuity &) = delete;
 
     /**
       * The assignment operator.  No not use.
       */
-    memory_walker_continuity &operator=(const memory_walker_continuity &);
+    memory_walker_continuity &operator=(const memory_walker_continuity &) = delete;
 };
 
 };

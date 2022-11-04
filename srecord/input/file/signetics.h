@@ -76,17 +76,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_signetics();
+    input_file_signetics() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_signetics(const input_file_signetics &);
+    input_file_signetics(const input_file_signetics &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_signetics &operator=(const input_file_signetics &);
+    input_file_signetics &operator=(const input_file_signetics &) = delete;
 
     /**
       * The read_inner method is used to read one line/record from

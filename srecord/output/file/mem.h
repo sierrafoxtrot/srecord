@@ -143,17 +143,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_mem();
+    output_file_mem() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_mem(const output_file_mem &);
+    output_file_mem(const output_file_mem &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_mem &operator=(const output_file_mem &);
+    output_file_mem &operator=(const output_file_mem &) = delete;
 };
 
 };

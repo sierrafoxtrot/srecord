@@ -90,17 +90,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_crop();
+    input_filter_crop() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_crop(const input_filter_crop &);
+    input_filter_crop(const input_filter_crop &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_crop &operator=(const input_filter_crop &);
+    input_filter_crop &operator=(const input_filter_crop &) = delete;
 };
 
 };

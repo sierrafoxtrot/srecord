@@ -96,17 +96,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_spectrum();
+    output_file_spectrum() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_spectrum(const output_file_spectrum &);
+    output_file_spectrum(const output_file_spectrum &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_spectrum &operator=(const output_file_spectrum &);
+    output_file_spectrum &operator=(const output_file_spectrum &) = delete;
 };
 
 };

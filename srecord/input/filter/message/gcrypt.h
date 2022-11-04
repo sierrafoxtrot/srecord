@@ -321,17 +321,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_message_gcrypt();
+    input_filter_message_gcrypt() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_message_gcrypt(const input_filter_message_gcrypt &);
+    input_filter_message_gcrypt(const input_filter_message_gcrypt &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_message_gcrypt &operator=(const input_filter_message_gcrypt &);
+    input_filter_message_gcrypt &operator=(const input_filter_message_gcrypt &) = delete;
 };
 
 };

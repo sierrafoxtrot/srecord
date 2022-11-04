@@ -84,17 +84,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_random_fill();
+    input_filter_random_fill() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_random_fill(const input_filter_random_fill &);
+    input_filter_random_fill(const input_filter_random_fill &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_random_fill &operator=(const input_filter_random_fill &);
+    input_filter_random_fill &operator=(const input_filter_random_fill &) = delete;
 };
 
 };

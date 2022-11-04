@@ -102,12 +102,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_trs80(const input_file_trs80 &);
+    input_file_trs80(const input_file_trs80 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_trs80 &operator=(const input_file_trs80 &);
+    input_file_trs80 &operator=(const input_file_trs80 &) = delete;
 };
 
 };

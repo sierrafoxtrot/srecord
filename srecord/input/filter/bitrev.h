@@ -63,17 +63,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_bitrev();
+    input_filter_bitrev() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_bitrev(const input_filter_bitrev &);
+    input_filter_bitrev(const input_filter_bitrev &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_bitrev &operator=(const input_filter_bitrev &);
+    input_filter_bitrev &operator=(const input_filter_bitrev &) = delete;
 };
 
 };

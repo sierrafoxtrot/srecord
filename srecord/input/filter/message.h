@@ -124,17 +124,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_message();
+    input_filter_message() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_message(const input_filter_message &);
+    input_filter_message(const input_filter_message &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_message &operator=(const input_filter_message &);
+    input_filter_message &operator=(const input_filter_message &) = delete;
 };
 
 };

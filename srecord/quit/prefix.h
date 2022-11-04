@@ -75,17 +75,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    quit_prefix();
+    quit_prefix() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    quit_prefix(const quit_prefix &);
+    quit_prefix(const quit_prefix &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    quit_prefix &operator=(const quit_prefix &);
+    quit_prefix &operator=(const quit_prefix &) = delete;
 };
 
 };

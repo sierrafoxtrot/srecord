@@ -112,17 +112,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_stewie();
+    input_file_stewie() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_stewie(const input_file_stewie &);
+    input_file_stewie(const input_file_stewie &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_stewie &operator=(const input_file_stewie &);
+    input_file_stewie &operator=(const input_file_stewie &) = delete;
 };
 
 };

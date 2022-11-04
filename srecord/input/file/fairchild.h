@@ -101,17 +101,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_fairchild();
+    input_file_fairchild() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_fairchild(const input_file_fairchild &);
+    input_file_fairchild(const input_file_fairchild &) = delete;
 
     /**
       * The assignment operator.
       */
-    input_file_fairchild &operator=(const input_file_fairchild &);
+    input_file_fairchild &operator=(const input_file_fairchild &) = delete;
 };
 
 };

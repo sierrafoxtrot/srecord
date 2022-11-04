@@ -119,17 +119,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_basic();
+    output_file_basic() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_basic(const output_file_basic &);
+    output_file_basic(const output_file_basic &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_basic &operator=(const output_file_basic &);
+    output_file_basic &operator=(const output_file_basic &) = delete;
 };
 
 };

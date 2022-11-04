@@ -95,12 +95,12 @@ private:
     /**
       * The copy constructor.  No not use.
       */
-    memory_walker_crc16(const memory_walker_crc16 &);
+    memory_walker_crc16(const memory_walker_crc16 &) = delete;
 
     /**
       * The assignment operator.  No not use.
       */
-    memory_walker_crc16 &operator=(const memory_walker_crc16 &);
+    memory_walker_crc16 &operator=(const memory_walker_crc16 &) = delete;
 };
 
 };

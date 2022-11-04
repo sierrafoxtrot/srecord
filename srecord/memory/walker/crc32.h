@@ -81,12 +81,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_crc32(const memory_walker_crc32 &);
+    memory_walker_crc32(const memory_walker_crc32 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_crc32 &operator=(const memory_walker_crc32 &);
+    memory_walker_crc32 &operator=(const memory_walker_crc32 &) = delete;
 };
 
 };

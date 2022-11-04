@@ -93,17 +93,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_atmel_generic();
+    output_file_atmel_generic() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_atmel_generic(const output_file_atmel_generic &);
+    output_file_atmel_generic(const output_file_atmel_generic &) = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_atmel_generic &operator=(const output_file_atmel_generic &);
+    output_file_atmel_generic &operator=(const output_file_atmel_generic &) = delete;
 };
 
 };

@@ -113,17 +113,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_interval();
+    input_filter_interval() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_interval(const input_filter_interval &);
+    input_filter_interval(const input_filter_interval &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_interval &operator=(const input_filter_interval &);
+    input_filter_interval &operator=(const input_filter_interval &) = delete;
 };
 
 };

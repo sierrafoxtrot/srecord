@@ -74,12 +74,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_fletcher32(const memory_walker_fletcher32 &);
+    memory_walker_fletcher32(const memory_walker_fletcher32 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_fletcher32 &operator=(const memory_walker_fletcher32 &);
+    memory_walker_fletcher32 &operator=(const memory_walker_fletcher32 &) = delete;
 };
 
 };
