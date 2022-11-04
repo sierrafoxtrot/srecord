@@ -49,7 +49,7 @@ rand32() -> long
 }
 
 
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
+#define SIZEOF(a) (sizeof(a) / sizeof((a)[0]))
 #define ENDOF(a) ((a) + SIZEOF(a))
 
 static bool ready;

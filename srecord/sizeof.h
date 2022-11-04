@@ -20,7 +20,7 @@
 #ifndef SRECORD_SIZEOF_H
 #define SRECORD_SIZEOF_H
 
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
+#define SIZEOF(a) (sizeof(a) / sizeof((a)[0]))
 #define ENDOF(a) ((a) + SIZEOF(a))
 
 #endif // SRECORD_SIZEOF_H
