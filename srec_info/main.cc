@@ -37,7 +37,7 @@ main(int argc, char **argv) -> int
 {
     srecord::arglex_tool cmdline(argc, argv);
     cmdline.token_first();
-    typedef std::vector<srecord::input::pointer> infile_t;
+    using infile_t = std::vector<srecord::input::pointer>;
     infile_t infile;
     bool verbose = false;
 

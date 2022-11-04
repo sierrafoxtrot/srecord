@@ -73,7 +73,7 @@ private:
       */
     input_file_ti_tagged_16(const std::string &file_name);
 
-    typedef input_file inherited;
+    using inherited = input_file;
 
     /**
       * The read_inner method is used to read a single line of input.

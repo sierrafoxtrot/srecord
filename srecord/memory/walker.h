@@ -33,7 +33,7 @@ class record; // forward
 class memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker> pointer;
+    using pointer = std::shared_ptr<memory_walker>;
 
     /**
       * The destructor.

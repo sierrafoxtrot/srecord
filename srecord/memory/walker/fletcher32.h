@@ -33,7 +33,7 @@ class memory_walker_fletcher32:
     public memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker_fletcher32> pointer;
+    using pointer = std::shared_ptr<memory_walker_fletcher32>;
 
     /**
       * The destructor.

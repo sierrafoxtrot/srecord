@@ -55,12 +55,12 @@ public:
     /**
       * The type of record addresses.
       */
-    typedef uint32_t address_t;
+    using address_t = uint32_t;
 
     /**
       * The type of record data values.
       */
-    typedef uint8_t data_t;
+    using data_t = uint8_t;
 
     /**
       * The default constructor.  The record will have an

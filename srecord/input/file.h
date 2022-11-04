@@ -36,7 +36,7 @@ class input_file:
     public input
 {
 public:
-    typedef std::shared_ptr<input_file> pointer;
+    using pointer = std::shared_ptr<input_file>;
 
     /**
       * The destructor.

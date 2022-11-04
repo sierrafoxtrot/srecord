@@ -189,7 +189,7 @@ private:
       * instance variable.  Also used to simplify the code use to
       * manipulate the 'tables' instance variable.
      */
-    typedef std::vector<const table_ty *> table_ptr_vec_t;
+    using table_ptr_vec_t = std::vector<const table_ty *>;
 
     /**
       * The tables instance variable tracks the command line token
@@ -349,7 +349,7 @@ private:
     void read_arguments_file(const char *filename);
 
 private:
-    typedef std::list<std::string> deprecated_options_t;
+    using deprecated_options_t = std::list<std::string>;
 
     /**
       * The deprecated_options instance variable is used to remember the

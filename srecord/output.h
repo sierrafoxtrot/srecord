@@ -38,7 +38,7 @@ class record; // forward
 class output
 {
 public:
-    typedef std::shared_ptr<output> pointer;
+    using pointer = std::shared_ptr<output>;
 
     /**
       * The destructor.

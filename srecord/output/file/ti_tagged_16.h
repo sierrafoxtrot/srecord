@@ -82,7 +82,7 @@ protected:
     auto format_name() const -> const char * override;
 
 private:
-    typedef output_file inherited;
+    using inherited = output_file;
 
     /**
       * The address instance variable is used to remember the current

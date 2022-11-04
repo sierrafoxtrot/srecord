@@ -44,8 +44,8 @@ public:
       * The data_t type is used to parameterise the integer type used in
       * the interval.
       */
-    typedef uint32_t data_t;
-    typedef uint64_t long_data_t;
+    using data_t = uint32_t;
+    using long_data_t = uint64_t;
 
     /**
       * The default constructor.  The interval is empty.

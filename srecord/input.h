@@ -38,7 +38,7 @@ class quit; // forward
 class input
 {
 public:
-    typedef std::shared_ptr<input> pointer;
+    using pointer = std::shared_ptr<input>;
 
     /**
       * The destructor.

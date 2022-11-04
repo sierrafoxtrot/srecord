@@ -74,7 +74,7 @@ private:
     auto get_char() -> int override;
 
 private:
-    typedef input_file inherited;
+    using inherited = input_file;
 
     /**
       * The read_inner method is used to read a single line of input.

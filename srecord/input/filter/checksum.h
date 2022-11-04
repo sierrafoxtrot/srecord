@@ -66,7 +66,7 @@ protected:
     input_filter_checksum(input::pointer deeper, int address,
         int length, endian_t end, int width = 1);
 
-    typedef unsigned long sum_t;
+    using sum_t = unsigned long;
 
     /**
       * The checksum_address instance variable is used to remember where

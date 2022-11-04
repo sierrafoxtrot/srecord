@@ -32,7 +32,7 @@ class input_file_tektronix_extended:
 {
 public:
     // make the code around gt_nibble more readable.
-    typedef input_file inherited;
+    using inherited = input_file;
 
     /**
       * The destructor.

@@ -34,7 +34,7 @@ class memory_walker_crc32:
     public memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker_crc32> pointer;
+    using pointer = std::shared_ptr<memory_walker_crc32>;
 
     /**
       * The destructor.

@@ -60,7 +60,7 @@
 #include <srecord/record.h>
 
 
-typedef srecord::input_file::pointer (*func_p)(const std::string &file_name);
+using func_p = srecord::input_file::pointer (*)(const std::string &);
 
 static func_p table[] =
 {
