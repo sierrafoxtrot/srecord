@@ -69,7 +69,7 @@ srecord::output_file_intel16::write_inner(int tag, unsigned long address,
     put_byte(tmp[0]);
     put_byte(tmp[1]);
     put_byte(tag);
-    const unsigned char *data_p = (const unsigned char *)data;
+    const auto *data_p = (const unsigned char *)data;
     for (int j = 0; j < data_nbytes; ++j)
     {
         // Note: bytes are ordered HI,LO so we invert

@@ -51,7 +51,7 @@ srecord::memory_walker_compare::observe(unsigned long addr, const void *p,
     interval wrongTemp;
     interval unsetTemp;
 
-    unsigned char *data = (unsigned char *)p;
+    auto *data = (unsigned char *)p;
     for (int j = 0; j < len; ++j)
     {
         if (other.set_p(addr + j))

@@ -68,7 +68,7 @@ srecord::output_file_intel::write_inner(int tag, unsigned long address,
     put_byte(tmp[0]);
     put_byte(tmp[1]);
     put_byte(tag);
-    const unsigned char *data_p = (const unsigned char *)data;
+    const auto *data_p = (const unsigned char *)data;
     for (int j = 0; j < data_nbytes; ++j)
         put_byte(data_p[j]);
     put_byte(-checksum_get());

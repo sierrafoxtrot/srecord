@@ -29,7 +29,7 @@ srecord::arglex::test_ambiguous()
     int number_of_errors = 0;
     for
     (
-        table_ptr_vec_t::const_iterator it1 = tables.begin();
+        auto it1 = tables.begin();
         it1 != tables.end();
         ++it1
     )

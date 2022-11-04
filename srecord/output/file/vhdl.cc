@@ -61,7 +61,7 @@ srecord::output_file_vhdl::command_line(srecord::arglex_tool *cmdln)
 
         if (a1 > 0)
         {
-            unsigned a2 = (unsigned)a1;
+            auto a2 = (unsigned)a1;
             if (a2 > sizeof(unsigned long))
                 a2 = sizeof(unsigned long);
             bytes_per_word = a2;
