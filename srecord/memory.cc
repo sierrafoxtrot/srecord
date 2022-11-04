@@ -74,9 +74,9 @@ srecord::memory::clear()
     for (int j = 0; j < nchunks; ++j) {
         delete chunk[j];
 }
-    if (chunk) {
+    
         delete [] chunk;
-}
+
     nchunks = 0;
     nchunks_max = 0;
     chunk = nullptr;

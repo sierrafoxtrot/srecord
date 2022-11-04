@@ -115,9 +115,9 @@ o96name(int x) -> const char *
 
 srecord::input_file_aomf::~input_file_aomf()
 {
-    if (current_buffer) {
+    
         delete [] current_buffer;
-}
+
 }
 
 
@@ -164,9 +164,9 @@ srecord::input_file_aomf::slurp() -> int
     --length; // includes checksum byte
     if (length > current_maximum)
     {
-        if (current_buffer) {
+        
             delete [] current_buffer;
-}
+
         while (current_maximum < length) {
             current_maximum = current_maximum * 2 + 64;
 }
