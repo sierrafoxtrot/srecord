@@ -50,8 +50,8 @@ private:
       * @param range
       *     The address range to be filled.
       */
-    input_filter_fill(const input::pointer &deeper, int value,
-        const interval &range);
+    input_filter_fill(const input::pointer &a1, int a2,
+        const interval &a3);
 
 public:
     /**
@@ -70,7 +70,7 @@ public:
 
 protected:
     // See base class for documentation.
-    auto read(record &record) -> bool override;
+    auto read(record &result) -> bool override;
 
 private:
     /**
@@ -96,7 +96,7 @@ private:
     /**
       * The generate method is used to generate fill records.
       */
-    auto generate(record &record) -> bool;
+    auto generate(record &result) -> bool;
 
     /**
       * The default constructor.  Do not use.

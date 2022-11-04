@@ -45,11 +45,11 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static auto create(const std::string &file_name) -> pointer;
+    static auto create(const std::string &a_filename) -> pointer;
 
 protected:
     // See base class for documentation.
-    auto read(record &record) -> bool override;
+    auto read(record &result) -> bool override;
 
     // See base class for documentation.
     auto get_file_format_name() const -> const char * override;
@@ -64,7 +64,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    input_file_ascii_hex(const std::string &file_name);
+    input_file_ascii_hex(const std::string &a_filename);
 
     /**
       * The read_inner method is used to read a single record from

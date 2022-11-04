@@ -47,7 +47,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    output_file_mos_tech(const std::string &file_name);
+    output_file_mos_tech(const std::string &a_filename);
 
 public:
     /**

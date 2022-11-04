@@ -48,7 +48,7 @@ public:
 
 protected:
     // See base class for documentation.
-    auto read(class record &rec) -> bool override;
+    auto read(class record &result) -> bool override;
 
     // See base class for documentation.
     auto get_file_format_name() const -> const char * override;

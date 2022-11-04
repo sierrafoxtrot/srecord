@@ -49,7 +49,7 @@ public:
 
 protected:
     // See base class for documentation.
-    auto read(record &record) -> bool override;
+    auto read(record &result) -> bool override;
 
     // See base class for documentation.
     auto get_file_format_name() const -> const char * override;
@@ -64,7 +64,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    input_file_ti_tagged(const std::string &file_name);
+    input_file_ti_tagged(const std::string &a_filename);
 
     /**
       * The get_char method is used to get a character from the input.

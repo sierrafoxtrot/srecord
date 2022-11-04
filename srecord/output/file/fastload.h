@@ -47,7 +47,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    output_file_fastload(const std::string &file_name);
+    output_file_fastload(const std::string &a_filename);
 
 public:
     /**
@@ -59,7 +59,7 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    static auto create(const std::string &file_name) -> pointer;
+    static auto create(const std::string &a_filename) -> pointer;
 
 protected:
     // See base class for documentation.
@@ -132,7 +132,7 @@ private:
       * The put_number method is used to write the given value to the
       * output in base-64 (big endian) notation.
       */
-    void put_number(unsigned long value, int ndigits);
+    void put_number(unsigned long n, int min_digits);
 
     /**
       * The put_command method is used to write a command to the file,

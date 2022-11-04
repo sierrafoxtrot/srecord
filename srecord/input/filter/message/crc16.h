@@ -74,7 +74,7 @@ protected:
     void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    void process(const memory &input, record &output) override;
+    void process(const memory &buffer, record &result) override;
 
     // See base class for documentation.
     auto get_algorithm_name() const -> const char * override;

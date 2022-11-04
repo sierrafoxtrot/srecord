@@ -45,7 +45,7 @@ private:
       * @param deeper
       *     The input source to be filtered.
       */
-    input_filter_not(const input::pointer &deeper);
+    input_filter_not(const input::pointer &arg);
 
 public:
     /**

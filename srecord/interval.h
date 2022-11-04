@@ -59,7 +59,7 @@ public:
       *    The interval is constructed to contain the single integer
       *    value supplied.
       */
-    interval(data_t val);
+    interval(data_t first);
 
     /**
       * The constructor.  The interval contains all values >= lo and < hi.
@@ -70,7 +70,7 @@ public:
       *     The upper bound of the integers in the initial interval;
       *     this value is not included.
       */
-    interval(data_t lo, data_t hi);
+    interval(data_t first, data_t last);
 
     /**
       * The copy constructor.
@@ -116,7 +116,7 @@ public:
       *     True if the given value is a member of the interval,
       *     false if it is not.
       */
-    auto member(data_t val) const -> bool;
+    auto member(data_t datum) const -> bool;
 
     /**
       * The empty method is used to test whether the interval is empty.
@@ -180,7 +180,7 @@ public:
       * @returns
       *     new padded interval.
       */
-    auto pad(int x) const -> interval;
+    auto pad(int mult) const -> interval;
 
     /**
       * The representation method is used to manufacture a textural

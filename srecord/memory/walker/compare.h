@@ -61,7 +61,7 @@ private:
       *     Whether or not to check that the data agrees as well as the
       *     address ranges.
       */
-    memory_walker_compare(const memory &other, bool check_wrong);
+    memory_walker_compare(const memory &a1, bool a2);
 
 public:
     /**
@@ -74,7 +74,7 @@ public:
       *     Whether or not to check that the data agrees as well as the
       *     address ranges.
       */
-    static auto create(const memory &other, bool check_wrong) -> pointer;
+    static auto create(const memory &a1, bool a2) -> pointer;
 
     // See base class for documentation.
     void observe(unsigned long, const void *, int) override;

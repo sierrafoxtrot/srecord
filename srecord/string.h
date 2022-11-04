@@ -35,7 +35,7 @@ auto string_url_encode(const std::string &text) -> std::string;
   */
 auto string_url_decode(const std::string &text) -> std::string;
 
-auto string_quote_c(const std::string &text) -> std::string;
+auto string_quote_c(const std::string &arg) -> std::string;
 
 };
 

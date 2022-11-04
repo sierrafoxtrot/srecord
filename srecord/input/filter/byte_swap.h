@@ -45,7 +45,7 @@ private:
       * @param deeper
       *     The incoming data source to be byte-swapped.
       */
-    input_filter_byte_swap(const input::pointer &deeper);
+    input_filter_byte_swap(const input::pointer &arg);
 
 public:
     /**

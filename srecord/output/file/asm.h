@@ -46,7 +46,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    output_file_asm(const std::string &file_name);
+    output_file_asm(const std::string &filename);
 
 public:
     /**

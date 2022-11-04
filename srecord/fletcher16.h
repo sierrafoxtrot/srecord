@@ -112,7 +112,7 @@ public:
       * @param data_size
       *     The size of the data to be checksummed, in bytes.
       */
-    void nextbuf(const void *data, size_t data_size);
+    void nextbuf(const void *data, size_t nbytes);
 
 private:
     /**

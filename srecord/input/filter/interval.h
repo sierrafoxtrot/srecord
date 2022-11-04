@@ -108,7 +108,7 @@ private:
       * @param record
       *     where to put the result
       */
-    auto generate(record &record) -> bool;
+    auto generate(record &result) -> bool;
 
     /**
       * The default constructor.  Do not use.

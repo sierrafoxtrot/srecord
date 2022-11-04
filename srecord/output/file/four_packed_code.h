@@ -107,7 +107,7 @@ private:
       * write a single line of output.
       */
     void write_inner(unsigned long address, const void *data,
-        int data_length);
+        int data_nbytes);
 
     /**
       * See base class for documentation.  We over-ride this method

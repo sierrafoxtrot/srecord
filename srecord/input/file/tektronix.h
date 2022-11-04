@@ -64,7 +64,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    input_file_tektronix(const std::string &file_name);
+    input_file_tektronix(const std::string &a_filename);
 
     /**
       * The get_nibble method gets a single hex-digit from input.

@@ -72,7 +72,7 @@ public:
       * @param bitdir
       *     the bit direction of the CRC
       */
-    static auto create(crc16::seed_mode_t seed_mode, bool augment_flag,
+    static auto create(crc16::seed_mode_t arg1, bool a_augment,
         unsigned short polynomial, crc16::bit_direction_t bitdir) -> pointer;
 
     /**

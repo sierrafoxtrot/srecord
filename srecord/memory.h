@@ -67,7 +67,7 @@ public:
       * the memory_chunk::set method, to set the byte within
       * the chunk.
       */
-    void set(unsigned long address, int value);
+    void set(unsigned long address, int datum);
 
     /**
       * The get method is used to fetch the value of the byte at
@@ -121,7 +121,7 @@ public:
       *     warning: issue a warning and continue (default)
       *     error: issue a fatal error message, and exit failure (default).
       */
-    void reader(const input::pointer &input, defcon_t redundant_bytes,
+    void reader(const input::pointer &ifp, defcon_t redundant_bytes,
         defcon_t contradictory_bytes);
 
     /**
@@ -167,7 +167,7 @@ public:
       *     encoding for of the more interesting non-printable byte values
       *     (eg. "%3F").
       */
-    void set_header(const std::string &value);
+    void set_header(const std::string &text);
 
     /**
       * The get_execution_start_address method is used to determine the
@@ -181,7 +181,7 @@ public:
       * The set_execution_start_address method may be used to set the
       * execution start address record.
       */
-    void set_execution_start_address(unsigned long value);
+    void set_execution_start_address(unsigned long addr);
 
     /**
       * The has_holes method may be used to determine whether or not the
@@ -307,7 +307,7 @@ private:
       * The copy method is used to copy the chunks from the `src' into
       * this object.  Only to be used the the assignment operator.
       */
-    void copy(const memory &src);
+    void copy(const memory &rhs);
 };
 
 };

@@ -53,7 +53,7 @@ public:
     /**
       * The constructor.
       */
-    memory_chunk(unsigned long address);
+    memory_chunk(unsigned long arg);
 
     /**
       * The copy constructor.
@@ -74,7 +74,7 @@ public:
       * The set method is used to set the byte at the given offset within
       * the chunk.
       */
-    void set(unsigned long offset, int value);
+    void set(unsigned long offset, int datum);
 
     /**
       * The get method is used to get the value at the given offset

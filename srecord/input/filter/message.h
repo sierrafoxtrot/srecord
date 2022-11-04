@@ -57,7 +57,7 @@ protected:
     input_filter_message(const input::pointer &deeper, bool naked = false);
 
     // See base class for documentation.
-    auto read(record &record) -> bool override;
+    auto read(record &result) -> bool override;
 
     /**
       * The process method is used to process the data from the input.

@@ -107,7 +107,7 @@ public:
       *     Turn the hash into a HMAC.
       */
     static auto create(const input::pointer &deeper, unsigned long address,
-        const char *algo, bool hmac = false) -> pointer;
+        const char *name, bool hmac = false) -> pointer;
 
     /**
       * The create_md5 class method is used to create a new dynamically

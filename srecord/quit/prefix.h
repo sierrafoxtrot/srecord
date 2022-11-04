@@ -43,14 +43,14 @@ public:
       * messages, once prefixed.  The given string is used as the
       * line prefix.
       */
-    quit_prefix(quit &deeper, const char *prefix);
+    quit_prefix(quit &a1, const char *a2);
 
     /**
       * A constructor.  The given handler is used to process the
       * messages, once prefixed.  The given string is used as the
       * line prefix.
       */
-    quit_prefix(quit &deeper, std::string prefix);
+    quit_prefix(quit &a1, std::string a2);
 
     // See base class for documentation.
     void exit(int) override;

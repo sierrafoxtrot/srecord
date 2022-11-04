@@ -55,8 +55,8 @@ private:
       *     wider, it is assumed that they are aligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    input_filter_checksum_positive(const input::pointer &deeper, int address,
-        int length, endian_t end, int width = 1);
+    input_filter_checksum_positive(const input::pointer &a1, int a2,
+        int a3, endian_t end, int a5 = 1);
 
 public:
     /**
@@ -77,8 +77,8 @@ public:
       *     wider, it is assumed that they are aligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    static auto create(const input::pointer &deeper, int address, int length,
-        endian_t end, int width = 1) -> pointer;
+    static auto create(const input::pointer &deeper, int a2, int a3,
+        endian_t end, int a5 = 1) -> pointer;
 
 protected:
     // See base class for documentation.

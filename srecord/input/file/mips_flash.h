@@ -62,7 +62,7 @@ public:
 
 protected:
     // See base class for documentation.
-    auto read(record &record) -> bool override;
+    auto read(record &result) -> bool override;
 
     // See base class for documentation.
     auto get_file_format_name() const -> const char * override;
@@ -80,7 +80,7 @@ private:
       *     The byte order.
       */
     input_file_mips_flash(const std::string &file_name,
-        endian_t end = endian_big);
+        endian_t a_endian = endian_big);
 
     /**
       * The read_inner method is used to read a record from the file.

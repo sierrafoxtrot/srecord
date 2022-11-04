@@ -49,8 +49,8 @@ private:
       * @param range
       *     the address range to be filled.
       */
-    input_filter_random_fill(const input::pointer &deeper,
-        const interval &range);
+    input_filter_random_fill(const input::pointer &a1,
+        const interval &a3);
 
 public:
     /**

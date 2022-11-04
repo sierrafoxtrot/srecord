@@ -58,8 +58,8 @@ private:
       * @param width
       *     The width of each stripe within the swathe.
       */
-    input_filter_unsplit(const input::pointer &deeper, int modulus, int offset,
-        int width);
+    input_filter_unsplit(const input::pointer &a1, int a2, int a3,
+        int a4);
 
 public:
     /**
@@ -75,8 +75,8 @@ public:
       * @param width
       *     The width of each stripe within the swathe.
       */
-    static auto create(const input::pointer &deeper, int modulus, int offset,
-        int width) -> pointer;
+    static auto create(const input::pointer &deeper, int a2, int a3,
+        int a4) -> pointer;
 
 protected:
     // See base class for documentation.

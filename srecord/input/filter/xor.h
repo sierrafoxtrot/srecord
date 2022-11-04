@@ -48,7 +48,7 @@ private:
       * @param value
       *     The value to be bit-wise XORed with each incoming data byte.
       */
-    input_filter_xor(const input::pointer &deeper, int value);
+    input_filter_xor(const input::pointer &a1, int a2);
 
 public:
     /**
@@ -60,7 +60,7 @@ public:
       * @param value
       *     The value to be bit-wise XORed with each incoming data byte.
       */
-    static auto create(const input::pointer &deeper, int value) -> pointer;
+    static auto create(const input::pointer &deeper, int a_mask) -> pointer;
 
 protected:
     // See base class for documentation.

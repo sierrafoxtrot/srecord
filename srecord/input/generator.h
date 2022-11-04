@@ -58,7 +58,7 @@ public:
 
 protected:
     // See base class for documentation
-    auto read(record &record) -> bool override;
+    auto read(record &result) -> bool override;
 
     // See base class for documentation
     void disable_checksum_validation() override;

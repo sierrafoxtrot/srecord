@@ -47,7 +47,7 @@ private:
       * @param mask
       *     The value to be bit-wise ANDed with each incoming data byte.
       */
-    input_filter_and(const input::pointer &deeper, int mask);
+    input_filter_and(const input::pointer &a1, int a2);
 
 public:
     /**
@@ -63,7 +63,7 @@ public:
 
 protected:
     // See base class for documentation.
-    auto read(record &record) -> bool override;
+    auto read(record &result) -> bool override;
 
 private:
     /**

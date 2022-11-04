@@ -139,7 +139,7 @@ protected:
       * The put_nibble method is used to send a hexadecimal digit (0..9,
       * A..F) to the output.  It calls put_char to send the output.
       */
-    void put_nibble(int value);
+    void put_nibble(int n);
 
     /**
       * The put_byte method is used to send a byte value to the output.
@@ -154,21 +154,21 @@ protected:
       * they have a special case.  Over-ride with caution, as it affects
       * many other methods.
       */
-    virtual void put_byte(unsigned char value);
+    virtual void put_byte(unsigned char n);
 
     /**
       * The put_word_be method is used to send a 16-bit value to the
       * output.  The #put_byte method is called twice, and the two byte
       * values are sent big-endian (most significant byte first).
       */
-    virtual void put_word_be(int value);
+    virtual void put_word_be(int n);
 
     /**
       * The put_word_le method is used to send a 16-bit value to the
       * output.  The #put_byte method is called twice, and the two byte
       * values are sent little-endian (least significant byte first).
       */
-    virtual void put_word_le(int value);
+    virtual void put_word_le(int n);
 
     /**
       * The put_3bytes_be method is used to send a 24-bit value to the
@@ -176,7 +176,7 @@ protected:
       * three byte values are sent big-endian (most significant byte
       * first).
       */
-    virtual void put_3bytes_be(unsigned long value);
+    virtual void put_3bytes_be(unsigned long n);
 
     /**
       * The put_3bytes_le method is used to send a 24-bit value to the
@@ -184,7 +184,7 @@ protected:
       * three byte values are sent little-endian (least significant byte
       * first).
       */
-    virtual void put_3bytes_le(unsigned long value);
+    virtual void put_3bytes_le(unsigned long n);
 
     /**
       * The put_4bytes_be method is used to send a 32-bit value to the
@@ -192,7 +192,7 @@ protected:
       * four byte values are sent big-endian (most significant byte
       * first).
       */
-    virtual void put_4bytes_be(unsigned long value);
+    virtual void put_4bytes_be(unsigned long n);
 
     /**
       * The put_4bytes_le method is used to send a 32-bit value to the
@@ -200,7 +200,7 @@ protected:
       * four byte values are sent little-endian (least significant byte
       * first).
       */
-    virtual void put_4bytes_le(unsigned long value);
+    virtual void put_4bytes_le(unsigned long n);
 
     /**
       * The checksum_reset method is used to set the running checksum to
@@ -244,7 +244,7 @@ protected:
       * The put_string method is used to send a nul-terminated C string
       * to the output.  Multiple calls to #put_char are made.
       */
-    void put_string(const char *text);
+    void put_string(const char *s);
 
     /**
       * The put_string method is used to send C++ string
@@ -253,7 +253,7 @@ protected:
       * @param text
       *     The string to print.
       */
-    void put_string(const std::string &text);
+    void put_string(const std::string &s);
 
     /**
       * The put_stringf method is used to send a formatted string to the
@@ -376,7 +376,7 @@ protected:
       * @param alignment
       *     The necessary byte alignment
       */
-    void fatal_alignment_error(int alignment);
+    void fatal_alignment_error(int multiple);
 
     /**
       * The fatal_hole_error method is used to report problems with

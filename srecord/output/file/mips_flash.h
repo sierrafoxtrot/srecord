@@ -87,7 +87,7 @@ private:
       * @param endian
       *     The byte order to expect.
       */
-    output_file_mips_flash(const std::string &file_name, endian_t endian);
+    output_file_mips_flash(const std::string &a_filename, endian_t endian);
 
     /**
       * The write_inner method is used to write a single line (record)

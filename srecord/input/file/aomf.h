@@ -45,7 +45,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    input_file_aomf(const std::string &file_name);
+    input_file_aomf(const std::string &a_filename);
 
 public:
     /**
@@ -57,7 +57,7 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static auto create(const std::string &file_name) -> pointer;
+    static auto create(const std::string &a_filename) -> pointer;
 
 protected:
     // See base class for documentation.

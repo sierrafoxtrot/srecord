@@ -49,7 +49,7 @@ private:
       *     The number of bytes to offset the addresses by.
       *     The value may be negative.
       */
-    input_filter_offset(const input::pointer &deeper, long nbytes);
+    input_filter_offset(const input::pointer &a1, long a2);
 
 public:
     /**

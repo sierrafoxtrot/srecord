@@ -63,7 +63,7 @@ protected:
       * @param deeper
       *     The deeper input to be filtered.
       */
-    input_filter(input::pointer deeper);
+    input_filter(input::pointer arg);
 
     //
     // I'd like this to be private, but srecord::input_filter_crc16 and

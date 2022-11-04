@@ -71,7 +71,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    input_file_signetics(const std::string &file_name);
+    input_file_signetics(const std::string &a_filename);
 
     /**
       * The default constructor.  Do not use.

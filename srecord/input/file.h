@@ -52,7 +52,7 @@ public:
       * @param cmdln
       *     The command line for context
       */
-    static auto guess(const std::string &file_name, arglex &cmdln) -> pointer;
+    static auto guess(const std::string &fn, arglex &cmdline) -> pointer;
 
     /**
       * The ignore_all_checksums method is used to set the global

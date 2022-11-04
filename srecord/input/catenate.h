@@ -47,7 +47,7 @@ private:
       * @param in2
       *     The second of the inputs to be read.
       */
-    input_catenate(pointer in1, pointer in2);
+    input_catenate(pointer a1, pointer a2);
 
 public:
     /**
@@ -59,7 +59,7 @@ public:
       * @param in2
       *     The second of the inputs to be read.
       */
-    static auto create(const pointer &in1, const pointer &in2) -> pointer;
+    static auto create(const pointer &a1, const pointer &a2) -> pointer;
 
 protected:
     // See base class for documentation.

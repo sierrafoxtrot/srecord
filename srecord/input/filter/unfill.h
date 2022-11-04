@@ -58,7 +58,7 @@ private:
       * @param minimum
       *     The minimum run length to be considered a hole.
       */
-    input_filter_unfill(const input::pointer &deeper, int value, int minimum);
+    input_filter_unfill(const input::pointer &a1, int a2, int a3);
 
 public:
     /**
@@ -72,7 +72,7 @@ public:
       * @param minimum
       *     The minimum run length to be considered a hole.
       */
-    static auto create(const input::pointer &deeper, int value, int minimum) -> pointer;
+    static auto create(const input::pointer &deeper, int a2, int a3) -> pointer;
 
 protected:
     // See base class for documentation.

@@ -63,7 +63,7 @@ protected:
       *     wider, it is assumed that they are aligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    input_filter_checksum(input::pointer deeper, int address,
+    input_filter_checksum(input::pointer a_input_filter, int address,
         int length, endian_t end, int width = 1);
 
     using sum_t = unsigned long;
@@ -115,7 +115,7 @@ protected:
       * @returns
       *     bool; false if end-of-file, true if data available
       */
-    auto generate(record &record) -> bool;
+    auto generate(record &result) -> bool;
 
 private:
     /**

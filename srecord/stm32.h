@@ -71,12 +71,12 @@ public:
     /**
       * The next method is used to advance the state by one byte.
       */
-    void next(unsigned char c);
+    void next(unsigned char x);
 
     /**
       * The nextbuf method is used to advance the state by a series of bytes.
       */
-    void nextbuf(const void *data, size_t data_size);
+    void nextbuf(const void *data, size_t nbytes);
 
     /**
       * Word size on the STM32

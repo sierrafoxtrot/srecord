@@ -43,7 +43,7 @@ private:
       * @param deeper
       *     The deeper input to be used as a data source.
       */
-    input_filter_bitrev(const input::pointer &deeper);
+    input_filter_bitrev(const input::pointer &arg);
 
 public:
     /**

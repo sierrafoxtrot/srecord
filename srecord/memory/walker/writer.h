@@ -46,7 +46,7 @@ private:
       * @param deeper
       *     where to write the output
       */
-    memory_walker_writer(output::pointer deeper);
+    memory_walker_writer(output::pointer arg);
 
 public:
     /**
@@ -56,7 +56,7 @@ public:
       * @param deeper
       *     where to write the output
       */
-    static auto create(const output::pointer &deeper) -> pointer;
+    static auto create(const output::pointer &arg) -> pointer;
 
 protected:
     // See base class for documentation.

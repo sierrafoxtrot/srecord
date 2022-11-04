@@ -43,14 +43,14 @@ private:
     /**
       * The constructor.
       */
-    input_filter_sequence(input::pointer deeper);
+    input_filter_sequence(input::pointer arg);
 
 public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
       */
-    static auto create(input::pointer deeper) -> pointer;
+    static auto create(input::pointer arg) -> pointer;
 
 protected:
     // See base class for documentation.

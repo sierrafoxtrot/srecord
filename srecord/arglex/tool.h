@@ -279,7 +279,7 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    auto get_interval(const char *err_msg_caption) -> interval;
+    auto get_interval(const char *name) -> interval;
 
     /**
       * The get_interval_small method may be used to parse an interval
@@ -321,7 +321,7 @@ private:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    auto get_interval_factor(const char *err_msg_caption) -> interval;
+    auto get_interval_factor(const char *name) -> interval;
 
     /**
       * The get_interval_term method is used to parse set-intersection
@@ -335,7 +335,7 @@ private:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    auto get_interval_term(const char *err_msg_caption) -> interval;
+    auto get_interval_term(const char *name) -> interval;
 
     /**
       * The get_address method is used to parse an address from the
@@ -345,7 +345,7 @@ private:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    void get_address(const char *err_msg_caption, unsigned long &addr);
+    void get_address(const char *name, unsigned long &addr);
 
     /**
       * The get_address_and_nbytes method is used to parse an address
@@ -355,7 +355,7 @@ private:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    void get_address_and_nbytes(const char *err_msg_caption,
+    void get_address_and_nbytes(const char *name,
             unsigned long &addr, int &nbytes);
 
     /**
@@ -366,7 +366,7 @@ private:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    void get_address_nbytes_width(const char *err_msg_caption,
+    void get_address_nbytes_width(const char *name,
         unsigned long &addr, int &nbytes, int &width);
 
     /**

@@ -48,7 +48,7 @@ private:
       * @param value
       *     The value to be bit-wise ORed with each incoming data byte.
       */
-    input_filter_or(const input::pointer &deeper, int value);
+    input_filter_or(const input::pointer &a1, int a2);
 
 public:
     /**

@@ -150,7 +150,7 @@ public:
       * name, and turn it into the minimum possible string for that
       * option.
       */
-    static auto abbreviate(const char *text) -> std::string;
+    static auto abbreviate(const char *s) -> std::string;
 
     /**
       * The test_ambiguous method is for debugging.  It verifies that
@@ -229,7 +229,7 @@ public:
       * The normal constructor.  The argv and argv should be those
       * passed to main().  Not manipulation is required.
       */
-    arglex(int argc, char **argv);
+    arglex(int ac, char **av);
 
     /**
       * The token_cur method is used to get the type of the current
@@ -271,7 +271,7 @@ public:
       * @param tok
       *     The ID of the token to be named.
       */
-    auto token_name(int tok) const -> const char *;
+    auto token_name(int n) const -> const char *;
 
     /**
       * The token_name method is used to obtain the name of the current
@@ -377,7 +377,7 @@ protected:
       *     The pattern that is deprecated.  Must be an entry in one of
       *     the tables, otherwise users are going to be VERY confused.
       */
-    void deprecated_option(const std::string &formal_name);
+    void deprecated_option(const std::string &old_fashioned);
 };
 
 };

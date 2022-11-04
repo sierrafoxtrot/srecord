@@ -100,8 +100,8 @@ public:
       *     How long the data is.
       *     assert(the_data_length < max_data_length);
       */
-    record(type_t the_type, address_t the_address, const data_t *the_data,
-        size_t the_data_length);
+    record(type_t a1, address_t a2, const data_t *a3,
+        size_t a4);
 
     /**
       * The assignment operator.
@@ -246,7 +246,7 @@ public:
       * @returns
       *     the decoded value
       */
-    static auto decode_big_endian(const data_t *data, size_t len) -> address_t;
+    static auto decode_big_endian(const data_t *buffer, size_t len) -> address_t;
 
     /**
       * The decode_little_endian method is used to extract 'len' bytes
@@ -260,7 +260,7 @@ public:
       * @returns
       *     the decoded value
       */
-    static auto decode_little_endian(const data_t *data, size_t len) -> address_t;
+    static auto decode_little_endian(const data_t *buffer, size_t len) -> address_t;
 
     /**
       * The decode method is used to extract 'len' bytes
@@ -301,7 +301,7 @@ public:
       *     The number of bytes to use to encode the data.
       *     Bits above the 8*len resolution will be discarded.
       */
-    static void encode_big_endian(data_t *data, address_t val, size_t len);
+    static void encode_big_endian(data_t *buffer, address_t val, size_t len);
 
     /**
       * The encode_little_endian method is used to break down
@@ -316,7 +316,7 @@ public:
       *     The number of bytes to use to encode the data.
       *     Bits above the 8*len resolution will be discarded.
       */
-    static void encode_little_endian(data_t *data, address_t val, size_t len);
+    static void encode_little_endian(data_t *buffer, address_t val, size_t len);
 
     /**
       * The encode method is used to break down 'val' into 'len' bytes
