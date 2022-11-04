@@ -39,9 +39,8 @@
 #include <srecord/output/file/intel.h>
 #include <srecord/output/file/intel16.h>
 #include <srecord/output/file/logisim.h>
-#include <srecord/output/file/mif.h>
 #include <srecord/output/file/mem.h>
-#include <srecord/output/file/coe.h>
+#include <srecord/output/file/mif.h>
 #include <srecord/output/file/mips_flash.h>
 #include <srecord/output/file/mos_tech.h>
 #include <srecord/output/file/motorola.h>
@@ -54,8 +53,8 @@
 #include <srecord/output/file/spasm.h>
 #include <srecord/output/file/spectrum.h>
 #include <srecord/output/file/stewie.h>
-#include <srecord/output/file/tektronix_extended.h>
 #include <srecord/output/file/tektronix.h>
+#include <srecord/output/file/tektronix_extended.h>
 #include <srecord/output/file/ti_tagged.h>
 #include <srecord/output/file/ti_tagged_16.h>
 #include <srecord/output/file/ti_txt.h>
