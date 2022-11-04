@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="-generate -random"
-. test_prelude
+. test_prelude.sh
 
 cat > test.ok << 'fubar'
 Format: Motorola S-Record
@@ -30,7 +30,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat -generate 0x123 0x456 -random \
-        -o test.srec -header HDR -start-addr 0
+    -o test.srec -header HDR -start-addr 0
 if test $? -ne 0; then fail; fi
 
 srec_info test.srec > test.out

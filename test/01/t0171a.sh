@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="read MIF"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 DEPTH = 14;

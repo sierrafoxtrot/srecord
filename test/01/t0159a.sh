@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="crc32 -xmodem"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00A0000746573742E696E30
@@ -40,7 +40,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -becrc32 0x40 -xmodem -o test.out > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi

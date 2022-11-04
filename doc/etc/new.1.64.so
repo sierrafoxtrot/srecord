@@ -47,7 +47,7 @@ the wrong way.
 .if t \(bu
 .\" srecord.1.63.D009
 .\" Change 26
-.\" sfinneran, Sat Jun 21 16:49:49 2014, Optionally compile without libgrcypt
+.\" sfinneran, Sat Jun 21 16:49:49 2014, Optionally compile without libgcrypt
 Added the ability to compile without libgcrypt if the user
 specifies the option \[hy]\[hy]without\[hy]gcrypt to configure. If gcrypt is
 missing, the user is prompted to either install it or explicitly

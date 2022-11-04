@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="TI-Tagged"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 00050        7FDD4F

@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="read mips flash"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 !R

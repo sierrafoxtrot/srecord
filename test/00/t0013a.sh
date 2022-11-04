@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="checksum filter"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B
@@ -37,7 +37,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in --Checksum_Positive_Big_Endian 0x100 -o  test.out
+srec_cat test.in --Checksum_Positive_Big_Endian 0x100 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -52,7 +52,7 @@ S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in --checksum-pos-little-endian 0x100 3 -o  test.out
+srec_cat test.in --checksum-pos-little-endian 0x100 3 -o test.out
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

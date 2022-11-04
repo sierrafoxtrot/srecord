@@ -17,12 +17,11 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-echo $* |
-tr ' ' '\12' |
-sort |
-while read f
-do
-        echo .so $f
-done
+echo "$@" |
+    tr ' ' '\12' |
+    sort |
+    while read -r f; do
+        echo .so "$f"
+    done
 
 exit 0

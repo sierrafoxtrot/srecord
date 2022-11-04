@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="memory chunk iterator"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in.srec << 'fubar'
 S00A0000746573742E696E30
@@ -52,9 +52,12 @@ if test $? -ne 0; then no_result; fi
 srec_cat test.in.srec -o test.in -bin
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -bin -exclude 0x40 0x44 -becrc32 0x40 -o test.out -bin \
-    > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+srec_cat test.in -bin -exclude 0x40 0x44 -becrc32 0x40 \
+    -o test.out -bin > LOG 2>&1
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 srec_cmp -v test.in -bin test.out -bin > log
 if test $? -ne 2; then fail; fi

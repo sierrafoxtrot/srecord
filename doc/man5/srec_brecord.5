@@ -29,7 +29,7 @@ This data format is understood by Freescale MC68EZ328 Dragonball series
 processors on their internal UART.
 .SS Lines
 Each line contains hexadecimal data, each byte represented by two
-hexadecimal nybbles in upper case.  Characters not in this set, but
+hexadecimal nibbles in upper case.  Characters not in this set, but
 larger than 0x30 (e.g. lower case) will be ignored, less than 0x30
 (e.g. CR or LF) are considered record terminators.
 Comments are problematic; don't try this at home.

@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="fletcher16 seed"
-. test_prelude
+. test_prelude.sh
 
 srec_cat - -o test.in -bin << 'fubar'
 S00600004844521B

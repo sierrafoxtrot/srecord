@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="atmel generic format"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B
@@ -37,7 +37,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -o test.out -atmel-generic > LOG 2>&1
-if test $? -ne 1; then cat LOG; fail; fi
+if test $? -ne 1; then
+    cat LOG
+    fail
+fi
 
 diff test.ok LOG
 if test $? -ne 0; then fail; fi

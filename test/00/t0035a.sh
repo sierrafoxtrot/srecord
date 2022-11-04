@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="ascii-hex format"
-. test_prelude
+. test_prelude.sh
 
 # --------------------------------------------------------------------------
 #

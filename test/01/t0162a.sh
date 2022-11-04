@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="MOS Tech output"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B
@@ -33,8 +33,11 @@ cat > test.ok << 'fubar'
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat test.in -o test.out -mos-tech 2>LOG
-if test $? -ne 0; then cat LOG; fail; fi
+srec_cat test.in -o test.out -mos-tech 2> LOG
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi

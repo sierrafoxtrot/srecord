@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="-generate -constant"
-. test_prelude
+. test_prelude.sh
 
 cat > test.ok << 'fubar'
 S00600004844521B

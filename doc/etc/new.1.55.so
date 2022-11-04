@@ -21,7 +21,7 @@
 .if t \(bu
 .\" Change 21
 A bug has been fixed in the MsBin output, it now concatenates
-records correctly, and calaulate checksums appropriately.
+records correctly, and calculate checksums appropriately.
 .TP 2n
 .if n *
 .if t \(bu

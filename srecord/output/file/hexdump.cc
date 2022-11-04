@@ -77,7 +77,7 @@ srecord::output_file_hexdump::row_cache_print(void)
 
 
 static char
-hex_nybble(int n)
+hex_nibble(int n)
 {
     return "0123456789ABCDEF"[n & 15];
 }
@@ -86,8 +86,8 @@ hex_nybble(int n)
 static void
 hex_byte(char *buffer, int n)
 {
-    buffer[0] = hex_nybble(n >> 4);
-    buffer[1] = hex_nybble(n);
+    buffer[0] = hex_nibble(n >> 4);
+    buffer[1] = hex_nibble(n);
 }
 
 

@@ -1,3 +1,4 @@
+#!/bin/sh
 #
 #       srecord - Manipulate EPROM load files
 #       Copyright (C) 2008, 2010, 2012 Peter Miller
@@ -17,8 +18,7 @@
 #       <http://www.gnu.org/licenses/>.
 #
 
-if [ "$TEST_SUBJECT" = "fill me in" -o "$TEST_SUBJECT" = "" ]
-then
+if [ "$TEST_SUBJECT" = "fill me in" ] || [ "$TEST_SUBJECT" = "" ]; then
     echo '    You must set the TEST_SUBJECT environment variable' 1>&2
     echo '    at the top of your test script to something' 1>&2
     echo '    descriptive.' 1>&2
@@ -30,8 +30,6 @@ fi
 #
 here=$(pwd)
 test $? -eq 0 || exit 2
-arch=${1-.}
-bindir=$here/$arch/bin
 
 #
 # We are going to create a temporary directory for running tests within.
@@ -48,7 +46,7 @@ testdir=/tmp/srecord-$$
 tear_down()
 {
     set +x
-    cd $here
+    cd "$here" || exit 2
     rm -rf $testdir
 }
 
@@ -84,7 +82,7 @@ fail()
 # The no_result function (command) is used to declare a test to have
 # failed in an unexpected way, and exit.  This is used for any case
 # where the "scaffolding" of a test does no succeed, effectively making
-# the correctedness of the functionality being tested indeterminate.
+# the correctness of the functionality being tested indeterminate.
 # The exit code of 2 is dictated by Aegis, so Aegis can know the result
 # of running the test.
 #
@@ -98,18 +96,18 @@ no_result()
 #
 # Create our testing directory and cd into it.
 #
-mkdir $testdir
+mkdir "$testdir"
 test $? -eq 0 || exit 2
-cd $testdir
+cd "$testdir" || exit 2
 test $? -eq 0 || no_result
 
 # On cygwin, we need to have diff ignore the CR in CRLF sequences
 # otherwise we see diff output which looks to be identical but which
 # diff things differs.  And it does, by a carriage return.
-if diff --strip-trailing-cr /dev/null /dev/null > /dev/null 2>&1
-then
-    diffpath=`which diff`
-    diff() {
+if diff --strip-trailing-cr /dev/null /dev/null > /dev/null 2>&1; then
+    diffpath=$(which diff)
+    diff()
+    {
         $diffpath --strip-trailing-cr "$@"
     }
 fi

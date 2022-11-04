@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="vmem format"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 :1000A0000302050C3000800C010C2600E307560A01

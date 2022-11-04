@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="fill range padding"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B
@@ -40,7 +40,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -fill 0xFF -within test.in -range-pad 4 \
-        -o test.out > LOG 2>&1
+    -o test.out > LOG 2>&1
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

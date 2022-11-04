@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="tektronix write"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 /00000E0E48656C6C6F2C20576F726C64210AB3

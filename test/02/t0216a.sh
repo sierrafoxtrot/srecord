@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="read stag prom prog bin"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in.1 << 'fubar'
 S00600004844521B
@@ -477,6 +477,7 @@ if test $? -ne 0; then no_result; fi
 srec_cat test.in.2 -mot -o test.in -ppb
 if test $? -ne 0; then no_result; fi
 
+# cSpell:disable
 cat > test.ok << 'fubar'
 00000000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  #................
 00000010: 00 00 00 00 00 00 00 00 01 00 0A 00 00 00 5F 00  #.............._.
@@ -1295,6 +1296,7 @@ cat > test.ok << 'fubar'
 000035E0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  #................
 000035F0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  #................
 fubar
+# cSpell:enable
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -ppb -o test.out -hexdump
@@ -1302,8 +1304,6 @@ if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
-
-
 
 #
 # The things tested here, worked.

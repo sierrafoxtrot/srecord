@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="CRLF"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S109000068656C6C6F0AD8
@@ -35,10 +35,16 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.ok.srec -o test.ok -bin > LOG 2>&1
-if test $? -ne 0; then cat LOG; no_result; fi
+if test $? -ne 0; then
+    cat LOG
+    no_result
+fi
 
 srec_cat test.in -o test.out -crlf > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 cmp test.ok test.out
 if test $? -ne 0; then fail; fi

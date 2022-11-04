@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="input -max-addr"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in1 << 'fubar'
 S00600004844521B

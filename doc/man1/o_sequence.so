@@ -40,5 +40,5 @@ data records are not in strictly ascending address order.
 \f[B]Note:\fP This option must be used \f[I]before\fP the offending
 input file.  This is because if there are several files on the command
 line, each may need different settings.  The setting remains in force
-until the next \fB\-Ensable_Sequence_Warnings\fP option.
+until the next \fB\-Enable_Sequence_Warnings\fP option.
 .RE

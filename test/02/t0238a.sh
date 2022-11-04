@@ -18,16 +18,15 @@
 #
 
 TEST_SUBJECT="filter checksum negative"
-. test_prelude
-
+. test_prelude.sh
 
 # ----------  Negative Checksum  ----------------------------------------------
 #
 # Test the checksum of all bytes 0x01
 #
 srec_cat -gen 0 0x10 --const 0x01 \
-        -header=HDR -esa 0 \
-        > test.in
+    -header=HDR -esa 0 \
+    > test.in
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'
@@ -50,8 +49,8 @@ if test $? -ne 0; then fail; fi
 # Test the checksum of all bytes 0xFF
 #
 srec_cat -gen 0 0x10 --const 0xFF \
-        -header=HDR -esa 0 \
-        > test.in
+    -header=HDR -esa 0 \
+    > test.in
 if test $? -ne 0; then no_result; fi
 
 cat > test.ok << 'fubar'

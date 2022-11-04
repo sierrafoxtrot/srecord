@@ -17,13 +17,13 @@
 #       along with this program. If not, see
 #       <http://www.gnu.org/licenses/>.
 #
-groff "$@" 2>groff.log
+
+groff "$@" 2> groff.log
 es=$?
 cat groff.log 1>&2
 test $es = 0 || exit $es
 
-if grep "can't open" groff.log 2>/dev/null
-then
+if grep "can't open" groff.log 2> /dev/null; then
     exit 1
 fi
 

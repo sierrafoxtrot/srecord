@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="FourPackedCode format"
-. test_prelude
+. test_prelude.sh
 
 #---------------------------------------------------------------------------
 #

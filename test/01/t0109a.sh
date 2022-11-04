@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="ti-tagged-16 format"
-. test_prelude
+. test_prelude.sh
 
 # --------------------------------------------------------------------------
 #
@@ -41,12 +41,11 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -fill 0xFF -within test.in -range-padding 2 \
-        -o test.out -ti-tagged-16
+    -o test.out -ti-tagged-16
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
-
 
 # --------------------------------------------------------------------------
 #

@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="b-record"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 000000000E48656C6C6F2C20576F726C64210A

@@ -106,7 +106,7 @@ private:
     unsigned long get_byte_value;
 
     /**
-      * The garbage_waring instance variable is used by the read
+      * The garbage_warning instance variable is used by the read
       * method to record whether or not a warning about non-format
       * lines has been issued (only one warning is issued per file).
       */

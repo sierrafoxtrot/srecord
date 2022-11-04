@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="srecord::output_filter_reblock"
-. test_prelude
+. test_prelude.sh
 
 # Note: the position of this data depends on srecord::memory_chunk::size
 #        defined in srecord/memory/chunk.h
@@ -44,7 +44,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -o test.out --address-length=4 \
-        --output-block-size=29  --output-block-packing
+    --output-block-size=29 --output-block-packing
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

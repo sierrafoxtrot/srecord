@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="fill filter"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 :0400000501D0010025
@@ -72,9 +72,9 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -intel \
-        -exclude 0x1D00000 0x1D00004 \
-        -fill 0xff 0x1D00004 0x1D00400 \
-        -o test.out -header HDR
+    -exclude 0x1D00000 0x1D00004 \
+    -fill 0xff 0x1D00004 0x1D00400 \
+    -o test.out -header HDR
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

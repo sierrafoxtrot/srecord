@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="hexdump"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 Now is the time for all good men to come to the aid of their party.

@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="msbin write"
-. test_prelude
+. test_prelude.sh
 
 # Simple Motorola file
 cat > test.in << 'fubar'

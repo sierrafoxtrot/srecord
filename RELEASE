@@ -19,7 +19,7 @@ COMPLETE CURRENT BRANCH DEVELOPMENT
        then re-arrange the shortcut
 
             aegis -remove-project-alias srecord.cur
-            segis -new-projet-alias srecord-1.63 srecord.cur
+            aegis -new-project-alias srecord-1.63 srecord.cur
             ae_p srecord.cur
 
 UPDATING THE CHANGE LOG
@@ -65,7 +65,7 @@ UPDATE SOURCEFORGE AND WEBSITE
 
        now we update the aegis.repo on sf.net
 
-           ./rsync-sourceorge
+           ./rsync-sourceforge
               (the name could be changed to be more informative, if you like)
 
            ./rsync-web-site

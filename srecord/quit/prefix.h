@@ -67,7 +67,7 @@ private:
 
     /**
       * The deeper instance variable is used to remember which handler
-      * is to be used to process the error messages once the refix
+      * is to be used to process the error messages once the prefix
       * has been added.
       */
     quit &deeper;

@@ -1,0 +1,33 @@
+---
+name: MegaLinter
+on: [push, pull_request]
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: MegaLinter
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: MegaLinter
+        uses: oxsecurity/megalinter/flavors/dotnet@v6
+        env:
+          # All available variables are described in documentation
+          # https://megalinter.github.io/configuration/
+          VALIDATE_ALL_CODEBASE: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Archive production artifacts
+        if: ${{ success() }} || ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: MegaLinter reports
+          path: |
+            megalinter-reports
+            mega-linter.log
+          retention-days: 10

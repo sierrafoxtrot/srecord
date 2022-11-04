@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="Atmel Generic read"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 000000:2c01

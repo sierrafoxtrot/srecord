@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="length's width"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B
@@ -39,7 +39,6 @@ if test $? -ne 0; then no_result; fi
 
 srec_cat test.in --excl-length-b-e 0x1000 4 3 -o test.out
 if test $? -ne 0; then fail; fi
-
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi

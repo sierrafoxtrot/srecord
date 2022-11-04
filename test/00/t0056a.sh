@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="C-array"
-. test_prelude
+. test_prelude.sh
 
 mkdir foo
 test $? -eq 0 || no_result

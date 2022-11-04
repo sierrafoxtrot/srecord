@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="intel segment boundary"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B

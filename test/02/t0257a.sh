@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="Verbose srec_info output"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in.1 << 'fubar'
 S00600004844521B

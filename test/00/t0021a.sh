@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="intel segment addressing"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 :020000021000EC

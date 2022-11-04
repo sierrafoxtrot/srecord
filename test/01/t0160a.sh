@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="interval subtraction"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S005000068741E
@@ -35,9 +35,9 @@ if test $? -ne 0; then no_result; fi
 
 #
 # strictly speaking, the braces are redundant, but they are there (a) to
-# help the human reader, and (b) if we change the presedence.
+# help the human reader, and (b) if we change the precedence.
 #
-srec_cat test.in -fill 0xff -over { test.in -exclude -within test.in } \
+srec_cat test.in -fill 0xff -over \{ test.in -exclude -within test.in \} \
     -o test.out
 if test $? -ne 0; then fail; fi
 

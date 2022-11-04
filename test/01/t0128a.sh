@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="interval arithmetic"
-. test_prelude
+. test_prelude.sh
 
 # ---------- set difference ------------------------------------------------
 
@@ -32,7 +32,7 @@ Data:   0000 - 00FF
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat -generate { 0 0x1000 -diff 0x100 0xE00 } -random \
+srec_cat -generate \{ 0 0x1000 -diff 0x100 0xE00 \} -random \
     -o test.srec -header HDR -start-addr 0
 if test $? -ne 0; then fail; fi
 
@@ -52,7 +52,7 @@ Data:   0100 - 0FFF
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat -generate { 0 0x1000 -intersect 0x100 0xE000 } -random \
+srec_cat -generate \{ 0 0x1000 -intersect 0x100 0xE000 \} -random \
     -o test.srec -header HDR -start-addr 0
 if test $? -ne 0; then fail; fi
 
@@ -74,7 +74,7 @@ Data:   0080 - 00C7
 fubar
 if test $? -ne 0; then no_result; fi
 
-srec_cat -generate { { 0 200 400 600 800 1000 } -intersect 0x80 0xE000 } \
+srec_cat -generate \{ \{ 0 200 400 600 800 1000 \} -intersect 0x80 0xE000 \} \
     -random \
     -o test.srec -header HDR -start-addr 0
 if test $? -ne 0; then fail; fi

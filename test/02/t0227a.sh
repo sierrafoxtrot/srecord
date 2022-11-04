@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="trs80 long data records"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in.srec << 'fubar'
 S00600004844521B

@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="vhdl alignment"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B
@@ -53,7 +53,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -fill 0 -within test.in -range-padding 4 \
-        -o test.out -vhdl 4
+    -o test.out -vhdl 4
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
@@ -84,7 +84,7 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -fill 0xFF -within test.in -range-padding 2 \
-        -o test.out -vhdl 2
+    -o test.out -vhdl 2
 if test $? -ne 0; then fail; fi
 
 diff test.ok test.out

@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="srec_cat -header"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 Hello, World!
@@ -34,7 +34,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -bin -o test.out -header "This is a test" > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
@@ -47,7 +50,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_info test.out > test.out2 2> LOG
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out2
 if test $? -ne 0; then fail; fi

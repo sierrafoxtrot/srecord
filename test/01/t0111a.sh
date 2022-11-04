@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="ti-txt"
-. test_prelude
+. test_prelude.sh
 
 # this example taken from TI documentation
 cat > test.in << 'fubar'

@@ -21,18 +21,18 @@
 .if t \(bu
 .\" Change 16
 Luc Steynen <LucSteynen@edna.be> discovered that the
-\-hecksum\[hy]big\[hy]endian option was a counter\[hy]intuitive alias for
+\-checksum\[hy]big\[hy]endian option was a counter\[hy]intuitive alias for
 the the \-checksum\[hy]bitnot\[hy]big\[hy]endian option.
 The \-checksum\[hy]big\[hy]endian option is now deprecated, in favor
 of the \-checksum\[hy]bitnot\[hy]big\[hy]endian option; the code will warn
-uers of the old option they will need to change.
+users of the old option they will need to change.
 Ditto little\[hy]endian variants
 .TP 2n
 .if n *
 .if t \(bu
 .\" Change 19
-Alin Pilkington <apilkington@moog.com> found that the Tektronics
-Extended format was calculating the record length incorrectory.
+Alin Pilkington <apilkington@moog.com> found that the Tektronix
+Extended format was calculating the record length incorrectly.
 Thanks you for the bug report.
 This has been fixed for both reading and writing.
 .TP 2n

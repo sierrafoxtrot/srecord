@@ -22,7 +22,7 @@ Use this option to permit a file to contain redundant values for some
 memory locations.  The default is for this condition to be a warning.
 .TP 4n
 ignore
-No warning or error is issued whena redundant settings are detected.
+No warning or error is issued when a redundant settings are detected.
 .TP 4n
 warning
 A warning is issued when a redundant settings are observed, the warning
@@ -43,7 +43,7 @@ ignore
 No warning or error is issued when contradictory setting is detected.
 .TP 4n
 warning
-A warning is issued when a vontradictory settings are observed, the warning
+A warning is issued when a contradictory settings are observed, the warning
 includes the problematic address, and values.
 .TP 4n
 error

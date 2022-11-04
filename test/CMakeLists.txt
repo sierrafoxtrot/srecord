@@ -37,30 +37,23 @@ file(GLOB_RECURSE TEST_URL_DECODE_SRC "url_decode/*.cc")
 add_executable(test_url_decode ${TEST_URL_DECODE_SRC})
 target_link_libraries(test_url_decode lib_srecord)
 
-configure_file(test_prelude.sh test_prelude COPYONLY
-  FILE_PERMISSIONS
-    OWNER_READ OWNER_WRITE OWNER_EXECUTE
-    GROUP_READ GROUP_EXECUTE
-    WORLD_READ WORLD_EXECUTE)
-
 # Tests
 enable_testing()
 file(GLOB_RECURSE SRECORD_TESTS "*/*.sh")
 foreach(t ${SRECORD_TESTS})
-  cmake_path(GET t FILENAME filename)
+    cmake_path(GET t FILENAME filename)
 
-  # Extract test description from .sh file
-  file(STRINGS ${t} test_subject REGEX ^TEST_SUBJECT)
-  string(REGEX REPLACE "TEST_SUBJECT\=" "" subject ${test_subject})
-  set(test_name "${filename}: ${subject}")
+    # Extract test description from .sh file
+    file(STRINGS ${t} test_subject REGEX ^TEST_SUBJECT)
+    string(REGEX REPLACE "TEST_SUBJECT\=" "" subject ${test_subject})
+    set(test_name "${filename}: ${subject}")
 
-  add_test(NAME ${test_name} COMMAND sh ${t})
-  set_property(TEST ${test_name} APPEND PROPERTY
-      ENVIRONMENT_MODIFICATION
-      PATH=path_list_prepend:${CMAKE_BINARY_DIR}
-      PATH=path_list_prepend:${CMAKE_BINARY_DIR}/srec_cat
-      PATH=path_list_prepend:${CMAKE_BINARY_DIR}/srec_cmp
-      PATH=path_list_prepend:${CMAKE_BINARY_DIR}/srec_info
-      PATH=path_list_prepend:${CMAKE_BINARY_DIR}/test
-      PATH=path_list_prepend:${CMAKE_SOURCE_DIR}/script)
+    add_test(NAME ${test_name} COMMAND sh ${t})
+    set_property(TEST ${test_name} APPEND PROPERTY
+        ENVIRONMENT_MODIFICATION
+        PATH=path_list_prepend:${CMAKE_BINARY_DIR}/srec_cat
+        PATH=path_list_prepend:${CMAKE_BINARY_DIR}/srec_cmp
+        PATH=path_list_prepend:${CMAKE_BINARY_DIR}/srec_info
+        PATH=path_list_prepend:${CMAKE_BINARY_DIR}/test
+        PATH=path_list_prepend:${CMAKE_SOURCE_DIR}/test)
 endforeach()

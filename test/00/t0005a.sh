@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="binary file"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 Hello, World!

@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="WindowsNT binary"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B
@@ -29,10 +29,16 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -o test.int -bin > log 2>&1
-if test $? -ne 0; then cat log; fail; fi
+if test $? -ne 0; then
+    cat log
+    fail
+fi
 
 srec_cat test.int -bin -o test.out -header HDR > log 2>&1
-if test $? -ne 0; then cat log; fail; fi
+if test $? -ne 0; then
+    cat log
+    fail
+fi
 
 diff test.in test.out
 if test $? -ne 0; then fail; fi

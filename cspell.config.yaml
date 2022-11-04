@@ -1,0 +1,261 @@
+---
+"$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json"
+
+version: "0.2"
+
+language: "en-GB"
+
+# --------------------------------------------------------------------------
+
+ignorePaths:
+  # Configuration files and dictionaries
+  - /.git
+  - .gitignore
+  - .mega-linter.yml
+  - .vscode
+  # The dictionaries used for adding unknown words
+  - /doc/dictionaries
+  # Author file full of names
+  - AUTHORS
+
+# --------------------------------------------------------------------------
+
+enableFiletypes:
+  # Needs to be enabled explicitly (for VSCode)
+  - cmake
+  - shellscript
+
+languageSettings:
+  - languageId: yaml
+    words:
+      - "dorny"
+
+overrides:
+  # License text is written in American English.
+  - filename: LICENSE
+    language: en
+  - filename: srec_license.1
+    language: en
+  # Add specific dictionaries based on file extensions
+  - filename: "*.{1,3,5,lsm,man,so}"
+    languageSettings:
+      - languageId: "*"
+        dictionaries:
+          - srecord-troff
+  - filename: "{CMakeLists.txt,*.cmake,*.h.in}"
+    enabled: true
+    languageSettings:
+      - languageId: "*"
+        dictionaries:
+          - srecord-cmake
+
+# --------------------------------------------------------------------------
+
+dictionaryDefinitions:
+  - name: srecord-cmake
+    path: doc/dictionaries/cmake.txt
+    addWords: true
+    description: CMake specific keywords
+  - name: srecord-names
+    path: doc/dictionaries/names.txt
+    addWords: true
+    description: Names of people, companies, tools or formats
+  - name: srecord-troff
+    path: doc/dictionaries/troff.txt
+    addWords: true
+    description: In troff files several word are prefixed by a \fI or \fP
+
+# Use these dictionaries for all files.
+dictionaries:
+  - srecord-names
+
+# Avoid these words in any file.
+# Hint: cSpell default minimum length to check is 4.
+flagWords:
+  # Avoid misspelling of "the" as "hte".
+  # cSpell:ignore hte
+  - hte
+
+# Allow these words in any file.
+# Some may be fixed by using better variable names in the code.
+words:
+  - ABBE
+  - abbrev
+  - abchp
+  - ADCCP
+  - addrlen
+  - aecd
+  - aecp
+  - aedb
+  - aede
+  - aelcf
+  - aenf
+  - aereport
+  - AFEA
+  - AFFFF
+  - allbox
+  - arglex
+  - AUTOBRIEF
+  - Baaaaaaaa
+  - bacsie
+  - BBAEC
+  - BDEF
+  - becrc
+  - bisync
+  - bitdir
+  - bitnot
+  - bitrev
+  - BRECORD
+  - bufpos
+  - buglet
+  - byteswap
+  - catenated
+  - cdrom
+  - clusive
+  - cmdln
+  - compl
+  - CSLEN
+  - csum
+  - DABEDE
+  - datarec
+  - dbyte
+  - DDAAD
+  - DDCC
+  - DEADBEEFFE
+  - decbin
+  - dect
+  - defcon_t
+  - devel
+  - DFDAED
+  - diffpath
+  - distro
+  - DOCDIR
+  - doco
+  - dont_care
+  - dotdot
+  - downto
+  - drctry
+  - DRLO
+  - dsum
+  - dvlpmnt
+  - dwords
+  - EABD
+  - EDAC
+  - EDAF
+  - EDITMSG
+  - elenbe
+  - elenle
+  - emaxbe
+  - emaxle
+  - eminbe
+  - eminle
+  - emon
+  - ENDOF
+  - eoln
+  - equire
+  - excl
+  - exitcode
+  - extern
+  - favor
+  - FBBAF
+  - FDCFF
+  - Fdvcmxk
+  - featherbrain
+  - featherbrained
+  - FFDC
+  - FFFD
+  - FFFE
+  - FFFFFB
+  - FFFFFFEF
+  - FFFFFFFE
+  - FFFFFFFEFFFF
+  - FFFFFFFFAB
+  - FFFFFFFFFFFE
+  - FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEC
+  - FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC
+  - flavor
+  - gcry
+  - getc
+  - GFWY
+  - GGPC
+  - globbing
+  - gsub
+  - gumph
+  - htdocs
+  - ifndef
+  - incl
+  - infile
+  - iscript
+  - junkyard
+  - lecrc
+  - leng
+  - lgcrypt
+  - linlen
+  - lintian
+  - logi
+  - LSEEK
+  - lsrecord
+  - lxxxx
+  - Maaaa
+  - MANDIR
+  - MGTPEZY
+  - naddr
+  - nbytes
+  - nchunks
+  - nextbuf
+  - nhit
+  - nholes
+  - nnmm
+  - NOTREACHED
+  - nsections
+  - numbytes
+  - numtoc
+  - nwords
+  - oldsection
+  - orld
+  - outfile
+  - oxsecurity
+  - parameterise
+  - PATCHLEVEL
+  - pated
+  - PDFEXE
+  - pirlen
+  - productbuild
+  - psselect
+  - radixes
+  - readmemh
+  - reblock
+  - RECORDLENGTH
+  - recsize
+  - reflashing
+  - REGEXES
+  - RSEG
+  - sbase
+  - slecf
+  - snprintf
+  - sortflag
+  - spasmle
+  - sprintf
+  - stuvwxyz
+  - substr
+  - tekext
+  - testdir
+  - timespec
+  - TREEVIEW
+  - ULBA
+  - unfill
+  - Unfilling
+  - unhex
+  - UNIICON
+  - unsplit
+  - UPDC
+  - updcrc
+  - USBA
+  - vdata
+  - VERSN
+  - vsnprintf
+  - VSNPRINTF
+  - wlhs
+  - wrhs
+  - yesno
+  - Zabcdefghijklmnopqr

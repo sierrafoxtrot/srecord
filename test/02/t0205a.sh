@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="fletcher16 answer"
-. test_prelude
+. test_prelude.sh
 
 srec_cat - -o test.in -bin << 'fubar'
 S00600004844521B
@@ -27,7 +27,6 @@ S5030001FB
 S9030000FC
 fubar
 if test $? -ne 0; then no_result; fi
-
 
 # Note that 0 == 0xFF mod 255
 
@@ -42,7 +41,6 @@ if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
-
 
 # try again for different answer
 

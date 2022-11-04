@@ -32,7 +32,7 @@ HP64000 absolute file format contributed by fenugrec. Supports file input, tests
 .\" commit 8801f6185d4512480082cb4b3219d9385b7b2daf
 .\" Author: dg1yfe
 .\" Date:   Sun Oct 9 09:59:42 2022 +1100
-Patch by dg1yfe as pulled from github via marcows. Updated man page for srec_ppb. Updated PPB output to match checksum range for output. Updated tests for PPB write and read including files containing holes. Tweaked patch to handle multi-line and arbirtary ascii before SOH. Added test for prolog stripping.
+Patch by dg1yfe as pulled from github via marcows. Updated man page for srec_ppb. Updated PPB output to match checksum range for output. Updated tests for PPB write and read including files containing holes. Tweaked patch to handle multi-line and arbitrary ascii before SOH. Added test for prologue stripping.
 .PP
 .if n *
 .if t \(bu
@@ -72,7 +72,7 @@ Verbose srec_info as suggested by Thomas. Display basic info on the proportion o
 .PP
 .if n *
 .if t \(bu
-Bug fix from xiretza for COE generation falsly detecting holes in input.
+Bug fix from xiretza for COE generation falsely detecting holes in input.
 .\" commit 84afd0aacce2252c20d3b757b92da44358f0a001
 .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
 .\" Date:   Sat Oct 1 22:27:29 2022 +1000
@@ -189,11 +189,11 @@ Fixed buffer overflow in four packed code output generator.
 .\" .\" commit 66ed2fe42ddc3844645fbe933c86f39877411ceb
 .\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
 .\" .\" Date:   Wed Sep 7 19:44:18 2022 +1000
-.\"     Get standalone docs compiling to bulid directory
+.\"     Get standalone docs compiling to build directory
 .\" commit 69ebff893b0032f241fbbd5480cf5aa6b652d30b
 .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
 .\" Date:   Wed Sep 7 19:21:43 2022 +1000
-.\" Move documentation to doc directory. Get man pages compiling to bulid directory
+.\" Move documentation to doc directory. Get man pages compiling to build directory
 .\" commit be71aa0d26f2d4299b3cccc27ea169dd04efb17a
 .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
 .\" Date:   Fri Sep 2 21:26:19 2022 +1000
@@ -209,7 +209,7 @@ Fixed buffer overflow in four packed code output generator.
 .\" .\" commit e41541dfb24135a7364f23648bdde6f29b89243e
 .\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
 .\" .\" Date:   Sun Aug 28 14:37:00 2022 +1000
-.\"     Test directory toplevel CMakeLists.txt. Support tools building. Tests no longer running
+.\"     Test directory top level CMakeLists.txt. Support tools building. Tests no longer running
 .\" .\" commit 96f4ce54ba8ab24d35e10c1a4aed9c2d9c13ce09
 .\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
 .\" .\" Date:   Sun Aug 28 14:00:18 2022 +1000
@@ -233,7 +233,7 @@ Fixed buffer overflow in four packed code output generator.
 .\" .\" commit d169efa54eda1b221440eaf5ef0f66eed869da7f
 .\" .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
 .\" .\" Date:   Wed Oct 31 17:52:47 2018 +1100
-.\"     Tidy dependecies
+.\"     Tidy dependencies
 .\" commit ebff9947741b08f10f918d49ad01e75191959e9c
 .\" Author: Scott Finneran <scottfinneran@yahoo.com.au>
 .\" Date:   Wed Oct 31 17:46:55 2018 +1100

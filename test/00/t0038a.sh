@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="mos-tech format"
-. test_prelude
+. test_prelude.sh
 
 # --------------------------------------------------------------------------
 #
@@ -44,7 +44,6 @@ if test $? -ne 0; then fail; fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
-
 
 # --------------------------------------------------------------------------
 #

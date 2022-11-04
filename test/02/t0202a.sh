@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="fletcher16 defaults"
-. test_prelude
+. test_prelude.sh
 
 srec_cat - -o test.in -bin << 'fubar'
 S00600004844521B

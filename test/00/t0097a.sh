@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="motorola --ignore-checksums"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S006000048445200

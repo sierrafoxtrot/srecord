@@ -27,12 +27,10 @@ oldsection=1
 echo '<br clear="all" />'
 echo "<h2>Commands</h2>"
 echo "<ul>"
-for f in $*
-do
-    base=$(basename $f .html)
-    section=$(echo $f | sed 's|.*man\([0-9]\)/.*|\1|' )
-    if [ "$section" != "$oldsection" ]
-    then
+for f in "$@"; do
+    base=$(basename "$f" .html)
+    section=$(echo "$f" | sed 's|.*man\([0-9]\)/.*|\1|')
+    if [ "$section" != "$oldsection" ]; then
         echo "</ul>"
         case $section in
         1)

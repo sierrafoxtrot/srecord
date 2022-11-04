@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="srec_cmp functionality"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in1 << 'fubar'
 S00600004844521B
@@ -55,7 +55,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cmp -dsw test.in1 test.in3 > LOG 2>&1
-if test $? -ne 2; then cat LOG; fail; fi
+if test $? -ne 2; then
+    cat LOG
+    fail
+fi
 
 #
 # The things tested here, worked.

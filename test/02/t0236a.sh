@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="url_encode"
-. test_prelude
+. test_prelude.sh
 
 test_url_decode --decode > test.in << 'fubar'
 a%01b%02c%03

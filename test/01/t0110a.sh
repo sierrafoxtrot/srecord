@@ -19,7 +19,7 @@
 #
 
 TEST_SUBJECT="ascii-hex"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S321000000007FD243A67FF343A63FC0003F3BDE700C3BE0000193FE00007FFA02A6A8
@@ -53,7 +53,10 @@ fubar
 if test $? -ne 0; then no_result; fi
 
 srec_cat test.in -o test.out -ah -data-only > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+    cat LOG
+    fail
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi

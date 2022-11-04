@@ -41,7 +41,7 @@ public:
     ~interval();
 
     /**
-      * The data_t type is used to parameterize the integer type used in
+      * The data_t type is used to parameterise the integer type used in
       * the interval.
       */
     typedef uint32_t data_t;

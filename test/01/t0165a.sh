@@ -18,7 +18,7 @@
 #
 
 TEST_SUBJECT="class srec_output_file_forth"
-. test_prelude
+. test_prelude.sh
 
 cat > test.in << 'fubar'
 S00600004844521B
