@@ -77,7 +77,7 @@ protected:
     // See base class for documentation.
     void disable_checksum_validation() override;
 
-protected:
+
     /**
       * The constructor.  The input will be taken from the named file
       * (or the standard input if the filename is "-").

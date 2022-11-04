@@ -73,7 +73,7 @@ private:
       */
     auto get_char() -> int override;
 
-private:
+
     using inherited = input_file;
 
     /**
