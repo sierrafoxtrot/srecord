@@ -264,14 +264,14 @@ srecord::output_file_fastload::preferred_block_size_set(int nbytes) -> bool
     int bytes_on_last_line = ((ll - 9) / 4) * 3;
     if (bytes_on_last_line > MAX) {
         return false;
-    } else if (bytes_on_last_line < 0) {
+    } if (bytes_on_last_line < 0) {
         return false;
 }
 
     int bytes_on_other_lines = (ll / 4) * 3;
     if (bytes_on_other_lines > MAX) {
         return false;
-    } else if (bytes_on_other_lines < 1) {
+    } if (bytes_on_other_lines < 1) {
         return false;
 }
 

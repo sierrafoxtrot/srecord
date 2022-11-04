@@ -240,10 +240,9 @@ srecord::crc16::updcrc(unsigned char c, unsigned short state)
     {
         return (((state >> 8) & 0xFF) | (c << 8)) ^ table[state & 0xFF];
     }
-    else
-    {
-        return ((state << 8) | c) ^ table[state >> 8];
-    }
+    
+            return ((state << 8) | c) ^ table[state >> 8];
+   
 }
 
 #endif // IMPL_CH10
