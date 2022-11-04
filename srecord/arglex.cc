@@ -389,7 +389,7 @@ deprecated_warning(const char *deprecated_name, const char *preferred_name)
 {
     srecord::quit_default.warning
     (
-        "option \"%s\" is deprecated, please use \"%s\" instead",
+        R"(option "%s" is deprecated, please use "%s" instead)",
         deprecated_name,
         preferred_name
     );
