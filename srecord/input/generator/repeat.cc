@@ -27,7 +27,7 @@ srecord::input_generator_repeat::~input_generator_repeat()
 
 
 srecord::input_generator_repeat::input_generator_repeat(
-        const interval &a_range, unsigned char *a_data, size_t a_length) :
+        const interval &a_range, const unsigned char *a_data, size_t a_length) :
     srecord::input_generator(a_range),
     address(a_range.get_lowest()),
     data(nullptr),
