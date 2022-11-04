@@ -29,9 +29,8 @@ srecord::input_filter_crop::~input_filter_crop()
 srecord::input_filter_crop::input_filter_crop(
         const srecord::input::pointer &a_deeper, const interval &a_range) :
     srecord::input_filter(a_deeper),
-    range(a_range),
-    data(),
-    data_range()
+    range(a_range)
+    
 {
 }
 

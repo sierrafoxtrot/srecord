@@ -31,7 +31,7 @@ srecord::input_filter_unsplit::input_filter_unsplit(
     modulus(a2),
     offset(a3),
     width(a4),
-    buffer(),
+    
     buffer_pos(0)
 {
 }

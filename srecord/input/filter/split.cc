@@ -31,7 +31,7 @@ srecord::input_filter_split::input_filter_split(const input::pointer &a1,
     modulus(a2),
     offset(a2 - a3),
     width(a4),
-    buffer(),
+    
     buffer_pos(0)
 {
     //

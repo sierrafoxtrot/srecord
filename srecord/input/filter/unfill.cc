@@ -30,7 +30,7 @@ srecord::input_filter_unfill::input_filter_unfill(
     srecord::input_filter(a1),
     fill_value(a2),
     fill_minimum(a3),
-    buffer(),
+    
     buffer_pos(0)
 {
 }
