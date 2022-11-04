@@ -76,8 +76,10 @@ foreach(m_src ${MAN_PAGES})
         COMMAND
             sh ${CMAKE_CURRENT_SOURCE_DIR}/script/groff.sh
             -T html                # Output device
-            -t                     # Preprocess with tbl
             -man                   # Macro Package man
+            # Order of preprocessors may be important
+            -t                     # Preprocess with tbl
+            -s                     # Preprocess with soelim, with search paths:
             -I ${DocSourcePath}
             -I ${DocBinaryPath}
             -P-I${image_stem_name} # Preprocess with pic
@@ -127,11 +129,12 @@ foreach(w_src ${WEB_PAGES})
         COMMAND
             sh ${CMAKE_CURRENT_SOURCE_DIR}/script/groff.sh
             -T ascii               # Output device
-            -t                     # Preprocess with tbl
-            -P-bcu                 # Preprocess with pic
             -man                   # Macro Package man
-            # Preprocess with soelim, with search paths:
+            # Order of preprocessors may be important
+            -t                     # Preprocess with tbl
+            -s                     # Preprocess with soelim, with search paths:
             -I${CMAKE_CURRENT_SOURCE_DIR}
+            -P-bcu                 # Preprocess with pic
             ${w_src}               # Source
             | awk -f ${CMAKE_CURRENT_SOURCE_DIR}/script/ssp.awk
             > ${w_target}
@@ -172,11 +175,12 @@ function(add_doc TARGET SOURCE DEPS)
         COMMAND
             sh ${CMAKE_CURRENT_SOURCE_DIR}/script/groff.sh
             -T ps                  # Output device
+            -man                   # Macro Package man
+            # Order of preprocessors may be important
+            -t                     # Preprocess with tbl
             -s                     # Preprocess with soelim, with search paths:
             -I${DocSourcePath}
             -I${DocBinaryPath}
-            -t                     # Preprocess with tbl
-            -man                   # Macro Package man
             ${SOURCE}              # Source
             > ${TARGET}.ps.tmp
         COMMAND
