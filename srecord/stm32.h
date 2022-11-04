@@ -28,7 +28,7 @@
 #ifndef SRECORD_STM32_H
 #define SRECORD_STM32_H
 
-#include <stddef.h>
+#include <cstddef>
 
 namespace srecord
 {

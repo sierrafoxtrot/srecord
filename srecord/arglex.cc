@@ -18,10 +18,10 @@
 
 #include <cassert>
 #include <cctype>
-#include <cstring>
+#include <cerrno>
 #include <cstdio>
 #include <cstdlib>
-#include <errno.h>
+#include <cstring>
 #include <iostream>
 #include <unistd.h>
 

@@ -19,9 +19,9 @@
 #ifndef SRECORD_INPUT_H
 #define SRECORD_INPUT_H
 
-#include <string>
-#include <stdarg.h>
+#include <cstdarg>
 #include <memory>
+#include <string>
 
 #include <srecord/format_printf.h>
 
