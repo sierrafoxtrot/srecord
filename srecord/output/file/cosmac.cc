@@ -56,9 +56,9 @@ srecord::output_file_cosmac::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (record.get_address() >= (1uL << 24) && address_length < 8) {
+        if (record.get_address() >= (1UL << 24) && address_length < 8) {
             address_length = 8;
-        } else if (record.get_address() >= (1uL << 16) && address_length < 6) {
+        } else if (record.get_address() >= (1UL << 16) && address_length < 6) {
             address_length = 6;
 }
 

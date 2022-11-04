@@ -344,7 +344,7 @@ srecord::input_filter_message_gcrypt::process(const memory &input,
 }
     gcry_md_hd_t handle = nullptr;
     gcry_error_t err = gcry_md_open(&handle, algo, flags);
-    if (err != 0u) {
+    if (err != 0U) {
         fatal_error("gcry_md_open: %s", gcry_strerror(err));
 }
 

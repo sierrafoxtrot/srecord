@@ -44,7 +44,7 @@ srecord::output_file_fastload::output_file_fastload(
 ) :
     srecord::output_file(a_filename),
     line_length(0),
-    address(~0uL),
+    address(~0UL),
     column(0),
     bytes_since_checksum(0),
     max_since_checksum(0),
@@ -66,7 +66,7 @@ srecord::output_file_fastload::put_number(unsigned long n, int min_digits)
 {
     unsigned char buffer[20];
     unsigned char *bp = buffer;
-    while ((n != 0u) || min_digits > 0)
+    while ((n != 0U) || min_digits > 0)
     {
         *bp++ = n & 63;
         --min_digits;
@@ -87,7 +87,7 @@ static auto
 number_width(unsigned long n) -> int
 {
     int result = 0;
-    while (n != 0u)
+    while (n != 0U)
     {
         result++;
         n >>= 6;

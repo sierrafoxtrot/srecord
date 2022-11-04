@@ -193,7 +193,7 @@ srecord::output_file_coe::write(const srecord::record &record)
         {
             unsigned long addr = record.get_address();
             unsigned len = record.get_length();
-            if (((addr % width_in_bytes) != 0u) || ((len % width_in_bytes) != 0u)) {
+            if (((addr % width_in_bytes) != 0U) || ((len % width_in_bytes) != 0U)) {
                 fatal_alignment_error(width_in_bytes);
 }
             emit_header();

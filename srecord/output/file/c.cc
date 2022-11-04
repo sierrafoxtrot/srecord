@@ -724,7 +724,7 @@ srecord::output_file_c::write(const srecord::record &record)
         emit_header();
         if (output_word)
         {
-            if (((record.get_address() & 1) != 0u) || ((record.get_length() & 1) != 0u)) {
+            if (((record.get_address() & 1) != 0U) || ((record.get_length() & 1) != 0U)) {
                 fatal_alignment_error(2);
 }
 

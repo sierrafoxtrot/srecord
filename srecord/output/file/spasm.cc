@@ -56,7 +56,7 @@ srecord::output_file_spasm::write(const srecord::record &record)
 }
 
     srecord::record::address_t address = record.get_address();
-    if (((address & 1) != 0u) || ((record.get_length() & 1) != 0u)) {
+    if (((address & 1) != 0U) || ((record.get_length() & 1) != 0U)) {
         fatal_alignment_error(2);
 }
 

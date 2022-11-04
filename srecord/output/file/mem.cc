@@ -212,7 +212,7 @@ srecord::output_file_mem::write(const srecord::record &record)
             if (address != addr) {
                 fatal_hole_error(address, addr);
 }
-            if (((addr % width_in_bytes) != 0u) || ((len % width_in_bytes) != 0u)) {
+            if (((addr % width_in_bytes) != 0U) || ((len % width_in_bytes) != 0U)) {
                 fatal_alignment_error(width_in_bytes);
 }
             emit_header();
@@ -299,7 +299,7 @@ srecord::output_file_mem::preferred_block_size_set(int nbytes) -> bool
     if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
 }
-    if ((nbytes % width_in_bytes) != 0u) {
+    if ((nbytes % width_in_bytes) != 0U) {
         return false;
 }
     pref_blk_sz = nbytes;

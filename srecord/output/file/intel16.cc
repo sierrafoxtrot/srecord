@@ -98,7 +98,7 @@ srecord::output_file_intel16::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (((record.get_address() & 1) != 0u) || ((record.get_length() & 1) != 0u)) {
+        if (((record.get_address() & 1) != 0U) || ((record.get_length() & 1) != 0U)) {
             fatal_alignment_error(2);
 }
         if ((record.get_address() & 0xFFFE0000) != address_base)

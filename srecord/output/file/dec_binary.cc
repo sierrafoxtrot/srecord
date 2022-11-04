@@ -27,7 +27,7 @@
 srecord::output_file_dec_binary::~output_file_dec_binary()
 {
     // Round off to a whole multiple of BLOCK_SIZE bytes.
-    while ((byte_offset & BLOCK_SIZE_MASK) != 0u) {
+    while ((byte_offset & BLOCK_SIZE_MASK) != 0U) {
         put_byte(0);
 }
 }
@@ -108,7 +108,7 @@ srecord::output_file_dec_binary::write(const srecord::record &record)
             put_byte(record.get_data(j));
 }
         put_byte(-checksum_get());
-        if ((byte_offset & 1) != 0u) {
+        if ((byte_offset & 1) != 0U) {
             put_byte(0);
 }
         break;

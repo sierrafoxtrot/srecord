@@ -113,7 +113,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln) -> srecord::input:
                     length
                 );
             }
-            unsigned long over = (1uL << (8u * length)) - 1;
+            unsigned long over = (1UL << (8U * length)) - 1;
             if (length < 4 && datum > over)
             {
                 srecord::arglex_tool::fatal_error
@@ -153,7 +153,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln) -> srecord::input:
                     length
                 );
             }
-            unsigned long over = (1uL << (8u * length)) - 1;
+            unsigned long over = (1UL << (8U * length)) - 1;
             if (length < 4 && datum > over)
             {
                 srecord::arglex_tool::fatal_error

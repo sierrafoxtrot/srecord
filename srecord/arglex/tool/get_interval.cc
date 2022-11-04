@@ -64,7 +64,7 @@ srecord::arglex_tool::get_interval_factor(const char *name) -> srecord::interval
             {
                 n2 = get_number("address range maximum");
             }
-            if ((n2 != 0u) && n1 >= n2)
+            if ((n2 != 0U) && n1 >= n2)
             {
                 fatal_error
                 (

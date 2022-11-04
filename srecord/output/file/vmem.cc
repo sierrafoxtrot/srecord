@@ -103,7 +103,7 @@ calc_width_shift(int x) -> unsigned
 static auto
 calc_width_mask(int x) -> unsigned
 {
-    return ((1uL << calc_width_shift(x)) - 1uL);
+    return ((1UL << calc_width_shift(x)) - 1UL);
 }
 
 
@@ -136,7 +136,7 @@ srecord::output_file_vmem::command_line(srecord::arglex_tool *cmdln)
         cmdln->token_next();
 
         width_shift = calc_width_shift(n);
-        bytes_per_word = 1u << width_shift;
+        bytes_per_word = 1U << width_shift;
         width_mask = calc_width_mask(n);
 
         //
@@ -193,11 +193,11 @@ srecord::output_file_vmem::write(const srecord::record &record)
         //
         if
         (
-            ((record.get_address() & width_mask) != 0u)
+            ((record.get_address() & width_mask) != 0U)
         ||
-            ((record.get_length() & width_mask) != 0u)
+            ((record.get_length() & width_mask) != 0U)
         ) {
-            fatal_alignment_error(1u << width_shift);
+            fatal_alignment_error(1U << width_shift);
 }
 
         //

@@ -79,7 +79,7 @@ srecord::input_file_dec_binary::read(srecord::record &record) -> bool
     //
     if (current_pos >= current_length)
     {
-        if (current_length != 0u)
+        if (current_length != 0U)
         {
             // Verify the checksum at end of the record.
             get_byte();

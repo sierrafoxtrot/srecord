@@ -117,7 +117,7 @@ srecord::output_file_ti_tagged_16::write(const srecord::record &record)
             // we can't start at an odd address,
             // but don't test for odd lengths
             //
-            if ((record.get_address() & 1) != 0u) {
+            if ((record.get_address() & 1) != 0U) {
                 fatal_alignment_error(2);
 }
 

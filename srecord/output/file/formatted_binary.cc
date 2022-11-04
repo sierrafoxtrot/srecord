@@ -76,7 +76,7 @@ srecord::output_file_formatted_binary::write(const srecord::record &record)
         if (upper_bound == 0) {
             fatal_error("must call srecord::output::notify_upper_bound first");
 }
-        if (upper_bound < (1uL << 16))
+        if (upper_bound < (1UL << 16))
         {
             put_char(0x08); //     *
             put_char(0x1C); //    ***

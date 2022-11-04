@@ -201,7 +201,7 @@ srecord::input_file_idt::read(record &record) -> bool
             break;
 
         case record::type_header:
-            if (record.get_address() != 0u)
+            if (record.get_address() != 0U)
             {
                 warning("address in header record ignored");
                 record.set_address(0);

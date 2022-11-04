@@ -56,7 +56,7 @@ srecord::quit_normal::message_v(const char *fmt, va_list ap)
     for (;;)
     {
         unsigned char c = *cp++;
-        if (c == 0u) {
+        if (c == 0U) {
             break;
 }
         if ((isspace(c) != 0) || (isprint(c) == 0)) {
@@ -68,7 +68,7 @@ srecord::quit_normal::message_v(const char *fmt, va_list ap)
         {
             word += c;
             c = *cp;
-            if (c == 0u) {
+            if (c == 0U) {
                 break;
 }
             if ((isspace(c) != 0) || (isprint(c) == 0)) {

@@ -169,7 +169,7 @@ srecord::output_file_motorola::write(const srecord::record &record)
     unsigned long shifted_address = record.get_address();
     if (address_shift != 0)
     {
-        if ((shifted_address & ((1 << address_shift) - 1)) != 0u)
+        if ((shifted_address & ((1 << address_shift) - 1)) != 0U)
         {
             fatal_error
             (

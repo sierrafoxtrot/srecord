@@ -195,7 +195,7 @@ srecord::output_file_mips_flash::buffer_flush_newline()
 void
 srecord::output_file_mips_flash::buffer_flush()
 {
-    if (buffer_length == 0u) {
+    if (buffer_length == 0U) {
         return;
 }
     if ((buffer_length & 3) != 0) {

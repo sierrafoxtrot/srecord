@@ -56,7 +56,7 @@ srecord::output_file_atmel_generic::write(const srecord::record &record)
 }
 
     long address = record.get_address();
-    if (((address & 1) != 0) || ((record.get_length() & 1) != 0u)) {
+    if (((address & 1) != 0) || ((record.get_length() & 1) != 0U)) {
         fatal_alignment_error(2);
 }
     for (size_t j = 0; j < record.get_length(); j += 2)

@@ -167,7 +167,7 @@ srecord::arglex::compare(const char *formal, const char *actual) -> bool
         switch (fc)
         {
         case 0:
-            return ac == 0u;
+            return ac == 0U;
 
         case '_':
             if (ac == '-') {
@@ -211,7 +211,7 @@ srecord::arglex::compare(const char *formal, const char *actual) -> bool
             // check for a match match of the stuff after
             // the '*', too, a la glob.
             //
-            if (ac == 0u) {
+            if (ac == 0U) {
                 return false;
 }
             partial = actual - 1;

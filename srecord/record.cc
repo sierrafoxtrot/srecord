@@ -164,7 +164,7 @@ srecord::record::is_all_zero()
     const -> bool
 {
     for (size_t j = 0; j < length; ++j) {
-        if (data[j] != 0u) {
+        if (data[j] != 0U) {
             return false;
 }
 }

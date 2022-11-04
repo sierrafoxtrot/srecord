@@ -90,7 +90,7 @@ calculate_table()
         unsigned long v = b;
         int i = 8;
         for (; --i >= 0; ) {
-            v = (v & 1) != 0u ? ((v >> 1) ^ POLYNOMIAL) : (v >> 1);
+            v = (v & 1) != 0U ? ((v >> 1) ^ POLYNOMIAL) : (v >> 1);
 }
         table[b] = v;
     }
@@ -115,7 +115,7 @@ initial_state_from_seed_mode(srecord::crc32::seed_mode_t seed_mode) -> unsigned 
 srecord::crc32::crc32(seed_mode_t seed_mode) :
     state(initial_state_from_seed_mode(seed_mode))
 {
-    if (table[1] == 0u) {
+    if (table[1] == 0U) {
         calculate_table();
 }
 }

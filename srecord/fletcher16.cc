@@ -119,7 +119,7 @@ srecord::fletcher16::nextbuf(const void *vdata, size_t nbytes)
     //
     const auto *data = (const unsigned char *)vdata;
     size_t len = nbytes;
-    while (len != 0u)
+    while (len != 0U)
     {
         size_t tlen = len > 21 ? 21 : len;
         len -= tlen;
@@ -128,7 +128,7 @@ srecord::fletcher16::nextbuf(const void *vdata, size_t nbytes)
             sum1 += *data++;
             sum2 += sum1;
             --tlen;
-            if (tlen == 0u) {
+            if (tlen == 0U) {
                 break;
 }
         }

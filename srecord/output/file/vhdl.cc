@@ -168,9 +168,9 @@ srecord::output_file_vhdl::write(const srecord::record &record)
             bytes_per_word > 1
         &&
             (
-                ((record.get_address() % bytes_per_word) != 0u)
+                ((record.get_address() % bytes_per_word) != 0U)
             ||
-                ((record.get_length() % bytes_per_word) != 0u)
+                ((record.get_length() % bytes_per_word) != 0U)
             )
         )
         {
