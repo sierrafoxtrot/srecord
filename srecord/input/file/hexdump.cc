@@ -42,7 +42,7 @@ srecord::input_file_hexdump::create(const std::string &filename)
 
 
 srecord::input_file_hexdump::token_t
-srecord::input_file_hexdump::get_next_token(void)
+srecord::input_file_hexdump::get_next_token()
 {
     for (;;)
     {
@@ -89,7 +89,7 @@ srecord::input_file_hexdump::get_next_token(void)
 
 
 bool
-srecord::input_file_hexdump::discard_rest_of_line(void)
+srecord::input_file_hexdump::discard_rest_of_line()
 {
     for (;;)
     {
@@ -199,7 +199,7 @@ srecord::input_file_hexdump::read(record &result)
 
 
 const char *
-srecord::input_file_hexdump::get_file_format_name(void)
+srecord::input_file_hexdump::get_file_format_name()
     const
 {
     return "hexdump";
@@ -207,7 +207,7 @@ srecord::input_file_hexdump::get_file_format_name(void)
 
 
 int
-srecord::input_file_hexdump::format_option_number(void)
+srecord::input_file_hexdump::format_option_number()
     const
 {
     return arglex_tool::token_hexdump;

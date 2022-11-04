@@ -68,13 +68,13 @@ protected:
     void address_length_set(int);
 
     // See base class for documentation.
-    int preferred_block_size_get(void) const;
+    int preferred_block_size_get() const;
 
     // See base class for documentation.
     bool preferred_block_size_set(int nbytes);
 
     // See base class for documentation.
-    const char *format_name(void) const;
+    const char *format_name() const;
 
 private:
     /**
@@ -138,14 +138,14 @@ private:
       * bytes of data in the #buffer array to the file.  The
       * #buffer_length has been reset to zero on return.
       */
-    void buffer_flush(void);
+    void buffer_flush();
 
     /**
       * The buffer_flush_newline method is used to write the data,
       * using the #buffer_flush method, and then issue a newline if the
       * output is not at the beginning of a new line.
       */
-    void buffer_flush_newline(void);
+    void buffer_flush_newline();
 
     /**
       * The line_length instance variable is used to remember the

@@ -321,7 +321,7 @@ srecord::output_file_msbin::format_name()
 
 
 bool
-srecord::output_file_msbin::is_binary(void)
+srecord::output_file_msbin::is_binary()
     const
 {
     return true;

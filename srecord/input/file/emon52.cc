@@ -41,7 +41,7 @@ srecord::input_file_emon52::create(const std::string &a_file_name)
 
 
 void
-srecord::input_file_emon52::skip_white_space(void)
+srecord::input_file_emon52::skip_white_space()
 {
     for (;;)
     {
@@ -96,7 +96,7 @@ srecord::input_file_emon52::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_emon52::get_file_format_name(void)
+srecord::input_file_emon52::get_file_format_name()
     const
 {
     return "Elektor Monitor (EMON52)";
@@ -104,7 +104,7 @@ srecord::input_file_emon52::get_file_format_name(void)
 
 
 int
-srecord::input_file_emon52::format_option_number(void)
+srecord::input_file_emon52::format_option_number()
     const
 {
     return arglex_tool::token_emon52;

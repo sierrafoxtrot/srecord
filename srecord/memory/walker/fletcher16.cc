@@ -54,7 +54,7 @@ srecord::memory_walker_fletcher16::observe(unsigned long, const void *data,
 
 
 unsigned
-srecord::memory_walker_fletcher16::get(void)
+srecord::memory_walker_fletcher16::get()
     const
 {
     return checksum.get();

@@ -89,7 +89,7 @@ srecord::output_file::output_file(std::string a_file_name) :
 
 
 bool
-srecord::output_file::is_binary(void)
+srecord::output_file::is_binary()
     const
 {
     return false;
@@ -97,7 +97,7 @@ srecord::output_file::is_binary(void)
 
 
 void *
-srecord::output_file::get_fp(void)
+srecord::output_file::get_fp()
 {
     if (!vfp)
     {
@@ -263,21 +263,21 @@ srecord::output_file::put_4bytes_le(unsigned long n)
 
 
 int
-srecord::output_file::checksum_get(void)
+srecord::output_file::checksum_get()
 {
     return (checksum & 0xFF);
 }
 
 
 int
-srecord::output_file::checksum_get16(void)
+srecord::output_file::checksum_get16()
 {
     return (checksum & 0xFFFF);
 }
 
 
 void
-srecord::output_file::checksum_reset(void)
+srecord::output_file::checksum_reset()
 {
     checksum = 0;
 }
@@ -429,7 +429,7 @@ srecord::output_file::enable_by_name(const std::string &name, bool yesno)
 
 
 void
-srecord::output_file::set_is_regular(void)
+srecord::output_file::set_is_regular()
 {
     FILE *fp = (FILE *)vfp;
     struct stat st;

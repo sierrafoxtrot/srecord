@@ -227,7 +227,7 @@ srecord::output_file_wilson::format_name()
 
 
 bool
-srecord::output_file_wilson::is_binary(void)
+srecord::output_file_wilson::is_binary()
     const
 {
     return true;

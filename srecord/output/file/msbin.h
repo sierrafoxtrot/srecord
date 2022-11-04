@@ -89,7 +89,7 @@ protected:
     void notify_upper_bound(unsigned long addr);
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    bool is_binary() const;
 
 private:
     /**

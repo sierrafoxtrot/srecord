@@ -57,14 +57,14 @@ public:
       * The create class method is used to create new dynamically
       * allocated instances of this class.
       */
-    static pointer create(void);
+    static pointer create();
 
     /**
       * The get method is used to get the CRC32 (STM32) checksum once
       * all memory chunks have been processed by calls to our observe
       * method.
       */
-    unsigned get(void) const;
+    unsigned get() const;
 
 protected:
     // See base class for documentation.

@@ -184,7 +184,7 @@ srecord::output_file_formatted_binary::format_name()
 
 
 bool
-srecord::output_file_formatted_binary::is_binary(void)
+srecord::output_file_formatted_binary::is_binary()
     const
 {
     return true;

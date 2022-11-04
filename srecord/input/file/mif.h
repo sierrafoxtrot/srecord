@@ -52,10 +52,10 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**
@@ -135,7 +135,7 @@ private:
       * The lex method is used to obtain the next lexical token from the
       * input stream.
       */
-    token_t lex(void);
+    token_t lex();
 
     /**
       * The token_value instance variable is used to remember the
@@ -147,13 +147,13 @@ private:
       * The lex_addr method is used to obtain the next lexical token
       * from the input stream, using the address radix.
       */
-    token_t lex_addr(void);
+    token_t lex_addr();
 
     /**
       * The lex_data method is used to obtain the next lexical token
       * from the input stream, using the data radix.
       */
-    token_t lex_data(void);
+    token_t lex_data();
 
     /**
       * The syntax_error method is used to report parse errors when
@@ -164,11 +164,11 @@ private:
       */
     void syntax_error(const char *text);
 
-    void get_equals(void);
-    long get_number(void);
-    void get_semicolon(void);
-    int get_radix(void);
-    void get_colon(void);
+    void get_equals();
+    long get_number();
+    void get_semicolon();
+    int get_radix();
+    void get_colon();
 
     unsigned width;
     unsigned width_in_bytes;

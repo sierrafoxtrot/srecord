@@ -24,7 +24,7 @@
 
 
 static void
-usage(void)
+usage()
 {
     fprintf(stderr, "Usage: test_fletcher16 [ <sum1> <sum2> [ <answer> ]]\n");
     exit(1);

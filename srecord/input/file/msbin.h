@@ -60,10 +60,10 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**
@@ -155,7 +155,7 @@ private:
       * The read_file_header method is used to read the (optional) magic
       * and the file header.
       */
-    void read_file_header(void);
+    void read_file_header();
 
     // Just to be sure we can fit uint32_t in address_t.
     static_assert(sizeof(record::address_t) >= sizeof(uint32_t));
@@ -164,7 +164,7 @@ private:
       * The read_dword_le method is used to read a little endian double
       * word from the input.
       */
-    uint32_t read_dword_le(void);
+    uint32_t read_dword_le();
 
     /**
       * The checksum method is used to calculate the checksum of a given
@@ -181,7 +181,7 @@ private:
     static uint32_t checksum(const unsigned char *data, size_t len);
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    bool is_binary() const;
 
     /**
       * The default constructor.  Do not use.

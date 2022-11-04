@@ -52,10 +52,10 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**
@@ -88,13 +88,13 @@ private:
       * The get_decimal method is used to get a decimal number from
       * the input.  It must have at least one digit.
       */
-    int get_decimal(void);
+    int get_decimal();
 
     /**
       * The get_binary method is used to get a binary number from
       * the input.  It must have at least one digit.
       */
-    int get_binary(void);
+    int get_binary();
 
     /**
       * The default constructor.  Do not use.

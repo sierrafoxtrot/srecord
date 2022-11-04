@@ -149,7 +149,7 @@ srecord::input_file_cosmac::get_file_format_name()
 
 
 int
-srecord::input_file_cosmac::format_option_number(void)
+srecord::input_file_cosmac::format_option_number()
     const
 {
     return arglex_tool::token_cosmac;

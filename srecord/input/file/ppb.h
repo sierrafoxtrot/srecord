@@ -51,13 +51,13 @@ protected:
     bool read(class record &rec);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    bool is_binary() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**
@@ -112,13 +112,13 @@ private:
       * the #packet and #packet_length and #packet_address and
       * #packet_used instance variables.
       */
-    bool get_packet(void);
+    bool get_packet();
 
     /**
       * The packet_format_error method is used to issue a #fatal_error
       * message when a packet is malformed.
       */
-    void packet_format_error(void);
+    void packet_format_error();
 
     /**
       * The default constructor.  Do not use.

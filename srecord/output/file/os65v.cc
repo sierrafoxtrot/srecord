@@ -173,7 +173,7 @@ srecord::output_file_os65v::preferred_block_size_get()
 
 
 const char *
-srecord::output_file_os65v::mode(void)
+srecord::output_file_os65v::mode()
     const
 {
     return "wb";

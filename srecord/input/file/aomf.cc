@@ -286,7 +286,7 @@ srecord::input_file_aomf::read(srecord::record &record)
 
 
 bool
-srecord::input_file_aomf::is_binary(void)
+srecord::input_file_aomf::is_binary()
     const
 {
     return true;
@@ -302,7 +302,7 @@ srecord::input_file_aomf::get_file_format_name()
 
 
 int
-srecord::input_file_aomf::format_option_number(void)
+srecord::input_file_aomf::format_option_number()
     const
 {
     return arglex_tool::token_aomf;

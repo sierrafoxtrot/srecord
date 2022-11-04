@@ -43,7 +43,7 @@ srecord::input_file_wilson::create(const std::string &a_file_name)
 
 
 int
-srecord::input_file_wilson::get_byte(void)
+srecord::input_file_wilson::get_byte()
 {
     int n = -1;
     int c = get_char();
@@ -212,7 +212,7 @@ srecord::input_file_wilson::read(record &record)
 
 
 bool
-srecord::input_file_wilson::is_binary(void)
+srecord::input_file_wilson::is_binary()
     const
 {
     return true;
@@ -220,7 +220,7 @@ srecord::input_file_wilson::is_binary(void)
 
 
 const char *
-srecord::input_file_wilson::get_file_format_name(void)
+srecord::input_file_wilson::get_file_format_name()
     const
 {
     return "Wilson (anyone know this format's real name?)";
@@ -228,7 +228,7 @@ srecord::input_file_wilson::get_file_format_name(void)
 
 
 int
-srecord::input_file_wilson::format_option_number(void)
+srecord::input_file_wilson::format_option_number()
     const
 {
     return arglex_tool::token_wilson;

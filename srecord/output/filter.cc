@@ -54,7 +54,7 @@ srecord::output_filter::address_length_set(int n)
 
 
 int
-srecord::output_filter::preferred_block_size_get(void)
+srecord::output_filter::preferred_block_size_get()
     const
 {
     return deeper->preferred_block_size_get();
@@ -69,7 +69,7 @@ srecord::output_filter::preferred_block_size_set(int nbytes)
 
 
 const std::string
-srecord::output_filter::filename(void)
+srecord::output_filter::filename()
     const
 {
     return deeper->filename();

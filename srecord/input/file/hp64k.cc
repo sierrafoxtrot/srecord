@@ -268,14 +268,14 @@ srecord::input_file_hp64k::read(record &record)
 }
 
 bool
-srecord::input_file_hp64k::is_binary(void)
+srecord::input_file_hp64k::is_binary()
     const
 {
     return true;
 }
 
 const char *
-srecord::input_file_hp64k::get_file_format_name(void)
+srecord::input_file_hp64k::get_file_format_name()
     const
 {
     return "HP64000 Absolute";
@@ -283,7 +283,7 @@ srecord::input_file_hp64k::get_file_format_name(void)
 
 
 int
-srecord::input_file_hp64k::format_option_number(void)
+srecord::input_file_hp64k::format_option_number()
     const
 {
     return arglex_tool::token_hp64k;

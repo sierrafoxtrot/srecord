@@ -112,13 +112,13 @@ public:
       * The get_address method is used to get the address of the
       * record.
       */
-    address_t get_address(void) const { return address; }
+    address_t get_address() const { return address; }
 
     /**
       * The get_address_end method is used to get the address "off
       * the end" of this record.
       */
-    address_t get_address_end(void) const { return (address + length); }
+    address_t get_address_end() const { return (address + length); }
 
     /**
       * The address_range_fits_into_n_bits method is used to test whether or
@@ -141,7 +141,7 @@ public:
       * The get_length method is used to get the length (number of
       * bytes) of the record data.
       */
-    size_t get_length(void) const { return length; }
+    size_t get_length() const { return length; }
 
     /**
       * The set_length method is used to set the number of data
@@ -165,7 +165,7 @@ public:
       * Note: Accessing beyond get_length() bytes will give an
       * undefined value.
       */
-    const data_t *get_data(void) const { return data; }
+    const data_t *get_data() const { return data; }
 
     /**
       * The get_data method is used to fetch the nth data value.
@@ -184,7 +184,7 @@ public:
       * The is_all_zero method is used to determine if the record
       * contains data bytes which are all zero.
       */
-    bool is_all_zero(void) const;
+    bool is_all_zero() const;
 
     /**
       * The set_data method is used to set values in the data array.
@@ -215,7 +215,7 @@ public:
     /**
       * The get_type method is used to get the type of the record.
       */
-    type_t get_type(void) const { return type; }
+    type_t get_type() const { return type; }
 
     /**
       * The set_type method is used to set the type of the record.

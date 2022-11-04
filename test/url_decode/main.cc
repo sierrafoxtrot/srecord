@@ -30,7 +30,7 @@
 
 
 static void
-usage(void)
+usage()
 {
     const char *prog;
 
@@ -42,7 +42,7 @@ usage(void)
 
 
 static void
-test_url_decode(void)
+test_url_decode()
 {
     for (;;)
     {
@@ -59,7 +59,7 @@ test_url_decode(void)
 
 
 static void
-test_url_encode(void)
+test_url_encode()
 {
     for (;;)
     {
@@ -79,7 +79,7 @@ int
 main(int argc, char **argv)
 {
     srecord::progname_set(argv[0]);
-    typedef void (*func_t)(void);
+    typedef void (*func_t)();
     func_t func = NULL;
     for (;;)
     {

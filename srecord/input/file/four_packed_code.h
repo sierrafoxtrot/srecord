@@ -53,10 +53,10 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**
@@ -81,13 +81,13 @@ private:
       * bytes) at a time.  The usual get_word (etc) continue to work
       * without additional modifications.
       */
-    int get_byte(void);
+    int get_byte();
 
     /**
       * The get_digit method is used to fetch one base85 digit from
       * the input.
       */
-    int get_digit(void);
+    int get_digit();
 
     /**
       * The get_byte_pos instance variable is used by the get_byte

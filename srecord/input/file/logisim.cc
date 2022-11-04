@@ -61,7 +61,7 @@ quote_char(int c)
 
 
 void
-srecord::input_file_logisim::read_inner_one(void)
+srecord::input_file_logisim::read_inner_one()
 {
     char buffer[512];
     char *bp = buffer;
@@ -93,7 +93,7 @@ srecord::input_file_logisim::read_inner_one(void)
 
 
 void
-srecord::input_file_logisim::read_inner_two(void)
+srecord::input_file_logisim::read_inner_two()
 {
     bool warned = false;
     for (;;)
@@ -129,7 +129,7 @@ srecord::input_file_logisim::read_inner_two(void)
 
 
 void
-srecord::input_file_logisim::read_inner_job(void)
+srecord::input_file_logisim::read_inner_job()
 {
     char buffer[200];
     char *bp = buffer;
@@ -273,7 +273,7 @@ srecord::input_file_logisim::read(class record &rec)
 
 
 const char *
-srecord::input_file_logisim::get_file_format_name(void)
+srecord::input_file_logisim::get_file_format_name()
     const
 {
     return "Logisim";
@@ -281,7 +281,7 @@ srecord::input_file_logisim::get_file_format_name(void)
 
 
 int
-srecord::input_file_logisim::format_option_number(void)
+srecord::input_file_logisim::format_option_number()
     const
 {
     return srecord::arglex_tool::token_logisim;
@@ -289,7 +289,7 @@ srecord::input_file_logisim::format_option_number(void)
 
 
 std::string
-srecord::input_file_logisim::datum_t::representation(void)
+srecord::input_file_logisim::datum_t::representation()
     const
 {
     char buffer[200];

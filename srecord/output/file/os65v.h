@@ -76,7 +76,7 @@ protected:
     bool preferred_block_size_set(int nbytes);
 
     // See base class for documentation
-    const char *mode(void) const;
+    const char *mode() const;
 
     // See base class for documentation.
     const char *format_name() const;

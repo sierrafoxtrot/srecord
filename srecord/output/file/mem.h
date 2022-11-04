@@ -69,7 +69,7 @@ protected:
     void address_length_set(int);
 
     // See base class for documentation
-    int preferred_block_size_get(void) const;
+    int preferred_block_size_get() const;
 
     // See base class for documentation.
     bool preferred_block_size_set(int nbytes);
@@ -78,7 +78,7 @@ protected:
     void command_line(arglex_tool *cmdln);
 
     // See base class for documentation.
-    const char *format_name(void) const;
+    const char *format_name() const;
 
     // See base class for documentation.
     void notify_upper_bound(unsigned long addr);
@@ -138,7 +138,7 @@ private:
       * The emit_header method is used to emit the file header,
       * if necessary.
       */
-    void emit_header(void);
+    void emit_header();
 
     /**
       * The default constructor.  Do not use.

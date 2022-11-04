@@ -168,7 +168,7 @@ srecord::input_file_os65v::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_os65v::get_file_format_name(void)
+srecord::input_file_os65v::get_file_format_name()
     const
 {
     return "Ohio Scientific";
@@ -176,7 +176,7 @@ srecord::input_file_os65v::get_file_format_name(void)
 
 
 int
-srecord::input_file_os65v::format_option_number(void)
+srecord::input_file_os65v::format_option_number()
     const
 {
     return arglex_tool::token_ohio_scientific;

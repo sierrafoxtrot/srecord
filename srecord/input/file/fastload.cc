@@ -46,7 +46,7 @@ srecord::input_file_fastload::create(const std::string &a_file_name)
 
 
 int
-srecord::input_file_fastload::get_digit(void)
+srecord::input_file_fastload::get_digit()
 {
     int c = get_char();
     switch (c)
@@ -144,7 +144,7 @@ srecord::input_file_fastload::get_number(int min_digits, int max_digits)
 
 
 void
-srecord::input_file_fastload::expect_white_space(void)
+srecord::input_file_fastload::expect_white_space()
 {
     switch (peek_char())
     {
@@ -309,7 +309,7 @@ srecord::input_file_fastload::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_fastload::get_file_format_name(void)
+srecord::input_file_fastload::get_file_format_name()
     const
 {
     return "LSI Logic Fast Load";
@@ -317,7 +317,7 @@ srecord::input_file_fastload::get_file_format_name(void)
 
 
 int
-srecord::input_file_fastload::format_option_number(void)
+srecord::input_file_fastload::format_option_number()
     const
 {
     return arglex_tool::token_fast_load;

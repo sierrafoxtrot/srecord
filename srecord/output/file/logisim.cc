@@ -161,7 +161,7 @@ srecord::output_file_logisim::preferred_block_size_set(int nbytes)
 
 
 int
-srecord::output_file_logisim::preferred_block_size_get(void)
+srecord::output_file_logisim::preferred_block_size_get()
     const
 {
     //
@@ -172,7 +172,7 @@ srecord::output_file_logisim::preferred_block_size_get(void)
 
 
 const char *
-srecord::output_file_logisim::format_name(void)
+srecord::output_file_logisim::format_name()
     const
 {
     return "Logisim";

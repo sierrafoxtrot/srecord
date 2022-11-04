@@ -111,7 +111,7 @@ srecord::output_file_ppb::address_length_set(int)
 
 
 int
-srecord::output_file_ppb::preferred_block_size_get(void)
+srecord::output_file_ppb::preferred_block_size_get()
     const
 {
     // Use the largest we can get.
@@ -120,7 +120,7 @@ srecord::output_file_ppb::preferred_block_size_get(void)
 
 
 const char *
-srecord::output_file_ppb::format_name(void)
+srecord::output_file_ppb::format_name()
     const
 {
     return "Stag Prom Programmer Binary";
@@ -175,7 +175,7 @@ srecord::output_file_ppb::packet(unsigned long address,
 
 
 void
-srecord::output_file_ppb::buffer_flush(void)
+srecord::output_file_ppb::buffer_flush()
 {
     if (buffer_length > 0)
     {
@@ -186,7 +186,7 @@ srecord::output_file_ppb::buffer_flush(void)
 
 
 bool
-srecord::output_file_ppb::is_binary(void)
+srecord::output_file_ppb::is_binary()
     const
 {
     return true;

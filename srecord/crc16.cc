@@ -67,7 +67,7 @@ static unsigned short const xmodem_seed = 0;
 
 
 void
-srecord::crc16::calculate_table(void)
+srecord::crc16::calculate_table()
 {
     if (polynomial == 0)
         polynomial = polynomial_ccitt;
@@ -289,7 +289,7 @@ srecord::crc16::nextbuf(const void *data, size_t nbytes)
 
 
 unsigned short
-srecord::crc16::get(void)
+srecord::crc16::get()
     const
 {
 #if (IMPL < IMPL_CH11)
@@ -307,7 +307,7 @@ srecord::crc16::get(void)
 
 
 void
-srecord::crc16::print_table(void)
+srecord::crc16::print_table()
     const
 {
     printf("/*\n");

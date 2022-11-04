@@ -44,7 +44,7 @@ srecord::memory_walker_alignment::create(unsigned a_multiple)
 
 
 bool
-srecord::memory_walker_alignment::is_well_aligned(void)
+srecord::memory_walker_alignment::is_well_aligned()
     const
 {
     return well_aligned;
@@ -75,7 +75,7 @@ srecord::memory_walker_alignment::observe(unsigned long address, const void *,
 
 
 void
-srecord::memory_walker_alignment::observe_end(void)
+srecord::memory_walker_alignment::observe_end()
 {
     // Check last end.
     if (data_seen && current_address % multiple != 0)

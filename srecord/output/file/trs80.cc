@@ -158,7 +158,7 @@ srecord::output_file_trs80::format_name()
 
 
 bool
-srecord::output_file_trs80::is_binary(void)
+srecord::output_file_trs80::is_binary()
     const
 {
     return true;

@@ -70,13 +70,13 @@ protected:
     void address_length_set(int);
 
     // See base class for documentation.
-    int preferred_block_size_get(void) const;
+    int preferred_block_size_get() const;
 
     // See base class for documentation.
     bool preferred_block_size_set(int nbytes);
 
     // See base class for documentation.
-    const char *format_name(void) const;
+    const char *format_name() const;
 
 private:
     /**

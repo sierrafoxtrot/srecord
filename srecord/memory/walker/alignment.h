@@ -56,14 +56,14 @@ public:
       * @returns
       *     true if the data has no holes, false if there are holes
       */
-    bool is_well_aligned(void) const;
+    bool is_well_aligned() const;
 
 protected:
     // See base class for documentation.
     void observe(unsigned long, const void *, int);
 
     // See base class for documentation.
-    void observe_end(void);
+    void observe_end();
 
 private:
     /**

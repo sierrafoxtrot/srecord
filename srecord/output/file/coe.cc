@@ -114,7 +114,7 @@ srecord::output_file_coe::notify_upper_bound(unsigned long addr)
 
 
 void
-srecord::output_file_coe::emit_header(void)
+srecord::output_file_coe::emit_header()
 {
     if (header_done)
         return;
@@ -279,7 +279,7 @@ srecord::output_file_coe::preferred_block_size_set(int nbytes)
 
 
 int
-srecord::output_file_coe::preferred_block_size_get(void)
+srecord::output_file_coe::preferred_block_size_get()
     const
 {
     return pref_blk_sz;
@@ -287,7 +287,7 @@ srecord::output_file_coe::preferred_block_size_get(void)
 
 
 const char *
-srecord::output_file_coe::format_name(void)
+srecord::output_file_coe::format_name()
     const
 {
     return "Coefficient (.COE) Files (Xilinx)";

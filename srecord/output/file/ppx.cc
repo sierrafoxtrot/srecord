@@ -156,7 +156,7 @@ srecord::output_file_ppx::address_length_set(int)
 
 
 int
-srecord::output_file_ppx::preferred_block_size_get(void)
+srecord::output_file_ppx::preferred_block_size_get()
     const
 {
     //
@@ -167,7 +167,7 @@ srecord::output_file_ppx::preferred_block_size_get(void)
 
 
 const char *
-srecord::output_file_ppx::format_name(void)
+srecord::output_file_ppx::format_name()
     const
 {
     return "Stag Prom Programmer Hexadecimal";

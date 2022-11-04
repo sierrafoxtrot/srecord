@@ -27,14 +27,14 @@ static  unsigned long   *pos;
 
 
 static inline int
-rand8(void)
+rand8()
 {
     return ((rand() >> 7) & 255);
 }
 
 
 static inline long
-rand32(void)
+rand32()
 {
     return
         (
@@ -56,7 +56,7 @@ static bool ready;
 
 
 static void
-r250_init(void)
+r250_init()
 {
     ready = true;
 
@@ -93,7 +93,7 @@ r250_init(void)
 
 
 unsigned long
-srecord::r250(void)
+srecord::r250()
 {
     if (!ready)
         r250_init();
