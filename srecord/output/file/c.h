@@ -213,7 +213,7 @@ private:
       * @param addr
       *     The address to be formatted
       */
-    auto format_address(unsigned long addr) -> std::string;
+    auto format_address(unsigned long addr) const -> std::string;
 
     /**
       * The default constructor.  Do not use.

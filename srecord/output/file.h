@@ -224,7 +224,7 @@ protected:
       * called by the #put_byte method).  Only the lower 8 bits of the
       * sum are returned.
       */
-    auto checksum_get() -> int;
+    auto checksum_get() const -> int;
 
     /**
       * The checksum_get16 method is used to get the current value of
@@ -232,7 +232,7 @@ protected:
       * usually called by the #put_byte method).  Only the lower 16
       * bits of the sum are returned.
       */
-    auto checksum_get16() -> int;
+    auto checksum_get16() const -> int;
 
     /**
       * The seek_to method is used to move the output position to the

@@ -672,7 +672,7 @@ srecord::output_file_c::emit_word(unsigned int n)
 
 
 auto
-srecord::output_file_c::format_address(unsigned long addr) -> std::string
+srecord::output_file_c::format_address(unsigned long addr) const -> std::string
 {
     char buffer[30];
     if (hex_style) {
