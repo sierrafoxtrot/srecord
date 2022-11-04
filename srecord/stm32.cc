@@ -37,14 +37,12 @@
 
 
 srecord::stm32::~stm32()
-{
-}
+= default;
 
 
 srecord::stm32::stm32() 
     
-{
-}
+= default;
 
 
 srecord::stm32::stm32(const stm32 &arg) :

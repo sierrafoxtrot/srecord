@@ -24,8 +24,7 @@
 
 
 srecord::output_file_wilson::~output_file_wilson()
-{
-}
+= default;
 
 
 srecord::output_file_wilson::output_file_wilson(

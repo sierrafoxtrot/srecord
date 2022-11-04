@@ -21,8 +21,7 @@
 
 
 srecord::memory_walker_fletcher16::~memory_walker_fletcher16()
-{
-}
+= default;
 
 
 srecord::memory_walker_fletcher16::memory_walker_fletcher16(

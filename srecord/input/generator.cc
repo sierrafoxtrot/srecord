@@ -29,8 +29,7 @@
 
 
 srecord::input_generator::~input_generator()
-{
-}
+= default;
 
 
 srecord::input_generator::input_generator(const interval &a_range) :

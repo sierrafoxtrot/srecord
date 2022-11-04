@@ -22,8 +22,7 @@
 
 
 srecord::input_file_binary::~input_file_binary()
-{
-}
+= default;
 
 
 srecord::input_file_binary::input_file_binary(const std::string &a_file_name) :

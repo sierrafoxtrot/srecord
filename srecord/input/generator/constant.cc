@@ -23,8 +23,7 @@
 
 
 srecord::input_generator_constant::~input_generator_constant()
-{
-}
+= default;
 
 
 srecord::input_generator_constant::input_generator_constant(

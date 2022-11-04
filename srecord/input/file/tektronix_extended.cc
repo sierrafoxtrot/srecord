@@ -22,8 +22,7 @@
 
 
 srecord::input_file_tektronix_extended::~input_file_tektronix_extended()
-{
-}
+= default;
 
 
 srecord::input_file_tektronix_extended::input_file_tektronix_extended(

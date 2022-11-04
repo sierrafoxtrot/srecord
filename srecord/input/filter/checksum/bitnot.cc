@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_checksum_bitnot::~input_filter_checksum_bitnot()
-{
-}
+= default;
 
 
 srecord::input_filter_checksum_bitnot::input_filter_checksum_bitnot(

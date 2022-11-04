@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_or::~input_filter_or()
-{
-}
+= default;
 
 
 srecord::input_filter_or::input_filter_or(const srecord::input::pointer &a1,

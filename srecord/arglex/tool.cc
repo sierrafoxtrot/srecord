@@ -256,8 +256,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
 
 
 srecord::arglex_tool::~arglex_tool()
-{
-}
+= default;
 
 
 bool

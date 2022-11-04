@@ -24,8 +24,7 @@
 
 
 srecord::input_file_ti_txt::~input_file_ti_txt()
-{
-}
+= default;
 
 
 srecord::input_file_ti_txt::input_file_ti_txt(const std::string &a_file_name) :

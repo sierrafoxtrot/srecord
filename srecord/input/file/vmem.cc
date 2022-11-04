@@ -24,8 +24,7 @@
 
 
 srecord::input_file_vmem::~input_file_vmem()
-{
-}
+= default;
 
 
 srecord::input_file_vmem::input_file_vmem(const std::string &a_file_name) :

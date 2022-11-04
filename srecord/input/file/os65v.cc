@@ -22,8 +22,7 @@
 
 
 srecord::input_file_os65v::~input_file_os65v()
-{
-}
+= default;
 
 
 srecord::input_file_os65v::input_file_os65v(const std::string &a_file_name) :

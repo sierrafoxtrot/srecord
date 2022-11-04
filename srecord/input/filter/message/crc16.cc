@@ -25,8 +25,7 @@
 
 
 srecord::input_filter_message_crc16::~input_filter_message_crc16()
-{
-}
+= default;
 
 
 srecord::input_filter_message_crc16::input_filter_message_crc16(

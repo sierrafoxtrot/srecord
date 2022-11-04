@@ -28,8 +28,7 @@
 
 
 srecord::fletcher16::~fletcher16()
-{
-}
+= default;
 
 
 srecord::fletcher16::fletcher16(
@@ -58,13 +57,9 @@ srecord::fletcher16::fletcher16(
 }
 
 
-srecord::fletcher16::fletcher16(const fletcher16 &rhs) :
-    sum1(rhs.sum1),
-    sum2(rhs.sum2),
-    answer(rhs.answer),
-    end(rhs.end)
-{
-}
+srecord::fletcher16::fletcher16(const fletcher16 &rhs) 
+    
+= default;
 
 
 srecord::fletcher16 &

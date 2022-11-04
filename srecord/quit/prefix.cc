@@ -24,8 +24,7 @@
 
 
 srecord::quit_prefix::~quit_prefix()
-{
-}
+= default;
 
 
 srecord::quit_prefix::quit_prefix(quit &a1, const char *a2) :

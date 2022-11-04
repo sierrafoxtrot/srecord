@@ -23,8 +23,7 @@
 
 
 srecord::input_filter_byte_swap::~input_filter_byte_swap()
-{
-}
+= default;
 
 
 srecord::input_filter_byte_swap::input_filter_byte_swap(

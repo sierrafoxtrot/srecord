@@ -24,8 +24,7 @@
 
 
 srecord::output_file_aomf::~output_file_aomf()
-{
-}
+= default;
 
 
 srecord::output_file_aomf::output_file_aomf(const std::string &a_file_name) :

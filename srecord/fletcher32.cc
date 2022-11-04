@@ -20,8 +20,7 @@
 
 
 srecord::fletcher32::~fletcher32()
-{
-}
+= default;
 
 
 srecord::fletcher32::fletcher32() 
@@ -31,11 +30,9 @@ srecord::fletcher32::fletcher32()
 }
 
 
-srecord::fletcher32::fletcher32(const fletcher32 &rhs) :
-    sum1(rhs.sum1),
-    sum2(rhs.sum2)
-{
-}
+srecord::fletcher32::fletcher32(const fletcher32 &rhs) 
+    
+= default;
 
 
 srecord::fletcher32 &

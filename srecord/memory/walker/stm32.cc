@@ -34,13 +34,11 @@
 
 
 srecord::memory_walker_stm32::~memory_walker_stm32()
-{
-}
+= default;
 
 
 srecord::memory_walker_stm32::memory_walker_stm32()
-{
-}
+= default;
 
 
 srecord::memory_walker_stm32::pointer

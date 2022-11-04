@@ -22,8 +22,7 @@
 
 
 srecord::input_file_hexdump::~input_file_hexdump()
-{
-}
+= default;
 
 
 srecord::input_file_hexdump::input_file_hexdump(const std::string &filename) :

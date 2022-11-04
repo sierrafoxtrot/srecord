@@ -21,8 +21,7 @@
 
 
 srecord::input_filter_interval_length::~input_filter_interval_length()
-{
-}
+= default;
 
 
 srecord::input_filter_interval_length::input_filter_interval_length(

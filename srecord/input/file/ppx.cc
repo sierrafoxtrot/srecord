@@ -24,8 +24,7 @@
 
 
 srecord::input_file_ppx::~input_file_ppx()
-{
-}
+= default;
 
 
 srecord::input_file_ppx::input_file_ppx(const std::string &filename) :

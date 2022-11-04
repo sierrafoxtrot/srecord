@@ -50,8 +50,7 @@
 
 
 srecord::input_file_hp64k::~input_file_hp64k()
-{
-}
+= default;
 
 
 srecord::input_file_hp64k::input_file_hp64k(

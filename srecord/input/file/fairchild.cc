@@ -22,8 +22,7 @@
 
 
 srecord::input_file_fairchild::~input_file_fairchild()
-{
-}
+= default;
 
 
 srecord::input_file_fairchild::input_file_fairchild(

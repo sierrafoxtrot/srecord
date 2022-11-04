@@ -25,8 +25,7 @@
 
 
 srecord::memory_walker_writer::~memory_walker_writer()
-{
-}
+= default;
 
 
 srecord::memory_walker_writer::memory_walker_writer(

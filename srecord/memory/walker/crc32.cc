@@ -22,8 +22,7 @@
 
 
 srecord::memory_walker_crc32::~memory_walker_crc32()
-{
-}
+= default;
 
 
 srecord::memory_walker_crc32::memory_walker_crc32(

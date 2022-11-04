@@ -25,25 +25,20 @@
 
 
 srecord::quit::~quit()
-{
-}
+= default;
 
 
 srecord::quit::quit()
-{
-}
+= default;
 
 
 srecord::quit::quit(const quit &)
-{
-}
+= default;
 
 
 srecord::quit &
 srecord::quit::operator=(const quit &)
-{
-    return *this;
-}
+= default;
 
 
 void

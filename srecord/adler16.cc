@@ -20,21 +20,17 @@
 
 
 srecord::adler16::~adler16()
-{
-}
+= default;
 
 
 srecord::adler16::adler16() 
     
-{
-}
+= default;
 
 
-srecord::adler16::adler16(const adler16 &rhs) :
-    sum_a(rhs.sum_a),
-    sum_b(rhs.sum_b)
-{
-}
+srecord::adler16::adler16(const adler16 &rhs) 
+    
+= default;
 
 
 srecord::adler16 &

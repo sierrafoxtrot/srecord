@@ -22,8 +22,7 @@
 
 
 srecord::input_file_four_packed_code::~input_file_four_packed_code()
-{
-}
+= default;
 
 
 srecord::input_file_four_packed_code::input_file_four_packed_code(

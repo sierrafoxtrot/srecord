@@ -22,14 +22,12 @@
 
 
 srecord::memory_walker_continuity::~memory_walker_continuity()
-{
-}
+= default;
 
 
 srecord::memory_walker_continuity::memory_walker_continuity() 
     
-{
-}
+= default;
 
 
 srecord::memory_walker_continuity::pointer

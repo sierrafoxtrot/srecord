@@ -22,8 +22,7 @@
 
 
 srecord::input_file_stewie::~input_file_stewie()
-{
-}
+= default;
 
 
 srecord::input_file_stewie::input_file_stewie(const std::string &a_file_name) :

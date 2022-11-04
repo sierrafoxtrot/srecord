@@ -23,8 +23,7 @@
 
 
 srecord::input_filter::~input_filter()
-{
-}
+= default;
 
 
 srecord::input_filter::input_filter(srecord::input::pointer arg) :

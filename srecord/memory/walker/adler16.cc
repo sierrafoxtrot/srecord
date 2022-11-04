@@ -22,13 +22,11 @@
 
 
 srecord::memory_walker_adler16::~memory_walker_adler16()
-{
-}
+= default;
 
 
 srecord::memory_walker_adler16::memory_walker_adler16()
-{
-}
+= default;
 
 
 srecord::memory_walker_adler16::pointer

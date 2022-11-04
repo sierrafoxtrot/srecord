@@ -24,8 +24,7 @@
 
 
 srecord::input_file_atmel_generic::~input_file_atmel_generic()
-{
-}
+= default;
 
 
 srecord::input_file_atmel_generic::input_file_atmel_generic(

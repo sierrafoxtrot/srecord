@@ -22,8 +22,7 @@
 
 
 srecord::input_file_idt::~input_file_idt()
-{
-}
+= default;
 
 
 srecord::input_file_idt::input_file_idt(

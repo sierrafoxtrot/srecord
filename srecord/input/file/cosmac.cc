@@ -22,8 +22,7 @@
 
 
 srecord::input_file_cosmac::~input_file_cosmac()
-{
-}
+= default;
 
 
 srecord::input_file_cosmac::input_file_cosmac(const std::string &a_file_name) :

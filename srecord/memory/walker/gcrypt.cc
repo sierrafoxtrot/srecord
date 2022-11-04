@@ -20,8 +20,7 @@
 
 
 srecord::memory_walker_gcrypt::~memory_walker_gcrypt()
-{
-}
+= default;
 
 
 srecord::memory_walker_gcrypt::memory_walker_gcrypt(gcry_md_hd_t a_handle) :

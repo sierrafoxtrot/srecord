@@ -21,8 +21,7 @@
 
 
 srecord::input_filter_checksum_positive::~input_filter_checksum_positive()
-{
-}
+= default;
 
 
 srecord::input_filter_checksum_positive::input_filter_checksum_positive(

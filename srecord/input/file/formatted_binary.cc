@@ -22,8 +22,7 @@
 
 
 srecord::input_file_formatted_binary::~input_file_formatted_binary()
-{
-}
+= default;
 
 
 srecord::input_file_formatted_binary::input_file_formatted_binary(

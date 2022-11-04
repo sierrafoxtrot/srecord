@@ -22,8 +22,7 @@
 
 
 srecord::input_file_mif::~input_file_mif()
-{
-}
+= default;
 
 
 srecord::input_file_mif::input_file_mif(const std::string &a_file_name) :

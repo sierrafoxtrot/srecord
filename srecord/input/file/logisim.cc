@@ -27,8 +27,7 @@
 
 
 srecord::input_file_logisim::~input_file_logisim()
-{
-}
+= default;
 
 
 srecord::input_file_logisim::input_file_logisim(

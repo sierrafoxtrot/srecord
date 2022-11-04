@@ -30,8 +30,7 @@
 
 srecord::memory::memory() 
     
-{
-}
+= default;
 
 
 srecord::memory::memory(const srecord::memory &rhs) :

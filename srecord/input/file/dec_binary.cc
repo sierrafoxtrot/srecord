@@ -22,8 +22,7 @@
 
 
 srecord::input_file_dec_binary::~input_file_dec_binary()
-{
-}
+= default;
 
 
 srecord::input_file_dec_binary::input_file_dec_binary(

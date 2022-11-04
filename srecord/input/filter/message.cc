@@ -21,8 +21,7 @@
 
 
 srecord::input_filter_message::~input_filter_message()
-{
-}
+= default;
 
 
 srecord::input_filter_message::input_filter_message(

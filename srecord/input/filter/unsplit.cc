@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_unsplit::~input_filter_unsplit()
-{
-}
+= default;
 
 
 srecord::input_filter_unsplit::input_filter_unsplit(

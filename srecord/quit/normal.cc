@@ -27,13 +27,11 @@
 
 
 srecord::quit_normal::~quit_normal()
-{
-}
+= default;
 
 
 srecord::quit_normal::quit_normal()
-{
-}
+= default;
 
 
 void

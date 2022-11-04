@@ -20,21 +20,17 @@
 
 
 srecord::adler32::~adler32()
-{
-}
+= default;
 
 
 srecord::adler32::adler32() 
     
-{
-}
+= default;
 
 
-srecord::adler32::adler32(const adler32 &rhs) :
-    sum_a(rhs.sum_a),
-    sum_b(rhs.sum_b)
-{
-}
+srecord::adler32::adler32(const adler32 &rhs) 
+    
+= default;
 
 
 srecord::adler32 &

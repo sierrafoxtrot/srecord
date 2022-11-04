@@ -24,8 +24,7 @@
 
 
 srecord::input_file_ppb::~input_file_ppb()
-{
-}
+= default;
 
 
 srecord::input_file_ppb::input_file_ppb(const std::string &filename) :

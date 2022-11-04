@@ -21,8 +21,7 @@
 
 
 srecord::input_filter_interval_maximum::~input_filter_interval_maximum()
-{
-}
+= default;
 
 
 srecord::input_filter_interval_maximum::input_filter_interval_maximum(

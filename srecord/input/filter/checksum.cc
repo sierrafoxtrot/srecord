@@ -48,8 +48,7 @@ srecord::input_filter_checksum::input_filter_checksum(
 
 
 srecord::input_filter_checksum::~input_filter_checksum()
-{
-}
+= default;
 
 
 bool

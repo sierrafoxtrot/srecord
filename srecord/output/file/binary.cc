@@ -22,8 +22,7 @@
 
 
 srecord::output_file_binary::~output_file_binary()
-{
-}
+= default;
 
 
 srecord::output_file_binary::output_file_binary(

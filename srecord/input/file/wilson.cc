@@ -22,8 +22,7 @@
 
 
 srecord::input_file_wilson::~input_file_wilson()
-{
-}
+= default;
 
 
 srecord::input_file_wilson::input_file_wilson(const std::string &a_file_name) :

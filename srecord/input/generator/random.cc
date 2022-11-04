@@ -22,8 +22,7 @@
 
 
 srecord::input_generator_random::~input_generator_random()
-{
-}
+= default;
 
 
 srecord::input_generator_random::input_generator_random(

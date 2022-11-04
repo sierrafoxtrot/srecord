@@ -24,8 +24,7 @@
 
 
 srecord::input_file_needham::~input_file_needham()
-{
-}
+= default;
 
 
 srecord::input_file_needham::input_file_needham(

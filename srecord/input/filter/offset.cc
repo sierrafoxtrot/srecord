@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_offset::~input_filter_offset()
-{
-}
+= default;
 
 
 srecord::input_filter_offset::input_filter_offset(

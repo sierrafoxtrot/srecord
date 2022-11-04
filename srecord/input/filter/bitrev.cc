@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_bitrev::~input_filter_bitrev()
-{
-}
+= default;
 
 
 srecord::input_filter_bitrev::input_filter_bitrev(

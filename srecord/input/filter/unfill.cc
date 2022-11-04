@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_unfill::~input_filter_unfill()
-{
-}
+= default;
 
 
 srecord::input_filter_unfill::input_filter_unfill(

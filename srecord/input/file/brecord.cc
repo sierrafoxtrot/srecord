@@ -22,8 +22,7 @@
 
 
 srecord::input_file_brecord::~input_file_brecord()
-{
-}
+= default;
 
 
 srecord::input_file_brecord::input_file_brecord(

@@ -23,8 +23,7 @@
 
 
 srecord::input_filter_not::~input_filter_not()
-{
-}
+= default;
 
 
 srecord::input_filter_not::input_filter_not(const input::pointer &arg) :

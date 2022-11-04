@@ -32,8 +32,7 @@
 
 
 srecord::input_filter_message_stm32::~input_filter_message_stm32()
-{
-}
+= default;
 
 
 srecord::input_filter_message_stm32::input_filter_message_stm32(

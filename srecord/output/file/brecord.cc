@@ -24,8 +24,7 @@
 
 
 srecord::output_file_brecord::~output_file_brecord()
-{
-}
+= default;
 
 
 srecord::output_file_brecord::output_file_brecord(

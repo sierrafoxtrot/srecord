@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_xor::~input_filter_xor()
-{
-}
+= default;
 
 
 srecord::input_filter_xor::input_filter_xor(const srecord::input::pointer &a1,

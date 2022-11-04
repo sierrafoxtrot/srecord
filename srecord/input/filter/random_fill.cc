@@ -24,8 +24,7 @@
 
 
 srecord::input_filter_random_fill::~input_filter_random_fill()
-{
-}
+= default;
 
 
 srecord::input_filter_random_fill::input_filter_random_fill(

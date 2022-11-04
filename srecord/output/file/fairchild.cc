@@ -22,8 +22,7 @@
 
 
 srecord::output_file_fairchild::~output_file_fairchild()
-{
-}
+= default;
 
 
 srecord::output_file_fairchild::output_file_fairchild(

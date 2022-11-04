@@ -22,8 +22,7 @@
 
 
 srecord::input_file_mips_flash::~input_file_mips_flash()
-{
-}
+= default;
 
 
 srecord::input_file_mips_flash::input_file_mips_flash(

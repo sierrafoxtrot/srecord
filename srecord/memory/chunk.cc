@@ -53,8 +53,7 @@ srecord::memory_chunk::operator=(const srecord::memory_chunk &arg)
 
 
 srecord::memory_chunk::~memory_chunk()
-{
-}
+= default;
 
 
 void

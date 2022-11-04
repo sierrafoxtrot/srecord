@@ -22,8 +22,7 @@
 
 
 srecord::output_file_spasm::~output_file_spasm()
-{
-}
+= default;
 
 
 srecord::output_file_spasm::output_file_spasm(

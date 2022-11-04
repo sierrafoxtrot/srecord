@@ -23,8 +23,7 @@
 
 
 srecord::input_file_emon52::~input_file_emon52()
-{
-}
+= default;
 
 
 srecord::input_file_emon52::input_file_emon52(const std::string &a_file_name) :

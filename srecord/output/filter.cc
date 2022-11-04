@@ -22,8 +22,7 @@
 
 
 srecord::output_filter::~output_filter()
-{
-}
+= default;
 
 
 srecord::output_filter::output_filter(output::pointer a_deeper) :

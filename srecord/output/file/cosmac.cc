@@ -21,8 +21,7 @@
 #include <srecord/record.h>
 
 srecord::output_file_cosmac::~output_file_cosmac()
-{
-}
+= default;
 
 
 srecord::output_file_cosmac::output_file_cosmac(

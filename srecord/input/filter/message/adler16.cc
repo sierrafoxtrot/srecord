@@ -24,8 +24,7 @@
 
 
 srecord::input_filter_message_adler16::~input_filter_message_adler16()
-{
-}
+= default;
 
 
 srecord::input_filter_message_adler16::input_filter_message_adler16(

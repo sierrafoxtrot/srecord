@@ -132,8 +132,7 @@ srecord::arglex::read_arguments_file(const char *filename)
 
 
 srecord::arglex::~arglex()
-{
-}
+= default;
 
 
 void

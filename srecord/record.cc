@@ -84,8 +84,7 @@ srecord::record::operator=(const srecord::record &arg)
 
 
 srecord::record::~record()
-{
-}
+= default;
 
 
 size_t

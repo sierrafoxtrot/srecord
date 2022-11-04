@@ -24,8 +24,7 @@
 
 
 srecord::input_file_spasm::~input_file_spasm()
-{
-}
+= default;
 
 
 srecord::input_file_spasm::input_file_spasm(

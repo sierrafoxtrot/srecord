@@ -25,8 +25,7 @@
 
 
 srecord::memory_walker_compare::~memory_walker_compare()
-{
-}
+= default;
 
 
 srecord::memory_walker_compare::memory_walker_compare(const srecord::memory &a1,

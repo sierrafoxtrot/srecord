@@ -23,8 +23,7 @@
 
 
 srecord::input_filter_message_fletcher32::~input_filter_message_fletcher32()
-{
-}
+= default;
 
 
 srecord::input_filter_message_fletcher32::input_filter_message_fletcher32(

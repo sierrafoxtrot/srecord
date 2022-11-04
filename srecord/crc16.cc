@@ -166,8 +166,7 @@ srecord::crc16::operator=(const crc16 &rhs)
 
 
 srecord::crc16::~crc16()
-{
-}
+= default;
 
 
 #if (IMPL == IMPL_CH9)

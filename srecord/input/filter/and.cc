@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_and::~input_filter_and()
-{
-}
+= default;
 
 
 srecord::input_filter_and::input_filter_and(const input::pointer &a1,

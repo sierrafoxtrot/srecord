@@ -27,13 +27,11 @@
 
 
 srecord::output::output()
-{
-}
+= default;
 
 
 srecord::output::~output()
-{
-}
+= default;
 
 
 void

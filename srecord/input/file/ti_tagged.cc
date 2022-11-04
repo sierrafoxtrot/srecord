@@ -24,8 +24,7 @@
 
 
 srecord::input_file_ti_tagged::~input_file_ti_tagged()
-{
-}
+= default;
 
 
 srecord::input_file_ti_tagged::input_file_ti_tagged(

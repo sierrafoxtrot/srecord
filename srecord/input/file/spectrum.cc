@@ -24,8 +24,7 @@
 
 
 srecord::input_file_spectrum::~input_file_spectrum()
-{
-}
+= default;
 
 
 srecord::input_file_spectrum::input_file_spectrum(

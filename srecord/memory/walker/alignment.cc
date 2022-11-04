@@ -22,8 +22,7 @@
 
 
 srecord::memory_walker_alignment::~memory_walker_alignment()
-{
-}
+= default;
 
 
 srecord::memory_walker_alignment::memory_walker_alignment(unsigned a_multiple) :

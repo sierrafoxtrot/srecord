@@ -22,8 +22,7 @@
 
 
 srecord::input_file_signetics::~input_file_signetics()
-{
-}
+= default;
 
 
 srecord::input_file_signetics::input_file_signetics(

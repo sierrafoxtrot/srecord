@@ -24,8 +24,7 @@
 
 
 srecord::input_file_fastload::~input_file_fastload()
-{
-}
+= default;
 
 
 srecord::input_file_fastload::input_file_fastload(

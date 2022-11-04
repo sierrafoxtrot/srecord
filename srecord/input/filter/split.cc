@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_split::~input_filter_split()
-{
-}
+= default;
 
 
 srecord::input_filter_split::input_filter_split(const input::pointer &a1,

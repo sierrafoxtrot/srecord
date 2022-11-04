@@ -33,8 +33,7 @@ srecord::input::input() :
 
 
 srecord::input::~input()
-{
-}
+= default;
 
 
 void

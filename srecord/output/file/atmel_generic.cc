@@ -22,8 +22,7 @@
 
 
 srecord::output_file_atmel_generic::~output_file_atmel_generic()
-{
-}
+= default;
 
 
 srecord::output_file_atmel_generic::output_file_atmel_generic(

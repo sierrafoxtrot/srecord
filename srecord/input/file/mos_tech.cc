@@ -22,8 +22,7 @@
 
 
 srecord::input_file_mos_tech::~input_file_mos_tech()
-{
-}
+= default;
 
 
 srecord::input_file_mos_tech::input_file_mos_tech(

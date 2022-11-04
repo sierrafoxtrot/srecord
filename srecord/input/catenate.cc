@@ -24,8 +24,7 @@
 
 
 srecord::input_catenate::~input_catenate()
-{
-}
+= default;
 
 
 srecord::input_catenate::input_catenate(pointer a1, pointer a2) :

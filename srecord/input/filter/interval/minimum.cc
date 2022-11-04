@@ -21,8 +21,7 @@
 
 
 srecord::input_filter_interval_minimum::~input_filter_interval_minimum()
-{
-}
+= default;
 
 
 srecord::input_filter_interval_minimum::input_filter_interval_minimum(

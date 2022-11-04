@@ -22,13 +22,11 @@
 
 
 srecord::memory_walker::memory_walker()
-{
-}
+= default;
 
 
 srecord::memory_walker::~memory_walker()
-{
-}
+= default;
 
 
 void

@@ -24,8 +24,7 @@
 
 
 srecord::input_filter_message_gcrypt::~input_filter_message_gcrypt()
-{
-}
+= default;
 
 
 srecord::input_filter_message_gcrypt::input_filter_message_gcrypt(

@@ -22,8 +22,7 @@
 
 
 srecord::input_file_motorola::~input_file_motorola()
-{
-}
+= default;
 
 
 srecord::input_file_motorola::input_file_motorola(

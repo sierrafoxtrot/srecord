@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_sequence::~input_filter_sequence()
-{
-}
+= default;
 
 
 srecord::input_filter_sequence::input_filter_sequence(

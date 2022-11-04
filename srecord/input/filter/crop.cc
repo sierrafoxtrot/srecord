@@ -23,8 +23,7 @@
 
 
 srecord::input_filter_crop::~input_filter_crop()
-{
-}
+= default;
 
 
 srecord::input_filter_crop::input_filter_crop(
