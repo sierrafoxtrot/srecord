@@ -38,7 +38,7 @@ srecord::output_file_hexdump::output_file_hexdump(
     row_cache_address((unsigned long)-1),
     row_cache_address_mask(0),
     row_cache_size(0),
-    row_cache(0),
+    row_cache(nullptr),
     address_length(4)
 {
     line_length_set(80);

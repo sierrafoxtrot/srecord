@@ -35,7 +35,7 @@ srecord::input_filter_fill::input_filter_fill(const input::pointer &a1,
         int a2, const interval &a3) :
     input_filter(a1),
     filler_value(a2),
-    filler_block(0),
+    filler_block(nullptr),
     range(a3)
 {
 }

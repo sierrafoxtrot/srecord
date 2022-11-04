@@ -132,7 +132,7 @@ srecord::output_file_tektronix::write(const srecord::record &record)
                     addr
                 );
             }
-            write_inner(record.get_address(), 0, 0);
+            write_inner(record.get_address(), nullptr, 0);
         }
         break;
 

@@ -84,7 +84,7 @@ private:
       * The current_buffer instance variable is used to remember the
       * base of an array which buffers the current input record.
       */
-    unsigned char *current_buffer{0};
+    unsigned char *current_buffer{nullptr};
 
     /**
       * The current_length instance variable is used to remember

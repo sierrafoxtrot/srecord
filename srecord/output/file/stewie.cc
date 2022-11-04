@@ -31,7 +31,7 @@ srecord::output_file_stewie::~output_file_stewie()
         // indicate the S7, S8 or S9 could terminate the file, only
         // S8 seems to work.
         //
-        write_inner(8, 0, 0, 0, 0);
+        write_inner(8, 0, 0, nullptr, 0);
     }
 }
 
@@ -130,7 +130,7 @@ srecord::output_file_stewie::write(const srecord::record &record)
             // Even though it starts with S0, the header record has a
             // fixed format, so we don't bother passing it any data.
             //
-            write_inner(0, 0, 0, 0, 0);
+            write_inner(0, 0, 0, nullptr, 0);
         }
         break;
 

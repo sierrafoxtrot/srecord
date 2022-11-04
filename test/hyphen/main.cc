@@ -143,8 +143,8 @@ usage()
 
 static struct option options[] =
 {
-    { "version", 0, 0, 'V' },
-    { 0, 0, 0, 0 }
+    { "version", 0, nullptr, 'V' },
+    { nullptr, 0, nullptr, 0 }
 };
 
 
@@ -154,7 +154,7 @@ main(int argc, char **argv)
     srecord::progname_set(argv[0]);
     for (;;)
     {
-        int c = getopt_long(argc, argv, "V", options, 0);
+        int c = getopt_long(argc, argv, "V", options, nullptr);
         switch (c)
         {
         case EOF:

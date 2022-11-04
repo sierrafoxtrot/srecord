@@ -36,11 +36,11 @@ srecord::memory::memory()
 srecord::memory::memory(const srecord::memory &rhs) :
     nchunks(0),
     nchunks_max(0),
-    chunk(0),
-    cache(0),
+    chunk(nullptr),
+    cache(nullptr),
     find_next_chunk_index(0),
-    header(0),
-    execution_start_address(0)
+    header(nullptr),
+    execution_start_address(nullptr)
 {
     copy(rhs);
 }
@@ -68,17 +68,17 @@ void
 srecord::memory::clear()
 {
     delete header;
-    header = 0;
+    header = nullptr;
     delete execution_start_address;
-    execution_start_address = 0;
+    execution_start_address = nullptr;
     for (int j = 0; j < nchunks; ++j)
         delete chunk[j];
     if (chunk)
         delete [] chunk;
     nchunks = 0;
     nchunks_max = 0;
-    chunk = 0;
-    cache = 0;
+    chunk = nullptr;
+    cache = nullptr;
 }
 
 
@@ -86,12 +86,12 @@ void
 srecord::memory::copy(const srecord::memory &rhs)
 {
     delete header;
-    header = 0;
+    header = nullptr;
     if (rhs.header)
         header = new srecord::record(*rhs.header);
 
     delete execution_start_address;
-    execution_start_address = 0;
+    execution_start_address = nullptr;
     if (rhs.execution_start_address)
     {
         execution_start_address =
@@ -125,7 +125,7 @@ srecord::memory::find(unsigned long address)
     //
     int min = 0;
     int max = nchunks - 1;
-    srecord::memory_chunk *mcp = 0;
+    srecord::memory_chunk *mcp = nullptr;
     while (min <= max)
     {
         int mid = (min + max) / 2;
@@ -415,7 +415,7 @@ srecord::memory::find_next_chunk(unsigned long address)
             return mcp;
         find_next_chunk_index++;
     }
-    return 0;
+    return nullptr;
 }
 
 
@@ -483,7 +483,7 @@ srecord::memory::set_execution_start_address(unsigned long addr)
         (
             srecord::record::type_execution_start_address,
             addr,
-            0,
+            nullptr,
             0
         );
 }

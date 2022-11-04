@@ -288,7 +288,7 @@ public:
     /**
       * The help method is used to print a help message.
       */
-    void help(const char * = 0) const;
+    void help(const char * = nullptr) const;
 
     /**
       * The version method is used to print a version message.

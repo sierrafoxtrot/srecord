@@ -51,7 +51,7 @@ srecord::output_file::~output_file()
 srecord::output_file::output_file() :
     file_name("standard output"),
     line_number(1),
-    vfp(0),
+    vfp(nullptr),
     checksum(0),
     position(0),
     is_regular(true)
@@ -65,7 +65,7 @@ srecord::output_file::output_file() :
 srecord::output_file::output_file(std::string a_file_name) :
     file_name(std::move(a_file_name)),
     line_number(1),
-    vfp(0),
+    vfp(nullptr),
     checksum(0),
     position(0),
     is_regular(true)

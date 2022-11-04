@@ -39,7 +39,7 @@ srecord::output_filter_reblock::output_filter_reblock(
     align(a_align),
     block_size(0),
     buffer_address(0),
-    buffer(0),
+    buffer(nullptr),
     buffer_pos(0),
     buffer_max(0)
 {

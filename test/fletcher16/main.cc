@@ -42,12 +42,12 @@ main(int argc, char **argv)
     switch (argc)
     {
     case 4:
-        answer = strtol(argv[3], 0, 0);
+        answer = strtol(argv[3], nullptr, 0);
         // Fall through...
 
     case 3:
-        sum2 = strtol(argv[2], 0, 0);
-        sum1 = strtol(argv[1], 0, 0);
+        sum2 = strtol(argv[2], nullptr, 0);
+        sum1 = strtol(argv[1], nullptr, 0);
         break;
 
     case 1:

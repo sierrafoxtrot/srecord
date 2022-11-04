@@ -36,7 +36,7 @@ srecord::input_file_intel::input_file_intel(const std::string &a_file_name) :
     termination_seen(false),
     mode(mode_i8hex),
     address_base(0),
-    pushback(0),
+    pushback(nullptr),
     end_seen(false)
 {
 }
@@ -56,7 +56,7 @@ srecord::input_file_intel::read_inner(srecord::record &record)
     {
         record = *pushback;
         delete pushback;
-        pushback = 0;
+        pushback = nullptr;
         return true;
     }
 
@@ -218,7 +218,7 @@ srecord::input_file_intel::read_inner(srecord::record &record)
                         (
                             srecord::record::type_execution_start_address,
                             address_field,
-                            0,
+                            nullptr,
                             0
                         );
                     return true;
@@ -274,7 +274,7 @@ srecord::input_file_intel::read_inner(srecord::record &record)
                 (
                     srecord::record::type_execution_start_address,
                     address_field,
-                    0,
+                    nullptr,
                     0
                 );
             mode = mode_segmented;
@@ -312,7 +312,7 @@ srecord::input_file_intel::read_inner(srecord::record &record)
                 (
                     srecord::record::type_execution_start_address,
                     address_field,
-                    0,
+                    nullptr,
                     0
                 );
             mode = mode_linear;

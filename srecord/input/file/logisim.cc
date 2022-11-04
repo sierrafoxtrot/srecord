@@ -133,7 +133,7 @@ srecord::input_file_logisim::read_inner_job()
     char buffer[200];
     char *bp = buffer;
     char *end = buffer + (sizeof(buffer) - 1);
-    char *seen_star = 0;
+    char *seen_star = nullptr;
     for(;;)
     {
         if (jobs.size() > 20)
@@ -161,7 +161,7 @@ srecord::input_file_logisim::read_inner_job()
         case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
         case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
             bp = buffer;
-            seen_star = 0;
+            seen_star = nullptr;
             for (;;)
             {
                 if (bp >= end)
@@ -199,7 +199,7 @@ srecord::input_file_logisim::read_inner_job()
             {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{
             if (seen_star)
             {
-                char *ep = 0;
+                char *ep = nullptr;
                 long count = strtol(buffer, &ep, 10);
                 if (buffer == ep || *ep != '*')
                     fatal_error("malformed datum");
@@ -207,7 +207,7 @@ srecord::input_file_logisim::read_inner_job()
                 // The documentation does not reveal a way to distinguish
                 // 1-byte vs 2-byte or 4-byte items.  Also it
                 // doesn't specify endian-ness.
-                ep = 0;
+                ep = nullptr;
                 unsigned long value = strtoul(seen_star, &ep, 16);
                 if (seen_star == ep || *ep != '\0')
                     fatal_error("malformed datum");
@@ -218,7 +218,7 @@ srecord::input_file_logisim::read_inner_job()
             }
 
             // no star
-            char *ep = 0;
+            char *ep = nullptr;
             long n = strtol(buffer, &ep, 16);
             if (buffer == ep || *ep != '\0')
                 fatal_error("malformed datum");

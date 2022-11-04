@@ -24,7 +24,7 @@
 srecord::output_file_intel16::~output_file_intel16()
 {
     if (enable_footer_flag)
-        write_inner(1, 0L, 0, 0);
+        write_inner(1, 0L, nullptr, 0);
 }
 
 

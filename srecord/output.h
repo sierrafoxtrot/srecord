@@ -59,7 +59,7 @@ public:
       * to the output.  If no record is specified, a default
       * record will be supplied.  The write method will be called.
       */
-    virtual void write_header(const record * = 0);
+    virtual void write_header(const record * = nullptr);
 
     /**
       * The write_data method is used to write data to the output.
@@ -74,7 +74,7 @@ public:
       * specified, a default record will be supplied.  The #write method
       * will be called.
       */
-    virtual void write_execution_start_address(const record * = 0);
+    virtual void write_execution_start_address(const record * = nullptr);
 
     /**
       * The set_line_length method is used to set the maximum

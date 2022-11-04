@@ -79,7 +79,7 @@ public:
       * @param rec
       *     The record to be processed.
       */
-    virtual void observe_header(const record *rec = 0);
+    virtual void observe_header(const record *rec = nullptr);
 
     /**
       * The observe_start_address method is used to inform the walker
@@ -88,7 +88,7 @@ public:
       * @param rec
       *     The record to be processed.
       */
-    virtual void observe_start_address(const record *rec = 0);
+    virtual void observe_start_address(const record *rec = nullptr);
 
 protected:
     /**

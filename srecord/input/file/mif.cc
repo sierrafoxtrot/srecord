@@ -179,7 +179,7 @@ srecord::input_file_mif::lex()
                 // (because strtol will reject it).
                 //
                 const char *cp = id.c_str();
-                char *ep = 0;
+                char *ep = nullptr;
                 token_value = strtol(cp, &ep, lex_radix);
                 if (ep != cp && !*ep)
                     return token_number;

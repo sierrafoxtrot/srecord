@@ -99,9 +99,9 @@ srecord::output_file_idt::write_data_count()
     if (enable_data_count_flag)
     {
         if (data_count < (1L << 16))
-            write_inner(5, data_count, 2, 0, 0);
+            write_inner(5, data_count, 2, nullptr, 0);
         else
-            write_inner(6, data_count, 3, 0, 0);
+            write_inner(6, data_count, 3, nullptr, 0);
     }
     data_count_written = true;
 
@@ -177,11 +177,11 @@ srecord::output_file_idt::write(const srecord::record &record)
             write_data_count();
 
             if (addr < (1UL << 16) && address_length <= 2)
-                write_inner(9, addr, 2, 0, 0);
+                write_inner(9, addr, 2, nullptr, 0);
             else if (addr < (1UL << 24) && address_length <= 3)
-                write_inner(8, addr, 3, 0, 0);
+                write_inner(8, addr, 3, nullptr, 0);
             else
-                write_inner(7, addr, 4, 0, 0);
+                write_inner(7, addr, 4, nullptr, 0);
         }
         break;
 

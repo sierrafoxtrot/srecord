@@ -400,8 +400,8 @@ static const char *
 memrchr(const char *data, char c, size_t len)
 {
     if (!data)
-        return 0;
-    const char *result = 0;
+        return nullptr;
+    const char *result = nullptr;
     while (len > 0)
     {
         const char *p = (const char *)memchr(data, c, len);

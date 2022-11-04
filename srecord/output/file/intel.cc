@@ -24,7 +24,7 @@
 srecord::output_file_intel::~output_file_intel()
 {
     if (enable_footer_flag)
-        write_inner(1, 0L, 0, 0);
+        write_inner(1, 0L, nullptr, 0);
 }
 
 
@@ -193,7 +193,7 @@ srecord::output_file_intel::write(const srecord::record &record)
 
             case mode_i8hex:
                 // In ancient times, it went into the EOF record
-                write_inner(1, record.get_address(), 0, 0);
+                write_inner(1, record.get_address(), nullptr, 0);
                 enable_footer_flag = false;
                 break;
             }

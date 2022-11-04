@@ -239,7 +239,7 @@ srecord::input_file_msbin::read(record &result)
             );
         }
 
-        result = record(record::type_execution_start_address, remaining, 0, 0);
+        result = record(record::type_execution_start_address, remaining, nullptr, 0);
 
         // This should be the last record - but if it was not, we try to read
         // further and produce a warning.

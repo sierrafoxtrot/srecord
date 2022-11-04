@@ -340,7 +340,7 @@ srecord::input_filter_message_gcrypt::process(const memory &input,
     unsigned int flags = 0;
     if (hmac)
         flags |= GCRY_MD_FLAG_HMAC;
-    gcry_md_hd_t handle = 0;
+    gcry_md_hd_t handle = nullptr;
     gcry_error_t err = gcry_md_open(&handle, algo, flags);
     if (err)
         fatal_error("gcry_md_open: %s", gcry_strerror(err));

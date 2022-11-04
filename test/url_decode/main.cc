@@ -80,18 +80,18 @@ main(int argc, char **argv)
 {
     srecord::progname_set(argv[0]);
     typedef void (*func_t)();
-    func_t func = NULL;
+    func_t func = nullptr;
     for (;;)
     {
         static const
         struct option options[] =
         {
-            { "decode", 0, 0, 'd' },
-            { "encode", 0, 0, 'e' },
-            { "version", 0, 0, 'V' },
-            { 0, 0, 0,0 }
+            { "decode", 0, nullptr, 'd' },
+            { "encode", 0, nullptr, 'e' },
+            { "version", 0, nullptr, 'V' },
+            { nullptr, 0, nullptr,0 }
         };
-        int c = getopt_long(argc, argv, "deV", options, NULL);
+        int c = getopt_long(argc, argv, "deV", options, nullptr);
         if (c == -1)
             break;
 

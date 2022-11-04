@@ -115,7 +115,7 @@ srecord::input_file_dec_binary::read(srecord::record &record)
             }
             srecord::record::type_t type =
                 srecord::record::type_execution_start_address;
-            record = srecord::record(type, current_address, 0, 0);
+            record = srecord::record(type, current_address, nullptr, 0);
             seek_to_end();
             return true;
         }

@@ -37,7 +37,7 @@ srecord::input_file_intel16::input_file_intel16(
     termination_seen(false),
     mode(linear),
     address_base(0),
-    pushback(0),
+    pushback(nullptr),
     end_seen(false)
 {
 }
@@ -57,7 +57,7 @@ srecord::input_file_intel16::read_inner(record &result)
     {
         result = *pushback;
         delete pushback;
-        pushback = 0;
+        pushback = nullptr;
         return true;
     }
 
@@ -241,7 +241,7 @@ srecord::input_file_intel16::read_inner(record &result)
                 (
                     record::type_execution_start_address,
                     address_field << 1,
-                    0,
+                    nullptr,
                     0
                 );
             return true;
@@ -278,7 +278,7 @@ srecord::input_file_intel16::read_inner(record &result)
                 (
                     record::type_execution_start_address,
                     address_field << 1,
-                    0,
+                    nullptr,
                     0
                 );
             return true;

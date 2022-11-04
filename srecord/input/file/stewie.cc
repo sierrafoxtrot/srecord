@@ -75,13 +75,13 @@ srecord::input_file_stewie::read_inner(record &result)
         // The header record is literally "S003"
         if (get_char() != '0' || get_char() != '3')
             fatal_error("format error");
-        result = record(record::type_header, 0, 0, 0);
+        result = record(record::type_header, 0, nullptr, 0);
         return true;
 
     case 7:
     case 8:
     case 9:
-        result = record(record::type_execution_start_address, 0, 0, 0);
+        result = record(record::type_execution_start_address, 0, nullptr, 0);
         return true;
     }
     checksum_reset();

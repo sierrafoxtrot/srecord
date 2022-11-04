@@ -204,7 +204,7 @@ srecord::input_file_aomf::read(srecord::record &record)
                     );
             }
             else
-                record = srecord::record(srecord::record::type_header, 0, 0, 0);
+                record = srecord::record(srecord::record::type_header, 0, nullptr, 0);
             current_length = 0;
             return true;
 

@@ -250,7 +250,7 @@ private:
       * settings of the various bytes.  By using a sparse array,
       * we can cope with arbitrary memory usages.
       */
-    mutable memory_chunk **chunk{0};
+    mutable memory_chunk **chunk{nullptr};
 
     /**
       * The find method is used to find the chunk which contains
@@ -266,7 +266,7 @@ private:
       * method, based on the fact that most memory accesses are
       * sequential, in the same chunk.
       */
-    mutable memory_chunk *cache{0};
+    mutable memory_chunk *cache{nullptr};
 
     /**
       * The find_next_chunk method is used to visit each and every
@@ -287,7 +287,7 @@ private:
       * It is set by the reader() and set_header() methods.  It is
       * read by the get_header() method.
       */
-    record *header{0};
+    record *header{nullptr};
 
     /**
       * The execution_start_address instance variable is used to track
@@ -295,7 +295,7 @@ private:
       * set_execution_start_address() methods.  It is read by the
       * get_execution_start_address() method.
       */
-    record *execution_start_address{0};
+    record *execution_start_address{nullptr};
 
     /**
       * The clear method is used to discard all data, as if when

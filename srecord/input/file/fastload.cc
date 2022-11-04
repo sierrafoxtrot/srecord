@@ -234,7 +234,7 @@ srecord::input_file_fastload::read_inner(srecord::record &record)
                 get_number(1, 6);
                 seek_to_end();
                 type = srecord::record::type_execution_start_address;
-                record = srecord::record(type, address, 0, 0);
+                record = srecord::record(type, address, nullptr, 0);
                 return true;
 
             case 'K':

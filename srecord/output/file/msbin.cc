@@ -131,7 +131,7 @@ srecord::output_file_msbin::write_data(const record &r)
 void
 srecord::output_file_msbin::flush_pending_records(const record *r)
 {
-    if (!pending_records.empty() || r != NULL)
+    if (!pending_records.empty() || r != nullptr)
     {
         // write header
         const record::address_t start =

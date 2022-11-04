@@ -138,7 +138,7 @@ srecord::output_file_tektronix_extended::write(const srecord::record &record)
                 8,
                 record.get_address(),
                 addr_width(record.get_address()),
-                0,
+                nullptr,
                 0
             );
         }

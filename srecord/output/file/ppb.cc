@@ -28,7 +28,7 @@ srecord::output_file_ppb::~output_file_ppb()
         fatal_error("no data records");
     if (buffer_length > 0)
         buffer_flush();
-    packet(0, 0, 0);
+    packet(0, nullptr, 0);
 }
 
 

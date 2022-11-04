@@ -97,7 +97,7 @@ private:
       * The pending instance variable is used to remember the second
       * half of large data packets, in the case where they must be split.
       */
-    record *pending{0};
+    record *pending{nullptr};
 
     /**
       * The copy constructor.  Do not use.

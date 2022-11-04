@@ -165,7 +165,7 @@ private:
       *     Optional pointer to a record that should be treated as if
       *     it's the last element of pending_records vector.
       */
-    void flush_pending_records(const record *r = NULL);
+    void flush_pending_records(const record *r = nullptr);
 
     /**
       * The append_pending_record handles adding a new record. If the

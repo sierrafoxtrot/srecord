@@ -30,7 +30,7 @@
 srecord::input_file_trs80::~input_file_trs80()
 {
     delete pending;
-    pending = 0;
+    pending = nullptr;
 }
 
 
@@ -67,7 +67,7 @@ srecord::input_file_trs80::read(srecord::record &result)
     {
         result = *pending;
         delete pending;
-        pending = 0;
+        pending = nullptr;
         return true;
     }
 
@@ -140,7 +140,7 @@ srecord::input_file_trs80::read(srecord::record &result)
                 }
                 long address = decode_word_le(payload);
                 record::type_t type = record::type_execution_start_address;
-                result = srecord::record(type, address, 0, 0);
+                result = srecord::record(type, address, nullptr, 0);
                 termination_seen = true;
                 return true;
             }

@@ -171,7 +171,7 @@ srecord::output::write_execution_start_address(const srecord::record *rp)
         // If you want to change it, this is the place.
         //
         srecord::record
-            record(srecord::record::type_execution_start_address, 0, 0, 0);
+            record(srecord::record::type_execution_start_address, 0, nullptr, 0);
         write(record);
     }
 }

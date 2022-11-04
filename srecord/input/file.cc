@@ -51,7 +51,7 @@ srecord::input_file::input_file(std::string a_file_name) :
     file_name(std::move(a_file_name)),
     line_number(1),
     prev_was_newline(false),
-    vfp(0),
+    vfp(nullptr),
     checksum(0),
     ignore_checksums(ignore_checksums_default)
 {

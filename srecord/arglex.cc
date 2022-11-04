@@ -50,14 +50,14 @@ static const srecord::arglex::table_ty default_table[] =
 
 
 srecord::arglex::arglex() :
-    usage_tail_(0)
+    usage_tail_(nullptr)
 {
     table_set(default_table);
 }
 
 
 srecord::arglex::arglex(int ac, char **av) :
-    usage_tail_(0)
+    usage_tail_(nullptr)
 {
     progname_set(av[0]);
     for (int j = 1; j < ac; ++j)
@@ -491,7 +491,7 @@ srecord::arglex::token_next()
     // scan the tables to see what it matches
     //
     nhit = 0;
-    partial = 0;
+    partial = nullptr;
     for
     (auto & table : tables)
     {
@@ -576,7 +576,7 @@ srecord::arglex::token_next()
         if (partial)
         {
             pushback.emplace_back(partial);
-            partial = 0;
+            partial = nullptr;
         }
         value_string_ = hit[0]->name;
         token = hit[0]->token;
@@ -652,7 +652,7 @@ srecord::arglex::help(const char *name)
 {
     if (!name)
         name = progname_get();
-    const char *cmd[3] = { "man", name, 0 };
+    const char *cmd[3] = { "man", name, nullptr };
     execvp(cmd[0], (char *const *)cmd);
     std::cerr << cmd[0] << ": " << strerror(errno) << std::endl;
     exit(1);

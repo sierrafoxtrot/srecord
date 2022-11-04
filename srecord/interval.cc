@@ -49,7 +49,7 @@ srecord::interval::interval()
     size = 0;
     scan_index = 0;
     scan_next_datum = 0;
-    data = 0;
+    data = nullptr;
     // assert(valid());
 }
 
@@ -138,7 +138,7 @@ srecord::interval::interval(const interval &arg)
             data[j] = arg.data[j];
     }
     else
-        data = 0;
+        data = nullptr;
     // assert(valid());
 }
 
@@ -151,7 +151,7 @@ srecord::interval::operator=(const interval &arg)
         if (data)
         {
             delete [] data;
-            data = 0;
+            data = nullptr;
         }
         // assert(arg.valid());
         length = arg.length;
@@ -165,7 +165,7 @@ srecord::interval::operator=(const interval &arg)
                 data[j] = arg.data[j];
         }
         else
-            data = 0;
+            data = nullptr;
         // assert(valid());
     }
     return *this;
@@ -193,7 +193,7 @@ srecord::interval::~interval()
     if (data)
     {
         delete [] data;
-        data = 0;
+        data = nullptr;
     }
 }
 
@@ -229,7 +229,7 @@ srecord::interval::valid()
         return false;
     if (length & 1)
         return false;
-    if ((size == 0) != (data == 0))
+    if ((size == 0) != (data == nullptr))
         return false;
     if (length == 0)
         return true;

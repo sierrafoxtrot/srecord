@@ -121,7 +121,7 @@ srecord::input_file_os65v::read_inner(srecord::record &record)
                 (
                     srecord::record::type_execution_start_address,
                     address,
-                    0,
+                    nullptr,
                     0
                 );
             ignore_the_rest = true;
