@@ -112,7 +112,7 @@ will install updates flagged in the updated database.:
 \f[I]\&...lots of output...\fP
 \f[B]% \fPpacman -Syu
 \f[I]\&...lots of output...\fP
-\f[B]% \fPpacman -S mingw-w64-x86_64-gcc groff \\
+\f[B]% \fPpacman -S mingw-w64-x86_64-gcc diffutils groff \\
 \f[B] \fP           mingw-w64-x86_64-libgcrypt mingw-w64-x86_64-cmake \\
 \f[B] \fP           mingw-w64-x86_64-graphviz mingw-w64-x86_64-ninja \\
 \f[B] \fP           mingw-w64-x86_64-doxygen mingw-w64-i686-ghostscript \\
