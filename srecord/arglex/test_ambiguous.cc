@@ -39,7 +39,7 @@ srecord::arglex::test_ambiguous()
             std::string abbrev = abbreviate(tp1->name);
 
             for
-            (auto tp2 : tables)
+            (const auto *tp2 : tables)
             {
                 for (; tp2->name != nullptr; ++tp2)
                 {

@@ -656,7 +656,7 @@ srecord::arglex::token_name(int n)
         break;
     }
     for
-    (auto tp : tables)
+    (const auto *tp : tables)
     {
         for (; tp->name != nullptr; ++tp)
         {
