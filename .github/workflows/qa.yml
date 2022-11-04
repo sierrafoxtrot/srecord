@@ -1,0 +1,86 @@
+---
+name: QA
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Check source
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Install prerequisites
+        run: >-
+          sudo apt-get install -y
+          libgcrypt20-dev
+          clang-14
+          cmake
+          ninja-build
+          doxygen
+          graphviz
+
+      - uses: actions/checkout@v3
+
+      - name: Configure
+        env:
+          CXX: clang++-14
+          CXXFLAGS: >-
+            -std=c++11
+            -pedantic
+            -Wall
+          SRecord_CMake_Flags: >-
+            -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+        run: |
+          cmake -G Ninja -S . -B build ${SRecord_CMake_Flags}
+
+      - name: Build
+        working-directory: build
+        run: ninja srecord-executables
+
+      - name: Smoke test
+        working-directory: build
+        run: ninja srecord-executables-version
+
+      - name: Build test prerequisites
+        working-directory: build
+        run: ninja prepare-test
+
+      - name: Test
+        working-directory: build
+        run: ctest --output-on-failure --output-junit ctest.junit.xml
+
+  docs:
+    name: Documentation
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Install prerequisites
+        run: >-
+          sudo apt-get install -y
+          cmake
+          ninja-build
+          doxygen
+          graphviz
+          groff
+          psutils
+          ghostscript
+
+      - uses: actions/checkout@v3
+
+      - name: Configure
+        run: cmake -G Ninja -S . -B build
+
+      - name: man pages
+        working-directory: build
+        run: ninja man
+
+      - name: PDF
+        working-directory: build
+        run: ninja doco
+
+      - name: Doxygen
+        working-directory: build
+        run: ninja doxygen
+
+      - name: Web Site
+        working-directory: build
+        run: ninja man-html web-site
