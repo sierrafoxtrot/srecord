@@ -45,7 +45,7 @@ protected:
       * @param deeper
       *     Where to send our filtered output.
       */
-    output_filter(const output::pointer &deeper);
+    output_filter(output::pointer deeper);
 
     // See base class for documentation.
     void write(const record &r);

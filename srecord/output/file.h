@@ -52,7 +52,7 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    output_file(const std::string &file_name);
+    output_file(std::string file_name);
 
     // See base class for documentation.
     virtual const std::string filename(void) const;

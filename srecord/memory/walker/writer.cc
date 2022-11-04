@@ -21,6 +21,8 @@
 #include <srecord/memory/walker/writer.h>
 #include <srecord/output.h>
 
+#include <utility>
+
 
 srecord::memory_walker_writer::~memory_walker_writer()
 {
@@ -28,8 +30,8 @@ srecord::memory_walker_writer::~memory_walker_writer()
 
 
 srecord::memory_walker_writer::memory_walker_writer(
-        const srecord::output::pointer &arg) :
-    op(arg)
+        srecord::output::pointer arg) :
+    op(std::move(arg))
 {
 }
 

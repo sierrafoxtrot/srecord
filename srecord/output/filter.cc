@@ -18,14 +18,16 @@
 
 #include <srecord/output/filter.h>
 
+#include <utility>
+
 
 srecord::output_filter::~output_filter()
 {
 }
 
 
-srecord::output_filter::output_filter(const output::pointer &a_deeper) :
-    deeper(a_deeper)
+srecord::output_filter::output_filter(output::pointer a_deeper) :
+    deeper(std::move(a_deeper))
 {
 }
 

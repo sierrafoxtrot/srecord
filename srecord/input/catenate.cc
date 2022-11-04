@@ -17,6 +17,7 @@
 //
 
 #include <cassert>
+#include <utility>
 
 #include <srecord/input/catenate.h>
 #include <srecord/record.h>
@@ -27,9 +28,9 @@ srecord::input_catenate::~input_catenate()
 }
 
 
-srecord::input_catenate::input_catenate(const pointer &a1, const pointer &a2) :
-    in1(a1),
-    in2(a2)
+srecord::input_catenate::input_catenate(pointer a1, pointer a2) :
+    in1(std::move(a1)),
+    in2(std::move(a2))
 {
     assert(!!in1);
     assert(!!in2);

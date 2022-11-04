@@ -87,7 +87,7 @@ protected:
       * @param file_name
       *     The name of the file to be read.
       */
-    input_file(const std::string &file_name);
+    input_file(std::string file_name);
 
     /**
       * The get_char method is used to fetch a character from

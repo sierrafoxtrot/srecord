@@ -21,8 +21,9 @@
 #include <cerrno>
 #include <cstdio>
 #include <iostream>
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <utility>
 
 #include <srecord/arglex.h>
 #include <srecord/sizeof.h>
@@ -61,8 +62,8 @@ srecord::output_file::output_file() :
 }
 
 
-srecord::output_file::output_file(const std::string &a_file_name) :
-    file_name(a_file_name),
+srecord::output_file::output_file(std::string a_file_name) :
+    file_name(std::move(a_file_name)),
     line_number(1),
     vfp(0),
     checksum(0),

@@ -19,6 +19,8 @@
 
 #include <srecord/input/filter.h>
 
+#include <utility>
+
 
 srecord::input_filter::~input_filter()
 {
@@ -26,7 +28,7 @@ srecord::input_filter::~input_filter()
 
 
 srecord::input_filter::input_filter(srecord::input::pointer arg) :
-    ifp(arg)
+    ifp(std::move(arg))
 {
 }
 

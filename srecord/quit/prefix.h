@@ -50,7 +50,7 @@ public:
       * messages, once prefixed.  The given string is used as the
       * line prefix.
       */
-    quit_prefix(quit &deeper, const std::string &prefix);
+    quit_prefix(quit &deeper, std::string prefix);
 
     // See base class for documentation.
     virtual void exit(int);

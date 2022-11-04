@@ -16,8 +16,9 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include <cstdio>
 #include <cstdarg>
+#include <cstdio>
+#include <utility>
 
 #include <srecord/quit/prefix.h>
 
@@ -34,8 +35,8 @@ srecord::quit_prefix::quit_prefix(quit &a1, const char *a2) :
 }
 
 
-srecord::quit_prefix::quit_prefix(quit &a1, const std::string &a2) :
-    prefix(a2),
+srecord::quit_prefix::quit_prefix(quit &a1, std::string a2) :
+    prefix(std::move(a2)),
     deeper(a1)
 {
 }

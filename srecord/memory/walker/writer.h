@@ -46,7 +46,7 @@ private:
       * @param deeper
       *     where to write the output
       */
-    memory_walker_writer(const output::pointer &deeper);
+    memory_walker_writer(output::pointer deeper);
 
 public:
     /**

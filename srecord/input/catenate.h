@@ -47,7 +47,7 @@ private:
       * @param in2
       *     The second of the inputs to be read.
       */
-    input_catenate(const pointer &in1, const pointer &in2);
+    input_catenate(pointer in1, pointer in2);
 
 public:
     /**
