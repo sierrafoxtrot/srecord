@@ -21,21 +21,6 @@
 # Configuration
 configure_file(etc/version.so.in etc/version.so @ONLY)
 
-# Tools
-configure_file(script/groff.sh           script/groff.sh COPYONLY)
-configure_file(script/page_select.sh     script/page_select.sh COPYONLY)
-configure_file(script/ref-ptx.sh         script/ref_ptx.sh COPYONLY)
-configure_file(script/new.sh             script/new.sh COPYONLY)
-configure_file(script/man-html-index.sh  script/man-html-index.sh COPYONLY)
-configure_file(script/ssp.awk            script/ssp.awk COPYONLY)
-
-set(GROFF sh ${CMAKE_CURRENT_BINARY_DIR}/script/groff.sh)
-set(PAGE_SELECT sh script/page_select.sh)
-set(NEW_CH sh script/new.sh)
-set(REF_PTX sh script/ref_ptx.sh)
-set(MAN_HTML_INDEX sh script/man-html-index.sh)
-set(SSP awk -f script/ssp.awk)
-
 # Target directories
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/man1)
@@ -89,7 +74,7 @@ foreach(m_src ${MAN_PAGES})
     cmake_path(GET m_target PARENT_PATH m_target_path)
     add_custom_command(OUTPUT ${m_target}
         COMMAND
-            ${GROFF}
+            sh ${CMAKE_CURRENT_SOURCE_DIR}/script/groff.sh
             -T html                # Output device
             -t                     # Preprocess with tbl
             -man                   # Macro Package man
@@ -112,7 +97,7 @@ endforeach()
 set(i_target ${CMAKE_CURRENT_BINARY_DIR}/html/man/index.html)
 set(HTML_MAN_PAGE_INDEX ${i_target})
 add_custom_command(OUTPUT ${HTML_MAN_PAGE_INDEX}
-    COMMAND ${MAN_HTML_INDEX} ${MAN_PAGES} > ${i_target}
+    COMMAND sh ${CMAKE_CURRENT_SOURCE_DIR}/script/man-html-index.sh ${MAN_PAGES} > ${i_target}
     DEPENDS
         ${MAN_PAGES}
         ${MAN_COMMON}
@@ -140,7 +125,7 @@ foreach(w_src ${WEB_PAGES})
     set(w_target ${CMAKE_CURRENT_BINARY_DIR}/${w_src})
     add_custom_command(OUTPUT ${w_target}
         COMMAND
-            ${GROFF}
+            sh ${CMAKE_CURRENT_SOURCE_DIR}/script/groff.sh
             -T ascii               # Output device
             -t                     # Preprocess with tbl
             -P-bcu                 # Preprocess with pic
@@ -148,7 +133,7 @@ foreach(w_src ${WEB_PAGES})
             # Preprocess with soelim, with search paths:
             -I${CMAKE_CURRENT_SOURCE_DIR}
             ${w_src}               # Source
-            | ${SSP}
+            | awk -f ${CMAKE_CURRENT_SOURCE_DIR}/script/ssp.awk
             > ${w_target}
         DEPENDS
             ${w_src}
@@ -163,7 +148,7 @@ add_custom_target(web-site ALL DEPENDS ${WEB_PAGE_OUTPUTS})
 # Reference Manual Components
 set(REF_PARTS ${CMAKE_CURRENT_BINARY_DIR}/etc/ref-parts.so)
 add_custom_command(OUTPUT ${REF_PARTS}
-    COMMAND ${REF_PTX} ${MAN_PAGES} > ${REF_PARTS}
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.sh ${MAN_PAGES} > ${REF_PARTS}
     DEPENDS
         ${MAN_PAGES}
         ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.sh
@@ -172,7 +157,7 @@ add_custom_command(OUTPUT ${REF_PARTS}
 
 set(NEW_CHANGES ${CMAKE_CURRENT_BINARY_DIR}/etc/new.so)
 add_custom_command(OUTPUT ${NEW_CHANGES}
-    COMMAND ${NEW_CH} -r ${NEW_CHANGE_NOTES} > ${NEW_CHANGES}
+    COMMAND sh ${CMAKE_CURRENT_SOURCE_DIR}/script/new.sh -r ${NEW_CHANGE_NOTES} > ${NEW_CHANGES}
     DEPENDS
         ${NEW_CHANGE_NOTES}
         ${CMAKE_CURRENT_SOURCE_DIR}/script/new.sh
@@ -185,7 +170,7 @@ add_custom_command(OUTPUT ${NEW_CHANGES}
 function(add_doc TARGET SOURCE DEPS)
     add_custom_command(OUTPUT ${TARGET}
         COMMAND
-            ${GROFF}
+            sh ${CMAKE_CURRENT_SOURCE_DIR}/script/groff.sh
             -T ps                  # Output device
             -s                     # Preprocess with soelim, with search paths:
             -I${DocSourcePath}
@@ -195,7 +180,7 @@ function(add_doc TARGET SOURCE DEPS)
             ${SOURCE}              # Source
             > ${TARGET}.ps.tmp
         COMMAND
-            ${PAGE_SELECT}
+            sh ${CMAKE_CURRENT_SOURCE_DIR}/script/page_select.sh
             ${CMAKE_CURRENT_SOURCE_DIR}/script/page-list.awk
             ${TARGET}.ps.tmp
             ${TARGET}.ps
