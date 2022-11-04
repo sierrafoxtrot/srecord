@@ -41,9 +41,8 @@ srecord::stm32::~stm32()
 }
 
 
-srecord::stm32::stm32() :
-    state(0xFFFFFFFF),
-    cnt(0)
+srecord::stm32::stm32() 
+    
 {
 }
 

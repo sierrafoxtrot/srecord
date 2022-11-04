@@ -69,9 +69,9 @@ protected:
     void observe(unsigned long, const void *, int);
 
 private:
-    unsigned long current_address;
-    bool data_seen;
-    int nholes;
+    unsigned long current_address{0};
+    bool data_seen{false};
+    int nholes{0};
 
     /**
       * The copy constructor.  No not use.

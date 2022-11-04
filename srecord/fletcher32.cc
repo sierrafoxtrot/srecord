@@ -24,9 +24,8 @@ srecord::fletcher32::~fletcher32()
 }
 
 
-srecord::fletcher32::fletcher32() :
-    sum1(0xFFFF),
-    sum2(0xFFFF)
+srecord::fletcher32::fletcher32() 
+    
 {
     // See notes in the nextbuf() method, below.
 }

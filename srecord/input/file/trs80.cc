@@ -37,10 +37,8 @@ srecord::input_file_trs80::~input_file_trs80()
 srecord::input_file_trs80::input_file_trs80(
     const std::string &a_file_name
 ) :
-    srecord::input_file(a_file_name),
-    termination_seen(false),
-    data_seen(false),
-    pending(0)
+    srecord::input_file(a_file_name)
+    
 {
 }
 

@@ -84,27 +84,27 @@ private:
       * The current_buffer instance variable is used to remember the
       * base of an array which buffers the current input record.
       */
-    unsigned char *current_buffer;
+    unsigned char *current_buffer{0};
 
     /**
       * The current_length instance variable is used to remember
       * the length of the current record.  It is zero if there is no
       * "current" record.
       */
-    size_t current_length;
+    size_t current_length{0};
 
     /**
       * The current_maximum instance variable is used to remember the
       * length of the current_buffer array.  It is zero if there is no
       * "current" buffer.
       */
-    size_t current_maximum;
+    size_t current_maximum{0};
 
     /**
       * The current_pos instance variable is used to remember the
       * position within the current_buffer array.
       */
-    size_t current_pos;
+    size_t current_pos{0};
 
     /**
       * The current_address instance variable is used to track the
@@ -112,7 +112,7 @@ private:
       * we return a partial block, so that we always return the
       * correct load address.
       */
-    unsigned long current_address;
+    unsigned long current_address{0};
 
     enum state_t
     {
@@ -125,7 +125,7 @@ private:
       * The state instance variable is used to remember what to expect
       * next from the file.
       */
-    state_t state;
+    state_t state{expecting_header};
 
     /**
       * The slurp method is used to fill the current_buffer array,

@@ -91,20 +91,20 @@ private:
       * number of output data lines have occurred to date.  This is used
       * at the end of the file to emit an S5 record.
       */
-    unsigned long data_count;
+    unsigned long data_count{0};
 
     /**
       * The pref_block_size instance variable is used to remember the
       * preferred number of data bytes (NOT encoded hex characters) to
       * be placed in each output line.
       */
-    int pref_block_size;
+    int pref_block_size{32};
 
     /**
       * The address_length instance variable is used to remember the
       * minimum number of address bytes to be emitted into output lines.
       */
-    int address_length;
+    int address_length{2};
 
     /**
       * The address_shift method is used to remember how far to the left
@@ -116,7 +116,7 @@ private:
       * thought out" because the no way (zero, zip, nada) of discovering
       * this just by looking at the data.
       */
-    int address_shift;
+    int address_shift{0};
 
     /**
       * The data_count_written instance variable is used to remember
@@ -125,7 +125,7 @@ private:
       * are circumstances where it will be needed when the file is
       * closed.
       */
-    bool data_count_written;
+    bool data_count_written{false};
 
     /**
       * The write_data_count method is used to write out a data count

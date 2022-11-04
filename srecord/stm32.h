@@ -95,12 +95,12 @@ private:
       * The state instance variable is used to remember the running
       * value of the 32-bit cyclic redundancy check.
       */
-    unsigned long state;
+    unsigned long state{0xFFFFFFFF};
 
     /**
       * Current counter of the byte feeding
       */
-    size_t cnt;
+    size_t cnt{0};
 
     /**
       * Buffer the incoming stream to build a word to feed to the

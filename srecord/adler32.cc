@@ -24,9 +24,8 @@ srecord::adler32::~adler32()
 }
 
 
-srecord::adler32::adler32() :
-    sum_a(1),
-    sum_b(0)
+srecord::adler32::adler32() 
+    
 {
 }
 

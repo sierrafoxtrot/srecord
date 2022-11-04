@@ -26,10 +26,8 @@ srecord::memory_walker_continuity::~memory_walker_continuity()
 }
 
 
-srecord::memory_walker_continuity::memory_walker_continuity() :
-    current_address(0),
-    data_seen(false),
-    nholes(0)
+srecord::memory_walker_continuity::memory_walker_continuity() 
+    
 {
 }
 

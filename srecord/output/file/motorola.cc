@@ -34,12 +34,8 @@ srecord::output_file_motorola::~output_file_motorola()
 srecord::output_file_motorola::output_file_motorola(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    data_count(0),
-    pref_block_size(32),
-    address_length(2),
-    address_shift(0),
-    data_count_written(false)
+    srecord::output_file(a_file_name)
+    
 {
 }
 

@@ -75,13 +75,13 @@ private:
       * The sum_a instance variable is used to remember the sum of bytes
       * scanned.
       */
-    unsigned short sum_a;
+    unsigned short sum_a{1};
 
     /**
       * The sum_b instance variable is used to remember the sum of the
       * sum of bytes scanned.
       */
-    unsigned short sum_b;
+    unsigned short sum_b{0};
 };
 
 };

@@ -69,13 +69,13 @@ private:
       * The termination_seen instance variable is used to remember
       * whether or not a termination record has been seen yet.
       */
-    bool termination_seen;
+    bool termination_seen{false};
 
     /**
       * The data_seen instance variable is used to remember
       * whether or not a data record has been seen yet.
       */
-    bool data_seen;
+    bool data_seen{false};
 
     /**
       * A constructor.  The input is read from the named file (or
@@ -97,7 +97,7 @@ private:
       * The pending instance variable is used to remember the second
       * half of large data packets, in the case where they must be split.
       */
-    record *pending;
+    record *pending{0};
 
     /**
       * The copy constructor.  Do not use.
