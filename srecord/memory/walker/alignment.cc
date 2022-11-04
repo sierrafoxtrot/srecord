@@ -35,16 +35,16 @@ srecord::memory_walker_alignment::memory_walker_alignment(unsigned a_multiple) :
 }
 
 
-srecord::memory_walker_alignment::pointer
-srecord::memory_walker_alignment::create(unsigned a_multiple)
+auto
+srecord::memory_walker_alignment::create(unsigned a_multiple) -> srecord::memory_walker_alignment::pointer
 {
     return pointer(new memory_walker_alignment(a_multiple));
 }
 
 
-bool
+auto
 srecord::memory_walker_alignment::is_well_aligned()
-    const
+    const -> bool
 {
     return well_aligned;
 }

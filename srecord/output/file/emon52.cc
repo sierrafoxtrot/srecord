@@ -36,8 +36,8 @@ srecord::output_file_emon52::output_file_emon52(
 }
 
 
-srecord::output::pointer
-srecord::output_file_emon52::create(const std::string &a_file_name)
+auto
+srecord::output_file_emon52::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_emon52(a_file_name));
 }
@@ -119,8 +119,8 @@ srecord::output_file_emon52::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_emon52::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_emon52::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
@@ -129,16 +129,16 @@ srecord::output_file_emon52::preferred_block_size_set(int nbytes)
 }
 
 
-int
-srecord::output_file_emon52::preferred_block_size_get() const
+auto
+srecord::output_file_emon52::preferred_block_size_get() const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_emon52::format_name()
-    const
+    const -> const char *
 {
     return "Emon52";
 }

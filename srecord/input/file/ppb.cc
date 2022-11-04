@@ -38,15 +38,15 @@ srecord::input_file_ppb::input_file_ppb(const std::string &filename) :
 }
 
 
-srecord::input_file_ppb::pointer
-srecord::input_file_ppb::create(const std::string &filename)
+auto
+srecord::input_file_ppb::create(const std::string &filename) -> srecord::input_file_ppb::pointer
 {
     return pointer(new input_file_ppb(filename));
 }
 
 
-bool
-srecord::input_file_ppb::get_packet()
+auto
+srecord::input_file_ppb::get_packet() -> bool
 {
     int c;
 
@@ -132,8 +132,8 @@ srecord::input_file_ppb::get_packet()
 }
 
 
-bool
-srecord::input_file_ppb::read(record &result)
+auto
+srecord::input_file_ppb::read(record &result) -> bool
 {
     if (packet_used >= packet_length)
     {
@@ -165,25 +165,25 @@ srecord::input_file_ppb::packet_format_error()
 }
 
 
-bool
+auto
 srecord::input_file_ppb::is_binary()
-    const
+    const -> bool
 {
     return true;
 }
 
 
-const char *
+auto
 srecord::input_file_ppb::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Stag Prom Programmer binary (PPB)";
 }
 
 
-int
+auto
 srecord::input_file_ppb::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_ppb;
 }

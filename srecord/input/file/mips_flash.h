@@ -46,7 +46,7 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create_be(const std::string &file_name);
+    static auto create_be(const std::string &file_name) -> pointer;
 
     /**
       * The create_le class method is used to create new dynamically
@@ -58,17 +58,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create_le(const std::string &file_name);
+    static auto create_le(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -86,7 +86,7 @@ private:
       * The read_inner method is used to read a record from the file.
       * The read method is a wrapper around it.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * The seen_some_input instance variable is used to remember whether
@@ -157,7 +157,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_mips_flash &operator=(const input_file_mips_flash &) = delete;
+    auto operator=(const input_file_mips_flash &) -> input_file_mips_flash & = delete;
 };
 
 };

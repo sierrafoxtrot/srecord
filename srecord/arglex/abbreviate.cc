@@ -19,8 +19,8 @@
 #include <srecord/arglex.h>
 
 
-std::string
-srecord::arglex::abbreviate(const char *s)
+auto
+srecord::arglex::abbreviate(const char *s) -> std::string
 {
     std::string result;
     for (;;)

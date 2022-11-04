@@ -59,20 +59,20 @@ public:
       * @param in2
       *     The second of the inputs to be read.
       */
-    static pointer create(const pointer &in1, const pointer &in2);
+    static auto create(const pointer &in1, const pointer &in2) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    std::string filename() const override;
+    auto filename() const -> std::string override;
 
     // See base class for documentation.
-    std::string filename_and_line() const override;
+    auto filename_and_line() const -> std::string override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
     void disable_checksum_validation() override;
@@ -103,7 +103,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_catenate &operator=(const input_catenate &) = delete;
+    auto operator=(const input_catenate &) -> input_catenate & = delete;
 };
 
 };

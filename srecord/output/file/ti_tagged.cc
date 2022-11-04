@@ -48,8 +48,8 @@ srecord::output_file_ti_tagged::output_file_ti_tagged(
 }
 
 
-srecord::output::pointer
-srecord::output_file_ti_tagged::create(const std::string &a_file_name)
+auto
+srecord::output_file_ti_tagged::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_ti_tagged(a_file_name));
 }
@@ -171,8 +171,8 @@ srecord::output_file_ti_tagged::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_ti_tagged::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_ti_tagged::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 2 || nbytes > record::max_data_length)
         return false;
@@ -183,9 +183,9 @@ srecord::output_file_ti_tagged::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_ti_tagged::preferred_block_size_get()
-    const
+    const -> int
 {
     int n = (line_length / 5) * 2;
     if (n < 1)
@@ -196,9 +196,9 @@ srecord::output_file_ti_tagged::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_ti_tagged::format_name()
-    const
+    const -> const char *
 {
     return "TI-Tagged";
 }

@@ -35,8 +35,8 @@ srecord::output_file_aomf::output_file_aomf(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_aomf::create(const std::string &a_file_name)
+auto
+srecord::output_file_aomf::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_aomf(a_file_name));
 }
@@ -181,25 +181,25 @@ srecord::output_file_aomf::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_aomf::preferred_block_size_set(int)
+auto
+srecord::output_file_aomf::preferred_block_size_set(int) -> bool
 {
     // Irrelevant.
     return true;
 }
 
 
-int
+auto
 srecord::output_file_aomf::preferred_block_size_get()
-    const
+    const -> int
 {
     return srecord::record::max_data_length;
 }
 
 
-const char *
+auto
 srecord::output_file_aomf::format_name()
-    const
+    const -> const char *
 {
     return "AOMF";
 }

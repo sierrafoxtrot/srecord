@@ -54,11 +54,11 @@ public:
       * @param cmdln
       *     The command line arguments, for deciding what to generate.
       */
-    static input::pointer create(arglex_tool *cmdln);
+    static auto create(arglex_tool *cmdln) -> input::pointer;
 
 protected:
     // See base class for documentation
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation
     void disable_checksum_validation() override;
@@ -72,7 +72,7 @@ protected:
       * @returns
       *     one byte of data
       */
-    virtual unsigned char generate_data(unsigned long address) = 0;
+    virtual auto generate_data(unsigned long address) -> unsigned char = 0;
 
 private:
     /**
@@ -95,7 +95,7 @@ private:
     /**
       * The assignment operator.
       */
-    input_generator &operator=(const input_generator &) = delete;
+    auto operator=(const input_generator &) -> input_generator & = delete;
 };
 
 };

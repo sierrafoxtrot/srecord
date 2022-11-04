@@ -71,15 +71,15 @@ srecord::input_file_msbin::input_file_msbin(const std::string &a_file_name) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_msbin::create(const std::string &a_file_name)
+auto
+srecord::input_file_msbin::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_msbin(a_file_name));
 }
 
 
-uint32_t
-srecord::input_file_msbin::read_dword_le()
+auto
+srecord::input_file_msbin::read_dword_le() -> uint32_t
 {
     unsigned char c[sizeof(uint32_t)];
 
@@ -152,8 +152,8 @@ srecord::input_file_msbin::read_file_header()
 }
 
 
-uint32_t
-srecord::input_file_msbin::checksum(const unsigned char *data, size_t len)
+auto
+srecord::input_file_msbin::checksum(const unsigned char *data, size_t len) -> uint32_t
 {
     uint32_t sum = 0;
 
@@ -164,8 +164,8 @@ srecord::input_file_msbin::checksum(const unsigned char *data, size_t len)
 }
 
 
-bool
-srecord::input_file_msbin::read(record &result)
+auto
+srecord::input_file_msbin::read(record &result) -> bool
 {
     // Read the file header if we haven't read it yet.
     if (!header_read)
@@ -301,25 +301,25 @@ srecord::input_file_msbin::read(record &result)
 }
 
 
-bool
+auto
 srecord::input_file_msbin::is_binary()
-    const
+    const -> bool
 {
     return true;
 }
 
 
-const char *
+auto
 srecord::input_file_msbin::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Windows CE Binary Image Data Format";
 }
 
 
-int
+auto
 srecord::input_file_msbin::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_msbin;
 }

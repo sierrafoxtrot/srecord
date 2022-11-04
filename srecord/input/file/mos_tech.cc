@@ -36,15 +36,15 @@ srecord::input_file_mos_tech::input_file_mos_tech(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_mos_tech::create(const std::string &a_file_name)
+auto
+srecord::input_file_mos_tech::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_mos_tech(a_file_name));
 }
 
 
-bool
-srecord::input_file_mos_tech::read_inner(srecord::record &record)
+auto
+srecord::input_file_mos_tech::read_inner(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -135,8 +135,8 @@ srecord::input_file_mos_tech::read_inner(srecord::record &record)
 }
 
 
-bool
-srecord::input_file_mos_tech::read(srecord::record &record)
+auto
+srecord::input_file_mos_tech::read(srecord::record &record) -> bool
 {
     if (!read_inner(record))
     {
@@ -149,17 +149,17 @@ srecord::input_file_mos_tech::read(srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_mos_tech::get_file_format_name()
-    const
+    const -> const char *
 {
     return "MOS Technology";
 }
 
 
-int
+auto
 srecord::input_file_mos_tech::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_mos_tech;
 }

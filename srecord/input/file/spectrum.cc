@@ -38,15 +38,15 @@ srecord::input_file_spectrum::input_file_spectrum(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_spectrum::create(const std::string &a_file_name)
+auto
+srecord::input_file_spectrum::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_spectrum(a_file_name));
 }
 
 
-int
-srecord::input_file_spectrum::get_decimal()
+auto
+srecord::input_file_spectrum::get_decimal() -> int
 {
     int c;
     for (;;)
@@ -80,15 +80,15 @@ srecord::input_file_spectrum::get_decimal()
 }
 
 
-static inline bool
-is_binary_digit(int c)
+static inline auto
+is_binary_digit(int c) -> bool
 {
     return ((c == '0' || c == '1'));
 }
 
 
-int
-srecord::input_file_spectrum::get_binary()
+auto
+srecord::input_file_spectrum::get_binary() -> int
 {
     int c;
     for (;;)
@@ -120,8 +120,8 @@ srecord::input_file_spectrum::get_binary()
 }
 
 
-bool
-srecord::input_file_spectrum::read(srecord::record &record)
+auto
+srecord::input_file_spectrum::read(srecord::record &record) -> bool
 {
     //
     // Check for the file header
@@ -176,17 +176,17 @@ srecord::input_file_spectrum::read(srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_spectrum::get_file_format_name ()
-    const
+    const -> const char *
 {
     return "Spectrum";
 }
 
 
-int
+auto
 srecord::input_file_spectrum::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_spectrum;
 }

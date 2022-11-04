@@ -45,8 +45,8 @@ srecord::output_file_hexdump::output_file_hexdump(
 }
 
 
-srecord::output::pointer
-srecord::output_file_hexdump::create(const std::string &a_file_name)
+auto
+srecord::output_file_hexdump::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_hexdump(a_file_name));
 }
@@ -76,8 +76,8 @@ srecord::output_file_hexdump::row_cache_print()
 }
 
 
-static char
-hex_nibble(int n)
+static auto
+hex_nibble(int n) -> char
 {
     return "0123456789ABCDEF"[n & 15];
 }
@@ -161,8 +161,8 @@ srecord::output_file_hexdump::write(const srecord::record &record)
 }
 
 
-int
-srecord::output_file_hexdump::columns_to_line_length(int cols)
+auto
+srecord::output_file_hexdump::columns_to_line_length(int cols) -> int
 {
     // 0000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  #................
     //      ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^^
@@ -185,8 +185,8 @@ srecord::output_file_hexdump::line_length_set(int line_length)
 }
 
 
-bool
-srecord::output_file_hexdump::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_hexdump::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 2 || nbytes > record::max_data_length)
         return false;
@@ -205,9 +205,9 @@ srecord::output_file_hexdump::address_length_set(int)
 }
 
 
-int
+auto
 srecord::output_file_hexdump::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Use the largest we can get,
@@ -216,9 +216,9 @@ srecord::output_file_hexdump::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_hexdump::format_name()
-    const
+    const -> const char *
 {
     return "hexdump";
 }

@@ -56,7 +56,7 @@ public:
       * @param deeper
       *     where to write the output
       */
-    static pointer create(const output::pointer &deeper);
+    static auto create(const output::pointer &deeper) -> pointer;
 
 protected:
     // See base class for documentation.
@@ -91,7 +91,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_writer &operator=(const memory_walker_writer &) = delete;
+    auto operator=(const memory_walker_writer &) -> memory_walker_writer & = delete;
 };
 
 }

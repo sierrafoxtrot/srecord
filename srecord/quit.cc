@@ -36,8 +36,8 @@ srecord::quit::quit(const quit &)
 = default;
 
 
-srecord::quit &
-srecord::quit::operator=(const quit &)
+auto
+srecord::quit::operator=(const quit &) -> srecord::quit &
 = default;
 
 

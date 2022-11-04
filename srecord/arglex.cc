@@ -145,8 +145,8 @@ srecord::arglex::table_set(const table_ty *tp)
 static const char *partial;
 
 
-bool
-srecord::arglex::compare(const char *formal, const char *actual)
+auto
+srecord::arglex::compare(const char *formal, const char *actual) -> bool
 {
     for (;;)
     {
@@ -257,8 +257,8 @@ srecord::arglex::compare(const char *formal, const char *actual)
 //              non-zero if is a number.
 //
 
-static int
-is_a_number(const char *s, long &n)
+static auto
+is_a_number(const char *s, long &n) -> int
 {
     int         sign;
 
@@ -350,8 +350,8 @@ default:
 }
 
 
-static bool
-starts_with(const std::string &haystack, const std::string &needle)
+static auto
+starts_with(const std::string &haystack, const std::string &needle) -> bool
 {
     return
         (
@@ -362,8 +362,8 @@ starts_with(const std::string &haystack, const std::string &needle)
 }
 
 
-static bool
-ends_with(const std::string &haystack, const std::string &needle)
+static auto
+ends_with(const std::string &haystack, const std::string &needle) -> bool
 {
     return
         (
@@ -418,8 +418,8 @@ deprecated_warning(const char *deprecated_name, const char *preferred_name)
 //      Must call arglex_init before this function is called.
 //
 
-int
-srecord::arglex::token_next()
+auto
+srecord::arglex::token_next() -> int
 {
     const table_ty  *tp;
     const table_ty  *hit[20];
@@ -609,9 +609,9 @@ srecord::arglex::check_deprecated(const std::string &actual)
 }
 
 
-const char *
+auto
 srecord::arglex::token_name(int n)
-    const
+    const -> const char *
 {
     switch (n)
     {
@@ -710,8 +710,8 @@ srecord::arglex::bad_argument()
 }
 
 
-int
-srecord::arglex::token_first()
+auto
+srecord::arglex::token_first() -> int
 {
 #if 1
     // We probably don't need to do this all the time.
@@ -753,9 +753,9 @@ srecord::arglex::usage_tail_set(const char *s)
 }
 
 
-const char *
+auto
 srecord::arglex::usage_tail_get()
-    const
+    const -> const char *
 {
     if (!usage_tail_)
         usage_tail_ = "<filename>...";

@@ -32,8 +32,8 @@ srecord::input_file_emon52::input_file_emon52(const std::string &a_file_name) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_emon52::create(const std::string &a_file_name)
+auto
+srecord::input_file_emon52::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_emon52(a_file_name));
 }
@@ -52,8 +52,8 @@ srecord::input_file_emon52::skip_white_space()
 }
 
 
-bool
-srecord::input_file_emon52::read(srecord::record &record)
+auto
+srecord::input_file_emon52::read(srecord::record &record) -> bool
 {
     //
     // This format has no execution start address record type, and no
@@ -94,17 +94,17 @@ srecord::input_file_emon52::read(srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_emon52::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Elektor Monitor (EMON52)";
 }
 
 
-int
+auto
 srecord::input_file_emon52::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_emon52;
 }

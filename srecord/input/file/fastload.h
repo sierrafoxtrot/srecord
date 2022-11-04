@@ -44,17 +44,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -70,20 +70,20 @@ private:
       * Read one line (record) of input.  Called by the #read method.
       * Returns false at end of file.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * Get a single base-64 digit.  Returns 0..63 for a valid digit.
       * Fatal error if not a valid base-64 digit.
       */
-    int get_digit();
+    auto get_digit() -> int;
 
     /**
       * The get_number method is used to get a base-64 number.
       * The ordering is big-endian, but like ordinary decimal numbers.
       * Four digits is 24 bits.
       */
-    unsigned long get_number(int min_digits, int max_digits);
+    auto get_number(int min_digits, int max_digits) -> unsigned long;
 
     /**
       * The seen_some_input instance variable is used to
@@ -118,7 +118,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_fastload &operator=(const input_file_fastload &) = delete;
+    auto operator=(const input_file_fastload &) -> input_file_fastload & = delete;
 };
 
 };

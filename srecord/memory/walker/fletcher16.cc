@@ -35,9 +35,9 @@ srecord::memory_walker_fletcher16::memory_walker_fletcher16(
 }
 
 
-srecord::memory_walker_fletcher16::pointer
+auto
 srecord::memory_walker_fletcher16::create(int a_sum1, int a_sum2,
-    int a_answer, endian_t a_end)
+    int a_answer, endian_t a_end) -> srecord::memory_walker_fletcher16::pointer
 {
     return
         pointer(new memory_walker_fletcher16(a_sum1, a_sum2, a_answer, a_end));
@@ -52,9 +52,9 @@ srecord::memory_walker_fletcher16::observe(unsigned long, const void *data,
 }
 
 
-unsigned
+auto
 srecord::memory_walker_fletcher16::get()
-    const
+    const -> unsigned
 {
     return checksum.get();
 }

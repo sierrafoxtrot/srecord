@@ -52,13 +52,13 @@ public:
     /**
       * The assignment operator.
       */
-    adler32 &operator=(const adler32 &);
+    auto operator=(const adler32 &) -> adler32 &;
 
     /**
       * The get method is used to obtain the running value of the
       * checksum.
       */
-    unsigned long get() const;
+    auto get() const -> unsigned long;
 
     /**
       * The next method is used to advance the state by one byte.

@@ -59,7 +59,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    quit_normal &operator=(const quit_normal &) = delete;
+    auto operator=(const quit_normal &) -> quit_normal & = delete;
 };
 
 };

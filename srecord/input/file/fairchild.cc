@@ -36,15 +36,15 @@ srecord::input_file_fairchild::input_file_fairchild(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_fairchild::create(const std::string &a_file_name)
+auto
+srecord::input_file_fairchild::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_fairchild(a_file_name));
 }
 
 
-int
-srecord::input_file_fairchild::get_nibble()
+auto
+srecord::input_file_fairchild::get_nibble() -> int
 {
     int n = input_file::get_nibble();
     checksum_add(n);
@@ -52,8 +52,8 @@ srecord::input_file_fairchild::get_nibble()
 }
 
 
-int
-srecord::input_file_fairchild::get_byte()
+auto
+srecord::input_file_fairchild::get_byte() -> int
 {
     // this differs from the srecord::input_file method only in that we
     // don't add to the checksum.
@@ -63,8 +63,8 @@ srecord::input_file_fairchild::get_byte()
 }
 
 
-bool
-srecord::input_file_fairchild::read(record &result)
+auto
+srecord::input_file_fairchild::read(record &result) -> bool
 {
     if (!header_seen)
     {
@@ -136,17 +136,17 @@ srecord::input_file_fairchild::read(record &result)
 }
 
 
-const char *
+auto
 srecord::input_file_fairchild::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Fairchild Fairbug";
 }
 
 
-int
+auto
 srecord::input_file_fairchild::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_fairchild;
 }

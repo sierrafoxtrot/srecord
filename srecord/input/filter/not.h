@@ -55,11 +55,11 @@ public:
       * @param deeper
       *     The incoming data source
       */
-    static pointer create(const input::pointer &deeper);
+    static auto create(const input::pointer &deeper) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -75,7 +75,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_not &operator=(const input_filter_not &) = delete;
+    auto operator=(const input_filter_not &) -> input_filter_not & = delete;
 };
 
 };

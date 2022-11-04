@@ -26,15 +26,15 @@ static  unsigned long   buf[250];
 static  unsigned long   *pos;
 
 
-static inline int
-rand8()
+static inline auto
+rand8() -> int
 {
     return ((rand() >> 7) & 255);
 }
 
 
-static inline long
-rand32()
+static inline auto
+rand32() -> long
 {
     return
         (
@@ -92,8 +92,8 @@ r250_init()
 }
 
 
-unsigned long
-srecord::r250()
+auto
+srecord::r250() -> unsigned long
 {
     if (!ready)
         r250_init();

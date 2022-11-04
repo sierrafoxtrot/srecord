@@ -47,7 +47,7 @@ public:
       * @param multiple
       *     The multiple of bytes we expect for alignment.
       */
-    static pointer create(unsigned multiple);
+    static auto create(unsigned multiple) -> pointer;
 
     /**
       * The is_continuous method is used to get the results of the
@@ -56,7 +56,7 @@ public:
       * @returns
       *     true if the data has no holes, false if there are holes
       */
-    bool is_well_aligned() const;
+    auto is_well_aligned() const -> bool;
 
 protected:
     // See base class for documentation.
@@ -94,7 +94,7 @@ private:
     /**
       * The assignment operator.  No not use.
       */
-    memory_walker_alignment &operator=(const memory_walker_alignment &) = delete;
+    auto operator=(const memory_walker_alignment &) -> memory_walker_alignment & = delete;
 };
 
 };

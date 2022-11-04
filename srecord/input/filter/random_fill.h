@@ -62,11 +62,11 @@ public:
       * @param range
       *     the address range to be filled.
       */
-    static pointer create(const input::pointer &deeper, const interval &range);
+    static auto create(const input::pointer &deeper, const interval &range) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -79,7 +79,7 @@ private:
     /**
       * The generate method is used to generate fill records.
       */
-    bool generate(record &record);
+    auto generate(record &record) -> bool;
 
     /**
       * The default constructor.  Do not use.
@@ -94,7 +94,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_random_fill &operator=(const input_filter_random_fill &) = delete;
+    auto operator=(const input_filter_random_fill &) -> input_filter_random_fill & = delete;
 };
 
 };

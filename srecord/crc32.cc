@@ -96,8 +96,8 @@ calculate_table()
 }
 
 
-static unsigned long
-initial_state_from_seed_mode(srecord::crc32::seed_mode_t seed_mode)
+static auto
+initial_state_from_seed_mode(srecord::crc32::seed_mode_t seed_mode) -> unsigned long
 {
     switch (seed_mode)
     {
@@ -124,8 +124,8 @@ srecord::crc32::crc32(const crc32 &arg)
 = default;
 
 
-srecord::crc32 &
-srecord::crc32::operator=(const crc32 &arg)
+auto
+srecord::crc32::operator=(const crc32 &arg) -> srecord::crc32 &
 {
     if (this != &arg)
     {
@@ -139,8 +139,8 @@ srecord::crc32::~crc32()
 = default;
 
 
-static inline unsigned long
-UPDC32(unsigned char octet, unsigned long crc)
+static inline auto
+UPDC32(unsigned char octet, unsigned long crc) -> unsigned long
 {
     // The original code had this as a #define
     return table[(crc ^ octet) & 0xFF] ^ (crc >> 8);
@@ -167,9 +167,9 @@ srecord::crc32::nextbuf(const void *data, size_t nbytes)
 }
 
 
-unsigned long
+auto
 srecord::crc32::get()
-    const
+    const -> unsigned long
 {
 #if 1
     return ~state;

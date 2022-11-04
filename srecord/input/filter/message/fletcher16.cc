@@ -41,10 +41,10 @@ srecord::input_filter_message_fletcher16::input_filter_message_fletcher16(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_message_fletcher16::create(
     const input::pointer &a_deeper, unsigned long a_address,
-    endian_t a_end)
+    endian_t a_end) -> srecord::input::pointer
 {
     return
         pointer
@@ -92,9 +92,9 @@ srecord::input_filter_message_fletcher16::process(const memory &input,
 }
 
 
-const char *
+auto
 srecord::input_filter_message_fletcher16::get_algorithm_name()
-    const
+    const -> const char *
 {
     return "Fletcher-16";
 }

@@ -106,8 +106,8 @@ static func_p table[] =
 #define ENDOF(a) ((a) + SIZEOF(a))
 
 
-srecord::input_file::pointer
-srecord::input_file::guess(const std::string &fn, arglex &cmdline)
+auto
+srecord::input_file::guess(const std::string &fn, arglex &cmdline) -> srecord::input_file::pointer
 {
     if (fn.empty() || fn == "-")
     {

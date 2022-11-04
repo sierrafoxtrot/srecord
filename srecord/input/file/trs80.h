@@ -49,20 +49,20 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &result) override;
+    auto read(record &result) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    bool is_binary() const override;
+    auto is_binary() const -> bool override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -91,7 +91,7 @@ private:
       * update the checksum.  We over-ride the base implementation,
       * because we use raw bytes rather than two hex digits.
       */
-    int get_byte() override;
+    auto get_byte() -> int override;
 
     /**
       * The pending instance variable is used to remember the second
@@ -107,7 +107,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_trs80 &operator=(const input_file_trs80 &) = delete;
+    auto operator=(const input_file_trs80 &) -> input_file_trs80 & = delete;
 };
 
 };

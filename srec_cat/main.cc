@@ -32,8 +32,8 @@
 #include <srec_cat/arglex3.h>
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     srec_cat_arglex3 cmdline(argc, argv);
     cmdline.token_first();

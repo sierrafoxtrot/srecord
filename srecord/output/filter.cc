@@ -52,32 +52,32 @@ srecord::output_filter::address_length_set(int n)
 }
 
 
-int
+auto
 srecord::output_filter::preferred_block_size_get()
-    const
+    const -> int
 {
     return deeper->preferred_block_size_get();
 }
 
 
-bool
-srecord::output_filter::preferred_block_size_set(int nbytes)
+auto
+srecord::output_filter::preferred_block_size_set(int nbytes) -> bool
 {
     return deeper->preferred_block_size_set(nbytes);
 }
 
 
-const std::string
+auto
 srecord::output_filter::filename()
-    const
+    const -> const std::string
 {
     return deeper->filename();
 }
 
 
-const char *
+auto
 srecord::output_filter::format_name()
-    const
+    const -> const char *
 {
     return deeper->format_name();
 }

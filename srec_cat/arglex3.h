@@ -67,7 +67,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    srec_cat_arglex3 &operator=(const srec_cat_arglex3 &) = delete;
+    auto operator=(const srec_cat_arglex3 &) -> srec_cat_arglex3 & = delete;
 };
 
 #endif // PROG_SREC_CAT_ARGLEX3_H

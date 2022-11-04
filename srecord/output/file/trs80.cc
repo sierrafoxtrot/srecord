@@ -44,8 +44,8 @@ srecord::output_file_trs80::output_file_trs80(
 }
 
 
-srecord::output::pointer
-srecord::output_file_trs80::create(const std::string &a_file_name)
+auto
+srecord::output_file_trs80::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_trs80(a_file_name));
 }
@@ -131,8 +131,8 @@ srecord::output_file_trs80::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_trs80::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_trs80::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > 256)
         return false;
@@ -141,25 +141,25 @@ srecord::output_file_trs80::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_trs80::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_trs80::format_name()
-    const
+    const -> const char *
 {
     return "TRS80";
 }
 
 
-bool
+auto
 srecord::output_file_trs80::is_binary()
-    const
+    const -> bool
 {
     return true;
 }

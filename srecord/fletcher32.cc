@@ -35,8 +35,8 @@ srecord::fletcher32::fletcher32(const fletcher32 &rhs)
 = default;
 
 
-srecord::fletcher32 &
-srecord::fletcher32::operator=(const fletcher32 &rhs)
+auto
+srecord::fletcher32::operator=(const fletcher32 &rhs) -> srecord::fletcher32 &
 {
     if (this != &rhs)
     {
@@ -107,9 +107,9 @@ srecord::fletcher32::nextbuf(const void *vdata, size_t nbytes)
 }
 
 
-unsigned long
+auto
 srecord::fletcher32::get()
-    const
+    const -> unsigned long
 {
     return ((sum2 << 16) | sum1);
 }

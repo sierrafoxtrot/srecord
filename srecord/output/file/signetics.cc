@@ -40,8 +40,8 @@ srecord::output_file_signetics::output_file_signetics(
 }
 
 
-srecord::output::pointer
-srecord::output_file_signetics::create(const std::string &a_file_name)
+auto
+srecord::output_file_signetics::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_signetics(a_file_name));
 }
@@ -130,8 +130,8 @@ srecord::output_file_signetics::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_signetics::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_signetics::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
@@ -142,16 +142,16 @@ srecord::output_file_signetics::preferred_block_size_set(int nbytes)
 }
 
 
-int
-srecord::output_file_signetics::preferred_block_size_get() const
+auto
+srecord::output_file_signetics::preferred_block_size_get() const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_signetics::format_name()
-    const
+    const -> const char *
 {
     return "Signetics";
 }

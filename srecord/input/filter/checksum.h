@@ -43,7 +43,7 @@ public:
 
 protected:
     // See bas class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     /**
       * The constructor.
@@ -103,7 +103,7 @@ protected:
       * The calculate method is used to calculate the checksum to be
       * written into the output, based on the "sum" instance variable.
       */
-    virtual sum_t calculate() = 0;
+    virtual auto calculate() -> sum_t = 0;
 
     /**
       * The generate method is used to generate the final data record,
@@ -115,7 +115,7 @@ protected:
       * @returns
       *     bool; false if end-of-file, true if data available
       */
-    bool generate(record &record);
+    auto generate(record &record) -> bool;
 
 private:
     /**
@@ -131,7 +131,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_checksum &operator=(const input_filter_checksum &) = delete;
+    auto operator=(const input_filter_checksum &) -> input_filter_checksum & = delete;
 };
 
 };

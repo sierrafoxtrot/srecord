@@ -53,8 +53,8 @@ srecord::output_file_fastload::output_file_fastload(
 }
 
 
-srecord::output::pointer
-srecord::output_file_fastload::create(const std::string &a_filename)
+auto
+srecord::output_file_fastload::create(const std::string &a_filename) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_fastload(a_filename));
 }
@@ -82,8 +82,8 @@ srecord::output_file_fastload::put_number(unsigned long n, int min_digits)
 }
 
 
-static int
-number_width(unsigned long n)
+static auto
+number_width(unsigned long n) -> int
 {
     int result = 0;
     while (n)
@@ -242,8 +242,8 @@ srecord::output_file_fastload::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_fastload::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_fastload::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes > srecord::record::max_data_length)
         return false;
@@ -276,18 +276,18 @@ srecord::output_file_fastload::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_fastload::preferred_block_size_get()
-    const
+    const -> int
 {
     // Prefer a multiple of 3
     return ((srecord::record::max_data_length / 3) * 3);
 }
 
 
-const char *
+auto
 srecord::output_file_fastload::format_name()
-    const
+    const -> const char *
 {
     return "FastLoad";
 }

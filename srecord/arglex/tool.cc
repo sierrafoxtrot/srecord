@@ -259,9 +259,9 @@ srecord::arglex_tool::~arglex_tool()
 = default;
 
 
-bool
+auto
 srecord::arglex_tool::can_get_number()
-    const
+    const -> bool
 {
     switch (token_cur())
     {

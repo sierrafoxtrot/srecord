@@ -37,15 +37,15 @@ srecord::input_file_needham::input_file_needham(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_needham::create(const std::string &a_file_name)
+auto
+srecord::input_file_needham::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_needham(a_file_name));
 }
 
 
-bool
-srecord::input_file_needham::read(srecord::record &record)
+auto
+srecord::input_file_needham::read(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -108,17 +108,17 @@ srecord::input_file_needham::read(srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_needham::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Needham";
 }
 
 
-int
+auto
 srecord::input_file_needham::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_needham_hex;
 }

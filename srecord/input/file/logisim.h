@@ -86,7 +86,7 @@ public:
       */
     ~input_file_logisim() override;
 
-    static input_file::pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> input_file::pointer;
 
     enum state_t
     {
@@ -97,13 +97,13 @@ public:
 
 protected:
     // See base class for documentation
-    bool read(srecord::record &rec) override;
+    auto read(srecord::record &rec) -> bool override;
 
     // See base class for documentation
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
     /**
       * The constructor.
@@ -122,12 +122,12 @@ private:
         uint32_t address;
         long count;
         uint32_t value;
-        std::string representation() const;
+        auto representation() const -> std::string;
     };
 
     std::list<datum_t> jobs;
 
-    bool read_inner(record &rec);
+    auto read_inner(record &rec) -> bool;
     void read_inner_one();
     void read_inner_two();
     void read_inner_job();
@@ -145,7 +145,7 @@ private:
     /**
       * The assignment operator.
       */
-    input_file_logisim &operator=(const input_file_logisim &);
+    auto operator=(const input_file_logisim &) -> input_file_logisim &;
 };
 
 };

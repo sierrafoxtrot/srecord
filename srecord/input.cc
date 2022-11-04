@@ -72,9 +72,9 @@ srecord::input::warning(const char *fmt, ...)
 }
 
 
-std::string
+auto
 srecord::input::filename_and_line()
-    const
+    const -> std::string
 {
     return filename();
 }

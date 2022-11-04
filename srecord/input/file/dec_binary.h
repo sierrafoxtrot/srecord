@@ -46,20 +46,20 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    bool is_binary() const override;
+    auto is_binary() const -> bool override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -76,7 +76,7 @@ private:
       * update the checksum.  We over-ride the base implementation,
       * because we use raw bytes rather than two hex digits.
       */
-    int get_byte() override;
+    auto get_byte() -> int override;
 
     /**
       * This format has NUL characters for optional padding around
@@ -84,7 +84,7 @@ private:
       * Returns true if there is more input available, or false at
       * end of file.
       */
-    bool skip_nul();
+    auto skip_nul() -> bool;
 
     /**
       * The current_pos instance variable is used to track out
@@ -117,7 +117,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_dec_binary &operator=(const input_file_dec_binary &) = delete;
+    auto operator=(const input_file_dec_binary &) -> input_file_dec_binary & = delete;
 };
 
 };

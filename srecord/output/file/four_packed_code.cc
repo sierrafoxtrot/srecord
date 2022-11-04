@@ -128,8 +128,8 @@ srecord::output_file_four_packed_code::output_file_four_packed_code(
 }
 
 
-srecord::output::pointer
-srecord::output_file_four_packed_code::create(const std::string &a_file_name)
+auto
+srecord::output_file_four_packed_code::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_four_packed_code(a_file_name));
 }
@@ -268,8 +268,8 @@ srecord::output_file_four_packed_code::line_length_set(int linlen)
 }
 
 
-bool
-srecord::output_file_four_packed_code::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_four_packed_code::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
@@ -280,8 +280,8 @@ srecord::output_file_four_packed_code::preferred_block_size_set(int nbytes)
 }
 
 
-int
-srecord::output_file_four_packed_code::preferred_block_size_get() const
+auto
+srecord::output_file_four_packed_code::preferred_block_size_get() const -> int
 {
     return pref_block_size;
 }
@@ -294,9 +294,9 @@ srecord::output_file_four_packed_code::address_length_set(int)
 }
 
 
-const char *
+auto
 srecord::output_file_four_packed_code::format_name()
-    const
+    const -> const char *
 {
     return "Four-Packed-Code";
 }

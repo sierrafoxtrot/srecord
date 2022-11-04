@@ -72,11 +72,11 @@ public:
       * @param minimum
       *     The minimum run length to be considered a hole.
       */
-    static pointer create(const input::pointer &deeper, int value, int minimum);
+    static auto create(const input::pointer &deeper, int value, int minimum) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -117,7 +117,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_unfill &operator=(const input_filter_unfill &) = delete;
+    auto operator=(const input_filter_unfill &) -> input_filter_unfill & = delete;
 };
 
 };

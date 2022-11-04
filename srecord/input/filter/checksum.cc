@@ -51,8 +51,8 @@ srecord::input_filter_checksum::~input_filter_checksum()
 = default;
 
 
-bool
-srecord::input_filter_checksum::generate(record &result)
+auto
+srecord::input_filter_checksum::generate(record &result) -> bool
 {
     if (length <= 0)
         return false;
@@ -65,8 +65,8 @@ srecord::input_filter_checksum::generate(record &result)
 }
 
 
-bool
-srecord::input_filter_checksum::read(record &record)
+auto
+srecord::input_filter_checksum::read(record &record) -> bool
 {
     if (!input_filter::read(record))
         return generate(record);

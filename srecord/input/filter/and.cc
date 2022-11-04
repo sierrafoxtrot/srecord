@@ -33,15 +33,15 @@ srecord::input_filter_and::input_filter_and(const input::pointer &a1,
 }
 
 
-srecord::input::pointer
-srecord::input_filter_and::create(const input::pointer &a_deeper, int a_mask)
+auto
+srecord::input_filter_and::create(const input::pointer &a_deeper, int a_mask) -> srecord::input::pointer
 {
     return pointer(new input_filter_and(a_deeper, a_mask));
 }
 
 
-bool
-srecord::input_filter_and::read(record &result)
+auto
+srecord::input_filter_and::read(record &result) -> bool
 {
     if (!input_filter::read(result))
         return false;

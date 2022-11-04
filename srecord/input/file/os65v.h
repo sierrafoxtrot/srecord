@@ -46,17 +46,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -80,13 +80,13 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_os65v &operator=(const input_file_os65v &) = delete;
+    auto operator=(const input_file_os65v &) -> input_file_os65v & = delete;
 
     /**
       * The read_inner method is used by the read method to get
       * another portion of input.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * The seen_some_input instance variable is used to remember whether

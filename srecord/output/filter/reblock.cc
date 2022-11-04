@@ -55,9 +55,9 @@ srecord::output_filter_reblock::output_filter_reblock(
 }
 
 
-srecord::output_filter_reblock::pointer
+auto
 srecord::output_filter_reblock::create(const output::pointer &a_deeper,
-    bool a_align)
+    bool a_align) -> srecord::output_filter_reblock::pointer
 {
     return pointer(new output_filter_reblock(a_deeper, a_align));
 }
@@ -86,16 +86,16 @@ srecord::output_filter_reblock::address_length_set(int n)
 }
 
 
-int
+auto
 srecord::output_filter_reblock::preferred_block_size_get()
-    const
+    const -> int
 {
     return record::max_data_length;
 }
 
 
-bool
-srecord::output_filter_reblock::preferred_block_size_set(int nbytes)
+auto
+srecord::output_filter_reblock::preferred_block_size_set(int nbytes) -> bool
 {
     if (!output_filter::preferred_block_size_set(nbytes))
         return false;

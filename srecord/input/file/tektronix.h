@@ -45,17 +45,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -71,20 +71,20 @@ private:
       * We override the one in the base class because the checksum is
       * nibble-based, not byte-based.
       */
-    int get_nibble() override;
+    auto get_nibble() -> int override;
 
     /**
       * The get_byte method gets a two hex-digit from input and assembles
       * them (big-endian) into a byte.  We override the one in the base
       * class because the checksum is nibble-based, not byte-based.
       */
-    int get_byte() override;
+    auto get_byte() -> int override;
 
     /**
       * The read_inner method is used to read a single record from
       * the input.  The read method is a wrapper around this method.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * The data_record_count instance variable is used to remember the
@@ -123,7 +123,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_tektronix &operator=(const input_file_tektronix &) = delete;
+    auto operator=(const input_file_tektronix &) -> input_file_tektronix & = delete;
 };
 
 };

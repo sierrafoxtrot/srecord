@@ -36,16 +36,16 @@ srecord::input_filter_unfill::input_filter_unfill(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_unfill::create(const input::pointer &a_deeper, int a2,
-    int a3)
+    int a3) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_unfill(a_deeper, a2, a3));
 }
 
 
-bool
-srecord::input_filter_unfill::read(srecord::record &record)
+auto
+srecord::input_filter_unfill::read(srecord::record &record) -> bool
 {
     for (;;)
     {

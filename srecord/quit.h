@@ -50,7 +50,7 @@ public:
     /**
       * The assignment operator.
       */
-    quit &operator=(const quit &);
+    auto operator=(const quit &) -> quit &;
 
     /**
       * The fatal_error method is used to report fatal errors.

@@ -62,7 +62,7 @@ public:
       * @param end
       *     The byte order of the output.
       */
-    static pointer create(const std::string &file_name, endian_t end);
+    static auto create(const std::string &file_name, endian_t end) -> pointer;
 
 protected:
     // See base class for documentation.
@@ -75,13 +75,13 @@ protected:
     void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const override;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes) override;
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    const char *format_name() const override;
+    auto format_name() const -> const char * override;
 
 private:
     /**
@@ -103,7 +103,7 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_atmel_generic &operator=(const output_file_atmel_generic &) = delete;
+    auto operator=(const output_file_atmel_generic &) -> output_file_atmel_generic & = delete;
 };
 
 };

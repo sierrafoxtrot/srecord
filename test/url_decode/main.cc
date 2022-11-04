@@ -75,8 +75,8 @@ test_url_encode()
 }
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     srecord::progname_set(argv[0]);
     typedef void (*func_t)();

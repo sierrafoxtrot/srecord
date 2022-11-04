@@ -38,8 +38,8 @@ srecord::input_generator::input_generator(const interval &a_range) :
 }
 
 
-bool
-srecord::input_generator::read(srecord::record &result)
+auto
+srecord::input_generator::read(srecord::record &result) -> bool
 {
     //
     // If there is not data left to generate,
@@ -89,8 +89,8 @@ srecord::input_generator::read(srecord::record &result)
 }
 
 
-srecord::input::pointer
-srecord::input_generator::create(srecord::arglex_tool *cmdln)
+auto
+srecord::input_generator::create(srecord::arglex_tool *cmdln) -> srecord::input::pointer
 {
     interval range = cmdln->get_interval_small("--generate");
     srecord::input::pointer result;

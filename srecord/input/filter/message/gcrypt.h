@@ -76,8 +76,8 @@ private:
       * @param hmac
       *     Add a message authentication code
       */
-    static pointer create(const input::pointer &deeper, unsigned long address,
-        int algo, bool hmac = false);
+    static auto create(const input::pointer &deeper, unsigned long address,
+        int algo, bool hmac = false) -> pointer;
 
     /**
       * The algorithm_from_name class method is used to translate an
@@ -89,7 +89,7 @@ private:
       *     an algorithm number.  It does not return if the name is
       *     unknown, it exits with a fatal error message instead.
       */
-    static int algorithm_from_name(const char *name);
+    static auto algorithm_from_name(const char *name) -> int;
 
 public:
     /**
@@ -106,8 +106,8 @@ public:
       * @param hmac
       *     Turn the hash into a HMAC.
       */
-    static pointer create(const input::pointer &deeper, unsigned long address,
-        const char *algo, bool hmac = false);
+    static auto create(const input::pointer &deeper, unsigned long address,
+        const char *algo, bool hmac = false) -> pointer;
 
     /**
       * The create_md5 class method is used to create a new dynamically
@@ -118,8 +118,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_md5(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_md5(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_sha1 class method is used to create a new dynamically
@@ -130,8 +130,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_sha1(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_sha1(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_rmd160 class method is used to create a new dynamically
@@ -142,8 +142,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_rmd160(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_rmd160(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_md2 class method is used to create a new dynamically
@@ -154,8 +154,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_md2(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_md2(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_tiger class method is used to create a new dynamically
@@ -166,8 +166,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_tiger(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_tiger(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_haval class method is used to create a new dynamically
@@ -178,8 +178,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_haval(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_haval(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_sha256 class method is used to create a new dynamically
@@ -190,8 +190,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_sha256(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_sha256(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_sha384 class method is used to create a new dynamically
@@ -202,8 +202,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_sha384(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_sha384(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_sha512 class method is used to create a new dynamically
@@ -214,8 +214,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_sha512(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_sha512(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_sha224 class method is used to create a new dynamically
@@ -226,8 +226,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_sha224(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_sha224(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_md4 class method is used to create a new dynamically
@@ -238,8 +238,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_md4(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_md4(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_crc32 class method is used to create a new dynamically
@@ -250,8 +250,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_crc32(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_crc32(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_crc32_rfc1510 class method is used to create a new
@@ -263,8 +263,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_crc32_rfc1510(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_crc32_rfc1510(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_crc24_rfc2440 class method is used to create a new
@@ -276,8 +276,8 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_crc24_rfc2440(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_crc24_rfc2440(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
     /**
       * The create_whirlpool class method is used to create a new
@@ -289,15 +289,15 @@ public:
       * @param address
       *     Where to place the hash in memory.
       */
-    static pointer create_whirlpool(const input::pointer &deeper,
-        unsigned long address);
+    static auto create_whirlpool(const input::pointer &deeper,
+        unsigned long address) -> pointer;
 
 protected:
     // See base class for documentation.
     void process(const memory &input, record &output) override;
 
     // See base class for documentation.
-    const char *get_algorithm_name() const override;
+    auto get_algorithm_name() const -> const char * override;
 
 private:
     /**
@@ -331,7 +331,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_message_gcrypt &operator=(const input_filter_message_gcrypt &) = delete;
+    auto operator=(const input_filter_message_gcrypt &) -> input_filter_message_gcrypt & = delete;
 };
 
 };

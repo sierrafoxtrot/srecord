@@ -41,16 +41,16 @@ srecord::input_filter_fill::input_filter_fill(const input::pointer &a1,
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_fill::create(const input::pointer &a_deeper,
-    int a_value, const interval &a_range)
+    int a_value, const interval &a_range) -> srecord::input::pointer
 {
     return pointer(new input_filter_fill(a_deeper, a_value, a_range));
 }
 
 
-bool
-srecord::input_filter_fill::generate(record &result)
+auto
+srecord::input_filter_fill::generate(record &result) -> bool
 {
     if (range.empty())
         return false;
@@ -76,8 +76,8 @@ srecord::input_filter_fill::generate(record &result)
 }
 
 
-bool
-srecord::input_filter_fill::read(record &result)
+auto
+srecord::input_filter_fill::read(record &result) -> bool
 {
     if (!input_filter::read(result))
         return generate(result);

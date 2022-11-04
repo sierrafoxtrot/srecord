@@ -53,8 +53,8 @@ srecord::output_file_mos_tech::output_file_mos_tech(
 }
 
 
-srecord::output::pointer
-srecord::output_file_mos_tech::create(const std::string &a_file_name)
+auto
+srecord::output_file_mos_tech::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_mos_tech(a_file_name));
 }
@@ -135,8 +135,8 @@ srecord::output_file_mos_tech::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_mos_tech::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_mos_tech::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
@@ -145,17 +145,17 @@ srecord::output_file_mos_tech::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_mos_tech::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_mos_tech::format_name()
-    const
+    const -> const char *
 {
     return "MOS-Tech";
 }

@@ -50,8 +50,8 @@ static const struct option options[] =
 };
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     srecord::progname_set(argv[0]);
     srecord::crc16::seed_mode_t seed_mode = srecord::crc16::seed_mode_ccitt;

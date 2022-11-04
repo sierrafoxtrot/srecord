@@ -43,15 +43,15 @@ srecord::input_file_trs80::input_file_trs80(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_trs80::create(const std::string &a_file_name)
+auto
+srecord::input_file_trs80::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_trs80(a_file_name));
 }
 
 
-int
-srecord::input_file_trs80::get_byte()
+auto
+srecord::input_file_trs80::get_byte() -> int
 {
     int c = get_char();
     if (c < 0)
@@ -60,8 +60,8 @@ srecord::input_file_trs80::get_byte()
 }
 
 
-bool
-srecord::input_file_trs80::read(srecord::record &result)
+auto
+srecord::input_file_trs80::read(srecord::record &result) -> bool
 {
     if (pending)
     {
@@ -189,25 +189,25 @@ srecord::input_file_trs80::read(srecord::record &result)
 }
 
 
-bool
+auto
 srecord::input_file_trs80::is_binary()
-    const
+    const -> bool
 {
     return true;
 }
 
 
-const char *
+auto
 srecord::input_file_trs80::get_file_format_name()
-    const
+    const -> const char *
 {
     return "TRS80";
 }
 
 
-int
+auto
 srecord::input_file_trs80::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_trs80;
 }

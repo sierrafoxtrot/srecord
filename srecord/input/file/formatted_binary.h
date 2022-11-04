@@ -45,20 +45,20 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read (record &record) override;
+    auto read (record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    bool is_binary() const override;
+    auto is_binary() const -> bool override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -112,7 +112,7 @@ private:
     /**
       * The assignment operator.
       */
-    input_file_formatted_binary &operator=(const input_file_formatted_binary &) = delete;
+    auto operator=(const input_file_formatted_binary &) -> input_file_formatted_binary & = delete;
 };
 
 };

@@ -31,8 +31,8 @@ usage()
 }
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     unsigned char sum1 = 0xFF;
     unsigned char sum2 = 0xFF;

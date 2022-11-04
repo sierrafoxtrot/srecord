@@ -228,7 +228,7 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    input::pointer get_input();
+    auto get_input() -> input::pointer;
 
     /**
       * The get_output method is used to parse an output specification
@@ -238,13 +238,13 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    output::pointer get_output();
+    auto get_output() -> output::pointer;
 
     /**
       * The get_number method is used to parse a numeric value from the
       * command line.
       */
-    unsigned long get_number(const char *caption);
+    auto get_number(const char *caption) -> unsigned long;
 
     /**
       * The get_number method is used to parse a numeric value
@@ -257,13 +257,13 @@ public:
       * @param max
       *     The maximum acceptable value (inclusive)
       */
-    unsigned long get_number(const char *caption, long min, long max);
+    auto get_number(const char *caption, long min, long max) -> unsigned long;
 
     /**
       * The can_get_number method is used to determine if it is possible
       * to parse a number from the next token on the command line.
       */
-    bool can_get_number() const;
+    auto can_get_number() const -> bool;
 
     /**
       * The get_interval method is used to parse an interval
@@ -279,7 +279,7 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    interval get_interval(const char *err_msg_caption);
+    auto get_interval(const char *err_msg_caption) -> interval;
 
     /**
       * The get_interval_small method may be used to parse an interval
@@ -287,7 +287,7 @@ public:
       * <=1GB, and errors if it is not, with a --big override.  Commonly
       * used to sanity check things like --fill.
       */
-    interval get_interval_small(const char *err_msg_caption);
+    auto get_interval_small(const char *err_msg_caption) -> interval;
 
     /**
       * The get_string method may be used to get a string from the
@@ -296,13 +296,13 @@ public:
       * @param caption
       *     The text for the error message.
       */
-    std::string get_string(const char *caption);
+    auto get_string(const char *caption) -> std::string;
 
     // See base class for documentation.
     void default_command_line_processing() override;
 
-    defcon_t get_redundant_bytes() const { return redundant_bytes; }
-    defcon_t get_contradictory_bytes() const { return contradictory_bytes; }
+    auto get_redundant_bytes() const -> defcon_t { return redundant_bytes; }
+    auto get_contradictory_bytes() const -> defcon_t { return contradictory_bytes; }
 
 private:
     /**
@@ -321,7 +321,7 @@ private:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    interval get_interval_factor(const char *err_msg_caption);
+    auto get_interval_factor(const char *err_msg_caption) -> interval;
 
     /**
       * The get_interval_term method is used to parse set-intersection
@@ -335,7 +335,7 @@ private:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    interval get_interval_term(const char *err_msg_caption);
+    auto get_interval_term(const char *err_msg_caption) -> interval;
 
     /**
       * The get_address method is used to parse an address from the
@@ -405,7 +405,7 @@ private:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    input::pointer get_simple_input();
+    auto get_simple_input() -> input::pointer;
 
     /**
       * The get_endian_by_token method is sued to obtain the endian-ness
@@ -415,15 +415,15 @@ private:
       * @param tok
       *     the token the endian-ness is required for.
       */
-    endian_t get_endian_by_token(int tok) const;
+    auto get_endian_by_token(int tok) const -> endian_t;
 
     /**
       * The get_endian_by_token method is sued to obtain the endian-ness
       * of the current token.
       */
-    endian_t
+    auto
     get_endian_by_token()
-        const
+        const -> endian_t
     {
         return get_endian_by_token(token_cur());
     }
@@ -436,15 +436,15 @@ private:
       * @param tok
       *     The token to examine.
       */
-    bool get_inclusive_by_token(int tok) const;
+    auto get_inclusive_by_token(int tok) const -> bool;
 
     /**
       * The get_inclusive_by_token method is used to determine whether
       * or not the current token is inclusive or exclusive.
       */
-    bool
+    auto
     get_inclusive_by_token()
-        const
+        const -> bool
     {
         return get_inclusive_by_token(token_cur());
     }
@@ -476,7 +476,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    arglex_tool &operator=(const arglex_tool &);
+    auto operator=(const arglex_tool &) -> arglex_tool &;
 };
 
 };

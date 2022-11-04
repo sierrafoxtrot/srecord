@@ -23,8 +23,8 @@
 #include <srecord/input/interval.h>
 
 
-unsigned long
-srecord::arglex_tool::get_number(const char *caption)
+auto
+srecord::arglex_tool::get_number(const char *caption) -> unsigned long
 {
     unsigned long value = 0;
     unsigned long multiple;
@@ -120,9 +120,9 @@ srecord::arglex_tool::get_number(const char *caption)
 }
 
 
-unsigned long
+auto
 srecord::arglex_tool::get_number(const char *caption, long minimum,
-    long maximum)
+    long maximum) -> unsigned long
 {
     long value = get_number(caption);
     if (value < minimum || value > maximum)

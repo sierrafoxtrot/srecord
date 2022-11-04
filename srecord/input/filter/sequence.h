@@ -50,11 +50,11 @@ public:
       * The create class method is used to create new dynamically
       * allocated instances of this class.
       */
-    static pointer create(input::pointer deeper);
+    static auto create(input::pointer deeper) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -89,7 +89,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_sequence &operator=(const input_filter_sequence &) = delete;
+    auto operator=(const input_filter_sequence &) -> input_filter_sequence & = delete;
 };
 
 };

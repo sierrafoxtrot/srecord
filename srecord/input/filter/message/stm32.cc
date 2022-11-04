@@ -47,9 +47,9 @@ srecord::input_filter_message_stm32::input_filter_message_stm32(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_message_stm32::create(const input::pointer &a_deeper,
-    unsigned long a_address, endian_t a_end)
+    unsigned long a_address, endian_t a_end) -> srecord::input::pointer
 {
     return
         pointer
@@ -86,17 +86,17 @@ srecord::input_filter_message_stm32::process(const memory &input,
 }
 
 
-const char *
+auto
 srecord::input_filter_message_stm32::get_algorithm_name()
-    const
+    const -> const char *
 {
     return "STM32";
 }
 
 
-unsigned
+auto
 srecord::input_filter_message_stm32::get_minimum_alignment()
-    const
+    const -> unsigned
 {
     return 4;
 }

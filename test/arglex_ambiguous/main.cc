@@ -19,8 +19,8 @@
 #include <srecord/arglex/tool.h>
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     srecord::arglex_tool cmdline(argc, argv);
     cmdline.token_first();

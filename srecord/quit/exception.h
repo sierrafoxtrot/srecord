@@ -63,7 +63,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    quit_exception &operator=(const quit_exception &) = delete;
+    auto operator=(const quit_exception &) -> quit_exception & = delete;
 };
 
 };

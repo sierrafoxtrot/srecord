@@ -46,17 +46,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -71,7 +71,7 @@ private:
       * Read one record from the file.  The read method is a wrapper
       * around this method.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * The data_record_count instance variable is used to remember the
@@ -135,7 +135,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_intel16 &operator=(const input_file_intel16 &) = delete;
+    auto operator=(const input_file_intel16 &) -> input_file_intel16 & = delete;
 };
 
 };

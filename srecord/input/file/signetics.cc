@@ -35,8 +35,8 @@ srecord::input_file_signetics::input_file_signetics(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_signetics::create(const std::string &a_file_name)
+auto
+srecord::input_file_signetics::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_signetics(a_file_name));
 }
@@ -50,8 +50,8 @@ srecord::input_file_signetics::checksum_add(unsigned char n)
 }
 
 
-bool
-srecord::input_file_signetics::read_inner(srecord::record &record)
+auto
+srecord::input_file_signetics::read_inner(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -125,8 +125,8 @@ srecord::input_file_signetics::read_inner(srecord::record &record)
 }
 
 
-bool
-srecord::input_file_signetics::read(srecord::record &record)
+auto
+srecord::input_file_signetics::read(srecord::record &record) -> bool
 {
     if (!read_inner(record))
     {
@@ -139,17 +139,17 @@ srecord::input_file_signetics::read(srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_signetics::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Signetics";
 }
 
 
-int
+auto
 srecord::input_file_signetics::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_signetics;
 }

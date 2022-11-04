@@ -38,23 +38,23 @@ srecord::input_file_spasm::input_file_spasm(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_spasm::create_be(const std::string &a_file_name)
+auto
+srecord::input_file_spasm::create_be(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return create(a_file_name, endian_big);
 }
 
 
-srecord::input_file::pointer
+auto
 srecord::input_file_spasm::create(const std::string &a_file_name,
-    endian_t a_end)
+    endian_t a_end) -> srecord::input_file::pointer
 {
     return pointer(new input_file_spasm(a_file_name, a_end));
 }
 
 
-bool
-srecord::input_file_spasm::read_inner(record &result)
+auto
+srecord::input_file_spasm::read_inner(record &result) -> bool
 {
     if (peek_char() < 0)
         return false;
@@ -88,8 +88,8 @@ srecord::input_file_spasm::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_spasm::read(record &result)
+auto
+srecord::input_file_spasm::read(record &result) -> bool
 {
     if (!read_inner(result))
     {
@@ -102,9 +102,9 @@ srecord::input_file_spasm::read(record &result)
 }
 
 
-const char *
+auto
 srecord::input_file_spasm::get_file_format_name()
-    const
+    const -> const char *
 {
     return
         (
@@ -117,9 +117,9 @@ srecord::input_file_spasm::get_file_format_name()
 }
 
 
-int
+auto
 srecord::input_file_spasm::format_option_number()
-    const
+    const -> int
 {
     return
         (

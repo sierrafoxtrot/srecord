@@ -34,8 +34,8 @@ srecord::output_file_fairchild::output_file_fairchild(
 }
 
 
-srecord::output::pointer
-srecord::output_file_fairchild::create(const std::string &a_file_name)
+auto
+srecord::output_file_fairchild::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_fairchild(a_file_name));
 }
@@ -130,24 +130,24 @@ srecord::output_file_fairchild::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_fairchild::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_fairchild::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes == 8);
 }
 
 
-int
+auto
 srecord::output_file_fairchild::preferred_block_size_get()
-    const
+    const -> int
 {
     return 8;
 }
 
 
-const char *
+auto
 srecord::output_file_fairchild::format_name()
-    const
+    const -> const char *
 {
     return "Fairchild";
 }

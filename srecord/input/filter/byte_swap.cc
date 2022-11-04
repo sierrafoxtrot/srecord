@@ -36,15 +36,15 @@ srecord::input_filter_byte_swap::input_filter_byte_swap(
 }
 
 
-srecord::input::pointer
-srecord::input_filter_byte_swap::create(const srecord::input::pointer &a_deeper)
+auto
+srecord::input_filter_byte_swap::create(const srecord::input::pointer &a_deeper) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_byte_swap(a_deeper));
 }
 
 
-bool
-srecord::input_filter_byte_swap::read(srecord::record &record)
+auto
+srecord::input_filter_byte_swap::read(srecord::record &record) -> bool
 {
     for (;;)
     {

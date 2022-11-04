@@ -62,8 +62,8 @@ srecord::output_file_msbin::output_file_msbin(
 }
 
 
-srecord::output::pointer
-srecord::output_file_msbin::create(const std::string &a_file_name)
+auto
+srecord::output_file_msbin::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_msbin(a_file_name));
 }
@@ -81,8 +81,8 @@ srecord::output_file_msbin::write_dword_le(uint32_t d)
 }
 
 
-uint32_t
-srecord::output_file_msbin::checksum(const unsigned char *data, size_t len)
+auto
+srecord::output_file_msbin::checksum(const unsigned char *data, size_t len) -> uint32_t
 {
     uint32_t sum = 0;
 
@@ -294,16 +294,16 @@ srecord::output_file_msbin::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_msbin::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_msbin::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes >= 1 && nbytes <= record::max_data_length);
 }
 
 
-int
+auto
 srecord::output_file_msbin::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -312,17 +312,17 @@ srecord::output_file_msbin::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_msbin::format_name()
-    const
+    const -> const char *
 {
     return "Windows CE Binary Image Data Format";
 }
 
 
-bool
+auto
 srecord::output_file_msbin::is_binary()
-    const
+    const -> bool
 {
     return true;
 }

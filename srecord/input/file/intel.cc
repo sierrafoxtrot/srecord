@@ -42,15 +42,15 @@ srecord::input_file_intel::input_file_intel(const std::string &a_file_name) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_intel::create(const std::string &a_file_name)
+auto
+srecord::input_file_intel::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_intel(a_file_name));
 }
 
 
-bool
-srecord::input_file_intel::read_inner(srecord::record &record)
+auto
+srecord::input_file_intel::read_inner(srecord::record &record) -> bool
 {
     if (pushback)
     {
@@ -335,8 +335,8 @@ srecord::input_file_intel::read_inner(srecord::record &record)
 }
 
 
-bool
-srecord::input_file_intel::read(srecord::record &record)
+auto
+srecord::input_file_intel::read(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -414,17 +414,17 @@ srecord::input_file_intel::read(srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_intel::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Intel Hexadecimal (MCS-86)";
 }
 
 
-int
+auto
 srecord::input_file_intel::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_intel;
 }

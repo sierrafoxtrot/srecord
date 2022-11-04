@@ -40,15 +40,15 @@ srecord::input_file_mips_flash::input_file_mips_flash(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_mips_flash::create_be(const std::string &a_file_name)
+auto
+srecord::input_file_mips_flash::create_be(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_mips_flash(a_file_name, endian_big));
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_mips_flash::create_le(const std::string &a_file_name)
+auto
+srecord::input_file_mips_flash::create_le(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_mips_flash(a_file_name, endian_little));
 }
@@ -126,8 +126,8 @@ srecord::input_file_mips_flash::tokenizer()
 }
 
 
-bool
-srecord::input_file_mips_flash::read_inner(record &result)
+auto
+srecord::input_file_mips_flash::read_inner(record &result) -> bool
 {
     if (!seen_reset)
     {
@@ -189,8 +189,8 @@ srecord::input_file_mips_flash::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_mips_flash::read(record &result)
+auto
+srecord::input_file_mips_flash::read(record &result) -> bool
 {
     if (!read_inner(result))
     {
@@ -203,9 +203,9 @@ srecord::input_file_mips_flash::read(record &result)
 }
 
 
-const char *
+auto
 srecord::input_file_mips_flash::get_file_format_name()
-    const
+    const -> const char *
 {
     return
         (
@@ -218,9 +218,9 @@ srecord::input_file_mips_flash::get_file_format_name()
 }
 
 
-int
+auto
 srecord::input_file_mips_flash::format_option_number()
-    const
+    const -> int
 {
     return
         (

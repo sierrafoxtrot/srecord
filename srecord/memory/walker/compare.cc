@@ -36,8 +36,8 @@ srecord::memory_walker_compare::memory_walker_compare(const srecord::memory &a1,
 }
 
 
-srecord::memory_walker_compare::pointer
-srecord::memory_walker_compare::create(const srecord::memory &a1, bool a2)
+auto
+srecord::memory_walker_compare::create(const srecord::memory &a1, bool a2) -> srecord::memory_walker_compare::pointer
 {
     return pointer(new srecord::memory_walker_compare(a1, a2));
 }
@@ -67,8 +67,8 @@ srecord::memory_walker_compare::observe(unsigned long addr, const void *p,
 }
 
 
-static std::string
-spaces(int n)
+static auto
+spaces(int n) -> std::string
 {
     // inefficient, but it isn't used much.
     std::string result;
@@ -112,9 +112,9 @@ srecord::memory_walker_compare::print(const char *caption)
 }
 
 
-bool
+auto
 srecord::memory_walker_compare::same()
-    const
+    const -> bool
 {
     return (wrong.empty() && unset.empty());
 }

@@ -49,8 +49,8 @@ srecord::output_file_stewie::output_file_stewie(
 }
 
 
-srecord::output::pointer
-srecord::output_file_stewie::create(const std::string &a_file_name)
+auto
+srecord::output_file_stewie::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_stewie(a_file_name));
 }
@@ -203,8 +203,8 @@ srecord::output_file_stewie::line_length_set(int n)
 }
 
 
-bool
-srecord::output_file_stewie::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_stewie::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
@@ -226,17 +226,17 @@ srecord::output_file_stewie::address_length_set(int n)
 }
 
 
-int
+auto
 srecord::output_file_stewie::preferred_block_size_get()
-    const
+    const -> int
 {
     return preferred_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_stewie::format_name()
-    const
+    const -> const char *
 {
     return "Stewie";
 }

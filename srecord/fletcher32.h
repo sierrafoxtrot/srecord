@@ -74,13 +74,13 @@ public:
     /**
       * The assignment operator.
       */
-    fletcher32 &operator=(const fletcher32 &);
+    auto operator=(const fletcher32 &) -> fletcher32 &;
 
     /**
       * The get method is used to obtain the running value of the cyclic
       * redundancy check.
       */
-    unsigned long get() const;
+    auto get() const -> unsigned long;
 
     /**
       * The next method is used to advance the state by one byte.

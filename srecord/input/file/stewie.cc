@@ -36,15 +36,15 @@ srecord::input_file_stewie::input_file_stewie(const std::string &a_file_name) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_stewie::create(const std::string &a_file_name)
+auto
+srecord::input_file_stewie::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_stewie(a_file_name));
 }
 
 
-int
-srecord::input_file_stewie::get_byte()
+auto
+srecord::input_file_stewie::get_byte() -> int
 {
     int n = get_char();
     if (n < 0)
@@ -54,8 +54,8 @@ srecord::input_file_stewie::get_byte()
 }
 
 
-bool
-srecord::input_file_stewie::read_inner(record &result)
+auto
+srecord::input_file_stewie::read_inner(record &result) -> bool
 {
     if (termination_seen)
         return false;
@@ -165,8 +165,8 @@ srecord::input_file_stewie::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_stewie::read(record &result)
+auto
+srecord::input_file_stewie::read(record &result) -> bool
 {
     for (;;)
     {
@@ -256,25 +256,25 @@ srecord::input_file_stewie::read(record &result)
 }
 
 
-bool
+auto
 srecord::input_file_stewie::is_binary()
-    const
+    const -> bool
 {
     return true;
 }
 
 
-const char *
+auto
 srecord::input_file_stewie::get_file_format_name()
-    const
+    const -> const char *
 {
     return "mobile phone signed binary (SBN)";
 }
 
 
-int
+auto
 srecord::input_file_stewie::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_stewie;
 }

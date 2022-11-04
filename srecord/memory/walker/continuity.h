@@ -53,7 +53,7 @@ public:
       * The create class method is used to create new dynamically
       * allocated instances of class.
       */
-    static pointer create();
+    static auto create() -> pointer;
 
     /**
       * The is_continuous method is used to get the results of the
@@ -62,7 +62,7 @@ public:
       * @returns
       *     true if the data has no holes, false if there are holes
       */
-    bool is_continuous() const;
+    auto is_continuous() const -> bool;
 
 protected:
     // See base class for documentation.
@@ -81,7 +81,7 @@ private:
     /**
       * The assignment operator.  No not use.
       */
-    memory_walker_continuity &operator=(const memory_walker_continuity &) = delete;
+    auto operator=(const memory_walker_continuity &) -> memory_walker_continuity & = delete;
 };
 
 };

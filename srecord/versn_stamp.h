@@ -28,21 +28,21 @@ namespace srecord
   * as a string.  This reflects Aegis' idea of the version, so you can
   * re-create that Aegis version easily.
   */
-const char *version_stamp();
+auto version_stamp() -> const char *;
 
 /**
   * The copyright_years function is used to obtain the range of
   * copyright years for the copyright notice.  This reflects Aegis'
   * tracking of the project, and updated automatically.
   */
-const char *copyright_years();
+auto copyright_years() -> const char *;
 
 /**
   * The git_sha1 function is used to obtain the git hash as a string.
   * This reflects git's idea of the version, so you can re-create that
   * git version easily.
   */
-const char *git_sha1();
+auto git_sha1() -> const char *;
 
 /**
   * The print_version function is used to print the program version, and

@@ -66,15 +66,15 @@ public:
       * @param end
       *     The byte order.
       */
-    static pointer create(const input::pointer &deeper, unsigned long address,
-        endian_t end);
+    static auto create(const input::pointer &deeper, unsigned long address,
+        endian_t end) -> pointer;
 
 protected:
     // See base class for documentation.
     void process(const memory &input, record &output) override;
 
     // See base class for documentation.
-    const char *get_algorithm_name() const override;
+    auto get_algorithm_name() const -> const char * override;
 
     // See base class for documentation.
     void command_line(srecord::arglex_tool *cmdln) override;
@@ -111,8 +111,8 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_message_fletcher16 &operator=(
-        const input_filter_message_fletcher16 &) = delete;
+    auto operator=(
+        const input_filter_message_fletcher16 &) -> input_filter_message_fletcher16 & = delete;
 };
 
 };

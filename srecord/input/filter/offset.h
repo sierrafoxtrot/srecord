@@ -62,11 +62,11 @@ public:
       *     The number of bytes to offset the addresses by.
       *     The value may be negative.
       */
-    static pointer create(const input::pointer &deeper, long nbytes);
+    static auto create(const input::pointer &deeper, long nbytes) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -88,7 +88,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_offset &operator=(const input_filter_offset &) = delete;
+    auto operator=(const input_filter_offset &) -> input_filter_offset & = delete;
 };
 
 };

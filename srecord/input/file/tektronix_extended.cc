@@ -37,15 +37,15 @@ srecord::input_file_tektronix_extended::input_file_tektronix_extended(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_tektronix_extended::create(const std::string &a_file_name)
+auto
+srecord::input_file_tektronix_extended::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_tektronix_extended(a_file_name));
 }
 
 
-int
-srecord::input_file_tektronix_extended::get_nibble()
+auto
+srecord::input_file_tektronix_extended::get_nibble() -> int
 {
     int n = inherited::get_nibble();
     nibble_sum += n;
@@ -53,8 +53,8 @@ srecord::input_file_tektronix_extended::get_nibble()
 }
 
 
-bool
-srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
+auto
+srecord::input_file_tektronix_extended::read_inner(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -178,8 +178,8 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
 }
 
 
-bool
-srecord::input_file_tektronix_extended::read(srecord::record &record)
+auto
+srecord::input_file_tektronix_extended::read(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -239,17 +239,17 @@ srecord::input_file_tektronix_extended::read(srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_tektronix_extended::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Tektronix Extended";
 }
 
 
-int
+auto
 srecord::input_file_tektronix_extended::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_tektronix_extended;
 }

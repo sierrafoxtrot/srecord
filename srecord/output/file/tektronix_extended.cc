@@ -37,8 +37,8 @@ srecord::output_file_tektronix_extended::output_file_tektronix_extended(
 }
 
 
-srecord::output::pointer
-srecord::output_file_tektronix_extended::create(const std::string &a_file_name)
+auto
+srecord::output_file_tektronix_extended::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_tektronix_extended(a_file_name));
 }
@@ -95,8 +95,8 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
 }
 
 
-static int
-addr_width(unsigned long n)
+static auto
+addr_width(unsigned long n) -> int
 {
     if (n < (1uL << 16))
         return 2;
@@ -193,8 +193,8 @@ srecord::output_file_tektronix_extended::address_length_set(int n)
 }
 
 
-bool
-srecord::output_file_tektronix_extended::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_tektronix_extended::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
@@ -205,17 +205,17 @@ srecord::output_file_tektronix_extended::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_tektronix_extended::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_tektronix_extended::format_name()
-    const
+    const -> const char *
 {
     return "Tektronix-Extended";
 }

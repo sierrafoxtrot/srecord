@@ -20,8 +20,8 @@
 #include <srecord/arglex/tool.h>
 
 
-std::string
-srecord::arglex_tool::get_string(const char *caption)
+auto
+srecord::arglex_tool::get_string(const char *caption) -> std::string
 {
     switch (token_cur())
     {

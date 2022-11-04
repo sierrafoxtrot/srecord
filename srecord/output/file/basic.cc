@@ -55,8 +55,8 @@ srecord::output_file_basic::output_file_basic(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_basic::create(const std::string &a_file_name)
+auto
+srecord::output_file_basic::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_basic(a_file_name));
 }
@@ -164,17 +164,17 @@ srecord::output_file_basic::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_basic::preferred_block_size_set(int)
+auto
+srecord::output_file_basic::preferred_block_size_set(int) -> bool
 {
     // ignore
     return true;
 }
 
 
-int
+auto
 srecord::output_file_basic::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -183,9 +183,9 @@ srecord::output_file_basic::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_basic::format_name()
-    const
+    const -> const char *
 {
     return "Basic";
 }

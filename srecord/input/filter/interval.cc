@@ -42,8 +42,8 @@ srecord::input_filter_interval::input_filter_interval(
 }
 
 
-bool
-srecord::input_filter_interval::generate(record &result)
+auto
+srecord::input_filter_interval::generate(record &result) -> bool
 {
     if (length <= 0)
         return false;
@@ -56,8 +56,8 @@ srecord::input_filter_interval::generate(record &result)
 }
 
 
-bool
-srecord::input_filter_interval::read(record &record)
+auto
+srecord::input_filter_interval::read(record &record) -> bool
 {
     if (!input_filter::read(record))
         return generate(record);

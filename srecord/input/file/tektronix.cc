@@ -39,15 +39,15 @@ srecord::input_file_tektronix::input_file_tektronix(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_tektronix::create(const std::string &a_file_name)
+auto
+srecord::input_file_tektronix::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_tektronix(a_file_name));
 }
 
 
-int
-srecord::input_file_tektronix::get_nibble()
+auto
+srecord::input_file_tektronix::get_nibble() -> int
 {
     int n = srecord::input_file::get_nibble();
     checksum_add(n);
@@ -55,8 +55,8 @@ srecord::input_file_tektronix::get_nibble()
 }
 
 
-int
-srecord::input_file_tektronix::get_byte()
+auto
+srecord::input_file_tektronix::get_byte() -> int
 {
     // this differs from the srecord::input_file method only in that we
     // don't add to the checksum.
@@ -66,8 +66,8 @@ srecord::input_file_tektronix::get_byte()
 }
 
 
-bool
-srecord::input_file_tektronix::read_inner(srecord::record &record)
+auto
+srecord::input_file_tektronix::read_inner(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -156,8 +156,8 @@ srecord::input_file_tektronix::read_inner(srecord::record &record)
 }
 
 
-bool
-srecord::input_file_tektronix::read(srecord::record &record)
+auto
+srecord::input_file_tektronix::read(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -207,17 +207,17 @@ srecord::input_file_tektronix::read(srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_tektronix::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Tektronix (16-bit)";
 }
 
 
-int
+auto
 srecord::input_file_tektronix::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_tektronix;
 }

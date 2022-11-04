@@ -23,21 +23,21 @@
 #include <srecord/progname.h>
 
 
-const char *
-srecord::version_stamp()
+auto
+srecord::version_stamp() -> const char *
 {
     return PATCHLEVEL;
 }
 
 
-const char *
-srecord::copyright_years()
+auto
+srecord::copyright_years() -> const char *
 {
     return COPYRIGHT_YEARS;
 }
 
-const char *
-srecord::git_sha1()
+auto
+srecord::git_sha1() -> const char *
 {
     return GIT_SHA1;
 }

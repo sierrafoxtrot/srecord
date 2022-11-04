@@ -43,15 +43,15 @@ srecord::input_file_intel16::input_file_intel16(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_intel16::create(const std::string &a_file_name)
+auto
+srecord::input_file_intel16::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_intel16(a_file_name));
 }
 
 
-bool
-srecord::input_file_intel16::read_inner(record &result)
+auto
+srecord::input_file_intel16::read_inner(record &result) -> bool
 {
     if (pushback)
     {
@@ -300,8 +300,8 @@ srecord::input_file_intel16::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_intel16::read(record &result)
+auto
+srecord::input_file_intel16::read(record &result) -> bool
 {
     for (;;)
     {
@@ -350,17 +350,17 @@ srecord::input_file_intel16::read(record &result)
 }
 
 
-const char *
+auto
 srecord::input_file_intel16::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Intel Hexadecimal 16 (INHX16)";
 }
 
 
-int
+auto
 srecord::input_file_intel16::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_intel16;
 }

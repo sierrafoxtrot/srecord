@@ -34,15 +34,15 @@ srecord::input_file_brecord::input_file_brecord(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_brecord::create(const std::string &a_file_name)
+auto
+srecord::input_file_brecord::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_brecord(a_file_name));
 }
 
 
-bool
-srecord::input_file_brecord::read_inner(record &result)
+auto
+srecord::input_file_brecord::read_inner(record &result) -> bool
 {
     if (peek_char() < 0)
         return false;
@@ -70,8 +70,8 @@ srecord::input_file_brecord::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_brecord::read(record &result)
+auto
+srecord::input_file_brecord::read(record &result) -> bool
 {
     if (!read_inner(result))
     {
@@ -84,17 +84,17 @@ srecord::input_file_brecord::read(record &result)
 }
 
 
-const char *
+auto
 srecord::input_file_brecord::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Motorola MC68EZ328 bootstrap b-record";
 }
 
 
-int
+auto
 srecord::input_file_brecord::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_brecord;
 }

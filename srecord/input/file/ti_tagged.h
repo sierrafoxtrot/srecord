@@ -45,17 +45,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -71,7 +71,7 @@ private:
       * We override bacsie the checksum is character based, not byte
       * based.
       */
-    int get_char() override;
+    auto get_char() -> int override;
 
 private:
     typedef input_file inherited;
@@ -80,7 +80,7 @@ private:
       * The read_inner method is used to read a single line of input.
       * the read method is a wrapper around this method.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * The address instance variable is used to remember where we are
@@ -107,7 +107,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_ti_tagged &operator=(const input_file_ti_tagged &);
+    auto operator=(const input_file_ti_tagged &) -> input_file_ti_tagged &;
 };
 
 };

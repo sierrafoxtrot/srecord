@@ -37,8 +37,8 @@ srecord::output_file_forth::output_file_forth(
 }
 
 
-srecord::output::pointer
-srecord::output_file_forth::create(const std::string &a_file_name)
+auto
+srecord::output_file_forth::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_forth(a_file_name));
 }
@@ -100,9 +100,9 @@ srecord::output_file_forth::write(const srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::output_file_forth::format_name()
-    const
+    const -> const char *
 {
     return "FORTH";
 }
@@ -145,15 +145,15 @@ srecord::output_file_forth::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_forth::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_forth::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes >= 1 && nbytes <= record::max_data_length);
 }
 
 
-int
-srecord::output_file_forth::preferred_block_size_get() const
+auto
+srecord::output_file_forth::preferred_block_size_get() const -> int
 {
   return 16;
 }

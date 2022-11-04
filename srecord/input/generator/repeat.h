@@ -64,18 +64,18 @@ public:
       * @param length
       *     The length of the array of data to be repeated.
       */
-    static pointer create(const interval &range, unsigned char *data,
-        size_t length);
+    static auto create(const interval &range, unsigned char *data,
+        size_t length) -> pointer;
 
 protected:
     // See base class for documentation.
-    unsigned char generate_data(unsigned long address) override;
+    auto generate_data(unsigned long address) -> unsigned char override;
 
     // See base class for documentation.
-    std::string filename() const override;
+    auto filename() const -> std::string override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
 private:
     /**
@@ -110,7 +110,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_generator_repeat &operator=(const input_generator_repeat &) = delete;
+    auto operator=(const input_generator_repeat &) -> input_generator_repeat & = delete;
 };
 
 };

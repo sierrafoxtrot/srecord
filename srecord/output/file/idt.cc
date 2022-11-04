@@ -38,8 +38,8 @@ srecord::output_file_idt::output_file_idt(
 }
 
 
-srecord::output::pointer
-srecord::output_file_idt::create(const std::string &a_file_name)
+auto
+srecord::output_file_idt::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new output_file_idt(a_file_name));
 }
@@ -209,8 +209,8 @@ srecord::output_file_idt::address_length_set(int n)
 }
 
 
-bool
-srecord::output_file_idt::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_idt::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > record::max_data_length - 4)
         return false;
@@ -219,25 +219,25 @@ srecord::output_file_idt::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_idt::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_idt::format_name()
-    const
+    const -> const char *
 {
     return "IDT System Integration Manager binary";
 }
 
 
-bool
+auto
 srecord::output_file_idt::is_binary()
-    const
+    const -> bool
 {
     return true;
 }

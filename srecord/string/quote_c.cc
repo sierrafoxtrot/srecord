@@ -19,8 +19,8 @@
 #include <srecord/string.h>
 
 
-std::string
-srecord::string_quote_c(const std::string &arg)
+auto
+srecord::string_quote_c(const std::string &arg) -> std::string
 {
     std::string result;
     result += '"';

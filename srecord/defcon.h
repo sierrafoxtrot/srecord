@@ -30,8 +30,8 @@ enum defcon_t
 };
 
 
-const char *text_from_defcon(defcon_t x);
-int defcon_from_text(const char *text);
+auto text_from_defcon(defcon_t x) -> const char *;
+auto defcon_from_text(const char *text) -> int;
 
 
 };

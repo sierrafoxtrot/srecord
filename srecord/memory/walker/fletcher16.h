@@ -80,13 +80,13 @@ public:
       *     The endian-ness of the checksum.  This is needed to
       *     manipulate the answer.  Ignored if answer is ignored.
       */
-    static pointer create(int sum1, int sum2, int answer, endian_t end);
+    static auto create(int sum1, int sum2, int answer, endian_t end) -> pointer;
 
     /**
       * The get method is used to get the Fletcher-16 checksum once all memory
       * chunks have been processed by calls to our #observe method.
       */
-    unsigned get() const;
+    auto get() const -> unsigned;
 
 protected:
     // See base class for documentation.
@@ -112,7 +112,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_fletcher16 &operator=(const memory_walker_fletcher16 &) = delete;
+    auto operator=(const memory_walker_fletcher16 &) -> memory_walker_fletcher16 & = delete;
 };
 
 };

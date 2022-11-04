@@ -35,8 +35,8 @@ srecord::memory_walker_writer::memory_walker_writer(
 }
 
 
-srecord::memory_walker::pointer
-srecord::memory_walker_writer::create(const srecord::output::pointer &arg)
+auto
+srecord::memory_walker_writer::create(const srecord::output::pointer &arg) -> srecord::memory_walker::pointer
 {
     return pointer(new srecord::memory_walker_writer(arg));
 }

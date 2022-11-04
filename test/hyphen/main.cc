@@ -29,8 +29,8 @@
 static int number_of_errors;
 
 
-static bool
-read_one_line(const char *filename, FILE *fp, std::string &result)
+static auto
+read_one_line(const char *filename, FILE *fp, std::string &result) -> bool
 {
     for (;;)
     {
@@ -148,8 +148,8 @@ static struct option options[] =
 };
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     srecord::progname_set(argv[0]);
     for (;;)

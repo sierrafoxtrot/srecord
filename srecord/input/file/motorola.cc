@@ -39,8 +39,8 @@ srecord::input_file_motorola::input_file_motorola(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_motorola::create(const std::string &a_file_name)
+auto
+srecord::input_file_motorola::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_motorola(a_file_name));
 }
@@ -96,8 +96,8 @@ srecord::input_file_motorola::command_line(arglex_tool *cmdln)
 }
 
 
-bool
-srecord::input_file_motorola::read_inner(record &result)
+auto
+srecord::input_file_motorola::read_inner(record &result) -> bool
 {
     for (;;)
     {
@@ -231,8 +231,8 @@ srecord::input_file_motorola::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_motorola::read(record &record)
+auto
+srecord::input_file_motorola::read(record &record) -> bool
 {
     for (;;)
     {
@@ -332,17 +332,17 @@ srecord::input_file_motorola::read(record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_motorola::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Motorola S-Record";
 }
 
 
-int
+auto
 srecord::input_file_motorola::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_motorola;
 }

@@ -27,15 +27,15 @@
 #include <vector>
 
 
-static bool
-execution_start_addresses_differ(srecord::record *rp1, srecord::record *rp2)
+static auto
+execution_start_addresses_differ(srecord::record *rp1, srecord::record *rp2) -> bool
 {
     return (rp1 && rp2 && rp1->get_address() != rp2->get_address());
 }
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     srecord::arglex_tool cmdline(argc, argv);
     cmdline.usage_tail_set("<file1> <file2>");

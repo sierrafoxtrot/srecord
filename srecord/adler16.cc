@@ -33,8 +33,8 @@ srecord::adler16::adler16(const adler16 &rhs)
 = default;
 
 
-srecord::adler16 &
-srecord::adler16::operator=(const adler16 &rhs)
+auto
+srecord::adler16::operator=(const adler16 &rhs) -> srecord::adler16 &
 {
     if (this != &rhs)
     {
@@ -45,9 +45,9 @@ srecord::adler16::operator=(const adler16 &rhs)
 }
 
 
-unsigned short
+auto
 srecord::adler16::get()
-    const
+    const -> unsigned short
 {
     return ((((unsigned short)sum_b) << 8) | sum_a);
 }

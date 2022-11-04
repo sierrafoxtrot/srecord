@@ -33,7 +33,7 @@ void progname_set(char *);
   * The progname_get function is used to retrieve the name of the
   * currently executing programme.  Used by error messages.
   */
-const char *progname_get();
+auto progname_get() -> const char *;
 
 };
 

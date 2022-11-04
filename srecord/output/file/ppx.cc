@@ -57,8 +57,8 @@ srecord::output_file_ppx::output_file_ppx(
 }
 
 
-srecord::output::pointer
-srecord::output_file_ppx::create(const std::string &a_file_name)
+auto
+srecord::output_file_ppx::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_ppx(a_file_name));
 }
@@ -141,8 +141,8 @@ srecord::output_file_ppx::line_length_set(int ll)
 }
 
 
-bool
-srecord::output_file_ppx::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_ppx::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes >= 2 && nbytes <= record::max_data_length);
 }
@@ -155,9 +155,9 @@ srecord::output_file_ppx::address_length_set(int)
 }
 
 
-int
+auto
 srecord::output_file_ppx::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Use the largest we can get,
@@ -166,9 +166,9 @@ srecord::output_file_ppx::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_ppx::format_name()
-    const
+    const -> const char *
 {
     return "Stag Prom Programmer Hexadecimal";
 }

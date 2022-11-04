@@ -45,17 +45,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -135,7 +135,7 @@ private:
       * The lex method is used to obtain the next lexical token from the
       * input stream.
       */
-    token_t lex();
+    auto lex() -> token_t;
 
     /**
       * The token_value instance variable is used to remember the
@@ -147,13 +147,13 @@ private:
       * The lex_addr method is used to obtain the next lexical token
       * from the input stream, using the address radix.
       */
-    token_t lex_addr();
+    auto lex_addr() -> token_t;
 
     /**
       * The lex_data method is used to obtain the next lexical token
       * from the input stream, using the data radix.
       */
-    token_t lex_data();
+    auto lex_data() -> token_t;
 
     /**
       * The syntax_error method is used to report parse errors when
@@ -165,9 +165,9 @@ private:
     void syntax_error(const char *text);
 
     void get_equals();
-    long get_number();
+    auto get_number() -> long;
     void get_semicolon();
-    int get_radix();
+    auto get_radix() -> int;
     void get_colon();
 
     unsigned width;
@@ -186,7 +186,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_mif &operator=(const input_file_mif &) = delete;
+    auto operator=(const input_file_mif &) -> input_file_mif & = delete;
 };
 
 };

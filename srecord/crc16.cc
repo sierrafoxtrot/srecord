@@ -95,8 +95,8 @@ srecord::crc16::calculate_table()
 }
 
 
-static int
-state_from_seed_mode(srecord::crc16::seed_mode_t seed_mode)
+static auto
+state_from_seed_mode(srecord::crc16::seed_mode_t seed_mode) -> int
 {
     switch (seed_mode)
     {
@@ -149,8 +149,8 @@ srecord::crc16::crc16(const crc16 &rhs) :
 }
 
 
-srecord::crc16 &
-srecord::crc16::operator=(const crc16 &rhs)
+auto
+srecord::crc16::operator=(const crc16 &rhs) -> srecord::crc16 &
 {
     if (this != &rhs)
     {
@@ -227,9 +227,9 @@ srecord::crc16::updcrc(unsigned char c, unsigned short state)
 // 'A Table-Driven Implementation', for an explanation.
 //
 
-inline unsigned short
+inline auto
 srecord::crc16::updcrc(unsigned char c, unsigned short state)
-    const
+    const -> unsigned short
 {
     if (bitdir == bit_direction_least_to_most)
     {
@@ -287,9 +287,9 @@ srecord::crc16::nextbuf(const void *data, size_t nbytes)
 }
 
 
-unsigned short
+auto
 srecord::crc16::get()
-    const
+    const -> unsigned short
 {
 #if (IMPL < IMPL_CH11)
     // The whole idea is that Ch.11 technique is "pre-augmented"
@@ -340,8 +340,8 @@ srecord::crc16::print_table()
 }
 
 
-int
-srecord::crc16::polynomial_by_name(const char *name)
+auto
+srecord::crc16::polynomial_by_name(const char *name) -> int
 {
     struct table_t
     {

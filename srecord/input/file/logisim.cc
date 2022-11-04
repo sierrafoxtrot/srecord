@@ -40,15 +40,15 @@ srecord::input_file_logisim::input_file_logisim(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_logisim::create(const std::string &a_file_name)
+auto
+srecord::input_file_logisim::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_logisim(a_file_name));
 }
 
 
-static std::string
-quote_char(int c)
+static auto
+quote_char(int c) -> std::string
 {
      if (c == EOF)
         return "EOF";
@@ -232,8 +232,8 @@ srecord::input_file_logisim::read_inner_job()
 }
 
 
-bool
-srecord::input_file_logisim::read(class record &rec)
+auto
+srecord::input_file_logisim::read(class record &rec) -> bool
 {
     for (;;)
     {
@@ -271,25 +271,25 @@ srecord::input_file_logisim::read(class record &rec)
 }
 
 
-const char *
+auto
 srecord::input_file_logisim::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Logisim";
 }
 
 
-int
+auto
 srecord::input_file_logisim::format_option_number()
-    const
+    const -> int
 {
     return srecord::arglex_tool::token_logisim;
 }
 
 
-std::string
+auto
 srecord::input_file_logisim::datum_t::representation()
-    const
+    const -> std::string
 {
     char buffer[200];
     snprintf

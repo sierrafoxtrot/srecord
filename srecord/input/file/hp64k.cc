@@ -62,8 +62,8 @@ srecord::input_file_hp64k::input_file_hp64k(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_hp64k::create(const std::string &a_file_name)
+auto
+srecord::input_file_hp64k::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_hp64k(a_file_name));
 }
@@ -76,8 +76,8 @@ srecord::input_file_hp64k::command_line(arglex_tool *cmdln)
     //TODO : don't expect the redundant recsize field?
 }
 
-bool
-srecord::input_file_hp64k::read_u16be(uint16_t *dest)
+auto
+srecord::input_file_hp64k::read_u16be(uint16_t *dest) -> bool
 {
     uint16_t tmp;
     int c = get_char();
@@ -94,8 +94,8 @@ srecord::input_file_hp64k::read_u16be(uint16_t *dest)
 
 //in this implementation, read_datarec is called at the "recsize" position,
 //i.e. 2 bytes before the actual data record.
-bool
-srecord::input_file_hp64k::read_datarec(record &result)
+auto
+srecord::input_file_hp64k::read_datarec(record &result) -> bool
 {
     uint16_t recsize, datasize;
     uint16_t load_l, load_h;
@@ -155,8 +155,8 @@ srecord::input_file_hp64k::read_datarec(record &result)
 
 #define HP64_MAGIC 0x8204U  //file signature, before header
 #define HP64_HDRLEN 16      //8 words
-bool
-srecord::input_file_hp64k::read_hdr(record &result)
+auto
+srecord::input_file_hp64k::read_hdr(record &result) -> bool
 {
     uint16_t magic;
     if (!read_u16be(&magic))
@@ -193,8 +193,8 @@ srecord::input_file_hp64k::read_hdr(record &result)
 }
 
 #define PIR_LEN 8
-bool
-srecord::input_file_hp64k::read_pir(record &result)
+auto
+srecord::input_file_hp64k::read_pir(record &result) -> bool
 {
     uint16_t pirlen, width, base, xfer_l, xfer_h;
     uint32_t xfer;
@@ -230,8 +230,8 @@ srecord::input_file_hp64k::read_pir(record &result)
 }
 
 
-bool
-srecord::input_file_hp64k::read(record &record)
+auto
+srecord::input_file_hp64k::read(record &record) -> bool
 {
     switch (state)
     {
@@ -266,24 +266,24 @@ srecord::input_file_hp64k::read(record &record)
     return true;
 }
 
-bool
+auto
 srecord::input_file_hp64k::is_binary()
-    const
+    const -> bool
 {
     return true;
 }
 
-const char *
+auto
 srecord::input_file_hp64k::get_file_format_name()
-    const
+    const -> const char *
 {
     return "HP64000 Absolute";
 }
 
 
-int
+auto
 srecord::input_file_hp64k::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_hp64k;
 }

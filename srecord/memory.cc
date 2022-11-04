@@ -46,8 +46,8 @@ srecord::memory::memory(const srecord::memory &rhs) :
 }
 
 
-srecord::memory &
-srecord::memory::operator=(const srecord::memory &rhs)
+auto
+srecord::memory::operator=(const srecord::memory &rhs) -> srecord::memory &
 {
     if (&rhs != this)
     {
@@ -110,9 +110,9 @@ srecord::memory::copy(const srecord::memory &rhs)
 }
 
 
-srecord::memory_chunk *
+auto
 srecord::memory::find(unsigned long address)
-    const
+    const -> srecord::memory_chunk *
 {
     //
     // Speed things up if we've been there recently.
@@ -179,9 +179,9 @@ srecord::memory::set(unsigned long address, int datum)
 }
 
 
-int
+auto
 srecord::memory::get(unsigned long address)
-    const
+    const -> int
 {
     unsigned long address_hi = address / srecord::memory_chunk::size;
     unsigned long address_lo = address % srecord::memory_chunk::size;
@@ -190,9 +190,9 @@ srecord::memory::get(unsigned long address)
 }
 
 
-bool
+auto
 srecord::memory::set_p(unsigned long address)
-    const
+    const -> bool
 {
     unsigned long address_hi = address / srecord::memory_chunk::size;
     unsigned long address_lo = address % srecord::memory_chunk::size;
@@ -201,8 +201,8 @@ srecord::memory::set_p(unsigned long address)
 }
 
 
-bool
-srecord::memory::equal(const srecord::memory &lhs, const srecord::memory &rhs)
+auto
+srecord::memory::equal(const srecord::memory &lhs, const srecord::memory &rhs) -> bool
 {
     if (lhs.nchunks != rhs.nchunks)
         return false;
@@ -214,8 +214,8 @@ srecord::memory::equal(const srecord::memory &lhs, const srecord::memory &rhs)
 
 
 
-bool
-srecord::memory::compare(const srecord::memory &lhs, const srecord::memory &rhs)
+auto
+srecord::memory::compare(const srecord::memory &lhs, const srecord::memory &rhs) -> bool
 {
     srecord::memory_walker_compare::pointer wlhs =
         srecord::memory_walker_compare::create(rhs, true);
@@ -229,9 +229,9 @@ srecord::memory::compare(const srecord::memory &lhs, const srecord::memory &rhs)
 }
 
 
-unsigned long
+auto
 srecord::memory::get_lower_bound()
-    const
+    const -> unsigned long
 {
     if (nchunks == 0)
         return 0;
@@ -239,9 +239,9 @@ srecord::memory::get_lower_bound()
 }
 
 
-unsigned long
+auto
 srecord::memory::get_upper_bound()
-    const
+    const -> unsigned long
 {
     if (nchunks == 0)
         return 0;
@@ -374,23 +374,23 @@ srecord::memory::reader(const srecord::input::pointer &ifp,
 }
 
 
-bool
-operator == (const srecord::memory &lhs, const srecord::memory &rhs)
+auto
+operator == (const srecord::memory &lhs, const srecord::memory &rhs) -> bool
 {
     return srecord::memory::equal(lhs, rhs);
 }
 
 
-bool
-operator != (const srecord::memory &lhs, const srecord::memory &rhs)
+auto
+operator != (const srecord::memory &lhs, const srecord::memory &rhs) -> bool
 {
     return !srecord::memory::equal(lhs, rhs);
 }
 
 
-srecord::memory_chunk *
+auto
 srecord::memory::find_next_chunk(unsigned long address)
-    const
+    const -> srecord::memory_chunk *
 {
     //
     // This method is generally called sequentially, to visit each
@@ -419,9 +419,9 @@ srecord::memory::find_next_chunk(unsigned long address)
 }
 
 
-bool
+auto
 srecord::memory::find_next_data(unsigned long &address, void *data,
-    size_t &nbytes) const
+    size_t &nbytes) const -> bool
 {
     unsigned long address_hi = address / srecord::memory_chunk::size;
     for (;;)
@@ -437,9 +437,9 @@ srecord::memory::find_next_data(unsigned long &address, void *data,
 }
 
 
-srecord::record *
+auto
 srecord::memory::get_header()
-    const
+    const -> srecord::record *
 {
     return header;
 }
@@ -466,9 +466,9 @@ srecord::memory::set_header(const std::string &text)
 }
 
 
-srecord::record *
+auto
 srecord::memory::get_execution_start_address()
-    const
+    const -> srecord::record *
 {
     return execution_start_address;
 }
@@ -489,9 +489,9 @@ srecord::memory::set_execution_start_address(unsigned long addr)
 }
 
 
-bool
+auto
 srecord::memory::has_holes()
-    const
+    const -> bool
 {
     srecord::memory_walker_continuity::pointer sniffer =
         srecord::memory_walker_continuity::create();
@@ -500,9 +500,9 @@ srecord::memory::has_holes()
 }
 
 
-bool
+auto
 srecord::memory::is_well_aligned(unsigned multiple)
-    const
+    const -> bool
 {
     if (multiple < 2)
         return true;

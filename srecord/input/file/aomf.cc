@@ -50,8 +50,8 @@
 #define O96_Res_Type_32                         0x32
 #define O96_Max_Rec_Type                        0x32
 
-static const char *
-o96name(int x)
+static auto
+o96name(int x) -> const char *
 {
     switch (x)
     {
@@ -127,15 +127,15 @@ srecord::input_file_aomf::input_file_aomf(const std::string &a_filename) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_aomf::create(const std::string &a_filename)
+auto
+srecord::input_file_aomf::create(const std::string &a_filename) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_aomf(a_filename));
 }
 
 
-int
-srecord::input_file_aomf::get_byte()
+auto
+srecord::input_file_aomf::get_byte() -> int
 {
     int c = get_char();
     if (c < 0)
@@ -145,8 +145,8 @@ srecord::input_file_aomf::get_byte()
 }
 
 
-int
-srecord::input_file_aomf::slurp()
+auto
+srecord::input_file_aomf::slurp() -> int
 {
     current_pos = 0;
     current_length = 0;
@@ -176,8 +176,8 @@ srecord::input_file_aomf::slurp()
 }
 
 
-bool
-srecord::input_file_aomf::read(srecord::record &record)
+auto
+srecord::input_file_aomf::read(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -280,25 +280,25 @@ srecord::input_file_aomf::read(srecord::record &record)
 }
 
 
-bool
+auto
 srecord::input_file_aomf::is_binary()
-    const
+    const -> bool
 {
     return true;
 }
 
 
-const char *
+auto
 srecord::input_file_aomf::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Intel Absolute Object Module Format (AOMF)";
 }
 
 
-int
+auto
 srecord::input_file_aomf::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_aomf;
 }

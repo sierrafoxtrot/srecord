@@ -77,12 +77,12 @@ public:
       *     wider, it is assumed that they are aligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    static pointer create(const input::pointer &deeper, int address, int length,
-        endian_t end, int width = 1);
+    static auto create(const input::pointer &deeper, int address, int length,
+        endian_t end, int width = 1) -> pointer;
 
 protected:
     // See base class for document.
-    sum_t calculate() override;
+    auto calculate() -> sum_t override;
 
 private:
     /**
@@ -98,8 +98,8 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_checksum_negative &operator=(
-        const input_filter_checksum_negative &) = delete;
+    auto operator=(
+        const input_filter_checksum_negative &) -> input_filter_checksum_negative & = delete;
 };
 
 };

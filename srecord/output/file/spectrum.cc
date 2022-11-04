@@ -36,8 +36,8 @@ srecord::output_file_spectrum::output_file_spectrum(
 }
 
 
-srecord::output::pointer
-srecord::output_file_spectrum::create(const std::string &a_file_name)
+auto
+srecord::output_file_spectrum::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_spectrum(a_file_name));
 }
@@ -107,24 +107,24 @@ srecord::output_file_spectrum::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_spectrum::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_spectrum::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes == 1);
 }
 
 
-int
+auto
 srecord::output_file_spectrum::preferred_block_size_get()
-    const
+    const -> int
 {
     return srecord::record::max_data_length;
 }
 
 
-const char *
+auto
 srecord::output_file_spectrum::format_name()
-    const
+    const -> const char *
 {
     return "Spectrum";
 }

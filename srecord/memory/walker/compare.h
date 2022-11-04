@@ -74,7 +74,7 @@ public:
       *     Whether or not to check that the data agrees as well as the
       *     address ranges.
       */
-    static pointer create(const memory &other, bool check_wrong);
+    static auto create(const memory &other, bool check_wrong) -> pointer;
 
     // See base class for documentation.
     void observe(unsigned long, const void *, int) override;
@@ -92,7 +92,7 @@ public:
       * The same method is used to discover whether the result of the
       * comparison indicate that the two memory instances are the same.
       */
-    bool same() const;
+    auto same() const -> bool;
 
 private:
     /**
@@ -134,7 +134,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_compare &operator=(const memory_walker_compare &) = delete;
+    auto operator=(const memory_walker_compare &) -> memory_walker_compare & = delete;
 };
 
 };

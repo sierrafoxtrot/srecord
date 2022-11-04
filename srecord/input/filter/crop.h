@@ -62,11 +62,11 @@ public:
       *     The address range to be preserved.  The rest will be
       *     ignored.
       */
-    static pointer create(const input::pointer &deeper, const interval &range);
+    static auto create(const input::pointer &deeper, const interval &range) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -100,7 +100,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_crop &operator=(const input_filter_crop &) = delete;
+    auto operator=(const input_filter_crop &) -> input_filter_crop & = delete;
 };
 
 };

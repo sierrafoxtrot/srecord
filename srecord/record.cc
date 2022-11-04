@@ -68,8 +68,8 @@ srecord::record::record(type_t a1, address_t a2, const data_t *a3, size_t a4) :
 }
 
 
-srecord::record &
-srecord::record::operator=(const srecord::record &arg)
+auto
+srecord::record::operator=(const srecord::record &arg) -> srecord::record &
 {
     if (this != &arg)
     {
@@ -87,8 +87,8 @@ srecord::record::~record()
 = default;
 
 
-size_t
-srecord::record::maximum_data_length(address_t address)
+auto
+srecord::record::maximum_data_length(address_t address) -> size_t
 {
     // FIXME: this is format specific
     if (address < ((address_t)1 << 16))
@@ -99,8 +99,8 @@ srecord::record::maximum_data_length(address_t address)
 }
 
 
-srecord::record::address_t
-srecord::record::decode_big_endian(const data_t *buffer, size_t length)
+auto
+srecord::record::decode_big_endian(const data_t *buffer, size_t length) -> srecord::record::address_t
 {
     assert(length <= sizeof(address_t));
     address_t result = 0;
@@ -110,8 +110,8 @@ srecord::record::decode_big_endian(const data_t *buffer, size_t length)
 }
 
 
-srecord::record::address_t
-srecord::record::decode_little_endian(const data_t *buffer, size_t length)
+auto
+srecord::record::decode_little_endian(const data_t *buffer, size_t length) -> srecord::record::address_t
 {
     assert(length <= sizeof(address_t));
     address_t result = 0;
@@ -153,9 +153,9 @@ srecord::record::encode_little_endian(data_t *buffer, address_t value,
 }
 
 
-bool
+auto
 srecord::record::is_all_zero()
-    const
+    const -> bool
 {
     for (size_t j = 0; j < length; ++j)
         if (data[j])
@@ -177,9 +177,9 @@ srecord::record::set_data_extend(size_t n, data_t d)
 }
 
 
-bool
+auto
 srecord::record::address_range_fits_into_n_bits(unsigned nbits)
-    const
+    const -> bool
 {
     assert(nbits > 0);
     assert(nbits <= 32);

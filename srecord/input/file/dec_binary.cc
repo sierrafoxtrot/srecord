@@ -33,15 +33,15 @@ srecord::input_file_dec_binary::input_file_dec_binary(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_dec_binary::create(const std::string &a_file_name)
+auto
+srecord::input_file_dec_binary::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_dec_binary(a_file_name));
 }
 
 
-bool
-srecord::input_file_dec_binary::skip_nul()
+auto
+srecord::input_file_dec_binary::skip_nul() -> bool
 {
     for (;;)
     {
@@ -55,8 +55,8 @@ srecord::input_file_dec_binary::skip_nul()
 }
 
 
-int
-srecord::input_file_dec_binary::get_byte()
+auto
+srecord::input_file_dec_binary::get_byte() -> int
 {
     int c = get_char();
     if (c < 0)
@@ -66,8 +66,8 @@ srecord::input_file_dec_binary::get_byte()
 }
 
 
-bool
-srecord::input_file_dec_binary::read(srecord::record &record)
+auto
+srecord::input_file_dec_binary::read(srecord::record &record) -> bool
 {
     //
     // The records in the file are much larger than SRecord usually
@@ -143,25 +143,25 @@ srecord::input_file_dec_binary::read(srecord::record &record)
 }
 
 
-bool
+auto
 srecord::input_file_dec_binary::is_binary()
-    const
+    const -> bool
 {
     return true;
 }
 
 
-const char *
+auto
 srecord::input_file_dec_binary::get_file_format_name()
-    const
+    const -> const char *
 {
     return "DEC Binary (XXDP)";
 }
 
 
-int
+auto
 srecord::input_file_dec_binary::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_dec_binary;
 }

@@ -21,8 +21,8 @@
 #include <srecord/string.h>
 
 
-static bool
-unhex_nibble(char c, int &result)
+static auto
+unhex_nibble(char c, int &result) -> bool
 {
     switch (c)
     {
@@ -45,8 +45,8 @@ unhex_nibble(char c, int &result)
 }
 
 
-static bool
-unhex_byte(const char *text, char &retval)
+static auto
+unhex_byte(const char *text, char &retval) -> bool
 {
     int c1 = 0;
     if (!unhex_nibble(text[0], c1))
@@ -59,8 +59,8 @@ unhex_byte(const char *text, char &retval)
 }
 
 
-std::string
-srecord::string_url_decode(const std::string &text)
+auto
+srecord::string_url_decode(const std::string &text) -> std::string
 {
     const char *begin = text.c_str();
     const char *cur = begin;

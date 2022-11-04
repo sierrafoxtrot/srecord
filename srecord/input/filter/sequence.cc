@@ -34,15 +34,15 @@ srecord::input_filter_sequence::input_filter_sequence(
 }
 
 
-srecord::input::pointer
-srecord::input_filter_sequence::create(srecord::input::pointer arg)
+auto
+srecord::input_filter_sequence::create(srecord::input::pointer arg) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_sequence(arg));
 }
 
 
-bool
-srecord::input_filter_sequence::read(srecord::record &record)
+auto
+srecord::input_filter_sequence::read(srecord::record &record) -> bool
 {
     if (!srecord::input_filter::read(record))
         return false;

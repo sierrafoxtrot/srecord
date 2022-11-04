@@ -33,15 +33,15 @@ srecord::input_filter_bitrev::input_filter_bitrev(
 }
 
 
-srecord::input::pointer
-srecord::input_filter_bitrev::create(const srecord::input::pointer &a_deeper)
+auto
+srecord::input_filter_bitrev::create(const srecord::input::pointer &a_deeper) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_bitrev(a_deeper));
 }
 
 
-bool
-srecord::input_filter_bitrev::read(srecord::record &record)
+auto
+srecord::input_filter_bitrev::read(srecord::record &record) -> bool
 {
     if (!srecord::input_filter::read(record))
         return false;

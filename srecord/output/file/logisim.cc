@@ -43,8 +43,8 @@ srecord::output_file_logisim::output_file_logisim(
 }
 
 
-srecord::output::pointer
-srecord::output_file_logisim::create(const std::string &a_file_name)
+auto
+srecord::output_file_logisim::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_logisim(a_file_name));
 }
@@ -152,17 +152,17 @@ srecord::output_file_logisim::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_logisim::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_logisim::preferred_block_size_set(int nbytes) -> bool
 {
     (void)nbytes;
     return false;
 }
 
 
-int
+auto
 srecord::output_file_logisim::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -171,9 +171,9 @@ srecord::output_file_logisim::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_logisim::format_name()
-    const
+    const -> const char *
 {
     return "Logisim";
 }

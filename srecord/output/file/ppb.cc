@@ -43,8 +43,8 @@ srecord::output_file_ppb::output_file_ppb(
 }
 
 
-srecord::output::pointer
-srecord::output_file_ppb::create(const std::string &a_file_name)
+auto
+srecord::output_file_ppb::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_ppb(a_file_name));
 }
@@ -96,8 +96,8 @@ srecord::output_file_ppb::line_length_set(int)
 }
 
 
-bool
-srecord::output_file_ppb::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_ppb::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes >= 2 && nbytes <= record::max_data_length);
 }
@@ -110,18 +110,18 @@ srecord::output_file_ppb::address_length_set(int)
 }
 
 
-int
+auto
 srecord::output_file_ppb::preferred_block_size_get()
-    const
+    const -> int
 {
     // Use the largest we can get.
     return srecord::record::max_data_length;
 }
 
 
-const char *
+auto
 srecord::output_file_ppb::format_name()
-    const
+    const -> const char *
 {
     return "Stag Prom Programmer Binary";
 }
@@ -137,8 +137,8 @@ srecord::output_file_ppb::put_bin_4be(unsigned long value)
 }
 
 
-unsigned char
-srecord::output_file_ppb::sum_ulong(unsigned long value, unsigned char sum)
+auto
+srecord::output_file_ppb::sum_ulong(unsigned long value, unsigned char sum) -> unsigned char
 {
     sum += (value >> 24);
     sum += (value >> 16);
@@ -185,9 +185,9 @@ srecord::output_file_ppb::buffer_flush()
 }
 
 
-bool
+auto
 srecord::output_file_ppb::is_binary()
-    const
+    const -> bool
 {
     return true;
 }

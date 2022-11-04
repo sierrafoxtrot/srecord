@@ -61,7 +61,7 @@ public:
       * @returns
       *     bool; true if data was read, false if at end-of-file
       */
-    virtual bool read(class record &rec) = 0;
+    virtual auto read(class record &rec) -> bool = 0;
 
     /**
       * The fatal_error method is used to report problems parsing
@@ -103,7 +103,7 @@ public:
       * The filename method is used to get the name of the input file
       * being processed.  Derived classes must supply this method.
       */
-    virtual std::string filename() const = 0;
+    virtual auto filename() const -> std::string = 0;
 
     /**
       * The filename_and_line method is used to get the name
@@ -111,14 +111,14 @@ public:
       * implementation simply calls the filename method and returns
       * that.  Text formats should be cleverer.
       */
-    virtual std::string filename_and_line() const;
+    virtual auto filename_and_line() const -> std::string;
 
     /**
       * The get_file_format_name method is used to find out the name
       * of the file format being read.  Derived classes must supply
       * this method.
       */
-    virtual const char *get_file_format_name() const = 0;
+    virtual auto get_file_format_name() const -> const char * = 0;
 
     /**
       * The set_quit method is used to set the disposition of the
@@ -175,7 +175,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input &operator=(const input &) = delete;
+    auto operator=(const input &) -> input & = delete;
 };
 
 };

@@ -29,8 +29,8 @@ srecord::memory_walker_adler16::memory_walker_adler16()
 = default;
 
 
-srecord::memory_walker_adler16::pointer
-srecord::memory_walker_adler16::create()
+auto
+srecord::memory_walker_adler16::create() -> srecord::memory_walker_adler16::pointer
 {
     return pointer(new srecord::memory_walker_adler16());
 }
@@ -44,9 +44,9 @@ srecord::memory_walker_adler16::observe(unsigned long, const void *data,
 }
 
 
-unsigned
+auto
 srecord::memory_walker_adler16::get()
-    const
+    const -> unsigned
 {
     return checksum.get();
 }

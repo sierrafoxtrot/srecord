@@ -61,8 +61,8 @@ srecord::output_file_mips_flash::output_file_mips_flash(
 }
 
 
-srecord::output::pointer
-srecord::output_file_mips_flash::create_le(const std::string &a_file_name)
+auto
+srecord::output_file_mips_flash::create_le(const std::string &a_file_name) -> srecord::output::pointer
 {
     return
         pointer
@@ -72,8 +72,8 @@ srecord::output_file_mips_flash::create_le(const std::string &a_file_name)
 }
 
 
-srecord::output::pointer
-srecord::output_file_mips_flash::create_be(const std::string &a_file_name)
+auto
+srecord::output_file_mips_flash::create_be(const std::string &a_file_name) -> srecord::output::pointer
 {
     return
         pointer
@@ -246,9 +246,9 @@ srecord::output_file_mips_flash::address_length_set(int)
 }
 
 
-int
+auto
 srecord::output_file_mips_flash::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -258,17 +258,17 @@ srecord::output_file_mips_flash::preferred_block_size_get()
 }
 
 
-bool
-srecord::output_file_mips_flash::preferred_block_size_set(int n)
+auto
+srecord::output_file_mips_flash::preferred_block_size_set(int n) -> bool
 {
     // Irrelevant.
     return ((n & 3) == 0);
 }
 
 
-const char *
+auto
 srecord::output_file_mips_flash::format_name()
-    const
+    const -> const char *
 {
     return
         (

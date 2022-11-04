@@ -42,16 +42,16 @@ public:
     ~input_filter() override;
 
     // See base class for documentation.
-    bool read(class record &record) override;
+    auto read(class record &record) -> bool override;
 
     // See base class for documentation.
-    std::string filename() const override;
+    auto filename() const -> std::string override;
 
     // See base class for documentation.
-    std::string filename_and_line() const override;
+    auto filename_and_line() const -> std::string override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
     void disable_checksum_validation() override;
@@ -86,7 +86,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter &operator=(const input_filter &) = delete;
+    auto operator=(const input_filter &) -> input_filter & = delete;
 };
 
 };

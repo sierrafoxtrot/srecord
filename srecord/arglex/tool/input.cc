@@ -93,9 +93,9 @@
 #include <srecord/input/interval.h>
 
 
-srecord::endian_t
+auto
 srecord::arglex_tool::get_endian_by_token(int tok)
-    const
+    const -> srecord::endian_t
 {
     switch (tok)
     {
@@ -157,9 +157,9 @@ srecord::arglex_tool::get_endian_by_token(int tok)
 }
 
 
-bool
+auto
 srecord::arglex_tool::get_inclusive_by_token(int tok)
-    const
+    const -> bool
 {
     switch (tok)
     {
@@ -196,8 +196,8 @@ srecord::arglex_tool::get_inclusive_by_token(int tok)
 }
 
 
-srecord::input::pointer
-srecord::arglex_tool::get_simple_input()
+auto
+srecord::arglex_tool::get_simple_input() -> srecord::input::pointer
 {
     std::string fn = "-";
     input::pointer ifp;
@@ -513,8 +513,8 @@ srecord::arglex_tool::get_simple_input()
 }
 
 
-srecord::input::pointer
-srecord::arglex_tool::get_input()
+auto
+srecord::arglex_tool::get_input() -> srecord::input::pointer
 {
     input::pointer ifp = get_simple_input();
 

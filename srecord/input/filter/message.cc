@@ -38,16 +38,16 @@ srecord::input_filter_message::input_filter_message(
 }
 
 
-unsigned
+auto
 srecord::input_filter_message::get_minimum_alignment()
-    const
+    const -> unsigned
 {
     return 0;
 }
 
 
-bool
-srecord::input_filter_message::read(record &result)
+auto
+srecord::input_filter_message::read(record &result) -> bool
 {
     //
     // If we haven't read the deeper input yet, read all of it into

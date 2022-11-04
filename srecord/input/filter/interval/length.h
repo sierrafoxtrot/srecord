@@ -78,12 +78,12 @@ public:
       *     true if the output location is included in the address
       *     range, false if not
       */
-    static pointer create(const input::pointer &deeper, long address,
-        int length, endian_t end, int width, bool inclusive);
+    static auto create(const input::pointer &deeper, long address,
+        int length, endian_t end, int width, bool inclusive) -> pointer;
 
 protected:
     // See base class for documentation.
-    long calculate_result() const override;
+    auto calculate_result() const -> long override;
 
 private:
     /**
@@ -104,8 +104,8 @@ private:
     /**
       * The assignment operator.
       */
-    input_filter_interval_length &operator=(
-        const input_filter_interval_length &) = delete;
+    auto operator=(
+        const input_filter_interval_length &) -> input_filter_interval_length & = delete;
 };
 
 };

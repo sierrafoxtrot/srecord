@@ -38,7 +38,7 @@ enum endian_t
   * @returns
   *     a C string
   */
-const char *endian_to_string(endian_t x);
+auto endian_to_string(endian_t x) -> const char *;
 
 /**
   * The decode_word_be function is used to decode a big-endian 2-byte
@@ -47,7 +47,7 @@ const char *endian_to_string(endian_t x);
   * @param data
   *     The data to be decoded
   */
-unsigned short decode_word_be(const unsigned char *data);
+auto decode_word_be(const unsigned char *data) -> unsigned short;
 
 /**
   * The decode_word_le function is used to decode a little-endian 2-byte
@@ -56,7 +56,7 @@ unsigned short decode_word_be(const unsigned char *data);
   * @param data
   *     The data to be decoded
   */
-unsigned short decode_word_le(const unsigned char *data);
+auto decode_word_le(const unsigned char *data) -> unsigned short;
 
 /**
   * The decode_word_le function is used to decode a little-endian 2-byte
@@ -67,7 +67,7 @@ unsigned short decode_word_le(const unsigned char *data);
   * @param order
   *     The order of the bytes to be decoded.
   */
-unsigned short endian_decode_word(const unsigned char *data, endian_t order);
+auto endian_decode_word(const unsigned char *data, endian_t order) -> unsigned short;
 
 };
 

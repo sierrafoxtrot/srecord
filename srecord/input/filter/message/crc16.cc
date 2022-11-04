@@ -42,9 +42,9 @@ srecord::input_filter_message_crc16::input_filter_message_crc16(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_message_crc16::create(const input::pointer &a_deeper,
-    unsigned long a_address, endian_t a_end)
+    unsigned long a_address, endian_t a_end) -> srecord::input::pointer
 {
     return
         pointer
@@ -160,9 +160,9 @@ srecord::input_filter_message_crc16::process(const memory &buffer,
 }
 
 
-const char *
+auto
 srecord::input_filter_message_crc16::get_algorithm_name()
-    const
+    const -> const char *
 {
     return "CRC16";
 }

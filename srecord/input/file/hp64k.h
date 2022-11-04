@@ -46,20 +46,20 @@ public:
      * @returns
      *     smart pointer to new instance
      */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
     void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -71,7 +71,7 @@ private:
     input_file_hp64k(const std::string &file_name);
 
     // See base class for documentation.
-    bool is_binary() const override;
+    auto is_binary() const -> bool override;
 
     /**
      * Number of parsed data records
@@ -79,16 +79,16 @@ private:
     unsigned long rec_count;
 
     /** Helper function: read two bytes, big-endian. Ret 1 if ok */
-    bool read_u16be(uint16_t *dest);
+    auto read_u16be(uint16_t *dest) -> bool;
 
     /** Read one data record. */
-    bool read_datarec(record &);
+    auto read_datarec(record &) -> bool;
 
     /** Read file magic and header */
-    bool read_hdr(record &);
+    auto read_hdr(record &) -> bool;
 
     /** Read Processor Information Record (PIR) */
-    bool read_pir(record &);
+    auto read_pir(record &) -> bool;
 
     /**
      * Parsing state. Files always have header, then PIR, then data records.
@@ -108,7 +108,7 @@ private:
     /**
      * The assignment operator.  Do not use.
      */
-    input_file_hp64k &operator=(const input_file_hp64k &) = delete;
+    auto operator=(const input_file_hp64k &) -> input_file_hp64k & = delete;
 };
 
 };

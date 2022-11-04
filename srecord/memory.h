@@ -52,7 +52,7 @@ public:
     /**
       * The assignment operator.
       */
-    memory &operator=(const memory &);
+    auto operator=(const memory &) -> memory &;
 
     /**
       * The destructor.
@@ -80,7 +80,7 @@ public:
       * the memory_chunk::get method, to get the byte within
       * the chunk.
       */
-    int get(unsigned long address) const;
+    auto get(unsigned long address) const -> int;
 
     /**
       * The set_p method is used to determine whether the byte at
@@ -91,7 +91,7 @@ public:
       * the memory_chunk::set_p method, to get the status of
       * the byte within the chunk.
       */
-    bool set_p(unsigned long address) const;
+    auto set_p(unsigned long address) const -> bool;
 
     /**
       * The walk method is used to apply a memory_walker derived
@@ -128,14 +128,14 @@ public:
       * The equal method may be used to determine if two memory
       * instances are equal.
       */
-    static bool equal(const memory &, const memory &);
+    static auto equal(const memory &, const memory &) -> bool;
 
     /**
       * The compare method may be used to determine if two memory
       * instances are equal.  Verbose messages concerning the exact
       * differences are printed if they are not equal.
       */
-    static bool compare(const memory &, const memory &);
+    static auto compare(const memory &, const memory &) -> bool;
 
     /**
       * The find_next_data method may be used to locate data at or
@@ -149,15 +149,15 @@ public:
       *
       * Calls the find_next_chunk() method.
       */
-    bool find_next_data(unsigned long &address, void *data,
-        size_t &nbytes) const;
+    auto find_next_data(unsigned long &address, void *data,
+        size_t &nbytes) const -> bool;
 
     /**
       * The get_header method is used to determine the value of the
       * header record set by either the reader() or set_header()
       * methods.  If neither has set a header, a NULL is returned.
       */
-    record *get_header() const;
+    auto get_header() const -> record *;
 
     /**
       * The set_header method may be used to set the header command.
@@ -175,7 +175,7 @@ public:
       * reader() or set_execution_start_address() methods.  If neither
       * has set an execution start address, NULL is returned.
       */
-    record *get_execution_start_address() const;
+    auto get_execution_start_address() const -> record *;
 
     /**
       * The set_execution_start_address method may be used to set the
@@ -192,19 +192,19 @@ public:
       *     one hole), false if the memory data is continuous (has no
       *     holes).
       */
-    bool has_holes() const;
+    auto has_holes() const -> bool;
 
     /**
       * The get_lower_bound method is used to obtain the lower bound
       * (lowest address) of the memory image.
       */
-    unsigned long get_lower_bound() const;
+    auto get_lower_bound() const -> unsigned long;
 
     /**
       * The get_upper_bound method is used to obtain the upper bound
       * (maximum address plus one) of the memory image.
       */
-    unsigned long get_upper_bound() const;
+    auto get_upper_bound() const -> unsigned long;
 
    /**
       * The is_well_aligned method is used to test whether or not
@@ -218,15 +218,15 @@ public:
       *     This isn't about holes, it's about the beginnings and
       *     endings of each consecutive run of bytes.
       */
-    bool is_well_aligned(unsigned multiple) const;
+    auto is_well_aligned(unsigned multiple) const -> bool;
 
     /**
       * The empty method is used to determine whether or not this memory
       * image has no data in it.
       */
-    bool
+    auto
     empty()
-        const
+        const -> bool
     {
         return (nchunks == 0);
     }
@@ -259,7 +259,7 @@ private:
       *
       * Called by the get(), set() and set_p() methods.
       */
-    memory_chunk *find(unsigned long address) const;
+    auto find(unsigned long address) const -> memory_chunk *;
 
     /**
       * The cache instance variable is used to accelerate the find()
@@ -273,7 +273,7 @@ private:
       * byte, in cases where the walk() method is not appropriate.
       * Called by the find_next_data() method.
       */
-    memory_chunk *find_next_chunk(unsigned long) const;
+    auto find_next_chunk(unsigned long) const -> memory_chunk *;
 
     /**
       * The find_next_chunk_index instance variable is used by
@@ -316,12 +316,12 @@ private:
   * The equality operator.  Used to test if two srecord::memory objects
   * are equal.  Calls the srecord::memory::equal() method.
   */
-bool operator == (const srecord::memory &, const srecord::memory &);
+auto operator == (const srecord::memory &, const srecord::memory &) -> bool;
 
 /**
   * The inequality operator.  Used to test if two srecord::memory objects
   * are not equal.  Calls the srecord::memory::equal() method.
   */
-bool operator != (const srecord::memory &, const srecord::memory &);
+auto operator != (const srecord::memory &, const srecord::memory &) -> bool;
 
 #endif // SRECORD_MEMORY_H

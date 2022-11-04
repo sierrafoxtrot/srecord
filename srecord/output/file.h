@@ -55,7 +55,7 @@ public:
     output_file(std::string file_name);
 
     // See base class for documentation.
-    const std::string filename() const override;
+    auto filename() const -> const std::string override;
 
     /**
       * The enable_header class method is used to enable or disable
@@ -111,7 +111,7 @@ public:
       *     true if name understood, false if not (to trigger diagnostic
       *     error message)
       */
-    static bool enable_by_name(const std::string &name, bool yesno);
+    static auto enable_by_name(const std::string &name, bool yesno) -> bool;
 
     /**
       * The line_termination_by_name method is used to force line
@@ -124,7 +124,7 @@ public:
       * @returns
       *     true if successful, false if name unknown
       */
-    static bool line_termination_by_name(const std::string &name);
+    static auto line_termination_by_name(const std::string &name) -> bool;
 
 protected:
     /**
@@ -224,7 +224,7 @@ protected:
       * called by the #put_byte method).  Only the lower 8 bits of the
       * sum are returned.
       */
-    int checksum_get();
+    auto checksum_get() -> int;
 
     /**
       * The checksum_get16 method is used to get the current value of
@@ -232,7 +232,7 @@ protected:
       * usually called by the #put_byte method).  Only the lower 16
       * bits of the sum are returned.
       */
-    int checksum_get16();
+    auto checksum_get16() -> int;
 
     /**
       * The seek_to method is used to move the output position to the
@@ -331,7 +331,7 @@ protected:
       * The line_termination_guess class method is used to figure out
       * the line termination style of the host environment.
       */
-    static line_termination_t line_termination_guess();
+    static auto line_termination_guess() -> line_termination_t;
 
 private:
     /**
@@ -428,14 +428,14 @@ private:
       * If the file has not been opened yet, it will be opened by this
       * method.
       */
-    void *get_fp();
+    auto get_fp() -> void *;
 
     /**
       * The is_binary method is used to to determine whether or not
       * a file format is binary (true) of text (false).  The default
       * implementation always returns false (text).
       */
-    virtual bool is_binary() const;
+    virtual auto is_binary() const -> bool;
 
     /**
       * The copy constructor.  Do not use.
@@ -445,7 +445,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    output_file &operator=(const output_file &);
+    auto operator=(const output_file &) -> output_file &;
 };
 
 };

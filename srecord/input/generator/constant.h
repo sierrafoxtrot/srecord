@@ -49,17 +49,17 @@ public:
       * The create class method is used to create new dynamically
       * allocated instances of this class.
       */
-    static pointer create(const interval &range, unsigned char datum);
+    static auto create(const interval &range, unsigned char datum) -> pointer;
 
 protected:
     // See base class for documentation.
-    std::string filename() const override;
+    auto filename() const -> std::string override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    unsigned char generate_data(unsigned long address) override;
+    auto generate_data(unsigned long address) -> unsigned char override;
 
 private:
     /**
@@ -81,7 +81,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_generator_constant &operator=(const input_generator_constant &) = delete;
+    auto operator=(const input_generator_constant &) -> input_generator_constant & = delete;
 };
 
 };

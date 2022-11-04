@@ -35,8 +35,8 @@ srecord::input_file_idt::input_file_idt(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_idt::create(const std::string &a_file_name)
+auto
+srecord::input_file_idt::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_idt(a_file_name));
 }
@@ -49,8 +49,8 @@ srecord::input_file_idt::record_format_error()
 }
 
 
-bool
-srecord::input_file_idt::read_inner(record &result)
+auto
+srecord::input_file_idt::read_inner(record &result) -> bool
 {
     int c = get_char();
     if (c < 0)
@@ -172,8 +172,8 @@ srecord::input_file_idt::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_idt::read(record &record)
+auto
+srecord::input_file_idt::read(record &record) -> bool
 {
     for (;;)
     {
@@ -240,25 +240,25 @@ srecord::input_file_idt::read(record &record)
 }
 
 
-bool
+auto
 srecord::input_file_idt::is_binary()
-    const
+    const -> bool
 {
     return true;
 }
 
 
-const char *
+auto
 srecord::input_file_idt::get_file_format_name()
-    const
+    const -> const char *
 {
     return "IDT System Integration Manager binary";
 }
 
 
-int
+auto
 srecord::input_file_idt::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_idt;
 }

@@ -63,7 +63,7 @@ public:
     /**
       * The assignment operator.
       */
-    memory_chunk &operator=(const memory_chunk &);
+    auto operator=(const memory_chunk &) -> memory_chunk &;
 
     /**
       * The destructor.
@@ -80,13 +80,13 @@ public:
       * The get method is used to get the value at the given offset
       * within the chunk.
       */
-    int get(unsigned long offset);
+    auto get(unsigned long offset) -> int;
 
     /**
       * The get_p method is used to determine whether the byte at the
       * given offset within the chunk contains valid data.
       */
-    bool set_p(unsigned long) const;
+    auto set_p(unsigned long) const -> bool;
 
     /**
       * The walk method is used to iterate across all of the bytes which
@@ -99,34 +99,34 @@ public:
       * chunk.  This is NOT the address of the first byte, it is the
       * chunk number.  To calculate the byte address, multiply by size.
       */
-    unsigned long get_address() const { return address; }
+    auto get_address() const -> unsigned long { return address; }
 
     /**
       * The equal class method is used to determine whether two memory
       * chunks are equal.  The must have the same address, the same bit
       * mask, and the same byte values on the valid bytes.
       */
-    static bool equal(const memory_chunk &, const memory_chunk &);
+    static auto equal(const memory_chunk &, const memory_chunk &) -> bool;
 
     /**
       * The find_next_data method is used when iterating across all of
       * the bytes set within the chunk.
       */
-    bool find_next_data(unsigned long &, void *, size_t &) const;
+    auto find_next_data(unsigned long &, void *, size_t &) const -> bool;
 
     /**
       * The get_upper_bound method is used to determine the upper bound
       * (offset of last byte with valid data, plus one) of the chunk.
       * It returns a memory byte address, NOT the chunk offset.
       */
-    unsigned long get_upper_bound() const;
+    auto get_upper_bound() const -> unsigned long;
 
     /**
       * The get_lower_bound method is used to determine the lower bound
       * (offset of first byte with valid data) of the chunk.
       * It returns a memory byte address, NOT the chunk offset.
       */
-    unsigned long get_lower_bound() const;
+    auto get_lower_bound() const -> unsigned long;
 
 private:
     /**
@@ -153,8 +153,8 @@ private:
     memory_chunk() = delete;
 };
 
-bool operator == (const srecord::memory_chunk &, const srecord::memory_chunk &);
-bool operator != (const srecord::memory_chunk &, const srecord::memory_chunk &);
+auto operator == (const srecord::memory_chunk &, const srecord::memory_chunk &) -> bool;
+auto operator != (const srecord::memory_chunk &, const srecord::memory_chunk &) -> bool;
 
 };
 

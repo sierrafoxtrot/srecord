@@ -80,31 +80,31 @@ public:
     /**
       * The assignment operator.
       */
-    interval &operator=(const interval &);
+    auto operator=(const interval &) -> interval &;
 
     /**
       * The union_ class method is used to calculate the set union of
       * two intervals.
       */
-    static interval union_(const interval &, const interval &);
+    static auto union_(const interval &, const interval &) -> interval;
 
     /**
       * The intersection class method is used to calculate the set
       * intersection of two intervals.
       */
-    static interval intersection(const interval &, const interval &);
+    static auto intersection(const interval &, const interval &) -> interval;
 
     /**
       * The difference class method is used to calculate the set
       * difference of two intervals.
       */
-    static interval difference(const interval &, const interval &);
+    static auto difference(const interval &, const interval &) -> interval;
 
     /**
       * The equal class method is used to test the equality of two
       * intervals.
       */
-    static bool equal(const interval &, const interval &);
+    static auto equal(const interval &, const interval &) -> bool;
 
     /**
       * The member method is used to test whether a given value is a
@@ -116,7 +116,7 @@ public:
       *     True if the given value is a member of the interval,
       *     false if it is not.
       */
-    bool member(data_t val) const;
+    auto member(data_t val) const -> bool;
 
     /**
       * The empty method is used to test whether the interval is empty.
@@ -125,7 +125,7 @@ public:
       *     True if the interval is empty,
       *     false if the interval is not empty.
       */
-    bool empty() const;
+    auto empty() const -> bool;
 
     /**
       * The first_interval_only method is used to crop the interval to the
@@ -143,7 +143,7 @@ public:
       * The interval_scan_next method is used to traverse every integer
       * value in the interval.
       */
-    bool scan_next(data_t &);
+    auto scan_next(data_t &) -> bool;
 
     /**
       * The interval_scan_end method is used to finish traversing every
@@ -155,14 +155,14 @@ public:
       * The get_lowest method is used to obtain the lower bound of
       * the interval.  It is inclusive.
       */
-    data_t get_lowest() const;
+    auto get_lowest() const -> data_t;
 
     /**
       * The get_highest method is used to obtain the upper bound of
       * the interval.  It is exclusive (i.e. one beyond the highest
       * integer in the set).
       */
-    data_t get_highest() const;
+    auto get_highest() const -> data_t;
 
     /**
       * The print method is used to print an interval on an output stream.
@@ -180,20 +180,20 @@ public:
       * @returns
       *     new padded interval.
       */
-    interval pad(int x) const;
+    auto pad(int x) const -> interval;
 
     /**
       * The representation method is used to manufacture a textural
       * representation of this interval.
       */
-    std::string representation() const;
+    auto representation() const -> std::string;
 
     /**
       * The flatten method is used to convert an interval with holes
       * in it to a simple interval with no holes in it, by using the
       * minimum and maximum values.
       */
-    interval flatten() const;
+    auto flatten() const -> interval;
 
     /**
       * The coverage method is used to obtain the size of the interval
@@ -204,7 +204,7 @@ public:
       *     holes.  Because the result could be 2**32, the 64-bit result
       *     is used so that this is representable.
       */
-    long_data_t coverage() const;
+    auto coverage() const -> long_data_t;
 
 private:
     /**
@@ -245,7 +245,7 @@ private:
       * The valid method is used to test whether the interval is
       * internally self-consistent.  Principally of use when debugging.
       */
-    bool valid() const;
+    auto valid() const -> bool;
 
     /**
       * The append method is used to append another value to the end
@@ -261,8 +261,8 @@ private:
   * The equality operator is used to determine if two intervals are the
   * same.
   */
-inline bool
-operator == (const interval &lhs, const interval &rhs)
+inline auto
+operator == (const interval &lhs, const interval &rhs) -> bool
 {
     return interval::equal(lhs, rhs);
 }
@@ -271,8 +271,8 @@ operator == (const interval &lhs, const interval &rhs)
   * The inequality operator is used to determine if two intervals are
   * different.
   */
-inline bool
-operator != (const interval &lhs, const interval &rhs)
+inline auto
+operator != (const interval &lhs, const interval &rhs) -> bool
 {
     return !interval::equal(lhs, rhs);
 }
@@ -281,8 +281,8 @@ operator != (const interval &lhs, const interval &rhs)
   * The binary star operator is used to calculate the intersection of
   * two intervals.
   */
-inline interval
-operator * (const interval &lhs, const interval &rhs)
+inline auto
+operator * (const interval &lhs, const interval &rhs) -> interval
 {
     return interval::intersection(lhs, rhs);
 }
@@ -291,8 +291,8 @@ operator * (const interval &lhs, const interval &rhs)
   * The star-and-replace operator is used to calculate the intersection
   * of two intervals, and assign the result to the left-hand-side.
   */
-inline interval &
-operator *= (interval &lhs, const interval &rhs)
+inline auto
+operator *= (interval &lhs, const interval &rhs) -> interval &
 {
     lhs = interval::intersection(lhs, rhs);
     return lhs;
@@ -302,8 +302,8 @@ operator *= (interval &lhs, const interval &rhs)
   * The binary plus operator is used to calculate the union of two
   * intervals.
   */
-inline interval
-operator + (const interval &lhs, const interval &rhs)
+inline auto
+operator + (const interval &lhs, const interval &rhs) -> interval
 {
     return interval::union_(lhs, rhs);
 }
@@ -312,8 +312,8 @@ operator + (const interval &lhs, const interval &rhs)
   * The plus-and-replace operator is used to calculate the union of two
   * intervals, and assign the result to the left-hand-side.
   */
-inline interval &
-operator += (interval &lhs, const interval &rhs)
+inline auto
+operator += (interval &lhs, const interval &rhs) -> interval &
 {
     lhs = interval::union_(lhs, rhs);
     return lhs;
@@ -323,8 +323,8 @@ operator += (interval &lhs, const interval &rhs)
   * The binary minus operator is used to calculate the difference of two
   * intervals.
   */
-inline interval
-operator - (const interval &lhs, const interval &rhs)
+inline auto
+operator - (const interval &lhs, const interval &rhs) -> interval
 {
     return interval::difference(lhs, rhs);
 }
@@ -333,8 +333,8 @@ operator - (const interval &lhs, const interval &rhs)
   * The minus-and-replace operator is used to calculate the difference
   * of two intervals, and assign the result to the left-hand-side.
   */
-inline interval &
-operator -= (interval &lhs, const interval &rhs)
+inline auto
+operator -= (interval &lhs, const interval &rhs) -> interval &
 {
     lhs = interval::difference(lhs, rhs);
     return lhs;
@@ -344,8 +344,8 @@ operator -= (interval &lhs, const interval &rhs)
   * The unary minus operator is used to calculate the logical complement
   * (inverse, negative) of an interval.
   */
-inline interval
-operator - (const interval &arg)
+inline auto
+operator - (const interval &arg) -> interval
 {
     return (interval(0, 0) - arg);
 }
@@ -354,8 +354,8 @@ operator - (const interval &arg)
   * The binary left-shift operator is used to print an interval on an
   * output stream.
   */
-inline std::ostream &
-operator << (std::ostream &os, const interval &val)
+inline auto
+operator << (std::ostream &os, const interval &val) -> std::ostream &
 {
     val.print(os);
     return os;

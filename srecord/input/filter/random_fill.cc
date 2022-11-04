@@ -35,16 +35,16 @@ srecord::input_filter_random_fill::input_filter_random_fill(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_random_fill::create(const input::pointer &a_deeper,
-    const interval &a_range)
+    const interval &a_range) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_random_fill(a_deeper, a_range));
 }
 
 
-bool
-srecord::input_filter_random_fill::generate(srecord::record &record)
+auto
+srecord::input_filter_random_fill::generate(srecord::record &record) -> bool
 {
     if (range.empty())
         return false;
@@ -72,8 +72,8 @@ srecord::input_filter_random_fill::generate(srecord::record &record)
 }
 
 
-bool
-srecord::input_filter_random_fill::read(srecord::record &record)
+auto
+srecord::input_filter_random_fill::read(srecord::record &record) -> bool
 {
     if (!srecord::input_filter::read(record))
         return generate(record);

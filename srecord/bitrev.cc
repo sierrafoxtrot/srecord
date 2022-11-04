@@ -56,15 +56,15 @@ static unsigned char table[256] =
 };
 
 
-unsigned char
-srecord::bitrev8(unsigned char value)
+auto
+srecord::bitrev8(unsigned char value) -> unsigned char
 {
     return table[value];
 }
 
 
-unsigned short
-srecord::bitrev16(unsigned short value)
+auto
+srecord::bitrev16(unsigned short value) -> unsigned short
 {
     // could make this faster with a table,
     // but is it worth it?
@@ -77,8 +77,8 @@ srecord::bitrev16(unsigned short value)
 }
 
 
-unsigned long
-srecord::bitrev24(unsigned long value)
+auto
+srecord::bitrev24(unsigned long value) -> unsigned long
 {
     unsigned char hi1(value >> 16);
     unsigned short lo1(value);
@@ -89,8 +89,8 @@ srecord::bitrev24(unsigned long value)
 }
 
 
-unsigned long
-srecord::bitrev32(unsigned long value)
+auto
+srecord::bitrev32(unsigned long value) -> unsigned long
 {
     unsigned short hi1(value >> 16);
     unsigned short lo1(value);
@@ -101,8 +101,8 @@ srecord::bitrev32(unsigned long value)
 }
 
 
-unsigned long long
-srecord::bitrev40(unsigned long long value)
+auto
+srecord::bitrev40(unsigned long long value) -> unsigned long long
 {
     unsigned char hi1(value >> 32);
     unsigned long lo1(value);
@@ -113,8 +113,8 @@ srecord::bitrev40(unsigned long long value)
 }
 
 
-unsigned long long
-srecord::bitrev48(unsigned long long value)
+auto
+srecord::bitrev48(unsigned long long value) -> unsigned long long
 {
     unsigned short hi1(value >> 32);
     unsigned long lo1(value);
@@ -125,8 +125,8 @@ srecord::bitrev48(unsigned long long value)
 }
 
 
-unsigned long long
-srecord::bitrev56(unsigned long long value)
+auto
+srecord::bitrev56(unsigned long long value) -> unsigned long long
 {
     unsigned long hi1(value >> 32);
     unsigned long lo1(value);
@@ -137,8 +137,8 @@ srecord::bitrev56(unsigned long long value)
 }
 
 
-unsigned long long
-srecord::bitrev64(unsigned long long value)
+auto
+srecord::bitrev64(unsigned long long value) -> unsigned long long
 {
     unsigned long hi1(value >> 32);
     unsigned long lo1(value);

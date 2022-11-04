@@ -47,8 +47,8 @@ srecord::output_file_formatted_binary::output_file_formatted_binary(
 }
 
 
-srecord::output::pointer
-srecord::output_file_formatted_binary::create(const std::string &a_file_name)
+auto
+srecord::output_file_formatted_binary::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_formatted_binary(a_file_name));
 }
@@ -157,16 +157,16 @@ srecord::output_file_formatted_binary::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_formatted_binary::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_formatted_binary::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes >= 1 || nbytes <= record::max_data_length);
 }
 
 
-int
+auto
 srecord::output_file_formatted_binary::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -175,17 +175,17 @@ srecord::output_file_formatted_binary::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_formatted_binary::format_name()
-    const
+    const -> const char *
 {
     return "Formatted-Binary";
 }
 
 
-bool
+auto
 srecord::output_file_formatted_binary::is_binary()
-    const
+    const -> bool
 {
     return true;
 }

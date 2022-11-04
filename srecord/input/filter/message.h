@@ -57,7 +57,7 @@ protected:
     input_filter_message(const input::pointer &deeper, bool naked = false);
 
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     /**
       * The process method is used to process the data from the input.
@@ -72,13 +72,13 @@ protected:
     /**
       * The get_algorithm_name method is used in error messages.
       */
-    virtual const char *get_algorithm_name() const = 0;
+    virtual auto get_algorithm_name() const -> const char * = 0;
 
     /**
       * The get_minimum_alignment method is used to obtain the minimum
       * require dbyte alignment.  Returns 0 if irrelevant.
       */
-    virtual unsigned get_minimum_alignment() const;
+    virtual auto get_minimum_alignment() const -> unsigned;
 
 private:
     /**
@@ -134,7 +134,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_message &operator=(const input_filter_message &) = delete;
+    auto operator=(const input_filter_message &) -> input_filter_message & = delete;
 };
 
 };

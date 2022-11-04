@@ -40,33 +40,33 @@ srecord::input_generator_repeat::input_generator_repeat(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_generator_repeat::create(const interval &a_range,
-    unsigned char *a_data, size_t a_length)
+    unsigned char *a_data, size_t a_length) -> srecord::input::pointer
 {
     return
         pointer(new srecord::input_generator_repeat(a_range, a_data, a_length));
 }
 
 
-unsigned char
-srecord::input_generator_repeat::generate_data(unsigned long addr)
+auto
+srecord::input_generator_repeat::generate_data(unsigned long addr) -> unsigned char
 {
     return data[(addr - address) % length];
 }
 
 
-std::string
+auto
 srecord::input_generator_repeat::filename()
-    const
+    const -> std::string
 {
     return "generate repeat data";
 }
 
 
-const char *
+auto
 srecord::input_generator_repeat::get_file_format_name()
-    const
+    const -> const char *
 {
     return "generate repeat data";
 }

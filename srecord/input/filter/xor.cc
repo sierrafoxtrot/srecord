@@ -33,15 +33,15 @@ srecord::input_filter_xor::input_filter_xor(const srecord::input::pointer &a1,
 }
 
 
-srecord::input::pointer
-srecord::input_filter_xor::create(const input::pointer &a_deeper, int a_mask)
+auto
+srecord::input_filter_xor::create(const input::pointer &a_deeper, int a_mask) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_xor(a_deeper, a_mask));
 }
 
 
-bool
-srecord::input_filter_xor::read(srecord::record &record)
+auto
+srecord::input_filter_xor::read(srecord::record &record) -> bool
 {
     if (!srecord::input_filter::read(record))
         return false;

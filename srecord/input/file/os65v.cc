@@ -35,15 +35,15 @@ srecord::input_file_os65v::input_file_os65v(const std::string &a_file_name) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_os65v::create(const std::string &a_file_name)
+auto
+srecord::input_file_os65v::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_os65v(a_file_name));
 }
 
 
-bool
-srecord::input_file_os65v::read_inner(srecord::record &record)
+auto
+srecord::input_file_os65v::read_inner(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -152,8 +152,8 @@ srecord::input_file_os65v::read_inner(srecord::record &record)
 }
 
 
-bool
-srecord::input_file_os65v::read(srecord::record &record)
+auto
+srecord::input_file_os65v::read(srecord::record &record) -> bool
 {
     if (!read_inner(record))
     {
@@ -166,17 +166,17 @@ srecord::input_file_os65v::read(srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_os65v::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Ohio Scientific";
 }
 
 
-int
+auto
 srecord::input_file_os65v::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_ohio_scientific;
 }

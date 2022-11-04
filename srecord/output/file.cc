@@ -88,16 +88,16 @@ srecord::output_file::output_file(std::string a_file_name) :
 }
 
 
-bool
+auto
 srecord::output_file::is_binary()
-    const
+    const -> bool
 {
     return false;
 }
 
 
-void *
-srecord::output_file::get_fp()
+auto
+srecord::output_file::get_fp() -> void *
 {
     if (!vfp)
     {
@@ -127,9 +127,9 @@ srecord::output_file::get_fp()
 }
 
 
-const std::string
+auto
 srecord::output_file::filename()
-    const
+    const -> const std::string
 {
     char buffer[20];
     sprintf(buffer, ": %d", line_number);
@@ -262,15 +262,15 @@ srecord::output_file::put_4bytes_le(unsigned long n)
 }
 
 
-int
-srecord::output_file::checksum_get()
+auto
+srecord::output_file::checksum_get() -> int
 {
     return (checksum & 0xFF);
 }
 
 
-int
-srecord::output_file::checksum_get16()
+auto
+srecord::output_file::checksum_get16() -> int
 {
     return (checksum & 0xFFFF);
 }
@@ -397,8 +397,8 @@ srecord::output_file::enable_optional_address(bool yesno)
 }
 
 
-bool
-srecord::output_file::enable_by_name(const std::string &name, bool yesno)
+auto
+srecord::output_file::enable_by_name(const std::string &name, bool yesno) -> bool
 {
     struct table_t
     {

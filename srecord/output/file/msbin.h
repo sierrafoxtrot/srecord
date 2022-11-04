@@ -64,7 +64,7 @@ public:
       *     The file name to open to write data to.  The name "-" is
       *     understood to mean the standard output.
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
@@ -77,19 +77,19 @@ protected:
     void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const override;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes) override;
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    const char *format_name() const override;
+    auto format_name() const -> const char * override;
 
     // See base class for documentation.
     void notify_upper_bound(unsigned long addr) override;
 
     // See base class for documentation.
-    bool is_binary() const override;
+    auto is_binary() const -> bool override;
 
 private:
     /**
@@ -120,7 +120,7 @@ private:
       * @param len
       *     The length of the data to be check-summed.
       */
-    static uint32_t checksum(const unsigned char *data, size_t len);
+    static auto checksum(const unsigned char *data, size_t len) -> uint32_t;
 
     /**
       * The write_file_header method is used to write the file header
@@ -235,7 +235,7 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_msbin &operator=(const output_file_msbin &) = delete;
+    auto operator=(const output_file_msbin &) -> output_file_msbin & = delete;
 };
 
 };

@@ -75,12 +75,12 @@ public:
       * @param width
       *     The width of each stripe within the swathe.
       */
-    static pointer create(const input::pointer &deeper, int modulus, int offset,
-        int width);
+    static auto create(const input::pointer &deeper, int modulus, int offset,
+        int width) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -127,7 +127,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_unsplit &operator=(const input_filter_unsplit &) = delete;
+    auto operator=(const input_filter_unsplit &) -> input_filter_unsplit & = delete;
 };
 
 };

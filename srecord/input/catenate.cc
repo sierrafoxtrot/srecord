@@ -36,15 +36,15 @@ srecord::input_catenate::input_catenate(pointer a1, pointer a2) :
 }
 
 
-srecord::input::pointer
-srecord::input_catenate::create(const pointer &a1, const pointer &a2)
+auto
+srecord::input_catenate::create(const pointer &a1, const pointer &a2) -> srecord::input::pointer
 {
     return pointer(new srecord::input_catenate(a1, a2));
 }
 
 
-bool
-srecord::input_catenate::read(srecord::record &record)
+auto
+srecord::input_catenate::read(srecord::record &record) -> bool
 {
     while (in1)
     {
@@ -82,25 +82,25 @@ srecord::input_catenate::read(srecord::record &record)
 }
 
 
-std::string
+auto
 srecord::input_catenate::filename()
-    const
+    const -> std::string
 {
     return (in1 ? in1 : in2)->filename();
 }
 
 
-std::string
+auto
 srecord::input_catenate::filename_and_line()
-    const
+    const -> std::string
 {
     return (in1 ? in1 : in2)->filename_and_line();
 }
 
 
-const char *
+auto
 srecord::input_catenate::get_file_format_name()
-    const
+    const -> const char *
 {
     return (in1 ? in1 : in2)->get_file_format_name();
 }

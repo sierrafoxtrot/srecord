@@ -45,17 +45,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -88,13 +88,13 @@ private:
       * The get_decimal method is used to get a decimal number from
       * the input.  It must have at least one digit.
       */
-    int get_decimal();
+    auto get_decimal() -> int;
 
     /**
       * The get_binary method is used to get a binary number from
       * the input.  It must have at least one digit.
       */
-    int get_binary();
+    auto get_binary() -> int;
 
     /**
       * The default constructor.  Do not use.
@@ -109,7 +109,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_spectrum &operator=(const input_file_spectrum &) = delete;
+    auto operator=(const input_file_spectrum &) -> input_file_spectrum & = delete;
 };
 
 };

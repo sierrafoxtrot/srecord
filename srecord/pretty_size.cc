@@ -22,8 +22,8 @@
 #include <srecord/pretty_size.h>
 
 
-std::string
-srecord::pretty_size(long long x, int width)
+auto
+srecord::pretty_size(long long x, int width) -> std::string
 {
     double tmp = x;
     bool negative = false;

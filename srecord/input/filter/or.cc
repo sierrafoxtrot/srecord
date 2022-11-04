@@ -33,15 +33,15 @@ srecord::input_filter_or::input_filter_or(const srecord::input::pointer &a1,
 }
 
 
-srecord::input::pointer
-srecord::input_filter_or::create(const input::pointer &a_deeper, int a_value)
+auto
+srecord::input_filter_or::create(const input::pointer &a_deeper, int a_value) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_or(a_deeper, a_value));
 }
 
 
-bool
-srecord::input_filter_or::read(srecord::record &record)
+auto
+srecord::input_filter_or::read(srecord::record &record) -> bool
 {
     if (!srecord::input_filter::read(record))
         return false;

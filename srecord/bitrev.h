@@ -29,7 +29,7 @@ namespace srecord
   * @param value
   *     The value to be reversed.
   */
-unsigned char bitrev8(unsigned char value);
+auto bitrev8(unsigned char value) -> unsigned char;
 
 /**
   * The bitrev16 function is used to reverse the order of the bits in an
@@ -38,7 +38,7 @@ unsigned char bitrev8(unsigned char value);
   * @param value
   *     The value to be reversed.
   */
-unsigned short bitrev16(unsigned short value);
+auto bitrev16(unsigned short value) -> unsigned short;
 
 /**
   * The bitrev24 function is used to reverse the order of the bits in an
@@ -47,7 +47,7 @@ unsigned short bitrev16(unsigned short value);
   * @param value
   *     The value to be reversed.
   */
-unsigned long bitrev24(unsigned long value);
+auto bitrev24(unsigned long value) -> unsigned long;
 
 /**
   * The bitrev32 function is used to reverse the order of the bits in an
@@ -56,7 +56,7 @@ unsigned long bitrev24(unsigned long value);
   * @param value
   *     The value to be reversed.
   */
-unsigned long bitrev32(unsigned long value);
+auto bitrev32(unsigned long value) -> unsigned long;
 
 /**
   * The bitrev40 function is used to reverse the order of the bits in an
@@ -65,7 +65,7 @@ unsigned long bitrev32(unsigned long value);
   * @param value
   *     The value to be reversed.
   */
-unsigned long long bitrev40(unsigned long long value);
+auto bitrev40(unsigned long long value) -> unsigned long long;
 
 /**
   * The bitrev48 function is used to reverse the order of the bits in an
@@ -74,7 +74,7 @@ unsigned long long bitrev40(unsigned long long value);
   * @param value
   *     The value to be reversed.
   */
-unsigned long long bitrev48(unsigned long long value);
+auto bitrev48(unsigned long long value) -> unsigned long long;
 
 /**
   * The bitrev56 function is used to reverse the order of the bits in an
@@ -83,7 +83,7 @@ unsigned long long bitrev48(unsigned long long value);
   * @param value
   *     The value to be reversed.
   */
-unsigned long long bitrev56(unsigned long long value);
+auto bitrev56(unsigned long long value) -> unsigned long long;
 
 /**
   * The bitrev64 function is used to reverse the order of the bits in an
@@ -92,7 +92,7 @@ unsigned long long bitrev56(unsigned long long value);
   * @param value
   *     The value to be reversed.
   */
-unsigned long long bitrev64(unsigned long long value);
+auto bitrev64(unsigned long long value) -> unsigned long long;
 
 };
 

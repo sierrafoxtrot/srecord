@@ -41,15 +41,15 @@ srecord::input_file_ascii_hex::input_file_ascii_hex(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_ascii_hex::create(const std::string &a_filename)
+auto
+srecord::input_file_ascii_hex::create(const std::string &a_filename) -> srecord::input_file::pointer
 {
     return pointer(new input_file_ascii_hex(a_filename));
 }
 
 
-bool
-srecord::input_file_ascii_hex::read_inner(record &result)
+auto
+srecord::input_file_ascii_hex::read_inner(record &result) -> bool
 {
     if (state == state_ignore)
         return false;
@@ -165,8 +165,8 @@ srecord::input_file_ascii_hex::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_ascii_hex::read(record &result)
+auto
+srecord::input_file_ascii_hex::read(record &result) -> bool
 {
     if (!read_inner(result))
     {
@@ -179,17 +179,17 @@ srecord::input_file_ascii_hex::read(record &result)
 }
 
 
-const char *
+auto
 srecord::input_file_ascii_hex::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Ascii Hex";
 }
 
 
-int
+auto
 srecord::input_file_ascii_hex::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_ascii_hex;
 }

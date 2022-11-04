@@ -34,9 +34,9 @@ srecord::input_filter_interval_length::input_filter_interval_length(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_interval_length::create(const pointer &a_deeper,
-    long a_address, int a_length, endian_t a_end, int a_width, bool inclusive)
+    long a_address, int a_length, endian_t a_end, int a_width, bool inclusive) -> srecord::input::pointer
 {
     return
         pointer
@@ -54,9 +54,9 @@ srecord::input_filter_interval_length::create(const pointer &a_deeper,
 }
 
 
-long
+auto
 srecord::input_filter_interval_length::calculate_result()
-    const
+    const -> long
 {
     const interval &r = get_range();
     return ((r.get_highest() - r.get_lowest()) / width);

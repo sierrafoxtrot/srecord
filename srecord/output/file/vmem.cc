@@ -52,8 +52,8 @@ srecord::output_file_vmem::~output_file_vmem()
 //   3      8      64
 //   4     16     128
 //
-static unsigned
-calc_width_shift(int x)
+static auto
+calc_width_shift(int x) -> unsigned
 {
     //
     // The user could be giving a number of bytes.
@@ -91,8 +91,8 @@ calc_width_shift(int x)
 }
 
 
-static unsigned
-calc_width_mask(int x)
+static auto
+calc_width_mask(int x) -> unsigned
 {
     return ((1uL << calc_width_shift(x)) - 1uL);
 }
@@ -111,8 +111,8 @@ srecord::output_file_vmem::output_file_vmem(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_vmem::create(const std::string &a_file_name)
+auto
+srecord::output_file_vmem::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_vmem(a_file_name));
 }
@@ -279,8 +279,8 @@ srecord::output_file_vmem::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_vmem::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_vmem::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
@@ -291,17 +291,17 @@ srecord::output_file_vmem::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_vmem::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_vmem::format_name()
-    const
+    const -> const char *
 {
     return "VMem";
 }

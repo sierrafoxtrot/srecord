@@ -72,14 +72,14 @@ public:
       * @param bitdir
       *     the bit direction of the CRC
       */
-    static pointer create(crc16::seed_mode_t seed_mode, bool augment_flag,
-        unsigned short polynomial, crc16::bit_direction_t bitdir);
+    static auto create(crc16::seed_mode_t seed_mode, bool augment_flag,
+        unsigned short polynomial, crc16::bit_direction_t bitdir) -> pointer;
 
     /**
       * The get method is used to get the CRC16 checksum once all memory
       * chunks have been processed by calls to our observe method.
       */
-    unsigned get() const;
+    auto get() const -> unsigned;
 
 protected:
     // See base class for documentation.
@@ -100,7 +100,7 @@ private:
     /**
       * The assignment operator.  No not use.
       */
-    memory_walker_crc16 &operator=(const memory_walker_crc16 &) = delete;
+    auto operator=(const memory_walker_crc16 &) -> memory_walker_crc16 & = delete;
 };
 
 };

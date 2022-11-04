@@ -143,14 +143,14 @@ public:
       * such as "-\\I*", and the partial global variable will have the path
       * in it on return.
       */
-    static bool compare(const char *formal, const char *actual);
+    static auto compare(const char *formal, const char *actual) -> bool;
 
     /**
       * The abbreviate class method is used to take an option's long
       * name, and turn it into the minimum possible string for that
       * option.
       */
-    static std::string abbreviate(const char *text);
+    static auto abbreviate(const char *text) -> std::string;
 
     /**
       * The test_ambiguous method is for debugging.  It verifies that
@@ -235,7 +235,7 @@ public:
       * The token_cur method is used to get the type of the current
       * token.
       */
-    int token_cur() const { return token; }
+    auto token_cur() const -> int { return token; }
 
     /**
       * The token_next method is used to advance to the next command
@@ -243,26 +243,26 @@ public:
       * It returns the type of the token; this value may also be
       * fetched using the token_cur method.
       */
-    int token_next();
+    auto token_next() -> int;
 
     /**
       * The token_first method is used to fetch the first command
       * like token (rather than use the token_next method).  This does
       * standard "help" and "version" options.
       */
-    int token_first();
+    auto token_first() -> int;
 
     /**
       * The value_string method is used to get the string value of
       * the current token.
       */
-    const std::string &value_string() const { return value_string_; }
+    auto value_string() const -> const std::string & { return value_string_; }
 
     /**
       * The value_number method is used to get the numeric value of
       * the current token.
       */
-    long value_number() const { return value_number_; }
+    auto value_number() const -> long { return value_number_; }
 
     /**
       * The token_name method is used to turn a token type number
@@ -271,13 +271,13 @@ public:
       * @param tok
       *     The ID of the token to be named.
       */
-    const char *token_name(int tok) const;
+    auto token_name(int tok) const -> const char *;
 
     /**
       * The token_name method is used to obtain the name of the current
       * token.
       */
-    const char *token_name() const { return token_name(token_cur()); }
+    auto token_name() const -> const char * { return token_name(token_cur()); }
 
     /**
       * The usage method is used to print a usage summary.
@@ -332,7 +332,7 @@ private:
       * The usage_tail_get method is used to get the tail end of
       * the command line to be printed by the 'usage' method.
       */
-    const char *usage_tail_get() const;
+    auto usage_tail_get() const -> const char *;
 
     /**
       * The read_arguments_file method is used to process filename

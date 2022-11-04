@@ -53,7 +53,7 @@ public:
       *     (that is, to use non-optimal short writes after holes to force
       *     alignment).
       */
-    static pointer create(const output::pointer &deeper, bool align = false);
+    static auto create(const output::pointer &deeper, bool align = false) -> pointer;
 
 protected:
     // See base class for documentation.
@@ -66,10 +66,10 @@ protected:
     void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const override;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes) override;
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
 private:
     /**
@@ -163,7 +163,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    output_filter_reblock &operator=(const output_filter_reblock &) = delete;
+    auto operator=(const output_filter_reblock &) -> output_filter_reblock & = delete;
 };
 
 };

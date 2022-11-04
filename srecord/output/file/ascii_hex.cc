@@ -42,8 +42,8 @@ srecord::output_file_ascii_hex::output_file_ascii_hex(
 }
 
 
-srecord::output::pointer
-srecord::output_file_ascii_hex::create(const std::string &a_file_name)
+auto
+srecord::output_file_ascii_hex::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_ascii_hex(a_file_name));
 }
@@ -183,8 +183,8 @@ srecord::output_file_ascii_hex::line_length_set(int linlen)
 }
 
 
-bool
-srecord::output_file_ascii_hex::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_ascii_hex::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > srecord::record::max_data_length)
         return false;
@@ -205,17 +205,17 @@ srecord::output_file_ascii_hex::address_length_set(int n)
 }
 
 
-int
+auto
 srecord::output_file_ascii_hex::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_ascii_hex::format_name()
-    const
+    const -> const char *
 {
     return "Ascii-Hex";
 }

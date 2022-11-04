@@ -44,8 +44,8 @@ srecord::output_file_ti_txt::output_file_ti_txt(
 }
 
 
-srecord::output::pointer
-srecord::output_file_ti_txt::create(const std::string &a_file_name)
+auto
+srecord::output_file_ti_txt::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_ti_txt(a_file_name));
 }
@@ -147,8 +147,8 @@ srecord::output_file_ti_txt::address_length_set(int n)
 }
 
 
-bool
-srecord::output_file_ti_txt::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_ti_txt::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
@@ -158,17 +158,17 @@ srecord::output_file_ti_txt::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_ti_txt::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_ti_txt::format_name()
-    const
+    const -> const char *
 {
     return "TI-Txt";
 }

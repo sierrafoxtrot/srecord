@@ -54,8 +54,8 @@ srecord::interval::interval()
 }
 
 
-static inline srecord::interval::long_data_t
-promote(srecord::interval::data_t datum, size_t pos)
+static inline auto
+promote(srecord::interval::data_t datum, size_t pos) -> srecord::interval::long_data_t
 {
     if (datum == 0 && (pos & 1))
         return ((srecord::interval::long_data_t)1 << 32);
@@ -143,8 +143,8 @@ srecord::interval::interval(const interval &arg)
 }
 
 
-srecord::interval &
-srecord::interval::operator=(const interval &arg)
+auto
+srecord::interval::operator=(const interval &arg) -> srecord::interval &
 {
     if (this != &arg)
     {
@@ -221,9 +221,9 @@ srecord::interval::~interval()
 //      and is intended for use in assert() statements.
 //
 
-bool
+auto
 srecord::interval::valid()
-    const
+    const -> bool
 {
     if (length > size)
         return false;
@@ -342,8 +342,8 @@ srecord::interval::append(data_t datum)
 //      Use the interval_free function for this purpose.
 //
 
-srecord::interval
-srecord::interval::union_(const interval &left, const interval &right)
+auto
+srecord::interval::union_(const interval &left, const interval &right) -> srecord::interval
 {
     // assert(left.valid());
     // assert(right.valid());
@@ -425,8 +425,8 @@ srecord::interval::union_(const interval &left, const interval &right)
 //      Use the interval_free function for this purpose.
 //
 
-srecord::interval
-srecord::interval::intersection(const interval &left, const interval &right)
+auto
+srecord::interval::intersection(const interval &left, const interval &right) -> srecord::interval
 {
     // assert(left.valid());
     // assert(right.valid());
@@ -507,8 +507,8 @@ srecord::interval::intersection(const interval &left, const interval &right)
 //      Use the interval_free function for this purpose.
 //
 
-srecord::interval
-srecord::interval::difference(const interval &left, const interval &right)
+auto
+srecord::interval::difference(const interval &left, const interval &right) -> srecord::interval
 {
     // assert(left.valid());
     // assert(right.valid());
@@ -584,9 +584,9 @@ srecord::interval::difference(const interval &left, const interval &right)
 //              0 if is not a member
 //
 
-bool
+auto
 srecord::interval::member(data_t datum)
-    const
+    const -> bool
 {
     if (length == 0)
         return false;
@@ -657,8 +657,8 @@ srecord::interval::scan_begin()
 //              0 if reached end of interval
 //
 
-bool
-srecord::interval::scan_next(data_t &datum)
+auto
+srecord::interval::scan_next(data_t &datum) -> bool
 {
     // assert(valid());
     // assert(scan_index & 1);
@@ -713,16 +713,16 @@ srecord::interval::first_interval_only()
 }
 
 
-bool
+auto
 srecord::interval::empty()
-    const
+    const -> bool
 {
     return (length == 0);
 }
 
 
-bool
-srecord::interval::equal(const interval &lhs, const interval &rhs)
+auto
+srecord::interval::equal(const interval &lhs, const interval &rhs) -> bool
 {
     if (lhs.length != rhs.length)
         return false;
@@ -733,18 +733,18 @@ srecord::interval::equal(const interval &lhs, const interval &rhs)
 }
 
 
-srecord::interval::data_t
+auto
 srecord::interval::get_lowest()
-    const
+    const -> srecord::interval::data_t
 {
     // assert(valid());
     return (length > 0 ? data[0] : 0);
 }
 
 
-srecord::interval::data_t
+auto
 srecord::interval::get_highest()
-    const
+    const -> srecord::interval::data_t
 {
     // assert(valid());
     return (length > 0 ? data[length - 1] : 0);
@@ -772,8 +772,8 @@ srecord::interval::print(std::ostream &os)
 }
 
 
-static std::string
-to_string(srecord::interval::data_t x)
+static auto
+to_string(srecord::interval::data_t x) -> std::string
 {
     int width = 4;
     if (x >= 0x10000)
@@ -786,9 +786,9 @@ to_string(srecord::interval::data_t x)
 }
 
 
-std::string
+auto
 srecord::interval::representation()
-    const
+    const -> std::string
 {
     std::string result;
     result += '(';
@@ -813,9 +813,9 @@ srecord::interval::representation()
 }
 
 
-srecord::interval
+auto
 srecord::interval::pad(int mult)
-    const
+    const -> srecord::interval
 {
     if (mult < 2)
         return *this;

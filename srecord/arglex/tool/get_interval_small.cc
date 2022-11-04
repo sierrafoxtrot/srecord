@@ -22,8 +22,8 @@
 #include <srecord/arglex/tool.h>
 
 
-srecord::interval
-srecord::arglex_tool::get_interval_small(const char *caption)
+auto
+srecord::arglex_tool::get_interval_small(const char *caption) -> srecord::interval
 {
     interval result = get_interval(caption);
     bool big_range_ok = false;

@@ -20,8 +20,8 @@
 #include <srecord/endian.h>
 
 
-const char *
-srecord::endian_to_string(endian_t x)
+auto
+srecord::endian_to_string(endian_t x) -> const char *
 {
     switch (x)
     {

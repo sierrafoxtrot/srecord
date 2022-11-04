@@ -105,7 +105,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker &operator=(const memory_walker &) = delete;
+    auto operator=(const memory_walker &) -> memory_walker & = delete;
 };
 
 };

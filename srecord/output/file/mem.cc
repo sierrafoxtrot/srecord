@@ -47,8 +47,8 @@ srecord::output_file_mem::output_file_mem(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_mem::create(const std::string &a_file_name)
+auto
+srecord::output_file_mem::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_mem(a_file_name));
 }
@@ -284,8 +284,8 @@ srecord::output_file_mem::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_mem::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_mem::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
@@ -296,17 +296,17 @@ srecord::output_file_mem::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_mem::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_blk_sz;
 }
 
 
-const char *
+auto
 srecord::output_file_mem::format_name()
-    const
+    const -> const char *
 {
     return "Lattice Memory Initialization Format (.mem)";
 }

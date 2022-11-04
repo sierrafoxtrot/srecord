@@ -77,7 +77,7 @@ public:
       * of a CRC-16 polynomial, and return the value of the CRC-16
       * polynomial corresponding to that name.
       */
-    static int polynomial_by_name(const char *name);
+    static auto polynomial_by_name(const char *name) -> int;
 
     enum seed_mode_t
     {
@@ -123,13 +123,13 @@ public:
     /**
       * The assignment operator.
       */
-    crc16 &operator=(const crc16 &);
+    auto operator=(const crc16 &) -> crc16 &;
 
     /**
       * The get method is used to obtain the running value of the cyclic
       * redundancy check.
       */
-    unsigned short get() const;
+    auto get() const -> unsigned short;
 
     /**
       * The next method is used to advance the state by one byte.
@@ -192,7 +192,7 @@ private:
       * The updcrc method is to add another byte of data to the running
       * CRC state.  It is called by the #next and next_buf methods.
       */
-    inline unsigned short updcrc(unsigned char c, unsigned short state) const;
+    inline auto updcrc(unsigned char c, unsigned short state) const -> unsigned short;
 };
 
 };

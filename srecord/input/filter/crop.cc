@@ -36,16 +36,16 @@ srecord::input_filter_crop::input_filter_crop(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_crop::create(const srecord::input::pointer &a_deeper,
-    const interval &a_range)
+    const interval &a_range) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_crop(a_deeper, a_range));
 }
 
 
-bool
-srecord::input_filter_crop::read(srecord::record &record)
+auto
+srecord::input_filter_crop::read(srecord::record &record) -> bool
 {
     for (;;)
     {

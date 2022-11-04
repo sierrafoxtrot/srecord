@@ -33,15 +33,15 @@ srecord::input_file_hexdump::input_file_hexdump(const std::string &filename) :
 }
 
 
-srecord::input_file_hexdump::pointer
-srecord::input_file_hexdump::create(const std::string &filename)
+auto
+srecord::input_file_hexdump::create(const std::string &filename) -> srecord::input_file_hexdump::pointer
 {
     return pointer(new input_file_hexdump(filename));
 }
 
 
-srecord::input_file_hexdump::token_t
-srecord::input_file_hexdump::get_next_token()
+auto
+srecord::input_file_hexdump::get_next_token() -> srecord::input_file_hexdump::token_t
 {
     for (;;)
     {
@@ -87,8 +87,8 @@ srecord::input_file_hexdump::get_next_token()
 }
 
 
-bool
-srecord::input_file_hexdump::discard_rest_of_line()
+auto
+srecord::input_file_hexdump::discard_rest_of_line() -> bool
 {
     for (;;)
     {
@@ -101,8 +101,8 @@ srecord::input_file_hexdump::discard_rest_of_line()
 }
 
 
-bool
-srecord::input_file_hexdump::read(record &result)
+auto
+srecord::input_file_hexdump::read(record &result) -> bool
 {
     // file
     //     : line
@@ -197,17 +197,17 @@ srecord::input_file_hexdump::read(record &result)
 }
 
 
-const char *
+auto
 srecord::input_file_hexdump::get_file_format_name()
-    const
+    const -> const char *
 {
     return "hexdump";
 }
 
 
-int
+auto
 srecord::input_file_hexdump::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_hexdump;
 }

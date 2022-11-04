@@ -60,11 +60,11 @@ public:
       * @param value
       *     The value to be bit-wise ORed with each incoming data byte.
       */
-    static pointer create(const input::pointer &deeper, int value);
+    static auto create(const input::pointer &deeper, int value) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -86,7 +86,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_or &operator=(const input_filter_or &) = delete;
+    auto operator=(const input_filter_or &) -> input_filter_or & = delete;
 };
 
 };

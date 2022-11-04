@@ -38,8 +38,8 @@ srecord::input_file_ti_txt::input_file_ti_txt(const std::string &a_file_name) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_ti_txt::create(const std::string &a_file_name)
+auto
+srecord::input_file_ti_txt::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_ti_txt(a_file_name));
 }
@@ -117,8 +117,8 @@ srecord::input_file_ti_txt::get_next_token()
 }
 
 
-bool
-srecord::input_file_ti_txt::read(record &result)
+auto
+srecord::input_file_ti_txt::read(record &result) -> bool
 {
     for (;;)
     {
@@ -191,17 +191,17 @@ srecord::input_file_ti_txt::read(record &result)
 }
 
 
-const char *
+auto
 srecord::input_file_ti_txt::get_file_format_name()
-    const
+    const -> const char *
 {
     return "ti-txt (MSP430)";
 }
 
 
-int
+auto
 srecord::input_file_ti_txt::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_ti_txt;
 }

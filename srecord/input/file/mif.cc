@@ -38,15 +38,15 @@ srecord::input_file_mif::input_file_mif(const std::string &a_file_name) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_mif::create(const std::string &a_file_name)
+auto
+srecord::input_file_mif::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_mif(a_file_name));
 }
 
 
-srecord::input_file_mif::token_t
-srecord::input_file_mif::lex_addr()
+auto
+srecord::input_file_mif::lex_addr() -> srecord::input_file_mif::token_t
 {
     lex_radix = lex_addr_radix;
     token_t result = lex();
@@ -55,8 +55,8 @@ srecord::input_file_mif::lex_addr()
 }
 
 
-srecord::input_file_mif::token_t
-srecord::input_file_mif::lex_data()
+auto
+srecord::input_file_mif::lex_data() -> srecord::input_file_mif::token_t
 {
     lex_radix = lex_data_radix;
     token_t result = lex();
@@ -65,8 +65,8 @@ srecord::input_file_mif::lex_data()
 }
 
 
-srecord::input_file_mif::token_t
-srecord::input_file_mif::lex()
+auto
+srecord::input_file_mif::lex() -> srecord::input_file_mif::token_t
 {
     for (;;)
     {
@@ -236,8 +236,8 @@ srecord::input_file_mif::get_equals()
 }
 
 
-long
-srecord::input_file_mif::get_number()
+auto
+srecord::input_file_mif::get_number() -> long
 {
     if (lex() != token_number)
         syntax_error("decimal number expected");
@@ -261,8 +261,8 @@ srecord::input_file_mif::get_colon()
 }
 
 
-int
-srecord::input_file_mif::get_radix()
+auto
+srecord::input_file_mif::get_radix() -> int
 {
     switch (lex())
     {
@@ -286,8 +286,8 @@ srecord::input_file_mif::get_radix()
 }
 
 
-bool
-srecord::input_file_mif::read(srecord::record &record)
+auto
+srecord::input_file_mif::read(srecord::record &record) -> bool
 {
     unsigned char buffer[srecord::record::max_data_length];
     size_t bufpos = 0;
@@ -456,17 +456,17 @@ srecord::input_file_mif::read(srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_mif::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Memory Initialization File (MIF, Altera)";
 }
 
 
-int
+auto
 srecord::input_file_mif::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_memory_initialization_file;
 }

@@ -44,20 +44,20 @@ public:
       * @param filename
       *     The name of the file to be read.
       */
-    static pointer create(const std::string &filename);
+    static auto create(const std::string &filename) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(class record &rec) override;
+    auto read(class record &rec) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    bool is_binary() const override;
+    auto is_binary() const -> bool override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -112,7 +112,7 @@ private:
       * the #packet and #packet_length and #packet_address and
       * #packet_used instance variables.
       */
-    bool get_packet();
+    auto get_packet() -> bool;
 
     /**
       * The packet_format_error method is used to issue a #fatal_error
@@ -133,7 +133,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_ppb &operator=(const input_file_ppb &) = delete;
+    auto operator=(const input_file_ppb &) -> input_file_ppb & = delete;
 };
 
 };

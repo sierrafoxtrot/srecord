@@ -60,8 +60,8 @@ srecord::output_file_os65v::output_file_os65v(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_os65v::create(const std::string &a_file_name)
+auto
+srecord::output_file_os65v::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_os65v(a_file_name));
 }
@@ -154,16 +154,16 @@ srecord::output_file_os65v::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_os65v::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_os65v::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes == 1);
 }
 
 
-int
+auto
 srecord::output_file_os65v::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -172,17 +172,17 @@ srecord::output_file_os65v::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_os65v::mode()
-    const
+    const -> const char *
 {
     return "wb";
 }
 
 
-const char *
+auto
 srecord::output_file_os65v::format_name()
-    const
+    const -> const char *
 {
     return "OS65V";
 }

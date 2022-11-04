@@ -48,20 +48,20 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
     // See base class for documentation.
-    int get_nibble() override;
+    auto get_nibble() -> int override;
 
 private:
     /**
@@ -82,7 +82,7 @@ private:
       * The read_inner method is used to read a record of input.
       * The read method is a wrapper around this method.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * The garbage_warning instance variable is used to remember
@@ -128,8 +128,8 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_tektronix_extended &operator=(
-        const input_file_tektronix_extended &) = delete;
+    auto operator=(
+        const input_file_tektronix_extended &) -> input_file_tektronix_extended & = delete;
 };
 
 };

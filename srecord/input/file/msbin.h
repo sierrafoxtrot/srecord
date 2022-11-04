@@ -53,17 +53,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -164,7 +164,7 @@ private:
       * The read_dword_le method is used to read a little endian double
       * word from the input.
       */
-    uint32_t read_dword_le();
+    auto read_dword_le() -> uint32_t;
 
     /**
       * The checksum method is used to calculate the checksum of a given
@@ -178,10 +178,10 @@ private:
       * @param len
       *     The length in bytes of the data to be check-summed.
       */
-    static uint32_t checksum(const unsigned char *data, size_t len);
+    static auto checksum(const unsigned char *data, size_t len) -> uint32_t;
 
     // See base class for documentation.
-    bool is_binary() const override;
+    auto is_binary() const -> bool override;
 
     /**
       * The default constructor.  Do not use.
@@ -196,7 +196,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_msbin &operator=(const input_file_msbin &) = delete;
+    auto operator=(const input_file_msbin &) -> input_file_msbin & = delete;
 };
 
 };

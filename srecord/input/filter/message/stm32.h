@@ -75,8 +75,8 @@ public:
       * @param end
       *     The byte order.
       */
-    static pointer create(const input::pointer &deeper, unsigned long address,
-        endian_t end);
+    static auto create(const input::pointer &deeper, unsigned long address,
+        endian_t end) -> pointer;
 
 protected:
     // See base class for documentation.
@@ -86,10 +86,10 @@ protected:
     void process(const memory &input, record &output) override;
 
     // See base class for documentation.
-    const char *get_algorithm_name() const override;
+    auto get_algorithm_name() const -> const char * override;
 
     // See base class for documentation.
-    unsigned get_minimum_alignment() const override;
+    auto get_minimum_alignment() const -> unsigned override;
 
 private:
     /**
@@ -117,7 +117,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_message_stm32 &operator=(const input_filter_message_stm32 &) = delete;
+    auto operator=(const input_filter_message_stm32 &) -> input_filter_message_stm32 & = delete;
 };
 
 };

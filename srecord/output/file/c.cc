@@ -27,8 +27,8 @@
 #include <srecord/record.h>
 
 
-static std::string
-toupper(const std::string &s)
+static auto
+toupper(const std::string &s) -> std::string
 {
     char *buffer = new char[s.size() + 1];
     char *bp = buffer;
@@ -47,8 +47,8 @@ toupper(const std::string &s)
 }
 
 
-static std::string
-identifier(const std::string &s)
+static auto
+identifier(const std::string &s) -> std::string
 {
     char *buffer = new char[s.size() + 1];
     char *bp = buffer;
@@ -396,8 +396,8 @@ srecord::output_file_c::~output_file_c()
 }
 
 
-static const char *
-memrchr(const char *data, char c, size_t len)
+static auto
+memrchr(const char *data, char c, size_t len) -> const char *
 {
     if (!data)
         return nullptr;
@@ -416,8 +416,8 @@ memrchr(const char *data, char c, size_t len)
 }
 
 
-static std::string
-build_include_file_name(const std::string &filename)
+static auto
+build_include_file_name(const std::string &filename) -> std::string
 {
     const char *fn = filename.c_str();
     // Watch out for out base class adding a line number.
@@ -459,8 +459,8 @@ srecord::output_file_c::output_file_c(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_c::create(const std::string &a_file_name)
+auto
+srecord::output_file_c::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_c(a_file_name));
 }
@@ -636,8 +636,8 @@ srecord::output_file_c::emit_word(unsigned int n)
 }
 
 
-std::string
-srecord::output_file_c::format_address(unsigned long addr)
+auto
+srecord::output_file_c::format_address(unsigned long addr) -> std::string
 {
     char buffer[30];
     if (hex_style)
@@ -778,8 +778,8 @@ srecord::output_file_c::address_length_set(int n)
 }
 
 
-bool
-srecord::output_file_c::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_c::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
@@ -789,9 +789,9 @@ srecord::output_file_c::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_c::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Use the largest we can get,
@@ -803,9 +803,9 @@ srecord::output_file_c::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_c::format_name()
-    const
+    const -> const char *
 {
     return (output_word ? "C-Array (16-bit)" : "C-Array (8-bit)");
 }

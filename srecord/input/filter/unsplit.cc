@@ -37,16 +37,16 @@ srecord::input_filter_unsplit::input_filter_unsplit(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_unsplit::create(const input::pointer &a_deeper, int a2,
-    int a3, int a4)
+    int a3, int a4) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_unsplit(a_deeper, a2, a3, a4));
 }
 
 
-bool
-srecord::input_filter_unsplit::read(srecord::record &record)
+auto
+srecord::input_filter_unsplit::read(srecord::record &record) -> bool
 {
     for (;;)
     {

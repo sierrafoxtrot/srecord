@@ -37,8 +37,8 @@ srecord::output_file_cosmac::output_file_cosmac(
 }
 
 
-srecord::output::pointer
-srecord::output_file_cosmac::create(const std::string &a_file_name)
+auto
+srecord::output_file_cosmac::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_cosmac(a_file_name));
 }
@@ -121,8 +121,8 @@ srecord::output_file_cosmac::address_length_set(int x)
 }
 
 
-bool
-srecord::output_file_cosmac::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_cosmac::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
@@ -131,9 +131,9 @@ srecord::output_file_cosmac::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_cosmac::preferred_block_size_get()
-    const
+    const -> int
 {
     int n = ((line_length - 1) / 2);
     if (n > record::max_data_length)
@@ -142,9 +142,9 @@ srecord::output_file_cosmac::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_cosmac::format_name()
-    const
+    const -> const char *
 {
     return "cosmac";
 }

@@ -37,15 +37,15 @@ srecord::input_file_ti_tagged_16::input_file_ti_tagged_16(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_ti_tagged_16::create(const std::string &a_file_name)
+auto
+srecord::input_file_ti_tagged_16::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_ti_tagged_16(a_file_name));
 }
 
 
-int
-srecord::input_file_ti_tagged_16::get_char()
+auto
+srecord::input_file_ti_tagged_16::get_char() -> int
 {
     int c = inherited::get_char();
     if (c < 0 || c == '\n')
@@ -56,8 +56,8 @@ srecord::input_file_ti_tagged_16::get_char()
 }
 
 
-bool
-srecord::input_file_ti_tagged_16::read(record &result)
+auto
+srecord::input_file_ti_tagged_16::read(record &result) -> bool
 {
     for (;;)
     {
@@ -176,17 +176,17 @@ srecord::input_file_ti_tagged_16::read(record &result)
 }
 
 
-const char *
+auto
 srecord::input_file_ti_tagged_16::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Texas Instruments SDSMAC (320)";
 }
 
 
-int
+auto
 srecord::input_file_ti_tagged_16::format_option_number()
-    const
+    const -> int
 {
     return arglex_tool::token_ti_tagged_16;
 }

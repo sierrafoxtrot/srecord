@@ -62,8 +62,8 @@ srecord::fletcher16::fletcher16(const fletcher16 &rhs)
 = default;
 
 
-srecord::fletcher16 &
-srecord::fletcher16::operator=(const fletcher16 &rhs)
+auto
+srecord::fletcher16::operator=(const fletcher16 &rhs) -> srecord::fletcher16 &
 {
     if (this != &rhs)
     {
@@ -136,9 +136,9 @@ srecord::fletcher16::nextbuf(const void *vdata, size_t nbytes)
 }
 
 
-unsigned short
+auto
 srecord::fletcher16::get()
-    const
+    const -> unsigned short
 {
     //
     // An empty "answer" on command line defaults to answer == -1

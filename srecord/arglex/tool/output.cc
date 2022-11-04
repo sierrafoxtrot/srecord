@@ -65,8 +65,8 @@
 #include <srecord/output/file/wilson.h>
 
 
-srecord::output::pointer
-srecord::arglex_tool::get_output()
+auto
+srecord::arglex_tool::get_output() -> srecord::output::pointer
 {
     //
     // skip the -output token

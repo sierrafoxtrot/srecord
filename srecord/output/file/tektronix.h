@@ -57,7 +57,7 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
@@ -70,10 +70,10 @@ protected:
     void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const override;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes) override;
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
     void put_nibble(int);
@@ -82,7 +82,7 @@ protected:
     void put_byte(unsigned char) override;
 
     // See base class for documentation.
-    const char *format_name() const override;
+    auto format_name() const -> const char * override;
 
 private:
     /**
@@ -117,7 +117,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_tektronix &operator=(const output_file_tektronix &) = delete;
+    auto operator=(const output_file_tektronix &) -> output_file_tektronix & = delete;
 };
 
 };

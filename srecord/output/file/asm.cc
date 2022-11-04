@@ -216,8 +216,8 @@ srecord::output_file_asm::output_file_asm(const std::string &filename) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_asm::create(const std::string &a_file_name)
+auto
+srecord::output_file_asm::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_asm(a_file_name));
 }
@@ -518,8 +518,8 @@ srecord::output_file_asm::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_asm::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_asm::preferred_block_size_set(int nbytes) -> bool
 {
     if (nbytes <= 0)
         return false;
@@ -529,9 +529,9 @@ srecord::output_file_asm::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_asm::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Use the largest we can get.
@@ -542,9 +542,9 @@ srecord::output_file_asm::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_asm::format_name()
-    const
+    const -> const char *
 {
     return (output_word ? "Assembler (16-bit)" : "Assembler (8-bit)");
 }

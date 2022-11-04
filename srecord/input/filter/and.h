@@ -59,11 +59,11 @@ public:
       * @param mask
       *     The value to be bit-wise ANDed with each incoming data byte.
       */
-    static pointer create(const input::pointer &deeper, int mask);
+    static auto create(const input::pointer &deeper, int mask) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -85,7 +85,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_and &operator=(const input_filter_and &) = delete;
+    auto operator=(const input_filter_and &) -> input_filter_and & = delete;
 };
 
 };

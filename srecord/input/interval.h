@@ -30,7 +30,7 @@ namespace srecord {
   * build an interval based on the addresses which contain data within
   * the input.
   */
-interval input_interval(srecord::input::pointer);
+auto input_interval(srecord::input::pointer) -> interval;
 
 };
 

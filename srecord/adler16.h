@@ -50,12 +50,12 @@ public:
     /**
       * The assignment operator.
       */
-    adler16 &operator=(const adler16 &);
+    auto operator=(const adler16 &) -> adler16 &;
 
     /**
       * The get method is used to obtain the running value of the checksum.
       */
-    unsigned short get() const;
+    auto get() const -> unsigned short;
 
     /**
       * The next method is used to advance the state by one byte.

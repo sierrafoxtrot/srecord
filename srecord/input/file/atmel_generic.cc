@@ -36,23 +36,23 @@ srecord::input_file_atmel_generic::input_file_atmel_generic(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_atmel_generic::create_be(const std::string &a_file_name)
+auto
+srecord::input_file_atmel_generic::create_be(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return create(a_file_name, endian_big);
 }
 
 
-srecord::input_file::pointer
+auto
 srecord::input_file_atmel_generic::create(const std::string &a_file_name,
-    endian_t a_end)
+    endian_t a_end) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_atmel_generic(a_file_name, a_end));
 }
 
 
-bool
-srecord::input_file_atmel_generic::read_inner(srecord::record &record)
+auto
+srecord::input_file_atmel_generic::read_inner(srecord::record &record) -> bool
 {
     if (peek_char() < 0)
         return false;
@@ -79,8 +79,8 @@ srecord::input_file_atmel_generic::read_inner(srecord::record &record)
 }
 
 
-bool
-srecord::input_file_atmel_generic::read(srecord::record &record)
+auto
+srecord::input_file_atmel_generic::read(srecord::record &record) -> bool
 {
     if (!read_inner(record))
     {
@@ -93,9 +93,9 @@ srecord::input_file_atmel_generic::read(srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_atmel_generic::get_file_format_name()
-    const
+    const -> const char *
 {
     return
         (
@@ -108,9 +108,9 @@ srecord::input_file_atmel_generic::get_file_format_name()
 }
 
 
-int
+auto
 srecord::input_file_atmel_generic::format_option_number()
-    const
+    const -> int
 {
     return
         (

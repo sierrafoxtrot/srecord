@@ -80,8 +80,8 @@ srecord::progname_set(char *s)
 }
 
 
-const char *
-srecord::progname_get()
+auto
+srecord::progname_get() -> const char *
 {
     return (progname ? progname : "???");
 }

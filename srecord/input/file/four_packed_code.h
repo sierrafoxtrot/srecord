@@ -46,17 +46,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record) override;
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const override;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number() const override;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -73,7 +73,7 @@ private:
       * from the input file.  Lines which don't start with "$"
       * will be ignored.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * See base class for documentation.  We override the default
@@ -81,13 +81,13 @@ private:
       * bytes) at a time.  The usual get_word (etc) continue to work
       * without additional modifications.
       */
-    int get_byte() override;
+    auto get_byte() -> int override;
 
     /**
       * The get_digit method is used to fetch one base85 digit from
       * the input.
       */
-    int get_digit();
+    auto get_digit() -> int;
 
     /**
       * The get_byte_pos instance variable is used by the get_byte
@@ -139,7 +139,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_four_packed_code &operator=(const input_file_four_packed_code &) = delete;
+    auto operator=(const input_file_four_packed_code &) -> input_file_four_packed_code & = delete;
 };
 
 };

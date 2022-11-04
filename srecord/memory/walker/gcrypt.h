@@ -65,7 +65,7 @@ public:
       *     used to access the libgcrypt handle to the message digest
       *     being calculated.
       */
-    static pointer create(gcry_md_hd_t handle);
+    static auto create(gcry_md_hd_t handle) -> pointer;
 
 protected:
     // See base class for documentation.
@@ -91,7 +91,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_gcrypt &operator=(const memory_walker_gcrypt &) = delete;
+    auto operator=(const memory_walker_gcrypt &) -> memory_walker_gcrypt & = delete;
 };
 
 };

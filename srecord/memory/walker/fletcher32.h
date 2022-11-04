@@ -52,13 +52,13 @@ public:
       * The create class method is used to create new dynamically
       * allocated instances of this class.
       */
-    static pointer create();
+    static auto create() -> pointer;
 
     /**
       * The get method is used to get the Fletcher-32 checksum once all memory
       * chunks have been processed by calls to our observe method.
       */
-    unsigned get() const;
+    auto get() const -> unsigned;
 
 protected:
     // See base class for documentation.
@@ -79,7 +79,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_fletcher32 &operator=(const memory_walker_fletcher32 &) = delete;
+    auto operator=(const memory_walker_fletcher32 &) -> memory_walker_fletcher32 & = delete;
 };
 
 };

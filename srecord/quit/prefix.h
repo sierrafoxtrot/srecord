@@ -85,7 +85,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    quit_prefix &operator=(const quit_prefix &) = delete;
+    auto operator=(const quit_prefix &) -> quit_prefix & = delete;
 };
 
 };
