@@ -1,0 +1,15 @@
+---
+Checks: >-
+  -*,
+  abseil-*,
+  portability-*,
+  misc-*,
+  -misc-no-recursion,
+  -misc-non-private-member-variables-in-classes,
+  -misc-redundant-expression,
+
+# All enabled checks shall be reported as error.
+WarningsAsErrors: "*"
+
+# Check all headers of the project.
+HeaderFilterRegex: '.*'

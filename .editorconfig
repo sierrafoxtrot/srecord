@@ -15,7 +15,7 @@ max_line_length = 80
 [*.{html,man,so}]
 max_line_length = 400
 
-[*.{yaml,yml}]
+[*.{yaml,yml,clang-tidy}]
 indent_size = 2
 tab_width = 2
 
