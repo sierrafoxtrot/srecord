@@ -22,8 +22,7 @@
 
 
 srecord::input_file_tektronix_extended::~input_file_tektronix_extended()
-{
-}
+= default;
 
 
 srecord::input_file_tektronix_extended::input_file_tektronix_extended(
@@ -38,15 +37,15 @@ srecord::input_file_tektronix_extended::input_file_tektronix_extended(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_tektronix_extended::create(const std::string &a_file_name)
+auto
+srecord::input_file_tektronix_extended::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_tektronix_extended(a_file_name));
 }
 
 
-int
-srecord::input_file_tektronix_extended::get_nibble(void)
+auto
+srecord::input_file_tektronix_extended::get_nibble() -> int
 {
     int n = inherited::get_nibble();
     nibble_sum += n;
@@ -54,20 +53,23 @@ srecord::input_file_tektronix_extended::get_nibble(void)
 }
 
 
-bool
-srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
+auto
+srecord::input_file_tektronix_extended::read_inner(srecord::record &record) -> bool
 {
     for (;;)
     {
         for (;;)
         {
             int c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 return false;
-            if (c == '%')
+}
+            if (c == '%') {
                 break;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 continue;
+}
             if (!garbage_warning)
             {
                 warning("ignoring garbage lines");
@@ -76,10 +78,12 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
             for (;;)
             {
                 c = get_char();
-                if (c < 0)
+                if (c < 0) {
                     return false;
-                if (c == '\n')
+}
+                if (c == '\n') {
                     break;
+}
             }
         }
         nibble_sum = 0;
@@ -100,8 +104,9 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
         length -= 2;
 
         int addr_len = get_nibble();
-        if (addr_len == 0)
+        if (addr_len == 0) {
             addr_len = 16;
+}
         --length;
         int addr_len_max = 2 * sizeof(srecord::record::address_t);
         if (addr_len > addr_len_max)
@@ -131,8 +136,9 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
             --addr_len;
             --length;
         }
-        if (length & 1)
+        if ((length & 1) != 0) {
             fatal_error("data length invalid (%d is odd)", length);
+}
 
         unsigned char buffer[125];
         for (int j = 0; j * 2 < length; ++j)
@@ -149,8 +155,9 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
                 nibble_sum
             );
         }
-        if (get_char() != '\n')
+        if (get_char() != '\n') {
             fatal_error("end-of-line expected");
+}
 
         srecord::record::type_t type = srecord::record::type_unknown;
         switch (tag)
@@ -179,15 +186,16 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
 }
 
 
-bool
-srecord::input_file_tektronix_extended::read(srecord::record &record)
+auto
+srecord::input_file_tektronix_extended::read(srecord::record &record) -> bool
 {
     for (;;)
     {
         if (!read_inner(record))
         {
-            if (!seen_some_input)
+            if (!seen_some_input) {
                 fatal_error("file contains no data");
+}
             if (!termination_seen)
             {
                 warning("no execution start address record");
@@ -229,8 +237,9 @@ srecord::input_file_tektronix_extended::read(srecord::record &record)
                 warning("data in execution start address record ignored");
                 record.set_length(0);
             }
-            if (termination_seen)
+            if (termination_seen) {
                 warning("redundant execution start address record");
+}
             termination_seen = true;
             break;
         }
@@ -240,17 +249,17 @@ srecord::input_file_tektronix_extended::read(srecord::record &record)
 }
 
 
-const char *
-srecord::input_file_tektronix_extended::get_file_format_name(void)
-    const
+auto
+srecord::input_file_tektronix_extended::get_file_format_name()
+    const -> const char *
 {
     return "Tektronix Extended";
 }
 
 
-int
-srecord::input_file_tektronix_extended::format_option_number(void)
-    const
+auto
+srecord::input_file_tektronix_extended::format_option_number()
+    const -> int
 {
     return arglex_tool::token_tektronix_extended;
 }

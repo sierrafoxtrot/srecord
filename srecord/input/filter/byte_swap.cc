@@ -23,29 +23,28 @@
 
 
 srecord::input_filter_byte_swap::~input_filter_byte_swap()
-{
-}
+= default;
 
 
 srecord::input_filter_byte_swap::input_filter_byte_swap(
         const srecord::input::pointer &arg) :
     srecord::input_filter(arg),
-    buffer(),
+    
     buffer_pos(0),
     mask(1)
 {
 }
 
 
-srecord::input::pointer
-srecord::input_filter_byte_swap::create(const srecord::input::pointer &a_deeper)
+auto
+srecord::input_filter_byte_swap::create(const srecord::input::pointer &a_deeper) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_byte_swap(a_deeper));
 }
 
 
-bool
-srecord::input_filter_byte_swap::read(srecord::record &record)
+auto
+srecord::input_filter_byte_swap::read(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -56,8 +55,9 @@ srecord::input_filter_byte_swap::read(srecord::record &record)
             buffer_pos >= buffer.get_length()
         )
         {
-            if (!srecord::input_filter::read(buffer))
+            if (!srecord::input_filter::read(buffer)) {
                 return false;
+}
             if (buffer.get_type() != srecord::record::type_data)
             {
                 record = buffer;

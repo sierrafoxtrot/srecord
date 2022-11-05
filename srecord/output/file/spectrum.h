@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_spectrum();
+    ~output_file_spectrum() override;
 
 private:
     /**
@@ -47,7 +47,7 @@ private:
       *     The name of the file to be written.  The special name "-"
       *     indicates the standard output is to be used.
       */
-    output_file_spectrum(const std::string &file_name);
+    output_file_spectrum(const std::string &a_filename);
 
 public:
     /**
@@ -57,26 +57,26 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    auto format_name() const -> const char * override;
 
 private:
     /**
@@ -96,17 +96,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_spectrum();
+    output_file_spectrum() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_spectrum(const output_file_spectrum &);
+    output_file_spectrum(const output_file_spectrum &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_spectrum &operator=(const output_file_spectrum &);
+    auto operator=(const output_file_spectrum &) -> output_file_spectrum & = delete;
 };
 
 };

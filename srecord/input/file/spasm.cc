@@ -24,8 +24,7 @@
 
 
 srecord::input_file_spasm::~input_file_spasm()
-{
-}
+= default;
 
 
 srecord::input_file_spasm::input_file_spasm(
@@ -39,30 +38,32 @@ srecord::input_file_spasm::input_file_spasm(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_spasm::create_be(const std::string &a_file_name)
+auto
+srecord::input_file_spasm::create_be(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return create(a_file_name, endian_big);
 }
 
 
-srecord::input_file::pointer
+auto
 srecord::input_file_spasm::create(const std::string &a_file_name,
-    endian_t a_end)
+    endian_t a_end) -> srecord::input_file::pointer
 {
     return pointer(new input_file_spasm(a_file_name, a_end));
 }
 
 
-bool
-srecord::input_file_spasm::read_inner(record &result)
+auto
+srecord::input_file_spasm::read_inner(record &result) -> bool
 {
-    if (peek_char() < 0)
+    if (peek_char() < 0) {
         return false;
+}
 
     int address = get_word_be();
-    if (get_char() != ' ')
+    if (get_char() != ' ') {
         fatal_error("space expected");
+}
     unsigned char data[2];
     if (end == endian_big)
     {
@@ -74,8 +75,9 @@ srecord::input_file_spasm::read_inner(record &result)
         data[0] = get_byte();
         data[1] = get_byte();
     }
-    if (get_char() != '\n')
+    if (get_char() != '\n') {
         fatal_error("end of line expected");
+}
 
     result =
         record
@@ -89,13 +91,14 @@ srecord::input_file_spasm::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_spasm::read(record &result)
+auto
+srecord::input_file_spasm::read(record &result) -> bool
 {
     if (!read_inner(result))
     {
-        if (!seen_some_input)
+        if (!seen_some_input) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;
@@ -103,9 +106,9 @@ srecord::input_file_spasm::read(record &result)
 }
 
 
-const char *
-srecord::input_file_spasm::get_file_format_name(void)
-    const
+auto
+srecord::input_file_spasm::get_file_format_name()
+    const -> const char *
 {
     return
         (
@@ -118,9 +121,9 @@ srecord::input_file_spasm::get_file_format_name(void)
 }
 
 
-int
-srecord::input_file_spasm::format_option_number(void)
-    const
+auto
+srecord::input_file_spasm::format_option_number()
+    const -> int
 {
     return
         (

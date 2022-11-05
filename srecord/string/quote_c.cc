@@ -19,8 +19,8 @@
 #include <srecord/string.h>
 
 
-std::string
-srecord::string_quote_c(const std::string &arg)
+auto
+srecord::string_quote_c(const std::string &arg) -> std::string
 {
     std::string result;
     result += '"';
@@ -55,9 +55,9 @@ srecord::string_quote_c(const std::string &arg)
             break;
 
         default:
-            if (isprint((unsigned char)c))
+            if (isprint((unsigned char)c) != 0) {
                 result += c;
-            else
+            } else
             {
                 result += '\\';
                 result += '0' + ((c >> 6) & 3);

@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_hexdump();
+    ~input_file_hexdump() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -43,17 +43,17 @@ public:
       * @param filename
       *     The name of the file to be read.
       */
-    static pointer create(const std::string &filename);
+    static auto create(const std::string &filename) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(class record &rec);
+    auto read(class record &result) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -79,13 +79,13 @@ private:
       *
       * It will set the #current_token_value instance variable for token_byte
       */
-    token_t get_next_token(void);
+    auto get_next_token() -> token_t;
 
     /**
       * The discard_rest_of_line method is used to
       * discard all characters until the next end of line character.
       */
-    bool discard_rest_of_line(void);
+    auto discard_rest_of_line() -> bool;
 
     /**
       * The address instance variable is used to remember the current
@@ -106,22 +106,22 @@ private:
       * The current_token_value instance variable is used to remember
       * the value of the most recent token_byte seen.
       */
-    unsigned current_token_value;
+    unsigned current_token_value{};
 
     /**
       * The default constructor.  Do not use.
       */
-    input_file_hexdump();
+    input_file_hexdump() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_hexdump(const input_file_hexdump &);
+    input_file_hexdump(const input_file_hexdump &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_hexdump &operator=(const input_file_hexdump &);
+    auto operator=(const input_file_hexdump &) -> input_file_hexdump & = delete;
 };
 
 };

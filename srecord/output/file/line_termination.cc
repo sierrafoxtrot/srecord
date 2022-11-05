@@ -27,8 +27,8 @@ srecord::output_file::line_termination_t
     srecord::output_file::line_termination_native;
 
 
-srecord::output_file::line_termination_t
-srecord::output_file::line_termination_guess()
+auto
+srecord::output_file::line_termination_guess() -> srecord::output_file::line_termination_t
 {
 #if __dos__ || __windows__ || __WINDOWS__ || __CYGWIN__ | _WIN32
     // Perform this test first, so that Cygwin thinks it's on Windows,
@@ -48,8 +48,8 @@ srecord::output_file::line_termination_guess()
 }
 
 
-bool
-srecord::output_file::line_termination_by_name(const std::string &name)
+auto
+srecord::output_file::line_termination_by_name(const std::string &name) -> bool
 {
     struct table_t
     {

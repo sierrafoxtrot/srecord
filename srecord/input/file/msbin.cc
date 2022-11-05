@@ -71,26 +71,27 @@ srecord::input_file_msbin::input_file_msbin(const std::string &a_file_name) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_msbin::create(const std::string &a_file_name)
+auto
+srecord::input_file_msbin::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_msbin(a_file_name));
 }
 
 
-uint32_t
-srecord::input_file_msbin::read_dword_le(void)
+auto
+srecord::input_file_msbin::read_dword_le() -> uint32_t
 {
     unsigned char c[sizeof(uint32_t)];
 
-    for (size_t i = 0; i < sizeof(c); ++i)
+    for (unsigned char & i : c)
     {
         int j = get_char();
-        if (j < 0)
+        if (j < 0) {
             fatal_error("short input file");
+}
 
         assert(j <= std::numeric_limits<unsigned char>::max());
-        c[i] = (unsigned char)j;
+        i = (unsigned char)j;
     }
 
     return record::decode_little_endian(c, sizeof(c));
@@ -98,7 +99,7 @@ srecord::input_file_msbin::read_dword_le(void)
 
 
 void
-srecord::input_file_msbin::read_file_header(void)
+srecord::input_file_msbin::read_file_header()
 {
     // Optional magic
     static const unsigned char Magic[7] =
@@ -109,23 +110,25 @@ srecord::input_file_msbin::read_file_header(void)
     for (size_t i = 0; i < sizeof(Magic); ++i)
     {
         int j = get_char();
-        if (j < 0)
+        if (j < 0) {
             fatal_error("short input file");
+}
 
         assert(j <= std::numeric_limits<unsigned char>::max());
         buff[i] = j;
     }
 
     static_assert(sizeof(buff) >= sizeof(Magic));
-    if (memcmp(Magic, buff, sizeof(Magic)))
+    if (memcmp(Magic, buff, sizeof(Magic)) != 0)
     {
         // Ok, there's no magic in the header. But it's optional anyway.
 
         // Fill up to two dwords
         static_assert(sizeof(buff) == 2 * sizeof(uint32_t));
         int j = get_char();
-        if (j < 0)
+        if (j < 0) {
             fatal_error("short input file");
+}
         buff[sizeof(buff) - 1] = j;
 
         // Read first dword
@@ -152,20 +155,21 @@ srecord::input_file_msbin::read_file_header(void)
 }
 
 
-uint32_t
-srecord::input_file_msbin::checksum(const unsigned char *data, size_t len)
+auto
+srecord::input_file_msbin::checksum(const unsigned char *data, size_t len) -> uint32_t
 {
     uint32_t sum = 0;
 
-    for (size_t i = 0; i < len; ++i)
+    for (size_t i = 0; i < len; ++i) {
         sum += data[i];
+}
 
     return sum;
 }
 
 
-bool
-srecord::input_file_msbin::read(record &result)
+auto
+srecord::input_file_msbin::read(record &result) -> bool
 {
     // Read the file header if we haven't read it yet.
     if (!header_read)
@@ -182,8 +186,9 @@ srecord::input_file_msbin::read(record &result)
         if (peek_char() < 0)
         {
             // Check if we have seen the execution start address record.
-            if (!execution_start_record_seen)
+            if (!execution_start_record_seen) {
                 warning("input file is missing the execution start record");
+}
 
             return false; // end of file
         }
@@ -239,7 +244,7 @@ srecord::input_file_msbin::read(record &result)
             );
         }
 
-        result = record(record::type_execution_start_address, remaining, 0, 0);
+        result = record(record::type_execution_start_address, remaining, nullptr, 0);
 
         // This should be the last record - but if it was not, we try to read
         // further and produce a warning.
@@ -266,8 +271,9 @@ srecord::input_file_msbin::read(record &result)
     {
         assert(c <= std::numeric_limits<unsigned char>::max());
         data[read++] = c;
-        if (read >= to_read)
+        if (read >= to_read) {
             break;
+}
         c = get_char();
         if (c < 0)
         {
@@ -301,25 +307,25 @@ srecord::input_file_msbin::read(record &result)
 }
 
 
-bool
-srecord::input_file_msbin::is_binary(void)
-    const
+auto
+srecord::input_file_msbin::is_binary()
+    const -> bool
 {
     return true;
 }
 
 
-const char *
-srecord::input_file_msbin::get_file_format_name(void)
-    const
+auto
+srecord::input_file_msbin::get_file_format_name()
+    const -> const char *
 {
     return "Windows CE Binary Image Data Format";
 }
 
 
-int
-srecord::input_file_msbin::format_option_number(void)
-    const
+auto
+srecord::input_file_msbin::format_option_number()
+    const -> int
 {
     return arglex_tool::token_msbin;
 }

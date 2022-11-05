@@ -34,9 +34,9 @@ srecord::memory_walker_crc16::memory_walker_crc16(crc16::seed_mode_t seed_mode,
 }
 
 
-srecord::memory_walker_crc16::pointer
+auto
 srecord::memory_walker_crc16::create(crc16::seed_mode_t arg1, bool a_augment,
-    unsigned short polynomial, crc16::bit_direction_t a_bitdir)
+    unsigned short polynomial, crc16::bit_direction_t a_bitdir) -> srecord::memory_walker_crc16::pointer
 {
     return
         pointer
@@ -60,9 +60,9 @@ srecord::memory_walker_crc16::observe(unsigned long, const void *data,
 }
 
 
-unsigned
+auto
 srecord::memory_walker_crc16::get()
-    const
+    const -> unsigned
 {
     return checksum->get();
 }

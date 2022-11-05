@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_c();
+    ~output_file_c() override;
 
 private:
     /**
@@ -59,29 +59,29 @@ public:
       *     The file name to open to write data to.  The name "-" is
       *     understood to mean the standard output.
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    auto format_name() const -> const char * override;
 
 private:
     /**
@@ -213,22 +213,22 @@ private:
       * @param addr
       *     The address to be formatted
       */
-    std::string format_address(unsigned long addr);
+    auto format_address(unsigned long addr) const -> std::string;
 
     /**
       * The default constructor.  Do not use.
       */
-    output_file_c();
+    output_file_c() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_c(const output_file_c &);
+    output_file_c(const output_file_c &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_c &operator=(const output_file_c &);
+    auto operator=(const output_file_c &) -> output_file_c & = delete;
 };
 
 };

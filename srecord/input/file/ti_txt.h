@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_ti_txt();
+    ~input_file_ti_txt() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -45,17 +45,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &result) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -70,7 +70,7 @@ private:
       * The garbage_warning instance variable is used to remember whether
       * a warning has already been issued if the file contains garbage.
       */
-    bool garbage_warning;
+    bool garbage_warning{};
 
     /**
       * The seen_some_input instance variable is used to remember whether
@@ -119,22 +119,22 @@ private:
       * the next symbol.  All the digits of a hexadecimal number are
       * considered a single symbol.
       */
-    void get_next_token(void);
+    void get_next_token();
 
     /**
       * The default constructor.  Do not use.
       */
-    input_file_ti_txt();
+    input_file_ti_txt() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_ti_txt(const input_file_ti_txt &);
+    input_file_ti_txt(const input_file_ti_txt &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_ti_txt &operator=(const input_file_ti_txt &);
+    auto operator=(const input_file_ti_txt &) -> input_file_ti_txt & = delete;
 };
 
 };

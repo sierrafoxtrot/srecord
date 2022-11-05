@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_xor();
+    ~input_filter_xor() override;
 
 private:
     /**
@@ -48,7 +48,7 @@ private:
       * @param value
       *     The value to be bit-wise XORed with each incoming data byte.
       */
-    input_filter_xor(const input::pointer &deeper, int value);
+    input_filter_xor(const input::pointer &a1, int a2);
 
 public:
     /**
@@ -60,11 +60,11 @@ public:
       * @param value
       *     The value to be bit-wise XORed with each incoming data byte.
       */
-    static pointer create(const input::pointer &deeper, int value);
+    static auto create(const input::pointer &deeper, int a_mask) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -76,17 +76,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_xor();
+    input_filter_xor() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_xor(const input_filter_xor &);
+    input_filter_xor(const input_filter_xor &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_xor &operator=(const input_filter_xor &);
+    auto operator=(const input_filter_xor &) -> input_filter_xor & = delete;
 };
 
 };

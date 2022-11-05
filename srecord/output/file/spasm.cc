@@ -22,8 +22,7 @@
 
 
 srecord::output_file_spasm::~output_file_spasm()
-{
-}
+= default;
 
 
 srecord::output_file_spasm::output_file_spasm(
@@ -36,9 +35,9 @@ srecord::output_file_spasm::output_file_spasm(
 }
 
 
-srecord::output::pointer
+auto
 srecord::output_file_spasm::create(const std::string &a_file_name,
-    endian_t a_end)
+    endian_t a_end) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_spasm(a_file_name, a_end));
 }
@@ -48,15 +47,18 @@ void
 srecord::output_file_spasm::write(const srecord::record &record)
 {
     // This format can't do header records or termination records
-    if (record.get_type() != srecord::record::type_data)
+    if (record.get_type() != srecord::record::type_data) {
         return;
+}
 
-    if (!record.address_range_fits_into_n_bits(17))
+    if (!record.address_range_fits_into_n_bits(17)) {
         data_address_too_large(record, 17);
+}
 
     srecord::record::address_t address = record.get_address();
-    if ((address & 1) || (record.get_length() & 1))
+    if (((address & 1) != 0U) || ((record.get_length() & 1) != 0U)) {
         fatal_alignment_error(2);
+}
 
     for (size_t j = 0; j < record.get_length(); j += 2)
     {
@@ -96,16 +98,16 @@ srecord::output_file_spasm::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_spasm::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_spasm::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes == 2);
 }
 
 
-int
+auto
 srecord::output_file_spasm::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -115,9 +117,9 @@ srecord::output_file_spasm::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_spasm::format_name()
-    const
+    const -> const char *
 {
     return "Spasm";
 }

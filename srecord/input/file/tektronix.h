@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_tektronix();
+    ~input_file_tektronix() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -45,17 +45,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -64,27 +64,27 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    input_file_tektronix(const std::string &file_name);
+    input_file_tektronix(const std::string &a_filename);
 
     /**
       * The get_nibble method gets a single hex-digit from input.
       * We override the one in the base class because the checksum is
       * nibble-based, not byte-based.
       */
-    int get_nibble(void);
+    auto get_nibble() -> int override;
 
     /**
       * The get_byte method gets a two hex-digit from input and assembles
       * them (big-endian) into a byte.  We override the one in the base
       * class because the checksum is nibble-based, not byte-based.
       */
-    int get_byte(void);
+    auto get_byte() -> int override;
 
     /**
       * The read_inner method is used to read a single record from
       * the input.  The read method is a wrapper around this method.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * The data_record_count instance variable is used to remember the
@@ -113,17 +113,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_tektronix();
+    input_file_tektronix() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_tektronix(const input_file_tektronix &);
+    input_file_tektronix(const input_file_tektronix &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_tektronix &operator=(const input_file_tektronix &);
+    auto operator=(const input_file_tektronix &) -> input_file_tektronix & = delete;
 };
 
 };

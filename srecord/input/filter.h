@@ -39,22 +39,22 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter();
+    ~input_filter() override;
 
     // See base class for documentation.
-    bool read(class record &record);
+    auto read(class record &record) -> bool override;
 
     // See base class for documentation.
-    std::string filename() const;
+    auto filename() const -> std::string override;
 
     // See base class for documentation.
-    std::string filename_and_line() const;
+    auto filename_and_line() const -> std::string override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    void disable_checksum_validation();
+    void disable_checksum_validation() override;
 
 protected:
     /**
@@ -63,7 +63,7 @@ protected:
       * @param deeper
       *     The deeper input to be filtered.
       */
-    input_filter(input::pointer deeper);
+    input_filter(input::pointer arg);
 
     //
     // I'd like this to be private, but srecord::input_filter_crc16 and
@@ -76,17 +76,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter();
+    input_filter() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter(const input_filter &);
+    input_filter(const input_filter &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter &operator=(const input_filter &);
+    auto operator=(const input_filter &) -> input_filter & = delete;
 };
 
 };

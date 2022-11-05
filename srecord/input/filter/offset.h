@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_offset();
+    ~input_filter_offset() override;
 
 private:
     /**
@@ -49,7 +49,7 @@ private:
       *     The number of bytes to offset the addresses by.
       *     The value may be negative.
       */
-    input_filter_offset(const input::pointer &deeper, long nbytes);
+    input_filter_offset(const input::pointer &a1, long a2);
 
 public:
     /**
@@ -62,11 +62,11 @@ public:
       *     The number of bytes to offset the addresses by.
       *     The value may be negative.
       */
-    static pointer create(const input::pointer &deeper, long nbytes);
+    static auto create(const input::pointer &deeper, long nbytes) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -78,17 +78,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_offset();
+    input_filter_offset() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_offset(const input_filter_offset &);
+    input_filter_offset(const input_filter_offset &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_offset &operator=(const input_filter_offset &);
+    auto operator=(const input_filter_offset &) -> input_filter_offset & = delete;
 };
 
 };

@@ -35,12 +35,12 @@ class output_filter_reblock:
     public output_filter
 {
 public:
-    typedef std::shared_ptr<output_filter_reblock> pointer;
+    using pointer = std::shared_ptr<output_filter_reblock>;
 
     /**
       * The destructor.
       */
-    virtual ~output_filter_reblock();
+    ~output_filter_reblock() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -53,23 +53,23 @@ public:
       *     (that is, to use non-optimal short writes after holes to force
       *     alignment).
       */
-    static pointer create(const output::pointer &deeper, bool align = false);
+    static auto create(const output::pointer &deeper, bool align = false) -> pointer;
 
 protected:
     // See base class for documentation.
-    void write(const record &r);
+    void write(const record &r) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get(void) const;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
 private:
     /**
@@ -137,7 +137,7 @@ private:
       * deeper->preferred_bock_size_get whenever that value could have
       * changed.
       */
-    void track_block_size(void);
+    void track_block_size();
 
     /**
       * The flush_buffer method is used to write the accumulated
@@ -153,17 +153,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_filter_reblock();
+    output_filter_reblock() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_filter_reblock(const output_filter_reblock &);
+    output_filter_reblock(const output_filter_reblock &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_filter_reblock &operator=(const output_filter_reblock &);
+    auto operator=(const output_filter_reblock &) -> output_filter_reblock & = delete;
 };
 
 };

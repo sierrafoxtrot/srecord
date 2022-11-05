@@ -28,7 +28,7 @@
 #ifndef SRECORD_STM32_H
 #define SRECORD_STM32_H
 
-#include <stddef.h>
+#include <cstddef>
 
 namespace srecord
 {
@@ -60,23 +60,23 @@ public:
     /**
       * The assignment operator.
       */
-    stm32 &operator=(const stm32 &);
+    auto operator=(const stm32 &) -> stm32 &;
 
     /**
       * The get method is used to obtain the running value of the cyclic
       * redundancy check.
       */
-    unsigned long get(void) const;
+    auto get() const -> unsigned long;
 
     /**
       * The next method is used to advance the state by one byte.
       */
-    void next(unsigned char c);
+    void next(unsigned char x);
 
     /**
       * The nextbuf method is used to advance the state by a series of bytes.
       */
-    void nextbuf(const void *data, size_t data_size);
+    void nextbuf(const void *data, size_t nbytes);
 
     /**
       * Word size on the STM32
@@ -89,24 +89,24 @@ private:
       * the incoming byte stream is in little-endian order, which is safe
       * considering this is for the STM32F series MPUs.
       */
-    void generator(void);
+    void generator();
 
     /**
       * The state instance variable is used to remember the running
       * value of the 32-bit cyclic redundancy check.
       */
-    unsigned long state;
+    unsigned long state{0xFFFFFFFF};
 
     /**
       * Current counter of the byte feeding
       */
-    size_t cnt;
+    size_t cnt{0};
 
     /**
       * Buffer the incoming stream to build a word to feed to the
       * CRC generator.
       */
-    unsigned char buf[wordsize];
+    unsigned char buf[wordsize]{};
 };
 
 };

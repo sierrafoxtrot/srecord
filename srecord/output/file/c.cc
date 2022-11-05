@@ -27,19 +27,20 @@
 #include <srecord/record.h>
 
 
-static std::string
-toupper(const std::string &s)
+static auto
+toupper(const std::string &s) -> std::string
 {
     char *buffer = new char[s.size() + 1];
     char *bp = buffer;
     const char *cp = s.c_str();
-    while (*cp)
+    while (*cp != 0)
     {
         unsigned char c = *cp++;
-        if (islower(c))
+        if (islower(c) != 0) {
             *bp++ = toupper(c);
-        else
+        } else {
             *bp++ = c;
+}
     }
     std::string result(buffer, bp - buffer);
     delete [] buffer;
@@ -47,21 +48,22 @@ toupper(const std::string &s)
 }
 
 
-static std::string
-identifier(const std::string &s)
+static auto
+identifier(const std::string &s) -> std::string
 {
     char *buffer = new char[s.size() + 1];
     char *bp = buffer;
     const char *cp = s.c_str();
-    while (*cp)
+    while (*cp != 0)
     {
         unsigned char c = *cp++;
-        if (islower(c))
+        if (islower(c) != 0) {
             *bp++ = toupper(c);
-        else if (isalnum(c))
+        } else if (isalnum(c) != 0) {
             *bp++ = c;
-        else
+        } else {
             *bp++ = '_';
+}
     }
     std::string result(buffer, bp - buffer);
     delete [] buffer;
@@ -77,12 +79,13 @@ srecord::output_file_c::~output_file_c()
     emit_header();
     if (range.empty())
     {
-        if (output_word)
+        if (output_word) {
             emit_word(0xFFFF);
-        else
+        } else {
             emit_byte(0xFF);
+}
     }
-    if (column)
+    if (column != 0)
     {
         put_char('\n');
         column = 0;
@@ -96,8 +99,9 @@ srecord::output_file_c::~output_file_c()
         // emit list of section addresses
         //
         put_string("\n");
-        if (constant)
+        if (constant) {
             put_string("const ");
+}
         put_stringf("unsigned long %s_address[] =\n{\n", prefix.c_str());
         interval x = range;
         while (!x.empty())
@@ -110,12 +114,12 @@ srecord::output_file_c::~output_file_c()
             std::string s = format_address(address);
             int len = s.size();
 
-            if (column && column + len + 2 > line_length)
+            if ((column != 0) && column + len + 2 > line_length)
             {
                 put_char('\n');
                 column = 0;
             }
-            if (column)
+            if (column != 0)
             {
                 put_char(' ');
                 ++column;
@@ -125,7 +129,7 @@ srecord::output_file_c::~output_file_c()
             put_char(',');
             ++column;
         }
-        if (column)
+        if (column != 0)
         {
             put_char('\n');
             column = 0;
@@ -138,8 +142,9 @@ srecord::output_file_c::~output_file_c()
         //
         if (output_word)
         {
-            if (constant)
+            if (constant) {
                 put_string("const ");
+}
             put_stringf("unsigned long %s_word_address[] =\n{\n",
                         prefix.c_str());
             x = range;
@@ -153,12 +158,12 @@ srecord::output_file_c::~output_file_c()
                 std::string s = format_address(address);
                 int len = s.size();
 
-                if (column && column + len + 2 > line_length)
+                if ((column != 0) && column + len + 2 > line_length)
                 {
                     put_char('\n');
                     column = 0;
                 }
-                if (column)
+                if (column != 0)
                 {
                     put_char(' ');
                     ++column;
@@ -168,7 +173,7 @@ srecord::output_file_c::~output_file_c()
                 put_char(',');
                 ++column;
             }
-            if (column)
+            if (column != 0)
             {
                 put_char('\n');
                 column = 0;
@@ -179,8 +184,9 @@ srecord::output_file_c::~output_file_c()
         //
         // emit list of section lengths
         //
-        if (constant)
+        if (constant) {
             put_string("const ");
+}
         put_stringf
         (
             "unsigned long %s_length_of_sections[] =\n{\n",
@@ -195,17 +201,18 @@ srecord::output_file_c::~output_file_c()
             unsigned long length = x2.get_highest() - x2.get_lowest();
             ++nsections;
 
-            if (output_word)
+            if (output_word) {
                 length /= 2;
+}
             std::string s = format_address(length);
             int len = s.size();
 
-            if (column && column + len + 2 > line_length)
+            if ((column != 0) && column + len + 2 > line_length)
             {
                 put_char('\n');
                 column = 0;
             }
-            if (column)
+            if (column != 0)
             {
                 put_char(' ');
                 ++column;
@@ -215,7 +222,7 @@ srecord::output_file_c::~output_file_c()
             put_char(',');
             ++column;
         }
-        if (column)
+        if (column != 0)
         {
             put_char('\n');
             column = 0;
@@ -225,8 +232,9 @@ srecord::output_file_c::~output_file_c()
         //
         // emit the number of sections
         //
-        if (constant)
+        if (constant) {
             put_string("const ");
+}
         put_string("unsigned long ");
         put_string(prefix.c_str());
         put_string("_sections    = ");
@@ -236,8 +244,9 @@ srecord::output_file_c::~output_file_c()
 
     if (enable_goto_addr_flag)
     {
-        if (constant)
+        if (constant) {
             put_string("const ");
+}
         put_stringf
         (
             "unsigned long %s_termination = %s;\n",
@@ -247,16 +256,18 @@ srecord::output_file_c::~output_file_c()
     }
     if (enable_footer_flag)
     {
-        if (constant)
+        if (constant) {
             put_string("const ");
+}
         put_stringf
         (
             "unsigned long %s_start       = %s;\n",
             prefix.c_str(),
             format_address(range.get_lowest()).c_str()
         );
-        if (constant)
+        if (constant) {
             put_string("const ");
+}
         put_stringf
         (
             "unsigned long %s_finish      = %s;\n",
@@ -265,8 +276,9 @@ srecord::output_file_c::~output_file_c()
         );
     }
 
-    if (constant)
+    if (constant) {
         put_string("const ");
+}
     put_stringf
     (
         "unsigned long %s_length      = %s;\n",
@@ -318,16 +330,18 @@ srecord::output_file_c::~output_file_c()
     {
         std::string insulation = identifier(include_file_name);
         FILE *fp = fopen(include_file_name.c_str(), "w");
-        if (!fp)
+        if (fp == nullptr) {
             fatal_error_errno("open %s", include_file_name.c_str());
+}
         fprintf(fp, "#ifndef %s\n", insulation.c_str());
         fprintf(fp, "#define %s\n", insulation.c_str());
         fprintf(fp, "\n");
         if (enable_goto_addr_flag)
         {
             fprintf(fp, "extern ");
-            if (constant)
+            if (constant) {
                 fprintf(fp, "const ");
+}
             fprintf
             (
                 fp,
@@ -338,75 +352,87 @@ srecord::output_file_c::~output_file_c()
         if (enable_footer_flag)
         {
             fprintf(fp, "extern ");
-            if (constant)
+            if (constant) {
                 fprintf(fp, "const ");
+}
             fprintf(fp, "unsigned long %s_start;\n", prefix.c_str());
             fprintf(fp, "extern ");
-            if (constant)
+            if (constant) {
                 fprintf(fp, "const ");
+}
             fprintf(fp, "unsigned long %s_finish;\n", prefix.c_str());
         }
         fprintf(fp, "extern ");
-        if (constant)
+        if (constant) {
             fprintf(fp, "const ");
+}
         fprintf(fp, "unsigned long %s_length;\n", prefix.c_str());
         if (section_style)
         {
             fprintf(fp, "extern ");
-            if (constant)
+            if (constant) {
                 fprintf(fp, "const ");
+}
             fprintf(fp, "unsigned long %s_sections;\n", prefix.c_str());
         }
         fprintf(fp, "extern ");
-        if (constant)
+        if (constant) {
             fprintf(fp, "const ");
+}
         fprintf(fp, "unsigned ");
-        if (output_word)
+        if (output_word) {
             fprintf(fp, "short");
-        else
+        } else {
             fprintf(fp, "char");
+}
         fprintf(fp, " %s[];\n", prefix.c_str());
         if (section_style)
         {
             fprintf(fp, "extern ");
-            if (constant)
+            if (constant) {
                 fprintf(fp, "const ");
+}
             fprintf(fp, "unsigned long");
             fprintf(fp, " %s_address[];\n", prefix.c_str());
             if (output_word)
             {
                 fprintf(fp, "extern ");
-                if (constant)
+                if (constant) {
                     fprintf(fp, "const ");
+}
                 fprintf(fp, "unsigned long");
                 fprintf(fp, " %s_word_address[];\n", prefix.c_str());
             }
             fprintf(fp, "extern ");
-            if (constant)
+            if (constant) {
                 fprintf(fp, "const ");
+}
             fprintf(fp, "unsigned long");
             fprintf(fp, " %s_length_of_sections[];\n", prefix.c_str());
         }
         fprintf(fp, "\n");
         fprintf(fp, "#endif /* %s */\n", insulation.c_str());
 
-        if (fclose(fp))
+        if (fclose(fp) != 0) {
             fatal_error_errno("write %s", include_file_name.c_str());
+}
     }
 }
 
 
-static const char *
-memrchr(const char *data, char c, size_t len)
+static auto
+memrchr(const char *data, char c, size_t len) -> const char *
 {
-    if (!data)
-        return 0;
-    const char *result = 0;
+    if (data == nullptr) {
+        return nullptr;
+}
+    const char *result = nullptr;
     while (len > 0)
     {
         const char *p = (const char *)memchr(data, c, len);
-        if (!p)
+        if (p == nullptr) {
             break;
+}
         result = p;
         size_t chunk = p - data + 1;
         data += chunk;
@@ -416,24 +442,28 @@ memrchr(const char *data, char c, size_t len)
 }
 
 
-static std::string
-build_include_file_name(const std::string &filename)
+static auto
+build_include_file_name(const std::string &filename) -> std::string
 {
     const char *fn = filename.c_str();
     // Watch out for out base class adding a line number.
     const char *colon = strstr(fn, ": ");
-    if (!colon)
+    if (colon == nullptr) {
         colon = fn + strlen(fn);
+}
     const char *slash = memrchr(fn, '/', colon - fn);
-    if (!slash)
+    if (slash == nullptr) {
         slash = memrchr(fn, '\\', colon - fn);
-    if (slash)
+}
+    if (slash != nullptr) {
         slash++;
-    else
+    } else {
         slash = fn;
+}
     const char *ep = memrchr(slash, '.', colon - slash);
-    if (!ep)
+    if (ep == nullptr) {
         ep = colon;
+}
     return (std::string(fn, ep - fn) + ".h");
 }
 
@@ -441,8 +471,7 @@ build_include_file_name(const std::string &filename)
 srecord::output_file_c::output_file_c(const std::string &a_file_name) :
     srecord::output_file(a_file_name),
     prefix("eprom"),
-    header_prefix(""),
-    header_postfix(""),
+    
     taddr(0),
     header_done(false),
     column(0),
@@ -459,8 +488,8 @@ srecord::output_file_c::output_file_c(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_c::create(const std::string &a_file_name)
+auto
+srecord::output_file_c::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_c(a_file_name));
 }
@@ -554,20 +583,23 @@ srecord::output_file_c::command_line(srecord::arglex_tool *cmdln)
 void
 srecord::output_file_c::emit_header()
 {
-    if (header_done)
+    if (header_done) {
         return;
+}
 
     if (header_prefix.length() > 0)
     {
         put_string(header_prefix.c_str());
         put_string(" ");
     }
-    if (constant)
+    if (constant) {
         put_stringf("const ");
-    if (output_word)
+}
+    if (output_word) {
         put_string("unsigned short");
-    else
+    } else {
         put_string("unsigned char");
+}
     put_char(' ');
     put_string(prefix.c_str());
     put_string("[] ");
@@ -586,18 +618,19 @@ void
 srecord::output_file_c::emit_byte(int n)
 {
     char buffer[30];
-    if (hex_style)
+    if (hex_style) {
         snprintf(buffer, sizeof(buffer), "0x%2.2X", (unsigned char)n);
-    else
+    } else {
         snprintf(buffer, sizeof(buffer), "%u", (unsigned char)n);
+}
     int len = strlen(buffer);
 
-    if (column && column + 2 + len > line_length)
+    if ((column != 0) && column + 2 + len > line_length)
     {
         put_char('\n');
         column = 0;
     }
-    if (column)
+    if (column != 0)
     {
         put_char(' ');
         ++column;
@@ -613,18 +646,19 @@ void
 srecord::output_file_c::emit_word(unsigned int n)
 {
     char buffer[30];
-    if (hex_style)
+    if (hex_style) {
         snprintf(buffer, sizeof(buffer), "0x%4.4X", (unsigned short)n);
-    else
+    } else {
         snprintf(buffer, sizeof(buffer), "%u", (unsigned short)n);
+}
     int len = strlen(buffer);
 
-    if (column && column + 2 + len > line_length)
+    if ((column != 0) && column + 2 + len > line_length)
     {
         put_char('\n');
         column = 0;
     }
-    if (column)
+    if (column != 0)
     {
         put_char(' ');
         ++column;
@@ -636,14 +670,15 @@ srecord::output_file_c::emit_word(unsigned int n)
 }
 
 
-std::string
-srecord::output_file_c::format_address(unsigned long addr)
+auto
+srecord::output_file_c::format_address(unsigned long addr) const -> std::string
 {
     char buffer[30];
-    if (hex_style)
+    if (hex_style) {
         snprintf(buffer, sizeof(buffer), "0x%0*lX", address_length * 2, addr);
-    else
+    } else {
         snprintf(buffer, sizeof(buffer), "%lu", addr);
+}
     return buffer;
 }
 
@@ -671,13 +706,15 @@ srecord::output_file_c::write(const srecord::record &record)
             while (cp < ep)
             {
                 unsigned char c = *cp++;
-                if (isprint(c) || isspace(c))
+                if ((isprint(c) != 0) || (isspace(c) != 0)) {
                     put_char(c);
-                else
+                } else {
                     put_stringf("\\%o", c);
+}
                 // make sure we don't end the comment
-                if (c == '*' && cp < ep && *cp == '/')
+                if (c == '*' && cp < ep && *cp == '/') {
                     put_char(' ');
+}
             }
             put_string(" */\n");
         }
@@ -687,8 +724,9 @@ srecord::output_file_c::write(const srecord::record &record)
         emit_header();
         if (output_word)
         {
-            if ((record.get_address() & 1) || (record.get_length() & 1))
+            if (((record.get_address() & 1) != 0U) || ((record.get_length() & 1) != 0U)) {
                 fatal_alignment_error(2);
+}
 
             unsigned long min = record.get_address();
             unsigned long max = record.get_address() + record.get_length();
@@ -778,34 +816,37 @@ srecord::output_file_c::address_length_set(int n)
 }
 
 
-bool
-srecord::output_file_c::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_c::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if (output_word && (nbytes & 1))
+}
+    if (output_word && ((nbytes & 1) != 0)) {
         return false;
+}
     return true;
 }
 
 
-int
+auto
 srecord::output_file_c::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Use the largest we can get,
     // but be careful about words.
     //
-    if (output_word)
+    if (output_word) {
         return (srecord::record::max_data_length & ~1);
+}
     return srecord::record::max_data_length;
 }
 
 
-const char *
+auto
 srecord::output_file_c::format_name()
-    const
+    const -> const char *
 {
     return (output_word ? "C-Array (16-bit)" : "C-Array (8-bit)");
 }

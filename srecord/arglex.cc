@@ -18,10 +18,10 @@
 
 #include <cassert>
 #include <cctype>
-#include <cstring>
+#include <cerrno>
 #include <cstdio>
 #include <cstdlib>
-#include <errno.h>
+#include <cstring>
 #include <iostream>
 #include <unistd.h>
 
@@ -50,22 +50,23 @@ static const srecord::arglex::table_ty default_table[] =
 
 
 srecord::arglex::arglex() :
-    usage_tail_(0)
+    usage_tail_(nullptr)
 {
     table_set(default_table);
 }
 
 
 srecord::arglex::arglex(int ac, char **av) :
-    usage_tail_(0)
+    usage_tail_(nullptr)
 {
     progname_set(av[0]);
     for (int j = 1; j < ac; ++j)
     {
-        if (av[j][0] == '@')
+        if (av[j][0] == '@') {
             read_arguments_file(av[j] + 1);
-        else
-            arguments.push_back(av[j]);
+        } else {
+            arguments.emplace_back(av[j]);
+}
     }
     table_set(default_table);
 }
@@ -75,20 +76,23 @@ void
 srecord::arglex::read_arguments_file(const char *filename)
 {
     FILE *fp = fopen(filename, "r");
-    if (!fp)
+    if (fp == nullptr) {
         quit_default.fatal_error_errno("open \"%s\"", filename);
+}
     for (;;)
     {
         int sc = getc(fp);
-        if (sc == EOF)
+        if (sc == EOF) {
             break;
+}
         unsigned char c = sc;
 
         //
         // Ignore white space between words.
         //
-        if (isspace(c))
+        if (isspace(c) != 0) {
             continue;
+}
 
         //
         // Ignore comments
@@ -98,8 +102,9 @@ srecord::arglex::read_arguments_file(const char *filename)
             for (;;)
             {
                 sc = getc(fp);
-                if (sc == EOF || sc == '\n')
+                if (sc == EOF || sc == '\n') {
                     break;
+}
             }
             continue;
         }
@@ -107,14 +112,17 @@ srecord::arglex::read_arguments_file(const char *filename)
         char *bp = buffer;
         for (;;)
         {
-            if (bp < buffer + sizeof(buffer) - 1)
+            if (bp < buffer + sizeof(buffer) - 1) {
                 *bp++ = c;
+}
             sc = getc(fp);
-            if (sc == EOF)
+            if (sc == EOF) {
                 break;
+}
             c = sc;
-            if (isspace(c))
+            if (isspace(c) != 0) {
                 break;
+}
             if (c == '#')
             {
                 ungetc(c, fp);
@@ -122,18 +130,18 @@ srecord::arglex::read_arguments_file(const char *filename)
             }
         }
         *bp = 0;
-        if (buffer[0] == '@')
+        if (buffer[0] == '@') {
             read_arguments_file(buffer + 1);
-        else
-            arguments.push_back(std::string(buffer, bp - buffer));
+        } else {
+            arguments.emplace_back(buffer, bp - buffer);
+}
     }
     fclose(fp);
 }
 
 
 srecord::arglex::~arglex()
-{
-}
+= default;
 
 
 void
@@ -146,23 +154,25 @@ srecord::arglex::table_set(const table_ty *tp)
 static const char *partial;
 
 
-bool
-srecord::arglex::compare(const char *formal, const char *actual)
+auto
+srecord::arglex::compare(const char *formal, const char *actual) -> bool
 {
     for (;;)
     {
         unsigned char ac = *actual++;
-        if (isupper(ac))
+        if (isupper(ac) != 0) {
             ac = tolower(ac);
+}
         unsigned char fc = *formal++;
         switch (fc)
         {
         case 0:
-            return !ac;
+            return ac == 0U;
 
         case '_':
-            if (ac == '-')
+            if (ac == '-') {
                 break;
+}
             // fall through...
 
         case 'a': case 'b': case 'c': case 'd': case 'e':
@@ -174,20 +184,23 @@ srecord::arglex::compare(const char *formal, const char *actual)
             //
             // optional characters
             //
-            if (ac == fc && compare(formal, actual))
+            if (ac == fc && compare(formal, actual)) {
                 return true;
+}
 
             //
             // skip forward to next
             // mandatory character, or after '_'
             //
-            while (islower(*formal))
+            while (islower(*formal) != 0) {
                 ++formal;
+}
             if (*formal == '_')
             {
                 ++formal;
-                if (ac == '_' || ac == '-')
+                if (ac == '_' || ac == '-') {
                     ++actual;
+}
             }
             --actual;
             break;
@@ -198,14 +211,16 @@ srecord::arglex::compare(const char *formal, const char *actual)
             // check for a match match of the stuff after
             // the '*', too, a la glob.
             //
-            if (!ac)
+            if (ac == 0U) {
                 return false;
+}
             partial = actual - 1;
             return true;
 
         case '\\':
-            if (actual[-1] != *formal++)
+            if (actual[-1] != *formal++) {
                 return false;
+}
             break;
 
         case 'A': case 'B': case 'C': case 'D': case 'E':
@@ -221,8 +236,9 @@ srecord::arglex::compare(const char *formal, const char *actual)
             //
             // mandatory characters
             //
-            if (fc != ac)
+            if (fc != ac) {
                 return false;
+}
             break;
         }
     }
@@ -258,10 +274,10 @@ srecord::arglex::compare(const char *formal, const char *actual)
 //              non-zero if is a number.
 //
 
-static int
-is_a_number(const char *s, long &n)
+static auto
+is_a_number(const char *s, long &n) -> int
 {
-    int         sign;
+    int         sign = 0;
 
     n = 0;
     switch (*s)
@@ -283,7 +299,7 @@ is_a_number(const char *s, long &n)
     switch (*s)
     {
     case '0':
-        if ((s[1] == 'x' || s[1] == 'X') && s[2])
+        if ((s[1] == 'x' || s[1] == 'X') && (s[2] != 0))
         {
             s += 2;
             for (;;)
@@ -344,15 +360,16 @@ is_a_number(const char *s, long &n)
 default:
         return 0;
     }
-    if (*s)
+    if (*s != 0) {
         return 0;
+}
     n *= sign;
     return 1;
 }
 
 
-static bool
-starts_with(const std::string &haystack, const std::string &needle)
+static auto
+starts_with(const std::string &haystack, const std::string &needle) -> bool
 {
     return
         (
@@ -363,8 +380,8 @@ starts_with(const std::string &haystack, const std::string &needle)
 }
 
 
-static bool
-ends_with(const std::string &haystack, const std::string &needle)
+static auto
+ends_with(const std::string &haystack, const std::string &needle) -> bool
 {
     return
         (
@@ -389,7 +406,7 @@ deprecated_warning(const char *deprecated_name, const char *preferred_name)
 {
     srecord::quit_default.warning
     (
-        "option \"%s\" is deprecated, please use \"%s\" instead",
+        R"(option "%s" is deprecated, please use "%s" instead)",
         deprecated_name,
         preferred_name
     );
@@ -419,12 +436,12 @@ deprecated_warning(const char *deprecated_name, const char *preferred_name)
 //      Must call arglex_init before this function is called.
 //
 
-int
-srecord::arglex::token_next(void)
+auto
+srecord::arglex::token_next() -> int
 {
-    const table_ty  *tp;
+    const table_ty  *tp = nullptr;
     const table_ty  *hit[20];
-    int             nhit;
+    int             nhit = 0;
 
     std::string arg;
     if (!pushback.empty())
@@ -454,9 +471,9 @@ srecord::arglex::token_next(void)
         if (arg[0] == '-' && arg[1] != '=')
         {
             const char *eqp = strchr(arg.c_str(), '=');
-            if (eqp)
+            if (eqp != nullptr)
             {
-                pushback.push_back(eqp + 1);
+                pushback.emplace_back(eqp + 1);
                 arg = std::string(arg.c_str(), eqp - arg.c_str());
             }
         }
@@ -473,16 +490,17 @@ srecord::arglex::token_next(void)
         &&
             arg[1] == '-'
         &&
-            !is_a_number(arg.c_str() + 1, value_number_)
-        )
+            (is_a_number(arg.c_str() + 1, value_number_) == 0)
+        ) {
             arg = std::string(arg.c_str() + 1);
+}
     }
     value_string_ = arg;
 
     //
     // see if it is a number
     //
-    if (is_a_number(arg.c_str(), value_number_))
+    if (is_a_number(arg.c_str(), value_number_) != 0)
     {
         token = arglex::token_number;
         return token;
@@ -492,18 +510,15 @@ srecord::arglex::token_next(void)
     // scan the tables to see what it matches
     //
     nhit = 0;
-    partial = 0;
+    partial = nullptr;
     for
-    (
-        table_ptr_vec_t::iterator it = tables.begin();
-        it != tables.end();
-        ++it
-    )
+    (auto & table : tables)
     {
-        for (tp = *it; tp->name; ++tp)
+        for (tp = table; tp->name != nullptr; ++tp)
         {
-            if (compare(tp->name, arg.c_str()))
+            if (compare(tp->name, arg.c_str())) {
                 hit[nhit++] = tp;
+}
 
             // big endian deprecated variants
             assert(!starts_with(tp->name, "-Big_Endian_"));
@@ -544,10 +559,11 @@ srecord::arglex::token_next(void)
         //
         // not found in the tables
         //
-        if (value_string_[0] == '-')
+        if (value_string_[0] == '-') {
             token = arglex::token_option;
-        else
+        } else {
             token = arglex::token_string;
+}
         break;
 
     default:
@@ -559,8 +575,9 @@ srecord::arglex::token_next(void)
             std::string possibilities = hit[0]->name;
             for (int k = 1; k < nhit; ++k)
             {
-                if (hit[0]->token != hit[k]->token)
+                if (hit[0]->token != hit[k]->token) {
                     all_same = false;
+}
                 possibilities += ", ";
                 possibilities += hit[k]->name;
             }
@@ -578,10 +595,10 @@ srecord::arglex::token_next(void)
         // fall through...
 
     case 1:
-        if (partial)
+        if (partial != nullptr)
         {
-            pushback.push_back(partial);
-            partial = 0;
+            pushback.emplace_back(partial);
+            partial = nullptr;
         }
         value_string_ = hit[0]->name;
         token = hit[0]->token;
@@ -604,13 +621,8 @@ srecord::arglex::check_deprecated(const std::string &actual)
     const
 {
     for
-    (
-        deprecated_options_t::const_iterator it = deprecated_options.begin();
-        it != deprecated_options.end();
-        ++it
-    )
+    (auto formal : deprecated_options)
     {
-        std::string formal = *it;
         if (compare(formal.c_str(), actual.c_str()))
         {
             deprecated_warning(formal.c_str(), token_name(token));
@@ -619,9 +631,9 @@ srecord::arglex::check_deprecated(const std::string &actual)
 }
 
 
-const char *
+auto
 srecord::arglex::token_name(int n)
-    const
+    const -> const char *
 {
     switch (n)
     {
@@ -644,16 +656,13 @@ srecord::arglex::token_name(int n)
         break;
     }
     for
-    (
-        table_ptr_vec_t::const_iterator it = tables.begin();
-        it != tables.end();
-        ++it
-    )
+    (const auto *tp : tables)
     {
-        for (const table_ty *tp = *it; tp->name; ++tp)
+        for (; tp->name != nullptr; ++tp)
         {
-            if (tp->token == n)
+            if (tp->token == n) {
                 return tp->name;
+}
         }
     }
     return "unknown command line token";
@@ -662,11 +671,12 @@ srecord::arglex::token_name(int n)
 
 void
 srecord::arglex::help(const char *name)
-    const
+    
 {
-    if (!name)
+    if (name == nullptr) {
         name = progname_get();
-    const char *cmd[3] = { "man", name, 0 };
+}
+    const char *cmd[3] = { "man", name, nullptr };
     execvp(cmd[0], (char *const *)cmd);
     std::cerr << cmd[0] << ": " << strerror(errno) << std::endl;
     exit(1);
@@ -674,8 +684,8 @@ srecord::arglex::help(const char *name)
 
 
 void
-srecord::arglex::version(void)
-    const
+srecord::arglex::version()
+    
 {
     print_version();
     exit(0);
@@ -683,7 +693,7 @@ srecord::arglex::version(void)
 
 
 void
-srecord::arglex::license(void)
+srecord::arglex::license()
     const
 {
     help("srec_license");
@@ -691,7 +701,7 @@ srecord::arglex::license(void)
 
 
 void
-srecord::arglex::bad_argument(void)
+srecord::arglex::bad_argument()
     const
 {
     switch (token_cur())
@@ -724,8 +734,8 @@ srecord::arglex::bad_argument(void)
 }
 
 
-int
-srecord::arglex::token_first(void)
+auto
+srecord::arglex::token_first() -> int
 {
 #if 1
     // We probably don't need to do this all the time.
@@ -739,20 +749,23 @@ srecord::arglex::token_first(void)
         return token_cur();
 
     case token_help:
-        if (token_next() != token_eoln)
+        if (token_next() != token_eoln) {
             bad_argument();
+}
         help();
         break;
 
     case token_version:
-        if (token_next() != token_eoln)
+        if (token_next() != token_eoln) {
             bad_argument();
+}
         version();
         break;
 
     case token_license:
-        if (token_next() != token_eoln)
+        if (token_next() != token_eoln) {
             bad_argument();
+}
         license();
         break;
     }
@@ -767,18 +780,19 @@ srecord::arglex::usage_tail_set(const char *s)
 }
 
 
-const char *
-srecord::arglex::usage_tail_get(void)
-    const
+auto
+srecord::arglex::usage_tail_get()
+    const -> const char *
 {
-    if (!usage_tail_)
+    if (usage_tail_ == nullptr) {
         usage_tail_ = "<filename>...";
+}
     return usage_tail_;
 }
 
 
 void
-srecord::arglex::usage(void)
+srecord::arglex::usage()
     const
 {
     std::cerr << "Usage: " << progname_get() << " [ <option>... ] "
@@ -792,7 +806,7 @@ srecord::arglex::usage(void)
 
 
 void
-srecord::arglex::default_command_line_processing(void)
+srecord::arglex::default_command_line_processing()
 {
     bad_argument();
 }

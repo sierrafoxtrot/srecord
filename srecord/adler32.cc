@@ -20,26 +20,21 @@
 
 
 srecord::adler32::~adler32()
-{
-}
+= default;
 
 
-srecord::adler32::adler32() :
-    sum_a(1),
-    sum_b(0)
-{
-}
+srecord::adler32::adler32() 
+    
+= default;
 
 
-srecord::adler32::adler32(const adler32 &rhs) :
-    sum_a(rhs.sum_a),
-    sum_b(rhs.sum_b)
-{
-}
+srecord::adler32::adler32(const adler32 &rhs) 
+    
+= default;
 
 
-srecord::adler32 &
-srecord::adler32::operator=(const adler32 &rhs)
+auto
+srecord::adler32::operator=(const adler32 &rhs) -> srecord::adler32 &
 {
     if (this != &rhs)
     {
@@ -50,9 +45,9 @@ srecord::adler32::operator=(const adler32 &rhs)
 }
 
 
-unsigned long
+auto
 srecord::adler32::get()
-    const
+    const -> unsigned long
 {
     return ((((unsigned long)sum_b) << 16) | sum_a);
 }
@@ -70,7 +65,7 @@ srecord::adler32::next(unsigned char c)
 void
 srecord::adler32::nextbuf(const void *data, size_t nbytes)
 {
-    const unsigned char *dp = (const unsigned char *)data;
+    const auto *dp = (const unsigned char *)data;
     while (nbytes > 0)
     {
         next(*dp);

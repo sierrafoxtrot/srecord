@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_split::~input_filter_split()
-{
-}
+= default;
 
 
 srecord::input_filter_split::input_filter_split(const input::pointer &a1,
@@ -32,7 +31,7 @@ srecord::input_filter_split::input_filter_split(const input::pointer &a1,
     modulus(a2),
     offset(a2 - a3),
     width(a4),
-    buffer(),
+    
     buffer_pos(0)
 {
     //
@@ -43,16 +42,16 @@ srecord::input_filter_split::input_filter_split(const input::pointer &a1,
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_split::create(const srecord::input::pointer &a_deeper,
-    int a2, int a3, int a4)
+    int a2, int a3, int a4) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_split(a_deeper, a2, a3, a4));
 }
 
 
-bool
-srecord::input_filter_split::read(srecord::record &record)
+auto
+srecord::input_filter_split::read(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -63,8 +62,9 @@ srecord::input_filter_split::read(srecord::record &record)
             buffer_pos >= buffer.get_length()
         )
         {
-            if (!srecord::input_filter::read(buffer))
+            if (!srecord::input_filter::read(buffer)) {
                 return false;
+}
             if (buffer.get_type() != srecord::record::type_data)
             {
                 record = buffer;

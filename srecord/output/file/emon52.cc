@@ -36,8 +36,8 @@ srecord::output_file_emon52::output_file_emon52(
 }
 
 
-srecord::output::pointer
-srecord::output_file_emon52::create(const std::string &a_file_name)
+auto
+srecord::output_file_emon52::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_emon52(a_file_name));
 }
@@ -53,10 +53,12 @@ srecord::output_file_emon52::write(const srecord::record & record)
         break;
 
     case srecord::record::type_data:
-        if (record.get_length() < 1)
+        if (record.get_length() < 1) {
             return;
-        if (!record.address_range_fits_into_n_bits(16))
+}
+        if (!record.address_range_fits_into_n_bits(16)) {
             data_address_too_large(record, 16);
+}
         put_byte(record.get_length());
         put_char(' ');
         put_word_be(record.get_address());
@@ -97,17 +99,19 @@ srecord::output_file_emon52::line_length_set(int linlen)
     //
     // Constrain based on the file format.
     //
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    else if (n > 255)
+    } else if (n > 255) {
         n = 255;
+}
 
     //
     // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srecord::record::max_data_length)
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
 }
 
@@ -119,26 +123,27 @@ srecord::output_file_emon52::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_emon52::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_emon52::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }
 
 
-int
-srecord::output_file_emon52::preferred_block_size_get() const
+auto
+srecord::output_file_emon52::preferred_block_size_get() const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_emon52::format_name()
-    const
+    const -> const char *
 {
     return "Emon52";
 }

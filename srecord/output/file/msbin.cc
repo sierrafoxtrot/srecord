@@ -20,6 +20,7 @@
 //
 
 #include <cassert>
+#include <memory>
 
 #include <srecord/output/file/msbin.h>
 
@@ -61,8 +62,8 @@ srecord::output_file_msbin::output_file_msbin(
 }
 
 
-srecord::output::pointer
-srecord::output_file_msbin::create(const std::string &a_file_name)
+auto
+srecord::output_file_msbin::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_msbin(a_file_name));
 }
@@ -75,18 +76,20 @@ srecord::output_file_msbin::write_dword_le(uint32_t d)
 
     srecord::record::encode_little_endian(c, d, sizeof(c));
 
-    for (size_t i = 0; i < sizeof(c); ++i)
-        put_char(c[i]);
+    for (unsigned char i : c) {
+        put_char(i);
+}
 }
 
 
-uint32_t
-srecord::output_file_msbin::checksum(const unsigned char *data, size_t len)
+auto
+srecord::output_file_msbin::checksum(const unsigned char *data, size_t len) -> uint32_t
 {
     uint32_t sum = 0;
 
-    for (size_t i = 0; i < len; ++i)
+    for (size_t i = 0; i < len; ++i) {
         sum += data[i];
+}
 
     return sum;
 }
@@ -98,8 +101,9 @@ srecord::output_file_msbin::write_file_header(uint32_t start, uint32_t length)
     // Write magic
     static const unsigned char Magic[7] =
         { 'B', '0', '0', '0', 'F', 'F', '\n' };
-    for (size_t i = 0; i < sizeof(Magic); ++i)
-        put_char(Magic[i]);
+    for (unsigned char i : Magic) {
+        put_char(i);
+}
 
     // Write header itself
     write_dword_le(start);
@@ -122,15 +126,16 @@ srecord::output_file_msbin::write_data(const record &r)
 {
     const unsigned char *data = r.get_data();
     size_t length = r.get_length();
-    while (length-- > 0)
+    while (length-- > 0) {
         put_char(*data++);
+}
 }
 
 
 void
 srecord::output_file_msbin::flush_pending_records(const record *r)
 {
-    if (!pending_records.empty() || r != NULL)
+    if (!pending_records.empty() || r != nullptr)
     {
         // write header
         const record::address_t start =
@@ -144,7 +149,7 @@ srecord::output_file_msbin::flush_pending_records(const record *r)
 
         const record::address_t end =
             (
-                r
+                r != nullptr
             ?
                 r->get_address_end()
             :
@@ -153,20 +158,24 @@ srecord::output_file_msbin::flush_pending_records(const record *r)
 
         record_vector::const_iterator it;
         uint32_t chksum = 0;
-        for (it = pending_records.begin(); it != pending_records.end(); ++it)
+        for (it = pending_records.begin(); it != pending_records.end(); ++it) {
             chksum += checksum((*it)->get_data(), (*it)->get_length());
+}
 
-        if (r)
+        if (r != nullptr) {
             chksum += checksum(r->get_data(), r->get_length());
+}
 
         write_record_header(start, end - start, chksum);
 
         // write data
-        for (it = pending_records.begin(); it != pending_records.end(); ++it)
+        for (it = pending_records.begin(); it != pending_records.end(); ++it) {
             write_data(*(*it));
+}
 
-        if (r)
+        if (r != nullptr) {
             write_data(*r);
+}
 
         pending_records.clear();
     }
@@ -199,9 +208,9 @@ srecord::output_file_msbin::append_pending_record(const record &r)
     {
         // can be possibly appended, check size constraints
         size_t pending_size = 0;
-        for (record_vector::const_iterator it = pending_records.begin();
-            it != pending_records.end(); ++it)
-            pending_size += (*it)->get_length();
+        for (const auto & pending_record : pending_records) {
+            pending_size += pending_record->get_length();
+}
 
         if (pending_size + r.get_length() > MAX_PENDING_DATA_SIZE)
         {
@@ -211,8 +220,9 @@ srecord::output_file_msbin::append_pending_record(const record &r)
             warning("%s", warning_size_exceeded);
             flush_pending_records(&r);
         }
-        else
-            pending_records.push_back(std::shared_ptr<record>(new record(r)));
+        else {
+            pending_records.push_back(std::make_shared<record>(r));
+}
     }
     else
     {
@@ -225,8 +235,9 @@ srecord::output_file_msbin::append_pending_record(const record &r)
             warning("%s", warning_size_exceeded);
             flush_pending_records(&r);
         }
-        else
-            pending_records.push_back(std::shared_ptr<record>(new record(r)));
+        else {
+            pending_records.push_back(std::make_shared<record>(r));
+}
     }
 }
 
@@ -294,16 +305,16 @@ srecord::output_file_msbin::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_msbin::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_msbin::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes >= 1 && nbytes <= record::max_data_length);
 }
 
 
-int
+auto
 srecord::output_file_msbin::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -312,17 +323,17 @@ srecord::output_file_msbin::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_msbin::format_name()
-    const
+    const -> const char *
 {
     return "Windows CE Binary Image Data Format";
 }
 
 
-bool
-srecord::output_file_msbin::is_binary(void)
-    const
+auto
+srecord::output_file_msbin::is_binary()
+    const -> bool
 {
     return true;
 }

@@ -17,9 +17,9 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include <errno.h>
-#include <iostream>
+#include <cerrno>
 #include <cstring>
+#include <iostream>
 
 #include <srecord/input.h>
 #include <srecord/record.h>
@@ -33,8 +33,7 @@ srecord::input::input() :
 
 
 srecord::input::~input()
-{
-}
+= default;
 
 
 void
@@ -73,9 +72,9 @@ srecord::input::warning(const char *fmt, ...)
 }
 
 
-std::string
+auto
 srecord::input::filename_and_line()
-    const
+    const -> std::string
 {
     return filename();
 }

@@ -41,18 +41,19 @@ srecord::input_file_ascii_hex::input_file_ascii_hex(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_ascii_hex::create(const std::string &a_filename)
+auto
+srecord::input_file_ascii_hex::create(const std::string &a_filename) -> srecord::input_file::pointer
 {
     return pointer(new input_file_ascii_hex(a_filename));
 }
 
 
-bool
-srecord::input_file_ascii_hex::read_inner(record &result)
+auto
+srecord::input_file_ascii_hex::read_inner(record &result) -> bool
 {
-    if (state == state_ignore)
+    if (state == state_ignore) {
         return false;
+}
 
     if (state == state_initial)
     {
@@ -84,13 +85,14 @@ srecord::input_file_ascii_hex::read_inner(record &result)
         {
             return false;
         }
-        if (isxdigit(c))
+        if (isxdigit(c) != 0)
         {
             unsigned char c = get_byte();
             result = record(record::type_data, address, &c, 1);
             int sep = get_char();
-            if (sep >= 0 && !isspace((unsigned char)sep))
+            if (sep >= 0 && (isspace((unsigned char)sep) == 0)) {
                 fatal_error("not execution character");
+}
             ++address;
             switch (peek_char())
             {
@@ -129,8 +131,9 @@ srecord::input_file_ascii_hex::read_inner(record &result)
             {
                 value = (value << 4) + get_nibble();
                 int c = get_char();
-                if (c == ',' || c == '.')
+                if (c == ',' || c == '.') {
                     break;
+}
                 get_char_undo(c);
             }
             switch (command)
@@ -165,13 +168,14 @@ srecord::input_file_ascii_hex::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_ascii_hex::read(record &result)
+auto
+srecord::input_file_ascii_hex::read(record &result) -> bool
 {
     if (!read_inner(result))
     {
-        if (!seen_some_input)
+        if (!seen_some_input) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;
@@ -179,17 +183,17 @@ srecord::input_file_ascii_hex::read(record &result)
 }
 
 
-const char *
+auto
 srecord::input_file_ascii_hex::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Ascii Hex";
 }
 
 
-int
-srecord::input_file_ascii_hex::format_option_number(void)
-    const
+auto
+srecord::input_file_ascii_hex::format_option_number()
+    const -> int
 {
     return arglex_tool::token_ascii_hex;
 }

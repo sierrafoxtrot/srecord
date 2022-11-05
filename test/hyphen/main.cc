@@ -29,22 +29,23 @@
 static int number_of_errors;
 
 
-static bool
-read_one_line(const char *filename, FILE *fp, std::string &result)
+static auto
+read_one_line(const char *filename, FILE *fp, std::string &result) -> bool
 {
     for (;;)
     {
         int c = getc(fp);
         if (c == EOF)
         {
-            if (ferror(fp))
+            if (ferror(fp) != 0)
             {
                 srecord::quit_default.fatal_error_errno("read %s", filename);
             }
             return !result.empty();
         }
-        if (c == '\n')
+        if (c == '\n') {
             return true;
+}
         result += (unsigned char)c;
     }
 }
@@ -54,14 +55,16 @@ static void
 check(const char *filename)
 {
     FILE *fp = fopen(filename, "r");
-    if (!fp)
+    if (fp == nullptr) {
         srecord::quit_default.fatal_error_errno("open %s", filename);
+}
     int line_number = 0;
     for (;;)
     {
         std::string line;
-        if (!read_one_line(filename, fp, line))
+        if (!read_one_line(filename, fp, line)) {
             break;
+}
         ++line_number;
         switch (line.c_str()[0])
         {
@@ -132,7 +135,7 @@ check(const char *filename)
 
 
 static void
-usage(void)
+usage()
 {
     const char *prog = srecord::progname_get();
     fprintf(stderr, "Usage: %s <filename>...\n", prog);
@@ -143,18 +146,18 @@ usage(void)
 
 static struct option options[] =
 {
-    { "version", 0, 0, 'V' },
-    { 0, 0, 0, 0 }
+    { "version", 0, nullptr, 'V' },
+    { nullptr, 0, nullptr, 0 }
 };
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     srecord::progname_set(argv[0]);
     for (;;)
     {
-        int c = getopt_long(argc, argv, "V", options, 0);
+        int c = getopt_long(argc, argv, "V", options, nullptr);
         switch (c)
         {
         case EOF:
@@ -169,14 +172,16 @@ main(int argc, char **argv)
         }
         break;
     }
-    if (optind >= argc)
+    if (optind >= argc) {
         usage();
+}
     for (;;)
     {
         check(argv[optind]);
         ++optind;
-        if (optind >= argc)
+        if (optind >= argc) {
             break;
+}
     }
     if (number_of_errors > 0)
     {

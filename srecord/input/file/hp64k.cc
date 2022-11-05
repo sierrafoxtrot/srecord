@@ -50,8 +50,7 @@
 
 
 srecord::input_file_hp64k::~input_file_hp64k()
-{
-}
+= default;
 
 
 srecord::input_file_hp64k::input_file_hp64k(
@@ -63,8 +62,8 @@ srecord::input_file_hp64k::input_file_hp64k(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_hp64k::create(const std::string &a_file_name)
+auto
+srecord::input_file_hp64k::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_hp64k(a_file_name));
 }
@@ -77,30 +76,34 @@ srecord::input_file_hp64k::command_line(arglex_tool *cmdln)
     //TODO : don't expect the redundant recsize field?
 }
 
-bool
-srecord::input_file_hp64k::read_u16be(uint16_t *dest)
+auto
+srecord::input_file_hp64k::read_u16be(uint16_t *dest) -> bool
 {
-    uint16_t tmp;
+    uint16_t tmp = 0;
     int c = get_char();
-    if (c < 0)
+    if (c < 0) {
         return false;
+}
     tmp = (c & 0xFF) << 8;
     c = get_char();
-    if (c < 0)
+    if (c < 0) {
         return false;
+}
     tmp = tmp | (c & 0xFF);
     *dest = tmp;
-    return 1;
+    return true;
 }
 
 //in this implementation, read_datarec is called at the "recsize" position,
 //i.e. 2 bytes before the actual data record.
-bool
-srecord::input_file_hp64k::read_datarec(record &result)
+auto
+srecord::input_file_hp64k::read_datarec(record &result) -> bool
 {
-    uint16_t recsize, datasize;
-    uint16_t load_l, load_h;
-    size_t tmp_addr;
+    uint16_t recsize = 0;
+    uint16_t datasize = 0;
+    uint16_t load_l = 0;
+    uint16_t load_h = 0;
+    size_t tmp_addr = 0;
 
     if (!read_u16be(&recsize))
     {
@@ -131,7 +134,7 @@ srecord::input_file_hp64k::read_datarec(record &result)
     }
     tmp_addr = (load_h << 16) | load_l;
 
-    unsigned cnt;
+    unsigned cnt = 0;
     uint8_t buf[256];
     for (cnt = 0; cnt < datasize; cnt++)
     {
@@ -141,7 +144,7 @@ srecord::input_file_hp64k::read_datarec(record &result)
         }
         buf[cnt] = (uint8_t) c;
     }
-    if (datasize & 1)
+    if ((datasize & 1) != 0)
     {
         //read dummy byte to maintain u16 alignment
         int c = get_char();
@@ -156,10 +159,10 @@ srecord::input_file_hp64k::read_datarec(record &result)
 
 #define HP64_MAGIC 0x8204U  //file signature, before header
 #define HP64_HDRLEN 16      //8 words
-bool
-srecord::input_file_hp64k::read_hdr(record &result)
+auto
+srecord::input_file_hp64k::read_hdr(record &result) -> bool
 {
-    uint16_t magic;
+    uint16_t magic = 0;
     if (!read_u16be(&magic))
     {
         return false;
@@ -170,7 +173,7 @@ srecord::input_file_hp64k::read_hdr(record &result)
         return false;
     }
 
-    unsigned cnt;
+    unsigned cnt = 0;
     unsigned len = HP64_HDRLEN; //initial value assume full buffer.
     uint8_t hdr[HP64_HDRLEN + 1];
 
@@ -194,11 +197,15 @@ srecord::input_file_hp64k::read_hdr(record &result)
 }
 
 #define PIR_LEN 8
-bool
-srecord::input_file_hp64k::read_pir(record &result)
+auto
+srecord::input_file_hp64k::read_pir(record &result) -> bool
 {
-    uint16_t pirlen, width, base, xfer_l, xfer_h;
-    uint32_t xfer;
+    uint16_t pirlen = 0;
+    uint16_t width = 0;
+    uint16_t base = 0;
+    uint16_t xfer_l = 0;
+    uint16_t xfer_h = 0;
+    uint32_t xfer = 0;
 
     if (!read_u16be(&pirlen))
     {
@@ -231,15 +238,15 @@ srecord::input_file_hp64k::read_pir(record &result)
 }
 
 
-bool
-srecord::input_file_hp64k::read(record &record)
+auto
+srecord::input_file_hp64k::read(record &record) -> bool
 {
     switch (state)
     {
     case need_hdr:
         if (!read_hdr(record))
         {
-            return 0;
+            return false;
         }
         state = need_pir;
         break;
@@ -247,7 +254,7 @@ srecord::input_file_hp64k::read(record &record)
     case need_pir:
         if (!read_pir(record))
         {
-            return 0;
+            return false;
         }
         state = data;
         break;
@@ -267,24 +274,24 @@ srecord::input_file_hp64k::read(record &record)
     return true;
 }
 
-bool
-srecord::input_file_hp64k::is_binary(void)
-    const
+auto
+srecord::input_file_hp64k::is_binary()
+    const -> bool
 {
     return true;
 }
 
-const char *
-srecord::input_file_hp64k::get_file_format_name(void)
-    const
+auto
+srecord::input_file_hp64k::get_file_format_name()
+    const -> const char *
 {
     return "HP64000 Absolute";
 }
 
 
-int
-srecord::input_file_hp64k::format_option_number(void)
-    const
+auto
+srecord::input_file_hp64k::format_option_number()
+    const -> int
 {
     return arglex_tool::token_hp64k;
 }

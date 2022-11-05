@@ -33,12 +33,12 @@ class memory_walker_alignment:
     public memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker_alignment> pointer;
+    using pointer = std::shared_ptr<memory_walker_alignment>;
 
     /**
       * The destructor.
       */
-    virtual ~memory_walker_alignment();
+    ~memory_walker_alignment() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -47,7 +47,7 @@ public:
       * @param multiple
       *     The multiple of bytes we expect for alignment.
       */
-    static pointer create(unsigned multiple);
+    static auto create(unsigned multiple) -> pointer;
 
     /**
       * The is_continuous method is used to get the results of the
@@ -56,14 +56,14 @@ public:
       * @returns
       *     true if the data has no holes, false if there are holes
       */
-    bool is_well_aligned(void) const;
+    auto is_well_aligned() const -> bool;
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
     // See base class for documentation.
-    void observe_end(void);
+    void observe_end() override;
 
 private:
     /**
@@ -84,17 +84,17 @@ private:
       * The default constructor.
       * Do not use.
       */
-    memory_walker_alignment();
+    memory_walker_alignment() = delete;
 
     /**
       * The copy constructor.  No not use.
       */
-    memory_walker_alignment(const memory_walker_alignment &);
+    memory_walker_alignment(const memory_walker_alignment &) = delete;
 
     /**
       * The assignment operator.  No not use.
       */
-    memory_walker_alignment &operator=(const memory_walker_alignment &);
+    auto operator=(const memory_walker_alignment &) -> memory_walker_alignment & = delete;
 };
 
 };

@@ -23,27 +23,27 @@
 #include <srecord/progname.h>
 
 
-const char *
-srecord::version_stamp(void)
+auto
+srecord::version_stamp() -> const char *
 {
     return PATCHLEVEL;
 }
 
 
-const char *
-srecord::copyright_years(void)
+auto
+srecord::copyright_years() -> const char *
 {
     return COPYRIGHT_YEARS;
 }
 
-const char *
-srecord::git_sha1(void)
+auto
+srecord::git_sha1() -> const char *
 {
     return GIT_SHA1;
 }
 
 void
-srecord::print_version(void)
+srecord::print_version()
 {
     std::cout << progname_get() << " version " << version_stamp()
               << " [git hash " << git_sha1() << "]"<< std::endl;

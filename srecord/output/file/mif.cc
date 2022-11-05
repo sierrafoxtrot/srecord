@@ -26,8 +26,9 @@ srecord::output_file_mif::~output_file_mif()
 {
     emit_header();
     put_stringf("END;\n");
-    if (enable_header_flag && actual_depth != depth)
+    if (enable_header_flag && actual_depth != depth) {
         put_stringf("-- DEPTH = %lu;\n", actual_depth / width_in_bytes);
+}
 }
 
 
@@ -44,8 +45,8 @@ srecord::output_file_mif::output_file_mif(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_mif::create(const std::string &a_file_name)
+auto
+srecord::output_file_mif::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_mif(a_file_name));
 }
@@ -102,8 +103,9 @@ srecord::output_file_mif::notify_upper_bound(unsigned long addr)
 void
 srecord::output_file_mif::emit_header()
 {
-    if (header_done)
+    if (header_done) {
         return;
+}
     if (enable_header_flag)
     {
         put_stringf
@@ -166,8 +168,9 @@ srecord::output_file_mif::write(const srecord::record &record)
                     put_string("\n-- ");
                     continue;
                 }
-                if (!isprint(c))
+                if (isprint(c) == 0) {
                     c = ' ';
+}
                 put_char(c);
             }
             put_char('\n');
@@ -178,21 +181,24 @@ srecord::output_file_mif::write(const srecord::record &record)
         {
             unsigned long addr = record.get_address();
             unsigned len = record.get_length();
-            if ((addr % width_in_bytes) || (len % width_in_bytes))
+            if (((addr % width_in_bytes) != 0U) || ((len % width_in_bytes) != 0U)) {
                 fatal_alignment_error(width_in_bytes);
+}
             emit_header();
             put_stringf("%04lX:", addr / width_in_bytes);
             for (unsigned j = 0; j < len; ++j)
             {
-                if ((j % width_in_bytes) == 0)
+                if ((j % width_in_bytes) == 0) {
                     put_stringf(" ");
+}
                 put_stringf("%02X", record.get_data(j));
             }
             put_stringf(";\n");
 
             unsigned long d = addr + len;
-            if (actual_depth < d)
+            if (actual_depth < d) {
                 actual_depth = d;
+}
         }
         break;
 
@@ -219,8 +225,9 @@ void
 srecord::output_file_mif::line_length_set(int len)
 {
     int pref_mult = (len - 6) / (1 + 2 * width_in_bytes);
-    if (pref_mult < 1)
+    if (pref_mult < 1) {
         pref_mult = 1;
+}
     pref_blk_sz = pref_mult * width_in_bytes;
 }
 
@@ -232,29 +239,31 @@ srecord::output_file_mif::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_mif::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_mif::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if (nbytes % width_in_bytes)
+}
+    if ((nbytes % width_in_bytes) != 0U) {
         return false;
+}
     pref_blk_sz = nbytes;
     return true;
 }
 
 
-int
+auto
 srecord::output_file_mif::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_blk_sz;
 }
 
 
-const char *
+auto
 srecord::output_file_mif::format_name()
-    const
+    const -> const char *
 {
     return "Memory Initialization File (MIF, Altera)";
 }

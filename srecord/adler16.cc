@@ -20,26 +20,21 @@
 
 
 srecord::adler16::~adler16()
-{
-}
+= default;
 
 
-srecord::adler16::adler16() :
-    sum_a(1),
-    sum_b(0)
-{
-}
+srecord::adler16::adler16() 
+    
+= default;
 
 
-srecord::adler16::adler16(const adler16 &rhs) :
-    sum_a(rhs.sum_a),
-    sum_b(rhs.sum_b)
-{
-}
+srecord::adler16::adler16(const adler16 &rhs) 
+    
+= default;
 
 
-srecord::adler16 &
-srecord::adler16::operator=(const adler16 &rhs)
+auto
+srecord::adler16::operator=(const adler16 &rhs) -> srecord::adler16 &
 {
     if (this != &rhs)
     {
@@ -50,9 +45,9 @@ srecord::adler16::operator=(const adler16 &rhs)
 }
 
 
-unsigned short
+auto
 srecord::adler16::get()
-    const
+    const -> unsigned short
 {
     return ((((unsigned short)sum_b) << 8) | sum_a);
 }
@@ -70,7 +65,7 @@ srecord::adler16::next(unsigned char c)
 void
 srecord::adler16::nextbuf(const void *data, size_t nbytes)
 {
-    const unsigned char *dp = (const unsigned char *)data;
+    const auto *dp = (const unsigned char *)data;
     while (nbytes > 0)
     {
         next(*dp);

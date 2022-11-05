@@ -34,12 +34,12 @@ class memory_walker_crc16:
     public memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker_crc16> pointer;
+    using pointer = std::shared_ptr<memory_walker_crc16>;
 
     /**
       * The destructor.
       */
-    virtual ~memory_walker_crc16();
+    ~memory_walker_crc16() override;
 
 private:
     /**
@@ -72,18 +72,18 @@ public:
       * @param bitdir
       *     the bit direction of the CRC
       */
-    static pointer create(crc16::seed_mode_t seed_mode, bool augment_flag,
-        unsigned short polynomial, crc16::bit_direction_t bitdir);
+    static auto create(crc16::seed_mode_t arg1, bool a_augment,
+        unsigned short polynomial, crc16::bit_direction_t bitdir) -> pointer;
 
     /**
       * The get method is used to get the CRC16 checksum once all memory
       * chunks have been processed by calls to our observe method.
       */
-    unsigned get() const;
+    auto get() const -> unsigned;
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
 private:
     /**
@@ -95,12 +95,12 @@ private:
     /**
       * The copy constructor.  No not use.
       */
-    memory_walker_crc16(const memory_walker_crc16 &);
+    memory_walker_crc16(const memory_walker_crc16 &) = delete;
 
     /**
       * The assignment operator.  No not use.
       */
-    memory_walker_crc16 &operator=(const memory_walker_crc16 &);
+    auto operator=(const memory_walker_crc16 &) -> memory_walker_crc16 & = delete;
 };
 
 };

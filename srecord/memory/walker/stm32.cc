@@ -34,17 +34,15 @@
 
 
 srecord::memory_walker_stm32::~memory_walker_stm32()
-{
-}
+= default;
 
 
 srecord::memory_walker_stm32::memory_walker_stm32()
-{
-}
+= default;
 
 
-srecord::memory_walker_stm32::pointer
-srecord::memory_walker_stm32::create(void)
+auto
+srecord::memory_walker_stm32::create() -> srecord::memory_walker_stm32::pointer
 {
     return pointer(new srecord::memory_walker_stm32());
 }
@@ -58,9 +56,9 @@ srecord::memory_walker_stm32::observe(unsigned long, const void *data,
 }
 
 
-unsigned
-srecord::memory_walker_stm32::get(void)
-    const
+auto
+srecord::memory_walker_stm32::get()
+    const -> unsigned
 {
     return checksum.get();
 }

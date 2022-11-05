@@ -23,15 +23,16 @@
 #include <srecord/record.h>
 
 
-srecord::interval
-srecord::input_interval(srecord::input::pointer ifp)
+auto
+srecord::input_interval(srecord::input::pointer ifp) -> srecord::interval
 {
     interval range;
     srecord::record record;
     while (ifp->read(record))
     {
-        if (record.get_type() != srecord::record::type_data)
+        if (record.get_type() != srecord::record::type_data) {
             continue;
+}
         range +=
             interval
             (

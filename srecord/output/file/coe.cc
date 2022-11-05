@@ -58,8 +58,8 @@ srecord::output_file_coe::output_file_coe(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_coe::create(const std::string &a_file_name)
+auto
+srecord::output_file_coe::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_coe(a_file_name));
 }
@@ -114,10 +114,11 @@ srecord::output_file_coe::notify_upper_bound(unsigned long addr)
 
 
 void
-srecord::output_file_coe::emit_header(void)
+srecord::output_file_coe::emit_header()
 {
-    if (header_done)
+    if (header_done) {
         return;
+}
     if (enable_header_flag)
     {
         put_stringf
@@ -179,8 +180,9 @@ srecord::output_file_coe::write(const srecord::record &record)
                     put_string("\n; ");
                     continue;
                 }
-                if (!isprint(c))
+                if (isprint(c) == 0) {
                     c = ' ';
+}
                 put_char(c);
             }
             put_char('\n');
@@ -191,32 +193,37 @@ srecord::output_file_coe::write(const srecord::record &record)
         {
             unsigned long addr = record.get_address();
             unsigned len = record.get_length();
-            if ((addr % width_in_bytes) || (len % width_in_bytes))
+            if (((addr % width_in_bytes) != 0U) || ((len % width_in_bytes) != 0U)) {
                 fatal_alignment_error(width_in_bytes);
+}
             emit_header();
 
-            if (address != record.get_address())
+            if (address != record.get_address()) {
                 fatal_hole_error(address, record.get_address());
+}
             if
             (
                 (record.get_address() % width_in_bytes) != 0
             ||
                 (record.get_length() % width_in_bytes) != 0
-            )
+            ) {
                 fatal_alignment_error(width_in_bytes);
+}
 
             address += len;
             for (unsigned j = 0; j < len; ++j)
             {
-                if (got_data && (j % width_in_bytes) == 0)
+                if (got_data && (j % width_in_bytes) == 0) {
                     put_stringf(",\n");
+}
                 put_stringf("%02X", record.get_data(j));
                 got_data = true;
             }
 
             unsigned long d = addr + len;
-            if (actual_depth < d)
+            if (actual_depth < d) {
                 actual_depth = d;
+}
         }
         break;
 
@@ -253,8 +260,9 @@ void
 srecord::output_file_coe::line_length_set(int len)
 {
     int pref_mult = (len - 6) / (1 + 2 * width_in_bytes);
-    if (pref_mult < 1)
+    if (pref_mult < 1) {
         pref_mult = 1;
+}
     pref_blk_sz = pref_mult * width_in_bytes;
 }
 
@@ -266,29 +274,31 @@ srecord::output_file_coe::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_coe::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_coe::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if ((nbytes % width_in_bytes) != 0)
+}
+    if ((nbytes % width_in_bytes) != 0) {
         return false;
+}
     pref_blk_sz = nbytes;
     return true;
 }
 
 
-int
-srecord::output_file_coe::preferred_block_size_get(void)
-    const
+auto
+srecord::output_file_coe::preferred_block_size_get()
+    const -> int
 {
     return pref_blk_sz;
 }
 
 
-const char *
-srecord::output_file_coe::format_name(void)
-    const
+auto
+srecord::output_file_coe::format_name()
+    const -> const char *
 {
     return "Coefficient (.COE) Files (Xilinx)";
 }

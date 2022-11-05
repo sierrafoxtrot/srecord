@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_random_fill();
+    ~input_filter_random_fill() override;
 
 private:
     /**
@@ -49,8 +49,8 @@ private:
       * @param range
       *     the address range to be filled.
       */
-    input_filter_random_fill(const input::pointer &deeper,
-        const interval &range);
+    input_filter_random_fill(const input::pointer &a1,
+        const interval &a3);
 
 public:
     /**
@@ -62,11 +62,11 @@ public:
       * @param range
       *     the address range to be filled.
       */
-    static pointer create(const input::pointer &deeper, const interval &range);
+    static auto create(const input::pointer &deeper, const interval &range) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -79,22 +79,22 @@ private:
     /**
       * The generate method is used to generate fill records.
       */
-    bool generate(record &record);
+    auto generate(record &record) -> bool;
 
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_random_fill();
+    input_filter_random_fill() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_random_fill(const input_filter_random_fill &);
+    input_filter_random_fill(const input_filter_random_fill &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_random_fill &operator=(const input_filter_random_fill &);
+    auto operator=(const input_filter_random_fill &) -> input_filter_random_fill & = delete;
 };
 
 };

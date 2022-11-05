@@ -19,7 +19,7 @@
 #ifndef SRECORD_MEMORY_CHUNK_H
 #define SRECORD_MEMORY_CHUNK_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include <srecord/memory/walker.h>
 
@@ -53,7 +53,7 @@ public:
     /**
       * The constructor.
       */
-    memory_chunk(unsigned long address);
+    memory_chunk(unsigned long arg);
 
     /**
       * The copy constructor.
@@ -63,7 +63,7 @@ public:
     /**
       * The assignment operator.
       */
-    memory_chunk &operator=(const memory_chunk &);
+    auto operator=(const memory_chunk &) -> memory_chunk &;
 
     /**
       * The destructor.
@@ -74,19 +74,19 @@ public:
       * The set method is used to set the byte at the given offset within
       * the chunk.
       */
-    void set(unsigned long offset, int value);
+    void set(unsigned long offset, int datum);
 
     /**
       * The get method is used to get the value at the given offset
       * within the chunk.
       */
-    int get(unsigned long offset);
+    auto get(unsigned long offset) -> int;
 
     /**
       * The get_p method is used to determine whether the byte at the
       * given offset within the chunk contains valid data.
       */
-    bool set_p(unsigned long) const;
+    auto set_p(unsigned long) const -> bool;
 
     /**
       * The walk method is used to iterate across all of the bytes which
@@ -99,34 +99,34 @@ public:
       * chunk.  This is NOT the address of the first byte, it is the
       * chunk number.  To calculate the byte address, multiply by size.
       */
-    unsigned long get_address() const { return address; }
+    auto get_address() const -> unsigned long { return address; }
 
     /**
       * The equal class method is used to determine whether two memory
       * chunks are equal.  The must have the same address, the same bit
       * mask, and the same byte values on the valid bytes.
       */
-    static bool equal(const memory_chunk &, const memory_chunk &);
+    static auto equal(const memory_chunk &, const memory_chunk &) -> bool;
 
     /**
       * The find_next_data method is used when iterating across all of
       * the bytes set within the chunk.
       */
-    bool find_next_data(unsigned long &, void *, size_t &) const;
+    auto find_next_data(unsigned long &, void *, size_t &) const -> bool;
 
     /**
       * The get_upper_bound method is used to determine the upper bound
       * (offset of last byte with valid data, plus one) of the chunk.
       * It returns a memory byte address, NOT the chunk offset.
       */
-    unsigned long get_upper_bound() const;
+    auto get_upper_bound() const -> unsigned long;
 
     /**
       * The get_lower_bound method is used to determine the lower bound
       * (offset of first byte with valid data) of the chunk.
       * It returns a memory byte address, NOT the chunk offset.
       */
-    unsigned long get_lower_bound() const;
+    auto get_lower_bound() const -> unsigned long;
 
 private:
     /**
@@ -139,22 +139,22 @@ private:
     /**
       * The data array is used to remember the values of valid data bytes.
       */
-    unsigned char data[size];
+    unsigned char data[size]{};
 
     /**
       * The mask array is used to remember which values in the data
       * array contain valid values.
       */
-    unsigned char mask[(size + 7) / 8];
+    unsigned char mask[(size + 7) / 8]{};
 
     /**
       * The default constructor.  Do not use.
       */
-    memory_chunk();
+    memory_chunk() = delete;
 };
 
-bool operator == (const srecord::memory_chunk &, const srecord::memory_chunk &);
-bool operator != (const srecord::memory_chunk &, const srecord::memory_chunk &);
+auto operator == (const srecord::memory_chunk &, const srecord::memory_chunk &) -> bool;
+auto operator != (const srecord::memory_chunk &, const srecord::memory_chunk &) -> bool;
 
 };
 

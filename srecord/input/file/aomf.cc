@@ -50,8 +50,8 @@
 #define O96_Res_Type_32                         0x32
 #define O96_Max_Rec_Type                        0x32
 
-static const char *
-o96name(int x)
+static auto
+o96name(int x) -> const char *
 {
     switch (x)
     {
@@ -115,90 +115,95 @@ o96name(int x)
 
 srecord::input_file_aomf::~input_file_aomf()
 {
-    if (current_buffer)
+    
         delete [] current_buffer;
+
 }
 
 
 srecord::input_file_aomf::input_file_aomf(const std::string &a_filename) :
-    srecord::input_file(a_filename),
-    current_buffer(0),
-    current_length(0),
-    current_maximum(0),
-    current_pos(0),
-    current_address(0),
-    state(expecting_header)
+    srecord::input_file(a_filename)
+    
 {
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_aomf::create(const std::string &a_filename)
+auto
+srecord::input_file_aomf::create(const std::string &a_filename) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_aomf(a_filename));
 }
 
 
-int
-srecord::input_file_aomf::get_byte()
+auto
+srecord::input_file_aomf::get_byte() -> int
 {
     int c = get_char();
-    if (c < 0)
+    if (c < 0) {
         fatal_error("premature end-of-file");
+}
     checksum_add(c);
     return c;
 }
 
 
-int
-srecord::input_file_aomf::slurp()
+auto
+srecord::input_file_aomf::slurp() -> int
 {
     current_pos = 0;
     current_length = 0;
-    if (peek_char() < 0)
+    if (peek_char() < 0) {
         return -1;
+}
     checksum_reset();
     int type = get_byte();
     size_t length = get_word_le();
-    if (length == 0)
+    if (length == 0) {
         fatal_error("invalid record length");
+}
     --length; // includes checksum byte
     if (length > current_maximum)
     {
-        if (current_buffer)
+        
             delete [] current_buffer;
-        while (current_maximum < length)
+
+        while (current_maximum < length) {
             current_maximum = current_maximum * 2 + 64;
+}
         current_buffer = new unsigned char [current_maximum];
     }
     current_length = length;
-    for (size_t j = 0; j < length; ++j)
+    for (size_t j = 0; j < length; ++j) {
         current_buffer[j] = get_byte();
+}
     get_byte();
-    if (use_checksums() && checksum_get() != 0)
+    if (use_checksums() && checksum_get() != 0) {
         fatal_error("checksum mismatch");
+}
     return type;
 }
 
 
-bool
-srecord::input_file_aomf::read(srecord::record &record)
+auto
+srecord::input_file_aomf::read(srecord::record &record) -> bool
 {
     for (;;)
     {
-        unsigned char c;
+        unsigned char c = 0;
         switch (state)
         {
         case expecting_header:
-            if (slurp() != O96_Mod_Hdr)
+            if (slurp() != O96_Mod_Hdr) {
                 fatal_error("Module Header Record expected");
+}
             state = expecting_data;
             if (current_length > 0)
             {
                 unsigned nbytes = current_buffer[0];
                 // should be exactly (current_length-3)
-                if (nbytes > current_length - 1)
+                if (nbytes > current_length - 1) {
                     nbytes = current_length - 1;
+}
                 record =
                     srecord::record
                     (
@@ -208,22 +213,25 @@ srecord::input_file_aomf::read(srecord::record &record)
                         nbytes
                     );
             }
-            else
-                record = srecord::record(srecord::record::type_header, 0, 0, 0);
+            else {
+                record = srecord::record(srecord::record::type_header, 0, nullptr, 0);
+}
             current_length = 0;
             return true;
 
         case expecting_eof:
-            if (slurp() >= 0)
+            if (slurp() >= 0) {
                 fatal_error("end-of-file expected");
+}
             return false;
 
         case expecting_data:
             if (current_pos < current_length)
             {
                 size_t nbytes = current_length - current_pos;
-                if (nbytes > srecord::record::max_data_length)
+                if (nbytes > srecord::record::max_data_length) {
                     nbytes = srecord::record::max_data_length;
+}
                 record =
                     srecord::record
                     (
@@ -247,8 +255,9 @@ srecord::input_file_aomf::read(srecord::record &record)
                 break;
 
             case O96_Content:
-                if (current_length < 3)
+                if (current_length < 3) {
                     fatal_error("malformed Content Record");
+}
                 current_address =
                     (
                         // strictly speaking, this byte should be ignored
@@ -285,25 +294,25 @@ srecord::input_file_aomf::read(srecord::record &record)
 }
 
 
-bool
-srecord::input_file_aomf::is_binary(void)
-    const
+auto
+srecord::input_file_aomf::is_binary()
+    const -> bool
 {
     return true;
 }
 
 
-const char *
+auto
 srecord::input_file_aomf::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Intel Absolute Object Module Format (AOMF)";
 }
 
 
-int
-srecord::input_file_aomf::format_option_number(void)
-    const
+auto
+srecord::input_file_aomf::format_option_number()
+    const -> int
 {
     return arglex_tool::token_aomf;
 }

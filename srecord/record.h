@@ -20,7 +20,7 @@
 #define SRECORD_RECORD_H
 
 #include <cstddef>
-#include <stdint.h>
+#include <cstdint>
 
 #include <srecord/endian.h>
 
@@ -55,12 +55,12 @@ public:
     /**
       * The type of record addresses.
       */
-    typedef uint32_t address_t;
+    using address_t = uint32_t;
 
     /**
       * The type of record data values.
       */
-    typedef uint8_t data_t;
+    using data_t = uint8_t;
 
     /**
       * The default constructor.  The record will have an
@@ -100,25 +100,25 @@ public:
       *     How long the data is.
       *     assert(the_data_length < max_data_length);
       */
-    record(type_t the_type, address_t the_address, const data_t *the_data,
-        size_t the_data_length);
+    record(type_t a1, address_t a2, const data_t *a3,
+        size_t a4);
 
     /**
       * The assignment operator.
       */
-    record &operator=(const record &);
+    auto operator=(const record &) -> record &;
 
     /**
       * The get_address method is used to get the address of the
       * record.
       */
-    address_t get_address(void) const { return address; }
+    auto get_address() const -> address_t { return address; }
 
     /**
       * The get_address_end method is used to get the address "off
       * the end" of this record.
       */
-    address_t get_address_end(void) const { return (address + length); }
+    auto get_address_end() const -> address_t { return (address + length); }
 
     /**
       * The address_range_fits_into_n_bits method is used to test whether or
@@ -129,7 +129,7 @@ public:
       * @returns
       *     true if the address range will fit, or false if it will not fit
       */
-    bool address_range_fits_into_n_bits(unsigned nbits) const;
+    auto address_range_fits_into_n_bits(unsigned nbits) const -> bool;
 
     /**
       * The set_address method is used to set the address of the
@@ -141,7 +141,7 @@ public:
       * The get_length method is used to get the length (number of
       * bytes) of the record data.
       */
-    size_t get_length(void) const { return length; }
+    auto get_length() const -> size_t { return length; }
 
     /**
       * The set_length method is used to set the number of data
@@ -154,8 +154,9 @@ public:
     void
     set_length(size_t arg)
     {
-        if (arg < length)
+        if (arg < length) {
             length = arg;
+}
     }
 
     /**
@@ -165,7 +166,7 @@ public:
       * Note: Accessing beyond get_length() bytes will give an
       * undefined value.
       */
-    const data_t *get_data(void) const { return data; }
+    auto get_data() const -> const data_t * { return data; }
 
     /**
       * The get_data method is used to fetch the nth data value.
@@ -178,13 +179,13 @@ public:
       *     The index into the data array, zero based.
       *     Values when n is in excess of @p length are undefined.
       */
-    int get_data(size_t n) const { return data[n]; }
+    auto get_data(size_t n) const -> int { return data[n]; }
 
     /**
       * The is_all_zero method is used to determine if the record
       * contains data bytes which are all zero.
       */
-    bool is_all_zero(void) const;
+    auto is_all_zero() const -> bool;
 
     /**
       * The set_data method is used to set values in the data array.
@@ -215,7 +216,7 @@ public:
     /**
       * The get_type method is used to get the type of the record.
       */
-    type_t get_type(void) const { return type; }
+    auto get_type() const -> type_t { return type; }
 
     /**
       * The set_type method is used to set the type of the record.
@@ -231,7 +232,7 @@ public:
       *     The address of the record.  Some formats trade data size of
       *     address size, for a constant maximum line length.
       */
-    static size_t maximum_data_length(address_t addr);
+    static auto maximum_data_length(address_t addr) -> size_t;
 
     /**
       * The decode_big_endian method is used to extract 'len'
@@ -245,7 +246,7 @@ public:
       * @returns
       *     the decoded value
       */
-    static address_t decode_big_endian(const data_t *data, size_t len);
+    static auto decode_big_endian(const data_t *buffer, size_t len) -> address_t;
 
     /**
       * The decode_little_endian method is used to extract 'len' bytes
@@ -259,7 +260,7 @@ public:
       * @returns
       *     the decoded value
       */
-    static address_t decode_little_endian(const data_t *data, size_t len);
+    static auto decode_little_endian(const data_t *buffer, size_t len) -> address_t;
 
     /**
       * The decode method is used to extract 'len' bytes
@@ -274,8 +275,8 @@ public:
       * @returns
       *     the decoded value
       */
-    static address_t
-    decode(const data_t *data, size_t len, endian_t end)
+    static auto
+    decode(const data_t *data, size_t len, endian_t end) -> address_t
     {
         return
             (
@@ -300,7 +301,7 @@ public:
       *     The number of bytes to use to encode the data.
       *     Bits above the 8*len resolution will be discarded.
       */
-    static void encode_big_endian(data_t *data, address_t val, size_t len);
+    static void encode_big_endian(data_t *buffer, address_t val, size_t len);
 
     /**
       * The encode_little_endian method is used to break down
@@ -315,7 +316,7 @@ public:
       *     The number of bytes to use to encode the data.
       *     Bits above the 8*len resolution will be discarded.
       */
-    static void encode_little_endian(data_t *data, address_t val, size_t len);
+    static void encode_little_endian(data_t *buffer, address_t val, size_t len);
 
     /**
       * The encode method is used to break down 'val' into 'len' bytes
@@ -334,10 +335,11 @@ public:
     static void
     encode(data_t *data, address_t val, size_t len, endian_t end)
     {
-        if (end == endian_big)
+        if (end == endian_big) {
             encode_big_endian(data, val, len);
-        else
+        } else {
             encode_little_endian(data, val, len);
+}
     }
 
     enum {
@@ -371,7 +373,7 @@ private:
       * of the record.  Only the first #length bytes are valid,
       * the rest are undefined.
       */
-    data_t data[max_data_length];
+    data_t data[max_data_length]{};
 };
 
 };

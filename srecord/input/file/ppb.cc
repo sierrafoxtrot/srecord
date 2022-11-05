@@ -24,56 +24,58 @@
 
 
 srecord::input_file_ppb::~input_file_ppb()
-{
-}
+= default;
 
 
 srecord::input_file_ppb::input_file_ppb(const std::string &filename) :
     input_file(filename),
     address(0),
     data_seen(false),
-    packet_address(-1uL),
+    packet_address(-1UL),
     packet_length(0),
     packet_used(0)
 {
 }
 
 
-srecord::input_file_ppb::pointer
-srecord::input_file_ppb::create(const std::string &filename)
+auto
+srecord::input_file_ppb::create(const std::string &filename) -> srecord::input_file_ppb::pointer
 {
     return pointer(new input_file_ppb(filename));
 }
 
 
-bool
-srecord::input_file_ppb::get_packet(void)
+auto
+srecord::input_file_ppb::get_packet() -> bool
 {
-    int c;
+    int c = 0;
 
     enum { SOH = 1 }; // Start of header marks beginning of record
 
     // Skip ASCII prologue (if any) and hunt for SOH
     do{
         c = get_char();
-        if (c < 0)
+        if (c < 0) {
             return false;
+}
         // tweak to original patch to handle CR/LF/CRLF
 //        if ((c == '\n') || (c == '\r'))
 //            continue;
     }while(c != SOH && /*c >= ' ' &&*/ c < 0x7f);
 
-    if (c != SOH)
+    if (c != SOH) {
         packet_format_error();
+}
 
     unsigned char hdr[8];
     unsigned char csum = 0;
-    for (int n = 0; n < 8; ++n)
+    for (unsigned char & n : hdr)
     {
         c = get_char();
-        if (c < 0)
+        if (c < 0) {
             packet_format_error();
-        hdr[n] = c;
+}
+        n = c;
         csum += c;
     }
 
@@ -98,8 +100,9 @@ srecord::input_file_ppb::get_packet(void)
         if (j > 0 && (j % 1024) == 0)
         {
             c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 packet_format_error();
+}
             if (c != (unsigned char)-csum && use_checksums())
             {
                 fatal_error
@@ -111,14 +114,16 @@ srecord::input_file_ppb::get_packet(void)
             }
         }
         c = get_char();
-        if (c < 0)
+        if (c < 0) {
             packet_format_error();
+}
         packet[j] = c;
         csum += c;
     }
     c = get_char();
-    if (c < 0)
+    if (c < 0) {
         packet_format_error();
+}
     if (c != (unsigned char)-csum && use_checksums())
     {
         fatal_error
@@ -133,19 +138,22 @@ srecord::input_file_ppb::get_packet(void)
 }
 
 
-bool
-srecord::input_file_ppb::read(record &result)
+auto
+srecord::input_file_ppb::read(record &result) -> bool
 {
     if (packet_used >= packet_length)
     {
-        if (!get_packet())
+        if (!get_packet()) {
             return false;
-        if (packet_length == 0)
+}
+        if (packet_length == 0) {
             return false;
+}
     }
     size_t size = packet_length - packet_used;
-    if (size > record::max_data_length)
+    if (size > record::max_data_length) {
         size = record::max_data_length;
+}
     result =
         record
         (
@@ -160,31 +168,31 @@ srecord::input_file_ppb::read(record &result)
 
 
 void
-srecord::input_file_ppb::packet_format_error(void)
+srecord::input_file_ppb::packet_format_error()
 {
     fatal_error("packet not formatted correctly");
 }
 
 
-bool
-srecord::input_file_ppb::is_binary(void)
-    const
+auto
+srecord::input_file_ppb::is_binary()
+    const -> bool
 {
     return true;
 }
 
 
-const char *
-srecord::input_file_ppb::get_file_format_name(void)
-    const
+auto
+srecord::input_file_ppb::get_file_format_name()
+    const -> const char *
 {
     return "Stag Prom Programmer binary (PPB)";
 }
 
 
-int
-srecord::input_file_ppb::format_option_number(void)
-    const
+auto
+srecord::input_file_ppb::format_option_number()
+    const -> int
 {
     return arglex_tool::token_ppb;
 }

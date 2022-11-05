@@ -23,14 +23,15 @@
 
 srecord::output_file_fastload::~output_file_fastload()
 {
-    if (bytes_since_checksum)
+    if (bytes_since_checksum != 0)
     {
         put_command('C', checksum_get16(), 3);
         bytes_since_checksum = 0;
     }
-    if (enable_footer_flag)
+    if (enable_footer_flag) {
         put_command('E', 0, 2);
-    if (column)
+}
+    if (column != 0)
     {
         put_char('\n');
         column = 0;
@@ -43,7 +44,7 @@ srecord::output_file_fastload::output_file_fastload(
 ) :
     srecord::output_file(a_filename),
     line_length(0),
-    address(~0uL),
+    address(~0UL),
     column(0),
     bytes_since_checksum(0),
     max_since_checksum(0),
@@ -53,8 +54,8 @@ srecord::output_file_fastload::output_file_fastload(
 }
 
 
-srecord::output::pointer
-srecord::output_file_fastload::create(const std::string &a_filename)
+auto
+srecord::output_file_fastload::create(const std::string &a_filename) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_fastload(a_filename));
 }
@@ -65,7 +66,7 @@ srecord::output_file_fastload::put_number(unsigned long n, int min_digits)
 {
     unsigned char buffer[20];
     unsigned char *bp = buffer;
-    while (n || min_digits > 0)
+    while ((n != 0U) || min_digits > 0)
     {
         *bp++ = n & 63;
         --min_digits;
@@ -82,11 +83,11 @@ srecord::output_file_fastload::put_number(unsigned long n, int min_digits)
 }
 
 
-static int
-number_width(unsigned long n)
+static auto
+number_width(unsigned long n) -> int
 {
     int result = 0;
-    while (n)
+    while (n != 0U)
     {
         result++;
         n >>= 6;
@@ -99,8 +100,9 @@ void
 srecord::output_file_fastload::put_command(int c, unsigned long n, int ndigits)
 {
     int width = number_width(n);
-    if (width < ndigits)
+    if (width < ndigits) {
         width = ndigits;
+}
     width += 2;
     if (column + width > line_length)
     {
@@ -119,19 +121,21 @@ srecord::output_file_fastload::put_command(int c, unsigned long n, int ndigits)
 void
 srecord::output_file_fastload::write(const srecord::record &record)
 {
-    size_t j;
+    size_t j = 0;
 
     switch (record.get_type())
     {
     case srecord::record::type_header:
         // This format can't do header records
-        if (!enable_optional_address_flag)
+        if (!enable_optional_address_flag) {
             address = (unsigned long)-1L;
+}
         break;
 
     case srecord::record::type_data:
-        if (record.get_length() < 1)
+        if (record.get_length() < 1) {
             return;
+}
         if (record.get_address() != address)
         {
             address = record.get_address();
@@ -186,7 +190,7 @@ srecord::output_file_fastload::write(const srecord::record &record)
     case srecord::record::type_execution_start_address:
         if (enable_goto_addr_flag)
         {
-            if (bytes_since_checksum)
+            if (bytes_since_checksum != 0)
             {
                 put_command('C', checksum_get16(), 3);
                 bytes_since_checksum = 0;
@@ -209,23 +213,26 @@ void
 srecord::output_file_fastload::line_length_set(int linlen)
 {
     line_length = linlen;
-    if (line_length < 10)
+    if (line_length < 10) {
         line_length = 10;
+}
 
     // Don't go bigger than this, or you get undetectable errors.
     enum { MAX = 256 };
 
     int bytes_on_last_line = ((line_length - 9) / 4) * 3;
-    if (bytes_on_last_line > MAX)
+    if (bytes_on_last_line > MAX) {
         bytes_on_last_line = MAX;
-    else if (bytes_on_last_line < 0)
+    } else if (bytes_on_last_line < 0) {
         bytes_on_last_line = 0;
+}
 
     int bytes_on_other_lines = (line_length / 4) * 3;
-    if (bytes_on_other_lines > MAX)
+    if (bytes_on_other_lines > MAX) {
         bytes_on_other_lines = MAX;
-    else if (bytes_on_other_lines < 1)
+    } else if (bytes_on_other_lines < 1) {
         bytes_on_other_lines = 1;
+}
 
     int num_other_lines =
         (MAX - bytes_on_last_line) / bytes_on_other_lines;
@@ -242,11 +249,12 @@ srecord::output_file_fastload::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_fastload::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_fastload::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes > srecord::record::max_data_length)
+    if (nbytes > srecord::record::max_data_length) {
         return false;
+}
 
     // Don't go bigger than this, or you get undetectable errors.
     enum { MAX = 256 };
@@ -254,16 +262,18 @@ srecord::output_file_fastload::preferred_block_size_set(int nbytes)
     int ll = (nbytes / 3) * 4;
 
     int bytes_on_last_line = ((ll - 9) / 4) * 3;
-    if (bytes_on_last_line > MAX)
+    if (bytes_on_last_line > MAX) {
         return false;
-    else if (bytes_on_last_line < 0)
+    } if (bytes_on_last_line < 0) {
         return false;
+}
 
     int bytes_on_other_lines = (ll / 4) * 3;
-    if (bytes_on_other_lines > MAX)
+    if (bytes_on_other_lines > MAX) {
         return false;
-    else if (bytes_on_other_lines < 1)
+    } if (bytes_on_other_lines < 1) {
         return false;
+}
 
     int num_other_lines =
         (MAX - bytes_on_last_line) / bytes_on_other_lines;
@@ -276,18 +286,18 @@ srecord::output_file_fastload::preferred_block_size_set(int nbytes)
 }
 
 
-int
+auto
 srecord::output_file_fastload::preferred_block_size_get()
-    const
+    const -> int
 {
     // Prefer a multiple of 3
     return ((srecord::record::max_data_length / 3) * 3);
 }
 
 
-const char *
+auto
 srecord::output_file_fastload::format_name()
-    const
+    const -> const char *
 {
     return "FastLoad";
 }

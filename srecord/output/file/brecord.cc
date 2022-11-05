@@ -24,8 +24,7 @@
 
 
 srecord::output_file_brecord::~output_file_brecord()
-{
-}
+= default;
 
 
 srecord::output_file_brecord::output_file_brecord(
@@ -37,8 +36,8 @@ srecord::output_file_brecord::output_file_brecord(
 }
 
 
-srecord::output::pointer
-srecord::output_file_brecord::create(const std::string &a_file_name)
+auto
+srecord::output_file_brecord::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_brecord(a_file_name));
 }
@@ -63,8 +62,9 @@ srecord::output_file_brecord::write(const srecord::record &record)
         put_4bytes_be(record.get_address());
         assert(record.get_length() <= BUFFER_MAXIMUM_MAXIMUM);
         put_byte(record.get_length());
-        for (unsigned j = 0; j < record.get_length(); ++j)
+        for (unsigned j = 0; j < record.get_length(); ++j) {
             put_byte(record.get_data(j));
+}
         put_char('\n');
         break;
     }
@@ -75,10 +75,11 @@ void
 srecord::output_file_brecord::line_length_set(int w)
 {
     int x = (w - 10) / 2;
-    if (x < 2)
+    if (x < 2) {
         x = 2;
-    else if (x > BUFFER_MAXIMUM_MAXIMUM)
+    } else if (x > BUFFER_MAXIMUM_MAXIMUM) {
         x = BUFFER_MAXIMUM_MAXIMUM;
+}
     block_size = x;
 }
 
@@ -92,27 +93,28 @@ srecord::output_file_brecord::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_brecord::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_brecord::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 2 || nbytes > BUFFER_MAXIMUM_MAXIMUM)
+    if (nbytes < 2 || nbytes > BUFFER_MAXIMUM_MAXIMUM) {
         return false;
+}
     block_size = nbytes;
     return true;
 }
 
 
-int
+auto
 srecord::output_file_brecord::preferred_block_size_get()
-    const
+    const -> int
 {
     return block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_brecord::format_name()
-    const
+    const -> const char *
 {
     return "B-Record";
 }

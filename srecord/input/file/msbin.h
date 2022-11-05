@@ -22,7 +22,7 @@
 #ifndef SRECORD_INPUT_FILE_MSBIN_H
 #define SRECORD_INPUT_FILE_MSBIN_H
 
-#include <stdint.h>
+#include <cstdint>
 #include <srecord/input/file.h>
 #include <srecord/record.h>
 
@@ -42,7 +42,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_msbin();
+    ~input_file_msbin() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -53,17 +53,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &result) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -131,31 +131,31 @@ private:
       * start, the lowest data address in the file, as read from the
       * file header.
       */
-    record::address_t image_start;
+    record::address_t image_start{};
 
     /**
       * The image_length instance variable is used to remember the image
       * length, as read from the file header.
       */
-    record::address_t image_length;
+    record::address_t image_length{};
 
     /**
       * The lowest_address instance variable is used to remember the
       * lowest address encountered in records read so far.
       */
-    record::address_t lowest_address;
+    record::address_t lowest_address{};
 
     /**
       * The highest_address instance variable is used to remember the
       * highest address encountered in records read so far.
       */
-    record::address_t highest_address;
+    record::address_t highest_address{};
 
     /**
       * The read_file_header method is used to read the (optional) magic
       * and the file header.
       */
-    void read_file_header(void);
+    void read_file_header();
 
     // Just to be sure we can fit uint32_t in address_t.
     static_assert(sizeof(record::address_t) >= sizeof(uint32_t));
@@ -164,7 +164,7 @@ private:
       * The read_dword_le method is used to read a little endian double
       * word from the input.
       */
-    uint32_t read_dword_le(void);
+    auto read_dword_le() -> uint32_t;
 
     /**
       * The checksum method is used to calculate the checksum of a given
@@ -178,25 +178,25 @@ private:
       * @param len
       *     The length in bytes of the data to be check-summed.
       */
-    static uint32_t checksum(const unsigned char *data, size_t len);
+    static auto checksum(const unsigned char *data, size_t len) -> uint32_t;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    auto is_binary() const -> bool override;
 
     /**
       * The default constructor.  Do not use.
       */
-    input_file_msbin();
+    input_file_msbin() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_msbin(const input_file_msbin &);
+    input_file_msbin(const input_file_msbin &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_msbin &operator=(const input_file_msbin &);
+    auto operator=(const input_file_msbin &) -> input_file_msbin & = delete;
 };
 
 };

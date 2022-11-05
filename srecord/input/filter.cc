@@ -19,44 +19,45 @@
 
 #include <srecord/input/filter.h>
 
+#include <utility>
+
 
 srecord::input_filter::~input_filter()
-{
-}
+= default;
 
 
 srecord::input_filter::input_filter(srecord::input::pointer arg) :
-    ifp(arg)
+    ifp(std::move(arg))
 {
 }
 
 
-std::string
+auto
 srecord::input_filter::filename()
-    const
+    const -> std::string
 {
     return ifp->filename();
 }
 
 
-std::string
+auto
 srecord::input_filter::filename_and_line()
-    const
+    const -> std::string
 {
     return ifp->filename_and_line();
 }
 
 
-bool
-srecord::input_filter::read(srecord::record &record)
+auto
+srecord::input_filter::read(srecord::record &record) -> bool
 {
     return ifp->read(record);
 }
 
 
-const char *
+auto
 srecord::input_filter::get_file_format_name()
-    const
+    const -> const char *
 {
     return ifp->get_file_format_name();
 }

@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_aomf();
+    ~output_file_aomf() override;
 
 private:
     /**
@@ -57,26 +57,26 @@ public:
       *     The file name to open to write data to.  The name "-" is
       *     understood to mean the standard output.
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    int preferred_block_size_get(void) const;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    const char *format_name(void) const;
+    auto format_name() const -> const char * override;
 
 private:
     /**
@@ -110,13 +110,13 @@ private:
       * This method also tracks the byte_offset, so that we can
       * align to specific boundaries.  Calls the #checksum_add method.
       */
-    void put_byte(unsigned char);
+    void put_byte(unsigned char) override;
 
     /**
       * The byte_offset instance variable is used to track the location
       * in the output file.  Maintained by the #put_byte method.
       */
-    unsigned long byte_offset;
+    unsigned long byte_offset{};
 
     /**
       * The module_name instance variable is used to remember the
@@ -128,12 +128,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_aomf(const output_file_aomf &);
+    output_file_aomf(const output_file_aomf &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_aomf &operator=(const output_file_aomf &);
+    auto operator=(const output_file_aomf &) -> output_file_aomf & = delete;
 };
 
 };

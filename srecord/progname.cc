@@ -30,15 +30,15 @@ srecord::progname_set(char *s)
 {
     for (;;)
     {
-        char            *cp1;
-        char            *cp2;
+        char            *cp1 = nullptr;
+        char            *cp2 = nullptr;
 
         cp1 = strrchr(s, '/');
-        if (!cp1)
+        if (cp1 == nullptr) {
             cp1 = s;
-        else
+        } else
         {
-            if (!cp1[1])
+            if (cp1[1] == 0)
             {
                 *cp1 = 0;
                 continue;
@@ -47,11 +47,11 @@ srecord::progname_set(char *s)
         }
 
         cp2 = strrchr(s, '\\');
-        if (!cp2)
+        if (cp2 == nullptr) {
             cp2 = s;
-        else
+        } else
         {
-            if (!cp2[1])
+            if (cp2[1] == 0)
             {
                 *cp2 = 0;
                 continue;
@@ -61,8 +61,9 @@ srecord::progname_set(char *s)
 
         progname = (cp1 > cp2 ? cp1 : cp2);
         // avoid some libtool nonsense
-        if (0 == memcmp(progname, "lt-", 3))
+        if (0 == memcmp(progname, "lt-", 3)) {
             progname += 3;
+}
         size_t len = strlen(progname);
         if
         (
@@ -73,15 +74,16 @@ srecord::progname_set(char *s)
             (progname[len - 2] == 'x' || progname[len - 2] == 'X')
         &&
             (progname[len - 1] == 'e' || progname[len - 1] == 'E')
-        )
+        ) {
             progname[len - 4] = '\0';
+}
         return;
     }
 }
 
 
-const char *
-srecord::progname_get()
+auto
+srecord::progname_get() -> const char *
 {
-    return (progname ? progname : "???");
+    return (progname != nullptr ? progname : "???");
 }

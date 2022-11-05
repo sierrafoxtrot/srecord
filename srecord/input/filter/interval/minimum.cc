@@ -21,8 +21,7 @@
 
 
 srecord::input_filter_interval_minimum::~input_filter_interval_minimum()
-{
-}
+= default;
 
 
 srecord::input_filter_interval_minimum::input_filter_interval_minimum(
@@ -33,9 +32,9 @@ srecord::input_filter_interval_minimum::input_filter_interval_minimum(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_interval_minimum::create(const pointer &a_deeper,
-    long a_address, int a_length, endian_t a_end, bool inclusive)
+    long a_address, int a_length, endian_t a_end, bool inclusive) -> srecord::input::pointer
 {
     return
         pointer
@@ -52,9 +51,9 @@ srecord::input_filter_interval_minimum::create(const pointer &a_deeper,
 }
 
 
-long
+auto
 srecord::input_filter_interval_minimum::calculate_result()
-    const
+    const -> long
 {
     return get_range().get_lowest();
 }

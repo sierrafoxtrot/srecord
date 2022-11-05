@@ -36,12 +36,12 @@ class input_file:
     public input
 {
 public:
-    typedef std::shared_ptr<input_file> pointer;
+    using pointer = std::shared_ptr<input_file>;
 
     /**
       * The destructor.
       */
-    virtual ~input_file();
+    ~input_file() override;
 
     /**
       * The guess class method is used to open a file of an unknown
@@ -52,32 +52,32 @@ public:
       * @param cmdln
       *     The command line for context
       */
-    static pointer guess(const std::string &file_name, arglex &cmdln);
+    static auto guess(const std::string &fn, arglex &cmdline) -> pointer;
 
     /**
       * The ignore_all_checksums method is used to set the global
       * ignore checksums flag.  This is usually the result of an
       * --ignore-checksums command line option.
       */
-    static void ignore_all_checksums(void) { ignore_checksums_default = true; }
+    static void ignore_all_checksums() { ignore_checksums_default = true; }
 
     /**
       * The format_option_number method is used to obtain the option number,
       * which can then be turned into text via the arglex::token_name method.
       */
-    virtual int format_option_number(void) const = 0;
+    virtual auto format_option_number() const -> int = 0;
 
 protected:
     // See base class for documentation.
-    virtual std::string filename(void) const;
+    auto filename() const -> std::string override;
 
     // See base class for documentation.
-    virtual std::string filename_and_line(void) const;
+    auto filename_and_line() const -> std::string override;
 
     // See base class for documentation.
-    void disable_checksum_validation(void);
+    void disable_checksum_validation() override;
 
-protected:
+
     /**
       * The constructor.  The input will be taken from the named file
       * (or the standard input if the filename is "-").
@@ -87,7 +87,7 @@ protected:
       * @param file_name
       *     The name of the file to be read.
       */
-    input_file(const std::string &file_name);
+    input_file(std::string file_name);
 
     /**
       * The get_char method is used to fetch a character from
@@ -99,7 +99,7 @@ protected:
       * filename_and_line method may report the current file location.
       * This makes for more informative error messages.
       */
-    virtual int get_char(void);
+    virtual auto get_char() -> int;
 
     /**
       * The get_char_undo method is used to return a character to
@@ -113,7 +113,7 @@ protected:
       * of input, without actually consuming it (a later get_char
       * or peak_char method will still see it).
       */
-    int peek_char(void);
+    auto peek_char() -> int;
 
     /**
       * The get_nibble_value class method is used to translate a
@@ -125,7 +125,7 @@ protected:
       *     int; 0..9 for '0'..'9', 10..15 for 'a'..'f',
       *     10..15 for 'A-Z', and -1 for everything else.
       */
-    static int get_nibble_value(int c);
+    static auto get_nibble_value(int c) -> int;
 
     /**
       * The get_nibble method is used to fetch one hexadecimal digit
@@ -134,7 +134,7 @@ protected:
       * are not hexadecimal digits will result in a fatal error,
       * and the method call will not return.
       */
-    virtual int get_nibble(void);
+    virtual auto get_nibble() -> int;
 
     /**
       * The get_byte method is used to fetch a byte value from the
@@ -150,14 +150,14 @@ protected:
       * it if they have a special case.  Over-ride with caution,
       * as it affects many other methods.
       */
-    virtual int get_byte(void);
+    virtual auto get_byte() -> int;
 
     /**
       * The get_word_be method is used to fetch a 16-bit value from the
       * input.  The get_byte method is called twice, and the two byte
       * values are assembled big-endian (most significant byte first).
       */
-    unsigned get_word_be(void);
+    auto get_word_be() -> unsigned;
 
     /**
       * The get_word_le method is used to fetch a 16-bit value from
@@ -165,7 +165,7 @@ protected:
       * byte values are assembled little-endian (least significant byte
       * first).
       */
-    unsigned get_word_le(void);
+    auto get_word_le() -> unsigned;
 
     /**
       * The get_3bytes_be method is used to fetch a 24-bit value from
@@ -173,7 +173,7 @@ protected:
       * and the three byte values are assembles big-endian (most
       * significant byte first).
       */
-    unsigned long get_3bytes_be(void);
+    auto get_3bytes_be() -> unsigned long;
 
     /**
       * The get_3bytes_le method is used to fetch a 24-bit value from
@@ -181,7 +181,7 @@ protected:
       * three byte values are assembled little-endian (least significant
       * byte first).
       */
-    unsigned long get_3bytes_le(void);
+    auto get_3bytes_le() -> unsigned long;
 
     /**
       * The get_4bytes_be method is used to fetch a 32-bit value from
@@ -189,7 +189,7 @@ protected:
       * and the four byte values are assembled big-endian (most
       * significant byte first).
       */
-    unsigned long get_4bytes_be(void);
+    auto get_4bytes_be() -> unsigned long;
 
     /**
       * The get_4bytes_le method is used to fetch a 32-bit value from
@@ -197,7 +197,7 @@ protected:
       * four byte values are assembled little-endian (least significant
       * byte first).
       */
-    unsigned long get_4bytes_le(void);
+    auto get_4bytes_le() -> unsigned long;
 
     /**
       * The checksum_get method is used to get the current value of
@@ -205,7 +205,7 @@ protected:
       * usually called by the get_byte method).  Only the lower 8
       * bits of the sum are returned.
       */
-    int checksum_get(void) const;
+    auto checksum_get() const -> int;
 
     /**
       * The checksum_get16 method is used to get the current value of
@@ -213,7 +213,7 @@ protected:
       * usually called by the get_byte method).  Only the lower 16
       * bits of the sum are returned.
       */
-    int checksum_get16(void) const;
+    auto checksum_get16() const -> int;
 
     /**
       * The checksum_add method is used to add another 8-bit value
@@ -225,20 +225,20 @@ protected:
       * The checksum_rest method is used to set the running checksum
       * to zero.
       */
-    void checksum_reset(void);
+    void checksum_reset();
 
     /**
       * The seek_to_end method is used to move the input position
       * to the end of the file.
       */
-    void seek_to_end(void);
+    void seek_to_end();
 
     /**
       * The is_binary method is used to to determine whether or not
       * a file format is binary (true) of text (false).  The default
       * implementation always returns false (text).
       */
-    virtual bool is_binary(void) const;
+    virtual auto is_binary() const -> bool;
 
 private:
     /**
@@ -293,7 +293,7 @@ protected:
       * @returns
       *     bool; true if need to check checksums, false to ignore checksums.
       */
-    bool use_checksums(void) const { return !ignore_checksums; }
+    auto use_checksums() const -> bool { return !ignore_checksums; }
 
 private:
     /**
@@ -318,7 +318,7 @@ private:
       * If the file has not been opened yet, it will be opened by
       * this method.
       */
-    void *get_fp(void);
+    auto get_fp() -> void *;
 
     /**
       * The default constructor.  Do not use.
@@ -333,7 +333,7 @@ private:
     /**
       * the assignment operator.  Do not use.
       */
-    input_file &operator=(const input_file &);
+    auto operator=(const input_file &) -> input_file &;
 };
 
 };

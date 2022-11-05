@@ -128,8 +128,8 @@ srecord::output_file_four_packed_code::output_file_four_packed_code(
 }
 
 
-srecord::output::pointer
-srecord::output_file_four_packed_code::create(const std::string &a_file_name)
+auto
+srecord::output_file_four_packed_code::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_four_packed_code(a_file_name));
 }
@@ -169,8 +169,9 @@ srecord::output_file_four_packed_code::write_inner(unsigned long address,
     //
     // Make sure the line is not too long.
     //
-    if (data_nbytes > 252)
+    if (data_nbytes > 252) {
         fatal_error("data length (%d) too long", data_nbytes);
+}
 
     //
     // Assemble the data for this line using format code zero
@@ -181,11 +182,12 @@ srecord::output_file_four_packed_code::write_inner(unsigned long address,
     buffer[2] = 0; // format code, first byte
     buffer[3] = 0; // format code, second byte
     srecord::record::encode_big_endian(buffer + 4, address, 4);
-    if (data_nbytes)
+    if (data_nbytes != 0)
     {
         memcpy(buffer + 8, data, data_nbytes);
-        while (data_nbytes & 3)
+        while ((data_nbytes & 3) != 0) {
             buffer[8 + data_nbytes++] = 0;
+}
     }
     int nbytes = 8 + data_nbytes;
 
@@ -193,16 +195,18 @@ srecord::output_file_four_packed_code::write_inner(unsigned long address,
     // Calculate the checksum.
     //
     int checksum = 0;
-    for (int j = 0; j < nbytes; ++j)
+    for (int j = 0; j < nbytes; ++j) {
         checksum += buffer[j];
+}
     buffer[0] = -checksum;
 
     //
     // Emit the line as base85 text.
     //
     put_char('$');
-    for (int j = 0; j < nbytes; ++j)
+    for (int j = 0; j < nbytes; ++j) {
         put_byte(buffer[j]);
+}
     put_char('\n');
 }
 
@@ -217,8 +221,9 @@ srecord::output_file_four_packed_code::write(const srecord::record & record)
         break;
 
     case srecord::record::type_data:
-        if (!record.address_range_fits_into_n_bits(16))
+        if (!record.address_range_fits_into_n_bits(16)) {
             data_address_too_large(record, 16);
+}
         write_inner
         (
             record.get_address(),
@@ -253,35 +258,39 @@ srecord::output_file_four_packed_code::line_length_set(int linlen)
     //
     // Constrain based on the file format.
     //
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    else if (n > 252)
+    } else if (n > 252) {
         n = 252;
+}
 
     //
     // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srecord::record::max_data_length)
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
 }
 
 
-bool
-srecord::output_file_four_packed_code::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_four_packed_code::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if (nbytes > 252)
+}
+    if (nbytes > 252) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }
 
 
-int
-srecord::output_file_four_packed_code::preferred_block_size_get() const
+auto
+srecord::output_file_four_packed_code::preferred_block_size_get() const -> int
 {
     return pref_block_size;
 }
@@ -294,9 +303,9 @@ srecord::output_file_four_packed_code::address_length_set(int)
 }
 
 
-const char *
+auto
 srecord::output_file_four_packed_code::format_name()
-    const
+    const -> const char *
 {
     return "Four-Packed-Code";
 }

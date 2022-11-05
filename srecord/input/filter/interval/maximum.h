@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_interval_maximum();
+    ~input_filter_interval_maximum() override;
 
 private:
     /**
@@ -74,29 +74,29 @@ public:
       *     true if the output location is included in the address
       *     range, false if not
       */
-    static pointer create(const input::pointer &deeper, long address,
-        int length, endian_t end, bool inclusive);
+    static auto create(const input::pointer &deeper, long address,
+        int length, endian_t end, bool inclusive) -> pointer;
 
 protected:
     // See base class for documentation.
-    long calculate_result() const;
+    auto calculate_result() const -> long override;
 
 private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_interval_maximum();
+    input_filter_interval_maximum() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_interval_maximum(const input_filter_interval_maximum &);
+    input_filter_interval_maximum(const input_filter_interval_maximum &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_interval_maximum &operator=(
-        const input_filter_interval_maximum &);
+    auto operator=(
+        const input_filter_interval_maximum &) -> input_filter_interval_maximum & = delete;
 };
 
 };

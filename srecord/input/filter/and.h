@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_and();
+    ~input_filter_and() override;
 
 private:
     /**
@@ -47,7 +47,7 @@ private:
       * @param mask
       *     The value to be bit-wise ANDed with each incoming data byte.
       */
-    input_filter_and(const input::pointer &deeper, int mask);
+    input_filter_and(const input::pointer &a1, int a2);
 
 public:
     /**
@@ -59,11 +59,11 @@ public:
       * @param mask
       *     The value to be bit-wise ANDed with each incoming data byte.
       */
-    static pointer create(const input::pointer &deeper, int mask);
+    static auto create(const input::pointer &deeper, int mask) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &result) -> bool override;
 
 private:
     /**
@@ -75,17 +75,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_and();
+    input_filter_and() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_and(const input_filter_and &);
+    input_filter_and(const input_filter_and &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_and &operator=(const input_filter_and &);
+    auto operator=(const input_filter_and &) -> input_filter_and & = delete;
 };
 
 };

@@ -52,13 +52,13 @@ public:
     /**
       * The assignment operator.
       */
-    adler32 &operator=(const adler32 &);
+    auto operator=(const adler32 &) -> adler32 &;
 
     /**
       * The get method is used to obtain the running value of the
       * checksum.
       */
-    unsigned long get() const;
+    auto get() const -> unsigned long;
 
     /**
       * The next method is used to advance the state by one byte.
@@ -75,13 +75,13 @@ private:
       * The sum_a instance variable is used to remember the sum of bytes
       * scanned.
       */
-    unsigned short sum_a;
+    unsigned short sum_a{1};
 
     /**
       * The sum_b instance variable is used to remember the sum of the
       * sum of bytes scanned.
       */
-    unsigned short sum_b;
+    unsigned short sum_b{0};
 };
 
 };

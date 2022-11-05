@@ -18,14 +18,15 @@
 
 #include <srecord/output/filter.h>
 
+#include <utility>
+
 
 srecord::output_filter::~output_filter()
-{
-}
+= default;
 
 
-srecord::output_filter::output_filter(const output::pointer &a_deeper) :
-    deeper(a_deeper)
+srecord::output_filter::output_filter(output::pointer a_deeper) :
+    deeper(std::move(a_deeper))
 {
 }
 
@@ -51,32 +52,32 @@ srecord::output_filter::address_length_set(int n)
 }
 
 
-int
-srecord::output_filter::preferred_block_size_get(void)
-    const
+auto
+srecord::output_filter::preferred_block_size_get()
+    const -> int
 {
     return deeper->preferred_block_size_get();
 }
 
 
-bool
-srecord::output_filter::preferred_block_size_set(int nbytes)
+auto
+srecord::output_filter::preferred_block_size_set(int nbytes) -> bool
 {
     return deeper->preferred_block_size_set(nbytes);
 }
 
 
-const std::string
-srecord::output_filter::filename(void)
-    const
+auto
+srecord::output_filter::filename()
+    const -> const std::string
 {
     return deeper->filename();
 }
 
 
-const char *
+auto
 srecord::output_filter::format_name()
-    const
+    const -> const char *
 {
     return deeper->format_name();
 }

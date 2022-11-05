@@ -23,29 +23,25 @@
 
 
 void
-srecord::arglex::test_ambiguous(void)
+srecord::arglex::test_ambiguous()
     const
 {
     int number_of_errors = 0;
     for
     (
-        table_ptr_vec_t::const_iterator it1 = tables.begin();
+        auto it1 = tables.begin();
         it1 != tables.end();
         ++it1
     )
     {
-        for (const table_ty *tp1 = *it1; tp1->name; ++tp1)
+        for (const table_ty *tp1 = *it1; tp1->name != nullptr; ++tp1)
         {
             std::string abbrev = abbreviate(tp1->name);
 
             for
-            (
-                table_ptr_vec_t::const_iterator it2 = tables.begin();
-                it2 != tables.end();
-                ++it2
-            )
+            (const auto *tp2 : tables)
             {
-                for (const table_ty *tp2 = *it2; tp2->name; ++tp2)
+                for (; tp2->name != nullptr; ++tp2)
                 {
                     if
                     (

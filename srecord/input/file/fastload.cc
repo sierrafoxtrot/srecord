@@ -24,8 +24,7 @@
 
 
 srecord::input_file_fastload::~input_file_fastload()
-{
-}
+= default;
 
 
 srecord::input_file_fastload::input_file_fastload(
@@ -38,15 +37,15 @@ srecord::input_file_fastload::input_file_fastload(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_fastload::create(const std::string &a_file_name)
+auto
+srecord::input_file_fastload::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_fastload(a_file_name));
 }
 
 
-int
-srecord::input_file_fastload::get_digit(void)
+auto
+srecord::input_file_fastload::get_digit() -> int
 {
     int c = get_char();
     switch (c)
@@ -121,8 +120,8 @@ srecord::input_file_fastload::get_digit(void)
 }
 
 
-unsigned long
-srecord::input_file_fastload::get_number(int min_digits, int max_digits)
+auto
+srecord::input_file_fastload::get_number(int min_digits, int max_digits) -> unsigned long
 {
     unsigned long result = 0;
     for (int ndigits = 0; ndigits < max_digits; ++ndigits)
@@ -144,7 +143,7 @@ srecord::input_file_fastload::get_number(int min_digits, int max_digits)
 
 
 void
-srecord::input_file_fastload::expect_white_space(void)
+srecord::input_file_fastload::expect_white_space()
 {
     switch (peek_char())
     {
@@ -162,15 +161,15 @@ srecord::input_file_fastload::expect_white_space(void)
 }
 
 
-bool
-srecord::input_file_fastload::read_inner(srecord::record &record)
+auto
+srecord::input_file_fastload::read_inner(srecord::record &record) -> bool
 {
-    unsigned long n;
+    unsigned long n = 0;
     unsigned char data[srecord::record::max_data_length];
     unsigned long data_address = address;
     srecord::record::type_t type;
     int data_length = 0;
-    unsigned char the_byte;
+    unsigned char the_byte = 0;
     for (;;)
     {
         switch (peek_char())
@@ -235,7 +234,7 @@ srecord::input_file_fastload::read_inner(srecord::record &record)
                 get_number(1, 6);
                 seek_to_end();
                 type = srecord::record::type_execution_start_address;
-                record = srecord::record(type, address, 0, 0);
+                record = srecord::record(type, address, nullptr, 0);
                 return true;
 
             case 'K':
@@ -249,10 +248,12 @@ srecord::input_file_fastload::read_inner(srecord::record &record)
                 for (;;)
                 {
                     int c = get_char();
-                    if (c < 0)
+                    if (c < 0) {
                         fatal_error("end-of-input in symbol");
-                    if (c == ',')
+}
+                    if (c == ',') {
                         break;
+}
                 }
                 get_number(1, 6);
                 expect_white_space();
@@ -261,8 +262,9 @@ srecord::input_file_fastload::read_inner(srecord::record &record)
             case 'Z':
                 n = get_number(1, 6);
                 expect_white_space();
-                if (n >= srecord::record::max_data_length)
+                if (n >= srecord::record::max_data_length) {
                     fatal_error("clearing too many bytes (%lu)", n);
+}
                 memset(data, 0, n);
                 type = srecord::record::type_data;
                 record = srecord::record(type, address, data, n);
@@ -275,8 +277,9 @@ srecord::input_file_fastload::read_inner(srecord::record &record)
             break;
 
         default:
-            if (data_length + 3 > srecord::record::max_data_length)
+            if (data_length + 3 > srecord::record::max_data_length) {
                 goto got_a_record;
+}
             n = get_number(4, 4);
             the_byte = n >> 16;
             data[data_length++] = the_byte;
@@ -294,13 +297,14 @@ srecord::input_file_fastload::read_inner(srecord::record &record)
 }
 
 
-bool
-srecord::input_file_fastload::read(srecord::record &record)
+auto
+srecord::input_file_fastload::read(srecord::record &record) -> bool
 {
     if (!read_inner(record))
     {
-        if (!seen_some_input)
+        if (!seen_some_input) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;
@@ -308,17 +312,17 @@ srecord::input_file_fastload::read(srecord::record &record)
 }
 
 
-const char *
-srecord::input_file_fastload::get_file_format_name(void)
-    const
+auto
+srecord::input_file_fastload::get_file_format_name()
+    const -> const char *
 {
     return "LSI Logic Fast Load";
 }
 
 
-int
-srecord::input_file_fastload::format_option_number(void)
-    const
+auto
+srecord::input_file_fastload::format_option_number()
+    const -> int
 {
     return arglex_tool::token_fast_load;
 }

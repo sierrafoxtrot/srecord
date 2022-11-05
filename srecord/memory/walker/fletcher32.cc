@@ -21,17 +21,15 @@
 
 
 srecord::memory_walker_fletcher32::~memory_walker_fletcher32()
-{
-}
+= default;
 
 
 srecord::memory_walker_fletcher32::memory_walker_fletcher32()
-{
-}
+= default;
 
 
-srecord::memory_walker_fletcher32::pointer
-srecord::memory_walker_fletcher32::create()
+auto
+srecord::memory_walker_fletcher32::create() -> srecord::memory_walker_fletcher32::pointer
 {
     return pointer(new srecord::memory_walker_fletcher32());
 }
@@ -45,9 +43,9 @@ srecord::memory_walker_fletcher32::observe(unsigned long, const void *data,
 }
 
 
-unsigned
+auto
 srecord::memory_walker_fletcher32::get()
-    const
+    const -> unsigned
 {
     return checksum.get();
 }

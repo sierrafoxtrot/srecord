@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_formatted_binary();
+    ~input_file_formatted_binary() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -45,20 +45,20 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read (record &record);
+    auto read (record &result) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    auto is_binary() const -> bool override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -102,17 +102,17 @@ private:
     /**
       * The default constructor.
       */
-    input_file_formatted_binary();
+    input_file_formatted_binary() = delete;
 
     /**
       * The copy constructor.
       */
-    input_file_formatted_binary(const input_file_formatted_binary &);
+    input_file_formatted_binary(const input_file_formatted_binary &) = delete;
 
     /**
       * The assignment operator.
       */
-    input_file_formatted_binary &operator=(const input_file_formatted_binary &);
+    auto operator=(const input_file_formatted_binary &) -> input_file_formatted_binary & = delete;
 };
 
 };

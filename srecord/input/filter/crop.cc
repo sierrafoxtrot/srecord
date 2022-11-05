@@ -23,30 +23,28 @@
 
 
 srecord::input_filter_crop::~input_filter_crop()
-{
-}
+= default;
 
 
 srecord::input_filter_crop::input_filter_crop(
         const srecord::input::pointer &a_deeper, const interval &a_range) :
     srecord::input_filter(a_deeper),
-    range(a_range),
-    data(),
-    data_range()
+    range(a_range)
+    
 {
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_crop::create(const srecord::input::pointer &a_deeper,
-    const interval &a_range)
+    const interval &a_range) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_crop(a_deeper, a_range));
 }
 
 
-bool
-srecord::input_filter_crop::read(srecord::record &record)
+auto
+srecord::input_filter_crop::read(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -92,8 +90,9 @@ srecord::input_filter_crop::read(srecord::record &record)
                 // Discard execution start address records which do not
                 // fall into the clip region.
                 //
-                if (!range.member(data.get_address()))
+                if (!range.member(data.get_address())) {
                     continue;
+}
                 record = data;
                 return true;
             }

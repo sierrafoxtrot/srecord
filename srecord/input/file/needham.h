@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_needham();
+    ~input_file_needham() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -45,17 +45,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -66,8 +66,8 @@ private:
       */
     input_file_needham(const std::string &file_name);
 
-    bool read_inner(record &);
-    bool garbage_warning;
+    auto read_inner(record &) -> bool;
+    bool garbage_warning{};
     bool seen_some_input;
     unsigned long address;
 
@@ -84,7 +84,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_needham &operator=(const input_file_needham &);
+    auto operator=(const input_file_needham &) -> input_file_needham &;
 };
 
 };

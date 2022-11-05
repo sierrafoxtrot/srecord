@@ -18,7 +18,6 @@
 
 #include <cctype>
 #include <cstdio>
-#include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <getopt.h>
@@ -30,9 +29,9 @@
 
 
 static void
-usage(void)
+usage()
 {
-    const char *prog;
+    const char *prog = nullptr;
 
     prog = srecord::progname_get();
     fprintf(stderr, "Usage: %s -decode [ <infile> [ <outfile> ]]\n", prog);
@@ -42,16 +41,18 @@ usage(void)
 
 
 static void
-test_url_decode(void)
+test_url_decode()
 {
     for (;;)
     {
         char buf[1000];
-        if (!fgets(buf, sizeof(buf), stdin))
+        if (fgets(buf, sizeof(buf), stdin) == nullptr) {
             break;
+}
         size_t len = strlen(buf);
-        while (len > 0 && isspace((unsigned char)buf[len - 1]))
+        while (len > 0 && (isspace((unsigned char)buf[len - 1]) != 0)) {
             --len;
+}
         std::string s(buf, len);
         printf("%s\n", srecord::string_url_decode(s).c_str());
     }
@@ -59,41 +60,44 @@ test_url_decode(void)
 
 
 static void
-test_url_encode(void)
+test_url_encode()
 {
     for (;;)
     {
         char buf[1000];
-        if (!fgets(buf, sizeof(buf), stdin))
+        if (fgets(buf, sizeof(buf), stdin) == nullptr) {
             break;
+}
         size_t len = strlen(buf);
-        while (len > 0 && isspace((unsigned char)buf[len - 1]))
+        while (len > 0 && (isspace((unsigned char)buf[len - 1]) != 0)) {
             --len;
+}
         std::string s(buf, len);
         printf("%s\n", srecord::string_url_encode(s).c_str());
     }
 }
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     srecord::progname_set(argv[0]);
-    typedef void (*func_t)(void);
-    func_t func = NULL;
+    using func_t = void (*)();
+    func_t func = nullptr;
     for (;;)
     {
         static const
         struct option options[] =
         {
-            { "decode", 0, 0, 'd' },
-            { "encode", 0, 0, 'e' },
-            { "version", 0, 0, 'V' },
-            { 0, 0, 0,0 }
+            { "decode", 0, nullptr, 'd' },
+            { "encode", 0, nullptr, 'e' },
+            { "version", 0, nullptr, 'V' },
+            { nullptr, 0, nullptr,0 }
         };
-        int c = getopt_long(argc, argv, "deV", options, NULL);
-        if (c == -1)
+        int c = getopt_long(argc, argv, "deV", options, nullptr);
+        if (c == -1) {
             break;
+}
 
         switch ((unsigned char)c)
         {
@@ -115,15 +119,16 @@ main(int argc, char **argv)
             return EXIT_FAILURE;
         }
     }
-    if (!func)
+    if (func == nullptr) {
         usage();
+}
     switch (argc - optind)
     {
     case 0:
         break;
 
     case 2:
-        if (!freopen(argv[optind + 1], "w", stdout))
+        if (freopen(argv[optind + 1], "w", stdout) == nullptr)
         {
             perror(argv[optind + 1]);
             return EXIT_FAILURE;
@@ -131,7 +136,7 @@ main(int argc, char **argv)
         // fall through...
 
     case 1:
-        if (!freopen(argv[optind], "r", stdin))
+        if (freopen(argv[optind], "r", stdin) == nullptr)
         {
             perror(argv[optind]);
             return EXIT_FAILURE;

@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_dec_binary();
+    ~output_file_dec_binary() override;
 
 private:
     /**
@@ -58,29 +58,29 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    auto format_name() const -> const char * override;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    auto is_binary() const -> bool override;
 
 private:
     /**
@@ -89,13 +89,13 @@ private:
       * method also tracks the byte_offset, so that we can align to
       * specific boundaries.  Calls the checksum_add() method.
       */
-    void put_byte(unsigned char);
+    void put_byte(unsigned char) override;
 
     /**
       * The byte_offset instance variable is used to track the location
       * in the output file.  Maintained by the put_byte() method.
       */
-    unsigned long byte_offset;
+    unsigned long byte_offset{};
 
     /**
       * The pref_block_size is used to remember the preferred
@@ -108,22 +108,22 @@ private:
       * The preferred_block_size_calculate method is used to determine
       * the best block size to pack into 512 byte blocks.
       */
-    static int preferred_block_size_calculate();
+    static auto preferred_block_size_calculate() -> int;
 
     /**
       * The default constructor.  Do not use.
       */
-    output_file_dec_binary();
+    output_file_dec_binary() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_dec_binary(const output_file_dec_binary &);
+    output_file_dec_binary(const output_file_dec_binary &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_dec_binary &operator=(const output_file_dec_binary &);
+    auto operator=(const output_file_dec_binary &) -> output_file_dec_binary & = delete;
 };
 
 };

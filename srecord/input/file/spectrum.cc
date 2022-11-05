@@ -24,8 +24,7 @@
 
 
 srecord::input_file_spectrum::~input_file_spectrum()
-{
-}
+= default;
 
 
 srecord::input_file_spectrum::input_file_spectrum(
@@ -39,17 +38,17 @@ srecord::input_file_spectrum::input_file_spectrum(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_spectrum::create(const std::string &a_file_name)
+auto
+srecord::input_file_spectrum::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_spectrum(a_file_name));
 }
 
 
-int
-srecord::input_file_spectrum::get_decimal()
+auto
+srecord::input_file_spectrum::get_decimal() -> int
 {
-    int c;
+    int c = 0;
     for (;;)
     {
         c = get_char();
@@ -58,19 +57,22 @@ srecord::input_file_spectrum::get_decimal()
             format_error:
             fatal_error("decimal number expected");
         }
-        if (isspace((unsigned char)c))
+        if (isspace((unsigned char)c) != 0) {
             continue;
-        if (!isdigit((unsigned char)c))
+}
+        if (isdigit((unsigned char)c) == 0) {
             goto format_error;
+}
         break;
     }
     int result = c - '0';
     for (;;)
     {
         c = get_char();
-        if (c < 0)
+        if (c < 0) {
             break;
-        if (!isdigit((unsigned char)c))
+}
+        if (isdigit((unsigned char)c) == 0)
         {
             get_char_undo(c);
             break;
@@ -81,17 +83,17 @@ srecord::input_file_spectrum::get_decimal()
 }
 
 
-static inline bool
-is_binary_digit(int c)
+static inline auto
+is_binary_digit(int c) -> bool
 {
     return ((c == '0' || c == '1'));
 }
 
 
-int
-srecord::input_file_spectrum::get_binary()
+auto
+srecord::input_file_spectrum::get_binary() -> int
 {
-    int c;
+    int c = 0;
     for (;;)
     {
         c = get_char();
@@ -100,10 +102,12 @@ srecord::input_file_spectrum::get_binary()
             format_error:
             fatal_error("binary number expected");
         }
-        if (isspace((unsigned char)c))
+        if (isspace((unsigned char)c) != 0) {
             continue;
-        if (!is_binary_digit((unsigned char)c))
+}
+        if (!is_binary_digit((unsigned char)c)) {
             goto format_error;
+}
         break;
     }
     int result = c - '0';
@@ -121,8 +125,8 @@ srecord::input_file_spectrum::get_binary()
 }
 
 
-bool
-srecord::input_file_spectrum::read(srecord::record &record)
+auto
+srecord::input_file_spectrum::read(srecord::record &record) -> bool
 {
     //
     // Check for the file header
@@ -133,8 +137,9 @@ srecord::input_file_spectrum::read(srecord::record &record)
         for (;;)
         {
             int c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 fatal_error("no start character");
+}
             if (c == 2)
             {
                 header_seen = true;
@@ -151,20 +156,23 @@ srecord::input_file_spectrum::read(srecord::record &record)
     //
     // Check for the file trailer.
     //
-    if (trailer_seen)
+    if (trailer_seen) {
         return false;
+}
     for (;;)
     {
         int c = get_char();
         if (c < 0 || c == 3)
         {
-            if (!file_contains_data)
+            if (!file_contains_data) {
                 fatal_error("file contains no data");
+}
             trailer_seen = true;
             return false;
         }
-        if (isspace((unsigned char)c))
+        if (isspace((unsigned char)c) != 0) {
             continue;
+}
         get_char_undo(c);
         break;
     }
@@ -177,17 +185,17 @@ srecord::input_file_spectrum::read(srecord::record &record)
 }
 
 
-const char *
+auto
 srecord::input_file_spectrum::get_file_format_name ()
-    const
+    const -> const char *
 {
     return "Spectrum";
 }
 
 
-int
-srecord::input_file_spectrum::format_option_number(void)
-    const
+auto
+srecord::input_file_spectrum::format_option_number()
+    const -> int
 {
     return arglex_tool::token_spectrum;
 }

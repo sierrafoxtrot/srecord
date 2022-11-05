@@ -27,8 +27,9 @@
 srecord::output_file_dec_binary::~output_file_dec_binary()
 {
     // Round off to a whole multiple of BLOCK_SIZE bytes.
-    while (byte_offset & BLOCK_SIZE_MASK)
+    while ((byte_offset & BLOCK_SIZE_MASK) != 0U) {
         put_byte(0);
+}
 }
 
 
@@ -38,13 +39,14 @@ srecord::output_file_dec_binary::output_file_dec_binary(
     srecord::output_file(a_file_name),
     pref_block_size(preferred_block_size_calculate())
 {
-    if (line_termination == line_termination_native)
+    if (line_termination == line_termination_native) {
         line_termination = line_termination_binary;
+}
 }
 
 
-srecord::output::pointer
-srecord::output_file_dec_binary::create(const std::string &a_file_name)
+auto
+srecord::output_file_dec_binary::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_dec_binary(a_file_name));
 }
@@ -69,10 +71,12 @@ srecord::output_file_dec_binary::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (record.get_length() < 1)
+        if (record.get_length() < 1) {
             return;
-        if (!record.address_range_fits_into_n_bits(16))
+}
+        if (!record.address_range_fits_into_n_bits(16)) {
             data_address_too_large(record, 16);
+}
 
 #if 0
         //
@@ -100,11 +104,13 @@ srecord::output_file_dec_binary::write(const srecord::record &record)
         put_word_le(1);
         put_word_le(record.get_length() + 6);
         put_word_le(record.get_address());
-        for (size_t j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j) {
             put_byte(record.get_data(j));
+}
         put_byte(-checksum_get());
-        if (byte_offset & 1)
+        if ((byte_offset & 1) != 0U) {
             put_byte(0);
+}
         break;
 
     case srecord::record::type_data_count:
@@ -142,26 +148,27 @@ srecord::output_file_dec_binary::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_dec_binary::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_dec_binary::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }
 
 
-int
+auto
 srecord::output_file_dec_binary::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_block_size;
 }
 
 
-int
-srecord::output_file_dec_binary::preferred_block_size_calculate()
+auto
+srecord::output_file_dec_binary::preferred_block_size_calculate() -> int
 {
 #if 0
     //
@@ -183,17 +190,17 @@ srecord::output_file_dec_binary::preferred_block_size_calculate()
 }
 
 
-const char *
+auto
 srecord::output_file_dec_binary::format_name()
-    const
+    const -> const char *
 {
     return "DEC-Binary";
 }
 
 
-bool
-srecord::output_file_dec_binary::is_binary(void)
-    const
+auto
+srecord::output_file_dec_binary::is_binary()
+    const -> bool
 {
     return true;
 }

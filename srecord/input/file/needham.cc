@@ -24,8 +24,7 @@
 
 
 srecord::input_file_needham::~input_file_needham()
-{
-}
+= default;
 
 
 srecord::input_file_needham::input_file_needham(
@@ -38,26 +37,27 @@ srecord::input_file_needham::input_file_needham(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_needham::create(const std::string &a_file_name)
+auto
+srecord::input_file_needham::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_needham(a_file_name));
 }
 
 
-bool
-srecord::input_file_needham::read(srecord::record &record)
+auto
+srecord::input_file_needham::read(srecord::record &record) -> bool
 {
     for (;;)
     {
         int c = peek_char();
         if (c < 0)
         {
-            if (!seen_some_input)
+            if (!seen_some_input) {
                 fatal_error("file contains no data");
+}
             return false;
         }
-        if (isxdigit(c))
+        if (isxdigit(c) != 0)
         {
             unsigned char c = get_byte();
             record =
@@ -90,8 +90,9 @@ srecord::input_file_needham::read(srecord::record &record)
             fatal_error("illegal character");
 
         case '$':
-            if (get_char() != 'A')
+            if (get_char() != 'A') {
                 fatal_error("unknown command");
+}
             address = 0;
             int n = 0;
             for (n = 0; n < 4 && peek_char() != ','; ++n)
@@ -99,27 +100,29 @@ srecord::input_file_needham::read(srecord::record &record)
                 int b = get_byte();
                 address = (address << 8) + b;
             }
-            if (n < 2)
+            if (n < 2) {
                 fatal_error("short address");
-            if (get_char() != ',')
+}
+            if (get_char() != ',') {
                 fatal_error("comma expected");
+}
             break;
         }
     }
 }
 
 
-const char *
-srecord::input_file_needham::get_file_format_name(void)
-    const
+auto
+srecord::input_file_needham::get_file_format_name()
+    const -> const char *
 {
     return "Needham";
 }
 
 
-int
-srecord::input_file_needham::format_option_number(void)
-    const
+auto
+srecord::input_file_needham::format_option_number()
+    const -> int
 {
     return arglex_tool::token_needham_hex;
 }

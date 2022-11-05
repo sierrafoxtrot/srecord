@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_spasm();
+    ~input_file_spasm() override;
 
     /**
       * The create_be class method is used to create new dynamically
@@ -47,7 +47,7 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create_be(const std::string &file_name);
+    static auto create_be(const std::string &file_name) -> pointer;
 
     /**
       * The create class method is used to create new dynamically
@@ -60,17 +60,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name, endian_t end);
+    static auto create(const std::string &file_name, endian_t end) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &result) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -87,7 +87,7 @@ private:
       * The read_inner method is used to read a record from the file.
       * The read method is a wrapper around it.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * The seen_some_input instance variable is used to remember whether
@@ -104,17 +104,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_spasm();
+    input_file_spasm() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_spasm(const input_file_spasm &);
+    input_file_spasm(const input_file_spasm &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_spasm &operator=(const input_file_spasm &);
+    auto operator=(const input_file_spasm &) -> input_file_spasm & = delete;
 };
 
 };

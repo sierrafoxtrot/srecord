@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_generator_repeat();
+    ~input_generator_repeat() override;
 
 private:
     /**
@@ -49,7 +49,7 @@ private:
       * @param length
       *     The length of the array of data to be repeated.
       */
-    input_generator_repeat(const interval &range, unsigned char *data,
+    input_generator_repeat(const interval &range, const unsigned char *data,
         size_t length);
 
 public:
@@ -64,18 +64,18 @@ public:
       * @param length
       *     The length of the array of data to be repeated.
       */
-    static pointer create(const interval &range, unsigned char *data,
-        size_t length);
+    static auto create(const interval &range, unsigned char *data,
+        size_t length) -> pointer;
 
 protected:
     // See base class for documentation.
-    unsigned char generate_data(unsigned long address);
+    auto generate_data(unsigned long address) -> unsigned char override;
 
     // See base class for documentation.
-    std::string filename() const;
+    auto filename() const -> std::string override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    auto get_file_format_name() const -> const char * override;
 
 private:
     /**
@@ -100,17 +100,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_generator_repeat();
+    input_generator_repeat() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_generator_repeat(const input_generator_repeat &);
+    input_generator_repeat(const input_generator_repeat &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_generator_repeat &operator=(const input_generator_repeat &);
+    auto operator=(const input_generator_repeat &) -> input_generator_repeat & = delete;
 };
 
 };

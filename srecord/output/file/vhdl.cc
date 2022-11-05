@@ -44,8 +44,8 @@ srecord::output_file_vhdl::output_file_vhdl(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_vhdl::create(const std::string &a_file_name)
+auto
+srecord::output_file_vhdl::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_vhdl(a_file_name));
 }
@@ -61,9 +61,10 @@ srecord::output_file_vhdl::command_line(srecord::arglex_tool *cmdln)
 
         if (a1 > 0)
         {
-            unsigned a2 = (unsigned)a1;
-            if (a2 > sizeof(unsigned long))
+            auto a2 = (unsigned)a1;
+            if (a2 > sizeof(unsigned long)) {
                 a2 = sizeof(unsigned long);
+}
             bytes_per_word = a2;
         }
     }
@@ -78,8 +79,9 @@ srecord::output_file_vhdl::command_line(srecord::arglex_tool *cmdln)
 void
 srecord::output_file_vhdl::emit_header()
 {
-    if (header_done)
+    if (header_done) {
         return;
+}
     if (enable_header_flag)
     {
         put_stringf
@@ -148,8 +150,9 @@ srecord::output_file_vhdl::write(const srecord::record &record)
                     put_string("\n-- ");
                     continue;
                 }
-                if (!isprint(c))
+                if (isprint(c) == 0) {
                     c = ' ';
+}
                 put_char(c);
             }
             put_char('\n');
@@ -165,9 +168,9 @@ srecord::output_file_vhdl::write(const srecord::record &record)
             bytes_per_word > 1
         &&
             (
-                (record.get_address() % bytes_per_word)
+                ((record.get_address() % bytes_per_word) != 0U)
             ||
-                (record.get_length() % bytes_per_word)
+                ((record.get_length() % bytes_per_word) != 0U)
             )
         )
         {
@@ -178,8 +181,9 @@ srecord::output_file_vhdl::write(const srecord::record &record)
         for (size_t j = 0; j < record.get_length(); j += bytes_per_word)
         {
             srecord::record::address_t current_word = 0;
-            for (unsigned k = 0; k < bytes_per_word; ++k)
+            for (unsigned k = 0; k < bytes_per_word; ++k) {
                 current_word = (current_word << 8) + record.get_data(j + k);
+}
             put_stringf
             (
                 "  %lu => %s_entry(%lu),\n",
@@ -215,35 +219,38 @@ srecord::output_file_vhdl::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_vhdl::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_vhdl::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes > 1 || nbytes > record::max_data_length)
+    if (nbytes > 1 || nbytes > record::max_data_length) {
         return false;
-    if (bytes_per_word > 1 && 0 != (nbytes % bytes_per_word))
+}
+    if (bytes_per_word > 1 && 0 != (nbytes % bytes_per_word)) {
         return false;
+}
     return true;
 }
 
 
-int
+auto
 srecord::output_file_vhdl::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Use the largest we can get, but it has to be a multiple of our
     // word size.
     //
     int n = srecord::record::max_data_length;
-    if (bytes_per_word > 1)
+    if (bytes_per_word > 1) {
         n -= (n % bytes_per_word);
+}
     return n;
 }
 
 
-const char *
+auto
 srecord::output_file_vhdl::format_name()
-    const
+    const -> const char *
 {
     return "VHDL";
 }

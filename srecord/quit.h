@@ -19,7 +19,7 @@
 #ifndef SRECORD_QUIT_H
 #define SRECORD_QUIT_H
 
-#include <stdarg.h>
+#include <cstdarg>
 #include <srecord/format_printf.h>
 
 namespace srecord
@@ -50,7 +50,7 @@ public:
     /**
       * The assignment operator.
       */
-    quit &operator=(const quit &);
+    auto operator=(const quit &) -> quit &;
 
     /**
       * The fatal_error method is used to report fatal errors.

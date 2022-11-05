@@ -22,21 +22,20 @@
 
 
 srecord::output_file_fairchild::~output_file_fairchild()
-{
-}
+= default;
 
 
 srecord::output_file_fairchild::output_file_fairchild(
     const std::string &a_file_name
 ) :
     srecord::output_file(a_file_name),
-    address(~0uL)
+    address(~0UL)
 {
 }
 
 
-srecord::output::pointer
-srecord::output_file_fairchild::create(const std::string &a_file_name)
+auto
+srecord::output_file_fairchild::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_fairchild(a_file_name));
 }
@@ -66,8 +65,9 @@ srecord::output_file_fairchild::write(const srecord::record &record)
     switch (record.get_type())
     {
     case srecord::record::type_header:
-        if (!enable_optional_address_flag)
+        if (!enable_optional_address_flag) {
             address = (unsigned long)-1L;
+}
         break;
 
     case srecord::record::type_unknown:
@@ -79,8 +79,9 @@ srecord::output_file_fairchild::write(const srecord::record &record)
         {
             int len = record.get_length();
             unsigned long new_addr = record.get_address();
-            if ((new_addr & 7) || (len & 7))
+            if (((new_addr & 7) != 0U) || ((len & 7) != 0)) {
                 fatal_alignment_error(8);
+}
             if (address != new_addr)
             {
                 put_stringf("S%4.4lX\n", new_addr);
@@ -131,24 +132,24 @@ srecord::output_file_fairchild::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_fairchild::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_fairchild::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes == 8);
 }
 
 
-int
+auto
 srecord::output_file_fairchild::preferred_block_size_get()
-    const
+    const -> int
 {
     return 8;
 }
 
 
-const char *
+auto
 srecord::output_file_fairchild::format_name()
-    const
+    const -> const char *
 {
     return "Fairchild";
 }

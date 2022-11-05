@@ -26,7 +26,7 @@ namespace srecord
   * The r250 function is used to produce a 32-bit random number.
   * It repeats every 2**256 samples, long enough for most purposes.
   */
-unsigned long r250(void);
+auto r250() -> unsigned long;
 
 };
 

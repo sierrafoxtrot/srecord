@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_vmem();
+    ~output_file_vmem() override;
 
 private:
     /**
@@ -57,29 +57,29 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    auto format_name() const -> const char * override;
 
 private:
     /**
@@ -125,17 +125,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_vmem();
+    output_file_vmem() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_vmem(const output_file_vmem &);
+    output_file_vmem(const output_file_vmem &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_vmem &operator=(const output_file_vmem &);
+    auto operator=(const output_file_vmem &) -> output_file_vmem & = delete;
 };
 
 };

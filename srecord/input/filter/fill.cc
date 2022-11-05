@@ -35,35 +35,37 @@ srecord::input_filter_fill::input_filter_fill(const input::pointer &a1,
         int a2, const interval &a3) :
     input_filter(a1),
     filler_value(a2),
-    filler_block(0),
+    filler_block(nullptr),
     range(a3)
 {
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_fill::create(const input::pointer &a_deeper,
-    int a_value, const interval &a_range)
+    int a_value, const interval &a_range) -> srecord::input::pointer
 {
     return pointer(new input_filter_fill(a_deeper, a_value, a_range));
 }
 
 
-bool
-srecord::input_filter_fill::generate(record &result)
+auto
+srecord::input_filter_fill::generate(record &result) -> bool
 {
-    if (range.empty())
+    if (range.empty()) {
         return false;
+}
     interval::data_t lo = range.get_lowest();
     size_t rec_len = record::maximum_data_length(lo);
     interval::data_t hi = lo + rec_len;
-    if (hi < lo)
+    if (hi < lo) {
         hi = 0;
+}
     interval chunk(lo, hi);
     chunk *= range;
     chunk.first_interval_only();
     size_t fill_block_size = 256;
-    if (!filler_block)
+    if (filler_block == nullptr)
     {
         filler_block = new unsigned char [fill_block_size];
         memset(filler_block, filler_value, fill_block_size);
@@ -76,11 +78,12 @@ srecord::input_filter_fill::generate(record &result)
 }
 
 
-bool
-srecord::input_filter_fill::read(record &result)
+auto
+srecord::input_filter_fill::read(record &result) -> bool
 {
-    if (!input_filter::read(result))
+    if (!input_filter::read(result)) {
         return generate(result);
+}
     if (result.get_type() == record::type_data)
     {
         range -=

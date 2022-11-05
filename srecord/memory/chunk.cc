@@ -39,8 +39,8 @@ srecord::memory_chunk::memory_chunk(const srecord::memory_chunk &arg) :
 }
 
 
-srecord::memory_chunk &
-srecord::memory_chunk::operator=(const srecord::memory_chunk &arg)
+auto
+srecord::memory_chunk::operator=(const srecord::memory_chunk &arg) -> srecord::memory_chunk &
 {
     if (this != &arg)
     {
@@ -53,8 +53,7 @@ srecord::memory_chunk::operator=(const srecord::memory_chunk &arg)
 
 
 srecord::memory_chunk::~memory_chunk()
-{
-}
+= default;
 
 
 void
@@ -71,32 +70,37 @@ srecord::memory_chunk::walk(srecord::memory_walker::pointer w)
 {
     for (int j = 0; j < size; ++j)
     {
-        if (!set_p(j))
+        if (!set_p(j)) {
             continue;
-        int k;
-        for (k = j + 1; k < size && set_p(k); ++k)
+}
+        int k = 0;
+        for (k = j + 1; k < size && set_p(k); ++k) {
             ;
+}
         w->observe(address * size + j, data + j, k - j);
         j = k;
     }
 }
 
 
-bool
+auto
 srecord::memory_chunk::find_next_data(unsigned long &ret_addr, void *ret_data,
         size_t &nbytes)
-    const
+    const -> bool
 {
     for (unsigned j = ret_addr % size; j < size; ++j)
     {
-        if (!set_p(j))
+        if (!set_p(j)) {
             continue;
+}
         size_t max = j + nbytes;
-        if (max > size)
+        if (max > size) {
             max = size;
-        unsigned k;
-        for (k = j + 1; k < max && set_p(k); ++k)
+}
+        unsigned k = 0;
+        for (k = j + 1; k < max && set_p(k); ++k) {
             ;
+}
         nbytes = k - j;
         memcpy(ret_data, data + j, nbytes);
         ret_addr = address * size + j;
@@ -106,24 +110,24 @@ srecord::memory_chunk::find_next_data(unsigned long &ret_addr, void *ret_data,
 }
 
 
-int
-srecord::memory_chunk::get(unsigned long offset)
+auto
+srecord::memory_chunk::get(unsigned long offset) -> int
 {
     return data[offset];
 }
 
 
-bool
+auto
 srecord::memory_chunk::set_p(unsigned long offset)
-    const
+    const -> bool
 {
     return (0 != (mask[offset >> 3] & (1 << (offset & 7))));
 }
 
 
-bool
+auto
 srecord::memory_chunk::equal(const srecord::memory_chunk &lhs,
-    const srecord::memory_chunk &rhs)
+    const srecord::memory_chunk &rhs) -> bool
 {
     return
     (
@@ -136,45 +140,47 @@ srecord::memory_chunk::equal(const srecord::memory_chunk &lhs,
 }
 
 
-unsigned long
+auto
 srecord::memory_chunk::get_upper_bound()
-    const
+    const -> unsigned long
 {
     for (size_t j = size; j > 0; --j)
     {
-        if (set_p(j - 1))
+        if (set_p(j - 1)) {
             return (address * size + j);
+}
     }
     // can't happen?
     return (address * size);
 }
 
 
-unsigned long
+auto
 srecord::memory_chunk::get_lower_bound()
-    const
+    const -> unsigned long
 {
     for (size_t j = 0; j < size; ++j)
     {
-        if (set_p(j))
+        if (set_p(j)) {
             return (address * size + j);
+}
     }
     // can't happen?
     return (address * size);
 }
 
 
-bool
+auto
 srecord::operator == (const srecord::memory_chunk &lhs,
-    const srecord::memory_chunk &rhs)
+    const srecord::memory_chunk &rhs) -> bool
 {
     return srecord::memory_chunk::equal(lhs, rhs);
 }
 
 
-bool
+auto
 srecord::operator != (const srecord::memory_chunk &lhs,
-    const srecord::memory_chunk &rhs)
+    const srecord::memory_chunk &rhs) -> bool
 {
     return !srecord::memory_chunk::equal(lhs, rhs);
 }

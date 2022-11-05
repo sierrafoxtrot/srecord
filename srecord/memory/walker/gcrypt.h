@@ -43,7 +43,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_gcrypt();
+    ~memory_walker_gcrypt() override;
 
 private:
     /**
@@ -65,11 +65,11 @@ public:
       *     used to access the libgcrypt handle to the message digest
       *     being calculated.
       */
-    static pointer create(gcry_md_hd_t handle);
+    static auto create(gcry_md_hd_t handle) -> pointer;
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
 private:
     /**
@@ -81,17 +81,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    memory_walker_gcrypt();
+    memory_walker_gcrypt() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_gcrypt(const memory_walker_gcrypt &);
+    memory_walker_gcrypt(const memory_walker_gcrypt &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_gcrypt &operator=(const memory_walker_gcrypt &);
+    auto operator=(const memory_walker_gcrypt &) -> memory_walker_gcrypt & = delete;
 };
 
 };

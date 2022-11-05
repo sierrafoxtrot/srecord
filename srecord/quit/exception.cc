@@ -20,13 +20,11 @@
 
 
 srecord::quit_exception::~quit_exception()
-{
-}
+= default;
 
 
 srecord::quit_exception::quit_exception()
-{
-}
+= default;
 
 
 void

@@ -25,8 +25,8 @@
 #include <srecord/input/interval.h>
 
 
-srecord::interval
-srecord::arglex_tool::get_interval_factor(const char *name)
+auto
+srecord::arglex_tool::get_interval_factor(const char *name) -> srecord::interval
 {
     switch (token_cur())
     {
@@ -64,7 +64,7 @@ srecord::arglex_tool::get_interval_factor(const char *name)
             {
                 n2 = get_number("address range maximum");
             }
-            if (n2 && n1 >= n2)
+            if ((n2 != 0U) && n1 >= n2)
             {
                 fatal_error
                 (
@@ -98,8 +98,8 @@ srecord::arglex_tool::get_interval_factor(const char *name)
 }
 
 
-srecord::interval
-srecord::arglex_tool::get_interval_term(const char *name)
+auto
+srecord::arglex_tool::get_interval_term(const char *name) -> srecord::interval
 {
     interval result = get_interval_factor(name);
     for (;;)
@@ -120,8 +120,8 @@ srecord::arglex_tool::get_interval_term(const char *name)
 }
 
 
-srecord::interval
-srecord::arglex_tool::get_interval(const char *name)
+auto
+srecord::arglex_tool::get_interval(const char *name) -> srecord::interval
 {
     interval result = get_interval_term(name);
     for (;;)

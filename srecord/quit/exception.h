@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~quit_exception();
+    ~quit_exception() override;
 
     /**
       * The default constructor.
@@ -49,21 +49,21 @@ public:
 
 protected:
     // see base class for documentation
-    virtual void exit(int n);
+    void exit(int n) override;
 
     // see base class for documentation
-    virtual void message_v(const char *fmt, va_list);
+    void message_v(const char *fmt, va_list) override;
 
 private:
     /**
       * The copy constructor.  Do not use.
       */
-    quit_exception(const quit_exception &);
+    quit_exception(const quit_exception &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    quit_exception &operator=(const quit_exception &);
+    auto operator=(const quit_exception &) -> quit_exception & = delete;
 };
 
 };

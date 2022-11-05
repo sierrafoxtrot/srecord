@@ -23,8 +23,7 @@
 
 
 srecord::input_file_emon52::~input_file_emon52()
-{
-}
+= default;
 
 
 srecord::input_file_emon52::input_file_emon52(const std::string &a_file_name) :
@@ -33,47 +32,51 @@ srecord::input_file_emon52::input_file_emon52(const std::string &a_file_name) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_emon52::create(const std::string &a_file_name)
+auto
+srecord::input_file_emon52::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_emon52(a_file_name));
 }
 
 
 void
-srecord::input_file_emon52::skip_white_space(void)
+srecord::input_file_emon52::skip_white_space()
 {
     for (;;)
     {
         int c = peek_char();
-        if (c != ' ')
+        if (c != ' ') {
             return;
+}
         get_char();
     }
 }
 
 
-bool
-srecord::input_file_emon52::read(srecord::record &record)
+auto
+srecord::input_file_emon52::read(srecord::record &record) -> bool
 {
     //
     // This format has no execution start address record type, and no
     // magic start character.  So look ahead to see if there is anything
     // more.
     //
-    if (peek_char() < 0)
+    if (peek_char() < 0) {
         return false;
+}
 
     //
     // Looks like there should be a record.  Read it all in.
     //
     int length = get_byte();
-    if (length == 0)
+    if (length == 0) {
         fatal_error("data length of zero is not valid");
+}
     skip_white_space();
     unsigned long address = get_word_be();
-    if (get_char() != ':')
+    if (get_char() != ':') {
         fatal_error("colon expected");
+}
     checksum_reset();
     unsigned char buffer[256];
     for (int j = 0; j < length; ++j)
@@ -84,10 +87,12 @@ srecord::input_file_emon52::read(srecord::record &record)
     skip_white_space();
     int csumX = checksum_get16();
     int csum = get_word_be();
-    if (use_checksums() && csumX != csum)
+    if (use_checksums() && csumX != csum) {
         fatal_error("checksum mismatch (%04X != %04X)", csumX, csum);
-    if (get_char() != '\n')
+}
+    if (get_char() != '\n') {
         fatal_error("end-of-line expected");
+}
 
     srecord::record::type_t type = srecord::record::type_data;
     record = srecord::record(type, address, buffer, length);
@@ -95,17 +100,17 @@ srecord::input_file_emon52::read(srecord::record &record)
 }
 
 
-const char *
-srecord::input_file_emon52::get_file_format_name(void)
-    const
+auto
+srecord::input_file_emon52::get_file_format_name()
+    const -> const char *
 {
     return "Elektor Monitor (EMON52)";
 }
 
 
-int
-srecord::input_file_emon52::format_option_number(void)
-    const
+auto
+srecord::input_file_emon52::format_option_number()
+    const -> int
 {
     return arglex_tool::token_emon52;
 }

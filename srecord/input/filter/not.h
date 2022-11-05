@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_not();
+    ~input_filter_not() override;
 
 private:
     /**
@@ -45,7 +45,7 @@ private:
       * @param deeper
       *     The input source to be filtered.
       */
-    input_filter_not(const input::pointer &deeper);
+    input_filter_not(const input::pointer &arg);
 
 public:
     /**
@@ -55,27 +55,27 @@ public:
       * @param deeper
       *     The incoming data source
       */
-    static pointer create(const input::pointer &deeper);
+    static auto create(const input::pointer &deeper) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
 private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_not();
+    input_filter_not() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_not(const input_filter_not &);
+    input_filter_not(const input_filter_not &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_not &operator=(const input_filter_not &);
+    auto operator=(const input_filter_not &) -> input_filter_not & = delete;
 };
 
 };

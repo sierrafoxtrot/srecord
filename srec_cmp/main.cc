@@ -27,15 +27,15 @@
 #include <vector>
 
 
-static bool
-execution_start_addresses_differ(srecord::record *rp1, srecord::record *rp2)
+static auto
+execution_start_addresses_differ(srecord::record *rp1, srecord::record *rp2) -> bool
 {
-    return (rp1 && rp2 && rp1->get_address() != rp2->get_address());
+    return ((rp1 != nullptr) && (rp2 != nullptr) && rp1->get_address() != rp2->get_address());
 }
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     srecord::arglex_tool cmdline(argc, argv);
     cmdline.usage_tail_set("<file1> <file2>");
@@ -55,11 +55,11 @@ main(int argc, char **argv)
         case srecord::arglex_tool::token_string:
         case srecord::arglex_tool::token_stdio:
         case srecord::arglex_tool::token_generator:
-            if (!if1)
+            if (!if1) {
                 if1 = cmdline.get_input();
-            else if (!if2)
+            } else if (!if2) {
                 if2 = cmdline.get_input();
-            else
+            } else
             {
                 std::cerr << argv[0] << ": too many input files specified"
                     << std::endl;
@@ -123,8 +123,9 @@ main(int argc, char **argv)
                 << "." << std::dec << std::endl;
             different = true;
         }
-        if (different)
+        if (different) {
             exit(2);
+}
         std::cerr << argv[0] << ": files \"" << if1->filename() << "\" and \""
             << if2->filename() << "\" are the same." << std::endl;
     }

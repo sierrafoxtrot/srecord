@@ -22,8 +22,7 @@
 
 
 srecord::input_file_brecord::~input_file_brecord()
-{
-}
+= default;
 
 
 srecord::input_file_brecord::input_file_brecord(
@@ -35,33 +34,37 @@ srecord::input_file_brecord::input_file_brecord(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_brecord::create(const std::string &a_file_name)
+auto
+srecord::input_file_brecord::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_brecord(a_file_name));
 }
 
 
-bool
-srecord::input_file_brecord::read_inner(record &result)
+auto
+srecord::input_file_brecord::read_inner(record &result) -> bool
 {
-    if (peek_char() < 0)
+    if (peek_char() < 0) {
         return false;
+}
 
     unsigned long address = get_4bytes_be();
     unsigned char length = get_byte();
-    if (length & 0x20)
+    if ((length & 0x20) != 0) {
         fatal_error("read mode not supported");
+}
     length &= 0x1F;
     unsigned char data[32];
-    for (unsigned j = 0; j < length; ++j)
+    for (unsigned j = 0; j < length; ++j) {
         data[j] = get_byte();
-    if (get_char() != '\n')
+}
+    if (get_char() != '\n') {
         fatal_error("end of line expected");
+}
 
     if (length == 0)
     {
-        result = record(record::type_execution_start_address, address, 0, 0);
+        result = record(record::type_execution_start_address, address, nullptr, 0);
     }
     else
     {
@@ -71,13 +74,14 @@ srecord::input_file_brecord::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_brecord::read(record &result)
+auto
+srecord::input_file_brecord::read(record &result) -> bool
 {
     if (!read_inner(result))
     {
-        if (!seen_some_input)
+        if (!seen_some_input) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;
@@ -85,17 +89,17 @@ srecord::input_file_brecord::read(record &result)
 }
 
 
-const char *
-srecord::input_file_brecord::get_file_format_name(void)
-    const
+auto
+srecord::input_file_brecord::get_file_format_name()
+    const -> const char *
 {
     return "Motorola MC68EZ328 bootstrap b-record";
 }
 
 
-int
-srecord::input_file_brecord::format_option_number(void)
-    const
+auto
+srecord::input_file_brecord::format_option_number()
+    const -> int
 {
     return arglex_tool::token_brecord;
 }

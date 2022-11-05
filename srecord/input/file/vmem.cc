@@ -24,8 +24,7 @@
 
 
 srecord::input_file_vmem::~input_file_vmem()
-{
-}
+= default;
 
 
 srecord::input_file_vmem::input_file_vmem(const std::string &a_file_name) :
@@ -36,23 +35,24 @@ srecord::input_file_vmem::input_file_vmem(const std::string &a_file_name) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_vmem::create(const std::string &a_file_name)
+auto
+srecord::input_file_vmem::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_vmem(a_file_name));
 }
 
 
-bool
-srecord::input_file_vmem::read(srecord::record &record)
+auto
+srecord::input_file_vmem::read(srecord::record &record) -> bool
 {
     for (;;)
     {
         int c = get_char();
         if (c < 0)
         {
-            if (!seen_some_input)
+            if (!seen_some_input) {
                 fatal_error("file contains no data");
+}
             return false;
         }
         if (c == '@')
@@ -63,13 +63,15 @@ srecord::input_file_vmem::read(srecord::record &record)
             {
                 address = (address << 4) + get_nibble();
                 c = peek_char();
-                if (c < 0 || !isxdigit((unsigned char)c))
+                if (c < 0 || (isxdigit((unsigned char)c) == 0)) {
                     break;
+}
             }
             continue;
         }
-        if (isspace((unsigned char)c))
+        if (isspace((unsigned char)c) != 0) {
             continue;
+}
 
         if (c == '/')
         {
@@ -79,8 +81,9 @@ srecord::input_file_vmem::read(srecord::record &record)
                 for (;;)
                 {
                     c = get_char();
-                    if (c == '\n' || c < 0)
+                    if (c == '\n' || c < 0) {
                         break;
+}
                 }
                 continue;
             }
@@ -96,19 +99,23 @@ srecord::input_file_vmem::read(srecord::record &record)
                             eof_within_comment:
                             fatal_error("end-of-file within comment");
                         }
-                        if (c == '*')
+                        if (c == '*') {
                             break;
+}
                     }
                     for (;;)
                     {
                         c = get_char();
-                        if (c < 0)
+                        if (c < 0) {
                             goto eof_within_comment;
-                        if (c != '*')
+}
+                        if (c != '*') {
                             break;
+}
                     }
-                    if (c =='/')
+                    if (c =='/') {
                         break;
+}
                 }
                 continue;
             }
@@ -123,8 +130,9 @@ srecord::input_file_vmem::read(srecord::record &record)
         {
             value[nbytes++] = get_byte();
             c = peek_char();
-            if (c < 0 || !isxdigit((unsigned char)c))
+            if (c < 0 || (isxdigit((unsigned char)c) == 0)) {
                 break;
+}
         }
         switch (nbytes)
         {
@@ -153,17 +161,17 @@ srecord::input_file_vmem::read(srecord::record &record)
 }
 
 
-const char *
-srecord::input_file_vmem::get_file_format_name(void)
-    const
+auto
+srecord::input_file_vmem::get_file_format_name()
+    const -> const char *
 {
     return "Verilog VMEM";
 }
 
 
-int
-srecord::input_file_vmem::format_option_number(void)
-    const
+auto
+srecord::input_file_vmem::format_option_number()
+    const -> int
 {
     return arglex_tool::token_vmem;
 }

@@ -34,12 +34,12 @@ class memory_walker_crc32:
     public memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker_crc32> pointer;
+    using pointer = std::shared_ptr<memory_walker_crc32>;
 
     /**
       * The destructor.
       */
-    virtual ~memory_walker_crc32();
+    ~memory_walker_crc32() override;
 
 private:
     /**
@@ -59,17 +59,17 @@ public:
       * @param seed_mode
       *     How to calculate the initial seed.
       */
-    static pointer create(crc32::seed_mode_t seed_mode);
+    static auto create(crc32::seed_mode_t seed_mode) -> pointer;
 
     /**
       * The get method is used to get the CRC32 checksum once all memory
       * chunks have been processed by calls to our observe method.
       */
-    unsigned get() const;
+    auto get() const -> unsigned;
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
 private:
     /**
@@ -81,12 +81,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_crc32(const memory_walker_crc32 &);
+    memory_walker_crc32(const memory_walker_crc32 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_crc32 &operator=(const memory_walker_crc32 &);
+    auto operator=(const memory_walker_crc32 &) -> memory_walker_crc32 & = delete;
 };
 
 };

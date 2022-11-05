@@ -31,7 +31,7 @@ srecord::output_file_stewie::~output_file_stewie()
         // indicate the S7, S8 or S9 could terminate the file, only
         // S8 seems to work.
         //
-        write_inner(8, 0, 0, 0, 0);
+        write_inner(8, 0, 0, nullptr, 0);
     }
 }
 
@@ -44,13 +44,14 @@ srecord::output_file_stewie::output_file_stewie(
     address_length(2),
     preferred_block_size(128)
 {
-    if (line_termination == line_termination_native)
+    if (line_termination == line_termination_native) {
         line_termination = line_termination_binary;
+}
 }
 
 
-srecord::output::pointer
-srecord::output_file_stewie::create(const std::string &a_file_name)
+auto
+srecord::output_file_stewie::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_stewie(a_file_name));
 }
@@ -88,8 +89,9 @@ srecord::output_file_stewie::write_inner(int tag, unsigned long address,
     int line_length = address_nbytes + data_nbytes + 1;
     buffer[0] = line_length;
     srecord::record::encode_big_endian(buffer + 1, address, address_nbytes);
-    if (data_nbytes)
+    if (data_nbytes != 0) {
         memcpy(buffer + 1 + address_nbytes, data, data_nbytes);
+}
 
     //
     // Emit the record as binary data.
@@ -110,8 +112,9 @@ srecord::output_file_stewie::write_inner(int tag, unsigned long address,
 
     default:
         checksum_reset();
-        for (int j = 0; j < line_length; ++j)
+        for (int j = 0; j < line_length; ++j) {
             put_byte(buffer[j]);
+}
         put_byte(~checksum_get());
         break;
     }
@@ -130,7 +133,7 @@ srecord::output_file_stewie::write(const srecord::record &record)
             // Even though it starts with S0, the header record has a
             // fixed format, so we don't bother passing it any data.
             //
-            write_inner(0, 0, 0, 0, 0);
+            write_inner(0, 0, 0, nullptr, 0);
         }
         break;
 
@@ -195,21 +198,24 @@ srecord::output_file_stewie::write(const srecord::record &record)
 void
 srecord::output_file_stewie::line_length_set(int n)
 {
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    else if (n > 250)
+    } else if (n > 250) {
         n = 250;
+}
     preferred_block_size = n;
 }
 
 
-bool
-srecord::output_file_stewie::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_stewie::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if (nbytes > 250)
+}
+    if (nbytes > 250) {
         return false;
+}
     preferred_block_size = nbytes;
     return true;
 }
@@ -218,25 +224,26 @@ srecord::output_file_stewie::preferred_block_size_set(int nbytes)
 void
 srecord::output_file_stewie::address_length_set(int n)
 {
-    if (n < 2)
+    if (n < 2) {
         n = 2;
-    else if (n > 4)
+    } else if (n > 4) {
         n = 4;
+}
     address_length = n;
 }
 
 
-int
+auto
 srecord::output_file_stewie::preferred_block_size_get()
-    const
+    const -> int
 {
     return preferred_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_stewie::format_name()
-    const
+    const -> const char *
 {
     return "Stewie";
 }

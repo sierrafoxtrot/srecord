@@ -22,8 +22,7 @@
 
 
 srecord::input_file_hexdump::~input_file_hexdump()
-{
-}
+= default;
 
 
 srecord::input_file_hexdump::input_file_hexdump(const std::string &filename) :
@@ -34,21 +33,22 @@ srecord::input_file_hexdump::input_file_hexdump(const std::string &filename) :
 }
 
 
-srecord::input_file_hexdump::pointer
-srecord::input_file_hexdump::create(const std::string &filename)
+auto
+srecord::input_file_hexdump::create(const std::string &filename) -> srecord::input_file_hexdump::pointer
 {
     return pointer(new input_file_hexdump(filename));
 }
 
 
-srecord::input_file_hexdump::token_t
-srecord::input_file_hexdump::get_next_token(void)
+auto
+srecord::input_file_hexdump::get_next_token() -> srecord::input_file_hexdump::token_t
 {
     for (;;)
     {
         int sc = get_char();
-        if (sc < 0)
+        if (sc < 0) {
             return token_eof;
+}
         unsigned char c = sc;
         switch (c)
         {
@@ -88,22 +88,24 @@ srecord::input_file_hexdump::get_next_token(void)
 }
 
 
-bool
-srecord::input_file_hexdump::discard_rest_of_line(void)
+auto
+srecord::input_file_hexdump::discard_rest_of_line() -> bool
 {
     for (;;)
     {
         int c = get_char();
-        if (c < 0)
+        if (c < 0) {
             return false;
-        if (c == '\n')
+}
+        if (c == '\n') {
             return true;
+}
     }
 }
 
 
-bool
-srecord::input_file_hexdump::read(record &result)
+auto
+srecord::input_file_hexdump::read(record &result) -> bool
 {
     // file
     //     : line
@@ -152,24 +154,28 @@ srecord::input_file_hexdump::read(record &result)
                 tok = discard_rest_of_line() ? token_eoln : token_eof;
                 break;
             }
-            if (nbytes > sizeof(address))
+            if (nbytes > sizeof(address)) {
                 could_be_an_address = false;
+}
 
             tok = get_next_token();
             if (tok == token_colon && could_be_an_address)
             {
                 // it's actually an address
                 address = 0;
-                for (unsigned d = 0; d < nbytes; ++d)
+                for (unsigned d = 0; d < nbytes; ++d) {
                     address = (address << 8) | data[d];
+}
                 nbytes = 0;
                 could_be_an_address = false;
                 tok = get_next_token();
-                if (tok == token_byte)
+                if (tok == token_byte) {
                     continue;
+}
             }
-            if (tok == token_eoln || tok == token_eof)
+            if (tok == token_eoln || tok == token_eof) {
                 break;
+}
             if (tok != token_byte)
             {
                 tok = discard_rest_of_line() ? token_eoln : token_eof;
@@ -179,10 +185,12 @@ srecord::input_file_hexdump::read(record &result)
 
         if (tok == token_eof)
         {
-            if (!data_seen)
+            if (!data_seen) {
                 fatal_error("file contains no data");
-            if (nbytes == 0)
+}
+            if (nbytes == 0) {
                 return false;
+}
             goto yes;
         }
 
@@ -198,17 +206,17 @@ srecord::input_file_hexdump::read(record &result)
 }
 
 
-const char *
-srecord::input_file_hexdump::get_file_format_name(void)
-    const
+auto
+srecord::input_file_hexdump::get_file_format_name()
+    const -> const char *
 {
     return "hexdump";
 }
 
 
-int
-srecord::input_file_hexdump::format_option_number(void)
-    const
+auto
+srecord::input_file_hexdump::format_option_number()
+    const -> int
 {
     return arglex_tool::token_hexdump;
 }

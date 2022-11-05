@@ -22,8 +22,7 @@
 
 
 srecord::input_generator_random::~input_generator_random()
-{
-}
+= default;
 
 
 srecord::input_generator_random::input_generator_random(
@@ -33,31 +32,31 @@ srecord::input_generator_random::input_generator_random(
 }
 
 
-srecord::input::pointer
-srecord::input_generator_random::create(const interval &a_range)
+auto
+srecord::input_generator_random::create(const interval &a_range) -> srecord::input::pointer
 {
     return pointer(new srecord::input_generator_random(a_range));
 }
 
 
-unsigned char
-srecord::input_generator_random::generate_data(unsigned long)
+auto
+srecord::input_generator_random::generate_data(unsigned long) -> unsigned char
 {
     return r250();
 }
 
 
-std::string
+auto
 srecord::input_generator_random::filename()
-    const
+    const -> std::string
 {
     return "random";
 }
 
 
-const char *
+auto
 srecord::input_generator_random::get_file_format_name()
-    const
+    const -> const char *
 {
     return "random";
 }

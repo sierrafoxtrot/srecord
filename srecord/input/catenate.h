@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_catenate();
+    ~input_catenate() override;
 
 private:
     /**
@@ -47,7 +47,7 @@ private:
       * @param in2
       *     The second of the inputs to be read.
       */
-    input_catenate(const pointer &in1, const pointer &in2);
+    input_catenate(pointer a1, pointer a2);
 
 public:
     /**
@@ -59,23 +59,23 @@ public:
       * @param in2
       *     The second of the inputs to be read.
       */
-    static pointer create(const pointer &in1, const pointer &in2);
+    static auto create(const pointer &a1, const pointer &a2) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    std::string filename() const;
+    auto filename() const -> std::string override;
 
     // See base class for documentation.
-    std::string filename_and_line() const;
+    auto filename_and_line() const -> std::string override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    void disable_checksum_validation();
+    void disable_checksum_validation() override;
 
 private:
     /**
@@ -93,17 +93,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_catenate();
+    input_catenate() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_catenate(const input_catenate &);
+    input_catenate(const input_catenate &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_catenate &operator=(const input_catenate &);
+    auto operator=(const input_catenate &) -> input_catenate & = delete;
 };
 
 };

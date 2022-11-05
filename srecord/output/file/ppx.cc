@@ -24,7 +24,7 @@
 
 srecord::output_file_ppx::~output_file_ppx()
 {
-    if (column)
+    if (column != 0)
     {
         if (column + 7 > line_length)
         {
@@ -57,8 +57,8 @@ srecord::output_file_ppx::output_file_ppx(
 }
 
 
-srecord::output::pointer
-srecord::output_file_ppx::create(const std::string &a_file_name)
+auto
+srecord::output_file_ppx::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_ppx(a_file_name));
 }
@@ -89,19 +89,20 @@ srecord::output_file_ppx::write(const srecord::record &record)
             unsigned char data = record.get_data(j);
             unsigned long data_address = record.get_address() + j;
 
-            if (data_address >= (1uL << 16))
+            if (data_address >= (1UL << 16)) {
                 data_address_too_large(record, 16);
+}
 
             if (data_address != address)
             {
-                if (column)
+                if (column != 0)
                 {
                     put_char('\n');
                     column = 0;
                 }
                 address = data_address;
             }
-            if (column)
+            if (column != 0)
             {
                 if (column + 3 > line_length)
                 {
@@ -141,8 +142,8 @@ srecord::output_file_ppx::line_length_set(int ll)
 }
 
 
-bool
-srecord::output_file_ppx::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_ppx::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes >= 2 && nbytes <= record::max_data_length);
 }
@@ -155,9 +156,9 @@ srecord::output_file_ppx::address_length_set(int)
 }
 
 
-int
-srecord::output_file_ppx::preferred_block_size_get(void)
-    const
+auto
+srecord::output_file_ppx::preferred_block_size_get()
+    const -> int
 {
     //
     // Use the largest we can get,
@@ -166,9 +167,9 @@ srecord::output_file_ppx::preferred_block_size_get(void)
 }
 
 
-const char *
-srecord::output_file_ppx::format_name(void)
-    const
+auto
+srecord::output_file_ppx::format_name()
+    const -> const char *
 {
     return "Stag Prom Programmer Hexadecimal";
 }

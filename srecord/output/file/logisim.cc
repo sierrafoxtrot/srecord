@@ -26,8 +26,9 @@
 
 srecord::output_file_logisim::~output_file_logisim()
 {
-    if (column)
+    if (column != 0) {
         put_char('\n');
+}
 }
 
 
@@ -43,8 +44,8 @@ srecord::output_file_logisim::output_file_logisim(
 }
 
 
-srecord::output::pointer
-srecord::output_file_logisim::create(const std::string &a_file_name)
+auto
+srecord::output_file_logisim::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_logisim(a_file_name));
 }
@@ -55,10 +56,11 @@ srecord::output_file_logisim::emit(int count, int value)
 {
     assert(count > 0);
     char buffer[100];
-    if (count == 1)
+    if (count == 1) {
         snprintf(buffer, sizeof(buffer), "%X", value);
-    else
+    } else {
         snprintf(buffer, sizeof(buffer), "%d*%X", count, value);
+}
     int buffer_length = strlen(buffer);
 
     address += count;
@@ -90,11 +92,13 @@ void
 srecord::output_file_logisim::write(const srecord::record &record)
 {
     // This format can't do header records or termination records
-    if (record.get_type() != srecord::record::type_data)
+    if (record.get_type() != srecord::record::type_data) {
         return;
+}
 
-    if (!record.address_range_fits_into_n_bits(16))
+    if (!record.address_range_fits_into_n_bits(16)) {
         data_address_too_large(record, 16);
+}
 
     assert (address <= record.get_address());
     while (address < record.get_address())
@@ -127,8 +131,9 @@ srecord::output_file_logisim::write(const srecord::record &record)
              ++count;
         }
         // Logisim only uses counts when the runs are longer than 4.
-        if (count < 4)
+        if (count < 4) {
             count = 1;
+}
         j += count - 1;
 
         emit(count, value);
@@ -152,17 +157,17 @@ srecord::output_file_logisim::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_logisim::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_logisim::preferred_block_size_set(int nbytes) -> bool
 {
     (void)nbytes;
     return false;
 }
 
 
-int
-srecord::output_file_logisim::preferred_block_size_get(void)
-    const
+auto
+srecord::output_file_logisim::preferred_block_size_get()
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -171,9 +176,9 @@ srecord::output_file_logisim::preferred_block_size_get(void)
 }
 
 
-const char *
-srecord::output_file_logisim::format_name(void)
-    const
+auto
+srecord::output_file_logisim::format_name()
+    const -> const char *
 {
     return "Logisim";
 }

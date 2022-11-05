@@ -22,20 +22,16 @@
 
 
 srecord::memory_walker_continuity::~memory_walker_continuity()
-{
-}
+= default;
 
 
-srecord::memory_walker_continuity::memory_walker_continuity() :
-    current_address(0),
-    data_seen(false),
-    nholes(0)
-{
-}
+srecord::memory_walker_continuity::memory_walker_continuity() 
+    
+= default;
 
 
-srecord::memory_walker_continuity::pointer
-srecord::memory_walker_continuity::create()
+auto
+srecord::memory_walker_continuity::create() -> srecord::memory_walker_continuity::pointer
 {
     return pointer(new srecord::memory_walker_continuity());
 }
@@ -47,8 +43,9 @@ srecord::memory_walker_continuity::observe(unsigned long addr, const void *,
 {
     if (data_seen)
     {
-        if (current_address != addr)
+        if (current_address != addr) {
             ++nholes;
+}
     }
     else
     {
@@ -58,9 +55,9 @@ srecord::memory_walker_continuity::observe(unsigned long addr, const void *,
 }
 
 
-bool
+auto
 srecord::memory_walker_continuity::is_continuous()
-    const
+    const -> bool
 {
     return (data_seen && nholes == 0);
 }

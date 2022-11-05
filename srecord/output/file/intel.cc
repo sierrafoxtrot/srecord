@@ -23,8 +23,9 @@
 
 srecord::output_file_intel::~output_file_intel()
 {
-    if (enable_footer_flag)
-        write_inner(1, 0L, 0, 0);
+    if (enable_footer_flag) {
+        write_inner(1, 0L, nullptr, 0);
+}
 }
 
 
@@ -40,8 +41,8 @@ srecord::output_file_intel::output_file_intel(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_intel::create(const std::string &a_file_name)
+auto
+srecord::output_file_intel::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_intel(a_file_name));
 }
@@ -54,8 +55,9 @@ srecord::output_file_intel::write_inner(int tag, unsigned long address,
     //
     // Make sure the line is not too long.
     //
-    if (data_nbytes >= 256)
+    if (data_nbytes >= 256) {
         fatal_error("data length (%d > 255) too long", data_nbytes);
+}
 
     //
     // Emit the line as hexadecimal text.
@@ -68,9 +70,10 @@ srecord::output_file_intel::write_inner(int tag, unsigned long address,
     put_byte(tmp[0]);
     put_byte(tmp[1]);
     put_byte(tag);
-    const unsigned char *data_p = (const unsigned char *)data;
-    for (int j = 0; j < data_nbytes; ++j)
+    const auto *data_p = (const unsigned char *)data;
+    for (int j = 0; j < data_nbytes; ++j) {
         put_byte(data_p[j]);
+}
     put_byte(-checksum_get());
     put_char('\n');
 }
@@ -86,8 +89,9 @@ srecord::output_file_intel::write(const srecord::record &record)
         //
         // This format can't do header records
         //
-        if (!enable_optional_address_flag)
+        if (!enable_optional_address_flag) {
             address_base = 1;
+}
         break;
 
     case srecord::record::type_data:
@@ -95,8 +99,9 @@ srecord::output_file_intel::write(const srecord::record &record)
         {
         case mode_i8hex:
             // This format is limited to 64KiB.
-            if (!record.address_range_fits_into_n_bits(16))
+            if (!record.address_range_fits_into_n_bits(16)) {
                 data_address_too_large(record, 16);
+}
             break;
 
         case mode_segmented:
@@ -105,8 +110,9 @@ srecord::output_file_intel::write(const srecord::record &record)
             //
             {
                 // This format is limited to 1MiB.
-                if (!record.address_range_fits_into_n_bits(20))
+                if (!record.address_range_fits_into_n_bits(20)) {
                     data_address_too_large(record, 20);
+}
 
                 //
                 // If the record would cross a segment boundary, split the
@@ -193,7 +199,7 @@ srecord::output_file_intel::write(const srecord::record &record)
 
             case mode_i8hex:
                 // In ancient times, it went into the EOF record
-                write_inner(1, record.get_address(), 0, 0);
+                write_inner(1, record.get_address(), nullptr, 0);
                 enable_footer_flag = false;
                 break;
             }
@@ -220,17 +226,19 @@ srecord::output_file_intel::line_length_set(int n)
     // Constrain based on the file format.
     // (255 is the largest that will fit in the data size field)
     //
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    else if (n > 255)
+    } else if (n > 255) {
         n = 255;
+}
 
     //
     // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srecord::record::max_data_length)
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
 }
 
@@ -253,29 +261,31 @@ srecord::output_file_intel::address_length_set(int x)
 }
 
 
-bool
-srecord::output_file_intel::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_intel::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if (nbytes > 255)
+}
+    if (nbytes > 255) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }
 
 
-int
+auto
 srecord::output_file_intel::preferred_block_size_get()
-        const
+        const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_intel::format_name()
-    const
+    const -> const char *
 {
     return "Intel-Hex";
 }

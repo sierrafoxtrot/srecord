@@ -19,7 +19,7 @@
 #ifndef SRECORD_FLETCHER32_H
 #define SRECORD_FLETCHER32_H
 
-#include <stddef.h>
+#include <cstddef>
 
 namespace srecord
 {
@@ -74,13 +74,13 @@ public:
     /**
       * The assignment operator.
       */
-    fletcher32 &operator=(const fletcher32 &);
+    auto operator=(const fletcher32 &) -> fletcher32 &;
 
     /**
       * The get method is used to obtain the running value of the cyclic
       * redundancy check.
       */
-    unsigned long get() const;
+    auto get() const -> unsigned long;
 
     /**
       * The next method is used to advance the state by one byte.
@@ -96,13 +96,13 @@ private:
     /**
       * The sum1 instance variable is used to remember the sum of the bytes.
       */
-    unsigned long sum1;
+    unsigned long sum1{0xFFFF};
 
     /**
       * The sum2 instance variable is used to remember the sum of the
       * sum of the bytes.
       */
-    unsigned long sum2;
+    unsigned long sum2{0xFFFF};
 };
 
 };

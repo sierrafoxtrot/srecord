@@ -38,8 +38,8 @@ srecord::output_file_idt::output_file_idt(
 }
 
 
-srecord::output::pointer
-srecord::output_file_idt::create(const std::string &a_file_name)
+auto
+srecord::output_file_idt::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new output_file_idt(a_file_name));
 }
@@ -91,17 +91,19 @@ srecord::output_file_idt::write_inner(int tag, unsigned long address,
 
 
 void
-srecord::output_file_idt::write_data_count(void)
+srecord::output_file_idt::write_data_count()
 {
-    if (data_count_written)
+    if (data_count_written) {
         return;
+}
 
     if (enable_data_count_flag)
     {
-        if (data_count < (1L << 16))
-            write_inner(5, data_count, 2, 0, 0);
-        else
-            write_inner(6, data_count, 3, 0, 0);
+        if (data_count < (1L << 16)) {
+            write_inner(5, data_count, 2, nullptr, 0);
+        } else {
+            write_inner(6, data_count, 3, nullptr, 0);
+}
     }
     data_count_written = true;
 
@@ -125,12 +127,13 @@ srecord::output_file_idt::write(const srecord::record &record)
     switch (record.get_type())
     {
     case srecord::record::type_header:
-        if (enable_header_flag)
+        if (enable_header_flag) {
             write_inner(0, 0, 2, record.get_data(), record.get_length());
+}
         break;
 
     case srecord::record::type_data:
-        if (addr < (1uL << 16) && address_length <= 2)
+        if (addr < (1UL << 16) && address_length <= 2)
         {
             write_inner
             (
@@ -176,12 +179,13 @@ srecord::output_file_idt::write(const srecord::record &record)
         {
             write_data_count();
 
-            if (addr < (1UL << 16) && address_length <= 2)
-                write_inner(9, addr, 2, 0, 0);
-            else if (addr < (1UL << 24) && address_length <= 3)
-                write_inner(8, addr, 3, 0, 0);
-            else
-                write_inner(7, addr, 4, 0, 0);
+            if (addr < (1UL << 16) && address_length <= 2) {
+                write_inner(9, addr, 2, nullptr, 0);
+            } else if (addr < (1UL << 24) && address_length <= 3) {
+                write_inner(8, addr, 3, nullptr, 0);
+            } else {
+                write_inner(7, addr, 4, nullptr, 0);
+}
         }
         break;
 
@@ -201,43 +205,45 @@ srecord::output_file_idt::line_length_set(int)
 void
 srecord::output_file_idt::address_length_set(int n)
 {
-    if (n < 2)
+    if (n < 2) {
         n = 2;
-    else if (n > 4)
+    } else if (n > 4) {
         n = 4;
+}
     address_length = n;
 }
 
 
-bool
-srecord::output_file_idt::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_idt::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length - 4)
+    if (nbytes < 1 || nbytes > record::max_data_length - 4) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }
 
 
-int
-srecord::output_file_idt::preferred_block_size_get(void)
-    const
+auto
+srecord::output_file_idt::preferred_block_size_get()
+    const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
-srecord::output_file_idt::format_name(void)
-    const
+auto
+srecord::output_file_idt::format_name()
+    const -> const char *
 {
     return "IDT System Integration Manager binary";
 }
 
 
-bool
-srecord::output_file_idt::is_binary(void)
-    const
+auto
+srecord::output_file_idt::is_binary()
+    const -> bool
 {
     return true;
 }

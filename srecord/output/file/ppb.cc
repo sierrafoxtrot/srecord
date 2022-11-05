@@ -24,11 +24,13 @@
 
 srecord::output_file_ppb::~output_file_ppb()
 {
-    if (!seen_some_data)
+    if (!seen_some_data) {
         fatal_error("no data records");
-    if (buffer_length > 0)
+}
+    if (buffer_length > 0) {
         buffer_flush();
-    packet(0, 0, 0);
+}
+    packet(0, nullptr, 0);
 }
 
 
@@ -36,15 +38,15 @@ srecord::output_file_ppb::output_file_ppb(
     const std::string &a_file_name
 ) :
     srecord::output_file(a_file_name),
-    address(-1uL),
+    address(-1UL),
     buffer_length(0),
     seen_some_data(false)
 {
 }
 
 
-srecord::output::pointer
-srecord::output_file_ppb::create(const std::string &a_file_name)
+auto
+srecord::output_file_ppb::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_ppb(a_file_name));
 }
@@ -76,8 +78,9 @@ srecord::output_file_ppb::write(const srecord::record &record)
             }
             buffer[buffer_length++] = data;
             ++address;
-            if (buffer_length >= sizeof(buffer))
+            if (buffer_length >= sizeof(buffer)) {
                 buffer_flush();
+}
             seen_some_data = true;
         }
         break;
@@ -96,8 +99,8 @@ srecord::output_file_ppb::line_length_set(int)
 }
 
 
-bool
-srecord::output_file_ppb::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_ppb::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes >= 2 && nbytes <= record::max_data_length);
 }
@@ -110,18 +113,18 @@ srecord::output_file_ppb::address_length_set(int)
 }
 
 
-int
-srecord::output_file_ppb::preferred_block_size_get(void)
-    const
+auto
+srecord::output_file_ppb::preferred_block_size_get()
+    const -> int
 {
     // Use the largest we can get.
     return srecord::record::max_data_length;
 }
 
 
-const char *
-srecord::output_file_ppb::format_name(void)
-    const
+auto
+srecord::output_file_ppb::format_name()
+    const -> const char *
 {
     return "Stag Prom Programmer Binary";
 }
@@ -137,8 +140,8 @@ srecord::output_file_ppb::put_bin_4be(unsigned long value)
 }
 
 
-unsigned char
-srecord::output_file_ppb::sum_ulong(unsigned long value, unsigned char sum)
+auto
+srecord::output_file_ppb::sum_ulong(unsigned long value, unsigned char sum) -> unsigned char
 {
     sum += (value >> 24);
     sum += (value >> 16);
@@ -165,8 +168,9 @@ srecord::output_file_ppb::packet(unsigned long address,
 
     for (size_t j = 0; j < data_size; ++j)
     {
-        if (j > 0 && (j % CSLEN) == 0)
+        if (j > 0 && (j % CSLEN) == 0) {
             put_char(-chksum);
+}
         put_char(data[j]);
         chksum += data[j];
     }
@@ -175,7 +179,7 @@ srecord::output_file_ppb::packet(unsigned long address,
 
 
 void
-srecord::output_file_ppb::buffer_flush(void)
+srecord::output_file_ppb::buffer_flush()
 {
     if (buffer_length > 0)
     {
@@ -185,9 +189,9 @@ srecord::output_file_ppb::buffer_flush(void)
 }
 
 
-bool
-srecord::output_file_ppb::is_binary(void)
-    const
+auto
+srecord::output_file_ppb::is_binary()
+    const -> bool
 {
     return true;
 }

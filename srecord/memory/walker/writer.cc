@@ -21,21 +21,22 @@
 #include <srecord/memory/walker/writer.h>
 #include <srecord/output.h>
 
+#include <utility>
+
 
 srecord::memory_walker_writer::~memory_walker_writer()
-{
-}
+= default;
 
 
 srecord::memory_walker_writer::memory_walker_writer(
-        const srecord::output::pointer &arg) :
-    op(arg)
+        srecord::output::pointer arg) :
+    op(std::move(arg))
 {
 }
 
 
-srecord::memory_walker::pointer
-srecord::memory_walker_writer::create(const srecord::output::pointer &arg)
+auto
+srecord::memory_walker_writer::create(const srecord::output::pointer &arg) -> srecord::memory_walker::pointer
 {
     return pointer(new srecord::memory_walker_writer(arg));
 }

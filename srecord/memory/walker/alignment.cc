@@ -22,8 +22,7 @@
 
 
 srecord::memory_walker_alignment::~memory_walker_alignment()
-{
-}
+= default;
 
 
 srecord::memory_walker_alignment::memory_walker_alignment(unsigned a_multiple) :
@@ -36,16 +35,16 @@ srecord::memory_walker_alignment::memory_walker_alignment(unsigned a_multiple) :
 }
 
 
-srecord::memory_walker_alignment::pointer
-srecord::memory_walker_alignment::create(unsigned a_multiple)
+auto
+srecord::memory_walker_alignment::create(unsigned a_multiple) -> srecord::memory_walker_alignment::pointer
 {
     return pointer(new memory_walker_alignment(a_multiple));
 }
 
 
-bool
-srecord::memory_walker_alignment::is_well_aligned(void)
-    const
+auto
+srecord::memory_walker_alignment::is_well_aligned()
+    const -> bool
 {
     return well_aligned;
 }
@@ -58,15 +57,17 @@ srecord::memory_walker_alignment::observe(unsigned long address, const void *,
     if (data_seen && address != current_address)
     {
         // Check end.
-        if (current_address % multiple != 0)
+        if (current_address % multiple != 0) {
             well_aligned = false;
+}
     }
 
     if (!data_seen || address != current_address)
     {
         // Check beginning.
-        if (address % multiple != 0)
+        if (address % multiple != 0) {
             well_aligned = false;
+}
     }
 
     current_address = address + data_size;
@@ -75,9 +76,10 @@ srecord::memory_walker_alignment::observe(unsigned long address, const void *,
 
 
 void
-srecord::memory_walker_alignment::observe_end(void)
+srecord::memory_walker_alignment::observe_end()
 {
     // Check last end.
-    if (data_seen && current_address % multiple != 0)
+    if (data_seen && current_address % multiple != 0) {
         well_aligned = false;
+}
 }

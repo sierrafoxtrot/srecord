@@ -49,16 +49,17 @@ srecord::interval::interval()
     size = 0;
     scan_index = 0;
     scan_next_datum = 0;
-    data = 0;
+    data = nullptr;
     // assert(valid());
 }
 
 
-static inline srecord::interval::long_data_t
-promote(srecord::interval::data_t datum, size_t pos)
+static inline auto
+promote(srecord::interval::data_t datum, size_t pos) -> srecord::interval::long_data_t
 {
-    if (datum == 0 && (pos & 1))
+    if (datum == 0 && ((pos & 1) != 0U)) {
         return ((srecord::interval::long_data_t)1 << 32);
+}
     return datum;
 }
 
@@ -131,41 +132,45 @@ srecord::interval::interval(const interval &arg)
     size = length;
     scan_index = 0;
     scan_next_datum = 0;
-    if (size)
+    if (size != 0U)
     {
         data = new data_t[size + 1];
-        for (size_t j = 0; j <= length; ++j)
+        for (size_t j = 0; j <= length; ++j) {
             data[j] = arg.data[j];
+}
     }
-    else
-        data = 0;
+    else {
+        data = nullptr;
+}
     // assert(valid());
 }
 
 
-srecord::interval &
-srecord::interval::operator=(const interval &arg)
+auto
+srecord::interval::operator=(const interval &arg) -> srecord::interval &
 {
     if (this != &arg)
     {
-        if (data)
+        if (data != nullptr)
         {
             delete [] data;
-            data = 0;
+            data = nullptr;
         }
         // assert(arg.valid());
         length = arg.length;
         size = length;
         scan_index = 0;
         scan_next_datum = 0;
-        if (size)
+        if (size != 0U)
         {
             data = new data_t[size + 1];
-            for (size_t j = 0; j <= length; ++j)
+            for (size_t j = 0; j <= length; ++j) {
                 data[j] = arg.data[j];
+}
         }
-        else
-            data = 0;
+        else {
+            data = nullptr;
+}
         // assert(valid());
     }
     return *this;
@@ -190,10 +195,10 @@ srecord::interval::operator=(const interval &arg)
 srecord::interval::~interval()
 {
     // assert(valid());
-    if (data)
+    if (data != nullptr)
     {
         delete [] data;
-        data = 0;
+        data = nullptr;
     }
 }
 
@@ -221,32 +226,40 @@ srecord::interval::~interval()
 //      and is intended for use in assert() statements.
 //
 
-bool
+auto
 srecord::interval::valid()
-    const
+    const -> bool
 {
-    if (length > size)
+    if (length > size) {
         return false;
-    if (length & 1)
+}
+    if ((length & 1) != 0U) {
         return false;
-    if ((size == 0) != (data == 0))
+}
+    if ((size == 0) != (data == nullptr)) {
         return false;
-    if (length == 0)
+}
+    if (length == 0) {
         return true;
-    if (data[length] != length)
+}
+    if (data[length] != length) {
         return false;
+}
 
     //
     // As a special case, an upper bound of zero means
     // positive infinity.  It has to be the last one.
     //
     size_t max = length;
-    if (data[max - 1] == 0)
+    if (data[max - 1] == 0) {
         --max;
+}
 
-    for (size_t j = 1; j < max; ++j)
-        if (data[j - 1] >= data[j])
+    for (size_t j = 1; j < max; ++j) {
+        if (data[j - 1] >= data[j]) {
             return false;
+}
+}
     return true;
 }
 
@@ -287,11 +300,12 @@ srecord::interval::append(data_t datum)
     if (length >= size)
     {
         size = size * 2 + 8;
-        data_t *tmp = new data_t[size + 1];
-        if (data)
+        auto *tmp = new data_t[size + 1];
+        if (data != nullptr)
         {
-            for (size_t k = 0; k < length; ++k)
+            for (size_t k = 0; k < length; ++k) {
                 tmp[k] = data[k];
+}
             delete [] data;
         }
         data = tmp;
@@ -313,8 +327,9 @@ srecord::interval::append(data_t datum)
     //   length is even:  [a, a)           -->   {}
     // Either way, discard the last two elements.
     //
-    if (length >= 2 && data[length - 1] == data[length - 2])
+    if (length >= 2 && data[length - 1] == data[length - 2]) {
         length -= 2;
+}
 }
 
 
@@ -342,8 +357,8 @@ srecord::interval::append(data_t datum)
 //      Use the interval_free function for this purpose.
 //
 
-srecord::interval
-srecord::interval::union_(const interval &left, const interval &right)
+auto
+srecord::interval::union_(const interval &left, const interval &right) -> srecord::interval
 {
     // assert(left.valid());
     // assert(right.valid());
@@ -354,7 +369,7 @@ srecord::interval::union_(const interval &left, const interval &right)
     for (;;)
     {
         int old_count = count;
-        data_t place;
+        data_t place = 0;
         if (left_pos < left.length)
         {
             if (right_pos < right.length)
@@ -365,18 +380,18 @@ srecord::interval::union_(const interval &left, const interval &right)
                     promote(right.data[right_pos], right_pos);
                 if (left_val < right_val)
                 {
-                    count += (left_pos & 1 ? -1 : 1);
+                    count += ((left_pos & 1) != 0U ? -1 : 1);
                     place = left.data[left_pos++];
                 }
                 else
                 {
-                    count += (right_pos & 1 ? -1 : 1);
+                    count += ((right_pos & 1) != 0U ? -1 : 1);
                     place = right.data[right_pos++];
                 }
             }
             else
             {
-                count += (left_pos & 1 ? -1 : 1);
+                count += ((left_pos & 1) != 0U ? -1 : 1);
                 place = left.data[left_pos++];
             }
         }
@@ -384,17 +399,20 @@ srecord::interval::union_(const interval &left, const interval &right)
         {
             if (right_pos < right.length)
             {
-                count += (right_pos & 1 ? -1 : 1);
+                count += ((right_pos & 1) != 0U ? -1 : 1);
                 place = right.data[right_pos++];
             }
-            else
+            else {
                 break;
+}
         }
-        if ((count >= 1) != (old_count >= 1))
+        if ((count >= 1) != (old_count >= 1)) {
             result.append(place);
+}
     }
-    if (result.length)
+    if (result.length != 0U) {
         result.data[result.length] = result.length;
+}
     // assert(result.valid());
     return result;
 }
@@ -425,8 +443,8 @@ srecord::interval::union_(const interval &left, const interval &right)
 //      Use the interval_free function for this purpose.
 //
 
-srecord::interval
-srecord::interval::intersection(const interval &left, const interval &right)
+auto
+srecord::interval::intersection(const interval &left, const interval &right) -> srecord::interval
 {
     // assert(left.valid());
     // assert(right.valid());
@@ -437,7 +455,7 @@ srecord::interval::intersection(const interval &left, const interval &right)
     for (;;)
     {
         int old_count = count;
-        data_t place;
+        data_t place = 0;
         if (left_pos < left.length)
         {
             if (right_pos < right.length)
@@ -448,18 +466,18 @@ srecord::interval::intersection(const interval &left, const interval &right)
                     promote(right.data[right_pos], right_pos);
                 if (left_val < right_val)
                 {
-                    count += (left_pos & 1 ? -1 : 1);
+                    count += ((left_pos & 1) != 0U ? -1 : 1);
                     place = left.data[left_pos++];
                 }
                 else
                 {
-                    count += (right_pos & 1 ? -1 : 1);
+                    count += ((right_pos & 1) != 0U ? -1 : 1);
                     place = right.data[right_pos++];
                 }
             }
             else
             {
-                count += (left_pos & 1 ? -1 : 1);
+                count += ((left_pos & 1) != 0U ? -1 : 1);
                 place = left.data[left_pos++];
             }
         }
@@ -467,17 +485,20 @@ srecord::interval::intersection(const interval &left, const interval &right)
         {
             if (right_pos < right.length)
             {
-                count += (right_pos & 1 ? -1 : 1);
+                count += ((right_pos & 1) != 0U ? -1 : 1);
                 place = right.data[right_pos++];
             }
-            else
+            else {
                 break;
+}
         }
-        if ((count >= 2) != (old_count >= 2))
+        if ((count >= 2) != (old_count >= 2)) {
             result.append(place);
+}
     }
-    if (result.length)
+    if (result.length != 0U) {
         result.data[result.length] = result.length;
+}
     // assert(result.valid());
     return result;
 }
@@ -507,8 +528,8 @@ srecord::interval::intersection(const interval &left, const interval &right)
 //      Use the interval_free function for this purpose.
 //
 
-srecord::interval
-srecord::interval::difference(const interval &left, const interval &right)
+auto
+srecord::interval::difference(const interval &left, const interval &right) -> srecord::interval
 {
     // assert(left.valid());
     // assert(right.valid());
@@ -519,7 +540,7 @@ srecord::interval::difference(const interval &left, const interval &right)
     for (;;)
     {
         int old_count = count;
-        data_t place;
+        data_t place = 0;
         if (left_pos < left.length)
         {
             if (right_pos < right.length)
@@ -529,18 +550,18 @@ srecord::interval::difference(const interval &left, const interval &right)
                     promote(right.data[right_pos], right_pos);
                 if (left_val < right_val)
                 {
-                    count += (left_pos & 1 ? -1 : 1);
+                    count += ((left_pos & 1) != 0U ? -1 : 1);
                     place = left.data[left_pos++];
                 }
                 else
                 {
-                    count -= (right_pos & 1 ? -1 : 1);
+                    count -= ((right_pos & 1) != 0U ? -1 : 1);
                     place = right.data[right_pos++];
                 }
             }
             else
             {
-                count += (left_pos & 1 ? -1 : 1);
+                count += ((left_pos & 1) != 0U ? -1 : 1);
                 place = left.data[left_pos++];
             }
         }
@@ -548,17 +569,20 @@ srecord::interval::difference(const interval &left, const interval &right)
         {
             if (right_pos < right.length)
             {
-                count -= (right_pos & 1 ? -1 : 1);
+                count -= ((right_pos & 1) != 0U ? -1 : 1);
                 place = right.data[right_pos++];
             }
-            else
+            else {
                 break;
+}
         }
-        if ((count >= 1) != (old_count >= 1))
+        if ((count >= 1) != (old_count >= 1)) {
             result.append(place);
+}
     }
-    if (result.length)
+    if (result.length != 0U) {
         result.data[result.length] = result.length;
+}
     // assert(result.valid());
     return result;
 }
@@ -584,12 +608,13 @@ srecord::interval::difference(const interval &left, const interval &right)
 //              0 if is not a member
 //
 
-bool
+auto
 srecord::interval::member(data_t datum)
-    const
+    const -> bool
 {
-    if (length == 0)
+    if (length == 0) {
         return false;
+}
     // assert(valid());
     long min = 0;
     long max = length - 2;
@@ -598,12 +623,14 @@ srecord::interval::member(data_t datum)
         long mid = ((min + max) / 2) & ~1;
         data_t lo = data[mid];
         long_data_t hi = promote(data[mid + 1], mid + 1);
-        if (lo <= datum && datum < hi)
+        if (lo <= datum && datum < hi) {
             return true;
-        if (lo < datum)
+}
+        if (lo < datum) {
             min = mid + 2;
-        else
+        } else {
             max = mid - 2;
+}
     }
     return false;
 }
@@ -630,10 +657,11 @@ srecord::interval::scan_begin()
     // assert(valid());
     // assert(!scan_index);
     scan_index = 1;
-    if (length)
+    if (length != 0U) {
         scan_next_datum = data[0];
-    else
+    } else {
         scan_next_datum = 0;
+}
 }
 
 
@@ -657,18 +685,20 @@ srecord::interval::scan_begin()
 //              0 if reached end of interval
 //
 
-bool
-srecord::interval::scan_next(data_t &datum)
+auto
+srecord::interval::scan_next(data_t &datum) -> bool
 {
     // assert(valid());
     // assert(scan_index & 1);
-    if (scan_index >= length)
+    if (scan_index >= length) {
         return false;
+}
     if (scan_next_datum >= promote(data[scan_index], scan_index))
     {
         scan_index += 2;
-        if (scan_index >= length)
+        if (scan_index >= length) {
             return false;
+}
         scan_next_datum = data[scan_index - 1];
     }
     datum = scan_next_datum++;
@@ -713,38 +743,41 @@ srecord::interval::first_interval_only()
 }
 
 
-bool
+auto
 srecord::interval::empty()
-    const
+    const -> bool
 {
     return (length == 0);
 }
 
 
-bool
-srecord::interval::equal(const interval &lhs, const interval &rhs)
+auto
+srecord::interval::equal(const interval &lhs, const interval &rhs) -> bool
 {
-    if (lhs.length != rhs.length)
+    if (lhs.length != rhs.length) {
         return false;
-    for (size_t j = 0; j < lhs.length; ++j)
-        if (lhs.data[j] != rhs.data[j])
+}
+    for (size_t j = 0; j < lhs.length; ++j) {
+        if (lhs.data[j] != rhs.data[j]) {
             return false;
+}
+}
     return true;
 }
 
 
-srecord::interval::data_t
+auto
 srecord::interval::get_lowest()
-    const
+    const -> srecord::interval::data_t
 {
     // assert(valid());
     return (length > 0 ? data[0] : 0);
 }
 
 
-srecord::interval::data_t
+auto
 srecord::interval::get_highest()
-    const
+    const -> srecord::interval::data_t
 {
     // assert(valid());
     return (length > 0 ? data[length - 1] : 0);
@@ -755,47 +788,54 @@ void
 srecord::interval::print(std::ostream &os)
     const
 {
-    if (length != 2)
+    if (length != 2) {
         os << "(";
+}
     for (size_t j = 0; j < length; j += 2)
     {
-        if (j)
+        if (j != 0U) {
             os << ", ";
+}
         os << data[j];
-        if (data[j] + 2 == data[j + 1])
+        if (data[j] + 2 == data[j + 1]) {
             os << ", " << data[j] + 1;
-        else if (data[j] + 1 != data[j + 1])
+        } else if (data[j] + 1 != data[j + 1]) {
             os << " - " << (data[j + 1] - 1);
+}
     }
-    if (length != 2)
+    if (length != 2) {
         os << ")";
+}
 }
 
 
-static std::string
-to_string(srecord::interval::data_t x)
+static auto
+to_string(srecord::interval::data_t x) -> std::string
 {
     int width = 4;
-    if (x >= 0x10000)
+    if (x >= 0x10000) {
         width += 2;
-    if (x >= 0x1000000)
+}
+    if (x >= 0x1000000) {
         width += 2;
+}
     char buffer[20];
     snprintf(buffer, sizeof(buffer), "0x%0*lX", width, (unsigned long)x);
     return buffer;
 }
 
 
-std::string
+auto
 srecord::interval::representation()
-    const
+    const -> std::string
 {
     std::string result;
     result += '(';
     for (size_t j = 0; j < length; j += 2)
     {
-        if (j)
+        if (j != 0U) {
             result += ", ";
+}
         result += to_string(data[j]);
         if (data[j] + 2 == data[j + 1])
         {
@@ -813,12 +853,13 @@ srecord::interval::representation()
 }
 
 
-srecord::interval
+auto
 srecord::interval::pad(int mult)
-    const
+    const -> srecord::interval
 {
-    if (mult < 2)
+    if (mult < 2) {
         return *this;
+}
     interval result;
     for (size_t j = 0; j < length; j += 2)
     {

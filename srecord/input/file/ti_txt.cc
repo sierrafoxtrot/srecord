@@ -24,8 +24,7 @@
 
 
 srecord::input_file_ti_txt::~input_file_ti_txt()
-{
-}
+= default;
 
 
 srecord::input_file_ti_txt::input_file_ti_txt(const std::string &a_file_name) :
@@ -39,15 +38,15 @@ srecord::input_file_ti_txt::input_file_ti_txt(const std::string &a_file_name) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_ti_txt::create(const std::string &a_file_name)
+auto
+srecord::input_file_ti_txt::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_ti_txt(a_file_name));
 }
 
 
 void
-srecord::input_file_ti_txt::get_next_token(void)
+srecord::input_file_ti_txt::get_next_token()
 {
     token_value = 0;
     for (;;)
@@ -118,8 +117,8 @@ srecord::input_file_ti_txt::get_next_token(void)
 }
 
 
-bool
-srecord::input_file_ti_txt::read(record &result)
+auto
+srecord::input_file_ti_txt::read(record &result) -> bool
 {
     for (;;)
     {
@@ -127,14 +126,16 @@ srecord::input_file_ti_txt::read(record &result)
         {
         case token_start_up:
             get_next_token();
-            if (token != token_at)
+            if (token != token_at) {
                 fatal_error("data must start with an address record");
+}
             break;
 
         case token_at:
             get_next_token();
-            if (token != token_number)
+            if (token != token_number) {
                 fatal_error("@ must be followed by an address");
+}
             address = token_value;
 #if 0
             //
@@ -160,14 +161,17 @@ srecord::input_file_ti_txt::read(record &result)
                 size_t n = 0;
                 for (;;)
                 {
-                    if (token_value >= 256)
+                    if (token_value >= 256) {
                         fatal_error("byte value (%ld) too large", token_value);
+}
                     buffer[n++] = token_value;
                     get_next_token();
-                    if (n >= record::max_data_length)
+                    if (n >= record::max_data_length) {
                         break;
-                    if (token != token_number)
+}
+                    if (token != token_number) {
                         break;
+}
                 }
                 if (address >= (1 << 20) && !address_warning)
                 {
@@ -181,8 +185,9 @@ srecord::input_file_ti_txt::read(record &result)
 
         case token_q:
         case token_end_of_file:
-            if (!seen_some_input)
+            if (!seen_some_input) {
                 fatal_error("file contains no data");
+}
             return false;
 
         case token_junk:
@@ -192,17 +197,17 @@ srecord::input_file_ti_txt::read(record &result)
 }
 
 
-const char *
-srecord::input_file_ti_txt::get_file_format_name(void)
-    const
+auto
+srecord::input_file_ti_txt::get_file_format_name()
+    const -> const char *
 {
     return "ti-txt (MSP430)";
 }
 
 
-int
-srecord::input_file_ti_txt::format_option_number(void)
-    const
+auto
+srecord::input_file_ti_txt::format_option_number()
+    const -> int
 {
     return arglex_tool::token_ti_txt;
 }

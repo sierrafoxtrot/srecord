@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_interval();
+    ~input_filter_interval() override;
 
 protected:
     /**
@@ -62,16 +62,16 @@ protected:
       * The calculate_result method is used to calculate the final value
       * to be placed into the output.
       */
-    virtual long calculate_result() const = 0;
+    virtual auto calculate_result() const -> long = 0;
 
     /**
       * The get_range method may be used to derived classes to get
       * access to the address range covered by the input data.
       */
-    const interval &get_range() const { return range; }
+    auto get_range() const -> const interval & { return range; }
 
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -108,22 +108,22 @@ private:
       * @param record
       *     where to put the result
       */
-    bool generate(record &record);
+    auto generate(record &result) -> bool;
 
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_interval();
+    input_filter_interval() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_interval(const input_filter_interval &);
+    input_filter_interval(const input_filter_interval &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_interval &operator=(const input_filter_interval &);
+    auto operator=(const input_filter_interval &) -> input_filter_interval & = delete;
 };
 
 };

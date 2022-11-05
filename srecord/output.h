@@ -38,7 +38,7 @@ class record; // forward
 class output
 {
 public:
-    typedef std::shared_ptr<output> pointer;
+    using pointer = std::shared_ptr<output>;
 
     /**
       * The destructor.
@@ -59,7 +59,7 @@ public:
       * to the output.  If no record is specified, a default
       * record will be supplied.  The write method will be called.
       */
-    virtual void write_header(const record * = 0);
+    virtual void write_header(const record * = nullptr);
 
     /**
       * The write_data method is used to write data to the output.
@@ -74,7 +74,7 @@ public:
       * specified, a default record will be supplied.  The #write method
       * will be called.
       */
-    virtual void write_execution_start_address(const record * = 0);
+    virtual void write_execution_start_address(const record * = nullptr);
 
     /**
       * The set_line_length method is used to set the maximum
@@ -105,7 +105,7 @@ public:
       * always, influenced by the line_length_set method.  Derived
       * classes must implement this method.
       */
-    virtual int preferred_block_size_get(void) const = 0;
+    virtual auto preferred_block_size_get() const -> int = 0;
 
     /**
       * The preferred_block_size_set method is to set a specific
@@ -120,7 +120,7 @@ public:
       *     if the format is incapable of using the specified block
       *     size.
       */
-    virtual bool preferred_block_size_set(int nbytes) = 0;
+    virtual auto preferred_block_size_set(int nbytes) -> bool = 0;
 
     /**
       * The fatal_error method is used to report fatal errors.
@@ -172,13 +172,13 @@ public:
       * output file.  It is used for the various error messages.
       * Derived classes must implement this method.
       */
-    virtual const std::string filename(void) const = 0;
+    virtual auto filename() const -> const std::string = 0;
 
     /**
       * The format_name method is used to obtain the name of this output
       * format.
       */
-    virtual const char *format_name(void) const = 0;
+    virtual auto format_name() const -> const char * = 0;
 
     /**
       * The notify_upper_bound method is used to notify the output class
@@ -213,12 +213,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    output(const output &);
+    output(const output &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output &operator=(const output &);
+    auto operator=(const output &) -> output & = delete;
 };
 
 };

@@ -21,8 +21,7 @@
 #include <srecord/record.h>
 
 srecord::output_file_cosmac::~output_file_cosmac()
-{
-}
+= default;
 
 
 srecord::output_file_cosmac::output_file_cosmac(
@@ -38,8 +37,8 @@ srecord::output_file_cosmac::output_file_cosmac(
 }
 
 
-srecord::output::pointer
-srecord::output_file_cosmac::create(const std::string &a_file_name)
+auto
+srecord::output_file_cosmac::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_cosmac(a_file_name));
 }
@@ -57,10 +56,11 @@ srecord::output_file_cosmac::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (record.get_address() >= (1uL << 24) && address_length < 8)
+        if (record.get_address() >= (1UL << 24) && address_length < 8) {
             address_length = 8;
-        else if (record.get_address() >= (1uL << 16) && address_length < 6)
+        } else if (record.get_address() >= (1UL << 16) && address_length < 6) {
             address_length = 6;
+}
 
         if (header_required)
         {
@@ -69,8 +69,9 @@ srecord::output_file_cosmac::write(const srecord::record &record)
             column = address_length + 3;
             header_required = false;
 
-            if (!enable_optional_address_flag)
+            if (!enable_optional_address_flag) {
                 address = (unsigned long)-1L;
+}
         }
         if (address != record.get_address())
         {
@@ -114,38 +115,42 @@ void
 srecord::output_file_cosmac::address_length_set(int x)
 {
     x *= 2;
-    if (x < 4)
+    if (x < 4) {
         x = 4;
-    if (x > 8)
+}
+    if (x > 8) {
         x = 8;
+}
     address_length = x;
 }
 
 
-bool
-srecord::output_file_cosmac::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_cosmac::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
+}
     line_length = 2 * nbytes + 1;
     return true;
 }
 
 
-int
+auto
 srecord::output_file_cosmac::preferred_block_size_get()
-    const
+    const -> int
 {
     int n = ((line_length - 1) / 2);
-    if (n > record::max_data_length)
+    if (n > record::max_data_length) {
         n = record::max_data_length;
+}
     return n;
 }
 
 
-const char *
+auto
 srecord::output_file_cosmac::format_name()
-    const
+    const -> const char *
 {
     return "cosmac";
 }

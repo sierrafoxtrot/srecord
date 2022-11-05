@@ -25,8 +25,9 @@ srecord::output_file_mips_flash::~output_file_mips_flash()
 {
     buffer_flush_newline();
 
-    if (!base_set)
+    if (!base_set) {
         fatal_error("no data written");
+}
     if (base == 0x1FC00000)
     {
         // Lock the flash.
@@ -61,8 +62,8 @@ srecord::output_file_mips_flash::output_file_mips_flash(
 }
 
 
-srecord::output::pointer
-srecord::output_file_mips_flash::create_le(const std::string &a_file_name)
+auto
+srecord::output_file_mips_flash::create_le(const std::string &a_file_name) -> srecord::output::pointer
 {
     return
         pointer
@@ -72,8 +73,8 @@ srecord::output_file_mips_flash::create_le(const std::string &a_file_name)
 }
 
 
-srecord::output::pointer
-srecord::output_file_mips_flash::create_be(const std::string &a_file_name)
+auto
+srecord::output_file_mips_flash::create_be(const std::string &a_file_name) -> srecord::output::pointer
 {
     return
         pointer
@@ -93,8 +94,9 @@ srecord::output_file_mips_flash::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (record.get_length() < 1)
+        if (record.get_length() < 1) {
             return;
+}
         for (size_t j = 0; j < record.get_length(); ++j)
         {
             unsigned long byte_address = record.get_address() + j;
@@ -132,8 +134,9 @@ srecord::output_file_mips_flash::write(const srecord::record &record)
                 unsigned long sbase = address & ~0x1FFFF;
                 put_stringf(">%.5lxxxx ", sbase >> 12);
                 put_stringf("@%.8lx !E\n", sbase);
-                if (sbase != address)
+                if (sbase != address) {
                     new_address = true;
+}
             }
 
             if (new_address)
@@ -141,8 +144,9 @@ srecord::output_file_mips_flash::write(const srecord::record &record)
                 // If the address is not 4-byte aligned:
                 // complain, and suggest they use a fill filter.
                 address = byte_address;
-                if ((address & 3) != 0)
+                if ((address & 3) != 0) {
                     fatal_alignment_error(4);
+}
 
                 // Set new write address.
                 put_stringf("@%.8lx\n", address);
@@ -156,8 +160,9 @@ srecord::output_file_mips_flash::write(const srecord::record &record)
 
             ++address;
             buffer[buffer_length++] = byte;
-            if (buffer_length >= sizeof(buffer))
+            if (buffer_length >= sizeof(buffer)) {
                 buffer_flush();
+}
         }
         break;
 
@@ -176,10 +181,10 @@ srecord::output_file_mips_flash::write(const srecord::record &record)
 
 
 void
-srecord::output_file_mips_flash::buffer_flush_newline(void)
+srecord::output_file_mips_flash::buffer_flush_newline()
 {
     buffer_flush();
-    if (column)
+    if (column != 0)
     {
         put_char('\n');
         column = 0;
@@ -188,16 +193,18 @@ srecord::output_file_mips_flash::buffer_flush_newline(void)
 
 
 void
-srecord::output_file_mips_flash::buffer_flush(void)
+srecord::output_file_mips_flash::buffer_flush()
 {
-    if (!buffer_length)
+    if (buffer_length == 0U) {
         return;
-    if ((buffer_length & 3) != 0)
+}
+    if ((buffer_length & 3) != 0) {
         fatal_alignment_error(4);
+}
     const unsigned char *end = buffer + buffer_length;
     for (const unsigned char *bp = buffer; bp < end; bp += 4)
     {
-        if (column)
+        if (column != 0)
         {
             if (column + 9 > line_length)
             {
@@ -234,8 +241,9 @@ void
 srecord::output_file_mips_flash::line_length_set(int w)
 {
     // ignore (fixed line length)
-    if (w > 0)
+    if (w > 0) {
         line_length = w;
+}
 }
 
 
@@ -246,9 +254,9 @@ srecord::output_file_mips_flash::address_length_set(int)
 }
 
 
-int
-srecord::output_file_mips_flash::preferred_block_size_get(void)
-    const
+auto
+srecord::output_file_mips_flash::preferred_block_size_get()
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -258,17 +266,17 @@ srecord::output_file_mips_flash::preferred_block_size_get(void)
 }
 
 
-bool
-srecord::output_file_mips_flash::preferred_block_size_set(int n)
+auto
+srecord::output_file_mips_flash::preferred_block_size_set(int n) -> bool
 {
     // Irrelevant.
     return ((n & 3) == 0);
 }
 
 
-const char *
-srecord::output_file_mips_flash::format_name(void)
-    const
+auto
+srecord::output_file_mips_flash::format_name()
+    const -> const char *
 {
     return
         (

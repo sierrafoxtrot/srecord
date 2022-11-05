@@ -29,8 +29,7 @@
 
 
 srecord::input_generator::~input_generator()
-{
-}
+= default;
 
 
 srecord::input_generator::input_generator(const interval &a_range) :
@@ -39,15 +38,16 @@ srecord::input_generator::input_generator(const interval &a_range) :
 }
 
 
-bool
-srecord::input_generator::read(srecord::record &result)
+auto
+srecord::input_generator::read(srecord::record &result) -> bool
 {
     //
     // If there is not data left to generate,
     // signal end-of-file
     //
-    if (range.empty())
+    if (range.empty()) {
         return false;
+}
 
     //
     // Calculate the address range for this chunk of data.  Use the
@@ -55,8 +55,9 @@ srecord::input_generator::read(srecord::record &result)
     //
     interval::data_t addr = range.get_lowest();
     interval::data_t end  = addr + srecord::record::max_data_length;
-    if (end < addr)
+    if (end < addr) {
         end = 0;
+}
     interval partial(addr, end);
     partial *= range;
 
@@ -90,8 +91,8 @@ srecord::input_generator::read(srecord::record &result)
 }
 
 
-srecord::input::pointer
-srecord::input_generator::create(srecord::arglex_tool *cmdln)
+auto
+srecord::input_generator::create(srecord::arglex_tool *cmdln) -> srecord::input::pointer
 {
     interval range = cmdln->get_interval_small("--generate");
     srecord::input::pointer result;
@@ -106,16 +107,16 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
                 cmdln->get_number("--generate --b-e-constant <length>");
             if (length <= 0 || length > 4)
             {
-                cmdln->fatal_error
+                srecord::arglex_tool::fatal_error
                 (
                     "length %d out of range [1..4]",
                     length
                 );
             }
-            unsigned long over = (1uL << (8u * length)) - 1;
+            unsigned long over = (1UL << (8U * length)) - 1;
             if (length < 4 && datum > over)
             {
-                cmdln->fatal_error
+                srecord::arglex_tool::fatal_error
                 (
                     "datum %lu out of range [0..%lu]",
                     datum,
@@ -146,16 +147,16 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
                 cmdln->get_number("--generate --l-e-constant <length>");
             if (length <= 0 || length > 4)
             {
-                cmdln->fatal_error
+                srecord::arglex_tool::fatal_error
                 (
                     "length %d out of range [1..4]",
                     length
                 );
             }
-            unsigned long over = (1uL << (8u * length)) - 1;
+            unsigned long over = (1UL << (8U * length)) - 1;
             if (length < 4 && datum > over)
             {
-                cmdln->fatal_error
+                srecord::arglex_tool::fatal_error
                 (
                     "datum %lu out of range [0..%lu]",
                     datum,
@@ -177,7 +178,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
             int n = cmdln->get_number("--generate --constant");
             if (n < 0 || n > 255)
             {
-                cmdln->fatal_error
+                srecord::arglex_tool::fatal_error
                 (
                     "data byte %d out of range [0..255]",
                     n
@@ -199,7 +200,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
             cmdln->token_next();
             size_t length = 0;
             size_t maxlen = 16;
-            unsigned char *data = new unsigned char [maxlen];
+            auto *data = new unsigned char [maxlen];
             for (;;)
             {
                 //
@@ -214,7 +215,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
                 if (length >= maxlen)
                 {
                     size_t new_maxlen = maxlen * 2 + 16;
-                    unsigned char *new_data = new unsigned char [new_maxlen];
+                    auto *new_data = new unsigned char [new_maxlen];
                     memcpy(new_data, data, length);
                     delete [] data;
                     data = new_data;
@@ -222,7 +223,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
                 }
                 if (byte_value < 0 || byte_value > 255)
                 {
-                    cmdln->fatal_error
+                    srecord::arglex_tool::fatal_error
                     (
                         "data byte %ld out of range [0..255]",
                         byte_value
@@ -238,8 +239,9 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
                 // If there are no more numbers on the command line, we
                 // are done.
                 //
-                if (!cmdln->can_get_number())
+                if (!cmdln->can_get_number()) {
                     break;
+}
             }
 
             //
@@ -270,7 +272,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
             switch (len)
             {
             case 0:
-                cmdln->fatal_error("--repeat-string value may not be empty");
+                srecord::arglex_tool::fatal_error("--repeat-string value may not be empty");
                 // NOTREACHED
 
             case 1:
@@ -291,7 +293,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
         break;
 
     default:
-        cmdln->fatal_error
+        srecord::arglex_tool::fatal_error
         (
             "the --generate option needs to be followed by a generation "
                 "type (e.g. --constant)"

@@ -34,18 +34,14 @@ srecord::output_file_motorola::~output_file_motorola()
 srecord::output_file_motorola::output_file_motorola(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    data_count(0),
-    pref_block_size(32),
-    address_length(2),
-    address_shift(0),
-    data_count_written(false)
+    srecord::output_file(a_file_name)
+    
 {
 }
 
 
-srecord::output::pointer
-srecord::output_file_motorola::create(const std::string &a_file_name)
+auto
+srecord::output_file_motorola::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_motorola(a_file_name));
 }
@@ -119,8 +115,9 @@ srecord::output_file_motorola::write_inner(int tag, unsigned long address,
     int line_length = address_nbytes + data_nbytes + 1;
     buffer[0] = line_length;
     srecord::record::encode_big_endian(buffer + 1, address, address_nbytes);
-    if (data_nbytes)
+    if (data_nbytes != 0) {
         memcpy(buffer + 1 + address_nbytes, data, data_nbytes);
+}
 
     //
     // Emit the line as hexadecimal text.
@@ -128,8 +125,9 @@ srecord::output_file_motorola::write_inner(int tag, unsigned long address,
     put_char('S');
     put_nibble(tag);
     checksum_reset();
-    for (int j = 0; j < line_length; ++j)
+    for (int j = 0; j < line_length; ++j) {
         put_byte(buffer[j]);
+}
     put_byte(~checksum_get());
     put_char('\n');
 }
@@ -138,15 +136,17 @@ srecord::output_file_motorola::write_inner(int tag, unsigned long address,
 void
 srecord::output_file_motorola::write_data_count()
 {
-    if (data_count_written)
+    if (data_count_written) {
         return;
+}
 
     if (enable_data_count_flag)
     {
-        if (data_count < (1L << 16))
-            write_inner(5, data_count, 2, 0, 0);
-        else
-            write_inner(6, data_count, 3, 0, 0);
+        if (data_count < (1L << 16)) {
+            write_inner(5, data_count, 2, nullptr, 0);
+        } else {
+            write_inner(6, data_count, 3, nullptr, 0);
+}
     }
     data_count_written = true;
 
@@ -167,9 +167,9 @@ srecord::output_file_motorola::write(const srecord::record &record)
     // FIXME: cope with this more elegantly.
     //
     unsigned long shifted_address = record.get_address();
-    if (address_shift)
+    if (address_shift != 0)
     {
-        if (shifted_address & ((1 << address_shift) - 1))
+        if ((shifted_address & ((1 << address_shift) - 1)) != 0U)
         {
             fatal_error
             (
@@ -184,8 +184,9 @@ srecord::output_file_motorola::write(const srecord::record &record)
     switch (record.get_type())
     {
     case srecord::record::type_header:
-        if (enable_header_flag)
+        if (enable_header_flag) {
             write_inner(0, 0, 2, record.get_data(), record.get_length());
+}
         break;
 
     case srecord::record::type_data:
@@ -235,12 +236,13 @@ srecord::output_file_motorola::write(const srecord::record &record)
         {
             write_data_count();
 
-            if (shifted_address < (1UL << 16) && address_length <= 2)
-                write_inner(9, shifted_address, 2, 0, 0);
-            else if (shifted_address < (1UL << 24) && address_length <= 3)
-                write_inner(8, shifted_address, 3, 0, 0);
-            else
-                write_inner(7, shifted_address, 4, 0, 0);
+            if (shifted_address < (1UL << 16) && address_length <= 2) {
+                write_inner(9, shifted_address, 2, nullptr, 0);
+            } else if (shifted_address < (1UL << 24) && address_length <= 3) {
+                write_inner(8, shifted_address, 3, nullptr, 0);
+            } else {
+                write_inner(7, shifted_address, 4, nullptr, 0);
+}
         }
         break;
 
@@ -270,17 +272,19 @@ srecord::output_file_motorola::line_length_set(int linlen)
     // the safest maximum.      We could make it based on the address,
     // but that's probably overkill.
     //
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    else if (n > 250)
+    } else if (n > 250) {
         n = 250;
+}
 
     //
     // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srecord::record::max_data_length)
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
 }
 
@@ -288,35 +292,37 @@ srecord::output_file_motorola::line_length_set(int linlen)
 void
 srecord::output_file_motorola::address_length_set(int n)
 {
-    if (n < 2)
+    if (n < 2) {
         n = 2;
-    else if (n > 4)
+    } else if (n > 4) {
         n = 4;
+}
     address_length = n;
 }
 
 
-bool
-srecord::output_file_motorola::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_motorola::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }
 
 
-int
+auto
 srecord::output_file_motorola::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_motorola::format_name()
-    const
+    const -> const char *
 {
     return "Motorola S-Record";
 }

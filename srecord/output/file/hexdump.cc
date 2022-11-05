@@ -17,6 +17,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#include <cstddef>
 #include <cstring>
 
 #include <srecord/output/file/hexdump.h>
@@ -38,15 +39,15 @@ srecord::output_file_hexdump::output_file_hexdump(
     row_cache_address((unsigned long)-1),
     row_cache_address_mask(0),
     row_cache_size(0),
-    row_cache(0),
+    row_cache(nullptr),
     address_length(4)
 {
     line_length_set(80);
 }
 
 
-srecord::output::pointer
-srecord::output_file_hexdump::create(const std::string &a_file_name)
+auto
+srecord::output_file_hexdump::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_hexdump(a_file_name));
 }
@@ -60,24 +61,27 @@ srecord::output_file_hexdump::command_line(srecord::arglex_tool *)
 
 
 void
-srecord::output_file_hexdump::row_cache_print(void)
+srecord::output_file_hexdump::row_cache_print()
 {
-    if (row_cache_address == (unsigned long)(-1))
+    if (row_cache_address == (unsigned long)(-1)) {
         return;
+}
     char *cp = row_cache;
     char *ep = cp + row_cache_size;
-    while (ep > cp && ep[-1] == ' ')
+    while (ep > cp && ep[-1] == ' ') {
         --ep;
-    while (cp < ep)
+}
+    while (cp < ep) {
         put_char(*cp++);
+}
     put_char('\n');
     memset(row_cache, ' ', row_cache_size);
     row_cache_address = (unsigned long)-1;
 }
 
 
-static char
-hex_nibble(int n)
+static auto
+hex_nibble(int n) -> char
 {
     return "0123456789ABCDEF"[n & 15];
 }
@@ -94,7 +98,7 @@ hex_byte(char *buffer, int n)
 static void
 hex(char *buffer, long value, int nbytes)
 {
-    buffer += nbytes * 2;
+    buffer += static_cast<ptrdiff_t>(nbytes * )2;
     while (nbytes > 0)
     {
         buffer -= 2;
@@ -121,14 +125,15 @@ srecord::output_file_hexdump::emit_byte(unsigned long address,
     {
         row_cache_address = address & ~row_cache_address_mask;
         hex(row_cache, row_cache_address, address_length);
-        row_cache[address_length * 2] = ':';
+        row_cache[static_cast<ptrdiff_t>(address_length * )2] = ':';
         row_cache[address_length * 2 + 3 + 3 * number_of_columns] = '#';
     }
     address &= row_cache_address_mask;
-    hex_byte(row_cache + address_length * 2 + 2 + 3 * address, data);
+    hex_byte(row_cache + static_cast<ptrdiff_t>(address_length * )2 + 2 + 3 * address, data);
     data &= 0x7F;
-    if (data < ' ' || data > '~')
+    if (data < ' ' || data > '~') {
         data = '.';
+}
     row_cache[address_length * 2 + 4 + 3 * number_of_columns + address] = data;
 }
 
@@ -149,8 +154,9 @@ srecord::output_file_hexdump::write(const srecord::record &record)
     case srecord::record::type_data:
         {
             unsigned long a = record.get_address();
-            for (size_t j = 0; j < record.get_length(); ++j)
+            for (size_t j = 0; j < record.get_length(); ++j) {
                 emit_byte(a + j, record.get_data(j));
+}
         }
         break;
 
@@ -161,8 +167,8 @@ srecord::output_file_hexdump::write(const srecord::record &record)
 }
 
 
-int
-srecord::output_file_hexdump::columns_to_line_length(int cols)
+auto
+srecord::output_file_hexdump::columns_to_line_length(int cols) const -> int
 {
     // 0000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  #................
     //      ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^^
@@ -174,8 +180,9 @@ void
 srecord::output_file_hexdump::line_length_set(int line_length)
 {
     int n = 8;
-    while (columns_to_line_length(n << 1) <= line_length)
+    while (columns_to_line_length(n << 1) <= line_length) {
         n <<= 1;
+}
     number_of_columns = n;
     delete [] row_cache;
     row_cache_size = columns_to_line_length(number_of_columns);
@@ -185,13 +192,15 @@ srecord::output_file_hexdump::line_length_set(int line_length)
 }
 
 
-bool
-srecord::output_file_hexdump::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_hexdump::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 2 || nbytes > record::max_data_length)
+    if (nbytes < 2 || nbytes > record::max_data_length) {
         return false;
-    if ((nbytes & -nbytes) != nbytes)
+}
+    if ((nbytes & -nbytes) != nbytes) {
         return false;
+}
     number_of_columns = nbytes;
     row_cache_address_mask = number_of_columns - 1;
     return true;
@@ -205,9 +214,9 @@ srecord::output_file_hexdump::address_length_set(int)
 }
 
 
-int
-srecord::output_file_hexdump::preferred_block_size_get(void)
-    const
+auto
+srecord::output_file_hexdump::preferred_block_size_get()
+    const -> int
 {
     //
     // Use the largest we can get,
@@ -216,9 +225,9 @@ srecord::output_file_hexdump::preferred_block_size_get(void)
 }
 
 
-const char *
-srecord::output_file_hexdump::format_name(void)
-    const
+auto
+srecord::output_file_hexdump::format_name()
+    const -> const char *
 {
     return "hexdump";
 }

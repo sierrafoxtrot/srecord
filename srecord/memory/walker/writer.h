@@ -36,7 +36,7 @@ public:
     /**
       * the destructor.
       */
-    virtual ~memory_walker_writer();
+    ~memory_walker_writer() override;
 
 private:
     /**
@@ -46,7 +46,7 @@ private:
       * @param deeper
       *     where to write the output
       */
-    memory_walker_writer(const output::pointer &deeper);
+    memory_walker_writer(output::pointer arg);
 
 public:
     /**
@@ -56,20 +56,20 @@ public:
       * @param deeper
       *     where to write the output
       */
-    static pointer create(const output::pointer &deeper);
+    static auto create(const output::pointer &arg) -> pointer;
 
 protected:
     // See base class for documentation.
-    virtual void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
     // See base class for documentation.
-    void notify_upper_bound(long unsigned);
+    void notify_upper_bound(long unsigned) override;
 
     // See base class for documentation.
-    void observe_header(const record *);
+    void observe_header(const record *) override;
 
     // See base class for documentation.
-    void observe_start_address(const record *);
+    void observe_start_address(const record *) override;
 
 private:
     /**
@@ -81,17 +81,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    memory_walker_writer();
+    memory_walker_writer() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_writer(const memory_walker_writer &);
+    memory_walker_writer(const memory_walker_writer &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_writer &operator=(const memory_walker_writer &);
+    auto operator=(const memory_walker_writer &) -> memory_walker_writer & = delete;
 };
 
 }

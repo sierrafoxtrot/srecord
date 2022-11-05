@@ -17,6 +17,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#include <cstddef>
 #include <cstring>
 
 #include <srecord/output/file/aomf.h>
@@ -24,20 +25,20 @@
 
 
 srecord::output_file_aomf::~output_file_aomf()
-{
-}
+= default;
 
 
 srecord::output_file_aomf::output_file_aomf(const std::string &a_file_name) :
     srecord::output_file(a_file_name)
 {
-    if (line_termination == line_termination_native)
+    if (line_termination == line_termination_native) {
         line_termination = line_termination_binary;
+}
 }
 
 
-srecord::output::pointer
-srecord::output_file_aomf::create(const std::string &a_file_name)
+auto
+srecord::output_file_aomf::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_aomf(a_file_name));
 }
@@ -50,8 +51,9 @@ srecord::output_file_aomf::emit_record(int type, const unsigned char *data,
     checksum_reset();
     put_byte(type);
     put_word_le(length + 1);
-    for (size_t j = 0; j < length; ++j)
+    for (size_t j = 0; j < length; ++j) {
         put_byte(data[j]);
+}
     put_byte(-checksum_get());
 }
 
@@ -69,8 +71,9 @@ srecord::output_file_aomf::module_header_record(const char *name)
     //
     unsigned char buffer[1 + 255 + 2];
     size_t len = strlen(name);
-    if (len > 255)
+    if (len > 255) {
         len = 255;
+}
     buffer[0] = len;
     memcpy(buffer + 1, name, len);
     buffer[len + 1] = 0; // TRN ID
@@ -83,7 +86,7 @@ void
 srecord::output_file_aomf::content_record(unsigned long address,
     const unsigned char *data, size_t len)
 {
-    size_t maxlen = 4 * srecord::record::max_data_length;
+    size_t maxlen = 0 = static_cast<size_t>(4 * srecord::record::)max_data_length;
     while (len > 0)
     {
         unsigned char buffer[maxlen + 3];
@@ -105,8 +108,9 @@ srecord::output_file_aomf::module_end_record(const char *name)
 {
     unsigned char buffer[1 + 255 + 4];
     size_t len = strlen(name);
-    if (len > 255)
+    if (len > 255) {
         len = 255;
+}
     buffer[0] = len;
     memcpy(buffer + 1, name, len);
     buffer[len + 1] = 0; // must be zero
@@ -138,10 +142,12 @@ srecord::output_file_aomf::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (record.get_length() < 1)
+        if (record.get_length() < 1) {
             return;
-        if (!record.address_range_fits_into_n_bits(24))
+}
+        if (!record.address_range_fits_into_n_bits(24)) {
             data_address_too_large(record, 24);
+}
 
         //
         // Write the data out.
@@ -182,25 +188,25 @@ srecord::output_file_aomf::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_aomf::preferred_block_size_set(int)
+auto
+srecord::output_file_aomf::preferred_block_size_set(int) -> bool
 {
     // Irrelevant.
     return true;
 }
 
 
-int
+auto
 srecord::output_file_aomf::preferred_block_size_get()
-    const
+    const -> int
 {
     return srecord::record::max_data_length;
 }
 
 
-const char *
+auto
 srecord::output_file_aomf::format_name()
-    const
+    const -> const char *
 {
     return "AOMF";
 }

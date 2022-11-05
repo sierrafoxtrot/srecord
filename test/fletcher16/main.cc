@@ -24,30 +24,31 @@
 
 
 static void
-usage(void)
+usage()
 {
     fprintf(stderr, "Usage: test_fletcher16 [ <sum1> <sum2> [ <answer> ]]\n");
     exit(1);
 }
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     unsigned char sum1 = 0xFF;
     unsigned char sum2 = 0xFF;
     int answer = -1;
-    if (argc == 2 && argv[1][0] == '-')
+    if (argc == 2 && argv[1][0] == '-') {
         return 0;
+}
     switch (argc)
     {
     case 4:
-        answer = strtol(argv[3], 0, 0);
+        answer = strtol(argv[3], nullptr, 0);
         // Fall through...
 
     case 3:
-        sum2 = strtol(argv[2], 0, 0);
-        sum1 = strtol(argv[1], 0, 0);
+        sum2 = strtol(argv[2], nullptr, 0);
+        sum1 = strtol(argv[1], nullptr, 0);
         break;
 
     case 1:
@@ -63,8 +64,9 @@ main(int argc, char **argv)
     {
         char buffer[1024];
         int n = read(0, buffer, sizeof(buffer));
-        if (n <= 0)
+        if (n <= 0) {
             break;
+}
         checksum.nextbuf(buffer, n);
         checksum1.nextbuf(buffer, n);
     }

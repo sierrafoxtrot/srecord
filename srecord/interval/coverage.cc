@@ -20,9 +20,9 @@
 #include <srecord/interval.h>
 
 
-srecord::interval::long_data_t
+auto
 srecord::interval::coverage()
-    const
+    const -> srecord::interval::long_data_t
 {
     long_data_t total = 0;
     for (size_t j = 0; j < length; j+= 2)

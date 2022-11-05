@@ -21,8 +21,9 @@
 #include <cerrno>
 #include <cstdio>
 #include <iostream>
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <utility>
 
 #include <srecord/arglex.h>
 #include <srecord/sizeof.h>
@@ -40,17 +41,19 @@ bool srecord::output_file::enable_optional_address_flag = false;
 srecord::output_file::~output_file()
 {
     FILE *fp = (FILE *)get_fp();
-    if (fflush(fp))
+    if (fflush(fp) != 0) {
         fatal_error_errno("write");
-    if (fp != stdout && fclose(fp))
+}
+    if (fp != stdout && (fclose(fp) != 0)) {
         fatal_error_errno("close");
+}
 }
 
 
 srecord::output_file::output_file() :
     file_name("standard output"),
     line_number(1),
-    vfp(0),
+    vfp(nullptr),
     checksum(0),
     position(0),
     is_regular(true)
@@ -61,10 +64,10 @@ srecord::output_file::output_file() :
 }
 
 
-srecord::output_file::output_file(const std::string &a_file_name) :
-    file_name(a_file_name),
+srecord::output_file::output_file(std::string a_file_name) :
+    file_name(std::move(a_file_name)),
     line_number(1),
-    vfp(0),
+    vfp(nullptr),
     checksum(0),
     position(0),
     is_regular(true)
@@ -87,18 +90,18 @@ srecord::output_file::output_file(const std::string &a_file_name) :
 }
 
 
-bool
-srecord::output_file::is_binary(void)
-    const
+auto
+srecord::output_file::is_binary()
+    const -> bool
 {
     return false;
 }
 
 
-void *
-srecord::output_file::get_fp(void)
+auto
+srecord::output_file::get_fp() -> void *
 {
-    if (!vfp)
+    if (vfp == nullptr)
     {
         //
         // The call to fopen is deferred until the constructor has
@@ -117,8 +120,9 @@ srecord::output_file::get_fp(void)
 #endif
         {
             vfp = fopen(file_name.c_str(), "wb");
-            if (!vfp)
+            if (vfp == nullptr) {
                 fatal_error_errno("open");
+}
         }
         set_is_regular();
     }
@@ -126,9 +130,9 @@ srecord::output_file::get_fp(void)
 }
 
 
-const std::string
+auto
 srecord::output_file::filename()
-    const
+    const -> const std::string
 {
     char buffer[20];
     sprintf(buffer, ": %d", line_number);
@@ -154,7 +158,7 @@ srecord::output_file::put_char(int c)
             case line_termination_primos:
                 putc('\n', fp);
                 ++position;
-                if (position & 1)
+                if ((position & 1) != 0U)
                 {
                     putc(0, fp);
                     ++position;
@@ -186,8 +190,9 @@ srecord::output_file::put_char(int c)
         putc(c, fp);
         ++position;
     }
-    if (ferror(fp))
+    if (ferror(fp) != 0) {
         fatal_error_errno("write");
+}
 }
 
 
@@ -261,22 +266,22 @@ srecord::output_file::put_4bytes_le(unsigned long n)
 }
 
 
-int
-srecord::output_file::checksum_get(void)
+auto
+srecord::output_file::checksum_get() const -> int
 {
     return (checksum & 0xFF);
 }
 
 
-int
-srecord::output_file::checksum_get16(void)
+auto
+srecord::output_file::checksum_get16() const -> int
 {
     return (checksum & 0xFFFF);
 }
 
 
 void
-srecord::output_file::checksum_reset(void)
+srecord::output_file::checksum_reset()
 {
     checksum = 0;
 }
@@ -298,11 +303,13 @@ srecord::output_file::seek_to(unsigned long address)
     //
     if (!is_regular)
     {
-        while (position < address)
+        while (position < address) {
             put_char(0);
+}
     }
-    if (address == position)
+    if (address == position) {
         return;
+}
 
     //
     // We'll have to try a seek.
@@ -311,7 +318,7 @@ srecord::output_file::seek_to(unsigned long address)
     errno = 0;
     if (fseek(fp, address, 0) < 0)
     {
-        if (errno == EINVAL && address >= 0x80000000uL)
+        if (errno == EINVAL && address >= 0x80000000UL)
         {
             warning
             (
@@ -322,7 +329,7 @@ srecord::output_file::seek_to(unsigned long address)
                 "to create a %3.1fGB file.  See the manual for a "
                 "description of the --offset filter, remembering that "
                 "you can give negative offsets.",
-                ((double)address / (double)(1uL << 30))
+                ((double)address / (double)(1UL << 30))
             );
         }
         fatal_error_errno("seek 0x%lX", address);
@@ -334,8 +341,9 @@ srecord::output_file::seek_to(unsigned long address)
 void
 srecord::output_file::put_string(const char *s)
 {
-    while (*s)
+    while (*s != 0) {
         put_char(*s++);
+}
 }
 
 
@@ -344,8 +352,9 @@ srecord::output_file::put_string(const std::string &s)
 {
     const char *cp = s.c_str();
     const char *ep = cp + s.size();
-    while (cp < ep)
+    while (cp < ep) {
         put_char(*cp++);
+}
 }
 
 
@@ -396,8 +405,8 @@ srecord::output_file::enable_optional_address(bool yesno)
 }
 
 
-bool
-srecord::output_file::enable_by_name(const std::string &name, bool yesno)
+auto
+srecord::output_file::enable_by_name(const std::string &name, bool yesno) -> bool
 {
     struct table_t
     {
@@ -428,10 +437,10 @@ srecord::output_file::enable_by_name(const std::string &name, bool yesno)
 
 
 void
-srecord::output_file::set_is_regular(void)
+srecord::output_file::set_is_regular()
 {
     FILE *fp = (FILE *)vfp;
-    struct stat st;
+    struct stat st{};
     is_regular = fstat(fileno(fp), &st) == 0 && S_ISREG(st.st_mode);
 }
 
@@ -500,9 +509,9 @@ srecord::output_file::data_address_too_large(const srecord::record &record,
             prec,
             hi,
             prec,
-            0uL,
+            0UL,
             prec,
-            (1uL << nbits) - 1
+            (1UL << nbits) - 1
         );
     }
     fatal_error("data address (0x%lX..0x%lX) too large", lo, hi);

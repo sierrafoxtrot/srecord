@@ -24,8 +24,7 @@
 
 
 srecord::input_file_ppx::~input_file_ppx()
-{
-}
+= default;
 
 
 srecord::input_file_ppx::input_file_ppx(const std::string &filename) :
@@ -41,15 +40,15 @@ srecord::input_file_ppx::input_file_ppx(const std::string &filename) :
 }
 
 
-srecord::input_file_ppx::pointer
-srecord::input_file_ppx::create(const std::string &filename)
+auto
+srecord::input_file_ppx::create(const std::string &filename) -> srecord::input_file_ppx::pointer
 {
     return pointer(new input_file_ppx(filename));
 }
 
 
 void
-srecord::input_file_ppx::get_next_token(void)
+srecord::input_file_ppx::get_next_token()
 {
     for (;;)
     {
@@ -92,8 +91,9 @@ srecord::input_file_ppx::get_next_token(void)
                 for (;;)
                 {
                     int sc = get_char();
-                    if (sc < 0)
+                    if (sc < 0) {
                         break;
+}
                     c = sc;
                     switch (c)
                     {
@@ -129,14 +129,14 @@ srecord::input_file_ppx::get_next_token(void)
 
 
 void
-srecord::input_file_ppx::syntax_error(void)
+srecord::input_file_ppx::syntax_error()
 {
     fatal_error("syntax error");
 }
 
 
-bool
-srecord::input_file_ppx::read(record &result)
+auto
+srecord::input_file_ppx::read(record &result) -> bool
 {
     //
     // file
@@ -189,8 +189,9 @@ srecord::input_file_ppx::read(record &result)
             switch (token)
             {
             case token_address:
-                if (address != token_value)
+                if (address != token_value) {
                     assert(buffer_length == 0);
+}
                 address = token_value;
                 get_next_token();
                 state = 3;
@@ -237,7 +238,7 @@ srecord::input_file_ppx::read(record &result)
             case token_end:
                 state = 1;
 
-                if (buffer_length)
+                if (buffer_length != 0U)
                 {
                     return_data_record:
                     result =
@@ -260,8 +261,9 @@ srecord::input_file_ppx::read(record &result)
                 get_next_token();
                 data_seen = true;
 
-                if (buffer_length >= sizeof(buffer))
+                if (buffer_length >= sizeof(buffer)) {
                     goto return_data_record;
+}
                 break;
 
             default:
@@ -297,8 +299,9 @@ srecord::input_file_ppx::read(record &result)
             switch (token)
             {
             case token_eof:
-                if (!data_seen)
+                if (!data_seen) {
                     fatal_error("no data seen");
+}
                 return false;
 
             default:
@@ -310,17 +313,17 @@ srecord::input_file_ppx::read(record &result)
 }
 
 
-const char *
-srecord::input_file_ppx::get_file_format_name(void)
-    const
+auto
+srecord::input_file_ppx::get_file_format_name()
+    const -> const char *
 {
     return "Stag Prom Programmer hexadecimal (PPX)";
 }
 
 
-int
-srecord::input_file_ppx::format_option_number(void)
-    const
+auto
+srecord::input_file_ppx::format_option_number()
+    const -> int
 {
     return arglex_tool::token_ppx;
 }

@@ -37,27 +37,27 @@ srecord::input_file_intel16::input_file_intel16(
     termination_seen(false),
     mode(linear),
     address_base(0),
-    pushback(0),
+    pushback(nullptr),
     end_seen(false)
 {
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_intel16::create(const std::string &a_file_name)
+auto
+srecord::input_file_intel16::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_intel16(a_file_name));
 }
 
 
-bool
-srecord::input_file_intel16::read_inner(record &result)
+auto
+srecord::input_file_intel16::read_inner(record &result) -> bool
 {
-    if (pushback)
+    if (pushback != nullptr)
     {
         result = *pushback;
         delete pushback;
-        pushback = 0;
+        pushback = nullptr;
         return true;
     }
 
@@ -74,14 +74,16 @@ srecord::input_file_intel16::read_inner(record &result)
         //
         // end of file means we are done
         //
-        if (c < 0)
+        if (c < 0) {
             return false;
+}
 
         //
         // quietly ignore blank lines
         //
-        if (c == '\n')
+        if (c == '\n') {
             continue;
+}
 
         //
         // If it doesn't start with a colon, it's a garbage line.
@@ -97,10 +99,12 @@ srecord::input_file_intel16::read_inner(record &result)
             for (;;)
             {
                 c = get_char();
-                if (c < 0)
+                if (c < 0) {
                     return false;
-                if (c == '\n')
+}
+                if (c == '\n') {
                     break;
+}
             }
             continue;
         }
@@ -123,11 +127,13 @@ srecord::input_file_intel16::read_inner(record &result)
         if (use_checksums())
         {
             int csum = checksum_get();
-            if (csum != 0x00)
+            if (csum != 0x00) {
                 fatal_error("checksum mismatch (%02X != 00)", csum);
+}
         }
-        if (get_char() != '\n')
+        if (get_char() != '\n') {
             fatal_error("end-of-line expected");
+}
 
         record::address_t address_field =
              2 * record::decode_big_endian(buffer + 1, 2);
@@ -199,10 +205,12 @@ srecord::input_file_intel16::read_inner(record &result)
             //
             // end-of-file record
             //
-            if (nbytes != 0)
+            if (nbytes != 0) {
                 fatal_error("length field must be zero");
-            if (address_field != 0)
+}
+            if (address_field != 0) {
                 fatal_error("address field must be zero");
+}
             end_seen = true;
             seek_to_end();
             return false;
@@ -217,10 +225,12 @@ srecord::input_file_intel16::read_inner(record &result)
             //
             // (Does this make sense for INHX16?)
             //
-            if (nbytes != 2)
+            if (nbytes != 2) {
                 fatal_error("length field must be 1");
-            if (address_field != 0)
+}
+            if (address_field != 0) {
                 fatal_error("address field must be zero");
+}
             address_base = record::decode_big_endian(buffer + 4, 2) << 5;
             mode = segmented;
             continue;
@@ -229,10 +239,12 @@ srecord::input_file_intel16::read_inner(record &result)
             //
             // start segment address record
             //
-            if (nbytes != 4)
+            if (nbytes != 4) {
                 fatal_error("length field must be 4");
-            if (address_field != 0)
+}
+            if (address_field != 0) {
                 fatal_error("address field must be zero");
+}
             address_field =
                 record::decode_big_endian(buffer + 4, 2) * 16 +
                 record::decode_big_endian(buffer + 6, 2);
@@ -241,7 +253,7 @@ srecord::input_file_intel16::read_inner(record &result)
                 (
                     record::type_execution_start_address,
                     address_field << 1,
-                    0,
+                    nullptr,
                     0
                 );
             return true;
@@ -256,10 +268,12 @@ srecord::input_file_intel16::read_inner(record &result)
             //
             // (Does this make sense for INHX16?)
             //
-            if (nbytes != 2)
+            if (nbytes != 2) {
                 fatal_error("length field must be 1");
-            if (address_field != 0)
+}
+            if (address_field != 0) {
                 fatal_error("address field must be zero");
+}
             address_base = record::decode_big_endian(buffer + 4, 2) << 17;
             mode = linear;
             continue;
@@ -268,17 +282,19 @@ srecord::input_file_intel16::read_inner(record &result)
             //
             // start linear address record
             //
-            if (nbytes != 4)
+            if (nbytes != 4) {
                 fatal_error("length field must be 2");
-            if (address_field != 0)
+}
+            if (address_field != 0) {
                 fatal_error("address field must be zero");
+}
             address_field = record::decode_big_endian(buffer + 4, 4);
             result =
                 record
                 (
                     record::type_execution_start_address,
                     address_field << 1,
-                    0,
+                    nullptr,
                     0
                 );
             return true;
@@ -300,17 +316,19 @@ srecord::input_file_intel16::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_intel16::read(record &result)
+auto
+srecord::input_file_intel16::read(record &result) -> bool
 {
     for (;;)
     {
         if (!read_inner(result))
         {
-            if (!seen_some_input && garbage_warning)
+            if (!seen_some_input && garbage_warning) {
                 fatal_error("file contains no data");
-            if (data_record_count <= 0)
+}
+            if (data_record_count <= 0) {
                 fatal_error("file contains no data");
+}
             if (!end_seen)
             {
                 warning("no end-of-file record");
@@ -339,8 +357,9 @@ srecord::input_file_intel16::read(record &result)
             break;
 
         case record::type_execution_start_address:
-            if (termination_seen)
+            if (termination_seen) {
                 warning("redundant execution start address record");
+}
             termination_seen = true;
             break;
         }
@@ -350,17 +369,17 @@ srecord::input_file_intel16::read(record &result)
 }
 
 
-const char *
+auto
 srecord::input_file_intel16::get_file_format_name()
-    const
+    const -> const char *
 {
     return "Intel Hexadecimal 16 (INHX16)";
 }
 
 
-int
-srecord::input_file_intel16::format_option_number(void)
-    const
+auto
+srecord::input_file_intel16::format_option_number()
+    const -> int
 {
     return arglex_tool::token_intel16;
 }

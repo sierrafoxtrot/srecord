@@ -29,7 +29,7 @@
 
 
 static void
-usage(void)
+usage()
 {
     fprintf(stderr, "Usage: [ -av ] %s\n", srecord::progname_get());
     exit(1);
@@ -38,20 +38,20 @@ usage(void)
 
 static const struct option options[] =
 {
-    { "augment", 0, 0, 'a' },
-    { "broken", 0, 0, 'b' },
-    { "ccitt", 0, 0, 'c' },
-    { "help", 0, 0, 'h' },
-    { "polynomial", 1, 0, 'p' },
-    { "reverse", 0, 0, 'r' },
-    { "table", 0, 0, 't' },
-    { "version", 0, 0, 'V' },
-    { "xmodem", 0, 0, 'x' },
+    { "augment", 0, nullptr, 'a' },
+    { "broken", 0, nullptr, 'b' },
+    { "ccitt", 0, nullptr, 'c' },
+    { "help", 0, nullptr, 'h' },
+    { "polynomial", 1, nullptr, 'p' },
+    { "reverse", 0, nullptr, 'r' },
+    { "table", 0, nullptr, 't' },
+    { "version", 0, nullptr, 'V' },
+    { "xmodem", 0, nullptr, 'x' },
 };
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     srecord::progname_set(argv[0]);
     srecord::crc16::seed_mode_t seed_mode = srecord::crc16::seed_mode_ccitt;
@@ -63,9 +63,10 @@ main(int argc, char **argv)
     bool h_flag = false;
     for (;;)
     {
-        int c = getopt_long(argc, argv, "abchp:rtVx", options, 0);
-        if (c == EOF)
+        int c = getopt_long(argc, argv, "abchp:rtVx", options, nullptr);
+        if (c == EOF) {
             break;
+}
         switch (c)
         {
         case 'a':
@@ -86,10 +87,11 @@ main(int argc, char **argv)
 
         case 'p':
             {
-                char *ep = 0;
+                char *ep = nullptr;
                 polynomial = strtol(optarg, &ep, 0);
-                if (ep == optarg || *ep)
+                if (ep == optarg || (*ep != 0)) {
                     polynomial = srecord::crc16::polynomial_by_name(optarg);
+}
             }
             break;
 
@@ -114,8 +116,9 @@ main(int argc, char **argv)
             // NOTREACHED
         }
     }
-    if (optind != argc)
+    if (optind != argc) {
         usage();
+}
 
     srecord::crc16 check(seed_mode, augment, polynomial, bitdir);
     if (print_table)
@@ -127,14 +130,17 @@ main(int argc, char **argv)
     {
         char buffer[1024];
         int n = read(0, buffer, sizeof(buffer));
-        if (n < 0)
+        if (n < 0) {
             srecord::quit_default.fatal_error_errno("read stdin");
-        if (!n)
+}
+        if (n == 0) {
             break;
+}
         if (h_flag)
         {
-            for (int j = 0; j < n; ++j)
+            for (int j = 0; j < n; ++j) {
                 buffer[j] = srecord::bitrev8(buffer[j]);
+}
         }
         check.nextbuf(buffer, n);
     }
@@ -142,9 +148,10 @@ main(int argc, char **argv)
     // The h_flags is use to validate the crc16 least-to-most code.
     // Because that code calculate the CRC bit reversed, we bit reverse
     // here so that we can test for identical-ness.
-    if (h_flag)
+    if (h_flag) {
         printf("0x%04X\n", srecord::bitrev16(check.get()));
-    else
+    } else {
         printf("0x%04X\n", check.get());
+}
     return 0;
 }

@@ -33,12 +33,12 @@ class memory_walker_fletcher16:
     public memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker_fletcher16> pointer;
+    using pointer = std::shared_ptr<memory_walker_fletcher16>;
 
     /**
       * The destructor.
       */
-    virtual ~memory_walker_fletcher16();
+    ~memory_walker_fletcher16() override;
 
 private:
     /**
@@ -80,17 +80,17 @@ public:
       *     The endian-ness of the checksum.  This is needed to
       *     manipulate the answer.  Ignored if answer is ignored.
       */
-    static pointer create(int sum1, int sum2, int answer, endian_t end);
+    static auto create(int sum1, int sum2, int answer, endian_t end) -> pointer;
 
     /**
       * The get method is used to get the Fletcher-16 checksum once all memory
       * chunks have been processed by calls to our #observe method.
       */
-    unsigned get(void) const;
+    auto get() const -> unsigned;
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long address, const void *data, int data_size);
+    void observe(unsigned long address, const void *data, int data_size) override;
 
 private:
     /**
@@ -102,17 +102,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    memory_walker_fletcher16();
+    memory_walker_fletcher16() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_fletcher16(const memory_walker_fletcher16 &);
+    memory_walker_fletcher16(const memory_walker_fletcher16 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_fletcher16 &operator=(const memory_walker_fletcher16 &);
+    auto operator=(const memory_walker_fletcher16 &) -> memory_walker_fletcher16 & = delete;
 };
 
 };

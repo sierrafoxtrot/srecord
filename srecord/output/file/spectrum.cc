@@ -23,8 +23,9 @@
 
 srecord::output_file_spectrum::~output_file_spectrum()
 {
-    if (enable_footer_flag)
+    if (enable_footer_flag) {
         put_char(3);
+}
 }
 
 
@@ -36,8 +37,8 @@ srecord::output_file_spectrum::output_file_spectrum(
 }
 
 
-srecord::output::pointer
-srecord::output_file_spectrum::create(const std::string &a_file_name)
+auto
+srecord::output_file_spectrum::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_spectrum(a_file_name));
 }
@@ -53,9 +54,9 @@ srecord::output_file_spectrum::put_decimal(unsigned long n)
 void
 srecord::output_file_spectrum::put_binary(unsigned char n)
 {
-    for (unsigned char bit = 0x80; bit; bit >>= 1)
+    for (unsigned char bit = 0x80; bit != 0U; bit >>= 1)
     {
-        put_char((n & bit) ? '1' : '0');
+        put_char((n & bit) != 0 ? '1' : '0');
     }
 }
 
@@ -66,8 +67,9 @@ srecord::output_file_spectrum::write(const srecord::record &record)
     switch (record.get_type())
     {
     case srecord::record::type_header:
-        if (enable_header_flag)
+        if (enable_header_flag) {
             put_char(2);
+}
         break;
 
     case srecord::record::type_data:
@@ -107,24 +109,24 @@ srecord::output_file_spectrum::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_spectrum::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_spectrum::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes == 1);
 }
 
 
-int
+auto
 srecord::output_file_spectrum::preferred_block_size_get()
-    const
+    const -> int
 {
     return srecord::record::max_data_length;
 }
 
 
-const char *
+auto
 srecord::output_file_spectrum::format_name()
-    const
+    const -> const char *
 {
     return "Spectrum";
 }

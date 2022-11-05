@@ -23,8 +23,8 @@
 #include <srecord/sizeof.h>
 
 
-const char *
-srecord::text_from_defcon(defcon_t x)
+auto
+srecord::text_from_defcon(defcon_t x) -> const char *
 {
     switch (x)
     {
@@ -62,23 +62,24 @@ static const table_t table[] =
 };
 
 
-static int
-compare(const void *va, const void *vb)
+static auto
+compare(const void *va, const void *vb) -> int
 {
-    const table_t *a = (const table_t *)va;
-    const table_t *b = (const table_t *)vb;
+    const auto *a = (const table_t *)va;
+    const auto *b = (const table_t *)vb;
     return strcmp(a->name, b->name);
 }
 
 
-int
-srecord::defcon_from_text(const char *text)
+auto
+srecord::defcon_from_text(const char *text) -> int
 {
     table_t key = { text, defcon_ignore };
-    table_t *tp =
+    auto *tp =
         (table_t *)
         bsearch(&key, table, SIZEOF(table), sizeof(table_t), compare);
-    if (!tp)
+    if (tp == nullptr) {
         return -1;
+}
     return tp->value;
 }

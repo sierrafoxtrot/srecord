@@ -24,8 +24,9 @@
 srecord::output_file_formatted_binary::~output_file_formatted_binary()
 {
     // assert(address == upper_bound);
-    if (address != upper_bound)
+    if (address != upper_bound) {
         fatal_error("upper bound stuffed");
+}
 
     put_char(0);
     put_char(0);
@@ -42,13 +43,14 @@ srecord::output_file_formatted_binary::output_file_formatted_binary(
     address(0),
     check_sum(0)
 {
-    if (line_termination == line_termination_native)
+    if (line_termination == line_termination_native) {
         line_termination = line_termination_binary;
+}
 }
 
 
-srecord::output::pointer
-srecord::output_file_formatted_binary::create(const std::string &a_file_name)
+auto
+srecord::output_file_formatted_binary::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_formatted_binary(a_file_name));
 }
@@ -58,8 +60,9 @@ void
 srecord::output_file_formatted_binary::notify_upper_bound(unsigned long arg)
 {
     upper_bound = arg;
-    if (upper_bound == 0)
+    if (upper_bound == 0) {
         fatal_error("can't write file with no data");
+}
 }
 
 
@@ -70,9 +73,10 @@ srecord::output_file_formatted_binary::write(const srecord::record &record)
     {
     case srecord::record::type_header:
         // assert(upper bound != 0);
-        if (upper_bound == 0)
+        if (upper_bound == 0) {
             fatal_error("must call srecord::output::notify_upper_bound first");
-        if (upper_bound < (1uL << 16))
+}
+        if (upper_bound < (1UL << 16))
         {
             put_char(0x08); //     *
             put_char(0x1C); //    ***
@@ -117,8 +121,9 @@ srecord::output_file_formatted_binary::write(const srecord::record &record)
             while (length-- > 0)
             {
                 // assert(address < upper_bound);
-                if (address >= upper_bound)
+                if (address >= upper_bound) {
                     fatal_error("upper bound stuffed");
+}
 
                 check_sum += *data;
                 put_char(*data++);
@@ -157,16 +162,16 @@ srecord::output_file_formatted_binary::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_formatted_binary::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_formatted_binary::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes >= 1 || nbytes <= record::max_data_length);
 }
 
 
-int
+auto
 srecord::output_file_formatted_binary::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -175,17 +180,17 @@ srecord::output_file_formatted_binary::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_formatted_binary::format_name()
-    const
+    const -> const char *
 {
     return "Formatted-Binary";
 }
 
 
-bool
-srecord::output_file_formatted_binary::is_binary(void)
-    const
+auto
+srecord::output_file_formatted_binary::is_binary()
+    const -> bool
 {
     return true;
 }

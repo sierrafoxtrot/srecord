@@ -23,7 +23,7 @@
 
 srecord::output_file_mos_tech::~output_file_mos_tech()
 {
-    if (data_record_count && enable_data_count_flag)
+    if ((data_record_count != 0) && enable_data_count_flag)
     {
         put_char(';');
         checksum_reset();
@@ -53,8 +53,8 @@ srecord::output_file_mos_tech::output_file_mos_tech(
 }
 
 
-srecord::output::pointer
-srecord::output_file_mos_tech::create(const std::string &a_file_name)
+auto
+srecord::output_file_mos_tech::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_mos_tech(a_file_name));
 }
@@ -70,16 +70,19 @@ srecord::output_file_mos_tech::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (record.get_length() < 1)
+        if (record.get_length() < 1) {
             return;
-        if (!record.address_range_fits_into_n_bits(16))
+}
+        if (!record.address_range_fits_into_n_bits(16)) {
             data_address_too_large(record, 16);
+}
         put_char(';');
         checksum_reset();
         put_byte(record.get_length());
         put_word_be(record.get_address());
-        for (size_t j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j) {
             put_byte(record.get_data(j));
+}
         put_word_be(checksum_get16());
         put_char('\n');
         ++data_record_count;
@@ -113,17 +116,19 @@ srecord::output_file_mos_tech::line_length_set(int linlen)
     //
     // Constrain based on the file format.
     //
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    else if (n > 255)
+    } else if (n > 255) {
         n = 255;
+}
 
     //
     // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srecord::record::max_data_length)
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
 }
 
@@ -135,27 +140,28 @@ srecord::output_file_mos_tech::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_mos_tech::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_mos_tech::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }
 
 
-int
+auto
 srecord::output_file_mos_tech::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_mos_tech::format_name()
-    const
+    const -> const char *
 {
     return "MOS-Tech";
 }

@@ -22,8 +22,7 @@
 
 
 srecord::input_file_formatted_binary::~input_file_formatted_binary()
-{
-}
+= default;
 
 
 srecord::input_file_formatted_binary::input_file_formatted_binary(
@@ -39,25 +38,26 @@ srecord::input_file_formatted_binary::input_file_formatted_binary(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_formatted_binary::create(const std::string &a_file_name)
+auto
+srecord::input_file_formatted_binary::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_formatted_binary(a_file_name));
 }
 
 
-bool
-srecord::input_file_formatted_binary::read(record &result)
+auto
+srecord::input_file_formatted_binary::read(record &result) -> bool
 {
     if (!header_seen)
     {
         // Skip leading NULs
-        int c;
+        int c = 0;
         for (;;)
         {
             c = get_char();
-            if (c)
+            if (c != 0) {
                 break;
+}
         }
         if (c != 0x08)
         {
@@ -66,43 +66,51 @@ srecord::input_file_formatted_binary::read(record &result)
             // NOTREACHED
         }
         c = get_char();
-        if (c != 0x1C)
+        if (c != 0x1C) {
             goto format_error;
+}
         c = get_char();
         int len = 4;
         if (c == 0x2A)
         {
             c = get_char();
-            if (c != 0x49)
+            if (c != 0x49) {
                 goto format_error;
+}
         }
         else if (c == 0x3E)
         {
             c = get_char();
-            if (c != 0x6B)
+            if (c != 0x6B) {
                 goto format_error;
+}
             len = 8;
         }
-        else
+        else {
             goto format_error;
+}
         c = get_char();
-        if (c != 0x08)
+        if (c != 0x08) {
             goto format_error;
+}
         c = get_char();
-        if (c != 0x00)
+        if (c != 0x00) {
             goto format_error;
+}
         upper_bound = 0;
         while (len > 0)
         {
             c = get_char();
-            if (c < 0 || c >= 16)
+            if (c < 0 || c >= 16) {
                 goto format_error;
+}
             upper_bound = (upper_bound << 4) + c;
             --len;
         }
         c = get_char();
-        if (c != 0xFF)
+        if (c != 0xFF) {
             goto format_error;
+}
         header_seen = true;
         address = 0;
     }
@@ -110,16 +118,20 @@ srecord::input_file_formatted_binary::read(record &result)
     {
         if (!trailer_seen)
         {
-            if (get_char() != 0)
+            if (get_char() != 0) {
                 goto format_error;
-            if (get_char() != 0)
+}
+            if (get_char() != 0) {
                 goto format_error;
+}
             int c1 = get_char();
-            if (c1 < 0)
+            if (c1 < 0) {
                 goto format_error;
+}
             int c2 = get_char();
-            if (c2 < 0)
+            if (c2 < 0) {
                 goto format_error;
+}
             int x = (c1 << 8) + c2;
             if ((check_sum & 0xFFFF) != (x & 0xFFFF))
             {
@@ -134,10 +146,12 @@ srecord::input_file_formatted_binary::read(record &result)
             {
                 // skip trailing NULs
                 int c = get_char();
-                if (c < 0)
+                if (c < 0) {
                     break;
-                if (c != 0)
+}
+                if (c != 0) {
                     goto format_error;
+}
             }
             trailer_seen = true;
         }
@@ -145,14 +159,16 @@ srecord::input_file_formatted_binary::read(record &result)
     }
 
     long datalen = upper_bound - address;
-    if (datalen > record::max_data_length)
+    if (datalen > record::max_data_length) {
         datalen = record::max_data_length;
+}
     unsigned char data[record::max_data_length];
     for (long j = 0; j < datalen; ++j)
     {
         int c = get_char();
-        if (c < 0)
+        if (c < 0) {
             goto format_error;
+}
         data[j] = c;
         check_sum += c;
     }
@@ -162,25 +178,25 @@ srecord::input_file_formatted_binary::read(record &result)
 }
 
 
-bool
-srecord::input_file_formatted_binary::is_binary(void)
-    const
+auto
+srecord::input_file_formatted_binary::is_binary()
+    const -> bool
 {
     return true;
 }
 
 
-const char *
-srecord::input_file_formatted_binary::get_file_format_name(void)
-    const
+auto
+srecord::input_file_formatted_binary::get_file_format_name()
+    const -> const char *
 {
     return "Formatted Binary";
 }
 
 
-int
-srecord::input_file_formatted_binary::format_option_number(void)
-    const
+auto
+srecord::input_file_formatted_binary::format_option_number()
+    const -> int
 {
     return arglex_tool::token_formatted_binary;
 }

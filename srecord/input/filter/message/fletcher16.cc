@@ -23,8 +23,7 @@
 
 
 srecord::input_filter_message_fletcher16::~input_filter_message_fletcher16()
-{
-}
+= default;
 
 
 srecord::input_filter_message_fletcher16::input_filter_message_fletcher16(
@@ -42,10 +41,10 @@ srecord::input_filter_message_fletcher16::input_filter_message_fletcher16(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_message_fletcher16::create(
     const input::pointer &a_deeper, unsigned long a_address,
-    endian_t a_end)
+    endian_t a_end) -> srecord::input::pointer
 {
     return
         pointer
@@ -64,8 +63,9 @@ srecord::input_filter_message_fletcher16::command_line(
         sum1 = 0xFF & cmdln->get_number("sum1");
         sum2 = 0xFF & cmdln->get_number("sum2");
 
-        if (cmdln->token_cur() == arglex::token_number)
+        if (cmdln->token_cur() == arglex::token_number) {
             answer = 0xFFFF & cmdln->get_number("answer");
+}
     }
 }
 
@@ -93,9 +93,9 @@ srecord::input_filter_message_fletcher16::process(const memory &input,
 }
 
 
-const char *
+auto
 srecord::input_filter_message_fletcher16::get_algorithm_name()
-    const
+    const -> const char *
 {
     return "Fletcher-16";
 }

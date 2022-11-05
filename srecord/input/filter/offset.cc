@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_offset::~input_filter_offset()
-{
-}
+= default;
 
 
 srecord::input_filter_offset::input_filter_offset(
@@ -34,19 +33,20 @@ srecord::input_filter_offset::input_filter_offset(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_offset::create(const srecord::input::pointer &a_deeper,
-    long nbytes)
+    long nbytes) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_offset(a_deeper, nbytes));
 }
 
 
-bool
-srecord::input_filter_offset::read(srecord::record &record)
+auto
+srecord::input_filter_offset::read(srecord::record &record) -> bool
 {
-    if (!srecord::input_filter::read(record))
+    if (!srecord::input_filter::read(record)) {
         return false;
+}
     long addr = record.get_address() + nbytes;
 
     //

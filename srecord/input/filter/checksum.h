@@ -39,11 +39,11 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_checksum();
+    ~input_filter_checksum() override;
 
 protected:
     // See bas class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
     /**
       * The constructor.
@@ -63,10 +63,10 @@ protected:
       *     wider, it is assumed that they are aligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    input_filter_checksum(input::pointer deeper, int address,
+    input_filter_checksum(input::pointer a_input_filter, int address,
         int length, endian_t end, int width = 1);
 
-    typedef unsigned long sum_t;
+    using sum_t = unsigned long;
 
     /**
       * The checksum_address instance variable is used to remember where
@@ -103,7 +103,7 @@ protected:
       * The calculate method is used to calculate the checksum to be
       * written into the output, based on the "sum" instance variable.
       */
-    virtual sum_t calculate(void) = 0;
+    virtual auto calculate() -> sum_t = 0;
 
     /**
       * The generate method is used to generate the final data record,
@@ -115,23 +115,23 @@ protected:
       * @returns
       *     bool; false if end-of-file, true if data available
       */
-    bool generate(record &record);
+    auto generate(record &result) -> bool;
 
 private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_checksum();
+    input_filter_checksum() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_checksum(const input_filter_checksum &);
+    input_filter_checksum(const input_filter_checksum &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_checksum &operator=(const input_filter_checksum &);
+    auto operator=(const input_filter_checksum &) -> input_filter_checksum & = delete;
 };
 
 };

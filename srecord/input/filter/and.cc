@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_and::~input_filter_and()
-{
-}
+= default;
 
 
 srecord::input_filter_and::input_filter_and(const input::pointer &a1,
@@ -34,22 +33,24 @@ srecord::input_filter_and::input_filter_and(const input::pointer &a1,
 }
 
 
-srecord::input::pointer
-srecord::input_filter_and::create(const input::pointer &a_deeper, int a_mask)
+auto
+srecord::input_filter_and::create(const input::pointer &a_deeper, int a_mask) -> srecord::input::pointer
 {
     return pointer(new input_filter_and(a_deeper, a_mask));
 }
 
 
-bool
-srecord::input_filter_and::read(record &result)
+auto
+srecord::input_filter_and::read(record &result) -> bool
 {
-    if (!input_filter::read(result))
+    if (!input_filter::read(result)) {
         return false;
+}
     if (result.get_type() == record::type_data)
     {
-        for (size_t j = 0; j < result.get_length(); ++j)
+        for (size_t j = 0; j < result.get_length(); ++j) {
             result.set_data(j, result.get_data(j) & value);
+}
     }
     return true;
 }

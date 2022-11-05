@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_mif();
+    ~input_file_mif() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -45,17 +45,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -135,25 +135,25 @@ private:
       * The lex method is used to obtain the next lexical token from the
       * input stream.
       */
-    token_t lex(void);
+    auto lex() -> token_t;
 
     /**
       * The token_value instance variable is used to remember the
       * numeric value of token_number returns from #lex.
       */
-    long token_value;
+    long token_value{};
 
     /**
       * The lex_addr method is used to obtain the next lexical token
       * from the input stream, using the address radix.
       */
-    token_t lex_addr(void);
+    auto lex_addr() -> token_t;
 
     /**
       * The lex_data method is used to obtain the next lexical token
       * from the input stream, using the data radix.
       */
-    token_t lex_data(void);
+    auto lex_data() -> token_t;
 
     /**
       * The syntax_error method is used to report parse errors when
@@ -164,11 +164,11 @@ private:
       */
     void syntax_error(const char *text);
 
-    void get_equals(void);
-    long get_number(void);
-    void get_semicolon(void);
-    int get_radix(void);
-    void get_colon(void);
+    void get_equals();
+    auto get_number() -> long;
+    void get_semicolon();
+    auto get_radix() -> int;
+    void get_colon();
 
     unsigned width;
     unsigned width_in_bytes;
@@ -176,17 +176,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_mif();
+    input_file_mif() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_mif(const input_file_mif &);
+    input_file_mif(const input_file_mif &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_mif &operator=(const input_file_mif &);
+    auto operator=(const input_file_mif &) -> input_file_mif & = delete;
 };
 
 };

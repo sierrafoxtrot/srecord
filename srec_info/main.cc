@@ -32,12 +32,12 @@
 #include <srecord/string.h>
 
 
-int
-main(int argc, char **argv)
+auto
+main(int argc, char **argv) -> int
 {
     srecord::arglex_tool cmdline(argc, argv);
     cmdline.token_first();
-    typedef std::vector<srecord::input::pointer> infile_t;
+    using infile_t = std::vector<srecord::input::pointer>;
     infile_t infile;
     bool verbose = false;
 
@@ -62,15 +62,16 @@ main(int argc, char **argv)
         }
         cmdline.token_next();
     }
-    if (infile.size() == 0U)
+    if (infile.empty()) {
         infile.push_back(cmdline.get_input());
+}
 
     std::cout << std::hex << std::uppercase;
 
     //
     // Read each file and emit informative gumph.
     //
-    for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
+    for (auto it = infile.begin(); it != infile.end(); ++it)
     {
         srecord::input::pointer ifp = *it;
         if (infile.size() > 1U)
@@ -89,8 +90,9 @@ main(int argc, char **argv)
             {
             case srecord::record::type_header:
                 {
-                    if (record.get_length() < 1U)
+                    if (record.get_length() < 1U) {
                         break;
+}
                     std::cout << "Header: ";
                     std::string s(
                         (const char *)record.get_data(),
@@ -134,10 +136,11 @@ main(int argc, char **argv)
         const uint32_t range_lowest  = range.get_lowest();
         const uint32_t range_highest = range.get_highest();
         int prec = 4;
-        if ((range_highest > (1UL << 24)) || (range_highest == 0UL))
+        if ((range_highest > (1UL << 24)) || (range_highest == 0UL)) {
             prec = 8;
-        else if (range_highest > (1UL << 16))
+        } else if (range_highest > (1UL << 16)) {
             prec = 6;
+}
         std::cout << std::setfill('0');
 
         uint32_t number_bytes = 0UL;
@@ -157,12 +160,12 @@ main(int argc, char **argv)
             }
             const uint32_t lo = tmp.get_lowest();
             const uint32_t hi = tmp.get_highest();
-            const uint32_t hi_address = static_cast<uint32_t>(hi - 1U);
+            const auto hi_address = static_cast<uint32_t>(hi - 1U);
             std::cout
                 << std::setw(prec) << lo
                 << " - "
                 << std::setw(prec) << hi_address;
-            const uint32_t interval_size = static_cast<uint32_t>(hi - lo);
+            const auto interval_size = static_cast<uint32_t>(hi - lo);
             if(verbose)
             {
                 std::cout << " (" << std::setw(prec) << interval_size<< ")";
@@ -171,20 +174,21 @@ main(int argc, char **argv)
 
             number_bytes += interval_size;
             range -= tmp;
-            if (range.empty())
+            if (range.empty()) {
                 break;
+}
         }
 
         if (verbose)
         {
             std::cout << "Filled: ";
-            if (number_bytes == 0UL)
+            if (number_bytes == 0UL) {
                 std::cout << "100000000";
-            else
+            } else {
                 std::cout << std::setw(prec) << number_bytes;
+}
             std::cout << std::endl;
-
-            const uint32_t range_size
+            const auto range_size
                 = static_cast<uint32_t>(range_highest - range_lowest);
             const double real_number_bytes
                 = (number_bytes == 0UL) ? 4294967296.0 : number_bytes;

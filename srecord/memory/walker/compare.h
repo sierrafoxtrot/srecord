@@ -43,12 +43,12 @@ class memory_walker_compare:
     public memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker_compare> pointer;
+    using pointer = std::shared_ptr<memory_walker_compare>;
 
     /**
       * The destructor.
       */
-    virtual ~memory_walker_compare();
+    ~memory_walker_compare() override;
 
 private:
     /**
@@ -61,7 +61,7 @@ private:
       *     Whether or not to check that the data agrees as well as the
       *     address ranges.
       */
-    memory_walker_compare(const memory &other, bool check_wrong);
+    memory_walker_compare(const memory &a1, bool a2);
 
 public:
     /**
@@ -74,10 +74,10 @@ public:
       *     Whether or not to check that the data agrees as well as the
       *     address ranges.
       */
-    static pointer create(const memory &other, bool check_wrong);
+    static auto create(const memory &a1, bool a2) -> pointer;
 
     // See base class for documentation.
-    virtual void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
     /**
       * The print method is used to print the results of the comparison
@@ -92,7 +92,7 @@ public:
       * The same method is used to discover whether the result of the
       * comparison indicate that the two memory instances are the same.
       */
-    bool same() const;
+    auto same() const -> bool;
 
 private:
     /**
@@ -124,17 +124,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    memory_walker_compare();
+    memory_walker_compare() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_compare(const memory_walker_compare &);
+    memory_walker_compare(const memory_walker_compare &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_compare &operator=(const memory_walker_compare &);
+    auto operator=(const memory_walker_compare &) -> memory_walker_compare & = delete;
 };
 
 };

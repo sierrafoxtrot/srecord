@@ -27,15 +27,15 @@ namespace srecord {
   * The string_url_encode function build a new string by adding url
   * quoting ("$FF")
   */
-std::string string_url_encode(const std::string &text);
+auto string_url_encode(const std::string &text) -> std::string;
 
 /**
   * The string_url_decode function build a new string by removing url
   * quoting ("$FF")
   */
-std::string string_url_decode(const std::string &text);
+auto string_url_decode(const std::string &text) -> std::string;
 
-std::string string_quote_c(const std::string &text);
+auto string_quote_c(const std::string &arg) -> std::string;
 
 };
 

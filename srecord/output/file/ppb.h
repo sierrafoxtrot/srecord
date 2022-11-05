@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_ppb();
+    ~output_file_ppb() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -43,29 +43,29 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get(void) const;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    const char *format_name(void) const;
+    auto format_name() const -> const char * override;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    auto is_binary() const -> bool override;
 
 private:
     /**
@@ -88,7 +88,7 @@ private:
       * The buffer instance variable is used to remember the accumulated
       * data bytes to be written to the file.
       */
-    unsigned char buffer[8192];
+    unsigned char buffer[8192]{};
 
     /**
       * The buffer_length instance variable is used to remember how many
@@ -106,7 +106,7 @@ private:
       * The buffer_flush method is used to write out the #buffer_length
       * bytes in the #buffer instance variable.
       */
-    void buffer_flush(void);
+    void buffer_flush();
 
     /**
       * The packet method is used to write out the #buffer as an
@@ -124,22 +124,22 @@ private:
     /**
       * 8-bit checksum a 4 byte sequence.
       */
-    unsigned char sum_ulong(unsigned long value, unsigned char sum);
+    static auto sum_ulong(unsigned long value, unsigned char sum) -> unsigned char;
 
     /**
       * The default constructor.  Do not use.
       */
-    output_file_ppb();
+    output_file_ppb() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_ppb(const output_file_ppb &);
+    output_file_ppb(const output_file_ppb &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_ppb &operator=(const output_file_ppb &);
+    auto operator=(const output_file_ppb &) -> output_file_ppb & = delete;
 };
 
 };

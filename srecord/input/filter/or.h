@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_or();
+    ~input_filter_or() override;
 
 private:
     /**
@@ -48,7 +48,7 @@ private:
       * @param value
       *     The value to be bit-wise ORed with each incoming data byte.
       */
-    input_filter_or(const input::pointer &deeper, int value);
+    input_filter_or(const input::pointer &a1, int a2);
 
 public:
     /**
@@ -60,11 +60,11 @@ public:
       * @param value
       *     The value to be bit-wise ORed with each incoming data byte.
       */
-    static pointer create(const input::pointer &deeper, int value);
+    static auto create(const input::pointer &deeper, int value) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -76,17 +76,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_or();
+    input_filter_or() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_or(const input_filter_or &);
+    input_filter_or(const input_filter_or &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_or &operator=(const input_filter_or &);
+    auto operator=(const input_filter_or &) -> input_filter_or & = delete;
 };
 
 };

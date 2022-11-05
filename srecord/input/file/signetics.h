@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_signetics();
+    ~input_file_signetics() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -45,23 +45,23 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
     /**
       * See base class for documentation.  We over-ride this method
       * because signetics uses its own XOR-ROL checksum algorithm.
       */
-    void checksum_add(unsigned char);
+    void checksum_add(unsigned char) override;
 
 private:
     /**
@@ -71,28 +71,28 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    input_file_signetics(const std::string &file_name);
+    input_file_signetics(const std::string &a_filename);
 
     /**
       * The default constructor.  Do not use.
       */
-    input_file_signetics();
+    input_file_signetics() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_signetics(const input_file_signetics &);
+    input_file_signetics(const input_file_signetics &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_signetics &operator=(const input_file_signetics &);
+    auto operator=(const input_file_signetics &) -> input_file_signetics & = delete;
 
     /**
       * The read_inner method is used to read one line/record from
       * the input.  Used by the `read' method.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * The garbage_warning instance variable is used to remember

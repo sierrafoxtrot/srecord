@@ -27,13 +27,11 @@
 
 
 srecord::output::output()
-{
-}
+= default;
 
 
 srecord::output::~output()
-{
-}
+= default;
 
 
 void
@@ -110,7 +108,7 @@ srecord::output::warning_v(const char *fmt, va_list ap)
 void
 srecord::output::write_header(const srecord::record *rp)
 {
-    if (rp)
+    if (rp != nullptr)
     {
         // Make sure we are writing a header record
         srecord::record record(*rp);
@@ -140,7 +138,7 @@ void
 srecord::output::write_data(unsigned long address, const void *data,
     size_t length)
 {
-    const srecord::record::data_t *data_p =
+    const auto *data_p =
         (const srecord::record::data_t *)data;
     size_t block_size = preferred_block_size_get();
     while (length > 0)
@@ -159,7 +157,7 @@ srecord::output::write_data(unsigned long address, const void *data,
 void
 srecord::output::write_execution_start_address(const srecord::record *rp)
 {
-    if (rp)
+    if (rp != nullptr)
     {
         // Make sure we are writing an execution start address record
         srecord::record record(*rp);
@@ -173,7 +171,7 @@ srecord::output::write_execution_start_address(const srecord::record *rp)
         // If you want to change it, this is the place.
         //
         srecord::record
-            record(srecord::record::type_execution_start_address, 0, 0, 0);
+            record(srecord::record::type_execution_start_address, 0, nullptr, 0);
         write(record);
     }
 }

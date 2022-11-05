@@ -63,7 +63,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_split();
+    ~input_filter_split() override;
 
 private:
     /**
@@ -78,8 +78,8 @@ private:
       * @param width
       *     The width of each stripe within the swathe.
       */
-    input_filter_split(const input::pointer &deeper, int modulus,
-        int offset, int width);
+    input_filter_split(const input::pointer &a1, int a2,
+        int a3, int a4);
 
 public:
     /**
@@ -95,12 +95,12 @@ public:
       * @param width
       *     The width of each stripe within the swathe.
       */
-    static pointer create(const input::pointer &deeper, int modulus,
-        int offset, int width);
+    static auto create(const input::pointer &deeper, int a2,
+        int a3, int a4) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -137,17 +137,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_split();
+    input_filter_split() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_split(const input_filter_split &);
+    input_filter_split(const input_filter_split &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_split &operator=(const input_filter_split &);
+    auto operator=(const input_filter_split &) -> input_filter_split & = delete;
 };
 
 };

@@ -28,8 +28,7 @@
 
 
 srecord::fletcher16::~fletcher16()
-{
-}
+= default;
 
 
 srecord::fletcher16::fletcher16(
@@ -44,31 +43,31 @@ srecord::fletcher16::fletcher16(
     end(a_end)
 {
     // because 0 == 255 mod 255, adjust accordingly
-    if (sum1 == 0xFF)
+    if (sum1 == 0xFF) {
         sum1 = 0;
-    if (sum2 == 0xFF)
+}
+    if (sum2 == 0xFF) {
         sum2 = 0;
+}
     if (answer >= 0)
     {
-        if ((answer & 0x00FF) == 0x00FF)
+        if ((answer & 0x00FF) == 0x00FF) {
             answer &= 0xFF00;
-        if ((answer & 0xFF00) == 0xFF00)
+}
+        if ((answer & 0xFF00) == 0xFF00) {
             answer &= 0x00FF;
+}
     }
 }
 
 
-srecord::fletcher16::fletcher16(const fletcher16 &rhs) :
-    sum1(rhs.sum1),
-    sum2(rhs.sum2),
-    answer(rhs.answer),
-    end(rhs.end)
-{
-}
+srecord::fletcher16::fletcher16(const fletcher16 &rhs) 
+    
+= default;
 
 
-srecord::fletcher16 &
-srecord::fletcher16::operator=(const fletcher16 &rhs)
+auto
+srecord::fletcher16::operator=(const fletcher16 &rhs) -> srecord::fletcher16 &
 {
     if (this != &rhs)
     {
@@ -118,9 +117,9 @@ srecord::fletcher16::nextbuf(const void *vdata, size_t nbytes)
     //   overflow in 16 bits. Any smaller value is also permissible; 16
     //   may be convenient in many cases.
     //
-    const unsigned char *data = (const unsigned char *)vdata;
+    const auto *data = (const unsigned char *)vdata;
     size_t len = nbytes;
-    while (len)
+    while (len != 0U)
     {
         size_t tlen = len > 21 ? 21 : len;
         len -= tlen;
@@ -129,8 +128,9 @@ srecord::fletcher16::nextbuf(const void *vdata, size_t nbytes)
             sum1 += *data++;
             sum2 += sum1;
             --tlen;
-            if (!tlen)
+            if (tlen == 0U) {
                 break;
+}
         }
         sum1 = (sum1 & 0xFF) + (sum1 >> 8);
         sum2 = (sum2 & 0xFF) + (sum2 >> 8);
@@ -141,9 +141,9 @@ srecord::fletcher16::nextbuf(const void *vdata, size_t nbytes)
 }
 
 
-unsigned short
+auto
 srecord::fletcher16::get()
-    const
+    const -> unsigned short
 {
     //
     // An empty "answer" on command line defaults to answer == -1
@@ -159,8 +159,8 @@ srecord::fletcher16::get()
         // bytes of eeprom.  (Note: 0xFF in final byte (f1 or f2) is
         // equivalent to 0x00 due to modulo 255 arithmetic.)
         //
-        unsigned char f2;
-        unsigned char f1;
+        unsigned char f2 = 0;
+        unsigned char f1 = 0;
         if (end == endian_big)
         {
             f1 = answer >> 8;

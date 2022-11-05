@@ -37,7 +37,7 @@ namespace srecord
   * @returns
   *     a string, including the suffix.
   */
-std::string pretty_size(long long x, int width = 0);
+auto pretty_size(long long x, int width = 0) -> std::string;
 
 };
 

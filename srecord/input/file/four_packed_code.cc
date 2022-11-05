@@ -22,8 +22,7 @@
 
 
 srecord::input_file_four_packed_code::~input_file_four_packed_code()
-{
-}
+= default;
 
 
 srecord::input_file_four_packed_code::input_file_four_packed_code(
@@ -37,15 +36,15 @@ srecord::input_file_four_packed_code::input_file_four_packed_code(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_four_packed_code::create(const std::string &a_file_name)
+auto
+srecord::input_file_four_packed_code::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_four_packed_code(a_file_name));
 }
 
 
-int
-srecord::input_file_four_packed_code::get_digit(void)
+auto
+srecord::input_file_four_packed_code::get_digit() -> int
 {
     int c = get_char();
     switch (c)
@@ -142,11 +141,12 @@ srecord::input_file_four_packed_code::get_digit(void)
 }
 
 
-int
-srecord::input_file_four_packed_code::get_byte(void)
+auto
+srecord::input_file_four_packed_code::get_byte() -> int
 {
-    if (get_byte_pos >= 4)
+    if (get_byte_pos >= 4) {
         get_byte_pos = 0;
+}
     if (get_byte_pos == 0)
     {
         get_byte_value = (((get_digit() * 85 + get_digit()) * 85 +
@@ -158,18 +158,21 @@ srecord::input_file_four_packed_code::get_byte(void)
 }
 
 
-bool
-srecord::input_file_four_packed_code::read_inner(srecord::record &record)
+auto
+srecord::input_file_four_packed_code::read_inner(srecord::record &record) -> bool
 {
     for (;;)
     {
         int c = get_char();
-        if (c < 0)
+        if (c < 0) {
             return false;
-        if (c == '$')
+}
+        if (c == '$') {
             break;
-        if (c == '\n')
+}
+        if (c == '\n') {
             continue;
+}
         if (!garbage_warning)
         {
             warning("ignoring garbage lines");
@@ -178,10 +181,12 @@ srecord::input_file_four_packed_code::read_inner(srecord::record &record)
         for (;;)
         {
             c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 return false;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 break;
+}
         }
     }
     checksum_reset();
@@ -191,12 +196,15 @@ srecord::input_file_four_packed_code::read_inner(srecord::record &record)
     switch (length)
     {
     case 0:
-        if (format_code != 0)
+        if (format_code != 0) {
                 fatal_error("format code must be zero");
-        if (get_char() != '\n')
+}
+        if (get_char() != '\n') {
                 fatal_error("end-of-line expected");
-        while (get_char() >= 0)
+}
+        while (get_char() >= 0) {
                 ;
+}
         return false;
 
     case 1:
@@ -232,29 +240,34 @@ srecord::input_file_four_packed_code::read_inner(srecord::record &record)
     }
 
     unsigned char buffer[256];
-    for (int j = 0; j < length; ++j)
+    for (int j = 0; j < length; ++j) {
         buffer[j] = get_byte();
-    if (use_checksums() && checksum_get() != 0)
+}
+    if (use_checksums() && checksum_get() != 0) {
         fatal_error("checksum mismatch");
-    if (get_char() != '\n')
+}
+    if (get_char() != '\n') {
         fatal_error("end-of-line expected");
+}
 
     srecord::record::type_t type = srecord::record::type_data;
-    if (length == 0)
+    if (length == 0) {
         type = srecord::record::type_execution_start_address;
+}
     record = srecord::record(type, address, buffer, length);
     running_address = address + length;
     return true;
 }
 
 
-bool
-srecord::input_file_four_packed_code::read(srecord::record &record)
+auto
+srecord::input_file_four_packed_code::read(srecord::record &record) -> bool
 {
     if (!read_inner(record))
     {
-        if (!seen_some_input && garbage_warning)
+        if (!seen_some_input && garbage_warning) {
             fatal_error("file contains no data");
+}
         return false;
     }
     seen_some_input = true;
@@ -262,17 +275,17 @@ srecord::input_file_four_packed_code::read(srecord::record &record)
 }
 
 
-const char *
-srecord::input_file_four_packed_code::get_file_format_name(void)
-    const
+auto
+srecord::input_file_four_packed_code::get_file_format_name()
+    const -> const char *
 {
     return "Four Packed Code (FPC)";
 }
 
 
-int
-srecord::input_file_four_packed_code::format_option_number(void)
-    const
+auto
+srecord::input_file_four_packed_code::format_option_number()
+    const -> int
 {
     return arglex_tool::token_four_packed_code;
 }

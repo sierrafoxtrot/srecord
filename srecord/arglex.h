@@ -109,7 +109,7 @@ public:
       * @note
       *     This method never returns.
       */
-    void fatal_error(const char *fmt, ...)                  FORMAT_PRINTF(2, 3);
+    static void fatal_error(const char *fmt, ...)                  FORMAT_PRINTF(2, 3);
 
     /**
       * The compare class method is used to compare a command line string
@@ -143,20 +143,20 @@ public:
       * such as "-\\I*", and the partial global variable will have the path
       * in it on return.
       */
-    static bool compare(const char *formal, const char *actual);
+    static auto compare(const char *formal, const char *actual) -> bool;
 
     /**
       * The abbreviate class method is used to take an option's long
       * name, and turn it into the minimum possible string for that
       * option.
       */
-    static std::string abbreviate(const char *text);
+    static auto abbreviate(const char *s) -> std::string;
 
     /**
       * The test_ambiguous method is for debugging.  It verifies that
       * all of the option names are unique.
       */
-    void test_ambiguous(void) const;
+    void test_ambiguous() const;
 
 private:
     /**
@@ -169,7 +169,7 @@ private:
       * The token instance variable tracks the current token in the
       * parse sequence.
       */
-    int token;
+    int token{};
 
     /**
       * The value_string_ instance variable tracks the value of the
@@ -182,14 +182,14 @@ private:
       * of the current command line argument.  Usually zero unless
       * the current command line argument is a number.
       */
-    long value_number_;
+    long value_number_{};
 
     /**
       * The table_ptr_vec_t type is used to declare the 'tables'
       * instance variable.  Also used to simplify the code use to
       * manipulate the 'tables' instance variable.
      */
-    typedef std::vector<const table_ty *> table_ptr_vec_t;
+    using table_ptr_vec_t = std::vector<const table_ty *>;
 
     /**
       * The tables instance variable tracks the command line token
@@ -229,13 +229,13 @@ public:
       * The normal constructor.  The argv and argv should be those
       * passed to main().  Not manipulation is required.
       */
-    arglex(int argc, char **argv);
+    arglex(int ac, char **av);
 
     /**
       * The token_cur method is used to get the type of the current
       * token.
       */
-    int token_cur() const { return token; }
+    auto token_cur() const -> int { return token; }
 
     /**
       * The token_next method is used to advance to the next command
@@ -243,26 +243,26 @@ public:
       * It returns the type of the token; this value may also be
       * fetched using the token_cur method.
       */
-    int token_next(void);
+    auto token_next() -> int;
 
     /**
       * The token_first method is used to fetch the first command
       * like token (rather than use the token_next method).  This does
       * standard "help" and "version" options.
       */
-    int token_first(void);
+    auto token_first() -> int;
 
     /**
       * The value_string method is used to get the string value of
       * the current token.
       */
-    const std::string &value_string() const { return value_string_; }
+    auto value_string() const -> const std::string & { return value_string_; }
 
     /**
       * The value_number method is used to get the numeric value of
       * the current token.
       */
-    long value_number() const { return value_number_; }
+    auto value_number() const -> long { return value_number_; }
 
     /**
       * The token_name method is used to turn a token type number
@@ -271,13 +271,13 @@ public:
       * @param tok
       *     The ID of the token to be named.
       */
-    const char *token_name(int tok) const;
+    auto token_name(int n) const -> const char *;
 
     /**
       * The token_name method is used to obtain the name of the current
       * token.
       */
-    const char *token_name() const { return token_name(token_cur()); }
+    auto token_name() const -> const char * { return token_name(token_cur()); }
 
     /**
       * The usage method is used to print a usage summary.
@@ -288,12 +288,12 @@ public:
     /**
       * The help method is used to print a help message.
       */
-    void help(const char * = 0) const;
+    static void help(const char * = nullptr) ;
 
     /**
       * The version method is used to print a version message.
       */
-    void version() const;
+    static void version() ;
 
     /**
       * The license method is used to print the license conditions
@@ -318,7 +318,7 @@ public:
       * The default_command_line_processing method is used to process
       * command line arguments not handled by the derived class.
       */
-    virtual void default_command_line_processing(void);
+    virtual void default_command_line_processing();
 
 private:
     /**
@@ -332,7 +332,7 @@ private:
       * The usage_tail_get method is used to get the tail end of
       * the command line to be printed by the 'usage' method.
       */
-    const char *usage_tail_get() const;
+    auto usage_tail_get() const -> const char *;
 
     /**
       * The read_arguments_file method is used to process filename
@@ -348,8 +348,8 @@ private:
       */
     void read_arguments_file(const char *filename);
 
-private:
-    typedef std::list<std::string> deprecated_options_t;
+
+    using deprecated_options_t = std::list<std::string>;
 
     /**
       * The deprecated_options instance variable is used to remember the
@@ -377,7 +377,7 @@ protected:
       *     The pattern that is deprecated.  Must be an entry in one of
       *     the tables, otherwise users are going to be VERY confused.
       */
-    void deprecated_option(const std::string &formal_name);
+    void deprecated_option(const std::string &old_fashioned);
 };
 
 };

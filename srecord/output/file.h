@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file();
+    ~output_file() override;
 
     /**
       * The default constructor.
@@ -52,10 +52,10 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    output_file(const std::string &file_name);
+    output_file(std::string file_name);
 
     // See base class for documentation.
-    virtual const std::string filename(void) const;
+    auto filename() const -> const std::string override;
 
     /**
       * The enable_header class method is used to enable or disable
@@ -111,7 +111,7 @@ public:
       *     true if name understood, false if not (to trigger diagnostic
       *     error message)
       */
-    static bool enable_by_name(const std::string &name, bool yesno);
+    static auto enable_by_name(const std::string &name, bool yesno) -> bool;
 
     /**
       * The line_termination_by_name method is used to force line
@@ -124,7 +124,7 @@ public:
       * @returns
       *     true if successful, false if name unknown
       */
-    static bool line_termination_by_name(const std::string &name);
+    static auto line_termination_by_name(const std::string &name) -> bool;
 
 protected:
     /**
@@ -139,7 +139,7 @@ protected:
       * The put_nibble method is used to send a hexadecimal digit (0..9,
       * A..F) to the output.  It calls put_char to send the output.
       */
-    void put_nibble(int value);
+    void put_nibble(int n);
 
     /**
       * The put_byte method is used to send a byte value to the output.
@@ -154,21 +154,21 @@ protected:
       * they have a special case.  Over-ride with caution, as it affects
       * many other methods.
       */
-    virtual void put_byte(unsigned char value);
+    virtual void put_byte(unsigned char n);
 
     /**
       * The put_word_be method is used to send a 16-bit value to the
       * output.  The #put_byte method is called twice, and the two byte
       * values are sent big-endian (most significant byte first).
       */
-    virtual void put_word_be(int value);
+    virtual void put_word_be(int n);
 
     /**
       * The put_word_le method is used to send a 16-bit value to the
       * output.  The #put_byte method is called twice, and the two byte
       * values are sent little-endian (least significant byte first).
       */
-    virtual void put_word_le(int value);
+    virtual void put_word_le(int n);
 
     /**
       * The put_3bytes_be method is used to send a 24-bit value to the
@@ -176,7 +176,7 @@ protected:
       * three byte values are sent big-endian (most significant byte
       * first).
       */
-    virtual void put_3bytes_be(unsigned long value);
+    virtual void put_3bytes_be(unsigned long n);
 
     /**
       * The put_3bytes_le method is used to send a 24-bit value to the
@@ -184,7 +184,7 @@ protected:
       * three byte values are sent little-endian (least significant byte
       * first).
       */
-    virtual void put_3bytes_le(unsigned long value);
+    virtual void put_3bytes_le(unsigned long n);
 
     /**
       * The put_4bytes_be method is used to send a 32-bit value to the
@@ -192,7 +192,7 @@ protected:
       * four byte values are sent big-endian (most significant byte
       * first).
       */
-    virtual void put_4bytes_be(unsigned long value);
+    virtual void put_4bytes_be(unsigned long n);
 
     /**
       * The put_4bytes_le method is used to send a 32-bit value to the
@@ -200,13 +200,13 @@ protected:
       * four byte values are sent little-endian (least significant byte
       * first).
       */
-    virtual void put_4bytes_le(unsigned long value);
+    virtual void put_4bytes_le(unsigned long n);
 
     /**
       * The checksum_reset method is used to set the running checksum to
       * zero.
       */
-    void checksum_reset(void);
+    void checksum_reset();
 
     /**
       * The checksum_add method is used to add another 8-bit value to
@@ -224,7 +224,7 @@ protected:
       * called by the #put_byte method).  Only the lower 8 bits of the
       * sum are returned.
       */
-    int checksum_get(void);
+    auto checksum_get() const -> int;
 
     /**
       * The checksum_get16 method is used to get the current value of
@@ -232,7 +232,7 @@ protected:
       * usually called by the #put_byte method).  Only the lower 16
       * bits of the sum are returned.
       */
-    int checksum_get16(void);
+    auto checksum_get16() const -> int;
 
     /**
       * The seek_to method is used to move the output position to the
@@ -244,7 +244,7 @@ protected:
       * The put_string method is used to send a nul-terminated C string
       * to the output.  Multiple calls to #put_char are made.
       */
-    void put_string(const char *text);
+    void put_string(const char *s);
 
     /**
       * The put_string method is used to send C++ string
@@ -253,7 +253,7 @@ protected:
       * @param text
       *     The string to print.
       */
-    void put_string(const std::string &text);
+    void put_string(const std::string &s);
 
     /**
       * The put_stringf method is used to send a formatted string to the
@@ -331,7 +331,7 @@ protected:
       * The line_termination_guess class method is used to figure out
       * the line termination style of the host environment.
       */
-    static line_termination_t line_termination_guess(void);
+    static auto line_termination_guess() -> line_termination_t;
 
 private:
     /**
@@ -376,7 +376,7 @@ protected:
       * @param alignment
       *     The necessary byte alignment
       */
-    void fatal_alignment_error(int alignment);
+    void fatal_alignment_error(int multiple);
 
     /**
       * The fatal_hole_error method is used to report problems with
@@ -417,7 +417,7 @@ private:
       * to establish whether the output file is a regular file or a
       * special file (like a pipe).
       */
-    void set_is_regular(void);
+    void set_is_regular();
 
     /**
       * The get_fp method is used to get the stdio file pointer
@@ -428,14 +428,14 @@ private:
       * If the file has not been opened yet, it will be opened by this
       * method.
       */
-    void *get_fp(void);
+    auto get_fp() -> void *;
 
     /**
       * The is_binary method is used to to determine whether or not
       * a file format is binary (true) of text (false).  The default
       * implementation always returns false (text).
       */
-    virtual bool is_binary(void) const;
+    virtual auto is_binary() const -> bool;
 
     /**
       * The copy constructor.  Do not use.
@@ -445,7 +445,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    output_file &operator=(const output_file &);
+    auto operator=(const output_file &) -> output_file &;
 };
 
 };

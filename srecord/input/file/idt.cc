@@ -22,8 +22,7 @@
 
 
 srecord::input_file_idt::~input_file_idt()
-{
-}
+= default;
 
 
 srecord::input_file_idt::input_file_idt(
@@ -36,49 +35,56 @@ srecord::input_file_idt::input_file_idt(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_idt::create(const std::string &a_file_name)
+auto
+srecord::input_file_idt::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_idt(a_file_name));
 }
 
 
 void
-srecord::input_file_idt::record_format_error(void)
+srecord::input_file_idt::record_format_error()
 {
     fatal_error("record format error");
 }
 
 
-bool
-srecord::input_file_idt::read_inner(record &result)
+auto
+srecord::input_file_idt::read_inner(record &result) -> bool
 {
     int c = get_char();
-    if (c < 0)
+    if (c < 0) {
         return false;
-    if (c != 'S')
+}
+    if (c != 'S') {
         record_format_error();
+}
     int tag = get_nibble();
-    if (tag < 0)
+    if (tag < 0) {
         record_format_error();
+}
     unsigned char csum = 0;
     int line_length = get_char();
-    if (line_length < 0)
+    if (line_length < 0) {
         record_format_error();
+}
     csum += line_length;
-    if (line_length < 1)
+    if (line_length < 1) {
         fatal_error("line length invalid");
+}
     record::data_t buffer[256];
     for (int j = 0; j < line_length; ++j)
     {
         int c = get_char();
-        if (c < 0)
+        if (c < 0) {
             record_format_error();
+}
         buffer[j] = c;
         csum += c;
     }
-    if (use_checksums() && csum != 0xFF)
+    if (use_checksums() && csum != 0xFF) {
         fatal_error("checksum mismatch (%02X != FF)", csum);
+}
     --line_length;
 
     int naddr = 2;
@@ -124,8 +130,9 @@ srecord::input_file_idt::read_inner(record &result)
         // generates records with 4 address bytes.  We cope
         // with this silently.
         //
-        if (line_length >= 2 && line_length <= 4)
+        if (line_length >= 2 && line_length <= 4) {
             naddr = line_length;
+}
         break;
 
     case 6:
@@ -136,8 +143,9 @@ srecord::input_file_idt::read_inner(record &result)
         // trick, we cope with address size crap the same as S5.
         //
         naddr = 3;
-        if (line_length == 4)
+        if (line_length == 4) {
             naddr = line_length;
+}
         break;
 
     case 7:
@@ -173,15 +181,16 @@ srecord::input_file_idt::read_inner(record &result)
 }
 
 
-bool
-srecord::input_file_idt::read(record &record)
+auto
+srecord::input_file_idt::read(record &record) -> bool
 {
     for (;;)
     {
         if (!read_inner(record))
         {
-            if (!seen_some_input)
+            if (!seen_some_input) {
                 fatal_error("file contains no data");
+}
             return false;
         }
         seen_some_input = true;
@@ -192,7 +201,7 @@ srecord::input_file_idt::read(record &record)
             break;
 
         case record::type_header:
-            if (record.get_address())
+            if (record.get_address() != 0U)
             {
                 warning("address in header record ignored");
                 record.set_address(0);
@@ -212,8 +221,9 @@ srecord::input_file_idt::read(record &record)
             {
                 record::address_t addr = record.get_address();
                 record::address_t mask = 0xFFFF;
-                while (addr > mask)
+                while (addr > mask) {
                     mask = ~(~mask << 8);
+}
                 mask &= data_count;
                 if (addr != mask)
                 {
@@ -241,25 +251,25 @@ srecord::input_file_idt::read(record &record)
 }
 
 
-bool
-srecord::input_file_idt::is_binary(void)
-    const
+auto
+srecord::input_file_idt::is_binary()
+    const -> bool
 {
     return true;
 }
 
 
-const char *
+auto
 srecord::input_file_idt::get_file_format_name()
-    const
+    const -> const char *
 {
     return "IDT System Integration Manager binary";
 }
 
 
-int
-srecord::input_file_idt::format_option_number(void)
-    const
+auto
+srecord::input_file_idt::format_option_number()
+    const -> int
 {
     return arglex_tool::token_idt;
 }

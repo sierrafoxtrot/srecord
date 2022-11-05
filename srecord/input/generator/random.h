@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_generator_random();
+    ~input_generator_random() override;
 
 private:
     /**
@@ -49,33 +49,33 @@ public:
       * The create class method is used to create new dynamically
       * allocated instances of this class.
       */
-    static pointer create(const interval &range);
+    static auto create(const interval &range) -> pointer;
 
 protected:
     // See base class for documentation.
-    std::string filename() const;
+    auto filename() const -> std::string override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    unsigned char generate_data(unsigned long address);
+    auto generate_data(unsigned long address) -> unsigned char override;
 
 private:
     /**
       * The default constructor.  Do not use.
       */
-    input_generator_random();
+    input_generator_random() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_generator_random(const input_generator_random &);
+    input_generator_random(const input_generator_random &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_generator_random &operator=(const input_generator_random &);
+    auto operator=(const input_generator_random &) -> input_generator_random & = delete;
 };
 
 };

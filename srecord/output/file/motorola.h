@@ -40,7 +40,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_motorola();
+    ~output_file_motorola() override;
 
 private:
     /**
@@ -61,29 +61,29 @@ public:
       *     The file name to open to write data to.  The name "-" is
       *     understood to mean the standard output.
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get(void) const;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    const char *format_name(void) const;
+    auto format_name() const -> const char * override;
 
 private:
     /**
@@ -91,20 +91,20 @@ private:
       * number of output data lines have occurred to date.  This is used
       * at the end of the file to emit an S5 record.
       */
-    unsigned long data_count;
+    unsigned long data_count{0};
 
     /**
       * The pref_block_size instance variable is used to remember the
       * preferred number of data bytes (NOT encoded hex characters) to
       * be placed in each output line.
       */
-    int pref_block_size;
+    int pref_block_size{32};
 
     /**
       * The address_length instance variable is used to remember the
       * minimum number of address bytes to be emitted into output lines.
       */
-    int address_length;
+    int address_length{2};
 
     /**
       * The address_shift method is used to remember how far to the left
@@ -116,7 +116,7 @@ private:
       * thought out" because the no way (zero, zip, nada) of discovering
       * this just by looking at the data.
       */
-    int address_shift;
+    int address_shift{0};
 
     /**
       * The data_count_written instance variable is used to remember
@@ -125,13 +125,13 @@ private:
       * are circumstances where it will be needed when the file is
       * closed.
       */
-    bool data_count_written;
+    bool data_count_written{false};
 
     /**
       * The write_data_count method is used to write out a data count
       * record, if one is required.
       */
-    void write_data_count(void);
+    void write_data_count();
 
     /**
       * The write_inner method is used to write a line of output.
@@ -154,12 +154,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_motorola(const output_file_motorola &);
+    output_file_motorola(const output_file_motorola &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_motorola &operator=(const output_file_motorola &);
+    auto operator=(const output_file_motorola &) -> output_file_motorola & = delete;
 };
 
 };

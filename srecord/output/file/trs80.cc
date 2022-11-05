@@ -44,8 +44,8 @@ srecord::output_file_trs80::output_file_trs80(
 }
 
 
-srecord::output::pointer
-srecord::output_file_trs80::create(const std::string &a_file_name)
+auto
+srecord::output_file_trs80::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_trs80(a_file_name));
 }
@@ -71,21 +71,25 @@ srecord::output_file_trs80::write(const srecord::record &record)
             size_t len = record.get_length();
             if (len > 0)
             {
-                if (len > 255)
+                if (len > 255) {
                     len = 255;
+}
                 put_byte(0x05);
                 put_byte(len);
-                for (size_t j = 0; j < len; ++j)
+                for (size_t j = 0; j < len; ++j) {
                     put_byte(record.get_data(j));
+}
             }
         }
         break;
 
     case srecord::record::type_data:
-        if (record.get_length() < 1)
+        if (record.get_length() < 1) {
             return;
-        if (!record.address_range_fits_into_n_bits(16))
+}
+        if (!record.address_range_fits_into_n_bits(16)) {
             data_address_too_large(record, 16);
+}
 
         //
         // Write the data out.
@@ -93,8 +97,9 @@ srecord::output_file_trs80::write(const srecord::record &record)
         put_byte(0x01);
         put_byte((record.get_length() + 2) & 0xFF);
         put_word_le(record.get_address());
-        for (size_t j = 0; j < record.get_length(); ++j)
+        for (size_t j = 0; j < record.get_length(); ++j) {
             put_byte(record.get_data(j));
+}
         break;
 
     case srecord::record::type_data_count:
@@ -131,35 +136,36 @@ srecord::output_file_trs80::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_trs80::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_trs80::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > 256)
+    if (nbytes < 1 || nbytes > 256) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }
 
 
-int
+auto
 srecord::output_file_trs80::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_trs80::format_name()
-    const
+    const -> const char *
 {
     return "TRS80";
 }
 
 
-bool
-srecord::output_file_trs80::is_binary(void)
-    const
+auto
+srecord::output_file_trs80::is_binary()
+    const -> bool
 {
     return true;
 }

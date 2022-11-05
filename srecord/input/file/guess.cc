@@ -60,7 +60,7 @@
 #include <srecord/record.h>
 
 
-typedef srecord::input_file::pointer (*func_p)(const std::string &file_name);
+using func_p = srecord::input_file::pointer (*)(const std::string &);
 
 static func_p table[] =
 {
@@ -102,12 +102,12 @@ static func_p table[] =
     srecord::input_file_hexdump::create,
 };
 
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
+#define SIZEOF(a) (sizeof(a) / sizeof((a)[0]))
 #define ENDOF(a) ((a) + SIZEOF(a))
 
 
-srecord::input_file::pointer
-srecord::input_file::guess(const std::string &fn, arglex &cmdline)
+auto
+srecord::input_file::guess(const std::string &fn, arglex &cmdline) -> srecord::input_file::pointer
 {
     if (fn.empty() || fn == "-")
     {

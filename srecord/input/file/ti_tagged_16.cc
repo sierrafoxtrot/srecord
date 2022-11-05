@@ -17,6 +17,7 @@
 //
 
 #include <cctype>
+#include <cstddef>
 
 #include <srecord/arglex/tool.h>
 #include <srecord/input/file/ti_tagged_16.h>
@@ -24,8 +25,7 @@
 
 
 srecord::input_file_ti_tagged_16::~input_file_ti_tagged_16()
-{
-}
+= default;
 
 
 srecord::input_file_ti_tagged_16::input_file_ti_tagged_16(
@@ -38,27 +38,28 @@ srecord::input_file_ti_tagged_16::input_file_ti_tagged_16(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_ti_tagged_16::create(const std::string &a_file_name)
+auto
+srecord::input_file_ti_tagged_16::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_ti_tagged_16(a_file_name));
 }
 
 
-int
-srecord::input_file_ti_tagged_16::get_char(void)
+auto
+srecord::input_file_ti_tagged_16::get_char() -> int
 {
     int c = inherited::get_char();
-    if (c < 0 || c == '\n')
+    if (c < 0 || c == '\n') {
         csum = 0;
-    else
+    } else {
         csum += c;
+}
     return c;
 }
 
 
-bool
-srecord::input_file_ti_tagged_16::read(record &result)
+auto
+srecord::input_file_ti_tagged_16::read(record &result) -> bool
 {
     for (;;)
     {
@@ -68,7 +69,7 @@ srecord::input_file_ti_tagged_16::read(record &result)
         default:
             fatal_error
             (
-                (isprint(c) ? "unknown tag '%c'" : "unknown tag (%02X)"),
+                (isprint(c) != 0 ? "unknown tag '%c'" : "unknown tag (%02X)"),
                 c
             );
 
@@ -87,8 +88,9 @@ srecord::input_file_ti_tagged_16::read(record &result)
 
         case ':':
             // end of file
-            while (get_char() >= 0)
+            while (get_char() >= 0) {
                 ;
+}
             return false;
 
         case '0':
@@ -98,8 +100,9 @@ srecord::input_file_ti_tagged_16::read(record &result)
                 // 8 char: file name (ascii)
                 // we will ignore
                 get_word_be();
-                for (int n = 0; n < 8; ++n)
+                for (int n = 0; n < 8; ++n) {
                     get_char();
+}
             }
             break;
 
@@ -127,7 +130,7 @@ srecord::input_file_ti_tagged_16::read(record &result)
 
         case '9':
             // load address which represents a word location.
-            address = get_word_be() * 2;
+            address = static_cast<unsigned long>(get_word_be() * )2;
             break;
 
         case 'B':
@@ -142,8 +145,9 @@ srecord::input_file_ti_tagged_16::read(record &result)
 
         case 'F':
             // denotes the end of a data record.
-            if (get_char() != '\n')
+            if (get_char() != '\n') {
                 fatal_error("end of line expected");
+}
             break;
 
         case 'K':
@@ -157,17 +161,20 @@ srecord::input_file_ti_tagged_16::read(record &result)
                 }
                 n -= 5;
                 int max = 250;
-                unsigned char *buffer = new unsigned char [max];
+                auto *buffer = new unsigned char [max];
                 for (int j = 0; j < n; ++j)
                 {
                     c = get_char();
-                    if (c < 0 || c == '\n')
+                    if (c < 0 || c == '\n') {
                             goto bad_desc;
-                    if (j < max)
+}
+                    if (j < max) {
                             buffer[j] = c;
+}
                 }
-                if (n > max)
+                if (n > max) {
                     n = max;
+}
                 result = record(record::type_header, 0, buffer, n);
                 delete [] buffer;
             }
@@ -177,17 +184,17 @@ srecord::input_file_ti_tagged_16::read(record &result)
 }
 
 
-const char *
-srecord::input_file_ti_tagged_16::get_file_format_name(void)
-    const
+auto
+srecord::input_file_ti_tagged_16::get_file_format_name()
+    const -> const char *
 {
     return "Texas Instruments SDSMAC (320)";
 }
 
 
-int
-srecord::input_file_ti_tagged_16::format_option_number(void)
-    const
+auto
+srecord::input_file_ti_tagged_16::format_option_number()
+    const -> int
 {
     return arglex_tool::token_ti_tagged_16;
 }

@@ -32,12 +32,12 @@ class input_file_tektronix_extended:
 {
 public:
     // make the code around gt_nibble more readable.
-    typedef input_file inherited;
+    using inherited = input_file;
 
     /**
       * The destructor.
       */
-    virtual ~input_file_tektronix_extended();
+    ~input_file_tektronix_extended() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -48,20 +48,20 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
     // See base class for documentation.
-    int get_nibble(void);
+    auto get_nibble() -> int override;
 
 private:
     /**
@@ -76,13 +76,13 @@ private:
       * The data_record_count instance variable is used to remember the
       * number of data records seen in the input so far.
       */
-    int data_record_count;
+    int data_record_count{};
 
     /**
       * The read_inner method is used to read a record of input.
       * The read method is a wrapper around this method.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * The garbage_warning instance variable is used to remember
@@ -101,7 +101,7 @@ private:
       * The header_seen instance variable is used to remember whether
       * the header record has been seen yet.
       */
-    bool header_seen;
+    bool header_seen{};
 
     /**
       * The termination_seen instance variable is used to remember
@@ -118,18 +118,18 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_tektronix_extended();
+    input_file_tektronix_extended() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_tektronix_extended(const input_file_tektronix_extended &);
+    input_file_tektronix_extended(const input_file_tektronix_extended &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_tektronix_extended &operator=(
-        const input_file_tektronix_extended &);
+    auto operator=(
+        const input_file_tektronix_extended &) -> input_file_tektronix_extended & = delete;
 };
 
 };

@@ -22,8 +22,7 @@
 
 
 srecord::output_file_binary::~output_file_binary()
-{
-}
+= default;
 
 
 srecord::output_file_binary::output_file_binary(
@@ -31,13 +30,14 @@ srecord::output_file_binary::output_file_binary(
 ) :
     srecord::output_file(a_file_name)
 {
-    if (line_termination == line_termination_native)
+    if (line_termination == line_termination_native) {
         line_termination = line_termination_binary;
+}
 }
 
 
-srecord::output::pointer
-srecord::output_file_binary::create(const std::string &a_file_name)
+auto
+srecord::output_file_binary::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_binary(a_file_name));
 }
@@ -47,13 +47,15 @@ void
 srecord::output_file_binary::write(const srecord::record &record)
 {
     // This format can't do header records or termination records
-    if (record.get_type() != srecord::record::type_data)
+    if (record.get_type() != srecord::record::type_data) {
         return;
+}
     seek_to(record.get_address());
     const unsigned char *data = record.get_data();
     int length = record.get_length();
-    while (length-- > 0)
+    while (length-- > 0) {
         put_char(*data++);
+}
 }
 
 
@@ -75,17 +77,17 @@ srecord::output_file_binary::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_binary::preferred_block_size_set(int)
+auto
+srecord::output_file_binary::preferred_block_size_set(int) -> bool
 {
     // Ignore.
     return true;
 }
 
 
-int
+auto
 srecord::output_file_binary::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -94,17 +96,17 @@ srecord::output_file_binary::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_binary::format_name()
-    const
+    const -> const char *
 {
     return "Binary";
 }
 
 
-bool
-srecord::output_file_binary::is_binary(void)
-    const
+auto
+srecord::output_file_binary::is_binary()
+    const -> bool
 {
     return true;
 }

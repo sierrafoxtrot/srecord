@@ -21,8 +21,7 @@
 
 
 srecord::input_filter_checksum_positive::~input_filter_checksum_positive()
-{
-}
+= default;
 
 
 srecord::input_filter_checksum_positive::input_filter_checksum_positive(
@@ -32,9 +31,9 @@ srecord::input_filter_checksum_positive::input_filter_checksum_positive(
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_checksum_positive::create(const input::pointer &a_deeper,
-    int a2, int a3, endian_t a_end, int a5)
+    int a2, int a3, endian_t a_end, int a5) -> srecord::input::pointer
 {
     return
         pointer
@@ -44,8 +43,8 @@ srecord::input_filter_checksum_positive::create(const input::pointer &a_deeper,
 }
 
 
-srecord::input_filter_checksum::sum_t
-srecord::input_filter_checksum_positive::calculate()
+auto
+srecord::input_filter_checksum_positive::calculate() -> srecord::input_filter_checksum::sum_t
 {
     return sum;
 }

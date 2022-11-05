@@ -22,7 +22,7 @@
 #ifndef SRECORD_OUTPUT_FILE_MSBIN_H
 #define SRECORD_OUTPUT_FILE_MSBIN_H
 
-#include <stdint.h>
+#include <cstdint>
 #include <srecord/output/file.h>
 #include <srecord/record.h>
 #include <vector>
@@ -44,7 +44,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_msbin();
+    ~output_file_msbin() override;
 
 private:
     /**
@@ -64,32 +64,32 @@ public:
       *     The file name to open to write data to.  The name "-" is
       *     understood to mean the standard output.
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    auto format_name() const -> const char * override;
 
     // See base class for documentation.
-    void notify_upper_bound(unsigned long addr);
+    void notify_upper_bound(unsigned long addr) override;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    auto is_binary() const -> bool override;
 
 private:
     /**
@@ -120,7 +120,7 @@ private:
       * @param len
       *     The length of the data to be check-summed.
       */
-    static uint32_t checksum(const unsigned char *data, size_t len);
+    static auto checksum(const unsigned char *data, size_t len) -> uint32_t;
 
     /**
       * The write_file_header method is used to write the file header
@@ -165,7 +165,7 @@ private:
       *     Optional pointer to a record that should be treated as if
       *     it's the last element of pending_records vector.
       */
-    void flush_pending_records(const record *r = NULL);
+    void flush_pending_records(const record *r = nullptr);
 
     /**
       * The append_pending_record handles adding a new record. If the
@@ -201,7 +201,7 @@ private:
       * The upper_bound instance variable is used to remember the upper
       * bound address as received via the #notify_upper_bound method.
       */
-    record::address_t upper_bound;
+    record::address_t upper_bound{};
 
     /**
       * The beginning_of_file instance variable is used to remember
@@ -212,7 +212,7 @@ private:
     /**
       * Type holding copies of records.
       */
-    typedef std::vector<std::shared_ptr<record> > record_vector;
+    using record_vector = std::vector<std::shared_ptr<record>>;
 
     /**
       * The pending_records instance variable is used to keep pending
@@ -225,17 +225,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_msbin();
+    output_file_msbin() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_msbin(const output_file_msbin &);
+    output_file_msbin(const output_file_msbin &) = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_msbin &operator=(const output_file_msbin &);
+    auto operator=(const output_file_msbin &) -> output_file_msbin & = delete;
 };
 
 };

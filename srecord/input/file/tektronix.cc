@@ -39,15 +39,15 @@ srecord::input_file_tektronix::input_file_tektronix(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_tektronix::create(const std::string &a_file_name)
+auto
+srecord::input_file_tektronix::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_tektronix(a_file_name));
 }
 
 
-int
-srecord::input_file_tektronix::get_nibble(void)
+auto
+srecord::input_file_tektronix::get_nibble() -> int
 {
     int n = srecord::input_file::get_nibble();
     checksum_add(n);
@@ -55,8 +55,8 @@ srecord::input_file_tektronix::get_nibble(void)
 }
 
 
-int
-srecord::input_file_tektronix::get_byte(void)
+auto
+srecord::input_file_tektronix::get_byte() -> int
 {
     // this differs from the srecord::input_file method only in that we
     // don't add to the checksum.
@@ -66,18 +66,21 @@ srecord::input_file_tektronix::get_byte(void)
 }
 
 
-bool
-srecord::input_file_tektronix::read_inner(srecord::record &record)
+auto
+srecord::input_file_tektronix::read_inner(srecord::record &record) -> bool
 {
     for (;;)
     {
         int c = get_char();
-        if (c < 0)
+        if (c < 0) {
             return false;
-        if (c == '/')
+}
+        if (c == '/') {
             break;
-        if (c == '\n')
+}
+        if (c == '\n') {
             continue;
+}
         if (!garbage_warning)
         {
             warning("ignoring garbage lines");
@@ -86,10 +89,12 @@ srecord::input_file_tektronix::read_inner(srecord::record &record)
         for (;;)
         {
             c = get_char();
-            if (c < 0)
+            if (c < 0) {
                 return false;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 break;
+}
         }
     }
 
@@ -118,11 +123,12 @@ srecord::input_file_tektronix::read_inner(srecord::record &record)
             buffer[3]
         );
     }
-    if (buffer[2])
+    if (buffer[2] != 0U)
     {
         checksum_reset();
-        for (int j = 0; j < buffer[2]; ++j)
+        for (int j = 0; j < buffer[2]; ++j) {
             buffer[4 + j] = get_byte();
+}
         int data_checksum_calc = checksum_get();
         int data_checksum_file = get_byte();
         if (use_checksums() && data_checksum_calc != data_checksum_file)
@@ -135,8 +141,9 @@ srecord::input_file_tektronix::read_inner(srecord::record &record)
             );
         }
     }
-    if (get_char() != '\n')
+    if (get_char() != '\n') {
         fatal_error("end-of-line expected");
+}
 
     record =
         srecord::record
@@ -156,17 +163,19 @@ srecord::input_file_tektronix::read_inner(srecord::record &record)
 }
 
 
-bool
-srecord::input_file_tektronix::read(srecord::record &record)
+auto
+srecord::input_file_tektronix::read(srecord::record &record) -> bool
 {
     for (;;)
     {
         if (!read_inner(record))
         {
-            if (!seen_some_input && garbage_warning)
+            if (!seen_some_input && garbage_warning) {
                 fatal_error("file contains no data");
-            if (data_record_count <= 0)
+}
+            if (data_record_count <= 0) {
                 fatal_error("file contains no data");
+}
             if (!termination_seen)
             {
                 warning("no execution start address record");
@@ -196,8 +205,9 @@ srecord::input_file_tektronix::read(srecord::record &record)
             break;
 
         case srecord::record::type_execution_start_address:
-            if (termination_seen)
+            if (termination_seen) {
                 warning("redundant execution start address record");
+}
             termination_seen = true;
             break;
         }
@@ -207,17 +217,17 @@ srecord::input_file_tektronix::read(srecord::record &record)
 }
 
 
-const char *
-srecord::input_file_tektronix::get_file_format_name(void)
-    const
+auto
+srecord::input_file_tektronix::get_file_format_name()
+    const -> const char *
 {
     return "Tektronix (16-bit)";
 }
 
 
-int
-srecord::input_file_tektronix::format_option_number(void)
-    const
+auto
+srecord::input_file_tektronix::format_option_number()
+    const -> int
 {
     return arglex_tool::token_tektronix;
 }

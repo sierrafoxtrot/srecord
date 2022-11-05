@@ -37,24 +37,24 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_sequence();
+    ~input_filter_sequence() override;
 
 private:
     /**
       * The constructor.
       */
-    input_filter_sequence(input::pointer deeper);
+    input_filter_sequence(input::pointer arg);
 
 public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
       */
-    static pointer create(input::pointer deeper);
+    static auto create(input::pointer arg) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
 private:
     /**
@@ -79,17 +79,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_sequence();
+    input_filter_sequence() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_sequence(const input_filter_sequence &);
+    input_filter_sequence(const input_filter_sequence &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_sequence &operator=(const input_filter_sequence &);
+    auto operator=(const input_filter_sequence &) -> input_filter_sequence & = delete;
 };
 
 };

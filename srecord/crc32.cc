@@ -89,15 +89,16 @@ calculate_table()
     {
         unsigned long v = b;
         int i = 8;
-        for (; --i >= 0; )
-            v = (v & 1) ? ((v >> 1) ^ POLYNOMIAL) : (v >> 1);
+        for (; --i >= 0; ) {
+            v = (v & 1) != 0U ? ((v >> 1) ^ POLYNOMIAL) : (v >> 1);
+}
         table[b] = v;
     }
 }
 
 
-static unsigned long
-initial_state_from_seed_mode(srecord::crc32::seed_mode_t seed_mode)
+static auto
+initial_state_from_seed_mode(srecord::crc32::seed_mode_t seed_mode) -> unsigned long
 {
     switch (seed_mode)
     {
@@ -114,19 +115,19 @@ initial_state_from_seed_mode(srecord::crc32::seed_mode_t seed_mode)
 srecord::crc32::crc32(seed_mode_t seed_mode) :
     state(initial_state_from_seed_mode(seed_mode))
 {
-    if (!table[1])
+    if (table[1] == 0U) {
         calculate_table();
 }
-
-
-srecord::crc32::crc32(const crc32 &arg) :
-    state(arg.state)
-{
 }
 
 
-srecord::crc32 &
-srecord::crc32::operator=(const crc32 &arg)
+srecord::crc32::crc32(const crc32 &arg) 
+    
+= default;
+
+
+auto
+srecord::crc32::operator=(const crc32 &arg) -> srecord::crc32 &
 {
     if (this != &arg)
     {
@@ -137,12 +138,11 @@ srecord::crc32::operator=(const crc32 &arg)
 
 
 srecord::crc32::~crc32()
-{
-}
+= default;
 
 
-static inline unsigned long
-UPDC32(unsigned char octet, unsigned long crc)
+static inline auto
+UPDC32(unsigned char octet, unsigned long crc) -> unsigned long
 {
     // The original code had this as a #define
     return table[(crc ^ octet) & 0xFF] ^ (crc >> 8);
@@ -159,7 +159,7 @@ srecord::crc32::next(unsigned char x)
 void
 srecord::crc32::nextbuf(const void *data, size_t nbytes)
 {
-    const unsigned char *dp = (const unsigned char *)data;
+    const auto *dp = (const unsigned char *)data;
     while (nbytes > 0)
     {
         state = UPDC32(*dp, state);
@@ -169,9 +169,9 @@ srecord::crc32::nextbuf(const void *data, size_t nbytes)
 }
 
 
-unsigned long
+auto
 srecord::crc32::get()
-    const
+    const -> unsigned long
 {
 #if 1
     return ~state;

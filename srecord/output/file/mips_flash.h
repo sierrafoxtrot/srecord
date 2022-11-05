@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_mips_flash();
+    ~output_file_mips_flash() override;
 
     /**
       * The create_le class method is used to create new dynamically
@@ -45,7 +45,7 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    static pointer create_le(const std::string &file_name);
+    static auto create_le(const std::string &file_name) -> pointer;
 
     /**
       * The create_be class method is used to create new dynamically
@@ -55,26 +55,26 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    static pointer create_be(const std::string &file_name);
+    static auto create_be(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get(void) const;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    const char *format_name(void) const;
+    auto format_name() const -> const char * override;
 
 private:
     /**
@@ -87,7 +87,7 @@ private:
       * @param endian
       *     The byte order to expect.
       */
-    output_file_mips_flash(const std::string &file_name, endian_t endian);
+    output_file_mips_flash(const std::string &a_filename, endian_t endian);
 
     /**
       * The write_inner method is used to write a single line (record)
@@ -125,7 +125,7 @@ private:
       * The buffer instance variable is used to remember the accumulated
       * data so far.  Must be a multiple of 4 bytes long.
       */
-    unsigned char buffer[256];
+    unsigned char buffer[256]{};
 
     /**
       * The buffer_length instance variable is used to remember how many
@@ -138,14 +138,14 @@ private:
       * bytes of data in the #buffer array to the file.  The
       * #buffer_length has been reset to zero on return.
       */
-    void buffer_flush(void);
+    void buffer_flush();
 
     /**
       * The buffer_flush_newline method is used to write the data,
       * using the #buffer_flush method, and then issue a newline if the
       * output is not at the beginning of a new line.
       */
-    void buffer_flush_newline(void);
+    void buffer_flush_newline();
 
     /**
       * The line_length instance variable is used to remember the
@@ -174,7 +174,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_mips_flash &operator=(const output_file_mips_flash &);
+    auto operator=(const output_file_mips_flash &) -> output_file_mips_flash &;
 };
 
 };

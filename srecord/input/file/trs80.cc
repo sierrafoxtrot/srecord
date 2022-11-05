@@ -30,51 +30,51 @@
 srecord::input_file_trs80::~input_file_trs80()
 {
     delete pending;
-    pending = 0;
+    pending = nullptr;
 }
 
 
 srecord::input_file_trs80::input_file_trs80(
     const std::string &a_file_name
 ) :
-    srecord::input_file(a_file_name),
-    termination_seen(false),
-    data_seen(false),
-    pending(0)
+    srecord::input_file(a_file_name)
+    
 {
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_trs80::create(const std::string &a_file_name)
+auto
+srecord::input_file_trs80::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new srecord::input_file_trs80(a_file_name));
 }
 
 
-int
-srecord::input_file_trs80::get_byte(void)
+auto
+srecord::input_file_trs80::get_byte() -> int
 {
     int c = get_char();
-    if (c < 0)
+    if (c < 0) {
         fatal_error("premature end-of-file");
+}
     return c;
 }
 
 
-bool
-srecord::input_file_trs80::read(srecord::record &result)
+auto
+srecord::input_file_trs80::read(srecord::record &result) -> bool
 {
-    if (pending)
+    if (pending != nullptr)
     {
         result = *pending;
         delete pending;
-        pending = 0;
+        pending = nullptr;
         return true;
     }
 
-    if (termination_seen)
+    if (termination_seen) {
         return false;
+}
     for (;;)
     {
         //
@@ -89,11 +89,13 @@ srecord::input_file_trs80::read(srecord::record &result)
         //
         unsigned rec_type = get_byte();
         unsigned payload_size = get_byte();
-        if (rec_type == 0x01 && payload_size <= 2)
+        if (rec_type == 0x01 && payload_size <= 2) {
             payload_size += 256;
+}
         unsigned char payload[258];
-        for (unsigned j = 0; j < payload_size; ++j)
+        for (unsigned j = 0; j < payload_size; ++j) {
             payload[j] = get_byte();
+}
 
         switch (rec_type)
         {
@@ -142,7 +144,7 @@ srecord::input_file_trs80::read(srecord::record &result)
                 }
                 long address = decode_word_le(payload);
                 record::type_t type = record::type_execution_start_address;
-                result = srecord::record(type, address, 0, 0);
+                result = srecord::record(type, address, nullptr, 0);
                 termination_seen = true;
                 return true;
             }
@@ -162,16 +164,18 @@ srecord::input_file_trs80::read(srecord::record &result)
                     unsigned char *op = payload;
                     while (ip < end)
                     {
-                        if (isprint(*ip))
+                        if (isprint(*ip) != 0) {
                             *op++ = *ip;
+}
                         ++ip;
                     }
                     payload_size = op - payload;
                 }
 
                 record::type_t type = record::type_header;
-                if (payload_size > record::max_data_length)
+                if (payload_size > record::max_data_length) {
                     payload_size = record::max_data_length;
+}
                 result = srecord::record(type, address, payload, payload_size);
                 return true;
             }
@@ -191,25 +195,25 @@ srecord::input_file_trs80::read(srecord::record &result)
 }
 
 
-bool
-srecord::input_file_trs80::is_binary(void)
-    const
+auto
+srecord::input_file_trs80::is_binary()
+    const -> bool
 {
     return true;
 }
 
 
-const char *
-srecord::input_file_trs80::get_file_format_name(void)
-    const
+auto
+srecord::input_file_trs80::get_file_format_name()
+    const -> const char *
 {
     return "TRS80";
 }
 
 
-int
-srecord::input_file_trs80::format_option_number(void)
-    const
+auto
+srecord::input_file_trs80::format_option_number()
+    const -> int
 {
     return arglex_tool::token_trs80;
 }

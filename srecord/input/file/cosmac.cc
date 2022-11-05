@@ -22,8 +22,7 @@
 
 
 srecord::input_file_cosmac::~input_file_cosmac()
-{
-}
+= default;
 
 
 srecord::input_file_cosmac::input_file_cosmac(const std::string &a_file_name) :
@@ -35,15 +34,15 @@ srecord::input_file_cosmac::input_file_cosmac(const std::string &a_file_name) :
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_cosmac::create(const std::string &a_file_name)
+auto
+srecord::input_file_cosmac::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_cosmac(a_file_name));
 }
 
 
-bool
-srecord::input_file_cosmac::read(record &result)
+auto
+srecord::input_file_cosmac::read(record &result) -> bool
 {
     for (;;)
     {
@@ -54,8 +53,9 @@ srecord::input_file_cosmac::read(record &result)
             // want another command
             if (c < 0)
             {
-                if (!seen_some_input)
+                if (!seen_some_input) {
                     fatal_error("file contains no data");
+}
                 return false;
             }
             if (c != '!')
@@ -69,8 +69,9 @@ srecord::input_file_cosmac::read(record &result)
 
         case '!':
             // want the 2nd half of "!M"
-            if (c != 'M')
+            if (c != 'M') {
                 goto format_error;
+}
             state = c;
             break;
 
@@ -82,16 +83,18 @@ srecord::input_file_cosmac::read(record &result)
                 state = c;
                 continue;
             }
-            if (c == ' ')
+            if (c == ' ') {
                 continue;
+}
 
             address = 0;
             for (int n = 0; ; ++n)
             {
                 // Check the length of the address.  The RCA Cosmac only
                 // had 16-bit addresses, but we'll allow 32.
-                if (n >= 8)
+                if (n >= 8) {
                     goto format_error;
+}
 
                 get_char_undo(c);
                 address = (address << 4) + get_nibble();
@@ -110,17 +113,21 @@ srecord::input_file_cosmac::read(record &result)
             }
 
         case ';':
-            if (c < 0)
+            if (c < 0) {
                 goto format_error;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 state = 'M';
+}
             break;
 
         case ',':
-            if (c < 0)
+            if (c < 0) {
                 goto format_error;
-            if (c == '\n')
+}
+            if (c == '\n') {
                 state = ' ';
+}
             break;
 
         case ' ':
@@ -140,17 +147,17 @@ srecord::input_file_cosmac::read(record &result)
 }
 
 
-const char *
+auto
 srecord::input_file_cosmac::get_file_format_name()
-    const
+    const -> const char *
 {
     return "RCA Cosmac";
 }
 
 
-int
-srecord::input_file_cosmac::format_option_number(void)
-    const
+auto
+srecord::input_file_cosmac::format_option_number()
+    const -> int
 {
     return arglex_tool::token_cosmac;
 }

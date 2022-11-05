@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_ppx();
+    ~input_file_ppx() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -44,17 +44,17 @@ public:
       * @param filename
       *     The name of the file to be read.
       */
-    static pointer create(const std::string &filename);
+    static auto create(const std::string &filename) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(class record &rec);
+    auto read(class record &result) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -102,7 +102,7 @@ private:
       * It will set the #token_value instance variable for token_byte
       * and token_address
       */
-    void get_next_token(void);
+    void get_next_token();
 
     /**
       * The address instance variable is used to remember the current
@@ -123,7 +123,7 @@ private:
       * The syntax_error method is a convenience wrapper around
       * #fatal_error to complain about syntax errors.
       */
-    void syntax_error(void);
+    void syntax_error();
 
     /**
       * The dsum instance variable is used to remember the simple sum of
@@ -135,7 +135,7 @@ private:
       * The buffer instance variable is used to remember the most recent
       * #buffer_length data bytes read from the file.
       */
-    record::data_t buffer[record::max_data_length];
+    record::data_t buffer[record::max_data_length]{};
 
     /**
       * The buffer_length instance variable is used to remember the
@@ -146,17 +146,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_file_ppx();
+    input_file_ppx() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_ppx(const input_file_ppx &);
+    input_file_ppx(const input_file_ppx &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_ppx &operator=(const input_file_ppx &);
+    auto operator=(const input_file_ppx &) -> input_file_ppx & = delete;
 };
 
 };

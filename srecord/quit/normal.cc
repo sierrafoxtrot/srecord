@@ -27,13 +27,11 @@
 
 
 srecord::quit_normal::~quit_normal()
-{
-}
+= default;
 
 
 srecord::quit_normal::quit_normal()
-{
-}
+= default;
 
 
 void
@@ -58,23 +56,27 @@ srecord::quit_normal::message_v(const char *fmt, va_list ap)
     for (;;)
     {
         unsigned char c = *cp++;
-        if (!c)
+        if (c == 0U) {
             break;
-        if (isspace(c) || !isprint(c))
+}
+        if ((isspace(c) != 0) || (isprint(c) == 0)) {
             continue;
+}
 
         std::string word;
         for (;;)
         {
             word += c;
             c = *cp;
-            if (!c)
+            if (c == 0U) {
                 break;
-            if (isspace(c) || !isprint(c))
+}
+            if ((isspace(c) != 0) || (isprint(c) == 0)) {
                 break;
+}
             ++cp;
         }
-        if (!column)
+        if (column == 0)
         {
             std::cerr << word;
             column = word.size();

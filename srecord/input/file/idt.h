@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_idt();
+    ~input_file_idt() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -45,20 +45,20 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &record) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    auto is_binary() const -> bool override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -79,7 +79,7 @@ private:
       * The read_inner method is used to read a record of input.
       * The read method is a wrapper around this method.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * The seen_some_input instance variable is used to remember where
@@ -91,22 +91,22 @@ private:
       * The record_format_error is a wrapper around #fatal_error to
       * complain abut format errors.
       */
-    void record_format_error(void);
+    void record_format_error();
 
     /**
       * The default constructor.  Do not use.
       */
-    input_file_idt();
+    input_file_idt() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_idt(const input_file_idt &);
+    input_file_idt(const input_file_idt &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_idt &operator=(const input_file_idt &);
+    auto operator=(const input_file_idt &) -> input_file_idt & = delete;
 };
 
 };

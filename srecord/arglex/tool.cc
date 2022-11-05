@@ -256,13 +256,12 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
 
 
 srecord::arglex_tool::~arglex_tool()
-{
-}
+= default;
 
 
-bool
-srecord::arglex_tool::can_get_number(void)
-    const
+auto
+srecord::arglex_tool::can_get_number()
+    const -> bool
 {
     switch (token_cur())
     {
@@ -352,7 +351,7 @@ srecord::arglex_tool::get_address_nbytes_width(const char *name,
 
 
 void
-srecord::arglex_tool::default_command_line_processing(void)
+srecord::arglex_tool::default_command_line_processing()
 {
     switch (token_cur())
     {

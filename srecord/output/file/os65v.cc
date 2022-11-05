@@ -60,8 +60,8 @@ srecord::output_file_os65v::output_file_os65v(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_os65v::create(const std::string &a_file_name)
+auto
+srecord::output_file_os65v::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_os65v(a_file_name));
 }
@@ -77,8 +77,9 @@ srecord::output_file_os65v::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (seen_start_address)
+        if (seen_start_address) {
             fatal_error("more data following execution start address (bug)");
+}
         if
         (
             address != record.get_address()
@@ -154,16 +155,16 @@ srecord::output_file_os65v::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_os65v::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_os65v::preferred_block_size_set(int nbytes) -> bool
 {
     return (nbytes == 1);
 }
 
 
-int
+auto
 srecord::output_file_os65v::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -172,17 +173,17 @@ srecord::output_file_os65v::preferred_block_size_get()
 }
 
 
-const char *
-srecord::output_file_os65v::mode(void)
-    const
+auto
+srecord::output_file_os65v::mode()
+    -> const char *
 {
     return "wb";
 }
 
 
-const char *
+auto
 srecord::output_file_os65v::format_name()
-    const
+    const -> const char *
 {
     return "OS65V";
 }

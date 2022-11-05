@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_ppb();
+    ~input_file_ppb() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -44,20 +44,20 @@ public:
       * @param filename
       *     The name of the file to be read.
       */
-    static pointer create(const std::string &filename);
+    static auto create(const std::string &filename) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(class record &rec);
+    auto read(class record &result) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    auto is_binary() const -> bool override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -93,7 +93,7 @@ private:
       * The packet instance variable is used to remember the most recent
       * #packet_length data bytes read from the file in the most recent packet.
       */
-    record::data_t packet[65536];
+    record::data_t packet[65536]{};
 
     /**
       * The packet_length instance variable is used to remember the
@@ -112,28 +112,28 @@ private:
       * the #packet and #packet_length and #packet_address and
       * #packet_used instance variables.
       */
-    bool get_packet(void);
+    auto get_packet() -> bool;
 
     /**
       * The packet_format_error method is used to issue a #fatal_error
       * message when a packet is malformed.
       */
-    void packet_format_error(void);
+    void packet_format_error();
 
     /**
       * The default constructor.  Do not use.
       */
-    input_file_ppb();
+    input_file_ppb() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_file_ppb(const input_file_ppb &);
+    input_file_ppb(const input_file_ppb &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_ppb &operator=(const input_file_ppb &);
+    auto operator=(const input_file_ppb &) -> input_file_ppb & = delete;
 };
 
 };

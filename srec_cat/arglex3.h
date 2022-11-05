@@ -46,7 +46,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~srec_cat_arglex3();
+    ~srec_cat_arglex3() override;
 
     /**
       * The constructor.
@@ -57,17 +57,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    srec_cat_arglex3();
+    srec_cat_arglex3() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    srec_cat_arglex3(const srec_cat_arglex3 &);
+    srec_cat_arglex3(const srec_cat_arglex3 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    srec_cat_arglex3 &operator=(const srec_cat_arglex3 &);
+    auto operator=(const srec_cat_arglex3 &) -> srec_cat_arglex3 & = delete;
 };
 
 #endif // PROG_SREC_CAT_ARGLEX3_H

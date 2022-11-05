@@ -22,8 +22,7 @@
 
 
 srecord::memory_walker_crc32::~memory_walker_crc32()
-{
-}
+= default;
 
 
 srecord::memory_walker_crc32::memory_walker_crc32(
@@ -33,8 +32,8 @@ srecord::memory_walker_crc32::memory_walker_crc32(
 }
 
 
-srecord::memory_walker_crc32::pointer
-srecord::memory_walker_crc32::create(crc32::seed_mode_t seed_mode)
+auto
+srecord::memory_walker_crc32::create(crc32::seed_mode_t seed_mode) -> srecord::memory_walker_crc32::pointer
 {
     return pointer(new srecord::memory_walker_crc32(seed_mode));
 }
@@ -48,9 +47,9 @@ srecord::memory_walker_crc32::observe(unsigned long, const void *data,
 }
 
 
-unsigned
+auto
 srecord::memory_walker_crc32::get()
-    const
+    const -> unsigned
 {
     return checksum.get();
 }

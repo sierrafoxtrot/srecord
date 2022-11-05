@@ -33,7 +33,7 @@ class record; // forward
 class memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker> pointer;
+    using pointer = std::shared_ptr<memory_walker>;
 
     /**
       * The destructor.
@@ -59,7 +59,7 @@ public:
       * The observe_end method is called once all of the data blocks
       * have been passed to the observer via the observe() method.
       */
-    virtual void observe_end(void);
+    virtual void observe_end();
 
     /**
       * The notify_upper_bound method is used to notify the walker of
@@ -79,7 +79,7 @@ public:
       * @param rec
       *     The record to be processed.
       */
-    virtual void observe_header(const record *rec = 0);
+    virtual void observe_header(const record *rec = nullptr);
 
     /**
       * The observe_start_address method is used to inform the walker
@@ -88,7 +88,7 @@ public:
       * @param rec
       *     The record to be processed.
       */
-    virtual void observe_start_address(const record *rec = 0);
+    virtual void observe_start_address(const record *rec = nullptr);
 
 protected:
     /**
@@ -100,12 +100,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker(const memory_walker &);
+    memory_walker(const memory_walker &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker &operator=(const memory_walker &);
+    auto operator=(const memory_walker &) -> memory_walker & = delete;
 };
 
 };

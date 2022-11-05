@@ -24,8 +24,7 @@
 
 
 srecord::output_file_wilson::~output_file_wilson()
-{
-}
+= default;
 
 
 srecord::output_file_wilson::output_file_wilson(
@@ -34,13 +33,14 @@ srecord::output_file_wilson::output_file_wilson(
     srecord::output_file(a_file_name),
     pref_block_size(32)
 {
-    if (line_termination == line_termination_native)
+    if (line_termination == line_termination_native) {
         line_termination = line_termination_binary;
+}
 }
 
 
-srecord::output::pointer
-srecord::output_file_wilson::create(const std::string &a_file_name)
+auto
+srecord::output_file_wilson::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_wilson(a_file_name));
 }
@@ -96,8 +96,9 @@ srecord::output_file_wilson::write_inner(int tag, unsigned long address,
     //
     // Make sure the line is not too long.
     //
-    if (data_nbytes > 250)
+    if (data_nbytes > 250) {
         fatal_error("data length (%d > 250) too long", data_nbytes);
+}
 
     //
     // Assemble the data for this line.
@@ -106,16 +107,18 @@ srecord::output_file_wilson::write_inner(int tag, unsigned long address,
     int line_length = data_nbytes + 5;
     buffer[0] = line_length;
     srecord::record::encode_big_endian(buffer + 1, address, 4);
-    if (data_nbytes)
+    if (data_nbytes != 0) {
         memcpy(buffer + 5, data, data_nbytes);
+}
 
     //
     // Emit the line as hexadecimal text.
     //
     put_char(tag);
     checksum_reset();
-    for (int j = 0; j < line_length; ++j)
+    for (int j = 0; j < line_length; ++j) {
         put_byte(buffer[j]);
+}
     put_byte(~checksum_get());
     put_char('\n');
 }
@@ -145,8 +148,9 @@ srecord::output_file_wilson::write(const srecord::record &record)
         break;
 
     case srecord::record::type_execution_start_address:
-        if (enable_goto_addr_flag)
-            write_inner('\'', record.get_address(), 0, 0);
+        if (enable_goto_addr_flag) {
+            write_inner('\'', record.get_address(), nullptr, 0);
+}
         break;
 
     case srecord::record::type_unknown:
@@ -175,17 +179,19 @@ srecord::output_file_wilson::line_length_set(int linlen)
     // size (1 byte), thus 250 (255 - 4 - 1) bytes of data is
     // the safest maximum.
     //
-    if (n < 1)
+    if (n < 1) {
         n = 1;
-    else if (n > 250)
+    } else if (n > 250) {
         n = 250;
+}
 
     //
     // An additional constraint is the size of the srecord::record
     // data buffer.
     //
-    if (n > srecord::record::max_data_length)
+    if (n > srecord::record::max_data_length) {
         n = srecord::record::max_data_length;
+}
     pref_block_size = n;
 }
 
@@ -198,37 +204,39 @@ srecord::output_file_wilson::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_wilson::preferred_block_size_set(int nbytes)
+auto
+srecord::output_file_wilson::preferred_block_size_set(int nbytes) -> bool
 {
-    if (nbytes < 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length) {
         return false;
-    if (nbytes > 250)
+}
+    if (nbytes > 250) {
         return false;
+}
     pref_block_size = nbytes;
     return true;
 }
 
 
-int
+auto
 srecord::output_file_wilson::preferred_block_size_get()
-    const
+    const -> int
 {
     return pref_block_size;
 }
 
 
-const char *
+auto
 srecord::output_file_wilson::format_name()
-    const
+    const -> const char *
 {
     return "Wilson";
 }
 
 
-bool
-srecord::output_file_wilson::is_binary(void)
-    const
+auto
+srecord::output_file_wilson::is_binary()
+    const -> bool
 {
     return true;
 }

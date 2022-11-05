@@ -20,27 +20,23 @@
 
 
 srecord::fletcher32::~fletcher32()
-{
-}
+= default;
 
 
-srecord::fletcher32::fletcher32() :
-    sum1(0xFFFF),
-    sum2(0xFFFF)
+srecord::fletcher32::fletcher32() 
+    
 {
     // See notes in the nextbuf() method, below.
 }
 
 
-srecord::fletcher32::fletcher32(const fletcher32 &rhs) :
-    sum1(rhs.sum1),
-    sum2(rhs.sum2)
-{
-}
+srecord::fletcher32::fletcher32(const fletcher32 &rhs) 
+    
+= default;
 
 
-srecord::fletcher32 &
-srecord::fletcher32::operator=(const fletcher32 &rhs)
+auto
+srecord::fletcher32::operator=(const fletcher32 &rhs) -> srecord::fletcher32 &
 {
     if (this != &rhs)
     {
@@ -88,9 +84,9 @@ srecord::fletcher32::nextbuf(const void *vdata, size_t nbytes)
     // overflow.  Any smaller value is also permissible; 256 may be
     // convenient in many cases.
     //
-    const unsigned char *data = (const unsigned char *)vdata;
+    const auto *data = (const unsigned char *)vdata;
     size_t len = nbytes;
-    while (len)
+    while (len != 0U)
     {
         unsigned tlen = len > 360 ? 360 : len;
         len -= tlen;
@@ -99,8 +95,9 @@ srecord::fletcher32::nextbuf(const void *vdata, size_t nbytes)
             sum1 += *data++;
             sum2 += sum1;
             --tlen;
-            if (!tlen)
+            if (tlen == 0U) {
                 break;
+}
         }
         sum1 = (sum1 & 0xFFFF) + (sum1 >> 16);
         sum2 = (sum2 & 0xFFFF) + (sum2 >> 16);
@@ -111,9 +108,9 @@ srecord::fletcher32::nextbuf(const void *vdata, size_t nbytes)
 }
 
 
-unsigned long
+auto
 srecord::fletcher32::get()
-    const
+    const -> unsigned long
 {
     return ((sum2 << 16) | sum1);
 }

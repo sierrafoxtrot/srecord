@@ -91,13 +91,13 @@ public:
     /**
       * The assignment operator.
       */
-    fletcher16 &operator=(const fletcher16 &);
+    auto operator=(const fletcher16 &) -> fletcher16 &;
 
     /**
       * The get method is used to obtain the running value of the cyclic
       * redundancy check.
       */
-    unsigned short get() const;
+    auto get() const -> unsigned short;
 
     /**
       * The next method is used to advance the state by one byte.
@@ -112,7 +112,7 @@ public:
       * @param data_size
       *     The size of the data to be checksummed, in bytes.
       */
-    void nextbuf(const void *data, size_t data_size);
+    void nextbuf(const void *data, size_t nbytes);
 
 private:
     /**

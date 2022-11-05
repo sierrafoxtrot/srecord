@@ -27,10 +27,12 @@
 
 srecord::output_file_basic::~output_file_basic()
 {
-    if (range.empty())
+    if (range.empty()) {
         emit_byte(0xFF);
-    if (column)
+}
+    if (column != 0) {
         put_char('\n');
+}
 
     if (enable_footer_flag)
     {
@@ -55,8 +57,8 @@ srecord::output_file_basic::output_file_basic(const std::string &a_file_name) :
 }
 
 
-srecord::output::pointer
-srecord::output_file_basic::create(const std::string &a_file_name)
+auto
+srecord::output_file_basic::create(const std::string &a_file_name) -> srecord::output::pointer
 {
     return pointer(new srecord::output_file_basic(a_file_name));
 }
@@ -68,12 +70,12 @@ srecord::output_file_basic::emit_byte(int n)
     char buffer[8];
     sprintf(buffer, "%d", (unsigned char)n);
     int len = strlen(buffer);
-    if (column && column + 1 + len > line_length)
+    if ((column != 0) && column + 1 + len > line_length)
     {
         put_char('\n');
         column = 0;
     }
-    if (!column)
+    if (column == 0)
     {
         put_string("DATA ");
         column = 5;
@@ -113,32 +115,38 @@ srecord::output_file_basic::write(const srecord::record &record)
                 bol = true;
                 continue;
             }
-            if (bol)
+            if (bol) {
                 put_string("REM ");
-            if (isprint(c))
+}
+            if (isprint(c) != 0) {
                 put_char(c);
+}
             bol = false;
             }
-            if (!bol)
+            if (!bol) {
             put_char('\n');
+}
         }
         break;
 
     case srecord::record::type_data:
-        if (range.empty())
+        if (range.empty()) {
             current_address = record.get_address();
+}
         range +=
             interval
             (
                 record.get_address(),
                 record.get_address() + record.get_length()
             );
-        while (current_address < record.get_address())
+        while (current_address < record.get_address()) {
             emit_byte(0xFF);
+}
         for (size_t j = 0; j < record.get_length(); ++j)
         {
-            if (record.get_address() + j < current_address)
+            if (record.get_address() + j < current_address) {
                 continue;
+}
             emit_byte(record.get_data(j));
         }
         break;
@@ -164,17 +172,17 @@ srecord::output_file_basic::address_length_set(int)
 }
 
 
-bool
-srecord::output_file_basic::preferred_block_size_set(int)
+auto
+srecord::output_file_basic::preferred_block_size_set(int) -> bool
 {
     // ignore
     return true;
 }
 
 
-int
+auto
 srecord::output_file_basic::preferred_block_size_get()
-    const
+    const -> int
 {
     //
     // Irrelevant.  Use the largest we can get.
@@ -183,9 +191,9 @@ srecord::output_file_basic::preferred_block_size_get()
 }
 
 
-const char *
+auto
 srecord::output_file_basic::format_name()
-    const
+    const -> const char *
 {
     return "Basic";
 }

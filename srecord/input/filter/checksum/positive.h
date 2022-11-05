@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_checksum_positive();
+    ~input_filter_checksum_positive() override;
 
 private:
     /**
@@ -55,8 +55,8 @@ private:
       *     wider, it is assumed that they are aligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    input_filter_checksum_positive(const input::pointer &deeper, int address,
-        int length, endian_t end, int width = 1);
+    input_filter_checksum_positive(const input::pointer &a1, int a2,
+        int a3, endian_t end, int a5 = 1);
 
 public:
     /**
@@ -77,29 +77,29 @@ public:
       *     wider, it is assumed that they are aligned on multiples of
       *     that width, no provision for an offset is provided.
       */
-    static pointer create(const input::pointer &deeper, int address, int length,
-        endian_t end, int width = 1);
+    static auto create(const input::pointer &deeper, int a2, int a3,
+        endian_t end, int a5 = 1) -> pointer;
 
 protected:
     // See base class for documentation.
-    sum_t calculate();
+    auto calculate() -> sum_t override;
 
 private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_checksum_positive();
+    input_filter_checksum_positive() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_checksum_positive(const input_filter_checksum_positive &);
+    input_filter_checksum_positive(const input_filter_checksum_positive &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_checksum_positive &operator=(
-        const input_filter_checksum_positive &);
+    auto operator=(
+        const input_filter_checksum_positive &) -> input_filter_checksum_positive & = delete;
 };
 
 };

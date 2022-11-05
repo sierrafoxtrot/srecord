@@ -16,15 +16,15 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include <cstdio>
 #include <cstdarg>
+#include <cstdio>
+#include <utility>
 
 #include <srecord/quit/prefix.h>
 
 
 srecord::quit_prefix::~quit_prefix()
-{
-}
+= default;
 
 
 srecord::quit_prefix::quit_prefix(quit &a1, const char *a2) :
@@ -34,8 +34,8 @@ srecord::quit_prefix::quit_prefix(quit &a1, const char *a2) :
 }
 
 
-srecord::quit_prefix::quit_prefix(quit &a1, const std::string &a2) :
-    prefix(a2),
+srecord::quit_prefix::quit_prefix(quit &a1, std::string a2) :
+    prefix(std::move(a2)),
     deeper(a1)
 {
 }
@@ -51,7 +51,7 @@ srecord::quit_prefix::exit(int n)
 void
 srecord::quit_prefix::message_v(const char *fmt, va_list ap)
 {
-    if (prefix != "")
+    if (!prefix.empty())
     {
         char buf[1024];
         vsnprintf(buf, sizeof(buf), fmt, ap);
@@ -63,6 +63,7 @@ srecord::quit_prefix::message_v(const char *fmt, va_list ap)
             buf
         );
     }
-    else
+    else {
         deeper.message_v(fmt, ap);
+}
 }

@@ -22,8 +22,7 @@
 
 
 srecord::input_filter_unfill::~input_filter_unfill()
-{
-}
+= default;
 
 
 srecord::input_filter_unfill::input_filter_unfill(
@@ -31,22 +30,22 @@ srecord::input_filter_unfill::input_filter_unfill(
     srecord::input_filter(a1),
     fill_value(a2),
     fill_minimum(a3),
-    buffer(),
+    
     buffer_pos(0)
 {
 }
 
 
-srecord::input::pointer
+auto
 srecord::input_filter_unfill::create(const input::pointer &a_deeper, int a2,
-    int a3)
+    int a3) -> srecord::input::pointer
 {
     return pointer(new srecord::input_filter_unfill(a_deeper, a2, a3));
 }
 
 
-bool
-srecord::input_filter_unfill::read(srecord::record &record)
+auto
+srecord::input_filter_unfill::read(srecord::record &record) -> bool
 {
     for (;;)
     {
@@ -57,8 +56,9 @@ srecord::input_filter_unfill::read(srecord::record &record)
             buffer_pos >= buffer.get_length()
         )
         {
-            if (!srecord::input_filter::read(buffer))
+            if (!srecord::input_filter::read(buffer)) {
                 return false;
+}
             if (buffer.get_type() != srecord::record::type_data)
             {
                 record = buffer;
@@ -81,8 +81,9 @@ srecord::input_filter_unfill::read(srecord::record &record)
             while (buffer_pos < buffer.get_length())
             {
                 c = buffer.get_data(buffer_pos);
-                if (c != fill_value)
+                if (c != fill_value) {
                     break;
+}
                 ++buffer_pos;
             }
             if (buffer_pos - first_pos < fill_minimum)
@@ -106,8 +107,9 @@ srecord::input_filter_unfill::read(srecord::record &record)
             while (buffer_pos < buffer.get_length())
             {
                 c = buffer.get_data(buffer_pos);
-                if (c == fill_value)
+                if (c == fill_value) {
                     break;
+}
                 ++buffer_pos;
             }
             record =

@@ -22,29 +22,32 @@
 #include <srecord/string.h>
 
 
-static char
-nibble(unsigned x)
+static auto
+nibble(unsigned x) -> char
 {
     x &= 0x0F;
-    if (x < 10)
+    if (x < 10) {
         return ('0' + x);
+}
     return (('A' - 10) + x);
 }
 
 
-static bool
-needs_quoting(unsigned char x)
+static auto
+needs_quoting(unsigned char x) -> bool
 {
-    if (x == '%')
+    if (x == '%') {
         return true;
-    if (x >= 0x80)
+}
+    if (x >= 0x80) {
         return true;
-    return !isprint(x);
+}
+    return isprint(x) == 0;
 }
 
 
-std::string
-srecord::string_url_encode(const std::string &text)
+auto
+srecord::string_url_encode(const std::string &text) -> std::string
 {
     const char *begin = text.c_str();
     const char *end = begin + text.size();

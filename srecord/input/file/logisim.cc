@@ -27,8 +27,7 @@
 
 
 srecord::input_file_logisim::~input_file_logisim()
-{
-}
+= default;
 
 
 srecord::input_file_logisim::input_file_logisim(
@@ -41,27 +40,29 @@ srecord::input_file_logisim::input_file_logisim(
 }
 
 
-srecord::input_file::pointer
-srecord::input_file_logisim::create(const std::string &a_file_name)
+auto
+srecord::input_file_logisim::create(const std::string &a_file_name) -> srecord::input_file::pointer
 {
     return pointer(new input_file_logisim(a_file_name));
 }
 
 
-static std::string
-quote_char(int c)
+static auto
+quote_char(int c) -> std::string
 {
-     if (c == EOF)
+     if (c == EOF) {
         return "EOF";
-     if (c == '\0')
+}
+     if (c == '\0') {
         return "\\0";
+}
      char buf[2] = { static_cast<char>(c), '\0' };
      return srecord::string_quote_c(buf);
 }
 
 
 void
-srecord::input_file_logisim::read_inner_one(void)
+srecord::input_file_logisim::read_inner_one()
 {
     char buffer[512];
     char *bp = buffer;
@@ -78,22 +79,24 @@ srecord::input_file_logisim::read_inner_one(void)
             break;
 
         default:
-            if (bp > end)
+            if (bp > end) {
                 fatal_error("line too long");
+}
             *bp++ = c;
             continue;
         }
         break;
     }
     *bp = '\0';
-    if (strcmp(buffer, "v2.0 raw"))
+    if (strcmp(buffer, "v2.0 raw") != 0) {
         fatal_error("bad magic number");
+}
     state = state_line_two;
 }
 
 
 void
-srecord::input_file_logisim::read_inner_two(void)
+srecord::input_file_logisim::read_inner_two()
 {
     bool warned = false;
     for (;;)
@@ -129,16 +132,17 @@ srecord::input_file_logisim::read_inner_two(void)
 
 
 void
-srecord::input_file_logisim::read_inner_job(void)
+srecord::input_file_logisim::read_inner_job()
 {
     char buffer[200];
     char *bp = buffer;
     char *end = buffer + (sizeof(buffer) - 1);
-    char *seen_star = 0;
+    char *seen_star = nullptr;
     for(;;)
     {
-        if (jobs.size() > 20)
+        if (jobs.size() > 20) {
             return;
+}
         int c = get_char();
         switch (c)
         {
@@ -162,11 +166,12 @@ srecord::input_file_logisim::read_inner_job(void)
         case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
         case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
             bp = buffer;
-            seen_star = 0;
+            seen_star = nullptr;
             for (;;)
             {
-                if (bp >= end)
+                if (bp >= end) {
                     fatal_error("datum too long");
+}
                 *bp++ = c;
 
                 c = get_char();
@@ -198,20 +203,22 @@ srecord::input_file_logisim::read_inner_job(void)
 
             // now push it on the back of the jobs list
             {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{
-            if (seen_star)
+            if (seen_star != nullptr)
             {
-                char *ep = 0;
+                char *ep = nullptr;
                 long count = strtol(buffer, &ep, 10);
-                if (buffer == ep || *ep != '*')
+                if (buffer == ep || *ep != '*') {
                     fatal_error("malformed datum");
+}
 
                 // The documentation does not reveal a way to distinguish
                 // 1-byte vs 2-byte or 4-byte items.  Also it
                 // doesn't specify endian-ness.
-                ep = 0;
+                ep = nullptr;
                 unsigned long value = strtoul(seen_star, &ep, 16);
-                if (seen_star == ep || *ep != '\0')
+                if (seen_star == ep || *ep != '\0') {
                     fatal_error("malformed datum");
+}
                 datum_t job(address, count, value);
                 jobs.push_back(job);
                 address += count;
@@ -219,10 +226,11 @@ srecord::input_file_logisim::read_inner_job(void)
             }
 
             // no star
-            char *ep = 0;
+            char *ep = nullptr;
             long n = strtol(buffer, &ep, 16);
-            if (buffer == ep || *ep != '\0')
+            if (buffer == ep || *ep != '\0') {
                 fatal_error("malformed datum");
+}
             datum_t job(address, 1, n);
             jobs.push_back(job);
             ++address;
@@ -233,15 +241,17 @@ srecord::input_file_logisim::read_inner_job(void)
 }
 
 
-bool
-srecord::input_file_logisim::read(class record &rec)
+auto
+srecord::input_file_logisim::read(class record &rec) -> bool
 {
     for (;;)
     {
-        if (state == state_line_one)
+        if (state == state_line_one) {
             read_inner_one();
-        if (state == state_line_two)
+}
+        if (state == state_line_two) {
             read_inner_two();
+}
         assert(state == state_lines_of_data);
 
         // So now we unwrap the run-length encoding
@@ -266,31 +276,32 @@ srecord::input_file_logisim::read(class record &rec)
         }
         read_inner_job();
 
-        if (jobs.empty())
+        if (jobs.empty()) {
             return false;
+}
     }
 }
 
 
-const char *
-srecord::input_file_logisim::get_file_format_name(void)
-    const
+auto
+srecord::input_file_logisim::get_file_format_name()
+    const -> const char *
 {
     return "Logisim";
 }
 
 
-int
-srecord::input_file_logisim::format_option_number(void)
-    const
+auto
+srecord::input_file_logisim::format_option_number()
+    const -> int
 {
     return srecord::arglex_tool::token_logisim;
 }
 
 
-std::string
-srecord::input_file_logisim::datum_t::representation(void)
-    const
+auto
+srecord::input_file_logisim::datum_t::representation()
+    const -> std::string
 {
     char buffer[200];
     snprintf

@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_ti_tagged();
+    ~input_file_ti_tagged() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -45,17 +45,17 @@ public:
       * @returns
       *     smart pointer to new instance
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &result) -> bool override;
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    auto get_file_format_name() const -> const char * override;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    auto format_option_number() const -> int override;
 
 private:
     /**
@@ -64,23 +64,23 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    input_file_ti_tagged(const std::string &file_name);
+    input_file_ti_tagged(const std::string &a_filename);
 
     /**
       * The get_char method is used to get a character from the input.
       * We override bacsie the checksum is character based, not byte
       * based.
       */
-    int get_char(void);
+    auto get_char() -> int override;
 
-private:
-    typedef input_file inherited;
+
+    using inherited = input_file;
 
     /**
       * The read_inner method is used to read a single line of input.
       * the read method is a wrapper around this method.
       */
-    bool read_inner(record &);
+    auto read_inner(record &) -> bool;
 
     /**
       * The address instance variable is used to remember where we are
@@ -107,7 +107,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_ti_tagged &operator=(const input_file_ti_tagged &);
+    auto operator=(const input_file_ti_tagged &) -> input_file_ti_tagged &;
 };
 
 };

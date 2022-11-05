@@ -21,6 +21,7 @@
 #include <cstdio>
 #include <cstring>
 #include <iostream>
+#include <utility>
 
 #include <srecord/input/file.h>
 
@@ -38,19 +39,19 @@ srecord::input_file::input_file() :
 }
 
 
-bool
-srecord::input_file::is_binary(void)
-    const
+auto
+srecord::input_file::is_binary()
+    const -> bool
 {
     return false;
 }
 
 
-srecord::input_file::input_file(const std::string &a_file_name) :
-    file_name(a_file_name),
+srecord::input_file::input_file(std::string a_file_name) :
+    file_name(std::move(a_file_name)),
     line_number(1),
     prev_was_newline(false),
-    vfp(0),
+    vfp(nullptr),
     checksum(0),
     ignore_checksums(ignore_checksums_default)
 {
@@ -70,10 +71,10 @@ srecord::input_file::input_file(const std::string &a_file_name) :
 }
 
 
-void *
-srecord::input_file::get_fp(void)
+auto
+srecord::input_file::get_fp() -> void *
 {
-    if (!vfp)
+    if (vfp == nullptr)
     {
         //
         // The call to fopen is deferred until the constructor has
@@ -87,8 +88,9 @@ srecord::input_file::get_fp(void)
             line_number = 0;
         }
         vfp = fopen(file_name.c_str(), the_mode);
-        if (!vfp)
+        if (vfp == nullptr) {
             fatal_error_errno("open");
+}
     }
     return vfp;
 }
@@ -97,45 +99,50 @@ srecord::input_file::get_fp(void)
 srecord::input_file::~input_file()
 {
     FILE *fp = (FILE *)get_fp();
-    if (fp != stdin && fclose(fp))
+    if (fp != stdin && (fclose(fp) != 0)) {
         fatal_error_errno("close");
+}
 }
 
 
-std::string
-srecord::input_file::filename(void)
-    const
+auto
+srecord::input_file::filename()
+    const -> std::string
 {
     return file_name;
 }
 
 
-std::string
-srecord::input_file::filename_and_line(void)
-    const
+auto
+srecord::input_file::filename_and_line()
+    const -> std::string
 {
-    if (!vfp)
+    if (vfp == nullptr) {
         return file_name;
+}
     char buffer[20];
-    if (!is_binary())
+    if (!is_binary()) {
         sprintf(buffer, ": %d", line_number);
-    else
+    } else {
         sprintf(buffer, ": 0x%04X", line_number);
+}
     return (file_name + buffer);
 }
 
 
-int
-srecord::input_file::get_char(void)
+auto
+srecord::input_file::get_char() -> int
 {
     FILE *fp = (FILE *)get_fp();
-    if (prev_was_newline)
+    if (prev_was_newline) {
         ++line_number;
+}
     int c = getc(fp);
     if (c == EOF)
     {
-        if (ferror(fp))
+        if (ferror(fp) != 0) {
             fatal_error_errno("read");
+}
 
         //
         // If this is a text file, but the last character wasn't
@@ -152,8 +159,9 @@ srecord::input_file::get_char(void)
         c = getc(fp);
         if (c == EOF)
         {
-            if (ferror(fp))
+            if (ferror(fp) != 0) {
                 fatal_error_errno("read");
+}
             c = '\r';
         }
         else if (c != '\n')
@@ -162,8 +170,9 @@ srecord::input_file::get_char(void)
             c = '\r';
         }
     }
-    if (is_binary() && c >= 0)
+    if (is_binary() && c >= 0) {
         ++line_number;
+}
     prev_was_newline = (!is_binary() && c == '\n');
     return c;
 }
@@ -176,32 +185,35 @@ srecord::input_file::get_char_undo(int c)
     {
         FILE *fp = (FILE *)get_fp();
         prev_was_newline = false;
-        if (is_binary())
+        if (is_binary()) {
             --line_number;
+}
         ungetc(c, fp);
     }
 }
 
 
-int
-srecord::input_file::peek_char(void)
+auto
+srecord::input_file::peek_char() -> int
 {
     FILE *fp = (FILE *)get_fp();
     int c = getc(fp);
     if (c == EOF)
     {
-        if (ferror(fp))
+        if (ferror(fp) != 0) {
             fatal_error_errno("read");
+}
         c = -1;
     }
-    else
+    else {
         ungetc(c, fp);
+}
     return c;
 }
 
 
-int
-srecord::input_file::get_nibble_value(int c)
+auto
+srecord::input_file::get_nibble_value(int c) -> int
 {
     switch (c)
     {
@@ -219,19 +231,20 @@ srecord::input_file::get_nibble_value(int c)
 }
 
 
-int
-srecord::input_file::get_nibble(void)
+auto
+srecord::input_file::get_nibble() -> int
 {
     int c = get_char();
     int n = get_nibble_value(c);
-    if (n < 0)
+    if (n < 0) {
         fatal_error("hexadecimal digit expected");
+}
     return n;
 }
 
 
-int
-srecord::input_file::get_byte(void)
+auto
+srecord::input_file::get_byte() -> int
 {
     int c1 = get_nibble();
     int c2 = get_nibble();
@@ -241,8 +254,8 @@ srecord::input_file::get_byte(void)
 }
 
 
-unsigned
-srecord::input_file::get_word_be(void)
+auto
+srecord::input_file::get_word_be() -> unsigned
 {
     int b1 = get_byte();
     int b2 = get_byte();
@@ -250,8 +263,8 @@ srecord::input_file::get_word_be(void)
 }
 
 
-unsigned
-srecord::input_file::get_word_le(void)
+auto
+srecord::input_file::get_word_le() -> unsigned
 {
     int b1 = get_byte();
     int b2 = get_byte();
@@ -259,8 +272,8 @@ srecord::input_file::get_word_le(void)
 }
 
 
-unsigned long
-srecord::input_file::get_3bytes_be(void)
+auto
+srecord::input_file::get_3bytes_be() -> unsigned long
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -269,8 +282,8 @@ srecord::input_file::get_3bytes_be(void)
 }
 
 
-unsigned long
-srecord::input_file::get_3bytes_le(void)
+auto
+srecord::input_file::get_3bytes_le() -> unsigned long
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -279,8 +292,8 @@ srecord::input_file::get_3bytes_le(void)
 }
 
 
-unsigned long
-srecord::input_file::get_4bytes_be(void)
+auto
+srecord::input_file::get_4bytes_be() -> unsigned long
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -290,8 +303,8 @@ srecord::input_file::get_4bytes_be(void)
 }
 
 
-unsigned long
-srecord::input_file::get_4bytes_le(void)
+auto
+srecord::input_file::get_4bytes_le() -> unsigned long
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -301,24 +314,24 @@ srecord::input_file::get_4bytes_le(void)
 }
 
 
-int
-srecord::input_file::checksum_get(void)
-    const
+auto
+srecord::input_file::checksum_get()
+    const -> int
 {
     return (checksum & 0xFF);
 }
 
 
-int
-srecord::input_file::checksum_get16(void)
-    const
+auto
+srecord::input_file::checksum_get16()
+    const -> int
 {
     return (checksum & 0xFFFF);
 }
 
 
 void
-srecord::input_file::checksum_reset(void)
+srecord::input_file::checksum_reset()
 {
     checksum = 0;
 }
@@ -332,7 +345,7 @@ srecord::input_file::checksum_add(unsigned char n)
 
 
 void
-srecord::input_file::seek_to_end(void)
+srecord::input_file::seek_to_end()
 {
     FILE *fp = (FILE *)get_fp();
     fseek(fp, 0L, SEEK_END);
@@ -340,7 +353,7 @@ srecord::input_file::seek_to_end(void)
 
 
 void
-srecord::input_file::disable_checksum_validation(void)
+srecord::input_file::disable_checksum_validation()
 {
     ignore_checksums = true;
 }

@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_fairchild();
+    ~output_file_fairchild() override;
 
 private:
     /**
@@ -56,26 +56,26 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &file_name) -> pointer;
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    auto format_name() const -> const char * override;
 
 private:
     /**
@@ -90,7 +90,7 @@ private:
       * We override the one in the base class because the checksum is
       * nibble-based, not byte-based.
       */
-    void put_byte(unsigned char);
+    void put_byte(unsigned char) override;
 
     /**
       * The address instance variable is used to remember the current
@@ -101,17 +101,17 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    output_file_fairchild();
+    output_file_fairchild() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    output_file_fairchild(const output_file_fairchild &);
+    output_file_fairchild(const output_file_fairchild &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_fairchild &operator=(const output_file_fairchild &);
+    auto operator=(const output_file_fairchild &) -> output_file_fairchild & = delete;
 };
 
 };

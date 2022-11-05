@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_message_adler32();
+    ~input_filter_message_adler32() override;
 
 private:
     /**
@@ -66,15 +66,15 @@ public:
       * @param end
       *     The byte order.
       */
-    static pointer create(const input::pointer &deeper,
-        unsigned long address, endian_t end);
+    static auto create(const input::pointer &deeper,
+        unsigned long address, endian_t end) -> pointer;
 
 protected:
     // See base class for documentation.
-    void process(const memory &input, record &output);
+    void process(const memory &input, record &output) override;
 
     // See base class for documentation.
-    const char *get_algorithm_name() const;
+    auto get_algorithm_name() const -> const char * override;
 
 private:
     /**
@@ -92,19 +92,19 @@ private:
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_message_adler32();
+    input_filter_message_adler32() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
     input_filter_message_adler32(
-        const input_filter_message_adler32 &);
+        const input_filter_message_adler32 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_filter_message_adler32 &operator=(
-        const input_filter_message_adler32 &);
+    auto operator=(
+        const input_filter_message_adler32 &) -> input_filter_message_adler32 & = delete;
 };
 
 };

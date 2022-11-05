@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_fastload();
+    ~output_file_fastload() override;
 
 private:
     /**
@@ -47,7 +47,7 @@ private:
       * @param file_name
       *     The name of the file to be written.
       */
-    output_file_fastload(const std::string &file_name);
+    output_file_fastload(const std::string &a_filename);
 
 public:
     /**
@@ -59,26 +59,26 @@ public:
       * @param file_name
       *     The name of the file to be written.
       */
-    static pointer create(const std::string &file_name);
+    static auto create(const std::string &a_filename) -> pointer;
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    auto preferred_block_size_get() const -> int override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    auto preferred_block_size_set(int nbytes) -> bool override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    auto format_name() const -> const char * override;
 
 private:
     /**
@@ -132,7 +132,7 @@ private:
       * The put_number method is used to write the given value to the
       * output in base-64 (big endian) notation.
       */
-    void put_number(unsigned long value, int ndigits);
+    void put_number(unsigned long n, int min_digits);
 
     /**
       * The put_command method is used to write a command to the file,
@@ -153,7 +153,7 @@ private:
     /**
       * The assignment operator.  Do not use.
       */
-    output_file_fastload &operator=(const output_file_fastload &);
+    auto operator=(const output_file_fastload &) -> output_file_fastload &;
 };
 
 };

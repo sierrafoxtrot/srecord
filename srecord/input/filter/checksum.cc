@@ -36,27 +36,29 @@ srecord::input_filter_checksum::input_filter_checksum(
     sum(0),
     width(a_width)
 {
-    if (length < 0)
+    if (length < 0) {
         length = 0;
-    else if (length > (int)sizeof(sum_t))
+    } else if (length > (int)sizeof(sum_t)) {
         length = sizeof(sum_t);
-    if (width < 1)
+}
+    if (width < 1) {
         width = 1;
-    else if (width > length)
+    } else if (width > length) {
         width = length;
+}
 }
 
 
 srecord::input_filter_checksum::~input_filter_checksum()
-{
-}
+= default;
 
 
-bool
-srecord::input_filter_checksum::generate(record &result)
+auto
+srecord::input_filter_checksum::generate(record &result) -> bool
 {
-    if (length <= 0)
+    if (length <= 0) {
         return false;
+}
     unsigned char chunk[sizeof(sum_t)];
     sum_t value = calculate();
     record::encode(chunk, value, length, end);
@@ -66,11 +68,12 @@ srecord::input_filter_checksum::generate(record &result)
 }
 
 
-bool
-srecord::input_filter_checksum::read(record &record)
+auto
+srecord::input_filter_checksum::read(record &record) -> bool
 {
-    if (!input_filter::read(record))
+    if (!input_filter::read(record)) {
         return generate(record);
+}
     if (record.get_type() == record::type_data)
     {
         if (width <= 1)

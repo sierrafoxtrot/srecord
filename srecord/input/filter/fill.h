@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_fill();
+    ~input_filter_fill() override;
 
 private:
     /**
@@ -50,8 +50,8 @@ private:
       * @param range
       *     The address range to be filled.
       */
-    input_filter_fill(const input::pointer &deeper, int value,
-        const interval &range);
+    input_filter_fill(const input::pointer &a1, int a2,
+        const interval &a3);
 
 public:
     /**
@@ -65,12 +65,12 @@ public:
       * @param range
       *     The address range to be filled.
       */
-    static pointer create(const input::pointer &deeper, int value,
-        const interval &range);
+    static auto create(const input::pointer &deeper, int value,
+        const interval &range) -> pointer;
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    auto read(record &result) -> bool override;
 
 private:
     /**
@@ -96,22 +96,22 @@ private:
     /**
       * The generate method is used to generate fill records.
       */
-    bool generate(record &record);
+    auto generate(record &result) -> bool;
 
     /**
       * The default constructor.  Do not use.
       */
-    input_filter_fill();
+    input_filter_fill() = delete;
 
     /**
       * The copy constructor.  Do not use.
       */
-    input_filter_fill(const input_filter_fill &);
+    input_filter_fill(const input_filter_fill &) = delete;
 
     /**
       * The assignment.  Do not use.
       */
-    input_filter_fill &operator=(const input_filter_fill &);
+    auto operator=(const input_filter_fill &) -> input_filter_fill & = delete;
 };
 
 };

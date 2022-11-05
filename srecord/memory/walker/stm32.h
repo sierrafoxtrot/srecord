@@ -46,29 +46,29 @@ class memory_walker_stm32:
     public memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker_stm32> pointer;
+    using pointer = std::shared_ptr<memory_walker_stm32>;
 
     /**
       * The destructor.
       */
-    virtual ~memory_walker_stm32();
+    ~memory_walker_stm32() override;
 
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
       */
-    static pointer create(void);
+    static auto create() -> pointer;
 
     /**
       * The get method is used to get the CRC32 (STM32) checksum once
       * all memory chunks have been processed by calls to our observe
       * method.
       */
-    unsigned get(void) const;
+    auto get() const -> unsigned;
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
 private:
     /**
@@ -86,12 +86,12 @@ private:
     /**
       * The copy constructor.  Do not use.
       */
-    memory_walker_stm32(const memory_walker_stm32 &);
+    memory_walker_stm32(const memory_walker_stm32 &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    memory_walker_stm32 &operator=(const memory_walker_stm32 &);
+    auto operator=(const memory_walker_stm32 &) -> memory_walker_stm32 & = delete;
 };
 
 };
