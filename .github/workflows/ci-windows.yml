@@ -1,0 +1,59 @@
+---
+name: CI-Windows
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: MSYS2 Build and Test
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - sys: mingw64
+            env: x86_64
+          - sys: mingw32
+            env: i686
+          - sys: ucrt64
+            env: ucrt-x86_64
+
+    steps:
+      - name: Install prerequisites
+        uses: msys2/setup-msys2@v2
+        with:
+          # cSpell:ignore msystem
+          msystem: ${{ matrix.sys }}
+          install: >-
+            mingw-w64-${{ matrix.env }}-libgcrypt
+            mingw-w64-${{ matrix.env }}-gcc
+            mingw-w64-${{ matrix.env }}-cmake
+            mingw-w64-${{ matrix.env }}-ninja
+            mingw-w64-${{ matrix.env }}-doxygen
+            mingw-w64-${{ matrix.env }}-graphviz
+            diffutils
+
+      - uses: actions/checkout@v3
+
+      - name: Configure
+        run: cmake -G Ninja -S . -B build
+
+      - name: Build
+        working-directory: build
+        run: ninja srecord-executables
+
+      - name: Smoke test
+        working-directory: build
+        run: ninja srecord-executables-version
+
+      - name: Build test prerequisites
+        working-directory: build
+        run: ninja prepare-test
+
+      - name: Test
+        working-directory: build
+        run: ctest --output-on-failure --output-junit ctest.junit.xml

@@ -29,6 +29,7 @@ dg1yfe
 DJGPP
 Doxygen
 dpkg
+diffutils
 Dragonball
 Elektor
 Elektuur
@@ -133,6 +134,7 @@ Torsten
 Tridge
 troff
 TRSDOS
+ucrt
 Uncia
 uudecode
 Verilog

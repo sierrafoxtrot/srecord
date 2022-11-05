@@ -1,0 +1,38 @@
+---
+name: CI-MacOS
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: macos-latest
+
+    steps:
+      - name: Install prerequisites
+        run: >-
+          brew install
+          libgcrypt
+          ninja
+          doxygen
+          graphviz
+
+      - uses: actions/checkout@v3
+
+      - name: Configure
+        run: cmake -G Ninja -S . -B build
+
+      - name: Build
+        working-directory: build
+        run: ninja srecord-executables
+
+      - name: Smoke test
+        working-directory: build
+        run: ninja srecord-executables-version
+
+      - name: Build test prerequisites
+        working-directory: build
+        run: ninja prepare-test
+
+      - name: Test
+        working-directory: build
+        run: ctest --output-on-failure --output-junit ctest.junit.xml

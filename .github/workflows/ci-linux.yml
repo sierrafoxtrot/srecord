@@ -1,0 +1,54 @@
+---
+name: CI-Linux
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04]
+        compiler:
+          - gcc-9
+          - gcc-10
+          - gcc-11
+          - clang-12
+          - clang-13
+          - clang-14
+
+    steps:
+      - name: Install prerequisites
+        run: >-
+          sudo apt-get install -y
+          libgcrypt20-dev
+          ${{ matrix.compiler }}
+          cmake
+          ninja-build
+          doxygen
+          graphviz
+
+      - uses: actions/checkout@v3
+
+      - name: Configure
+        run: |
+          export CXX=$(echo ${{ matrix.compiler }} | sed -E 's/^(g|clang)(cc)?/\1++/')
+          cmake -G Ninja -S . -B build
+
+      - name: Build
+        working-directory: build
+        run: ninja srecord-executables
+
+      - name: Smoke test
+        working-directory: build
+        run: ninja srecord-executables-version
+
+      - name: Build test prerequisites
+        working-directory: build
+        run: ninja prepare-test
+
+      - name: Test
+        working-directory: build
+        run: ctest --output-on-failure --output-junit ctest.junit.xml

@@ -116,6 +116,7 @@ words:
   - compl
   - CSLEN
   - csum
+  - CXXFLAGS
   - DABEDE
   - datarec
   - dbyte
