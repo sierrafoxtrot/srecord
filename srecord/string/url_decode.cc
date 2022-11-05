@@ -82,7 +82,7 @@ srecord::string_url_decode(const std::string &text) -> std::string
             {
                 if (end - cur >= 2)
                 {
-                    char whatsit;
+                    char whatsit = 0;
                     if (unhex_byte(cur, whatsit))
                     {
                         result << whatsit;

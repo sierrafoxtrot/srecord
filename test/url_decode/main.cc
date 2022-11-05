@@ -31,7 +31,7 @@
 static void
 usage()
 {
-    const char *prog;
+    const char *prog = nullptr;
 
     prog = srecord::progname_get();
     fprintf(stderr, "Usage: %s -decode [ <infile> [ <outfile> ]]\n", prog);

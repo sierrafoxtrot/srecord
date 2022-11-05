@@ -73,7 +73,7 @@ srecord::input_file_wilson::get_byte() -> int
 auto
 srecord::input_file_wilson::read_inner(record &result) -> bool
 {
-    int c;
+    int c = 0;
     for (;;)
     {
         c = get_char();

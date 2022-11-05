@@ -79,7 +79,7 @@ srecord::input_file_hp64k::command_line(arglex_tool *cmdln)
 auto
 srecord::input_file_hp64k::read_u16be(uint16_t *dest) -> bool
 {
-    uint16_t tmp;
+    uint16_t tmp = 0;
     int c = get_char();
     if (c < 0) {
         return false;
@@ -99,11 +99,11 @@ srecord::input_file_hp64k::read_u16be(uint16_t *dest) -> bool
 auto
 srecord::input_file_hp64k::read_datarec(record &result) -> bool
 {
-    uint16_t recsize;
-    uint16_t datasize;
-    uint16_t load_l;
-    uint16_t load_h;
-    size_t tmp_addr;
+    uint16_t recsize = 0;
+    uint16_t datasize = 0;
+    uint16_t load_l = 0;
+    uint16_t load_h = 0;
+    size_t tmp_addr = 0;
 
     if (!read_u16be(&recsize))
     {
@@ -134,7 +134,7 @@ srecord::input_file_hp64k::read_datarec(record &result) -> bool
     }
     tmp_addr = (load_h << 16) | load_l;
 
-    unsigned cnt;
+    unsigned cnt = 0;
     uint8_t buf[256];
     for (cnt = 0; cnt < datasize; cnt++)
     {
@@ -162,7 +162,7 @@ srecord::input_file_hp64k::read_datarec(record &result) -> bool
 auto
 srecord::input_file_hp64k::read_hdr(record &result) -> bool
 {
-    uint16_t magic;
+    uint16_t magic = 0;
     if (!read_u16be(&magic))
     {
         return false;
@@ -173,7 +173,7 @@ srecord::input_file_hp64k::read_hdr(record &result) -> bool
         return false;
     }
 
-    unsigned cnt;
+    unsigned cnt = 0;
     unsigned len = HP64_HDRLEN; //initial value assume full buffer.
     uint8_t hdr[HP64_HDRLEN + 1];
 
@@ -200,12 +200,12 @@ srecord::input_file_hp64k::read_hdr(record &result) -> bool
 auto
 srecord::input_file_hp64k::read_pir(record &result) -> bool
 {
-    uint16_t pirlen;
-    uint16_t width;
-    uint16_t base;
-    uint16_t xfer_l;
-    uint16_t xfer_h;
-    uint32_t xfer;
+    uint16_t pirlen = 0;
+    uint16_t width = 0;
+    uint16_t base = 0;
+    uint16_t xfer_l = 0;
+    uint16_t xfer_h = 0;
+    uint32_t xfer = 0;
 
     if (!read_u16be(&pirlen))
     {

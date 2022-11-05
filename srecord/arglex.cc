@@ -277,7 +277,7 @@ srecord::arglex::compare(const char *formal, const char *actual) -> bool
 static auto
 is_a_number(const char *s, long &n) -> int
 {
-    int         sign;
+    int         sign = 0;
 
     n = 0;
     switch (*s)
@@ -439,9 +439,9 @@ deprecated_warning(const char *deprecated_name, const char *preferred_name)
 auto
 srecord::arglex::token_next() -> int
 {
-    const table_ty  *tp;
+    const table_ty  *tp = nullptr;
     const table_ty  *hit[20];
-    int             nhit;
+    int             nhit = 0;
 
     std::string arg;
     if (!pushback.empty())

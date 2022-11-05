@@ -159,8 +159,8 @@ srecord::fletcher16::get()
         // bytes of eeprom.  (Note: 0xFF in final byte (f1 or f2) is
         // equivalent to 0x00 due to modulo 255 arithmetic.)
         //
-        unsigned char f2;
-        unsigned char f1;
+        unsigned char f2 = 0;
+        unsigned char f1 = 0;
         if (end == endian_big)
         {
             f1 = answer >> 8;

@@ -63,7 +63,7 @@ r250_init()
     //
     // initialize crummy linear congruential
     //
-    time_t now;
+    time_t now = 0;
     time(&now);
     srand(now + getpid());
 
@@ -75,7 +75,7 @@ r250_init()
     //
     // initialise contents of array
     //
-    unsigned long *bp;
+    unsigned long *bp = nullptr;
     for (bp = buf; bp < ENDOF(buf); ++bp) {
         *bp = rand32();
 }
@@ -83,7 +83,7 @@ r250_init()
     //
     // make sure the bits are linearly independent
     //
-    unsigned long bit;
+    unsigned long bit = 0;
     for (bit = 1, bp = buf + 3; bit != 0U; bp += 11, bit <<= 1)
     {
         if (bp >= ENDOF(buf)) {

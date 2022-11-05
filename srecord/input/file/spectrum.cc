@@ -48,7 +48,7 @@ srecord::input_file_spectrum::create(const std::string &a_file_name) -> srecord:
 auto
 srecord::input_file_spectrum::get_decimal() -> int
 {
-    int c;
+    int c = 0;
     for (;;)
     {
         c = get_char();
@@ -93,7 +93,7 @@ is_binary_digit(int c) -> bool
 auto
 srecord::input_file_spectrum::get_binary() -> int
 {
-    int c;
+    int c = 0;
     for (;;)
     {
         c = get_char();

@@ -533,7 +533,7 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                unsigned long address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_adler16::create
@@ -551,7 +551,7 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                unsigned long address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_adler32::create
@@ -598,9 +598,9 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
-                int nbytes;
-                int width;
+                unsigned long address = 0;
+                int nbytes = 0;
+                int width = 0;
                 get_address_nbytes_width(name, address, nbytes, width);
                 ifp =
                     input_filter_checksum_bitnot::create
@@ -620,9 +620,9 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
-                int nbytes;
-                int width;
+                unsigned long address = 0;
+                int nbytes = 0;
+                int width = 0;
                 get_address_nbytes_width(name, address, nbytes, width);
                 ifp =
                     input_filter_checksum_negative::create
@@ -642,9 +642,9 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
-                int nbytes;
-                int width;
+                unsigned long address = 0;
+                int nbytes = 0;
+                int width = 0;
                 get_address_nbytes_width(name, address, nbytes, width);
                 ifp =
                     input_filter_checksum_positive::create
@@ -664,7 +664,7 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 endian_t end = get_endian_by_token();
                 const char *name = token_name();
                 token_next();
-                unsigned long address;
+                unsigned long address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_crc16::create(ifp, address, end);
@@ -677,7 +677,7 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                unsigned long address = 0;
                 get_address(name, address);
                 ifp = input_filter_message_crc32::create(ifp, address, end);
             }
@@ -732,7 +732,7 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                unsigned long address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_fletcher16::create
@@ -750,7 +750,7 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                unsigned long address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_fletcher32::create
@@ -810,9 +810,9 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 endian_t end = get_endian_by_token();
                 bool inclusive = get_inclusive_by_token();
                 token_next();
-                unsigned long address;
-                int nbytes;
-                int width;
+                unsigned long address = 0;
+                int nbytes = 0;
+                int width = 0;
                 get_address_nbytes_width(name, address, nbytes, width);
                 ifp =
                     input_filter_interval_length::create
@@ -836,8 +836,8 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 endian_t end = get_endian_by_token();
                 bool inclusive = get_inclusive_by_token();
                 token_next();
-                unsigned long address;
-                int nbytes;
+                unsigned long address = 0;
+                int nbytes = 0;
                 get_address_and_nbytes(name, address, nbytes);
                 ifp =
                     input_filter_interval_maximum::create
@@ -860,8 +860,8 @@ srecord::arglex_tool::get_input() -> srecord::input::pointer
                 endian_t end = get_endian_by_token();
                 bool inclusive = get_inclusive_by_token();
                 token_next();
-                unsigned long address;
-                int nbytes;
+                unsigned long address = 0;
+                int nbytes = 0;
                 get_address_and_nbytes(name, address, nbytes);
                 ifp =
                     input_filter_interval_minimum::create

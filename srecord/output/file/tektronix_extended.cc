@@ -70,7 +70,7 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
     csum += buf[pos++] = 0; // checksum hi, fill in later
     csum += buf[pos++] = 0; // checksum lo, fill in later
     csum += buf[pos++] = addr_nbytes * 2;  // size of addr, in nibbles
-    int j;
+    int j = 0;
     for (j = 0; j < 2 * addr_nbytes; ++j) {
         csum += buf[pos++] = (addr >> (4 * (2*addr_nbytes-1 - j))) & 15;
 }

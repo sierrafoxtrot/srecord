@@ -27,7 +27,7 @@ auto
 srecord::arglex_tool::get_number(const char *caption) -> unsigned long
 {
     unsigned long value = 0;
-    unsigned long multiple;
+    unsigned long multiple = 0;
     interval over;
 
     switch (token_cur())

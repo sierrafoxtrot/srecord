@@ -51,7 +51,7 @@ srecord::input_file_formatted_binary::read(record &result) -> bool
     if (!header_seen)
     {
         // Skip leading NULs
-        int c;
+        int c = 0;
         for (;;)
         {
             c = get_char();

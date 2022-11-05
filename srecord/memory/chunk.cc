@@ -73,7 +73,7 @@ srecord::memory_chunk::walk(srecord::memory_walker::pointer w)
         if (!set_p(j)) {
             continue;
 }
-        int k;
+        int k = 0;
         for (k = j + 1; k < size && set_p(k); ++k) {
             ;
 }
@@ -97,7 +97,7 @@ srecord::memory_chunk::find_next_data(unsigned long &ret_addr, void *ret_data,
         if (max > size) {
             max = size;
 }
-        unsigned k;
+        unsigned k = 0;
         for (k = j + 1; k < max && set_p(k); ++k) {
             ;
 }

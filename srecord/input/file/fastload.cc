@@ -164,12 +164,12 @@ srecord::input_file_fastload::expect_white_space()
 auto
 srecord::input_file_fastload::read_inner(srecord::record &record) -> bool
 {
-    unsigned long n;
+    unsigned long n = 0;
     unsigned char data[srecord::record::max_data_length];
     unsigned long data_address = address;
     srecord::record::type_t type;
     int data_length = 0;
-    unsigned char the_byte;
+    unsigned char the_byte = 0;
     for (;;)
     {
         switch (peek_char())

@@ -48,7 +48,7 @@ srecord::input_file_ppb::create(const std::string &filename) -> srecord::input_f
 auto
 srecord::input_file_ppb::get_packet() -> bool
 {
-    int c;
+    int c = 0;
 
     enum { SOH = 1 }; // Start of header marks beginning of record
 

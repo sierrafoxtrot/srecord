@@ -121,7 +121,7 @@ srecord::output_file_fastload::put_command(int c, unsigned long n, int ndigits)
 void
 srecord::output_file_fastload::write(const srecord::record &record)
 {
-    size_t j;
+    size_t j = 0;
 
     switch (record.get_type())
     {

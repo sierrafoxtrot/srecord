@@ -369,7 +369,7 @@ srecord::interval::union_(const interval &left, const interval &right) -> srecor
     for (;;)
     {
         int old_count = count;
-        data_t place;
+        data_t place = 0;
         if (left_pos < left.length)
         {
             if (right_pos < right.length)
@@ -455,7 +455,7 @@ srecord::interval::intersection(const interval &left, const interval &right) -> 
     for (;;)
     {
         int old_count = count;
-        data_t place;
+        data_t place = 0;
         if (left_pos < left.length)
         {
             if (right_pos < right.length)
@@ -540,7 +540,7 @@ srecord::interval::difference(const interval &left, const interval &right) -> sr
     for (;;)
     {
         int old_count = count;
-        data_t place;
+        data_t place = 0;
         if (left_pos < left.length)
         {
             if (right_pos < right.length)

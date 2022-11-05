@@ -30,8 +30,8 @@ srecord::progname_set(char *s)
 {
     for (;;)
     {
-        char            *cp1;
-        char            *cp2;
+        char            *cp1 = nullptr;
+        char            *cp2 = nullptr;
 
         cp1 = strrchr(s, '/');
         if (cp1 == nullptr) {

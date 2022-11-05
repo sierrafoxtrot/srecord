@@ -189,7 +189,7 @@ srecord::input_file_aomf::read(srecord::record &record) -> bool
 {
     for (;;)
     {
-        unsigned char c;
+        unsigned char c = 0;
         switch (state)
         {
         case expecting_header:
