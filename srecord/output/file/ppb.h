@@ -88,7 +88,7 @@ private:
       * The buffer instance variable is used to remember the accumulated
       * data bytes to be written to the file.
       */
-    unsigned char buffer[8192];
+    unsigned char buffer[8192]{};
 
     /**
       * The buffer_length instance variable is used to remember how many

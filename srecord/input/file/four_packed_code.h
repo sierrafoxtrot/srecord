@@ -95,7 +95,7 @@ private:
       * 5-character (4-byte) input multiple.  (Only the get_byte
       * method may use this instance variable.)
       */
-    unsigned get_byte_pos;
+    unsigned get_byte_pos{};
 
     /**
       * The get_byte_value instance variable is used by the bet_byte
@@ -103,7 +103,7 @@ private:
       * input multiple.  (Only the get_byte method may use this
       * instance variable.)
       */
-    unsigned long get_byte_value;
+    unsigned long get_byte_value{};
 
     /**
       * The garbage_warning instance variable is used by the read

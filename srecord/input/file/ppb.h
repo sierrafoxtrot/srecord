@@ -93,7 +93,7 @@ private:
       * The packet instance variable is used to remember the most recent
       * #packet_length data bytes read from the file in the most recent packet.
       */
-    record::data_t packet[65536];
+    record::data_t packet[65536]{};
 
     /**
       * The packet_length instance variable is used to remember the

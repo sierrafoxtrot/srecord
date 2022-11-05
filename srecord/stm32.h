@@ -106,7 +106,7 @@ private:
       * Buffer the incoming stream to build a word to feed to the
       * CRC generator.
       */
-    unsigned char buf[wordsize];
+    unsigned char buf[wordsize]{};
 };
 
 };

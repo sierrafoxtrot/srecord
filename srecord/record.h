@@ -373,7 +373,7 @@ private:
       * of the record.  Only the first #length bytes are valid,
       * the rest are undefined.
       */
-    data_t data[max_data_length];
+    data_t data[max_data_length]{};
 };
 
 };

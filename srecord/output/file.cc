@@ -440,7 +440,7 @@ void
 srecord::output_file::set_is_regular()
 {
     FILE *fp = (FILE *)vfp;
-    struct stat st;
+    struct stat st{};
     is_regular = fstat(fileno(fp), &st) == 0 && S_ISREG(st.st_mode);
 }
 

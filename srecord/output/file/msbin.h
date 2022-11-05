@@ -201,7 +201,7 @@ private:
       * The upper_bound instance variable is used to remember the upper
       * bound address as received via the #notify_upper_bound method.
       */
-    record::address_t upper_bound;
+    record::address_t upper_bound{};
 
     /**
       * The beginning_of_file instance variable is used to remember

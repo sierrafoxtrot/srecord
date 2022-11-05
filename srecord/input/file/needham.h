@@ -67,7 +67,7 @@ private:
     input_file_needham(const std::string &file_name);
 
     auto read_inner(record &) -> bool;
-    bool garbage_warning;
+    bool garbage_warning{};
     bool seen_some_input;
     unsigned long address;
 

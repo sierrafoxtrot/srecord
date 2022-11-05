@@ -141,7 +141,7 @@ private:
       * The token_value instance variable is used to remember the
       * numeric value of token_number returns from #lex.
       */
-    long token_value;
+    long token_value{};
 
     /**
       * The lex_addr method is used to obtain the next lexical token

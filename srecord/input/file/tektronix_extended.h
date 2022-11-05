@@ -76,7 +76,7 @@ private:
       * The data_record_count instance variable is used to remember the
       * number of data records seen in the input so far.
       */
-    int data_record_count;
+    int data_record_count{};
 
     /**
       * The read_inner method is used to read a record of input.
@@ -101,7 +101,7 @@ private:
       * The header_seen instance variable is used to remember whether
       * the header record has been seen yet.
       */
-    bool header_seen;
+    bool header_seen{};
 
     /**
       * The termination_seen instance variable is used to remember

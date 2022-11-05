@@ -169,7 +169,7 @@ private:
       * The token instance variable tracks the current token in the
       * parse sequence.
       */
-    int token;
+    int token{};
 
     /**
       * The value_string_ instance variable tracks the value of the
@@ -182,7 +182,7 @@ private:
       * of the current command line argument.  Usually zero unless
       * the current command line argument is a number.
       */
-    long value_number_;
+    long value_number_{};
 
     /**
       * The table_ptr_vec_t type is used to declare the 'tables'

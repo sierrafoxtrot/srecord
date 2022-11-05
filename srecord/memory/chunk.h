@@ -139,13 +139,13 @@ private:
     /**
       * The data array is used to remember the values of valid data bytes.
       */
-    unsigned char data[size];
+    unsigned char data[size]{};
 
     /**
       * The mask array is used to remember which values in the data
       * array contain valid values.
       */
-    unsigned char mask[(size + 7) / 8];
+    unsigned char mask[(size + 7) / 8]{};
 
     /**
       * The default constructor.  Do not use.

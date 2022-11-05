@@ -131,25 +131,25 @@ private:
       * start, the lowest data address in the file, as read from the
       * file header.
       */
-    record::address_t image_start;
+    record::address_t image_start{};
 
     /**
       * The image_length instance variable is used to remember the image
       * length, as read from the file header.
       */
-    record::address_t image_length;
+    record::address_t image_length{};
 
     /**
       * The lowest_address instance variable is used to remember the
       * lowest address encountered in records read so far.
       */
-    record::address_t lowest_address;
+    record::address_t lowest_address{};
 
     /**
       * The highest_address instance variable is used to remember the
       * highest address encountered in records read so far.
       */
-    record::address_t highest_address;
+    record::address_t highest_address{};
 
     /**
       * The read_file_header method is used to read the (optional) magic

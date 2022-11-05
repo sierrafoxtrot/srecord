@@ -125,7 +125,7 @@ private:
       * The buffer instance variable is used to remember the accumulated
       * data so far.  Must be a multiple of 4 bytes long.
       */
-    unsigned char buffer[256];
+    unsigned char buffer[256]{};
 
     /**
       * The buffer_length instance variable is used to remember how many

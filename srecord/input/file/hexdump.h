@@ -106,7 +106,7 @@ private:
       * The current_token_value instance variable is used to remember
       * the value of the most recent token_byte seen.
       */
-    unsigned current_token_value;
+    unsigned current_token_value{};
 
     /**
       * The default constructor.  Do not use.

@@ -95,7 +95,7 @@ private:
       * The byte_offset instance variable is used to track the location
       * in the output file.  Maintained by the put_byte() method.
       */
-    unsigned long byte_offset;
+    unsigned long byte_offset{};
 
     /**
       * The pref_block_size is used to remember the preferred

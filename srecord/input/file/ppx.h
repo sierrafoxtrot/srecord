@@ -135,7 +135,7 @@ private:
       * The buffer instance variable is used to remember the most recent
       * #buffer_length data bytes read from the file.
       */
-    record::data_t buffer[record::max_data_length];
+    record::data_t buffer[record::max_data_length]{};
 
     /**
       * The buffer_length instance variable is used to remember the
