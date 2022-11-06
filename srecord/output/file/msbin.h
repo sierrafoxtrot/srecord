@@ -147,13 +147,13 @@ private:
     void write_record_header(uint32_t addr, uint32_t length, uint32_t checksum);
 
     /**
-      * The write_data method is used to write the data contained in
+      * The write_record_data method is used to write the data contained in
       * a record to the output.
       *
       * @param r
       *     The record containing the data to be written to output.
       */
-    void write_data(const record &r);
+    void write_record_data(const record &r);
 
     /**
       * The flush_pending_records method is used to write out all the
