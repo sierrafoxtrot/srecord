@@ -3,8 +3,8 @@ name: QA
 on: [push, pull_request]
 
 jobs:
-  build:
-    name: Check source
+  build-clang:
+    name: Check source with clang
     runs-on: ubuntu-22.04
 
     steps:
@@ -22,20 +22,23 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Configure
+        # cSpell:disable
         env:
           CXX: clang++-14
           CXXFLAGS: >-
             -std=c++11
             -pedantic
+            -Werror
             -Wall
+            -Wextra
           SRecord_CMake_Flags: >-
             -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
-        run: |
-          cmake -G Ninja -S . -B build ${SRecord_CMake_Flags}
+        run: cmake -G Ninja -S . -B build ${SRecord_CMake_Flags}
+        # cSpell:enable
 
       - name: Build
         working-directory: build
-        run: ninja srecord-executables
+        run: ninja -k 0 srecord-executables
 
       - name: Smoke test
         working-directory: build
@@ -52,6 +55,55 @@ jobs:
       - name: clang-tidy
         if: always()
         run: run-clang-tidy-14 -p build
+
+  build-gcc:
+    name: Check source with gcc
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Install prerequisites
+        run: >-
+          sudo apt-get install -y
+          libgcrypt20-dev
+          gcc-11
+          cmake
+          ninja-build
+          doxygen
+          graphviz
+
+      - uses: actions/checkout@v3
+
+      - name: Configure
+        # cSpell:disable
+        env:
+          CXX: g++-11
+          CXXFLAGS: >-
+            -std=c++11
+            -pedantic
+            -Werror
+            -Wall
+            -Wextra
+            -Wno-implicit-fallthrough
+          SRecord_CMake_Flags: >-
+            -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+        run: cmake -G Ninja -S . -B build ${SRecord_CMake_Flags}
+        # cSpell:enable
+
+      - name: Build
+        working-directory: build
+        run: ninja -k 0 srecord-executables
+
+      - name: Smoke test
+        working-directory: build
+        run: ninja srecord-executables-version
+
+      - name: Build test prerequisites
+        working-directory: build
+        run: ninja prepare-test
+
+      - name: Test
+        working-directory: build
+        run: ctest --output-on-failure --output-junit ctest.junit.xml
 
   docs:
     name: Documentation
