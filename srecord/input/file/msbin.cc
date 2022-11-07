@@ -116,13 +116,15 @@ srecord::input_file_msbin::read_file_header(void)
         buff[i] = j;
     }
 
-    static_assert(sizeof(buff) >= sizeof(Magic));
+    static_assert(sizeof(buff) >= sizeof(Magic),
+        "Just to be sure that the buffer is big enough.");
     if (memcmp(Magic, buff, sizeof(Magic)))
     {
         // Ok, there's no magic in the header. But it's optional anyway.
 
         // Fill up to two dwords
-        static_assert(sizeof(buff) == 2 * sizeof(uint32_t));
+        static_assert(sizeof(buff) == 2 * sizeof(uint32_t),
+            "Just to be sure that the buffer size equals two uint32_t.");
         int j = get_char();
         if (j < 0)
             fatal_error("short input file");

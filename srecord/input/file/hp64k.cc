@@ -71,7 +71,7 @@ srecord::input_file_hp64k::create(const std::string &a_file_name)
 
 
 void
-srecord::input_file_hp64k::command_line(arglex_tool *cmdln)
+srecord::input_file_hp64k::command_line(arglex_tool *)
 {
     //TODO : possibly different types of header bytes ?
     //TODO : don't expect the redundant recsize field?

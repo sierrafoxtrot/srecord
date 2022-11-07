@@ -158,7 +158,8 @@ private:
     void read_file_header(void);
 
     // Just to be sure we can fit uint32_t in address_t.
-    static_assert(sizeof(record::address_t) >= sizeof(uint32_t));
+    static_assert(sizeof(record::address_t) >= sizeof(uint32_t),
+        "Just to be sure we can fit uint32_t in address_t.");
 
     /**
       * The read_dword_le method is used to read a little endian double

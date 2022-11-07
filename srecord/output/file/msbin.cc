@@ -118,7 +118,7 @@ srecord::output_file_msbin::write_record_header(uint32_t addr, uint32_t length,
 
 
 void
-srecord::output_file_msbin::write_data(const record &r)
+srecord::output_file_msbin::write_record_data(const record &r)
 {
     const unsigned char *data = r.get_data();
     size_t length = r.get_length();
@@ -163,10 +163,10 @@ srecord::output_file_msbin::flush_pending_records(const record *r)
 
         // write data
         for (it = pending_records.begin(); it != pending_records.end(); ++it)
-            write_data(*(*it));
+            write_record_data(*(*it));
 
         if (r)
-            write_data(*r);
+            write_record_data(*r);
 
         pending_records.clear();
     }
