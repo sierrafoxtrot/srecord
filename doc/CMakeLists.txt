@@ -151,7 +151,7 @@ add_custom_target(web-site ALL DEPENDS ${WEB_PAGE_OUTPUTS})
 # Reference Manual Components
 set(REF_PARTS ${CMAKE_CURRENT_BINARY_DIR}/etc/ref-parts.so)
 add_custom_command(OUTPUT ${REF_PARTS}
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.sh ${MAN_PAGES} > ${REF_PARTS}
+    COMMAND sh ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.sh ${MAN_PAGES} > ${REF_PARTS}
     DEPENDS
         ${MAN_PAGES}
         ${CMAKE_CURRENT_SOURCE_DIR}/script/ref-ptx.sh

@@ -96,6 +96,10 @@ endif (HAVE_GCRYPT_H)
 
 # ps2pdf used in building the PDF version of the documentation
 find_program(PS2PDF ps2pdf)
+if(WIN32)
+  # Shell script cannot be invoked directly using cmd.exe
+  set(PS2PDF "sh" "${PS2PDF}")
+endif()
 message(STATUS "PS2PDF ${PS2PDF}")
 
 # cygpath used in helping the build run on Windows
