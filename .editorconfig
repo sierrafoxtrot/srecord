@@ -9,12 +9,22 @@ max_line_length = 120
 tab_width = 8
 trim_trailing_whitespace = true
 
-[*.{cc,h,h.in}]
-max_line_length = 80
-
 [*.{html,man,so}]
 max_line_length = 400
 
+# Sources
+[*.{cc,h,h.in}]
+max_line_length = 80
+
+# Documentation files processed by groff
+[*.{1,3,5,html,lsm,man,so}]
+end_of_line = lf
+
+# Script files
+[*.{awk,sh}]
+end_of_line = lf
+
+# YAML configuration files
 [*.{yaml,yml,clang-tidy}]
 indent_size = 2
 tab_width = 2
