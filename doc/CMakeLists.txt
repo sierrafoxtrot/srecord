@@ -171,7 +171,7 @@ add_custom_command(OUTPUT ${NEW_CHANGES}
 
 # Transform man page(s) (ie troff format files) into a PDF
 function(add_doc TARGET SOURCE DEPS)
-    add_custom_command(OUTPUT ${TARGET}
+    add_custom_command(OUTPUT ${TARGET}.groff.ps
         COMMAND
             sh ${CMAKE_CURRENT_SOURCE_DIR}/script/groff.sh
             -T ps                  # Output device
@@ -182,22 +182,33 @@ function(add_doc TARGET SOURCE DEPS)
             -I${DocSourcePath}
             -I${DocBinaryPath}
             ${SOURCE}              # Source
-            > ${TARGET}.ps.tmp
-        COMMAND
-            sh ${CMAKE_CURRENT_SOURCE_DIR}/script/page_select.sh
-            ${CMAKE_CURRENT_SOURCE_DIR}/script/page-list.awk
-            ${TARGET}.ps.tmp
-            ${TARGET}.ps
-        COMMAND ${PS2PDF} ${TARGET}.ps ${TARGET}
-        COMMAND rm ${TARGET}.ps ${TARGET}.ps.tmp
+            > ${TARGET}.groff.ps
         DEPENDS
             ${SOURCE}
             ${DEPS}
             ${CMAKE_CURRENT_SOURCE_DIR}/script/groff.sh
+        COMMENT "Building ${TARGET}.groff.ps"
+        VERBATIM)
+
+    add_custom_command(OUTPUT ${TARGET}.ps
+        COMMAND
+            sh ${CMAKE_CURRENT_SOURCE_DIR}/script/page_select.sh
+            ${CMAKE_CURRENT_SOURCE_DIR}/script/page-list.awk
+            ${TARGET}.groff.ps
+            ${TARGET}.ps
+        DEPENDS
+            ${TARGET}.groff.ps
             ${CMAKE_CURRENT_SOURCE_DIR}/script/page_select.sh
             ${CMAKE_CURRENT_SOURCE_DIR}/script/page-list.awk
+        COMMENT "Building ${TARGET}.ps"
+        VERBATIM)
+
+    add_custom_command(OUTPUT ${TARGET}
+        COMMAND ${PS2PDF} ${TARGET}.ps ${TARGET}
+        DEPENDS ${TARGET}.ps
         COMMENT "Building ${TARGET}"
         VERBATIM)
+
     list(APPEND DOC_TARGETS ${TARGET})
     set(DOC_TARGETS ${DOC_TARGETS} PARENT_SCOPE)
 endfunction()
