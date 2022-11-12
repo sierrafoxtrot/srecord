@@ -1,0 +1,24 @@
+# Enable default behaviour
+*       text=auto
+
+# Sources
+*.cc    text diff=cpp
+*.h     text diff=cpp
+*.h.in  text diff=cpp
+
+# Documentation files processed by groff
+*.1     text eol=lf
+*.3     text eol=lf
+*.5     text eol=lf
+*.html  text eol=lf
+*.lsm   text eol=lf
+*.man   text eol=lf
+*.so    text eol=lf
+
+# Script files
+*.awk   text eol=lf
+*.sh    text eol=lf
+
+# Image files
+*.ico   binary
+*.png   binary

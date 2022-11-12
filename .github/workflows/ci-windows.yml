@@ -35,7 +35,10 @@ jobs:
             mingw-w64-${{ matrix.env }}-ninja
             mingw-w64-${{ matrix.env }}-doxygen
             mingw-w64-${{ matrix.env }}-graphviz
+            mingw-w64-${{ matrix.env }}-ghostscript
+            mingw-w64-${{ matrix.env }}-texlive-bin
             diffutils
+            groff
 
       - uses: actions/checkout@v3
 
@@ -57,3 +60,17 @@ jobs:
       - name: Test
         working-directory: build
         run: ctest --output-on-failure --output-junit ctest.junit.xml
+
+      - name: Build all
+        working-directory: build
+        run: ninja
+
+      - name: Create ZIP package
+        working-directory: build
+        run: cpack -G ZIP
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v3
+        with:
+          name: msys2-${{ matrix.env }}-packages
+          path: build/srecord-*.*
