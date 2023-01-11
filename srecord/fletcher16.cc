@@ -118,7 +118,7 @@ srecord::fletcher16::nextbuf(const void *vdata, size_t nbytes)
     //   overflow in 16 bits. Any smaller value is also permissible; 16
     //   may be convenient in many cases.
     //
-    const unsigned char *data = (const unsigned char *)vdata;
+    const auto *data = (const unsigned char *)vdata;
     size_t len = nbytes;
     while (len)
     {

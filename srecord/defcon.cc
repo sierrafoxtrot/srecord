@@ -65,8 +65,8 @@ static const table_t table[] =
 static int
 compare(const void *va, const void *vb)
 {
-    const table_t *a = (const table_t *)va;
-    const table_t *b = (const table_t *)vb;
+    const auto *a = (const table_t *)va;
+    const auto *b = (const table_t *)vb;
     return strcmp(a->name, b->name);
 }
 
@@ -75,7 +75,7 @@ int
 srecord::defcon_from_text(const char *text)
 {
     table_t key = { text, defcon_ignore };
-    table_t *tp =
+    auto *tp =
         (table_t *)
         bsearch(&key, table, SIZEOF(table), sizeof(table_t), compare);
     if (!tp)

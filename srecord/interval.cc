@@ -287,7 +287,7 @@ srecord::interval::append(data_t datum)
     if (length >= size)
     {
         size = size * 2 + 8;
-        data_t *tmp = new data_t[size + 1];
+        auto *tmp = new data_t[size + 1];
         if (data)
         {
             for (size_t k = 0; k < length; ++k)

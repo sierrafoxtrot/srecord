@@ -154,8 +154,7 @@ srecord::memory::find(unsigned long address)
     if (nchunks >= nchunks_max)
     {
         nchunks_max = nchunks_max * 2 + 4;
-        srecord::memory_chunk **tmp =
-            new srecord::memory_chunk * [nchunks_max];
+        auto **tmp = new srecord::memory_chunk * [nchunks_max];
         for (int j = 0; j < nchunks; ++j)
             tmp[j] = chunk[j];
         delete [] chunk;

@@ -199,7 +199,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
             cmdln->token_next();
             size_t length = 0;
             size_t maxlen = 16;
-            unsigned char *data = new unsigned char [maxlen];
+            auto *data = new unsigned char [maxlen];
             for (;;)
             {
                 //
@@ -214,7 +214,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
                 if (length >= maxlen)
                 {
                     size_t new_maxlen = maxlen * 2 + 16;
-                    unsigned char *new_data = new unsigned char [new_maxlen];
+                    auto *new_data = new unsigned char [new_maxlen];
                     memcpy(new_data, data, length);
                     delete [] data;
                     data = new_data;

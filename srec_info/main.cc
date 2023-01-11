@@ -70,7 +70,7 @@ main(int argc, char **argv)
     //
     // Read each file and emit informative gumph.
     //
-    for (infile_t::iterator it = infile.begin(); it != infile.end(); ++it)
+    for (auto it = infile.begin(); it != infile.end(); ++it)
     {
         srecord::input::pointer ifp = *it;
         if (infile.size() > 1U)
@@ -157,12 +157,12 @@ main(int argc, char **argv)
             }
             const uint32_t lo = tmp.get_lowest();
             const uint32_t hi = tmp.get_highest();
-            const uint32_t hi_address = static_cast<uint32_t>(hi - 1U);
+            const auto hi_address = static_cast<uint32_t>(hi - 1U);
             std::cout
                 << std::setw(prec) << lo
                 << " - "
                 << std::setw(prec) << hi_address;
-            const uint32_t interval_size = static_cast<uint32_t>(hi - lo);
+            const auto interval_size = static_cast<uint32_t>(hi - lo);
             if(verbose)
             {
                 std::cout << " (" << std::setw(prec) << interval_size<< ")";
@@ -184,7 +184,7 @@ main(int argc, char **argv)
                 std::cout << std::setw(prec) << number_bytes;
             std::cout << std::endl;
 
-            const uint32_t range_size
+            const auto range_size
                 = static_cast<uint32_t>(range_highest - range_lowest);
             const double real_number_bytes
                 = (number_bytes == 0UL) ? 4294967296.0 : number_bytes;

@@ -84,7 +84,7 @@ srecord::output_file_aomf::content_record(unsigned long address,
     const unsigned char *data, size_t len)
 {
     const size_t maxlen = 4 * srecord::record::max_data_length;
-    auto buffer = new unsigned char[maxlen + 3];
+    auto *buffer = new unsigned char[maxlen + 3];
 
     while (len > 0)
     {

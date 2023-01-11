@@ -497,7 +497,7 @@ srecord::arglex::token_next(void)
     partial = 0;
     for
     (
-        table_ptr_vec_t::iterator it = tables.begin();
+        auto it = tables.begin();
         it != tables.end();
         ++it
     )
@@ -607,7 +607,7 @@ srecord::arglex::check_deprecated(const std::string &actual)
 {
     for
     (
-        deprecated_options_t::const_iterator it = deprecated_options.begin();
+        auto it = deprecated_options.begin();
         it != deprecated_options.end();
         ++it
     )
@@ -647,7 +647,7 @@ srecord::arglex::token_name(int n)
     }
     for
     (
-        table_ptr_vec_t::const_iterator it = tables.begin();
+        auto it = tables.begin();
         it != tables.end();
         ++it
     )

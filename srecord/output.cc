@@ -140,8 +140,7 @@ void
 srecord::output::write_data(unsigned long address, const void *data,
     size_t length)
 {
-    const srecord::record::data_t *data_p =
-        (const srecord::record::data_t *)data;
+    const auto *data_p = (const srecord::record::data_t *)data;
     size_t block_size = preferred_block_size_get();
     while (length > 0)
     {

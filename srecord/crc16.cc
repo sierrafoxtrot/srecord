@@ -279,7 +279,7 @@ srecord::crc16::next(unsigned char ch)
 void
 srecord::crc16::nextbuf(const void *data, size_t nbytes)
 {
-    unsigned char *dp = (unsigned char *)data;
+    auto *dp = (unsigned char *)data;
     while (nbytes > 0)
     {
         state = updcrc(*dp++, state);

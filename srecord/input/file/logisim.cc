@@ -253,7 +253,7 @@ srecord::input_file_logisim::read(class record &rec)
             size_t max_data_size = record::maximum_data_length(address);
             size_t data_size =
                 ((size_t)job.count > max_data_size ? max_data_size : job.count);
-            auto data = new record::data_t[data_size];
+            auto *data = new record::data_t[data_size];
             memset(data, job.value, data_size);
             rec = record(record::type_data, job.address, data, data_size);
             job.address += data_size;

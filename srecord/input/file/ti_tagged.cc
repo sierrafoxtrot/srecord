@@ -157,7 +157,7 @@ srecord::input_file_ti_tagged::read(record &result)
                 }
                 n -= 5;
                 int max = 250;
-                unsigned char *buffer = new unsigned char [max];
+                auto *buffer = new unsigned char [max];
                 for (int j = 0; j < n; ++j)
                 {
                     c = get_char();
