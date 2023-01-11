@@ -19,7 +19,7 @@
 #ifndef SRECORD_MEMORY_CHUNK_H
 #define SRECORD_MEMORY_CHUNK_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include <srecord/memory/walker.h>
 

@@ -20,7 +20,7 @@
 #define SRECORD_RECORD_H
 
 #include <cstddef>
-#include <stdint.h>
+#include <cstdint>
 
 #include <srecord/endian.h>
 

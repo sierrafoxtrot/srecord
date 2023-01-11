@@ -20,7 +20,7 @@
 #ifndef SRECORD_CRC32_H
 #define SRECORD_CRC32_H
 
-#include <stddef.h>
+#include <cstddef>
 
 namespace srecord
 {

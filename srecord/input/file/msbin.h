@@ -22,7 +22,7 @@
 #ifndef SRECORD_INPUT_FILE_MSBIN_H
 #define SRECORD_INPUT_FILE_MSBIN_H
 
-#include <stdint.h>
+#include <cstdint>
 #include <srecord/input/file.h>
 #include <srecord/record.h>
 

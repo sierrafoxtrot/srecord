@@ -23,7 +23,7 @@
 #ifndef SRECORD_CRC16_H
 #define SRECORD_CRC16_H
 
-#include <stddef.h>
+#include <cstddef>
 
 namespace srecord
 {
