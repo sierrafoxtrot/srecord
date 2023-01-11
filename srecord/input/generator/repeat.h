@@ -49,7 +49,7 @@ private:
       * @param length
       *     The length of the array of data to be repeated.
       */
-    input_generator_repeat(const interval &range, unsigned char *data,
+    input_generator_repeat(const interval &range, const unsigned char *data,
         size_t length);
 
 public:

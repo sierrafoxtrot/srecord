@@ -262,14 +262,14 @@ srecord::output_file::put_4bytes_le(unsigned long n)
 
 
 int
-srecord::output_file::checksum_get(void)
+srecord::output_file::checksum_get(void) const
 {
     return (checksum & 0xFF);
 }
 
 
 int
-srecord::output_file::checksum_get16(void)
+srecord::output_file::checksum_get16(void) const
 {
     return (checksum & 0xFFFF);
 }

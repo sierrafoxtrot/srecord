@@ -162,7 +162,7 @@ srecord::output_file_hexdump::write(const srecord::record &record)
 
 
 int
-srecord::output_file_hexdump::columns_to_line_length(int cols)
+srecord::output_file_hexdump::columns_to_line_length(int cols) const
 {
     // 0000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  #................
     //      ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^^

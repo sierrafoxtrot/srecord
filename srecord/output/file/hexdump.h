@@ -138,7 +138,7 @@ private:
     /**
       * The columns_to_line_length method is used to
       */
-    int columns_to_line_length(int cols);
+    int columns_to_line_length(int cols) const;
 
     /**
       * The default constructor.  Do not use.
