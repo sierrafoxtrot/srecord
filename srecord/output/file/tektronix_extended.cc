@@ -98,9 +98,9 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
 static int
 addr_width(unsigned long n)
 {
-    if (n < (1uL << 16))
+    if (n < (1UL << 16))
         return 2;
-    if (n < (1uL << 24))
+    if (n < (1UL << 24))
         return 3;
     return 4;
 }

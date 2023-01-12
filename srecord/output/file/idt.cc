@@ -130,7 +130,7 @@ srecord::output_file_idt::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (addr < (1uL << 16) && address_length <= 2)
+        if (addr < (1UL << 16) && address_length <= 2)
         {
             write_inner
             (

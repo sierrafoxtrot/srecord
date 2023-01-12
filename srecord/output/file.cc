@@ -311,7 +311,7 @@ srecord::output_file::seek_to(unsigned long address)
     errno = 0;
     if (fseek(fp, address, 0) < 0)
     {
-        if (errno == EINVAL && address >= 0x80000000uL)
+        if (errno == EINVAL && address >= 0x80000000UL)
         {
             warning
             (
@@ -322,7 +322,7 @@ srecord::output_file::seek_to(unsigned long address)
                 "to create a %3.1fGB file.  See the manual for a "
                 "description of the --offset filter, remembering that "
                 "you can give negative offsets.",
-                ((double)address / (double)(1uL << 30))
+                ((double)address / (double)(1UL << 30))
             );
         }
         fatal_error_errno("seek 0x%lX", address);
@@ -500,9 +500,9 @@ srecord::output_file::data_address_too_large(const srecord::record &record,
             prec,
             hi,
             prec,
-            0uL,
+            0UL,
             prec,
-            (1uL << nbits) - 1
+            (1UL << nbits) - 1
         );
     }
     fatal_error("data address (0x%lX..0x%lX) too large", lo, hi);
