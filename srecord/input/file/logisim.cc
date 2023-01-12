@@ -86,7 +86,7 @@ srecord::input_file_logisim::read_inner_one()
         break;
     }
     *bp = '\0';
-    if (strcmp(buffer, "v2.0 raw"))
+    if (strcmp(buffer, "v2.0 raw") != 0)
         fatal_error("bad magic number");
     state = state_line_two;
 }

@@ -118,7 +118,7 @@ srecord::input_file_msbin::read_file_header()
 
     static_assert(sizeof(buff) >= sizeof(Magic),
         "Just to be sure that the buffer is big enough.");
-    if (memcmp(Magic, buff, sizeof(Magic)))
+    if (memcmp(Magic, buff, sizeof(Magic)) != 0)
     {
         // Ok, there's no magic in the header. But it's optional anyway.
 
