@@ -110,7 +110,7 @@ srecord::input_file_atmel_generic::get_file_format_name()
 
 
 int
-srecord::input_file_atmel_generic::format_option_number(void)
+srecord::input_file_atmel_generic::format_option_number()
     const
 {
     return

@@ -47,7 +47,7 @@ srecord::input_file_tektronix::create(const std::string &a_file_name)
 
 
 int
-srecord::input_file_tektronix::get_nibble(void)
+srecord::input_file_tektronix::get_nibble()
 {
     int n = srecord::input_file::get_nibble();
     checksum_add(n);
@@ -56,7 +56,7 @@ srecord::input_file_tektronix::get_nibble(void)
 
 
 int
-srecord::input_file_tektronix::get_byte(void)
+srecord::input_file_tektronix::get_byte()
 {
     // this differs from the srecord::input_file method only in that we
     // don't add to the checksum.
@@ -208,7 +208,7 @@ srecord::input_file_tektronix::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_tektronix::get_file_format_name(void)
+srecord::input_file_tektronix::get_file_format_name()
     const
 {
     return "Tektronix (16-bit)";
@@ -216,7 +216,7 @@ srecord::input_file_tektronix::get_file_format_name(void)
 
 
 int
-srecord::input_file_tektronix::format_option_number(void)
+srecord::input_file_tektronix::format_option_number()
     const
 {
     return arglex_tool::token_tektronix;

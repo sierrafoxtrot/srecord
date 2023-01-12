@@ -46,7 +46,7 @@ srecord::input_file_tektronix_extended::create(const std::string &a_file_name)
 
 
 int
-srecord::input_file_tektronix_extended::get_nibble(void)
+srecord::input_file_tektronix_extended::get_nibble()
 {
     int n = inherited::get_nibble();
     nibble_sum += n;
@@ -241,7 +241,7 @@ srecord::input_file_tektronix_extended::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_tektronix_extended::get_file_format_name(void)
+srecord::input_file_tektronix_extended::get_file_format_name()
     const
 {
     return "Tektronix Extended";
@@ -249,7 +249,7 @@ srecord::input_file_tektronix_extended::get_file_format_name(void)
 
 
 int
-srecord::input_file_tektronix_extended::format_option_number(void)
+srecord::input_file_tektronix_extended::format_option_number()
     const
 {
     return arglex_tool::token_tektronix_extended;

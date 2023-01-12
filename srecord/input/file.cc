@@ -39,7 +39,7 @@ srecord::input_file::input_file() :
 
 
 bool
-srecord::input_file::is_binary(void)
+srecord::input_file::is_binary()
     const
 {
     return false;
@@ -71,7 +71,7 @@ srecord::input_file::input_file(const std::string &a_file_name) :
 
 
 void *
-srecord::input_file::get_fp(void)
+srecord::input_file::get_fp()
 {
     if (!vfp)
     {
@@ -103,7 +103,7 @@ srecord::input_file::~input_file()
 
 
 std::string
-srecord::input_file::filename(void)
+srecord::input_file::filename()
     const
 {
     return file_name;
@@ -111,7 +111,7 @@ srecord::input_file::filename(void)
 
 
 std::string
-srecord::input_file::filename_and_line(void)
+srecord::input_file::filename_and_line()
     const
 {
     if (!vfp)
@@ -126,7 +126,7 @@ srecord::input_file::filename_and_line(void)
 
 
 int
-srecord::input_file::get_char(void)
+srecord::input_file::get_char()
 {
     FILE *fp = (FILE *)get_fp();
     if (prev_was_newline)
@@ -184,7 +184,7 @@ srecord::input_file::get_char_undo(int c)
 
 
 int
-srecord::input_file::peek_char(void)
+srecord::input_file::peek_char()
 {
     FILE *fp = (FILE *)get_fp();
     int c = getc(fp);
@@ -220,7 +220,7 @@ srecord::input_file::get_nibble_value(int c)
 
 
 int
-srecord::input_file::get_nibble(void)
+srecord::input_file::get_nibble()
 {
     int c = get_char();
     int n = get_nibble_value(c);
@@ -231,7 +231,7 @@ srecord::input_file::get_nibble(void)
 
 
 int
-srecord::input_file::get_byte(void)
+srecord::input_file::get_byte()
 {
     int c1 = get_nibble();
     int c2 = get_nibble();
@@ -242,7 +242,7 @@ srecord::input_file::get_byte(void)
 
 
 unsigned
-srecord::input_file::get_word_be(void)
+srecord::input_file::get_word_be()
 {
     int b1 = get_byte();
     int b2 = get_byte();
@@ -251,7 +251,7 @@ srecord::input_file::get_word_be(void)
 
 
 unsigned
-srecord::input_file::get_word_le(void)
+srecord::input_file::get_word_le()
 {
     int b1 = get_byte();
     int b2 = get_byte();
@@ -260,7 +260,7 @@ srecord::input_file::get_word_le(void)
 
 
 unsigned long
-srecord::input_file::get_3bytes_be(void)
+srecord::input_file::get_3bytes_be()
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -270,7 +270,7 @@ srecord::input_file::get_3bytes_be(void)
 
 
 unsigned long
-srecord::input_file::get_3bytes_le(void)
+srecord::input_file::get_3bytes_le()
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -280,7 +280,7 @@ srecord::input_file::get_3bytes_le(void)
 
 
 unsigned long
-srecord::input_file::get_4bytes_be(void)
+srecord::input_file::get_4bytes_be()
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -291,7 +291,7 @@ srecord::input_file::get_4bytes_be(void)
 
 
 unsigned long
-srecord::input_file::get_4bytes_le(void)
+srecord::input_file::get_4bytes_le()
 {
     unsigned long b1 = get_byte();
     unsigned long b2 = get_byte();
@@ -302,7 +302,7 @@ srecord::input_file::get_4bytes_le(void)
 
 
 int
-srecord::input_file::checksum_get(void)
+srecord::input_file::checksum_get()
     const
 {
     return (checksum & 0xFF);
@@ -310,7 +310,7 @@ srecord::input_file::checksum_get(void)
 
 
 int
-srecord::input_file::checksum_get16(void)
+srecord::input_file::checksum_get16()
     const
 {
     return (checksum & 0xFFFF);
@@ -318,7 +318,7 @@ srecord::input_file::checksum_get16(void)
 
 
 void
-srecord::input_file::checksum_reset(void)
+srecord::input_file::checksum_reset()
 {
     checksum = 0;
 }
@@ -332,7 +332,7 @@ srecord::input_file::checksum_add(unsigned char n)
 
 
 void
-srecord::input_file::seek_to_end(void)
+srecord::input_file::seek_to_end()
 {
     FILE *fp = (FILE *)get_fp();
     fseek(fp, 0L, SEEK_END);
@@ -340,7 +340,7 @@ srecord::input_file::seek_to_end(void)
 
 
 void
-srecord::input_file::disable_checksum_validation(void)
+srecord::input_file::disable_checksum_validation()
 {
     ignore_checksums = true;
 }

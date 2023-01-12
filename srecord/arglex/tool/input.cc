@@ -197,7 +197,7 @@ srecord::arglex_tool::get_inclusive_by_token(int tok)
 
 
 srecord::input::pointer
-srecord::arglex_tool::get_simple_input(void)
+srecord::arglex_tool::get_simple_input()
 {
     std::string fn = "-";
     input::pointer ifp;

@@ -66,7 +66,7 @@ protected:
     void address_length_set(int);
 
     // See base class for documentation.
-    int preferred_block_size_get(void) const;
+    int preferred_block_size_get() const;
 
     // See base class for documentation.
     bool preferred_block_size_set(int nbytes);
@@ -137,7 +137,7 @@ private:
       * deeper->preferred_bock_size_get whenever that value could have
       * changed.
       */
-    void track_block_size(void);
+    void track_block_size();
 
     /**
       * The flush_buffer method is used to write the accumulated

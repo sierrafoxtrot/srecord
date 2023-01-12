@@ -56,16 +56,16 @@ protected:
     void address_length_set(int);
 
     // See base class for documentation.
-    int preferred_block_size_get(void) const;
+    int preferred_block_size_get() const;
 
     // See base class for documentation.
     bool preferred_block_size_set(int nbytes);
 
     // See base class for documentation.
-    const char *format_name(void) const;
+    const char *format_name() const;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    bool is_binary() const;
 
 private:
     /**
@@ -106,7 +106,7 @@ private:
       * The buffer_flush method is used to write out the #buffer_length
       * bytes in the #buffer instance variable.
       */
-    void buffer_flush(void);
+    void buffer_flush();
 
     /**
       * The packet method is used to write out the #buffer as an

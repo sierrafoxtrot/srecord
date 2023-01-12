@@ -49,7 +49,7 @@ srecord::input_file_ppx::create(const std::string &filename)
 
 
 void
-srecord::input_file_ppx::get_next_token(void)
+srecord::input_file_ppx::get_next_token()
 {
     for (;;)
     {
@@ -129,7 +129,7 @@ srecord::input_file_ppx::get_next_token(void)
 
 
 void
-srecord::input_file_ppx::syntax_error(void)
+srecord::input_file_ppx::syntax_error()
 {
     fatal_error("syntax error");
 }
@@ -311,7 +311,7 @@ srecord::input_file_ppx::read(record &result)
 
 
 const char *
-srecord::input_file_ppx::get_file_format_name(void)
+srecord::input_file_ppx::get_file_format_name()
     const
 {
     return "Stag Prom Programmer hexadecimal (PPX)";
@@ -319,7 +319,7 @@ srecord::input_file_ppx::get_file_format_name(void)
 
 
 int
-srecord::input_file_ppx::format_option_number(void)
+srecord::input_file_ppx::format_option_number()
     const
 {
     return arglex_tool::token_ppx;

@@ -46,7 +46,7 @@ srecord::input_file_ti_tagged::create(const std::string &a_file_name)
 
 
 int
-srecord::input_file_ti_tagged::get_char(void)
+srecord::input_file_ti_tagged::get_char()
 {
     int c = inherited::get_char();
     if (c < 0 || c == '\n')
@@ -178,7 +178,7 @@ srecord::input_file_ti_tagged::read(record &result)
 
 
 const char *
-srecord::input_file_ti_tagged::get_file_format_name(void)
+srecord::input_file_ti_tagged::get_file_format_name()
     const
 {
     return "Texas Instruments Tagged (SDSMAC)";
@@ -186,7 +186,7 @@ srecord::input_file_ti_tagged::get_file_format_name(void)
 
 
 int
-srecord::input_file_ti_tagged::format_option_number(void)
+srecord::input_file_ti_tagged::format_option_number()
     const
 {
     return arglex_tool::token_ti_tagged;

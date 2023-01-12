@@ -186,7 +186,7 @@ srecord::input_file_spectrum::get_file_format_name ()
 
 
 int
-srecord::input_file_spectrum::format_option_number(void)
+srecord::input_file_spectrum::format_option_number()
     const
 {
     return arglex_tool::token_spectrum;

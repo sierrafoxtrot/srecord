@@ -23,7 +23,7 @@
 
 
 void
-srecord::arglex::test_ambiguous(void)
+srecord::arglex::test_ambiguous()
     const
 {
     int number_of_errors = 0;

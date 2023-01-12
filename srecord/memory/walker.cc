@@ -53,7 +53,7 @@ srecord::memory_walker::observe_start_address(const srecord::record *)
 
 
 void
-srecord::memory_walker::observe_end(void)
+srecord::memory_walker::observe_end()
 {
     // Do nothing.
 }

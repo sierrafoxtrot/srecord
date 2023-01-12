@@ -132,7 +132,7 @@ check(const char *filename)
 
 
 static void
-usage(void)
+usage()
 {
     const char *prog = srecord::progname_get();
     fprintf(stderr, "Usage: %s <filename>...\n", prog);

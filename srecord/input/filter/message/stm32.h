@@ -86,10 +86,10 @@ protected:
     void process(const memory &input, record &output);
 
     // See base class for documentation.
-    const char *get_algorithm_name(void) const;
+    const char *get_algorithm_name() const;
 
     // See base class for documentation.
-    unsigned get_minimum_alignment(void) const;
+    unsigned get_minimum_alignment() const;
 
 private:
     /**

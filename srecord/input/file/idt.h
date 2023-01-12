@@ -52,13 +52,13 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    bool is_binary() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**
@@ -91,7 +91,7 @@ private:
       * The record_format_error is a wrapper around #fatal_error to
       * complain abut format errors.
       */
-    void record_format_error(void);
+    void record_format_error();
 
     /**
       * The default constructor.  Do not use.

@@ -104,7 +104,7 @@ srecord::input_file_spasm::read(record &result)
 
 
 const char *
-srecord::input_file_spasm::get_file_format_name(void)
+srecord::input_file_spasm::get_file_format_name()
     const
 {
     return
@@ -119,7 +119,7 @@ srecord::input_file_spasm::get_file_format_name(void)
 
 
 int
-srecord::input_file_spasm::format_option_number(void)
+srecord::input_file_spasm::format_option_number()
     const
 {
     return

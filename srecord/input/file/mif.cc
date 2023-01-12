@@ -47,7 +47,7 @@ srecord::input_file_mif::create(const std::string &a_file_name)
 
 
 srecord::input_file_mif::token_t
-srecord::input_file_mif::lex_addr(void)
+srecord::input_file_mif::lex_addr()
 {
     lex_radix = lex_addr_radix;
     token_t result = lex();
@@ -57,7 +57,7 @@ srecord::input_file_mif::lex_addr(void)
 
 
 srecord::input_file_mif::token_t
-srecord::input_file_mif::lex_data(void)
+srecord::input_file_mif::lex_data()
 {
     lex_radix = lex_data_radix;
     token_t result = lex();
@@ -67,7 +67,7 @@ srecord::input_file_mif::lex_data(void)
 
 
 srecord::input_file_mif::token_t
-srecord::input_file_mif::lex(void)
+srecord::input_file_mif::lex()
 {
     for (;;)
     {
@@ -230,7 +230,7 @@ srecord::input_file_mif::syntax_error(const char *text)
 
 
 void
-srecord::input_file_mif::get_equals(void)
+srecord::input_file_mif::get_equals()
 {
     if (lex() != token_equals)
         syntax_error("equals (=) expected");
@@ -238,7 +238,7 @@ srecord::input_file_mif::get_equals(void)
 
 
 long
-srecord::input_file_mif::get_number(void)
+srecord::input_file_mif::get_number()
 {
     if (lex() != token_number)
         syntax_error("decimal number expected");
@@ -247,7 +247,7 @@ srecord::input_file_mif::get_number(void)
 
 
 void
-srecord::input_file_mif::get_semicolon(void)
+srecord::input_file_mif::get_semicolon()
 {
     if (lex() != token_semicolon)
         syntax_error("semicolon (;) expected");
@@ -255,7 +255,7 @@ srecord::input_file_mif::get_semicolon(void)
 
 
 void
-srecord::input_file_mif::get_colon(void)
+srecord::input_file_mif::get_colon()
 {
     if (lex() != token_colon)
         syntax_error("colon (:) expected");
@@ -263,7 +263,7 @@ srecord::input_file_mif::get_colon(void)
 
 
 int
-srecord::input_file_mif::get_radix(void)
+srecord::input_file_mif::get_radix()
 {
     switch (lex())
     {
@@ -458,7 +458,7 @@ srecord::input_file_mif::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_mif::get_file_format_name(void)
+srecord::input_file_mif::get_file_format_name()
     const
 {
     return "Memory Initialization File (MIF, Altera)";
@@ -466,7 +466,7 @@ srecord::input_file_mif::get_file_format_name(void)
 
 
 int
-srecord::input_file_mif::format_option_number(void)
+srecord::input_file_mif::format_option_number()
     const
 {
     return arglex_tool::token_memory_initialization_file;

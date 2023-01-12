@@ -188,7 +188,7 @@ srecord::input_file_ascii_hex::get_file_format_name()
 
 
 int
-srecord::input_file_ascii_hex::format_option_number(void)
+srecord::input_file_ascii_hex::format_option_number()
     const
 {
     return arglex_tool::token_ascii_hex;

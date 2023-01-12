@@ -64,7 +64,7 @@ srecord::output_filter_reblock::create(const output::pointer &a_deeper,
 
 
 void
-srecord::output_filter_reblock::track_block_size(void)
+srecord::output_filter_reblock::track_block_size()
 {
     block_size = output_filter::preferred_block_size_get();
 }
@@ -87,7 +87,7 @@ srecord::output_filter_reblock::address_length_set(int n)
 
 
 int
-srecord::output_filter_reblock::preferred_block_size_get(void)
+srecord::output_filter_reblock::preferred_block_size_get()
     const
 {
     return record::max_data_length;

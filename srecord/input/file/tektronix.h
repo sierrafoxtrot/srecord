@@ -52,10 +52,10 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**
@@ -71,14 +71,14 @@ private:
       * We override the one in the base class because the checksum is
       * nibble-based, not byte-based.
       */
-    int get_nibble(void);
+    int get_nibble();
 
     /**
       * The get_byte method gets a two hex-digit from input and assembles
       * them (big-endian) into a byte.  We override the one in the base
       * class because the checksum is nibble-based, not byte-based.
       */
-    int get_byte(void);
+    int get_byte();
 
     /**
       * The read_inner method is used to read a single record from

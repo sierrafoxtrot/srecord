@@ -258,7 +258,7 @@ srecord::input_file_stewie::read(record &result)
 
 
 bool
-srecord::input_file_stewie::is_binary(void)
+srecord::input_file_stewie::is_binary()
     const
 {
     return true;
@@ -274,7 +274,7 @@ srecord::input_file_stewie::get_file_format_name()
 
 
 int
-srecord::input_file_stewie::format_option_number(void)
+srecord::input_file_stewie::format_option_number()
     const
 {
     return arglex_tool::token_stewie;

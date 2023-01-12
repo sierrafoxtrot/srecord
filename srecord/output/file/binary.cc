@@ -103,7 +103,7 @@ srecord::output_file_binary::format_name()
 
 
 bool
-srecord::output_file_binary::is_binary(void)
+srecord::output_file_binary::is_binary()
     const
 {
     return true;

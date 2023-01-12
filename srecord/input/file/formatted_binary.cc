@@ -163,7 +163,7 @@ srecord::input_file_formatted_binary::read(record &result)
 
 
 bool
-srecord::input_file_formatted_binary::is_binary(void)
+srecord::input_file_formatted_binary::is_binary()
     const
 {
     return true;
@@ -171,7 +171,7 @@ srecord::input_file_formatted_binary::is_binary(void)
 
 
 const char *
-srecord::input_file_formatted_binary::get_file_format_name(void)
+srecord::input_file_formatted_binary::get_file_format_name()
     const
 {
     return "Formatted Binary";
@@ -179,7 +179,7 @@ srecord::input_file_formatted_binary::get_file_format_name(void)
 
 
 int
-srecord::input_file_formatted_binary::format_option_number(void)
+srecord::input_file_formatted_binary::format_option_number()
     const
 {
     return arglex_tool::token_formatted_binary;

@@ -52,10 +52,10 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**
@@ -72,7 +72,7 @@ private:
       * The format requires spaces in some locations, this method
       * skips the space of present.
       */
-    void skip_white_space(void);
+    void skip_white_space();
 
     /**
       * The default constructor.  Do not use.

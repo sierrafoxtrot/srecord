@@ -103,7 +103,7 @@ public:
       * The filename method is used to get the name of the input file
       * being processed.  Derived classes must supply this method.
       */
-    virtual std::string filename(void) const = 0;
+    virtual std::string filename() const = 0;
 
     /**
       * The filename_and_line method is used to get the name
@@ -111,14 +111,14 @@ public:
       * implementation simply calls the filename method and returns
       * that.  Text formats should be cleverer.
       */
-    virtual std::string filename_and_line(void) const;
+    virtual std::string filename_and_line() const;
 
     /**
       * The get_file_format_name method is used to find out the name
       * of the file format being read.  Derived classes must supply
       * this method.
       */
-    virtual const char *get_file_format_name(void) const = 0;
+    virtual const char *get_file_format_name() const = 0;
 
     /**
       * The set_quit method is used to set the disposition of the
@@ -132,13 +132,13 @@ public:
       * The reset_quit method is used to cause the disposition of
       * the error messages, and the "exit" back to the default.
       */
-    void reset_quit(void);
+    void reset_quit();
 
     /**
       * The disable_checksum_validation method is used to have this
       * input stream ignore checksum errors.
       */
-    virtual void disable_checksum_validation(void) = 0;
+    virtual void disable_checksum_validation() = 0;
 
     /**
       * The command_line method is used by arglex_srec::get_input

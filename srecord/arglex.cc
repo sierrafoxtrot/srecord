@@ -422,7 +422,7 @@ deprecated_warning(const char *deprecated_name, const char *preferred_name)
 //
 
 int
-srecord::arglex::token_next(void)
+srecord::arglex::token_next()
 {
     const table_ty  *tp;
     const table_ty  *hit[20];
@@ -676,7 +676,7 @@ srecord::arglex::help(const char *name)
 
 
 void
-srecord::arglex::version(void)
+srecord::arglex::version()
     const
 {
     print_version();
@@ -685,7 +685,7 @@ srecord::arglex::version(void)
 
 
 void
-srecord::arglex::license(void)
+srecord::arglex::license()
     const
 {
     help("srec_license");
@@ -693,7 +693,7 @@ srecord::arglex::license(void)
 
 
 void
-srecord::arglex::bad_argument(void)
+srecord::arglex::bad_argument()
     const
 {
     switch (token_cur())
@@ -727,7 +727,7 @@ srecord::arglex::bad_argument(void)
 
 
 int
-srecord::arglex::token_first(void)
+srecord::arglex::token_first()
 {
 #if 1
     // We probably don't need to do this all the time.
@@ -770,7 +770,7 @@ srecord::arglex::usage_tail_set(const char *s)
 
 
 const char *
-srecord::arglex::usage_tail_get(void)
+srecord::arglex::usage_tail_get()
     const
 {
     if (!usage_tail_)
@@ -780,7 +780,7 @@ srecord::arglex::usage_tail_get(void)
 
 
 void
-srecord::arglex::usage(void)
+srecord::arglex::usage()
     const
 {
     std::cerr << "Usage: " << progname_get() << " [ <option>... ] "
@@ -794,7 +794,7 @@ srecord::arglex::usage(void)
 
 
 void
-srecord::arglex::default_command_line_processing(void)
+srecord::arglex::default_command_line_processing()
 {
     bad_argument();
 }
