@@ -21,6 +21,7 @@
 #include <unistd.h>
 
 #include <srecord/r250.h>
+#include <srecord/sizeof.h>
 
 static  unsigned long   buf[250];
 static  unsigned long   *pos;
@@ -48,9 +49,6 @@ rand32()
         );
 }
 
-
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
-#define ENDOF(a) ((a) + SIZEOF(a))
 
 static bool ready;
 

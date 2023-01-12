@@ -58,6 +58,7 @@
 #include <srecord/input/file/vmem.h>
 #include <srecord/input/file/wilson.h>
 #include <srecord/record.h>
+#include <srecord/sizeof.h>
 
 
 typedef srecord::input_file::pointer (*func_p)(const std::string &file_name);
@@ -101,9 +102,6 @@ static func_p table[] =
     srecord::input_file_wilson::create,
     srecord::input_file_hexdump::create,
 };
-
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
-#define ENDOF(a) ((a) + SIZEOF(a))
 
 
 srecord::input_file::pointer
