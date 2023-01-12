@@ -80,8 +80,7 @@ srecord::memory::clear()
     execution_start_address = 0;
     for (int j = 0; j < nchunks; ++j)
         delete chunk[j];
-    if (chunk)
-        delete [] chunk;
+    delete [] chunk;
     nchunks = 0;
     nchunks_max = 0;
     chunk = 0;

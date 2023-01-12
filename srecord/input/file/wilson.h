@@ -78,7 +78,6 @@ private:
       */
     input_file_wilson(const std::string &file_name);
 
-private:
     /**
       * The read_inner method is used to read a record from the input.
       * The #read method is a wrapper around this method.

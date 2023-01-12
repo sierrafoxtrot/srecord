@@ -98,8 +98,10 @@ srecord::input_file_hp64k::read_u16be(uint16_t *dest)
 bool
 srecord::input_file_hp64k::read_datarec(record &result)
 {
-    uint16_t recsize, datasize;
-    uint16_t load_l, load_h;
+    uint16_t recsize;
+    uint16_t datasize;
+    uint16_t load_l;
+    uint16_t load_h;
     size_t tmp_addr;
 
     if (!read_u16be(&recsize))
@@ -197,7 +199,11 @@ srecord::input_file_hp64k::read_hdr(record &result)
 bool
 srecord::input_file_hp64k::read_pir(record &result)
 {
-    uint16_t pirlen, width, base, xfer_l, xfer_h;
+    uint16_t pirlen;
+    uint16_t width;
+    uint16_t base;
+    uint16_t xfer_l;
+    uint16_t xfer_h;
     uint32_t xfer;
 
     if (!read_u16be(&pirlen))

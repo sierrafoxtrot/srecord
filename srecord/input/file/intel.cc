@@ -23,8 +23,7 @@
 
 srecord::input_file_intel::~input_file_intel()
 {
-    if (pushback)
-        delete pushback;
+    delete pushback;
 }
 
 

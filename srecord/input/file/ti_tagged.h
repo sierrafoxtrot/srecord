@@ -73,7 +73,6 @@ private:
       */
     int get_char();
 
-private:
     typedef input_file inherited;
 
     /**

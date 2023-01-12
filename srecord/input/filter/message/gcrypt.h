@@ -60,7 +60,7 @@ private:
     input_filter_message_gcrypt(const input::pointer &deeper,
         unsigned long address, int algo, bool hmac);
 
-private:
+
     /**
       * The create class method is used to create a new dynamically
       * allocated instance of this class.

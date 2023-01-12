@@ -62,7 +62,7 @@ main(int argc, char **argv)
         }
         cmdline.token_next();
     }
-    if (infile.size() == 0U)
+    if (infile.empty())
         infile.push_back(cmdline.get_input());
 
     std::cout << std::hex << std::uppercase;

@@ -348,7 +348,6 @@ private:
       */
     void read_arguments_file(const char *filename);
 
-private:
     typedef std::list<std::string> deprecated_options_t;
 
     /**
