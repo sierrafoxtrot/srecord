@@ -65,7 +65,7 @@ srecord::arglex::arglex(int ac, char **av) :
         if (av[j][0] == '@')
             read_arguments_file(av[j] + 1);
         else
-            arguments.push_back(av[j]);
+            arguments.emplace_back(av[j]);
     }
     table_set(default_table);
 }
@@ -125,7 +125,7 @@ srecord::arglex::read_arguments_file(const char *filename)
         if (buffer[0] == '@')
             read_arguments_file(buffer + 1);
         else
-            arguments.push_back(std::string(buffer, bp - buffer));
+            arguments.emplace_back(buffer, bp - buffer);
     }
     fclose(fp);
 }
@@ -391,7 +391,7 @@ deprecated_warning(const char *deprecated_name, const char *preferred_name)
 {
     srecord::quit_default.warning
     (
-        "option \"%s\" is deprecated, please use \"%s\" instead",
+        R"(option "%s" is deprecated, please use "%s" instead)",
         deprecated_name,
         preferred_name
     );
@@ -458,7 +458,7 @@ srecord::arglex::token_next(void)
             const char *eqp = strchr(arg.c_str(), '=');
             if (eqp)
             {
-                pushback.push_back(eqp + 1);
+                pushback.emplace_back(eqp + 1);
                 arg = std::string(arg.c_str(), eqp - arg.c_str());
             }
         }
@@ -582,7 +582,7 @@ srecord::arglex::token_next(void)
     case 1:
         if (partial)
         {
-            pushback.push_back(partial);
+            pushback.emplace_back(partial);
             partial = 0;
         }
         value_string_ = hit[0]->name;

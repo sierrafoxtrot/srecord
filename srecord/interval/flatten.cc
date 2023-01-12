@@ -26,5 +26,5 @@ srecord::interval::flatten()
 {
     if (length <= 2)
         return *this;
-    return interval(get_lowest(), get_highest());
+    return {get_lowest(), get_highest()};
 }

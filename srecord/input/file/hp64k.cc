@@ -90,7 +90,7 @@ srecord::input_file_hp64k::read_u16be(uint16_t *dest)
         return false;
     tmp = tmp | (c & 0xFF);
     *dest = tmp;
-    return 1;
+    return true;
 }
 
 //in this implementation, read_datarec is called at the "recsize" position,
@@ -239,7 +239,7 @@ srecord::input_file_hp64k::read(record &record)
     case need_hdr:
         if (!read_hdr(record))
         {
-            return 0;
+            return false;
         }
         state = need_pir;
         break;
@@ -247,7 +247,7 @@ srecord::input_file_hp64k::read(record &record)
     case need_pir:
         if (!read_pir(record))
         {
-            return 0;
+            return false;
         }
         state = data;
         break;

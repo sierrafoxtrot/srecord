@@ -20,6 +20,7 @@
 //
 
 #include <cassert>
+#include <memory>
 
 #include <srecord/output/file/msbin.h>
 
@@ -212,7 +213,7 @@ srecord::output_file_msbin::append_pending_record(const record &r)
             flush_pending_records(&r);
         }
         else
-            pending_records.push_back(std::shared_ptr<record>(new record(r)));
+            pending_records.push_back(std::make_shared<record>(r));
     }
     else
     {
@@ -226,7 +227,7 @@ srecord::output_file_msbin::append_pending_record(const record &r)
             flush_pending_records(&r);
         }
         else
-            pending_records.push_back(std::shared_ptr<record>(new record(r)));
+            pending_records.push_back(std::make_shared<record>(r));
     }
 }
 
