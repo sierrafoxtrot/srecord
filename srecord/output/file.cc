@@ -126,7 +126,7 @@ srecord::output_file::get_fp()
 }
 
 
-const std::string
+std::string
 srecord::output_file::filename()
     const
 {

@@ -55,7 +55,7 @@ public:
     output_file(const std::string &file_name);
 
     // See base class for documentation.
-    virtual const std::string filename() const;
+    virtual std::string filename() const;
 
     /**
       * The enable_header class method is used to enable or disable

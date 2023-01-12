@@ -66,7 +66,7 @@ srecord::output_filter::preferred_block_size_set(int nbytes)
 }
 
 
-const std::string
+std::string
 srecord::output_filter::filename()
     const
 {

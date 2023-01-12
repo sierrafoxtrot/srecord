@@ -172,7 +172,7 @@ public:
       * output file.  It is used for the various error messages.
       * Derived classes must implement this method.
       */
-    virtual const std::string filename() const = 0;
+    virtual std::string filename() const = 0;
 
     /**
       * The format_name method is used to obtain the name of this output
