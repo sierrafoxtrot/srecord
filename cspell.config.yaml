@@ -10,6 +10,7 @@ language: "en-GB"
 ignorePaths:
   # Configuration files and dictionaries
   - /.git
+  - .clang-tidy
   - .gitignore
   - .mega-linter.yml
   - .vscode
