@@ -182,6 +182,7 @@ words:
   - globbing
   - gsub
   - gumph
+  - howto
   - htdocs
   - ifndef
   - incl
@@ -222,6 +223,7 @@ words:
   - PDFEXE
   - pirlen
   - productbuild
+  - progname
   - psselect
   - radixes
   - readmemh
