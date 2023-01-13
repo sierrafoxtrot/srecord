@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+      - name: Update system
+        run: sudo apt-get update
+
       - name: Install prerequisites
         run: >-
           sudo apt-get install -y
@@ -61,6 +64,9 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+      - name: Update system
+        run: sudo apt-get update
+
       - name: Install prerequisites
         run: >-
           sudo apt-get install -y
@@ -110,6 +116,9 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+      - name: Update system
+        run: sudo apt-get update
+
       - name: Install prerequisites
         run: >-
           sudo apt-get install -y
