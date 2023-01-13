@@ -43,17 +43,17 @@ test $? -eq 0 || no_result
 #
 test_crc16 < zero.length.file > test.out
 test $? -eq 0 || fail
-echo >> test.out
+echo | cat >> test.out
 test $? -eq 0 || no_result
 
 test_crc16 < single.a.file >> test.out
 test $? -eq 0 || fail
-echo >> test.out
+echo | cat >> test.out
 test $? -eq 0 || no_result
 
 test_crc16 < nine.digits.file >> test.out
 test $? -eq 0 || fail
-echo >> test.out
+echo | cat >> test.out
 test $? -eq 0 || no_result
 
 test_crc16 < upper-case-a.256.file >> test.out
