@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # srecord - Manipulate EPROM load files
-# Copyright (C) 2014 Markus Heidelberg
+# Copyright (C) 2023 Sean Alling
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,16 +20,15 @@
 TEST_SUBJECT="-Round_Down"
 . test_prelude.sh
 
-cat > test.ok << 'fubar'
-S00600004844521B
-S306FFFFFFFE00FE
-S5030001FB
-fubar
-if test $? -ne 0; then no_result; fi
-
-srec_cat test.in  -offset  - 1 -Round_Down 0 -o test.out
+srec_cat -generate 0 8 -constant 0 -offset - 1 -Round_Up 0 \
+    2> test.out
 
 if test $? -ne 1; then fail; fi
 
+cat > test.ok << 'fubar'
+srec_cat: -Round_Up value must not be 0
+fubar
+if test $? -ne 0; then no_result; fi
 
-pass
+diff -u test.ok test.out
+if test $? -ne 0; then fail; fi
