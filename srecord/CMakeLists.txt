@@ -22,6 +22,7 @@ file(GLOB_RECURSE LIB_SRECORD_HDR "*.h")
 
 message(STATUS "gcrypt location ${LIB_GCRYPT}")
 add_library(lib_srecord STATIC ${LIB_SRECORD_SRC} ${LIB_SRECORD_HDR} ${LIB_GCRYPT})
+target_compile_features(lib_srecord PUBLIC cxx_std_11)
 
 # Install the library
 install(TARGETS lib_srecord
