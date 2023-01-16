@@ -20,6 +20,8 @@ cmake_minimum_required(VERSION 3.22)
 project(srecord VERSION "1.65")
 set(CMAKE_BUILD_TYPE Release)
 
+option(ENABLE_BUILDING_DOCS "Enable documentation generation during build" ON)
+
 # Headers are all relative to project root
 include_directories(./)
 
@@ -62,8 +64,10 @@ endforeach()
 enable_testing()
 add_subdirectory(test)
 
-# Documentation & Man Pages
-add_subdirectory(doc)
+if(ENABLE_BUILDING_DOCS)
+  # Documentation & Man Pages
+  add_subdirectory(doc)
+endif()
 
 # Package SRecord
 include(CPack)
