@@ -138,10 +138,8 @@ option(_TANDEM_SOURCE ON)
 # Enable general extensions on Solaris.
 option(__EXTENSIONS__ ON)
 
-if(ENABLE_BUILDING_DOCS)
+if(SRecord_INTERNAL_ENABLE_DOCS)
   # Doxygen configuration
-  find_package(Doxygen REQUIRED doxygen dot)
-
   set(DOXYGEN_DOT_GRAPH_MAX_NODES 150)
   set(DOXYGEN_ALPHABETICAL_INDEX NO)
   set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
