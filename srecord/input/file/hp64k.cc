@@ -90,7 +90,7 @@ srecord::input_file_hp64k::read_u16be(uint16_t *dest)
         return false;
     tmp = tmp | (c & 0xFF);
     *dest = tmp;
-    return 1;
+    return true;
 }
 
 //in this implementation, read_datarec is called at the "recsize" position,
@@ -98,8 +98,10 @@ srecord::input_file_hp64k::read_u16be(uint16_t *dest)
 bool
 srecord::input_file_hp64k::read_datarec(record &result)
 {
-    uint16_t recsize, datasize;
-    uint16_t load_l, load_h;
+    uint16_t recsize;
+    uint16_t datasize;
+    uint16_t load_l;
+    uint16_t load_h;
     size_t tmp_addr;
 
     if (!read_u16be(&recsize))
@@ -197,7 +199,11 @@ srecord::input_file_hp64k::read_hdr(record &result)
 bool
 srecord::input_file_hp64k::read_pir(record &result)
 {
-    uint16_t pirlen, width, base, xfer_l, xfer_h;
+    uint16_t pirlen;
+    uint16_t width;
+    uint16_t base;
+    uint16_t xfer_l;
+    uint16_t xfer_h;
     uint32_t xfer;
 
     if (!read_u16be(&pirlen))
@@ -239,7 +245,7 @@ srecord::input_file_hp64k::read(record &record)
     case need_hdr:
         if (!read_hdr(record))
         {
-            return 0;
+            return false;
         }
         state = need_pir;
         break;
@@ -247,7 +253,7 @@ srecord::input_file_hp64k::read(record &record)
     case need_pir:
         if (!read_pir(record))
         {
-            return 0;
+            return false;
         }
         state = data;
         break;
@@ -268,14 +274,14 @@ srecord::input_file_hp64k::read(record &record)
 }
 
 bool
-srecord::input_file_hp64k::is_binary(void)
+srecord::input_file_hp64k::is_binary()
     const
 {
     return true;
 }
 
 const char *
-srecord::input_file_hp64k::get_file_format_name(void)
+srecord::input_file_hp64k::get_file_format_name()
     const
 {
     return "HP64000 Absolute";
@@ -283,7 +289,7 @@ srecord::input_file_hp64k::get_file_format_name(void)
 
 
 int
-srecord::input_file_hp64k::format_option_number(void)
+srecord::input_file_hp64k::format_option_number()
     const
 {
     return arglex_tool::token_hp64k;

@@ -60,7 +60,7 @@ srecord::output_file_hexdump::command_line(srecord::arglex_tool *)
 
 
 void
-srecord::output_file_hexdump::row_cache_print(void)
+srecord::output_file_hexdump::row_cache_print()
 {
     if (row_cache_address == (unsigned long)(-1))
         return;
@@ -162,7 +162,7 @@ srecord::output_file_hexdump::write(const srecord::record &record)
 
 
 int
-srecord::output_file_hexdump::columns_to_line_length(int cols)
+srecord::output_file_hexdump::columns_to_line_length(int cols) const
 {
     // 0000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  #................
     //      ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^^
@@ -206,7 +206,7 @@ srecord::output_file_hexdump::address_length_set(int)
 
 
 int
-srecord::output_file_hexdump::preferred_block_size_get(void)
+srecord::output_file_hexdump::preferred_block_size_get()
     const
 {
     //
@@ -217,7 +217,7 @@ srecord::output_file_hexdump::preferred_block_size_get(void)
 
 
 const char *
-srecord::output_file_hexdump::format_name(void)
+srecord::output_file_hexdump::format_name()
     const
 {
     return "hexdump";

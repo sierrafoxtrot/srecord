@@ -30,7 +30,7 @@ srecord::output_file_fairchild::output_file_fairchild(
     const std::string &a_file_name
 ) :
     srecord::output_file(a_file_name),
-    address(~0uL)
+    address(~0UL)
 {
 }
 

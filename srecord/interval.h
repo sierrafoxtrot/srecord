@@ -21,7 +21,7 @@
 #define SRECORD_INTERVAL_H
 
 #include <cstddef>
-#include <stdint.h>
+#include <cstdint>
 #include <iostream>
 
 namespace srecord

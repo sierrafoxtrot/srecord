@@ -23,7 +23,7 @@
 #ifndef SRECORD_CRC16_H
 #define SRECORD_CRC16_H
 
-#include <stddef.h>
+#include <cstddef>
 
 namespace srecord
 {
@@ -145,7 +145,7 @@ public:
       * The print_table method may be used to print the table being used.
       * This is principally for debugging the table generation process.
       */
-    void print_table(void) const;
+    void print_table() const;
 
 private:
     /**
@@ -186,7 +186,7 @@ private:
       * The calculate_table method is called by the constructor to fill
       * in the #table instance variable.
       */
-    void calculate_table(void);
+    void calculate_table();
 
     /**
       * The updcrc method is to add another byte of data to the running

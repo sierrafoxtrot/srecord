@@ -86,7 +86,7 @@ srecord::input_file_brecord::read(record &result)
 
 
 const char *
-srecord::input_file_brecord::get_file_format_name(void)
+srecord::input_file_brecord::get_file_format_name()
     const
 {
     return "Motorola MC68EZ328 bootstrap b-record";
@@ -94,7 +94,7 @@ srecord::input_file_brecord::get_file_format_name(void)
 
 
 int
-srecord::input_file_brecord::format_option_number(void)
+srecord::input_file_brecord::format_option_number()
     const
 {
     return arglex_tool::token_brecord;

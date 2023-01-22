@@ -40,7 +40,7 @@ srecord::input_filter_message::input_filter_message(
 
 
 unsigned
-srecord::input_filter_message::get_minimum_alignment(void)
+srecord::input_filter_message::get_minimum_alignment()
     const
 {
     return 0;

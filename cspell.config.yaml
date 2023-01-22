@@ -10,6 +10,7 @@ language: "en-GB"
 ignorePaths:
   # Configuration files and dictionaries
   - /.git
+  - .clang-tidy
   - .gitignore
   - .mega-linter.yml
   - .vscode
@@ -182,6 +183,7 @@ words:
   - globbing
   - gsub
   - gumph
+  - howto
   - htdocs
   - ifndef
   - incl
@@ -222,6 +224,7 @@ words:
   - PDFEXE
   - pirlen
   - productbuild
+  - progname
   - psselect
   - radixes
   - readmemh

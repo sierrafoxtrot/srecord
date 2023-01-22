@@ -78,7 +78,7 @@ protected:
     const char *format_name() const;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    bool is_binary() const;
 
 private:
     /**

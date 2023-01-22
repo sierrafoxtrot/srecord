@@ -22,7 +22,7 @@
 #ifndef SRECORD_OUTPUT_FILE_MSBIN_H
 #define SRECORD_OUTPUT_FILE_MSBIN_H
 
-#include <stdint.h>
+#include <cstdint>
 #include <srecord/output/file.h>
 #include <srecord/record.h>
 #include <vector>
@@ -89,7 +89,7 @@ protected:
     void notify_upper_bound(unsigned long addr);
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    bool is_binary() const;
 
 private:
     /**

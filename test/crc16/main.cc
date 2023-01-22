@@ -29,7 +29,7 @@
 
 
 static void
-usage(void)
+usage()
 {
     fprintf(stderr, "Usage: [ -av ] %s\n", srecord::progname_get());
     exit(1);

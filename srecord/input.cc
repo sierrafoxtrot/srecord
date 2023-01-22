@@ -17,9 +17,9 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include <errno.h>
-#include <iostream>
+#include <cerrno>
 #include <cstring>
+#include <iostream>
 
 #include <srecord/input.h>
 #include <srecord/record.h>

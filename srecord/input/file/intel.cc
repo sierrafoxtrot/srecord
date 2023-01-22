@@ -23,8 +23,7 @@
 
 srecord::input_file_intel::~input_file_intel()
 {
-    if (pushback)
-        delete pushback;
+    delete pushback;
 }
 
 
@@ -423,7 +422,7 @@ srecord::input_file_intel::get_file_format_name()
 
 
 int
-srecord::input_file_intel::format_option_number(void)
+srecord::input_file_intel::format_option_number()
     const
 {
     return arglex_tool::token_intel;

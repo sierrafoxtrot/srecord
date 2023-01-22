@@ -115,8 +115,7 @@ o96name(int x)
 
 srecord::input_file_aomf::~input_file_aomf()
 {
-    if (current_buffer)
-        delete [] current_buffer;
+    delete [] current_buffer;
 }
 
 
@@ -165,7 +164,7 @@ srecord::input_file_aomf::slurp()
     --length; // includes checksum byte
     if (length > current_maximum)
     {
-        if (current_buffer)
+
             delete [] current_buffer;
         while (current_maximum < length)
             current_maximum = current_maximum * 2 + 64;
@@ -286,7 +285,7 @@ srecord::input_file_aomf::read(srecord::record &record)
 
 
 bool
-srecord::input_file_aomf::is_binary(void)
+srecord::input_file_aomf::is_binary()
     const
 {
     return true;
@@ -302,7 +301,7 @@ srecord::input_file_aomf::get_file_format_name()
 
 
 int
-srecord::input_file_aomf::format_option_number(void)
+srecord::input_file_aomf::format_option_number()
     const
 {
     return arglex_tool::token_aomf;

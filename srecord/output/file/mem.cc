@@ -103,7 +103,7 @@ srecord::output_file_mem::notify_upper_bound(unsigned long addr)
 
 
 void
-srecord::output_file_mem::emit_header(void)
+srecord::output_file_mem::emit_header()
 {
     if (header_done)
         return;
@@ -297,7 +297,7 @@ srecord::output_file_mem::preferred_block_size_set(int nbytes)
 
 
 int
-srecord::output_file_mem::preferred_block_size_get(void)
+srecord::output_file_mem::preferred_block_size_get()
     const
 {
     return pref_blk_sz;
@@ -305,7 +305,7 @@ srecord::output_file_mem::preferred_block_size_get(void)
 
 
 const char *
-srecord::output_file_mem::format_name(void)
+srecord::output_file_mem::format_name()
     const
 {
     return "Lattice Memory Initialization Format (.mem)";

@@ -18,10 +18,10 @@
 
 #include <cassert>
 #include <cctype>
-#include <cstring>
+#include <cerrno>
 #include <cstdio>
 #include <cstdlib>
-#include <errno.h>
+#include <cstring>
 #include <iostream>
 #include <unistd.h>
 
@@ -65,7 +65,7 @@ srecord::arglex::arglex(int ac, char **av) :
         if (av[j][0] == '@')
             read_arguments_file(av[j] + 1);
         else
-            arguments.push_back(av[j]);
+            arguments.emplace_back(av[j]);
     }
     table_set(default_table);
 }
@@ -125,7 +125,7 @@ srecord::arglex::read_arguments_file(const char *filename)
         if (buffer[0] == '@')
             read_arguments_file(buffer + 1);
         else
-            arguments.push_back(std::string(buffer, bp - buffer));
+            arguments.emplace_back(buffer, bp - buffer);
     }
     fclose(fp);
 }
@@ -391,7 +391,7 @@ deprecated_warning(const char *deprecated_name, const char *preferred_name)
 {
     srecord::quit_default.warning
     (
-        "option \"%s\" is deprecated, please use \"%s\" instead",
+        R"(option "%s" is deprecated, please use "%s" instead)",
         deprecated_name,
         preferred_name
     );
@@ -422,7 +422,7 @@ deprecated_warning(const char *deprecated_name, const char *preferred_name)
 //
 
 int
-srecord::arglex::token_next(void)
+srecord::arglex::token_next()
 {
     const table_ty  *tp;
     const table_ty  *hit[20];
@@ -458,7 +458,7 @@ srecord::arglex::token_next(void)
             const char *eqp = strchr(arg.c_str(), '=');
             if (eqp)
             {
-                pushback.push_back(eqp + 1);
+                pushback.emplace_back(eqp + 1);
                 arg = std::string(arg.c_str(), eqp - arg.c_str());
             }
         }
@@ -497,7 +497,7 @@ srecord::arglex::token_next(void)
     partial = 0;
     for
     (
-        table_ptr_vec_t::iterator it = tables.begin();
+        auto it = tables.begin();
         it != tables.end();
         ++it
     )
@@ -582,7 +582,7 @@ srecord::arglex::token_next(void)
     case 1:
         if (partial)
         {
-            pushback.push_back(partial);
+            pushback.emplace_back(partial);
             partial = 0;
         }
         value_string_ = hit[0]->name;
@@ -607,7 +607,7 @@ srecord::arglex::check_deprecated(const std::string &actual)
 {
     for
     (
-        deprecated_options_t::const_iterator it = deprecated_options.begin();
+        auto it = deprecated_options.begin();
         it != deprecated_options.end();
         ++it
     )
@@ -647,7 +647,7 @@ srecord::arglex::token_name(int n)
     }
     for
     (
-        table_ptr_vec_t::const_iterator it = tables.begin();
+        auto it = tables.begin();
         it != tables.end();
         ++it
     )
@@ -676,7 +676,7 @@ srecord::arglex::help(const char *name)
 
 
 void
-srecord::arglex::version(void)
+srecord::arglex::version()
     const
 {
     print_version();
@@ -685,7 +685,7 @@ srecord::arglex::version(void)
 
 
 void
-srecord::arglex::license(void)
+srecord::arglex::license()
     const
 {
     help("srec_license");
@@ -693,7 +693,7 @@ srecord::arglex::license(void)
 
 
 void
-srecord::arglex::bad_argument(void)
+srecord::arglex::bad_argument()
     const
 {
     switch (token_cur())
@@ -727,7 +727,7 @@ srecord::arglex::bad_argument(void)
 
 
 int
-srecord::arglex::token_first(void)
+srecord::arglex::token_first()
 {
 #if 1
     // We probably don't need to do this all the time.
@@ -770,7 +770,7 @@ srecord::arglex::usage_tail_set(const char *s)
 
 
 const char *
-srecord::arglex::usage_tail_get(void)
+srecord::arglex::usage_tail_get()
     const
 {
     if (!usage_tail_)
@@ -780,7 +780,7 @@ srecord::arglex::usage_tail_get(void)
 
 
 void
-srecord::arglex::usage(void)
+srecord::arglex::usage()
     const
 {
     std::cerr << "Usage: " << progname_get() << " [ <option>... ] "
@@ -794,7 +794,7 @@ srecord::arglex::usage(void)
 
 
 void
-srecord::arglex::default_command_line_processing(void)
+srecord::arglex::default_command_line_processing()
 {
     bad_argument();
 }

@@ -157,7 +157,7 @@ public:
       * header record set by either the reader() or set_header()
       * methods.  If neither has set a header, a NULL is returned.
       */
-    record *get_header(void) const;
+    record *get_header() const;
 
     /**
       * The set_header method may be used to set the header command.
@@ -175,7 +175,7 @@ public:
       * reader() or set_execution_start_address() methods.  If neither
       * has set an execution start address, NULL is returned.
       */
-    record *get_execution_start_address(void) const;
+    record *get_execution_start_address() const;
 
     /**
       * The set_execution_start_address method may be used to set the
@@ -192,7 +192,7 @@ public:
       *     one hole), false if the memory data is continuous (has no
       *     holes).
       */
-    bool has_holes(void) const;
+    bool has_holes() const;
 
     /**
       * The get_lower_bound method is used to obtain the lower bound
@@ -225,7 +225,7 @@ public:
       * image has no data in it.
       */
     bool
-    empty(void)
+    empty()
         const
     {
         return (nchunks == 0);
@@ -301,7 +301,7 @@ private:
       * The clear method is used to discard all data, as if when
       * the instance was first constructed. Also used by the destructor.
       */
-    void clear(void);
+    void clear();
 
     /**
       * The copy method is used to copy the chunks from the `src' into

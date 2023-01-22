@@ -23,13 +23,13 @@
 
 
 void
-srecord::arglex::test_ambiguous(void)
+srecord::arglex::test_ambiguous()
     const
 {
     int number_of_errors = 0;
     for
     (
-        table_ptr_vec_t::const_iterator it1 = tables.begin();
+        auto it1 = tables.begin();
         it1 != tables.end();
         ++it1
     )
@@ -40,7 +40,7 @@ srecord::arglex::test_ambiguous(void)
 
             for
             (
-                table_ptr_vec_t::const_iterator it2 = tables.begin();
+                auto it2 = tables.begin();
                 it2 != tables.end();
                 ++it2
             )

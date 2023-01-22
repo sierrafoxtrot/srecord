@@ -98,7 +98,7 @@ stm32_crc(unsigned long crc, unsigned long data)
 
 
 void
-srecord::stm32::generator(void)
+srecord::stm32::generator()
 {
     unsigned long data = 0;
     for (size_t j = 0; j < wordsize; j++)
@@ -120,7 +120,7 @@ srecord::stm32::next(unsigned char x)
 void
 srecord::stm32::nextbuf(const void *data, size_t nbytes)
 {
-    const unsigned char *dp = (const unsigned char *)data;
+    const auto *dp = (const unsigned char *)data;
     while (nbytes > 0)
     {
         --nbytes;
@@ -130,7 +130,7 @@ srecord::stm32::nextbuf(const void *data, size_t nbytes)
 
 
 unsigned long
-srecord::stm32::get(void)
+srecord::stm32::get()
     const
 {
     return state;

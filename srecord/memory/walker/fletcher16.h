@@ -86,7 +86,7 @@ public:
       * The get method is used to get the Fletcher-16 checksum once all memory
       * chunks have been processed by calls to our #observe method.
       */
-    unsigned get(void) const;
+    unsigned get() const;
 
 protected:
     // See base class for documentation.

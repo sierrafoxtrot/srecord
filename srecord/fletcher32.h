@@ -19,7 +19,7 @@
 #ifndef SRECORD_FLETCHER32_H
 #define SRECORD_FLETCHER32_H
 
-#include <stddef.h>
+#include <cstddef>
 
 namespace srecord
 {

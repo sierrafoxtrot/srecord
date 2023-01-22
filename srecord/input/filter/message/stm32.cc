@@ -88,7 +88,7 @@ srecord::input_filter_message_stm32::process(const memory &input,
 
 
 const char *
-srecord::input_filter_message_stm32::get_algorithm_name(void)
+srecord::input_filter_message_stm32::get_algorithm_name()
     const
 {
     return "STM32";
@@ -96,7 +96,7 @@ srecord::input_filter_message_stm32::get_algorithm_name(void)
 
 
 unsigned
-srecord::input_filter_message_stm32::get_minimum_alignment(void)
+srecord::input_filter_message_stm32::get_minimum_alignment()
     const
 {
     return 4;

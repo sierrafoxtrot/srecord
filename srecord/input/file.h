@@ -59,25 +59,24 @@ public:
       * ignore checksums flag.  This is usually the result of an
       * --ignore-checksums command line option.
       */
-    static void ignore_all_checksums(void) { ignore_checksums_default = true; }
+    static void ignore_all_checksums() { ignore_checksums_default = true; }
 
     /**
       * The format_option_number method is used to obtain the option number,
       * which can then be turned into text via the arglex::token_name method.
       */
-    virtual int format_option_number(void) const = 0;
+    virtual int format_option_number() const = 0;
 
 protected:
     // See base class for documentation.
-    virtual std::string filename(void) const;
+    virtual std::string filename() const;
 
     // See base class for documentation.
-    virtual std::string filename_and_line(void) const;
+    virtual std::string filename_and_line() const;
 
     // See base class for documentation.
-    void disable_checksum_validation(void);
+    void disable_checksum_validation();
 
-protected:
     /**
       * The constructor.  The input will be taken from the named file
       * (or the standard input if the filename is "-").
@@ -99,7 +98,7 @@ protected:
       * filename_and_line method may report the current file location.
       * This makes for more informative error messages.
       */
-    virtual int get_char(void);
+    virtual int get_char();
 
     /**
       * The get_char_undo method is used to return a character to
@@ -113,7 +112,7 @@ protected:
       * of input, without actually consuming it (a later get_char
       * or peak_char method will still see it).
       */
-    int peek_char(void);
+    int peek_char();
 
     /**
       * The get_nibble_value class method is used to translate a
@@ -134,7 +133,7 @@ protected:
       * are not hexadecimal digits will result in a fatal error,
       * and the method call will not return.
       */
-    virtual int get_nibble(void);
+    virtual int get_nibble();
 
     /**
       * The get_byte method is used to fetch a byte value from the
@@ -150,14 +149,14 @@ protected:
       * it if they have a special case.  Over-ride with caution,
       * as it affects many other methods.
       */
-    virtual int get_byte(void);
+    virtual int get_byte();
 
     /**
       * The get_word_be method is used to fetch a 16-bit value from the
       * input.  The get_byte method is called twice, and the two byte
       * values are assembled big-endian (most significant byte first).
       */
-    unsigned get_word_be(void);
+    unsigned get_word_be();
 
     /**
       * The get_word_le method is used to fetch a 16-bit value from
@@ -165,7 +164,7 @@ protected:
       * byte values are assembled little-endian (least significant byte
       * first).
       */
-    unsigned get_word_le(void);
+    unsigned get_word_le();
 
     /**
       * The get_3bytes_be method is used to fetch a 24-bit value from
@@ -173,7 +172,7 @@ protected:
       * and the three byte values are assembles big-endian (most
       * significant byte first).
       */
-    unsigned long get_3bytes_be(void);
+    unsigned long get_3bytes_be();
 
     /**
       * The get_3bytes_le method is used to fetch a 24-bit value from
@@ -181,7 +180,7 @@ protected:
       * three byte values are assembled little-endian (least significant
       * byte first).
       */
-    unsigned long get_3bytes_le(void);
+    unsigned long get_3bytes_le();
 
     /**
       * The get_4bytes_be method is used to fetch a 32-bit value from
@@ -189,7 +188,7 @@ protected:
       * and the four byte values are assembled big-endian (most
       * significant byte first).
       */
-    unsigned long get_4bytes_be(void);
+    unsigned long get_4bytes_be();
 
     /**
       * The get_4bytes_le method is used to fetch a 32-bit value from
@@ -197,7 +196,7 @@ protected:
       * four byte values are assembled little-endian (least significant
       * byte first).
       */
-    unsigned long get_4bytes_le(void);
+    unsigned long get_4bytes_le();
 
     /**
       * The checksum_get method is used to get the current value of
@@ -205,7 +204,7 @@ protected:
       * usually called by the get_byte method).  Only the lower 8
       * bits of the sum are returned.
       */
-    int checksum_get(void) const;
+    int checksum_get() const;
 
     /**
       * The checksum_get16 method is used to get the current value of
@@ -213,7 +212,7 @@ protected:
       * usually called by the get_byte method).  Only the lower 16
       * bits of the sum are returned.
       */
-    int checksum_get16(void) const;
+    int checksum_get16() const;
 
     /**
       * The checksum_add method is used to add another 8-bit value
@@ -225,20 +224,20 @@ protected:
       * The checksum_rest method is used to set the running checksum
       * to zero.
       */
-    void checksum_reset(void);
+    void checksum_reset();
 
     /**
       * The seek_to_end method is used to move the input position
       * to the end of the file.
       */
-    void seek_to_end(void);
+    void seek_to_end();
 
     /**
       * The is_binary method is used to to determine whether or not
       * a file format is binary (true) of text (false).  The default
       * implementation always returns false (text).
       */
-    virtual bool is_binary(void) const;
+    virtual bool is_binary() const;
 
 private:
     /**
@@ -293,7 +292,7 @@ protected:
       * @returns
       *     bool; true if need to check checksums, false to ignore checksums.
       */
-    bool use_checksums(void) const { return !ignore_checksums; }
+    bool use_checksums() const { return !ignore_checksums; }
 
 private:
     /**
@@ -318,7 +317,7 @@ private:
       * If the file has not been opened yet, it will be opened by
       * this method.
       */
-    void *get_fp(void);
+    void *get_fp();
 
     /**
       * The default constructor.  Do not use.

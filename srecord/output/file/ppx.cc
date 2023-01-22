@@ -89,7 +89,7 @@ srecord::output_file_ppx::write(const srecord::record &record)
             unsigned char data = record.get_data(j);
             unsigned long data_address = record.get_address() + j;
 
-            if (data_address >= (1uL << 16))
+            if (data_address >= (1UL << 16))
                 data_address_too_large(record, 16);
 
             if (data_address != address)
@@ -156,7 +156,7 @@ srecord::output_file_ppx::address_length_set(int)
 
 
 int
-srecord::output_file_ppx::preferred_block_size_get(void)
+srecord::output_file_ppx::preferred_block_size_get()
     const
 {
     //
@@ -167,7 +167,7 @@ srecord::output_file_ppx::preferred_block_size_get(void)
 
 
 const char *
-srecord::output_file_ppx::format_name(void)
+srecord::output_file_ppx::format_name()
     const
 {
     return "Stag Prom Programmer Hexadecimal";

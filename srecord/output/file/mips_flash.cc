@@ -176,7 +176,7 @@ srecord::output_file_mips_flash::write(const srecord::record &record)
 
 
 void
-srecord::output_file_mips_flash::buffer_flush_newline(void)
+srecord::output_file_mips_flash::buffer_flush_newline()
 {
     buffer_flush();
     if (column)
@@ -188,7 +188,7 @@ srecord::output_file_mips_flash::buffer_flush_newline(void)
 
 
 void
-srecord::output_file_mips_flash::buffer_flush(void)
+srecord::output_file_mips_flash::buffer_flush()
 {
     if (!buffer_length)
         return;
@@ -247,7 +247,7 @@ srecord::output_file_mips_flash::address_length_set(int)
 
 
 int
-srecord::output_file_mips_flash::preferred_block_size_get(void)
+srecord::output_file_mips_flash::preferred_block_size_get()
     const
 {
     //
@@ -267,7 +267,7 @@ srecord::output_file_mips_flash::preferred_block_size_set(int n)
 
 
 const char *
-srecord::output_file_mips_flash::format_name(void)
+srecord::output_file_mips_flash::format_name()
     const
 {
     return

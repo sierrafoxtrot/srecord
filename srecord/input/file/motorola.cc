@@ -334,7 +334,7 @@ srecord::input_file_motorola::read(record &record)
 
 
 const char *
-srecord::input_file_motorola::get_file_format_name(void)
+srecord::input_file_motorola::get_file_format_name()
     const
 {
     return "Motorola S-Record";
@@ -342,7 +342,7 @@ srecord::input_file_motorola::get_file_format_name(void)
 
 
 int
-srecord::input_file_motorola::format_option_number(void)
+srecord::input_file_motorola::format_option_number()
     const
 {
     return arglex_tool::token_motorola;

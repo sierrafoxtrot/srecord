@@ -21,20 +21,21 @@
 #include <unistd.h>
 
 #include <srecord/r250.h>
+#include <srecord/sizeof.h>
 
 static  unsigned long   buf[250];
 static  unsigned long   *pos;
 
 
 static inline int
-rand8(void)
+rand8()
 {
     return ((rand() >> 7) & 255);
 }
 
 
 static inline long
-rand32(void)
+rand32()
 {
     return
         (
@@ -49,14 +50,11 @@ rand32(void)
 }
 
 
-#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
-#define ENDOF(a) ((a) + SIZEOF(a))
-
 static bool ready;
 
 
 static void
-r250_init(void)
+r250_init()
 {
     ready = true;
 
@@ -93,7 +91,7 @@ r250_init(void)
 
 
 unsigned long
-srecord::r250(void)
+srecord::r250()
 {
     if (!ready)
         r250_init();

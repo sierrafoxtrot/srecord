@@ -110,7 +110,7 @@ srecord::input_file_needham::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_needham::get_file_format_name(void)
+srecord::input_file_needham::get_file_format_name()
     const
 {
     return "Needham";
@@ -118,7 +118,7 @@ srecord::input_file_needham::get_file_format_name(void)
 
 
 int
-srecord::input_file_needham::format_option_number(void)
+srecord::input_file_needham::format_option_number()
     const
 {
     return arglex_tool::token_needham_hex;

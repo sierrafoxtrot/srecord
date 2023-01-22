@@ -79,7 +79,7 @@ srecord::input_file_msbin::create(const std::string &a_file_name)
 
 
 uint32_t
-srecord::input_file_msbin::read_dword_le(void)
+srecord::input_file_msbin::read_dword_le()
 {
     unsigned char c[sizeof(uint32_t)];
 
@@ -98,7 +98,7 @@ srecord::input_file_msbin::read_dword_le(void)
 
 
 void
-srecord::input_file_msbin::read_file_header(void)
+srecord::input_file_msbin::read_file_header()
 {
     // Optional magic
     static const unsigned char Magic[7] =
@@ -118,7 +118,7 @@ srecord::input_file_msbin::read_file_header(void)
 
     static_assert(sizeof(buff) >= sizeof(Magic),
         "Just to be sure that the buffer is big enough.");
-    if (memcmp(Magic, buff, sizeof(Magic)))
+    if (memcmp(Magic, buff, sizeof(Magic)) != 0)
     {
         // Ok, there's no magic in the header. But it's optional anyway.
 
@@ -304,7 +304,7 @@ srecord::input_file_msbin::read(record &result)
 
 
 bool
-srecord::input_file_msbin::is_binary(void)
+srecord::input_file_msbin::is_binary()
     const
 {
     return true;
@@ -312,7 +312,7 @@ srecord::input_file_msbin::is_binary(void)
 
 
 const char *
-srecord::input_file_msbin::get_file_format_name(void)
+srecord::input_file_msbin::get_file_format_name()
     const
 {
     return "Windows CE Binary Image Data Format";
@@ -320,7 +320,7 @@ srecord::input_file_msbin::get_file_format_name(void)
 
 
 int
-srecord::input_file_msbin::format_option_number(void)
+srecord::input_file_msbin::format_option_number()
     const
 {
     return arglex_tool::token_msbin;

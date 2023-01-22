@@ -51,10 +51,10 @@ protected:
     bool read(class record &rec);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**
@@ -102,7 +102,7 @@ private:
       * It will set the #token_value instance variable for token_byte
       * and token_address
       */
-    void get_next_token(void);
+    void get_next_token();
 
     /**
       * The address instance variable is used to remember the current
@@ -123,7 +123,7 @@ private:
       * The syntax_error method is a convenience wrapper around
       * #fatal_error to complain about syntax errors.
       */
-    void syntax_error(void);
+    void syntax_error();
 
     /**
       * The dsum instance variable is used to remember the simple sum of

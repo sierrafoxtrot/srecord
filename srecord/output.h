@@ -105,7 +105,7 @@ public:
       * always, influenced by the line_length_set method.  Derived
       * classes must implement this method.
       */
-    virtual int preferred_block_size_get(void) const = 0;
+    virtual int preferred_block_size_get() const = 0;
 
     /**
       * The preferred_block_size_set method is to set a specific
@@ -172,13 +172,13 @@ public:
       * output file.  It is used for the various error messages.
       * Derived classes must implement this method.
       */
-    virtual const std::string filename(void) const = 0;
+    virtual std::string filename() const = 0;
 
     /**
       * The format_name method is used to obtain the name of this output
       * format.
       */
-    virtual const char *format_name(void) const = 0;
+    virtual const char *format_name() const = 0;
 
     /**
       * The notify_upper_bound method is used to notify the output class

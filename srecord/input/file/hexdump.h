@@ -50,10 +50,10 @@ protected:
     bool read(class record &rec);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**
@@ -79,13 +79,13 @@ private:
       *
       * It will set the #current_token_value instance variable for token_byte
       */
-    token_t get_next_token(void);
+    token_t get_next_token();
 
     /**
       * The discard_rest_of_line method is used to
       * discard all characters until the next end of line character.
       */
-    bool discard_rest_of_line(void);
+    bool discard_rest_of_line();
 
     /**
       * The address instance variable is used to remember the current

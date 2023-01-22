@@ -19,7 +19,7 @@
 #ifndef SRECORD_INPUT_FILE_LOGISIM_H
 #define SRECORD_INPUT_FILE_LOGISIM_H
 
-#include <inttypes.h>
+#include <cinttypes>
 #include <list>
 
 #include <srecord/record.h>
@@ -100,10 +100,10 @@ protected:
     bool read(srecord::record &rec);
 
     // See base class for documentation
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation
-    int format_option_number(void) const;
+    int format_option_number() const;
 
     /**
       * The constructor.
@@ -122,15 +122,15 @@ private:
         uint32_t address;
         long count;
         uint32_t value;
-        std::string representation(void) const;
+        std::string representation() const;
     };
 
     std::list<datum_t> jobs;
 
     bool read_inner(record &rec);
-    void read_inner_one(void);
-    void read_inner_two(void);
-    void read_inner_job(void);
+    void read_inner_one();
+    void read_inner_two();
+    void read_inner_job();
 
     /**
       * The default constructor.

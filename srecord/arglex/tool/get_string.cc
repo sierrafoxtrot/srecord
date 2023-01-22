@@ -41,6 +41,6 @@ srecord::arglex_tool::get_string(const char *caption)
             token_name(token_cur())
         );
         // NOTREACHED
-        return std::string();
+        return {};
     }
 }

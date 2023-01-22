@@ -46,7 +46,7 @@ srecord::input_file_ti_tagged_16::create(const std::string &a_file_name)
 
 
 int
-srecord::input_file_ti_tagged_16::get_char(void)
+srecord::input_file_ti_tagged_16::get_char()
 {
     int c = inherited::get_char();
     if (c < 0 || c == '\n')
@@ -157,7 +157,7 @@ srecord::input_file_ti_tagged_16::read(record &result)
                 }
                 n -= 5;
                 int max = 250;
-                unsigned char *buffer = new unsigned char [max];
+                auto *buffer = new unsigned char [max];
                 for (int j = 0; j < n; ++j)
                 {
                     c = get_char();
@@ -178,7 +178,7 @@ srecord::input_file_ti_tagged_16::read(record &result)
 
 
 const char *
-srecord::input_file_ti_tagged_16::get_file_format_name(void)
+srecord::input_file_ti_tagged_16::get_file_format_name()
     const
 {
     return "Texas Instruments SDSMAC (320)";
@@ -186,7 +186,7 @@ srecord::input_file_ti_tagged_16::get_file_format_name(void)
 
 
 int
-srecord::input_file_ti_tagged_16::format_option_number(void)
+srecord::input_file_ti_tagged_16::format_option_number()
     const
 {
     return arglex_tool::token_ti_tagged_16;

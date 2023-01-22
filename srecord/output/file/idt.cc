@@ -91,7 +91,7 @@ srecord::output_file_idt::write_inner(int tag, unsigned long address,
 
 
 void
-srecord::output_file_idt::write_data_count(void)
+srecord::output_file_idt::write_data_count()
 {
     if (data_count_written)
         return;
@@ -130,7 +130,7 @@ srecord::output_file_idt::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        if (addr < (1uL << 16) && address_length <= 2)
+        if (addr < (1UL << 16) && address_length <= 2)
         {
             write_inner
             (
@@ -220,7 +220,7 @@ srecord::output_file_idt::preferred_block_size_set(int nbytes)
 
 
 int
-srecord::output_file_idt::preferred_block_size_get(void)
+srecord::output_file_idt::preferred_block_size_get()
     const
 {
     return pref_block_size;
@@ -228,7 +228,7 @@ srecord::output_file_idt::preferred_block_size_get(void)
 
 
 const char *
-srecord::output_file_idt::format_name(void)
+srecord::output_file_idt::format_name()
     const
 {
     return "IDT System Integration Manager binary";
@@ -236,7 +236,7 @@ srecord::output_file_idt::format_name(void)
 
 
 bool
-srecord::output_file_idt::is_binary(void)
+srecord::output_file_idt::is_binary()
     const
 {
     return true;

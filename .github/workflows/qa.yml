@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+      - name: Update system
+        run: sudo apt-get update
+
       - name: Install prerequisites
         run: >-
           sudo apt-get install -y
@@ -54,13 +57,16 @@ jobs:
 
       - name: clang-tidy
         if: always()
-        run: run-clang-tidy-14 -p build
+        run: run-clang-tidy-14 -p build -header-filter=.*
 
   build-gcc:
     name: Check source with gcc
     runs-on: ubuntu-22.04
 
     steps:
+      - name: Update system
+        run: sudo apt-get update
+
       - name: Install prerequisites
         run: >-
           sudo apt-get install -y
@@ -110,6 +116,9 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+      - name: Update system
+        run: sudo apt-get update
+
       - name: Install prerequisites
         run: >-
           sudo apt-get install -y

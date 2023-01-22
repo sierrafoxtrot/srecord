@@ -85,7 +85,7 @@ srecord::output_file_tektronix::write_inner(unsigned long address,
     if (data_nbytes)
     {
         checksum_reset();
-        const unsigned char *data_p = (const unsigned char *)data;
+        const auto *data_p = (const unsigned char *)data;
         for (int j = 0; j < data_nbytes; ++j)
             put_byte(data_p[j]);
         put_byte(checksum_get());

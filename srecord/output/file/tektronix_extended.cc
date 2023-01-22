@@ -72,7 +72,7 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
     int j;
     for (j = 0; j < 2 * addr_nbytes; ++j)
         csum += buf[pos++] = (addr >> (4 * (2*addr_nbytes-1 - j))) & 15;
-    const unsigned char *data = (const unsigned char *)data_p;
+    const auto *data = (const unsigned char *)data_p;
     for (j = 0; j < data_nbytes; ++j)
     {
         csum += buf[pos++] = (data[j] >> 4) & 15;
@@ -98,9 +98,9 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
 static int
 addr_width(unsigned long n)
 {
-    if (n < (1uL << 16))
+    if (n < (1UL << 16))
         return 2;
-    if (n < (1uL << 24))
+    if (n < (1UL << 24))
         return 3;
     return 4;
 }

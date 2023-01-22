@@ -54,20 +54,20 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    bool is_binary() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
     /**
       * The get_byte method is used to get a byte of input.  We override
       * because the byte encoding is one character of input sometimes,
       * and two characters of input at other times.
       */
-    virtual int get_byte(void);
+    virtual int get_byte();
 
 private:
     /**
@@ -78,7 +78,6 @@ private:
       */
     input_file_wilson(const std::string &file_name);
 
-private:
     /**
       * The read_inner method is used to read a record from the input.
       * The #read method is a wrapper around this method.

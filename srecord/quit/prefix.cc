@@ -51,7 +51,7 @@ srecord::quit_prefix::exit(int n)
 void
 srecord::quit_prefix::message_v(const char *fmt, va_list ap)
 {
-    if (prefix != "")
+    if (!prefix.empty())
     {
         char buf[1024];
         vsnprintf(buf, sizeof(buf), fmt, ap);

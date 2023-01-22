@@ -20,6 +20,9 @@ jobs:
           - clang-14
 
     steps:
+      - name: Update system
+        run: sudo apt-get update
+
       - name: Install prerequisites
         run: >-
           sudo apt-get install -y

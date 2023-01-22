@@ -52,17 +52,17 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     /**
       * The get_char method is used to get a character from the input.
       * We override because the checksum is character based, not byte
       * based.
       */
-    int get_char(void);
+    int get_char();
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**

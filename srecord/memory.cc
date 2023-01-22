@@ -72,7 +72,7 @@ srecord::memory::~memory()
 
 
 void
-srecord::memory::clear(void)
+srecord::memory::clear()
 {
     delete header;
     header = 0;
@@ -80,8 +80,7 @@ srecord::memory::clear(void)
     execution_start_address = 0;
     for (int j = 0; j < nchunks; ++j)
         delete chunk[j];
-    if (chunk)
-        delete [] chunk;
+    delete [] chunk;
     nchunks = 0;
     nchunks_max = 0;
     chunk = 0;
@@ -154,8 +153,7 @@ srecord::memory::find(unsigned long address)
     if (nchunks >= nchunks_max)
     {
         nchunks_max = nchunks_max * 2 + 4;
-        srecord::memory_chunk **tmp =
-            new srecord::memory_chunk * [nchunks_max];
+        auto **tmp = new srecord::memory_chunk * [nchunks_max];
         for (int j = 0; j < nchunks; ++j)
             tmp[j] = chunk[j];
         delete [] chunk;
@@ -247,7 +245,7 @@ srecord::memory::get_lower_bound()
 
 
 unsigned long
-srecord::memory::get_upper_bound(void)
+srecord::memory::get_upper_bound()
     const
 {
     if (nchunks == 0)
@@ -445,7 +443,7 @@ srecord::memory::find_next_data(unsigned long &address, void *data,
 
 
 srecord::record *
-srecord::memory::get_header(void)
+srecord::memory::get_header()
     const
 {
     return header;
@@ -474,7 +472,7 @@ srecord::memory::set_header(const std::string &text)
 
 
 srecord::record *
-srecord::memory::get_execution_start_address(void)
+srecord::memory::get_execution_start_address()
     const
 {
     return execution_start_address;
@@ -497,7 +495,7 @@ srecord::memory::set_execution_start_address(unsigned long addr)
 
 
 bool
-srecord::memory::has_holes(void)
+srecord::memory::has_holes()
     const
 {
     srecord::memory_walker_continuity::pointer sniffer =

@@ -51,10 +51,10 @@ protected:
     bool read(record &record);
 
     // See base class for documentation.
-    const char *get_file_format_name(void) const;
+    const char *get_file_format_name() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**
@@ -76,7 +76,7 @@ private:
       * Get a single base-64 digit.  Returns 0..63 for a valid digit.
       * Fatal error if not a valid base-64 digit.
       */
-    int get_digit(void);
+    int get_digit();
 
     /**
       * The get_number method is used to get a base-64 number.
@@ -103,7 +103,7 @@ private:
       * space follows the various commands.  It doesn't consume any
       * input, since it uses peek_char to do the checking.
       */
-    void expect_white_space(void);
+    void expect_white_space();
 
     /**
       * The default constructor.  Do not use.

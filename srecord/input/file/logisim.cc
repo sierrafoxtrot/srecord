@@ -61,7 +61,7 @@ quote_char(int c)
 
 
 void
-srecord::input_file_logisim::read_inner_one(void)
+srecord::input_file_logisim::read_inner_one()
 {
     char buffer[512];
     char *bp = buffer;
@@ -86,14 +86,14 @@ srecord::input_file_logisim::read_inner_one(void)
         break;
     }
     *bp = '\0';
-    if (strcmp(buffer, "v2.0 raw"))
+    if (strcmp(buffer, "v2.0 raw") != 0)
         fatal_error("bad magic number");
     state = state_line_two;
 }
 
 
 void
-srecord::input_file_logisim::read_inner_two(void)
+srecord::input_file_logisim::read_inner_two()
 {
     bool warned = false;
     for (;;)
@@ -129,7 +129,7 @@ srecord::input_file_logisim::read_inner_two(void)
 
 
 void
-srecord::input_file_logisim::read_inner_job(void)
+srecord::input_file_logisim::read_inner_job()
 {
     char buffer[200];
     char *bp = buffer;
@@ -253,7 +253,7 @@ srecord::input_file_logisim::read(class record &rec)
             size_t max_data_size = record::maximum_data_length(address);
             size_t data_size =
                 ((size_t)job.count > max_data_size ? max_data_size : job.count);
-            auto data = new record::data_t[data_size];
+            auto *data = new record::data_t[data_size];
             memset(data, job.value, data_size);
             rec = record(record::type_data, job.address, data, data_size);
             job.address += data_size;
@@ -274,7 +274,7 @@ srecord::input_file_logisim::read(class record &rec)
 
 
 const char *
-srecord::input_file_logisim::get_file_format_name(void)
+srecord::input_file_logisim::get_file_format_name()
     const
 {
     return "Logisim";
@@ -282,7 +282,7 @@ srecord::input_file_logisim::get_file_format_name(void)
 
 
 int
-srecord::input_file_logisim::format_option_number(void)
+srecord::input_file_logisim::format_option_number()
     const
 {
     return srecord::arglex_tool::token_logisim;
@@ -290,7 +290,7 @@ srecord::input_file_logisim::format_option_number(void)
 
 
 std::string
-srecord::input_file_logisim::datum_t::representation(void)
+srecord::input_file_logisim::datum_t::representation()
     const
 {
     char buffer[200];

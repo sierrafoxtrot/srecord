@@ -45,7 +45,7 @@ srecord::input_file_four_packed_code::create(const std::string &a_file_name)
 
 
 int
-srecord::input_file_four_packed_code::get_digit(void)
+srecord::input_file_four_packed_code::get_digit()
 {
     int c = get_char();
     switch (c)
@@ -143,7 +143,7 @@ srecord::input_file_four_packed_code::get_digit(void)
 
 
 int
-srecord::input_file_four_packed_code::get_byte(void)
+srecord::input_file_four_packed_code::get_byte()
 {
     if (get_byte_pos >= 4)
         get_byte_pos = 0;
@@ -263,7 +263,7 @@ srecord::input_file_four_packed_code::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_four_packed_code::get_file_format_name(void)
+srecord::input_file_four_packed_code::get_file_format_name()
     const
 {
     return "Four Packed Code (FPC)";
@@ -271,7 +271,7 @@ srecord::input_file_four_packed_code::get_file_format_name(void)
 
 
 int
-srecord::input_file_four_packed_code::format_option_number(void)
+srecord::input_file_four_packed_code::format_option_number()
     const
 {
     return arglex_tool::token_four_packed_code;

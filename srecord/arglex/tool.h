@@ -228,7 +228,7 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    input::pointer get_input(void);
+    input::pointer get_input();
 
     /**
       * The get_output method is used to parse an output specification
@@ -238,7 +238,7 @@ public:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    output::pointer get_output(void);
+    output::pointer get_output();
 
     /**
       * The get_number method is used to parse a numeric value from the
@@ -263,7 +263,7 @@ public:
       * The can_get_number method is used to determine if it is possible
       * to parse a number from the next token on the command line.
       */
-    bool can_get_number(void) const;
+    bool can_get_number() const;
 
     /**
       * The get_interval method is used to parse an interval
@@ -299,10 +299,10 @@ public:
     std::string get_string(const char *caption);
 
     // See base class for documentation.
-    void default_command_line_processing(void);
+    void default_command_line_processing();
 
-    defcon_t get_redundant_bytes(void) const { return redundant_bytes; }
-    defcon_t get_contradictory_bytes(void) const { return contradictory_bytes; }
+    defcon_t get_redundant_bytes() const { return redundant_bytes; }
+    defcon_t get_contradictory_bytes() const { return contradictory_bytes; }
 
 private:
     /**
@@ -422,7 +422,7 @@ private:
       * of the current token.
       */
     endian_t
-    get_endian_by_token(void)
+    get_endian_by_token()
         const
     {
         return get_endian_by_token(token_cur());
@@ -443,7 +443,7 @@ private:
       * or not the current token is inclusive or exclusive.
       */
     bool
-    get_inclusive_by_token(void)
+    get_inclusive_by_token()
         const
     {
         return get_inclusive_by_token(token_cur());

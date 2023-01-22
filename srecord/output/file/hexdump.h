@@ -70,7 +70,7 @@ protected:
     void address_length_set(int);
 
     // See base class for documentation.
-    int preferred_block_size_get(void) const;
+    int preferred_block_size_get() const;
 
     // See base class for documentation.
     bool preferred_block_size_set(int nbytes);
@@ -79,7 +79,7 @@ protected:
     void command_line(arglex_tool *cmdln);
 
     // See base class for documentation.
-    const char *format_name(void) const;
+    const char *format_name() const;
 
 private:
     /**
@@ -133,12 +133,12 @@ private:
       * The row_cache_print method is used to print the row cache to the
       * file and then erase the cache in preparation for another row.
       */
-    void row_cache_print(void);
+    void row_cache_print();
 
     /**
       * The columns_to_line_length method is used to
       */
-    int columns_to_line_length(int cols);
+    int columns_to_line_length(int cols) const;
 
     /**
       * The default constructor.  Do not use.

@@ -94,7 +94,7 @@ calc_width_shift(int x)
 static unsigned
 calc_width_mask(int x)
 {
-    return ((1uL << calc_width_shift(x)) - 1uL);
+    return ((1UL << calc_width_shift(x)) - 1UL);
 }
 
 
@@ -127,7 +127,7 @@ srecord::output_file_vmem::command_line(srecord::arglex_tool *cmdln)
         cmdln->token_next();
 
         width_shift = calc_width_shift(n);
-        bytes_per_word = 1u << width_shift;
+        bytes_per_word = 1U << width_shift;
         width_mask = calc_width_mask(n);
 
         //
@@ -185,7 +185,7 @@ srecord::output_file_vmem::write(const srecord::record &record)
         ||
             (record.get_length() & width_mask)
         )
-            fatal_alignment_error(1u << width_shift);
+            fatal_alignment_error(1U << width_shift);
 
         //
         // If we need to advance the address, it has to be at the start

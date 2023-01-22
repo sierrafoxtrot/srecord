@@ -159,7 +159,7 @@ srecord::crc32::next(unsigned char x)
 void
 srecord::crc32::nextbuf(const void *data, size_t nbytes)
 {
-    const unsigned char *dp = (const unsigned char *)data;
+    const auto *dp = (const unsigned char *)data;
     while (nbytes > 0)
     {
         state = UPDC32(*dp, state);

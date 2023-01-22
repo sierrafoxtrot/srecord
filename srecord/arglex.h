@@ -156,7 +156,7 @@ public:
       * The test_ambiguous method is for debugging.  It verifies that
       * all of the option names are unique.
       */
-    void test_ambiguous(void) const;
+    void test_ambiguous() const;
 
 private:
     /**
@@ -243,14 +243,14 @@ public:
       * It returns the type of the token; this value may also be
       * fetched using the token_cur method.
       */
-    int token_next(void);
+    int token_next();
 
     /**
       * The token_first method is used to fetch the first command
       * like token (rather than use the token_next method).  This does
       * standard "help" and "version" options.
       */
-    int token_first(void);
+    int token_first();
 
     /**
       * The value_string method is used to get the string value of
@@ -318,7 +318,7 @@ public:
       * The default_command_line_processing method is used to process
       * command line arguments not handled by the derived class.
       */
-    virtual void default_command_line_processing(void);
+    virtual void default_command_line_processing();
 
 private:
     /**
@@ -348,7 +348,6 @@ private:
       */
     void read_arguments_file(const char *filename);
 
-private:
     typedef std::list<std::string> deprecated_options_t;
 
     /**

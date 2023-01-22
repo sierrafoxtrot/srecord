@@ -88,7 +88,7 @@ srecord::output_file::output_file(const std::string &a_file_name) :
 
 
 bool
-srecord::output_file::is_binary(void)
+srecord::output_file::is_binary()
     const
 {
     return false;
@@ -96,7 +96,7 @@ srecord::output_file::is_binary(void)
 
 
 void *
-srecord::output_file::get_fp(void)
+srecord::output_file::get_fp()
 {
     if (!vfp)
     {
@@ -126,7 +126,7 @@ srecord::output_file::get_fp(void)
 }
 
 
-const std::string
+std::string
 srecord::output_file::filename()
     const
 {
@@ -262,21 +262,21 @@ srecord::output_file::put_4bytes_le(unsigned long n)
 
 
 int
-srecord::output_file::checksum_get(void)
+srecord::output_file::checksum_get() const
 {
     return (checksum & 0xFF);
 }
 
 
 int
-srecord::output_file::checksum_get16(void)
+srecord::output_file::checksum_get16() const
 {
     return (checksum & 0xFFFF);
 }
 
 
 void
-srecord::output_file::checksum_reset(void)
+srecord::output_file::checksum_reset()
 {
     checksum = 0;
 }
@@ -311,7 +311,7 @@ srecord::output_file::seek_to(unsigned long address)
     errno = 0;
     if (fseek(fp, address, 0) < 0)
     {
-        if (errno == EINVAL && address >= 0x80000000uL)
+        if (errno == EINVAL && address >= 0x80000000UL)
         {
             warning
             (
@@ -322,7 +322,7 @@ srecord::output_file::seek_to(unsigned long address)
                 "to create a %3.1fGB file.  See the manual for a "
                 "description of the --offset filter, remembering that "
                 "you can give negative offsets.",
-                ((double)address / (double)(1uL << 30))
+                ((double)address / (double)(1UL << 30))
             );
         }
         fatal_error_errno("seek 0x%lX", address);
@@ -428,7 +428,7 @@ srecord::output_file::enable_by_name(const std::string &name, bool yesno)
 
 
 void
-srecord::output_file::set_is_regular(void)
+srecord::output_file::set_is_regular()
 {
     FILE *fp = (FILE *)vfp;
     struct stat st;
@@ -500,9 +500,9 @@ srecord::output_file::data_address_too_large(const srecord::record &record,
             prec,
             hi,
             prec,
-            0uL,
+            0UL,
             prec,
-            (1uL << nbits) - 1
+            (1UL << nbits) - 1
         );
     }
     fatal_error("data address (0x%lX..0x%lX) too large", lo, hi);

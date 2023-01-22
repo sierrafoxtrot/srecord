@@ -53,7 +53,7 @@ srecord::input_file_trs80::create(const std::string &a_file_name)
 
 
 int
-srecord::input_file_trs80::get_byte(void)
+srecord::input_file_trs80::get_byte()
 {
     int c = get_char();
     if (c < 0)
@@ -192,7 +192,7 @@ srecord::input_file_trs80::read(srecord::record &result)
 
 
 bool
-srecord::input_file_trs80::is_binary(void)
+srecord::input_file_trs80::is_binary()
     const
 {
     return true;
@@ -200,7 +200,7 @@ srecord::input_file_trs80::is_binary(void)
 
 
 const char *
-srecord::input_file_trs80::get_file_format_name(void)
+srecord::input_file_trs80::get_file_format_name()
     const
 {
     return "TRS80";
@@ -208,7 +208,7 @@ srecord::input_file_trs80::get_file_format_name(void)
 
 
 int
-srecord::input_file_trs80::format_option_number(void)
+srecord::input_file_trs80::format_option_number()
     const
 {
     return arglex_tool::token_trs80;

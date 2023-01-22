@@ -32,7 +32,7 @@ srecord::input_file_ppb::input_file_ppb(const std::string &filename) :
     input_file(filename),
     address(0),
     data_seen(false),
-    packet_address(-1uL),
+    packet_address(-1UL),
     packet_length(0),
     packet_used(0)
 {
@@ -47,7 +47,7 @@ srecord::input_file_ppb::create(const std::string &filename)
 
 
 bool
-srecord::input_file_ppb::get_packet(void)
+srecord::input_file_ppb::get_packet()
 {
     int c;
 
@@ -160,14 +160,14 @@ srecord::input_file_ppb::read(record &result)
 
 
 void
-srecord::input_file_ppb::packet_format_error(void)
+srecord::input_file_ppb::packet_format_error()
 {
     fatal_error("packet not formatted correctly");
 }
 
 
 bool
-srecord::input_file_ppb::is_binary(void)
+srecord::input_file_ppb::is_binary()
     const
 {
     return true;
@@ -175,7 +175,7 @@ srecord::input_file_ppb::is_binary(void)
 
 
 const char *
-srecord::input_file_ppb::get_file_format_name(void)
+srecord::input_file_ppb::get_file_format_name()
     const
 {
     return "Stag Prom Programmer binary (PPB)";
@@ -183,7 +183,7 @@ srecord::input_file_ppb::get_file_format_name(void)
 
 
 int
-srecord::input_file_ppb::format_option_number(void)
+srecord::input_file_ppb::format_option_number()
     const
 {
     return arglex_tool::token_ppb;

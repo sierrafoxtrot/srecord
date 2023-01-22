@@ -78,7 +78,7 @@ protected:
       * The get_minimum_alignment method is used to obtain the minimum
       * require dbyte alignment.  Returns 0 if irrelevant.
       */
-    virtual unsigned get_minimum_alignment(void) const;
+    virtual unsigned get_minimum_alignment() const;
 
 private:
     /**

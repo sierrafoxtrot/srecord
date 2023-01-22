@@ -55,7 +55,7 @@ public:
     output_file(const std::string &file_name);
 
     // See base class for documentation.
-    virtual const std::string filename(void) const;
+    virtual std::string filename() const;
 
     /**
       * The enable_header class method is used to enable or disable
@@ -206,7 +206,7 @@ protected:
       * The checksum_reset method is used to set the running checksum to
       * zero.
       */
-    void checksum_reset(void);
+    void checksum_reset();
 
     /**
       * The checksum_add method is used to add another 8-bit value to
@@ -224,7 +224,7 @@ protected:
       * called by the #put_byte method).  Only the lower 8 bits of the
       * sum are returned.
       */
-    int checksum_get(void);
+    int checksum_get() const;
 
     /**
       * The checksum_get16 method is used to get the current value of
@@ -232,7 +232,7 @@ protected:
       * usually called by the #put_byte method).  Only the lower 16
       * bits of the sum are returned.
       */
-    int checksum_get16(void);
+    int checksum_get16() const;
 
     /**
       * The seek_to method is used to move the output position to the
@@ -331,7 +331,7 @@ protected:
       * The line_termination_guess class method is used to figure out
       * the line termination style of the host environment.
       */
-    static line_termination_t line_termination_guess(void);
+    static line_termination_t line_termination_guess();
 
 private:
     /**
@@ -417,7 +417,7 @@ private:
       * to establish whether the output file is a regular file or a
       * special file (like a pipe).
       */
-    void set_is_regular(void);
+    void set_is_regular();
 
     /**
       * The get_fp method is used to get the stdio file pointer
@@ -428,14 +428,14 @@ private:
       * If the file has not been opened yet, it will be opened by this
       * method.
       */
-    void *get_fp(void);
+    void *get_fp();
 
     /**
       * The is_binary method is used to to determine whether or not
       * a file format is binary (true) of text (false).  The default
       * implementation always returns false (text).
       */
-    virtual bool is_binary(void) const;
+    virtual bool is_binary() const;
 
     /**
       * The copy constructor.  Do not use.

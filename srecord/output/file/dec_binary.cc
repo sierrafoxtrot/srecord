@@ -192,7 +192,7 @@ srecord::output_file_dec_binary::format_name()
 
 
 bool
-srecord::output_file_dec_binary::is_binary(void)
+srecord::output_file_dec_binary::is_binary()
     const
 {
     return true;

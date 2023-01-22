@@ -56,7 +56,7 @@ srecord::input_file_mips_flash::create_le(const std::string &a_file_name)
 
 
 void
-srecord::input_file_mips_flash::tokenizer(void)
+srecord::input_file_mips_flash::tokenizer()
 {
     for (;;)
     {
@@ -205,7 +205,7 @@ srecord::input_file_mips_flash::read(record &result)
 
 
 const char *
-srecord::input_file_mips_flash::get_file_format_name(void)
+srecord::input_file_mips_flash::get_file_format_name()
     const
 {
     return
@@ -220,7 +220,7 @@ srecord::input_file_mips_flash::get_file_format_name(void)
 
 
 int
-srecord::input_file_mips_flash::format_option_number(void)
+srecord::input_file_mips_flash::format_option_number()
     const
 {
     return

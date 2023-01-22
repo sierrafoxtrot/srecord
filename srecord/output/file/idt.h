@@ -62,16 +62,16 @@ protected:
     void address_length_set(int nbytes);
 
     // See base class for documentation.
-    int preferred_block_size_get(void) const;
+    int preferred_block_size_get() const;
 
     // See base class for documentation.
     bool preferred_block_size_set(int nbytes);
 
     // See base class for documentation.
-    const char *format_name(void) const;
+    const char *format_name() const;
 
     // See base class for documentation.
-    bool is_binary(void) const;
+    bool is_binary() const;
 
 private:
     /**
@@ -116,7 +116,7 @@ private:
       * The write_data_count method is used to write out a data count
       * record, if one is required.
       */
-    void write_data_count(void);
+    void write_data_count();
 
     /**
       * The write_inner method is used to write a line of output.

@@ -59,7 +59,7 @@ public:
       * The observe_end method is called once all of the data blocks
       * have been passed to the observer via the observe() method.
       */
-    virtual void observe_end(void);
+    virtual void observe_end();
 
     /**
       * The notify_upper_bound method is used to notify the walker of

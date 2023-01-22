@@ -151,7 +151,7 @@ srecord::input_file_mos_tech::read(srecord::record &record)
 
 
 const char *
-srecord::input_file_mos_tech::get_file_format_name(void)
+srecord::input_file_mos_tech::get_file_format_name()
     const
 {
     return "MOS Technology";
@@ -159,7 +159,7 @@ srecord::input_file_mos_tech::get_file_format_name(void)
 
 
 int
-srecord::input_file_mos_tech::format_option_number(void)
+srecord::input_file_mos_tech::format_option_number()
     const
 {
     return arglex_tool::token_mos_tech;
