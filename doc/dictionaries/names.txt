@@ -1,6 +1,7 @@
 aefinish
 aenbr
 Alin
+Alling
 Altera
 Anselmi
 AOMF
@@ -84,6 +85,7 @@ netpmb
 Niederstrasser
 Nivas
 NSIS
+oceanofthelost
 opensource
 Ozcelik
 patryks
@@ -105,6 +107,7 @@ rpmbuild
 Sadowski
 Schmitt
 SDSMAC
+Sean
 segfault
 Seitz
 Sergeev
