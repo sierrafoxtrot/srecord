@@ -18,17 +18,6 @@
 
 #include <srecord/quit/exception.h>
 
-
-srecord::quit_exception::~quit_exception()
-{
-}
-
-
-srecord::quit_exception::quit_exception()
-{
-}
-
-
 void
 srecord::quit_exception::exit(int)
 {

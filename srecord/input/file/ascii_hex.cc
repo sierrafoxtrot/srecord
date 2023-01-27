@@ -22,21 +22,10 @@
 #include <srecord/input/file/ascii_hex.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_ascii_hex::~input_file_ascii_hex()
-{
-    // check termination?
-}
-
-
 srecord::input_file_ascii_hex::input_file_ascii_hex(
     const std::string &a_filename
 ) :
-    input_file(a_filename),
-    garbage_warning(false),
-    seen_some_input(false),
-    address(0),
-    state(state_initial)
+    input_file(a_filename)
 {
 }
 

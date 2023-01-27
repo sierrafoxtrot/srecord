@@ -26,16 +26,6 @@
 #include <srecord/quit/normal.h>
 
 
-srecord::quit_normal::~quit_normal()
-{
-}
-
-
-srecord::quit_normal::quit_normal()
-{
-}
-
-
 void
 srecord::quit_normal::exit(int n)
 {

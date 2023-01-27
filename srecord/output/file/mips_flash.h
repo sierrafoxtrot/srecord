@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_mips_flash();
+    ~output_file_mips_flash() override;
 
     /**
       * The create_le class method is used to create new dynamically
@@ -59,22 +59,22 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
@@ -106,32 +106,32 @@ private:
       * The address instance variable is used to remember the address at
       * which the next byte is to be placed.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The base instance variable is used to remember the base address
       * of the current flash segment.
       */
-    unsigned long base;
+    unsigned long base{0};
 
     /**
       * The base_set instance variable is used to remember whether or
       * not the #base instance variable has been set yet.  This also
       * implies no data has been seen yet.
       */
-    bool base_set;
+    bool base_set{false};
 
     /**
       * The buffer instance variable is used to remember the accumulated
       * data so far.  Must be a multiple of 4 bytes long.
       */
-    unsigned char buffer[256];
+    unsigned char buffer[256]{};
 
     /**
       * The buffer_length instance variable is used to remember how many
       * bytes of the #buffer array have been consumed to date.
       */
-    size_t buffer_length;
+    size_t buffer_length{0};
 
     /**
       * The buffer_flush method is used to write the #buffer_length
@@ -152,29 +152,30 @@ private:
       * preferred line length for the output, in fixed width character
       * columns.
       */
-    int line_length;
+    int line_length{80};
 
     /**
       * The column instance variable is used to remember the current
       * output column.  If zero, it means we are positioned at the
       * beginning of a new line of text.
       */
-    int column;
+    int column{0};
+
+public:
+    /**
+      * The default constructor.
+      */
+    output_file_mips_flash() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_mips_flash();
+    output_file_mips_flash(const output_file_mips_flash &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    output_file_mips_flash(const output_file_mips_flash &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    output_file_mips_flash &operator=(const output_file_mips_flash &);
+    output_file_mips_flash &operator=(const output_file_mips_flash &) = delete;
 };
 
 };

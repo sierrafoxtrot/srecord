@@ -50,13 +50,7 @@ srecord::output_file_mips_flash::output_file_mips_flash(
     endian_t a_endian
 ) :
     srecord::output_file(a_filename),
-    endian(a_endian),
-    address(0),
-    base(0),
-    base_set(false),
-    buffer_length(0),
-    line_length(80),
-    column(0)
+    endian(a_endian)
 {
 }
 

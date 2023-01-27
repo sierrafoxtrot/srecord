@@ -31,11 +31,6 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_message_stm32::~input_filter_message_stm32()
-{
-}
-
-
 srecord::input_filter_message_stm32::input_filter_message_stm32(
     const input::pointer &a_deeper,
     unsigned long a_address,

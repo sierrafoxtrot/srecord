@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_stewie();
+    ~output_file_stewie() override;
 
 private:
     /**
@@ -62,64 +62,65 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    void put_byte(unsigned char);
+    void put_byte(unsigned char) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
       * The data_count instance variable is used to remember how many
       * data records have occurred so far in the output file.
       */
-    unsigned long data_count;
+    unsigned long data_count{0};
 
     /**
       * The address_length instance variable is used to remember the
       * minimum number of bytes to use for addresses.
       */
-    int address_length;
+    int address_length{2};
 
     /**
       * The preferred_block_size instance variable is used to remember
       * the preferred block size for records.
       */
-    int preferred_block_size;
+    int preferred_block_size{128};
 
     /**
       * Write a data record.
       */
     void write_inner(int, unsigned long, int, const void *, int);
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_stewie();
+    output_file_stewie() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_stewie(const output_file_stewie &);
+    output_file_stewie(const output_file_stewie &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_file_stewie &operator=(const output_file_stewie &);
+    output_file_stewie &operator=(const output_file_stewie &) = delete;
 };
 
 };

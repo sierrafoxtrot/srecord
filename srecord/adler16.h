@@ -33,26 +33,6 @@ class adler16
 {
 public:
     /**
-      * The destructor.
-      */
-    virtual ~adler16();
-
-    /**
-      * The default constructor.
-      */
-    adler16();
-
-    /**
-      * The copy constructor.
-      */
-    adler16(const adler16 &);
-
-    /**
-      * The assignment operator.
-      */
-    adler16 &operator=(const adler16 &);
-
-    /**
       * The get method is used to obtain the running value of the checksum.
       */
     unsigned short get() const;
@@ -72,13 +52,13 @@ private:
       * The sum_a instance variable is used to remember the sum of bytes
       * scanned.
       */
-    unsigned char sum_a;
+    unsigned char sum_a{1};
 
     /**
       * The sum_b instance variable is used to remember the sum of the
       * sum of bytes scanned.
       */
-    unsigned char sum_b;
+    unsigned char sum_b{0};
 };
 
 };

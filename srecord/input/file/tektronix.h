@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_tektronix();
+    ~input_file_tektronix() = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,13 +49,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -71,14 +71,14 @@ private:
       * We override the one in the base class because the checksum is
       * nibble-based, not byte-based.
       */
-    int get_nibble();
+    int get_nibble() override;
 
     /**
       * The get_byte method gets a two hex-digit from input and assembles
       * them (big-endian) into a byte.  We override the one in the base
       * class because the checksum is nibble-based, not byte-based.
       */
-    int get_byte();
+    int get_byte() override;
 
     /**
       * The read_inner method is used to read a single record from
@@ -90,40 +90,41 @@ private:
       * The data_record_count instance variable is used to remember the
       * number of data records seen so far.
       */
-    int data_record_count;
+    int data_record_count{0};
 
     /**
       * The garbage_warning instance variable is used to remember whether
       * a warning about input line containing garbage has been issued yet.
       */
-    bool garbage_warning;
+    bool garbage_warning{false};
 
     /**
       * The seen_some_input instance variable is used to remember whether
       * the file contains any data so far.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The termination_seen instance variable is used to remember
       * whether the termination record has been seen yet.
       */
-    bool termination_seen;
+    bool termination_seen{false};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_tektronix() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_tektronix();
+    input_file_tektronix(const input_file_tektronix &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_tektronix(const input_file_tektronix &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_tektronix &operator=(const input_file_tektronix &);
+    input_file_tektronix &operator=(const input_file_tektronix &) = delete;
 };
 
 };

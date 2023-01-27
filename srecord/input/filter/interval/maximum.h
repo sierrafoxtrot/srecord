@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_interval_maximum();
+    ~input_filter_interval_maximum() override = default;
 
 private:
     /**
@@ -79,24 +79,25 @@ public:
 
 protected:
     // See base class for documentation.
-    long calculate_result() const;
+    long calculate_result() const override;
 
-private:
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_interval_maximum();
+    input_filter_interval_maximum() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_interval_maximum(const input_filter_interval_maximum &);
+    input_filter_interval_maximum(
+        const input_filter_interval_maximum &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
     input_filter_interval_maximum &operator=(
-        const input_filter_interval_maximum &);
+        const input_filter_interval_maximum &) = delete;
 };
 
 };

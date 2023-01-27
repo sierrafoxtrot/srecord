@@ -42,7 +42,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_message();
+    ~input_filter_message() override = default;
 
 protected:
     /**
@@ -57,7 +57,7 @@ protected:
     input_filter_message(const input::pointer &deeper, bool naked = false);
 
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     /**
       * The process method is used to process the data from the input.
@@ -100,41 +100,42 @@ private:
       * The buffer_pos instance variable is used to remember where we
       * are up to in processing 'buffer'.
       */
-    unsigned long buffer_pos;
+    unsigned long buffer_pos{0};
 
     /**
       * The have_forwarded_header instance variable is used to remember
       * whether we have returned the file header to our reader yet.
       */
-    bool have_forwarded_header;
+    bool have_forwarded_header{false};
 
     /**
       * The have_given_result instance variable is used to remember
       * whether we have returned the result to our reader yet.
       */
-    bool have_given_result;
+    bool have_given_result{false};
 
     /**
       * The have_forwarded_start_address instance variable is used to
       * remember whether we have returned the execution start address to
       * our reader yet.
       */
-    bool have_forwarded_start_address;
+    bool have_forwarded_start_address{false};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_filter_message() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_message();
+    input_filter_message(const input_filter_message &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_filter_message(const input_filter_message &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_filter_message &operator=(const input_filter_message &);
+    input_filter_message &operator=(const input_filter_message &) = delete;
 };
 
 };

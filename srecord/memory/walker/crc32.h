@@ -39,7 +39,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_crc32();
+    ~memory_walker_crc32() override  = default;
 
 private:
     /**
@@ -69,7 +69,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
 private:
     /**
@@ -78,15 +78,16 @@ private:
       */
     crc32 checksum;
 
+public:
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    memory_walker_crc32(const memory_walker_crc32 &);
+    memory_walker_crc32(const memory_walker_crc32 &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    memory_walker_crc32 &operator=(const memory_walker_crc32 &);
+    memory_walker_crc32 &operator=(const memory_walker_crc32 &) = delete;
 };
 
 };

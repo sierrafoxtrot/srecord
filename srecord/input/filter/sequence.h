@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_sequence();
+    ~input_filter_sequence() override = default;
 
 private:
     /**
@@ -54,7 +54,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
 private:
     /**
@@ -63,7 +63,7 @@ private:
       * addresses less than this cause an "out of sequence" warning.
       * It is check and updated by the read() method.
       */
-    unsigned long last_address;
+    unsigned long last_address{0};
 
     /**
       * The warned instance variable is used to remember whether or not
@@ -74,22 +74,23 @@ private:
       * embedded too chains emit zillions of these as they walk across
       * object files updating segments in parallel.
       */
-    bool warned;
+    bool warned{false};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_filter_sequence() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_sequence();
+    input_filter_sequence(const input_filter_sequence &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_filter_sequence(const input_filter_sequence &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_filter_sequence &operator=(const input_filter_sequence &);
+    input_filter_sequence &operator=(const input_filter_sequence &) = delete;
 };
 
 };

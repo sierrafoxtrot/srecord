@@ -20,20 +20,11 @@
 #include <srecord/input/file/tektronix_extended.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_tektronix_extended::~input_file_tektronix_extended()
-{
-}
-
-
 srecord::input_file_tektronix_extended::input_file_tektronix_extended(
     const std::string &a_file_name
 ) :
-    srecord::input_file(a_file_name),
-    garbage_warning(false),
-    seen_some_input(false),
-    termination_seen(false),
-    nibble_sum(0)
+    srecord::input_file(a_file_name)
+
 {
 }
 

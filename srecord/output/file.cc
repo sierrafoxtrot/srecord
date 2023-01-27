@@ -47,13 +47,7 @@ srecord::output_file::~output_file()
 }
 
 
-srecord::output_file::output_file() :
-    file_name("standard output"),
-    line_number(1),
-    vfp(0),
-    checksum(0),
-    position(0),
-    is_regular(true)
+srecord::output_file::output_file()
 {
     vfp = stdout;
     set_is_regular();
@@ -62,12 +56,7 @@ srecord::output_file::output_file() :
 
 
 srecord::output_file::output_file(const std::string &a_file_name) :
-    file_name(a_file_name),
-    line_number(1),
-    vfp(0),
-    checksum(0),
-    position(0),
-    is_regular(true)
+    file_name(a_file_name)
 {
     if (file_name == "-")
     {
@@ -431,7 +420,7 @@ void
 srecord::output_file::set_is_regular()
 {
     FILE *fp = (FILE *)vfp;
-    struct stat st;
+    struct stat st{};
     is_regular = fstat(fileno(fp), &st) == 0 && S_ISREG(st.st_mode);
 }
 

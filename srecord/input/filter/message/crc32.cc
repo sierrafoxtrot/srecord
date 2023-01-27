@@ -23,11 +23,6 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_message_crc32::~input_filter_message_crc32()
-{
-}
-
-
 srecord::input_filter_message_crc32::input_filter_message_crc32(
     const input::pointer &a_deeper,
     unsigned long a_address,

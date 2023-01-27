@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_aomf();
+    ~input_file_aomf() override;
 
 private:
     /**
@@ -45,7 +45,7 @@ private:
       * @param file_name
       *     The name of the file to be read.
       */
-    input_file_aomf(const std::string &file_name);
+    explicit input_file_aomf(const std::string &file_name);
 
 public:
     /**
@@ -61,16 +61,16 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -78,33 +78,33 @@ private:
       * update the checksum.  We over-ride the base implementation,
       * because we use raw bytes rather than two hex digits.
       */
-    int get_byte();
+    int get_byte() override;
 
     /**
       * The current_buffer instance variable is used to remember the
       * base of an array which buffers the current input record.
       */
-    unsigned char *current_buffer;
+    unsigned char *current_buffer{nullptr};
 
     /**
       * The current_length instance variable is used to remember
       * the length of the current record.  It is zero if there is no
       * "current" record.
       */
-    size_t current_length;
+    size_t current_length{0};
 
     /**
       * The current_maximum instance variable is used to remember the
       * length of the current_buffer array.  It is zero if there is no
       * "current" buffer.
       */
-    size_t current_maximum;
+    size_t current_maximum{0};
 
     /**
       * The current_pos instance variable is used to remember the
       * position within the current_buffer array.
       */
-    size_t current_pos;
+    size_t current_pos{0};
 
     /**
       * The current_address instance variable is used to track the
@@ -112,7 +112,7 @@ private:
       * we return a partial block, so that we always return the
       * correct load address.
       */
-    unsigned long current_address;
+    unsigned long current_address{0};
 
     enum state_t
     {
@@ -125,7 +125,7 @@ private:
       * The state instance variable is used to remember what to expect
       * next from the file.
       */
-    state_t state;
+    state_t state{expecting_header};
 
     /**
       * The slurp method is used to fill the current_buffer array,
@@ -133,15 +133,16 @@ private:
       */
     int slurp();
 
+public:
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_aomf(const input_file_aomf &);
+    input_file_aomf(const input_file_aomf &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_file_aomf &operator=(const input_file_aomf &);
+    input_file_aomf &operator=(const input_file_aomf &) = delete;
 };
 
 };

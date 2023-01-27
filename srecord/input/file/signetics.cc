@@ -20,18 +20,10 @@
 #include <srecord/input/file/signetics.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_signetics::~input_file_signetics()
-{
-}
-
-
 srecord::input_file_signetics::input_file_signetics(
     const std::string &a_filename
 ) :
-    srecord::input_file(a_filename),
-    garbage_warning(false),
-    seen_some_input(false)
+    srecord::input_file(a_filename)
 {
 }
 

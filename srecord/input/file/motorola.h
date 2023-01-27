@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_motorola();
+    ~input_file_motorola() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,16 +49,16 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -73,7 +73,7 @@ private:
       * The data_count instance variable is used to remember the number
       * of data lines has occurred so far in the input file.
       */
-    unsigned long data_count;
+    unsigned long data_count{0};
 
     /**
       * The read_inner method is used to read a record of input.
@@ -85,25 +85,25 @@ private:
       * The garbage_warning instance variable is used to remember whether
       * or not a warning about garbage input lines has been issued yet.
       */
-    bool garbage_warning;
+    bool garbage_warning{false};
 
     /**
       * The seen_some_input instance variable is used to remember where
       * any data has been seen in this file yet.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The header_seen instance variable is used to remember whether
       * or not the header record has been seen yet.
       */
-    bool header_seen;
+    bool header_seen{false};
 
     /**
       * The termination_seen instance variable is used to remember
       * whether or not the termination record has been seen yet.
       */
-    bool termination_seen;
+    bool termination_seen{false};
 
     /**
       * The address_shift method is used to remember how far to the left
@@ -117,22 +117,23 @@ private:
       * the lines are jumbled just right, the first few lines are no
       * more enlightening).
       */
-    unsigned address_shift;
+    unsigned address_shift{0};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_motorola() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_motorola();
+    input_file_motorola(const input_file_motorola &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_motorola(const input_file_motorola &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_motorola &operator=(const input_file_motorola &);
+    input_file_motorola &operator=(const input_file_motorola &) = delete;
 };
 
 };

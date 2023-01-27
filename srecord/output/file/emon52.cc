@@ -21,17 +21,10 @@
 #include <srecord/record.h>
 
 
-srecord::output_file_emon52::~output_file_emon52()
-{
-    // check for termination record
-}
-
-
 srecord::output_file_emon52::output_file_emon52(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    pref_block_size(16)
+    srecord::output_file(a_file_name)
 {
 }
 

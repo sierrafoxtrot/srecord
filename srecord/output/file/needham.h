@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_needham();
+    ~output_file_needham() override;
 
 private:
     /**
@@ -60,63 +60,64 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
       * The address instance variable is used to remember where in the
       * file the output has reached.  This is used to fill gaps.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The column instance variable is used to remember the column of
       * the output text we have reached.  This is used when calculating
       * when to throw new lines.
       */
-    int column;
+    int column{0};
 
     /**
       * The pref_block_size instance variable is used to remember The
       * preferred line length of the output text.
       */
-    int pref_block_size;
+    int pref_block_size{16};
 
     /**
       * The address_length instance variable is used to remember the
       * minimum number of bytes to use for addresses in the output text.
       */
-    int address_length;
+    int address_length{4};
+
+public:
+    /**
+      * The default constructor.
+      */
+    output_file_needham() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_needham();
+    output_file_needham(const output_file_needham &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    output_file_needham(const output_file_needham &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    output_file_needham &operator=(const output_file_needham &);
+    output_file_needham &operator=(const output_file_needham &) = delete;
 };
 
 };

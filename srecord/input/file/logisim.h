@@ -84,7 +84,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_logisim();
+    ~input_file_logisim() override = default;
 
     static input_file::pointer create(const std::string &file_name);
 
@@ -97,13 +97,13 @@ public:
 
 protected:
     // See base class for documentation
-    bool read(srecord::record &rec);
+    bool read(srecord::record &rec) override;
 
     // See base class for documentation
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation
-    int format_option_number() const;
+    int format_option_number() const override;
 
     /**
       * The constructor.
@@ -111,8 +111,8 @@ protected:
     input_file_logisim(const std::string &file_name);
 
 private:
-    srecord::record::address_t address;
-    state_t state;
+    srecord::record::address_t address{0};
+    state_t state{state_line_one};
 
     struct datum_t
     {
@@ -132,20 +132,21 @@ private:
     void read_inner_two();
     void read_inner_job();
 
+public:
     /**
       * The default constructor.
       */
-    input_file_logisim();
+    input_file_logisim() = delete;
 
     /**
       * The copy constructor.
       */
-    input_file_logisim(const input_file_logisim &);
+    input_file_logisim(const input_file_logisim &)  = delete;
 
     /**
       * The assignment operator.
       */
-    input_file_logisim &operator=(const input_file_logisim &);
+    input_file_logisim &operator=(const input_file_logisim &)  = delete;
 };
 
 };

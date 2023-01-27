@@ -36,7 +36,7 @@ public:
     /**
       * the destructor.
       */
-    virtual ~memory_walker_writer();
+    ~memory_walker_writer() override = default;
 
 private:
     /**
@@ -60,16 +60,16 @@ public:
 
 protected:
     // See base class for documentation.
-    virtual void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
     // See base class for documentation.
-    void notify_upper_bound(long unsigned);
+    void notify_upper_bound(long unsigned) override;
 
     // See base class for documentation.
-    void observe_header(const record *);
+    void observe_header(const record *) override;
 
     // See base class for documentation.
-    void observe_start_address(const record *);
+    void observe_start_address(const record *) override;
 
 private:
     /**
@@ -78,20 +78,21 @@ private:
       */
     output::pointer op;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    memory_walker_writer();
+    memory_walker_writer() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    memory_walker_writer(const memory_walker_writer &);
+    memory_walker_writer(const memory_walker_writer &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    memory_walker_writer &operator=(const memory_walker_writer &);
+    memory_walker_writer &operator=(const memory_walker_writer &) = delete;
 };
 
 }

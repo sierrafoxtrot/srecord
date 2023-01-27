@@ -22,17 +22,9 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_byte_swap::~input_filter_byte_swap()
-{
-}
-
-
 srecord::input_filter_byte_swap::input_filter_byte_swap(
         const srecord::input::pointer &arg) :
-    srecord::input_filter(arg),
-    buffer(),
-    buffer_pos(0),
-    mask(1)
+    srecord::input_filter(arg)
 {
 }
 

@@ -18,38 +18,6 @@
 
 #include <srecord/adler16.h>
 
-
-srecord::adler16::~adler16()
-{
-}
-
-
-srecord::adler16::adler16() :
-    sum_a(1),
-    sum_b(0)
-{
-}
-
-
-srecord::adler16::adler16(const adler16 &rhs) :
-    sum_a(rhs.sum_a),
-    sum_b(rhs.sum_b)
-{
-}
-
-
-srecord::adler16 &
-srecord::adler16::operator=(const adler16 &rhs)
-{
-    if (this != &rhs)
-    {
-        sum_a = rhs.sum_a;
-        sum_b = rhs.sum_b;
-    }
-    return *this;
-}
-
-
 unsigned short
 srecord::adler16::get()
     const

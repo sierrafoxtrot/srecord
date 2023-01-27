@@ -40,7 +40,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_filter_reblock();
+    ~output_filter_reblock() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -57,19 +57,19 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &r);
+    void write(const record &r) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
 private:
     /**
@@ -99,14 +99,14 @@ private:
       * deeper->preferred_block_size_get() value, the cache is updated
       * at strategic times, by calling the #track_block_size method.
       */
-    unsigned block_size;
+    unsigned block_size{0};
 
     /**
       * The buffer_address instance variable is used to remember the
       * byte address of the first byte of the output buffer.  Not
       * meaningful if #buffer_pos is zero.
       */
-    unsigned long buffer_address;
+    unsigned long buffer_address{0};
 
     /**
       * The buffer instance variable is used to remember the base
@@ -116,7 +116,7 @@ private:
       *
       * assert(!buffer == !buffer_max);
       */
-    unsigned char *buffer;
+    unsigned char *buffer{0};
 
     /**
       * The buffer_pos instance variable is used to remember how many
@@ -124,13 +124,13 @@ private:
       *
       * assert(buffer_pos < buffer_max);
       */
-    size_t buffer_pos;
+    size_t buffer_pos{0};
 
     /**
       * The buffer_max instance variable is used to remember how many
       * data bytes were allocated when the #buffer was created.
       */
-    size_t buffer_max;
+    size_t buffer_max{0};
 
     /**
       * The track_block_size method is used to re-cache the
@@ -150,20 +150,21 @@ private:
       */
     void flush_buffer(bool partial);
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_filter_reblock();
+    output_filter_reblock() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_filter_reblock(const output_filter_reblock &);
+    output_filter_reblock(const output_filter_reblock &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_filter_reblock &operator=(const output_filter_reblock &);
+    output_filter_reblock &operator=(const output_filter_reblock &) = delete;
 };
 
 };

@@ -21,11 +21,6 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_bitrev::~input_filter_bitrev()
-{
-}
-
-
 srecord::input_filter_bitrev::input_filter_bitrev(
     const srecord::input::pointer &arg
 ) :

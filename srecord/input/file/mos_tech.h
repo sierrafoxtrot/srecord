@@ -33,7 +33,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_mos_tech();
+    ~input_file_mos_tech() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -48,13 +48,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -77,34 +77,35 @@ private:
       * whether or not a warning has been issued about non-format
       * lines in the file.  Only one warning per file is issued.
       */
-    bool garbage_warning;
+    bool garbage_warning{false};
 
     /**
       * The seen_some_input instance variable is used to
       * remember whether any input has been seen.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The data_record_count instance variable is used to remember the
       * number of data records seen to date.
       */
-    int data_record_count;
+    int data_record_count{0};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_mos_tech() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_mos_tech();
+    input_file_mos_tech(const input_file_mos_tech &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_mos_tech(const input_file_mos_tech &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_mos_tech &operator=(const input_file_mos_tech &);
+    input_file_mos_tech &operator=(const input_file_mos_tech &) = delete;
 };
 
 };

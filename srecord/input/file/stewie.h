@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_stewie();
+    ~input_file_stewie() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -50,19 +50,19 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
     // See base class for documentation.
-    int get_byte();
+    int get_byte() override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -77,7 +77,7 @@ private:
       * The data_count instance variable is used to remember the number
       * of data lines has occurred so far in the input file.
       */
-    unsigned long data_count;
+    unsigned long data_count{0};
 
     /**
       * The read_inner method is used to read a record of input.
@@ -89,40 +89,41 @@ private:
       * The garbage_warning instance variable is used to remember whether
       * or not a warning about garbage input lines has been issued yet.
       */
-    bool garbage_warning;
+    bool garbage_warning{false};
 
     /**
       * The seen_some_input instance variable is used to remember where
       * any data has been seen in this file yet.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The header_seen instance variable is used to remember whether
       * or not the header record has been seen yet.
       */
-    bool header_seen;
+    bool header_seen{false};
 
     /**
       * The termination_seen instance variable is used to remember
       * whether or not the termination record has been seen yet.
       */
-    bool termination_seen;
+    bool termination_seen{false};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_stewie() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_stewie();
+    input_file_stewie(const input_file_stewie &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_stewie(const input_file_stewie &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_stewie &operator=(const input_file_stewie &);
+    input_file_stewie &operator=(const input_file_stewie &) = delete;
 };
 
 };

@@ -20,19 +20,10 @@
 #include <srecord/input/file/fairchild.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_fairchild::~input_file_fairchild()
-{
-}
-
-
 srecord::input_file_fairchild::input_file_fairchild(
     const std::string &a_filename
 ) :
-    input_file(a_filename),
-    header_seen(false),
-    address(0),
-    file_contains_data(false)
+    input_file(a_filename)
 {
 }
 

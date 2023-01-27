@@ -20,21 +20,12 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_message::~input_filter_message()
-{
-}
-
-
 srecord::input_filter_message::input_filter_message(
     const input::pointer &a_deeper,
     bool a_naked
 ) :
     input_filter(a_deeper),
-    naked(a_naked),
-    buffer_pos(0),
-    have_forwarded_header(false),
-    have_given_result(false),
-    have_forwarded_start_address(false)
+    naked(a_naked)
 {
 }
 

@@ -39,22 +39,22 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter();
+    ~input_filter() override = default;
 
     // See base class for documentation.
-    bool read(class record &record);
+    bool read(class record &record) override;
 
     // See base class for documentation.
-    std::string filename() const;
+    std::string filename() const override;
 
     // See base class for documentation.
-    std::string filename_and_line() const;
+    std::string filename_and_line() const override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    void disable_checksum_validation();
+    void disable_checksum_validation() override;
 
 protected:
     /**
@@ -72,21 +72,21 @@ protected:
     //
     pointer ifp;
 
-private:
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter();
+    input_filter() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter(const input_filter &);
+    input_filter(const input_filter &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_filter &operator=(const input_filter &);
+    input_filter &operator=(const input_filter &) = delete;
 };
 
 };

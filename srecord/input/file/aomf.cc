@@ -120,13 +120,8 @@ srecord::input_file_aomf::~input_file_aomf()
 
 
 srecord::input_file_aomf::input_file_aomf(const std::string &a_filename) :
-    srecord::input_file(a_filename),
-    current_buffer(0),
-    current_length(0),
-    current_maximum(0),
-    current_pos(0),
-    current_address(0),
-    state(expecting_header)
+    srecord::input_file(a_filename)
+
 {
 }
 

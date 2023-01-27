@@ -22,11 +22,6 @@
 #include <srecord/quit/prefix.h>
 
 
-srecord::quit_prefix::~quit_prefix()
-{
-}
-
-
 srecord::quit_prefix::quit_prefix(quit &a1, const char *a2) :
     prefix(a2),
     deeper(a1)

@@ -23,11 +23,6 @@
 #include <srecord/record.h>
 
 
-srecord::output_file_aomf::~output_file_aomf()
-{
-}
-
-
 srecord::output_file_aomf::output_file_aomf(const std::string &a_file_name) :
     srecord::output_file(a_file_name)
 {

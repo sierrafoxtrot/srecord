@@ -51,8 +51,3 @@ srec_cat_arglex3::srec_cat_arglex3(int argc, char **argv) :
 
     table_set(table);
 }
-
-
-srec_cat_arglex3::~srec_cat_arglex3()
-{
-}

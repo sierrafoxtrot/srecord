@@ -41,13 +41,7 @@ srecord::output_file_fastload::~output_file_fastload()
 srecord::output_file_fastload::output_file_fastload(
     const std::string &a_filename
 ) :
-    srecord::output_file(a_filename),
-    line_length(0),
-    address(~0UL),
-    column(0),
-    bytes_since_checksum(0),
-    max_since_checksum(0),
-    prev_was_command(false)
+    srecord::output_file(a_filename)
 {
     line_length_set(80);
 }

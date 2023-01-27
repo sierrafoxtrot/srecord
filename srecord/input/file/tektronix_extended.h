@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_tektronix_extended();
+    ~input_file_tektronix_extended() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -52,16 +52,16 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
     // See base class for documentation.
-    int get_nibble();
+    int get_nibble() override;
 
 private:
     /**
@@ -76,7 +76,7 @@ private:
       * The data_record_count instance variable is used to remember the
       * number of data records seen in the input so far.
       */
-    int data_record_count;
+    int data_record_count{};
 
     /**
       * The read_inner method is used to read a record of input.
@@ -89,47 +89,43 @@ private:
       * whether or not a warning about garbage line in the input has
       * been issued yet.
       */
-    bool garbage_warning;
+    bool garbage_warning{false};
 
     /**
       * The seen_some_input instance variable is used to remember whether
       * any data has been seen in this file yet.
       */
-    bool seen_some_input;
-
-    /**
-      * The header_seen instance variable is used to remember whether
-      * the header record has been seen yet.
-      */
-    bool header_seen;
+    bool seen_some_input{false};
 
     /**
       * The termination_seen instance variable is used to remember
       * whether the termination record has been seen yet.
       */
-    bool termination_seen;
+    bool termination_seen{false};
 
     /**
       * The nibble_sum instance variable is usd to remember the running
       * checksum, of each nibble on the record line.
       */
-    unsigned char nibble_sum;
+    unsigned char nibble_sum{0};
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_file_tektronix_extended();
+    input_file_tektronix_extended() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_tektronix_extended(const input_file_tektronix_extended &);
+    input_file_tektronix_extended(
+        const input_file_tektronix_extended &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
     input_file_tektronix_extended &operator=(
-        const input_file_tektronix_extended &);
+        const input_file_tektronix_extended &) = delete;
 };
 
 };

@@ -31,8 +31,7 @@ srecord::output_file_forth::~output_file_forth()
 srecord::output_file_forth::output_file_forth(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    store_cmd("C!")
+    srecord::output_file(a_file_name)
 {
 }
 

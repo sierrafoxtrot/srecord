@@ -43,16 +43,7 @@ srecord::output_file_coe::~output_file_coe()
 
 
 srecord::output_file_coe::output_file_coe(const std::string &a_file_name) :
-    srecord::output_file(a_file_name),
-    address(0),
-    column(0),
-    depth(0),
-    width(8),
-    width_in_bytes(1),
-    actual_depth(0),
-    header_done(false),
-    pref_blk_sz(32),
-    got_data(false)
+    srecord::output_file(a_file_name)
 {
     line_length_set(80);
 }

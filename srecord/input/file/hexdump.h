@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_hexdump();
+    ~input_file_hexdump() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -47,13 +47,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(class record &rec);
+    bool read(class record &rec) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -92,7 +92,7 @@ private:
       * address of the next data record.  This is set and advanced by
       * the #read method.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The data_seen instance variable is used to remember whether or
@@ -100,28 +100,29 @@ private:
       * an error when there is apparently no data in the file, and this
       * helps #guess to figure out the file is not of this type.
       */
-    bool data_seen;
+    bool data_seen{false};
 
     /**
       * The current_token_value instance variable is used to remember
       * the value of the most recent token_byte seen.
       */
-    unsigned current_token_value;
+    unsigned current_token_value{};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_hexdump() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_hexdump();
+    input_file_hexdump(const input_file_hexdump &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_hexdump(const input_file_hexdump &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_hexdump &operator=(const input_file_hexdump &);
+    input_file_hexdump &operator=(const input_file_hexdump &) = delete;
 };
 
 };

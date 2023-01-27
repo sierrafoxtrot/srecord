@@ -20,17 +20,10 @@
 #include <srecord/input/file/brecord.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_brecord::~input_file_brecord()
-{
-}
-
-
 srecord::input_file_brecord::input_file_brecord(
     const std::string &a_file_name
 ) :
-    input_file(a_file_name),
-    seen_some_input(false)
+    input_file(a_file_name)
 {
 }
 
@@ -61,7 +54,8 @@ srecord::input_file_brecord::read_inner(record &result)
 
     if (length == 0)
     {
-        result = record(record::type_execution_start_address, address, 0, 0);
+        result = record(record::type_execution_start_address,
+            address, nullptr, 0);
     }
     else
     {

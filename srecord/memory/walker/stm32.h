@@ -51,7 +51,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_stm32();
+    ~memory_walker_stm32() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -68,14 +68,14 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
 private:
     /**
       * The default constructor.
       * It is private on purpose, use the #create class method instead.
       */
-    memory_walker_stm32();
+    memory_walker_stm32() = default;
 
     /**
       * The checksum instance variable is used to remember the running
@@ -83,15 +83,16 @@ private:
       */
     stm32 checksum;
 
+public:
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    memory_walker_stm32(const memory_walker_stm32 &);
+    memory_walker_stm32(const memory_walker_stm32 &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    memory_walker_stm32 &operator=(const memory_walker_stm32 &);
+    memory_walker_stm32 &operator=(const memory_walker_stm32 &) = delete;
 };
 
 };

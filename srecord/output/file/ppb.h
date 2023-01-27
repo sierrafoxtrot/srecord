@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_ppb();
+    ~output_file_ppb() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -47,25 +47,25 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
 private:
     /**
@@ -82,25 +82,25 @@ private:
       * The address instance variable is used to remember the address of
       * the next data byte to be parsed.
       */
-    unsigned long address;
+    unsigned long address{-1UL};
 
     /**
       * The buffer instance variable is used to remember the accumulated
       * data bytes to be written to the file.
       */
-    unsigned char buffer[8192];
+    unsigned char buffer[8192]{};
 
     /**
       * The buffer_length instance variable is used to remember how many
       * bytes are valid in the #buffer array.
       */
-    unsigned buffer_length;
+    unsigned buffer_length{0};
 
     /**
       * The seen_some_data instance variable is used to remember whether
       * or not any data has been written to the file yet.
       */
-    bool seen_some_data;
+    bool seen_some_data{false};
 
     /**
       * The buffer_flush method is used to write out the #buffer_length
@@ -126,20 +126,21 @@ private:
       */
     unsigned char sum_ulong(unsigned long value, unsigned char sum);
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_ppb();
+    output_file_ppb() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_ppb(const output_file_ppb &);
+    output_file_ppb(const output_file_ppb &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_file_ppb &operator=(const output_file_ppb &);
+    output_file_ppb &operator=(const output_file_ppb &) = delete;
 };
 
 };

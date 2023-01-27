@@ -21,11 +21,6 @@
 #include <srecord/output.h>
 
 
-srecord::memory_walker_crc32::~memory_walker_crc32()
-{
-}
-
-
 srecord::memory_walker_crc32::memory_walker_crc32(
         crc32::seed_mode_t seed_mode) :
     checksum(seed_mode)

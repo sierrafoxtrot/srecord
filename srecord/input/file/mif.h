@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_mif();
+    ~input_file_mif() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,13 +49,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -79,31 +79,31 @@ private:
       * The state instance variable is used to remember the parse state
       * as we progress through the file.
       */
-    state_t state;
+    state_t state{state_header};
 
     /**
       * The address instance variable is used to remember where we are
       * up to in the input file, so it may be associated with data bytes.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The lex_radix instance variable is used to remember the numeric
       * radix to be used when parsing numbers.
       */
-    unsigned lex_radix;
+    unsigned lex_radix{10};
 
     /**
       * The lex_addr_radix instance variable is used to remember the
       * numeric radix to be used when parsing address values.
       */
-    unsigned lex_addr_radix;
+    unsigned lex_addr_radix{16};
 
     /**
       * The lex_data_radix instance variable is used to remember the
       * numeric radix to be used when parsing data values.
       */
-    unsigned lex_data_radix;
+    unsigned lex_data_radix{16};
 
     enum token_t
     {
@@ -141,7 +141,7 @@ private:
       * The token_value instance variable is used to remember the
       * numeric value of token_number returns from #lex.
       */
-    long token_value;
+    long token_value{};
 
     /**
       * The lex_addr method is used to obtain the next lexical token
@@ -170,23 +170,24 @@ private:
     int get_radix();
     void get_colon();
 
-    unsigned width;
-    unsigned width_in_bytes;
+    unsigned width{8};
+    unsigned width_in_bytes{1};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_mif() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_mif();
+    input_file_mif(const input_file_mif &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_mif(const input_file_mif &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_mif &operator=(const input_file_mif &);
+    input_file_mif &operator=(const input_file_mif &) = delete;
 };
 
 };

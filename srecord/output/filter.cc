@@ -19,11 +19,6 @@
 #include <srecord/output/filter.h>
 
 
-srecord::output_filter::~output_filter()
-{
-}
-
-
 srecord::output_filter::output_filter(const output::pointer &a_deeper) :
     deeper(a_deeper)
 {

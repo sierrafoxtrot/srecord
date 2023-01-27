@@ -27,27 +27,8 @@
 #include <srecord/record.h>
 #include <srecord/string.h>
 
+srecord::memory::memory(const srecord::memory &rhs)
 
-srecord::memory::memory() :
-    nchunks(0),
-    nchunks_max(0),
-    chunk(0),
-    cache(0),
-    find_next_chunk_index(0),
-    header(0),
-    execution_start_address(0)
-{
-}
-
-
-srecord::memory::memory(const srecord::memory &rhs) :
-    nchunks(0),
-    nchunks_max(0),
-    chunk(0),
-    cache(0),
-    find_next_chunk_index(0),
-    header(0),
-    execution_start_address(0)
 {
     copy(rhs);
 }

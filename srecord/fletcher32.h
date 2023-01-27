@@ -59,17 +59,17 @@ public:
     /**
       * The destructor.
       */
-    virtual ~fletcher32();
+    virtual ~fletcher32() = default;
 
     /**
       * The default constructor.
       */
-    fletcher32();
+    fletcher32() = default;
 
     /**
       * The copy constructor.
       */
-    fletcher32(const fletcher32 &);
+    fletcher32(const fletcher32 &) = default;
 
     /**
       * The assignment operator.
@@ -96,13 +96,13 @@ private:
     /**
       * The sum1 instance variable is used to remember the sum of the bytes.
       */
-    unsigned long sum1;
+    unsigned long sum1{0xFFFF};
 
     /**
       * The sum2 instance variable is used to remember the sum of the
       * sum of the bytes.
       */
-    unsigned long sum2;
+    unsigned long sum2{0xFFFF};
 };
 
 };

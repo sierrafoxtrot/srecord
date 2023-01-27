@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_fill();
+    ~input_filter_fill() override;
 
 private:
     /**
@@ -70,7 +70,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
 private:
     /**
@@ -84,7 +84,7 @@ private:
       * of a dynamically allocated array of bytes, used to construct
       * filler block records.
       */
-    unsigned char *filler_block;
+    unsigned char *filler_block{nullptr};
 
     /**
       * The range instance variable is used to remember the range of
@@ -98,20 +98,21 @@ private:
       */
     bool generate(record &record);
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_fill();
+    input_filter_fill() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_fill(const input_filter_fill &);
+    input_filter_fill(const input_filter_fill &) = delete;
 
     /**
-      * The assignment.  Do not use.
+      * The assignment.
       */
-    input_filter_fill &operator=(const input_filter_fill &);
+    input_filter_fill &operator=(const input_filter_fill &) = delete;
 };
 
 };

@@ -41,7 +41,33 @@ public:
     /**
       * The destructor.
       */
-    virtual ~arglex();
+    virtual ~arglex() = default;
+
+    /**
+      * The default constructor.
+      */
+    arglex();
+
+    /**
+      * The copy constructor.
+      */
+    arglex(arglex &) = default;
+
+    /**
+      * The move constructor
+      */
+    arglex ( arglex && ) = default;
+
+    /**
+      * The move assignment operator
+      */
+    arglex& operator=(arglex&&) = default;
+
+    /**
+      * The normal constructor.  The argv and argv should be those
+      * passed to main().  Not manipulation is required.
+      */
+    arglex(int argc, char **argv);
 
     /**
       * The "normal" command line tokens common to all programs.
@@ -169,7 +195,7 @@ private:
       * The token instance variable tracks the current token in the
       * parse sequence.
       */
-    int token;
+    int token{};
 
     /**
       * The value_string_ instance variable tracks the value of the
@@ -182,7 +208,7 @@ private:
       * of the current command line argument.  Usually zero unless
       * the current command line argument is a number.
       */
-    long value_number_;
+    long value_number_{};
 
     /**
       * The table_ptr_vec_t type is used to declare the 'tables'
@@ -215,22 +241,6 @@ protected:
     void table_set(const table_ty *);
 
 public:
-    /**
-      * The default constructor.
-      */
-    arglex();
-
-    /**
-      * The copy constructor.
-      */
-    arglex(arglex &);
-
-    /**
-      * The normal constructor.  The argv and argv should be those
-      * passed to main().  Not manipulation is required.
-      */
-    arglex(int argc, char **argv);
-
     /**
       * The token_cur method is used to get the type of the current
       * token.
@@ -288,7 +298,7 @@ public:
     /**
       * The help method is used to print a help message.
       */
-    void help(const char * = 0) const;
+    void help(const char * = nullptr) const;
 
     /**
       * The version method is used to print a version message.
@@ -326,7 +336,7 @@ private:
       * the command line printed by the 'usage' method.
       * Defaults to the empty string.
       */
-    mutable const char *usage_tail_;
+    mutable const char *usage_tail_{nullptr};
 
     /**
       * The usage_tail_get method is used to get the tail end of

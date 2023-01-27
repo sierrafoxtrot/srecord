@@ -28,15 +28,7 @@ srecord::input_file_intel::~input_file_intel()
 
 
 srecord::input_file_intel::input_file_intel(const std::string &a_file_name) :
-    srecord::input_file(a_file_name),
-    data_record_count(0),
-    garbage_warning(false),
-    seen_some_input(false),
-    termination_seen(false),
-    mode(mode_i8hex),
-    address_base(0),
-    pushback(0),
-    end_seen(false)
+    srecord::input_file(a_file_name)
 {
 }
 

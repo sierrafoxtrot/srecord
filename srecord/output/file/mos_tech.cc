@@ -44,9 +44,7 @@ srecord::output_file_mos_tech::~output_file_mos_tech()
 srecord::output_file_mos_tech::output_file_mos_tech(
     const std::string &a_filename
 ) :
-    srecord::output_file(a_filename),
-    pref_block_size(24),
-    data_record_count(0)
+    srecord::output_file(a_filename)
 {
     // The block size of 24 comes from the sole example I have seen of a
     // valid MOS Tech file.

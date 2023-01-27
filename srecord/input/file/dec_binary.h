@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_dec_binary();
+    ~input_file_dec_binary() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -50,16 +50,16 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -76,7 +76,7 @@ private:
       * update the checksum.  We over-ride the base implementation,
       * because we use raw bytes rather than two hex digits.
       */
-    int get_byte();
+    int get_byte() override;
 
     /**
       * This format has NUL characters for optional padding around
@@ -92,14 +92,14 @@ private:
       * because DEC Binary records can be significantly longer than
       * other formats.
       */
-    unsigned long current_pos;
+    unsigned long current_pos{0};
 
     /**
       * The current_length instance variable is used to remember
       * the length of the current record.  It is zero if there is no
       * "current" record.
       */
-    unsigned long current_length;
+    unsigned long current_length{0};
 
     /**
       * The current_address instance variable is used to track the
@@ -107,17 +107,18 @@ private:
       * we return a partial block, so that we always return the
       * correct load address.
       */
-    unsigned long current_address;
+    unsigned long current_address{0};
+
+public:
+    /**
+      * The copy constructor.
+      */
+    input_file_dec_binary(const input_file_dec_binary &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_dec_binary(const input_file_dec_binary &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_dec_binary &operator=(const input_file_dec_binary &);
+    input_file_dec_binary &operator=(const input_file_dec_binary &) = delete;
 };
 
 };

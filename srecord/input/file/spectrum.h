@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_spectrum();
+    ~input_file_spectrum() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,13 +49,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -70,19 +70,19 @@ private:
       * The header_seen instance variable is used to remember whether
       * the file header (the start character STX=0x02) has been seen yet.
       */
-    bool header_seen;
+    bool header_seen{false};
 
     /**
       * The trailer_seen instance variable is used to remember whether
       * the file trailer (the end character ETX=0x03) has been seen yet.
       */
-    bool trailer_seen;
+    bool trailer_seen{false};
 
     /**
       * The file_contains_data instance variable is used to remember
       * whether any file data has been seen yet.
       */
-    bool file_contains_data;
+    bool file_contains_data{false};
 
     /**
       * The get_decimal method is used to get a decimal number from
@@ -96,20 +96,21 @@ private:
       */
     int get_binary();
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_file_spectrum();
+    input_file_spectrum() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_spectrum(const input_file_spectrum &);
+    input_file_spectrum(const input_file_spectrum &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_file_spectrum &operator=(const input_file_spectrum &);
+    input_file_spectrum &operator=(const input_file_spectrum &) = delete;
 };
 
 };

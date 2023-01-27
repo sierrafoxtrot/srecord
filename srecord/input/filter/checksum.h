@@ -39,11 +39,11 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_checksum();
+    ~input_filter_checksum() override = default;
 
 protected:
     // See bas class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     /**
       * The constructor.
@@ -90,7 +90,7 @@ protected:
       * The sum instance variable is used to remember the running
       * checksum of the incoming data source.
       */
-    sum_t sum;
+    sum_t sum{0};
 
     /**
       * The width instance variable is used to remember the swathe width
@@ -117,21 +117,21 @@ protected:
       */
     bool generate(record &record);
 
-private:
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_checksum();
+    input_filter_checksum() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_checksum(const input_filter_checksum &);
+    input_filter_checksum(const input_filter_checksum &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_filter_checksum &operator=(const input_filter_checksum &);
+    input_filter_checksum &operator=(const input_filter_checksum &) = delete;
 };
 
 };

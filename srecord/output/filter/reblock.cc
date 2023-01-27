@@ -36,12 +36,7 @@ srecord::output_filter_reblock::output_filter_reblock(
     bool a_align
 ) :
     output_filter(a_deeper),
-    align(a_align),
-    block_size(0),
-    buffer_address(0),
-    buffer(0),
-    buffer_pos(0),
-    buffer_max(0)
+    align(a_align)
 {
     track_block_size();
 

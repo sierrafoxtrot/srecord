@@ -27,17 +27,6 @@
 bool srecord::input_file::ignore_checksums_default = false;
 
 
-srecord::input_file::input_file() :
-    file_name("standard input"),
-    line_number(1),
-    prev_was_newline(false),
-    vfp(stdin),
-    checksum(0),
-    ignore_checksums(ignore_checksums_default)
-{
-}
-
-
 bool
 srecord::input_file::is_binary()
     const
@@ -47,12 +36,7 @@ srecord::input_file::is_binary()
 
 
 srecord::input_file::input_file(const std::string &a_file_name) :
-    file_name(a_file_name),
-    line_number(1),
-    prev_was_newline(false),
-    vfp(0),
-    checksum(0),
-    ignore_checksums(ignore_checksums_default)
+    file_name(a_file_name)
 {
     if (file_name == "-")
     {

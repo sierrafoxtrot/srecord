@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_basic();
+    ~output_file_basic() override;
 
 private:
     /**
@@ -61,29 +61,29 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
       * The taddr instance variable is used to remember the
       * termination address, to be emitted in the footer.
       */
-    unsigned long taddr;
+    unsigned long taddr{0};
 
     /**
       * The range instance variable is used to remember the range
@@ -95,20 +95,20 @@ private:
       * The column instance variable is used to remember the current
       * printing column on the line.
       */
-    int column;
+    int column{0};
 
     /**
       * The current_address instance variable is used to remember
       * the current address that the file is positioned at.  This is
       * used to know whether we need to add padding.
       */
-    unsigned long current_address;
+    unsigned long current_address{0};
 
     /**
       * The line_length instance variable is used to remember the
       * maximum line length.  The output usually does not exceed it.
       */
-    int line_length;
+    int line_length{75};
 
     /**
       * The emit_byte method is used to emit a single byte.  It uses
@@ -116,20 +116,21 @@ private:
       */
     void emit_byte(int);
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_basic();
+    output_file_basic() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_basic(const output_file_basic &);
+    output_file_basic(const output_file_basic &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_file_basic &operator=(const output_file_basic &);
+    output_file_basic &operator=(const output_file_basic &) = delete;
 };
 
 };

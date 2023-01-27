@@ -35,26 +35,6 @@ class adler32
 {
 public:
     /**
-      * The destructor.
-      */
-    virtual ~adler32();
-
-    /**
-      * The default constructor.
-      */
-    adler32();
-
-    /**
-      * The copy constructor.
-      */
-    adler32(const adler32 &);
-
-    /**
-      * The assignment operator.
-      */
-    adler32 &operator=(const adler32 &);
-
-    /**
       * The get method is used to obtain the running value of the
       * checksum.
       */
@@ -75,13 +55,13 @@ private:
       * The sum_a instance variable is used to remember the sum of bytes
       * scanned.
       */
-    unsigned short sum_a;
+    unsigned short sum_a{1};
 
     /**
       * The sum_b instance variable is used to remember the sum of the
       * sum of bytes scanned.
       */
-    unsigned short sum_b;
+    unsigned short sum_b{0};
 };
 
 };

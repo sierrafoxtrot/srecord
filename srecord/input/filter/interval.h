@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_interval();
+    ~input_filter_interval() override = default;
 
 protected:
     /**
@@ -71,7 +71,7 @@ protected:
     const interval &get_range() const { return range; }
 
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
 private:
     /**
@@ -110,20 +110,21 @@ private:
       */
     bool generate(record &record);
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_interval();
+    input_filter_interval() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_interval(const input_filter_interval &);
+    input_filter_interval(const input_filter_interval &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_filter_interval &operator=(const input_filter_interval &);
+    input_filter_interval &operator=(const input_filter_interval &) = delete;
 };
 
 };

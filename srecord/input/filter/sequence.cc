@@ -21,16 +21,9 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_sequence::~input_filter_sequence()
-{
-}
-
-
 srecord::input_filter_sequence::input_filter_sequence(
         srecord::input::pointer arg) :
-    srecord::input_filter(arg),
-    last_address(0),
-    warned(false)
+    srecord::input_filter(arg)
 {
 }
 

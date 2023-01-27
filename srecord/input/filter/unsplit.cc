@@ -20,20 +20,12 @@
 #include <srecord/input/filter/unsplit.h>
 #include <srecord/record.h>
 
-
-srecord::input_filter_unsplit::~input_filter_unsplit()
-{
-}
-
-
 srecord::input_filter_unsplit::input_filter_unsplit(
         const srecord::input::pointer &a1, int a2, int a3, int a4) :
     srecord::input_filter(a1),
     modulus(a2),
     offset(a3),
-    width(a4),
-    buffer(),
-    buffer_pos(0)
+    width(a4)
 {
 }
 

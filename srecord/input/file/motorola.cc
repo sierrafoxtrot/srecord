@@ -20,22 +20,10 @@
 #include <srecord/input/file/motorola.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_motorola::~input_file_motorola()
-{
-}
-
-
 srecord::input_file_motorola::input_file_motorola(
     const std::string &a_file_name
 ) :
-    input_file(a_file_name),
-    data_count(0),
-    garbage_warning(false),
-    seen_some_input(false),
-    header_seen(false),
-    termination_seen(false),
-    address_shift(0)
+    input_file(a_file_name)
 {
 }
 

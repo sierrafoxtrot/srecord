@@ -22,12 +22,6 @@
 #include <srecord/memory/walker/gcrypt.h>
 #include <srecord/record.h>
 
-
-srecord::input_filter_message_gcrypt::~input_filter_message_gcrypt()
-{
-}
-
-
 srecord::input_filter_message_gcrypt::input_filter_message_gcrypt(
     const input::pointer &a_deeper,
     unsigned long a_address,

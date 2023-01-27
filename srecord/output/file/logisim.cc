@@ -34,10 +34,7 @@ srecord::output_file_logisim::~output_file_logisim()
 srecord::output_file_logisim::output_file_logisim(
     const std::string &a_file_name
 ) :
-    output_file(a_file_name),
-    address(0),
-    line_length(80),
-    column(0)
+    output_file(a_file_name)
 {
     put_string("v2.0 raw\n\n");
 }

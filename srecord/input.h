@@ -43,7 +43,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input();
+    virtual ~input() = default;
 
     /**
       * The read method is used to read one record from the input.
@@ -166,16 +166,16 @@ protected:
       */
     input();
 
-private:
+public:
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input(const input &);
+    input(const input &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input &operator=(const input &);
+    input &operator=(const input &) = delete;
 };
 
 };

@@ -38,11 +38,7 @@ srecord::output_file_ti_tagged_16::~output_file_ti_tagged_16()
 srecord::output_file_ti_tagged_16::output_file_ti_tagged_16(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    address(0),
-    column(0),
-    line_length(74),
-    csum(0)
+    srecord::output_file(a_file_name)
 {
 }
 

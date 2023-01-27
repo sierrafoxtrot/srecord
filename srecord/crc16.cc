@@ -165,11 +165,6 @@ srecord::crc16::operator=(const crc16 &rhs)
 }
 
 
-srecord::crc16::~crc16()
-{
-}
-
-
 #if (IMPL == IMPL_CH9)
 
 //

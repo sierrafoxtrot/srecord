@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_interval_minimum();
+    ~input_filter_interval_minimum() override = default;
 
 private:
     /**
@@ -78,24 +78,25 @@ public:
 
 protected:
     // See base class for documentation.
-    long calculate_result() const;
+    long calculate_result() const override;
 
-private:
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_interval_minimum();
+    input_filter_interval_minimum() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_interval_minimum(const input_filter_interval_minimum &);
+    input_filter_interval_minimum(
+        const input_filter_interval_minimum &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
     input_filter_interval_minimum &operator=(
-        const input_filter_interval_minimum &);
+        const input_filter_interval_minimum &) = delete;
 };
 
 };

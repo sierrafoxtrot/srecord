@@ -20,11 +20,6 @@
 #include <srecord/output.h>
 
 
-srecord::memory_walker_fletcher16::~memory_walker_fletcher16()
-{
-}
-
-
 srecord::memory_walker_fletcher16::memory_walker_fletcher16(
     int a_sum1,
     int a_sum2,

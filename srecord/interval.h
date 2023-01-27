@@ -50,7 +50,7 @@ public:
     /**
       * The default constructor.  The interval is empty.
       */
-    interval();
+    interval() = default;
 
     /**
       * The constructor.  The interval contains the single integer supplied.
@@ -212,26 +212,26 @@ private:
       * the data instance variable.  This is almost always even, because
       * the internal is a series of [lo, hi) sub-intervals.
       */
-    size_t length;
+    size_t length{0};
 
     /**
       * The size instance variable is used to remember the maximum size
       * of the data instance variable.  The length can go up and down
       * depending on the calculation, but the size only ever rises.
       */
-    size_t size;
+    size_t size{0};
 
     /**
       * The scan_index instance variable is used to remember where the
       * scan us up to.  Used by the scan_next method, et al.
       */
-    size_t scan_index;
+    size_t scan_index{0};
 
     /**
       * The scan_next_datum instance variable is used to remember where
       * the scan us up to.  Used by the scan_next method, et al.
       */
-    data_t scan_next_datum;
+    data_t scan_next_datum{0};
 
     /**
       * The data instance variable is used to remember a pointer to
@@ -239,7 +239,7 @@ private:
       * pairs.  As a sanity check, there is an extra item, which contains
       * the same value as the length instance variable.
       */
-    data_t *data;
+    data_t *data{nullptr};
 
     /**
       * The valid method is used to test whether the interval is

@@ -35,12 +35,12 @@ public:
     /**
       * The destructor.
       */
-    virtual ~quit_exception();
+    ~quit_exception() override = default;
 
     /**
       * The default constructor.
       */
-    quit_exception();
+    quit_exception() = default;
 
     /**
       * the vomit class is used for the throw.
@@ -49,21 +49,21 @@ public:
 
 protected:
     // see base class for documentation
-    virtual void exit(int n);
+    void exit(int n) override;
 
     // see base class for documentation
-    virtual void message_v(const char *fmt, va_list);
+    void message_v(const char *fmt, va_list) override;
 
-private:
+public:
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    quit_exception(const quit_exception &);
+    quit_exception(const quit_exception &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    quit_exception &operator=(const quit_exception &);
+    quit_exception &operator=(const quit_exception &) = delete;
 };
 
 };

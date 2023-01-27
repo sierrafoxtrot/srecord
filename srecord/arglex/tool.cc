@@ -24,12 +24,7 @@
 
 
 srecord::arglex_tool::arglex_tool(int argc, char **argv) :
-    arglex(argc, argv),
-    stdin_used(false),
-    stdout_used(false),
-    issue_sequence_warnings(-1),
-    redundant_bytes(srecord::defcon_warning),
-    contradictory_bytes(srecord::defcon_fatal_error)
+    arglex(argc, argv)
 {
     static const table_ty table[] =
     {
@@ -252,11 +247,6 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
     deprecated_option("-INtel_16");
     deprecated_option("-MAximum");
     deprecated_option("-MInimum");
-}
-
-
-srecord::arglex_tool::~arglex_tool()
-{
 }
 
 

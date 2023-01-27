@@ -484,7 +484,6 @@ srecord::arglex_tool::get_simple_input()
         ifp = input_file_wilson::create(fn);
         break;
     }
-    // assert(ifp);
 
     //
     // Process any additional format-specific command line options.

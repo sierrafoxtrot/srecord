@@ -21,11 +21,6 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_offset::~input_filter_offset()
-{
-}
-
-
 srecord::input_filter_offset::input_filter_offset(
         const srecord::input::pointer &a1, long a2) :
     srecord::input_filter(a1),

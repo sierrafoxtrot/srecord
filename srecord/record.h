@@ -38,7 +38,7 @@ public:
       * The destructor.  It isn't virtual, so don't derive anything
       * from this class.
       */
-    ~record();
+    ~record() = default;
 
     /**
       * The type of the various record types.
@@ -66,7 +66,7 @@ public:
       * The default constructor.  The record will have an
       * indeterminate type, zero address, and no data.
       */
-    record();
+    record() = default;
 
     /**
       * The copy constructor.
@@ -352,26 +352,26 @@ private:
       * The type instance variable is used to remember the type of
       * the record.
       */
-    type_t type;
+    type_t type{type_unknown};
 
     /**
       * The address instance variable is used to remember the address
       * of the record.
       */
-    address_t address;
+    address_t address{0};
 
     /**
       * The length instance variable is used to remember the number
       * of valid bytes in the #data array.
       */
-    size_t length;
+    size_t length{0};
 
     /**
       * The data instance variable is used to remember the data
       * of the record.  Only the first #length bytes are valid,
       * the rest are undefined.
       */
-    data_t data[max_data_length];
+    data_t data[max_data_length]{};
 };
 
 };

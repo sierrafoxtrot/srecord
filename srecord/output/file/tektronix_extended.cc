@@ -21,18 +21,10 @@
 #include <srecord/record.h>
 
 
-srecord::output_file_tektronix_extended::~output_file_tektronix_extended()
-{
-    // check for termination record
-}
-
-
 srecord::output_file_tektronix_extended::output_file_tektronix_extended(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    pref_block_size(32),
-    address_length(4)
+    srecord::output_file(a_file_name)
 {
 }
 

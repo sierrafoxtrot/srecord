@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_offset();
+    ~input_filter_offset() override = default;
 
 private:
     /**
@@ -66,7 +66,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
 private:
     /**
@@ -75,20 +75,21 @@ private:
       */
     long nbytes;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_offset();
+    input_filter_offset() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_offset(const input_filter_offset &);
+    input_filter_offset(const input_filter_offset &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_filter_offset &operator=(const input_filter_offset &);
+    input_filter_offset &operator=(const input_filter_offset &) = delete;
 };
 
 };

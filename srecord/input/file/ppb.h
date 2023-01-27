@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_ppb();
+    ~input_file_ppb() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -48,16 +48,16 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(class record &rec);
+    bool read(class record &rec) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -69,43 +69,28 @@ private:
     input_file_ppb(const std::string &filename);
 
     /**
-      * The address instance variable is used to remember the current
-      * address of the next data record.  This is set and advanced by
-      * the #read method.
-      */
-    record::address_t address;
-
-    /**
-      * The data_seen instance variable is used to remember whether or
-      * not any data has been seen in the file.  This is used to issue
-      * an error when there is apparently no data in the file, and this
-      * helps #guess to figure out the file is not of this type.
-      */
-    bool data_seen;
-
-    /**
       * The packet_address instance variable is used to remember the
       * address of the first byte in the most recently read packet.
       */
-    unsigned long packet_address;
+    unsigned long packet_address{-1UL};
 
     /**
       * The packet instance variable is used to remember the most recent
       * #packet_length data bytes read from the file in the most recent packet.
       */
-    record::data_t packet[65536];
+    record::data_t packet[65536]{};
 
     /**
       * The packet_length instance variable is used to remember the
       * number of data bytes in the #packet array.
       */
-    size_t packet_length;
+    size_t packet_length{0};
 
     /**
       * The packet_used instance variable is used to remember how many
       * bytes of the most recently read packet have been consumed.
       */
-    size_t packet_used;
+    size_t packet_used{0};
 
     /**
       * The get_packet method is used to read another packet, setting
@@ -120,20 +105,21 @@ private:
       */
     void packet_format_error();
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_file_ppb();
+    input_file_ppb() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_ppb(const input_file_ppb &);
+    input_file_ppb(const input_file_ppb &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_file_ppb &operator=(const input_file_ppb &);
+    input_file_ppb &operator=(const input_file_ppb &) = delete;
 };
 
 };

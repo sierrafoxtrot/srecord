@@ -58,15 +58,7 @@ srecord::input_file_msbin::~input_file_msbin()
 
 
 srecord::input_file_msbin::input_file_msbin(const std::string &a_file_name) :
-    input_file(a_file_name),
-    header_read(false),
-    first_record_read(false),
-    execution_start_record_seen(false),
-    last_record_warning(false),
-    address(0),
-    remaining(0),
-    record_checksum(0),
-    running_checksum(0)
+    input_file(a_file_name)
 {
 }
 

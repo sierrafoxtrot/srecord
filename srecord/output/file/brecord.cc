@@ -22,12 +22,6 @@
 #include <srecord/output/file/brecord.h>
 #include <srecord/record.h>
 
-
-srecord::output_file_brecord::~output_file_brecord()
-{
-}
-
-
 srecord::output_file_brecord::output_file_brecord(
     const std::string &a_file_name
 ) :

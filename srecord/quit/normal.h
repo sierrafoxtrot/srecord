@@ -36,30 +36,30 @@ public:
     /**
       * The destructor.
       */
-    virtual ~quit_normal();
+    ~quit_normal() override = default;
 
     /**
       * The default constructor.
       */
-    quit_normal();
+    quit_normal() = default;
 
 protected:
     // see base class for documentation
-    virtual void exit(int);
+    void exit(int) override;
 
     // see base class for documentation
-    virtual void message_v(const char *, va_list);
+    void message_v(const char *, va_list) override;
 
-private:
+public:
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    quit_normal(const quit_normal &);
+    quit_normal(const quit_normal &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    quit_normal &operator=(const quit_normal &);
+    quit_normal &operator=(const quit_normal &) = delete;
 };
 
 };

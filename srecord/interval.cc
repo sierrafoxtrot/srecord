@@ -43,17 +43,6 @@
 //      Use the interval_free function for this purpose.
 //
 
-srecord::interval::interval()
-{
-    length = 0;
-    size = 0;
-    scan_index = 0;
-    scan_next_datum = 0;
-    data = 0;
-    // assert(valid());
-}
-
-
 static inline srecord::interval::long_data_t
 promote(srecord::interval::data_t datum, size_t pos)
 {

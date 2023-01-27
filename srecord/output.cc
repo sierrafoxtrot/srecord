@@ -26,16 +26,6 @@
 #include <srecord/record.h>
 
 
-srecord::output::output()
-{
-}
-
-
-srecord::output::~output()
-{
-}
-
-
 void
 srecord::output::fatal_error(const char *fmt, ...)
     const

@@ -21,11 +21,6 @@
 #include <srecord/record.h>
 
 
-srecord::output_file_spasm::~output_file_spasm()
-{
-}
-
-
 srecord::output_file_spasm::output_file_spasm(
     const std::string &a_file_name,
     endian_t a_end

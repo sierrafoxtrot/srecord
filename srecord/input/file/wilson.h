@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_wilson();
+    ~input_file_wilson() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -51,23 +51,23 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
     /**
       * The get_byte method is used to get a byte of input.  We override
       * because the byte encoding is one character of input sometimes,
       * and two characters of input at other times.
       */
-    virtual int get_byte();
+    int get_byte() override;
 
 private:
     /**
@@ -88,34 +88,46 @@ private:
       * The garbage_warning instance variable is used to remember whether
       * a warning about garbage input has been issued yet.
       */
-    bool garbage_warning;
+    bool garbage_warning{false};
 
     /**
       * The seen_some_input instance variable is used to remember whether
       * this file contains any data so far.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The termination_seen instance variable is used to remember
       * whether the termination record has been seen yet.
       */
-    bool termination_seen;
+    bool termination_seen{false};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_wilson() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_wilson();
+    input_file_wilson(const input_file_wilson &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_wilson(const input_file_wilson &);
+    input_file_wilson &operator=(const input_file_wilson &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The move constructor
       */
-    input_file_wilson &operator=(const input_file_wilson &);
+    input_file_wilson ( input_file_wilson && ) = delete;
+
+    /**
+      * The move assignment operator
+      */
+    input_file_wilson& operator=(input_file_wilson&&) = delete;
+
 };
 
 };

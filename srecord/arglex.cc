@@ -49,15 +49,13 @@ static const srecord::arglex::table_ty default_table[] =
 };
 
 
-srecord::arglex::arglex() :
-    usage_tail_(0)
+srecord::arglex::arglex()
 {
     table_set(default_table);
 }
 
 
-srecord::arglex::arglex(int ac, char **av) :
-    usage_tail_(0)
+srecord::arglex::arglex(int ac, char **av)
 {
     progname_set(av[0]);
     for (int j = 1; j < ac; ++j)
@@ -128,11 +126,6 @@ srecord::arglex::read_arguments_file(const char *filename)
             arguments.emplace_back(buffer, bp - buffer);
     }
     fclose(fp);
-}
-
-
-srecord::arglex::~arglex()
-{
 }
 
 

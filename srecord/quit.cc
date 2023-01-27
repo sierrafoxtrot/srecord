@@ -23,29 +23,6 @@
 
 #include <srecord/quit.h>
 
-
-srecord::quit::~quit()
-{
-}
-
-
-srecord::quit::quit()
-{
-}
-
-
-srecord::quit::quit(const quit &)
-{
-}
-
-
-srecord::quit &
-srecord::quit::operator=(const quit &)
-{
-    return *this;
-}
-
-
 void
 srecord::quit::fatal_error(const char *fmt, ...)
 {

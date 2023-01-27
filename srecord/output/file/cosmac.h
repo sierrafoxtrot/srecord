@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_cosmac();
+    ~output_file_cosmac() override = default;
 
 private:
     /**
@@ -60,69 +60,70 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
       * The address instance variable is used to remember the current
       * output address, so that file size can be optimized.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The address_length is used to remember the preferred number of
       * characters used to represent an address in the output file.
       * Defaults to 4 characters.
       */
-    unsigned address_length;
+    unsigned address_length{4};
 
     /**
       * The line_length instance variable is used to remember the maximum
       * line length of the output.  Defaults to 80 characters.
       */
-    unsigned line_length;
+    unsigned line_length{80};
 
     /**
       * The column instance variable is used to remember which output
       * column the current output position is on.
       */
-    unsigned column;
+    unsigned column{0};
 
     /**
       * The header_required instance variable is used to remember whether
       * or not the header (the !M command) has been issued, or not.
       */
-    bool header_required;
+    bool header_required{true};
+
+public:
+    /**
+      * The default constructor.
+      */
+    output_file_cosmac() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_cosmac();
+    output_file_cosmac(const output_file_cosmac &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    output_file_cosmac(const output_file_cosmac &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    output_file_cosmac &operator=(const output_file_cosmac &);
+    output_file_cosmac &operator=(const output_file_cosmac &) = delete;
 };
 
 };

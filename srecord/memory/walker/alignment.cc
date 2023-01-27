@@ -21,16 +21,8 @@
 #include <srecord/memory/walker/alignment.h>
 
 
-srecord::memory_walker_alignment::~memory_walker_alignment()
-{
-}
-
-
 srecord::memory_walker_alignment::memory_walker_alignment(unsigned a_multiple) :
-    multiple(a_multiple),
-    current_address(0),
-    data_seen(false),
-    well_aligned(true)
+    multiple(a_multiple)
 {
     assert(multiple >= 2);
 }

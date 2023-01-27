@@ -201,17 +201,7 @@ srecord::output_file_asm::~output_file_asm()
 
 
 srecord::output_file_asm::output_file_asm(const std::string &filename) :
-    srecord::output_file(filename),
-    prefix("eprom"),
-    taddr(0),
-    column(0),
-    current_address(0),
-    line_length(75),
-    org_warn(false),
-    output_word(false),
-    dot_style(false),
-    section_style(false),
-    hex_style(false)
+    srecord::output_file(filename)
 {
 }
 

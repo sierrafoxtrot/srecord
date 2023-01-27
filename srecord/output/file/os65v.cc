@@ -43,10 +43,7 @@ srecord::output_file_os65v::~output_file_os65v()
 
 
 srecord::output_file_os65v::output_file_os65v(const std::string &a_file_name) :
-    srecord::output_file(a_file_name),
-    address(0),
-    state(0),
-    seen_start_address(false)
+    srecord::output_file(a_file_name)
 {
     if (line_termination == line_termination_native)
     {

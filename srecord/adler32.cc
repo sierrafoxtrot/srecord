@@ -18,38 +18,6 @@
 
 #include <srecord/adler32.h>
 
-
-srecord::adler32::~adler32()
-{
-}
-
-
-srecord::adler32::adler32() :
-    sum_a(1),
-    sum_b(0)
-{
-}
-
-
-srecord::adler32::adler32(const adler32 &rhs) :
-    sum_a(rhs.sum_a),
-    sum_b(rhs.sum_b)
-{
-}
-
-
-srecord::adler32 &
-srecord::adler32::operator=(const adler32 &rhs)
-{
-    if (this != &rhs)
-    {
-        sum_a = rhs.sum_a;
-        sum_b = rhs.sum_b;
-    }
-    return *this;
-}
-
-
 unsigned long
 srecord::adler32::get()
     const

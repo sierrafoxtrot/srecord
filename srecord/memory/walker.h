@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker();
+    virtual ~memory_walker() = default;
 
     /**
       * The observe method is used by the memory walker to provide data.
@@ -94,18 +94,18 @@ protected:
     /**
       * The default constructor.  May only be called by derived classes.
       */
-    memory_walker();
+    memory_walker() = default;
 
-private:
+public:
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    memory_walker(const memory_walker &);
+    memory_walker(const memory_walker &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    memory_walker &operator=(const memory_walker &);
+    memory_walker &operator=(const memory_walker &) = delete;
 };
 
 };

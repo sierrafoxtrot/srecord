@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_interval_length();
+    ~input_filter_interval_length() override = default;
 
 private:
     /**
@@ -83,7 +83,7 @@ public:
 
 protected:
     // See base class for documentation.
-    long calculate_result() const;
+    long calculate_result() const override;
 
 private:
     /**
@@ -91,21 +91,22 @@ private:
       */
     int width;
 
+public:
     /**
       * The default constructor.
       */
-    input_filter_interval_length();
+    input_filter_interval_length() = delete;
 
     /**
       * The copy constructor.
       */
-    input_filter_interval_length(const input_filter_interval_length &);
+    input_filter_interval_length(const input_filter_interval_length &) = delete;
 
     /**
       * The assignment operator.
       */
     input_filter_interval_length &operator=(
-        const input_filter_interval_length &);
+        const input_filter_interval_length &) = delete;
 };
 
 };

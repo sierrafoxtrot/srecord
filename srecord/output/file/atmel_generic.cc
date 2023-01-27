@@ -20,12 +20,6 @@
 #include <srecord/output/file/atmel_generic.h>
 #include <srecord/record.h>
 
-
-srecord::output_file_atmel_generic::~output_file_atmel_generic()
-{
-}
-
-
 srecord::output_file_atmel_generic::output_file_atmel_generic(
     const std::string &a_file_name,
     endian_t a_end

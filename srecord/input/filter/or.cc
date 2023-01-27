@@ -21,11 +21,6 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_or::~input_filter_or()
-{
-}
-
-
 srecord::input_filter_or::input_filter_or(const srecord::input::pointer &a1,
         int a2) :
     srecord::input_filter(a1),

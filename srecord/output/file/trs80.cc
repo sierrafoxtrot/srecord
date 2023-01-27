@@ -37,9 +37,7 @@ srecord::output_file_trs80::~output_file_trs80()
 srecord::output_file_trs80::output_file_trs80(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    termination_seen(false),
-    pref_block_size(253)
+    srecord::output_file(a_file_name)
 {
 }
 

@@ -42,7 +42,7 @@ public:
     /**
       * The default constructor.
       */
-    memory();
+    memory() = default;
 
     /**
       * The copy constructor.
@@ -236,13 +236,13 @@ private:
       * The nchunks instance variable is used to member how large
       * our pool of memory chunks is.  It is always <= nchunks_max;
       */
-    mutable int nchunks;
+    mutable int nchunks{0};
 
     /**
       * The max_chunks instance variable is used to remember the
       * size of the chunk array, which holds the pool of memory chunks.
       */
-    mutable int nchunks_max;
+    mutable int nchunks_max{0};
 
     /**
       * The chunk instance variable is used to hold the pointer to
@@ -250,7 +250,7 @@ private:
       * settings of the various bytes.  By using a sparse array,
       * we can cope with arbitrary memory usages.
       */
-    mutable memory_chunk **chunk;
+    mutable memory_chunk **chunk{0};
 
     /**
       * The find method is used to find the chunk which contains
@@ -266,7 +266,7 @@ private:
       * method, based on the fact that most memory accesses are
       * sequential, in the same chunk.
       */
-    mutable memory_chunk *cache;
+    mutable memory_chunk *cache{0};
 
     /**
       * The find_next_chunk method is used to visit each and every
@@ -280,14 +280,14 @@ private:
       * the find_next_chunk() method to keep track of where it is
       * positioned across the chunk array.
       */
-    mutable int find_next_chunk_index;
+    mutable int find_next_chunk_index{0};
 
     /**
       * The header instance variable is used to track the file header.
       * It is set by the reader() and set_header() methods.  It is
       * read by the get_header() method.
       */
-    record *header;
+    record *header{0};
 
     /**
       * The execution_start_address instance variable is used to track
@@ -295,7 +295,7 @@ private:
       * set_execution_start_address() methods.  It is read by the
       * get_execution_start_address() method.
       */
-    record *execution_start_address;
+    record *execution_start_address{0};
 
     /**
       * The clear method is used to discard all data, as if when

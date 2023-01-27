@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_ppx();
+    ~input_file_ppx() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -48,13 +48,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(class record &rec);
+    bool read(class record &rec) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -70,7 +70,7 @@ private:
       * processing state as the file is progressively parsed.  The parse
       * is, of course, interrupted to return data records when they are seen.
       */
-    int state;
+    int state{0};
 
     enum token_t
     {
@@ -86,14 +86,14 @@ private:
       * The token instance variable is used to remember the kind of the
       * most recent token seen.  Set by the #get_next_token method.
       */
-    token_t token;
+    token_t token{token_eof};
 
     /**
       * The token_value instance variable is used to remember the value
       * of the most recent token_byte or token_address seen.
       * Set by the #get_next_token method.
       */
-    unsigned token_value;
+    unsigned token_value{0};
 
     /**
       * The get_next_token method is used to read the next lexical token
@@ -109,7 +109,7 @@ private:
       * address of the next data record.  This is set and advanced by
       * the #read method.
       */
-    record::address_t address;
+    record::address_t address{0};
 
     /**
       * The data_seen instance variable is used to remember whether or
@@ -117,7 +117,7 @@ private:
       * an error when there is apparently no data in the file, and this
       * helps #guess to figure out the file is not of this type.
       */
-    bool data_seen;
+    bool data_seen{false};
 
     /**
       * The syntax_error method is a convenience wrapper around
@@ -129,34 +129,35 @@ private:
       * The dsum instance variable is used to remember the simple sum of
       * the data bytes, and the data bytes alone.
       */
-    unsigned short dsum;
+    unsigned short dsum{0};
 
     /**
       * The buffer instance variable is used to remember the most recent
       * #buffer_length data bytes read from the file.
       */
-    record::data_t buffer[record::max_data_length];
+    record::data_t buffer[record::max_data_length]{};
 
     /**
       * The buffer_length instance variable is used to remember the
       * number of data bytes in the #buffer array.
       */
-    size_t buffer_length;
+    size_t buffer_length{0};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_ppx() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_ppx();
+    input_file_ppx(const input_file_ppx &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_ppx(const input_file_ppx &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_ppx &operator=(const input_file_ppx &);
+    input_file_ppx &operator=(const input_file_ppx &) = delete;
 };
 
 };

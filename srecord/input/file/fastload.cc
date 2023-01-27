@@ -23,17 +23,10 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_fastload::~input_file_fastload()
-{
-}
-
-
 srecord::input_file_fastload::input_file_fastload(
     const std::string &a_file_name
 ) :
-    srecord::input_file(a_file_name),
-    seen_some_input(false),
-    address(0)
+    srecord::input_file(a_file_name)
 {
 }
 

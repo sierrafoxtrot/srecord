@@ -22,11 +22,6 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_not::~input_filter_not()
-{
-}
-
-
 srecord::input_filter_not::input_filter_not(const input::pointer &arg) :
     srecord::input_filter(arg)
 {

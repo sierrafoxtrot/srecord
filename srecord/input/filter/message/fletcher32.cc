@@ -21,12 +21,6 @@
 #include <srecord/memory/walker/fletcher32.h>
 #include <srecord/record.h>
 
-
-srecord::input_filter_message_fletcher32::~input_filter_message_fletcher32()
-{
-}
-
-
 srecord::input_filter_message_fletcher32::input_filter_message_fletcher32(
     const input::pointer &a_deeper,
     unsigned long a_address,

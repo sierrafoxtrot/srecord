@@ -20,21 +20,10 @@
 #include <srecord/input/file/tektronix.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_tektronix::~input_file_tektronix()
-{
-    // make sure the termination record is done
-}
-
-
 srecord::input_file_tektronix::input_file_tektronix(
     const std::string &a_filename
 ) :
-    srecord::input_file(a_filename),
-    data_record_count(0),
-    garbage_warning(false),
-    seen_some_input(false),
-    termination_seen(false)
+    srecord::input_file(a_filename)
 {
 }
 

@@ -32,13 +32,7 @@ srecord::output_file_mif::~output_file_mif()
 
 
 srecord::output_file_mif::output_file_mif(const std::string &a_file_name) :
-    srecord::output_file(a_file_name),
-    depth(65536),
-    width(8),
-    width_in_bytes(1),
-    actual_depth(0),
-    header_done(false),
-    pref_blk_sz(32)
+    srecord::output_file(a_file_name)
 {
     line_length_set(80);
 }

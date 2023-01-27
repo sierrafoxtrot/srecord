@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_signetics();
+    ~input_file_signetics() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,21 +49,21 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
     /**
       * See base class for documentation.  We over-ride this method
       * because signetics uses its own XOR-ROL checksum algorithm.
       */
-    void checksum_add(unsigned char);
+    void checksum_add(unsigned char) override;
 
-private:
+public:
     /**
       * The constructor.  The input will be read from the named file
       * (or the standard input if the filename is "-").
@@ -74,20 +74,21 @@ private:
     input_file_signetics(const std::string &file_name);
 
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_file_signetics();
+    input_file_signetics() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_signetics(const input_file_signetics &);
+    input_file_signetics(const input_file_signetics &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_file_signetics &operator=(const input_file_signetics &);
+    input_file_signetics &operator=(const input_file_signetics &) = delete;
 
+private:
     /**
       * The read_inner method is used to read one line/record from
       * the input.  Used by the `read' method.
@@ -99,13 +100,13 @@ private:
       * whether or not a warning has been issued about non-format
       * lines in the file.  Only one warning per file is issued.
       */
-    bool garbage_warning;
+    bool garbage_warning{false};
 
     /**
       * The seen_some_input instance variable is used to
       * remember whether any input has been seen.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 };
 
 };

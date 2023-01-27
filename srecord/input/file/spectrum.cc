@@ -22,19 +22,10 @@
 #include <srecord/input/file/spectrum.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_spectrum::~input_file_spectrum()
-{
-}
-
-
 srecord::input_file_spectrum::input_file_spectrum(
     const std::string &a_file_name
 ) :
-    srecord::input_file(a_file_name),
-    header_seen(false),
-    trailer_seen(false),
-    file_contains_data(false)
+    srecord::input_file(a_file_name)
 {
 }
 

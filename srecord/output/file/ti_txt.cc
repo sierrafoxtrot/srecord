@@ -34,11 +34,6 @@ srecord::output_file_ti_txt::output_file_ti_txt(
     const std::string &a_file_name
 ) :
     srecord::output_file(a_file_name),
-    address(),
-    address_set(false),
-    address_length(2),
-    pref_block_size(16),
-    column(0),
     line_length(pref_block_size * 3 - 1)
 {
 }

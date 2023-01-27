@@ -19,12 +19,6 @@
 
 #include <srecord/input/filter/interval/maximum.h>
 
-
-srecord::input_filter_interval_maximum::~input_filter_interval_maximum()
-{
-}
-
-
 srecord::input_filter_interval_maximum::input_filter_interval_maximum(
         const pointer &a_deeper, long a_address, int a_length, endian_t a_end,
         bool inclusive) :

@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_xor();
+    ~input_filter_xor() override = default;
 
 private:
     /**
@@ -64,7 +64,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
 private:
     /**
@@ -73,20 +73,21 @@ private:
       */
     int value;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_xor();
+    input_filter_xor() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_xor(const input_filter_xor &);
+    input_filter_xor(const input_filter_xor &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_filter_xor &operator=(const input_filter_xor &);
+    input_filter_xor &operator=(const input_filter_xor &) = delete;
 };
 
 };

@@ -21,11 +21,6 @@
 #include <srecord/input/generator/random.h>
 
 
-srecord::input_generator_random::~input_generator_random()
-{
-}
-
-
 srecord::input_generator_random::input_generator_random(
         const interval &a_range) :
     srecord::input_generator(a_range)

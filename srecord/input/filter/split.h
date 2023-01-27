@@ -63,7 +63,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_split();
+    ~input_filter_split() override = default;
 
 private:
     /**
@@ -100,7 +100,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
 private:
     /**
@@ -132,22 +132,23 @@ private:
       * The buffer_pos instance variable is used to remember where we
       * are up to in the "buffer" instance variable.
       */
-    size_t buffer_pos;
+    size_t buffer_pos{0};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_filter_split() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_split();
+    input_filter_split(const input_filter_split &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_filter_split(const input_filter_split &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_filter_split &operator=(const input_filter_split &);
+    input_filter_split &operator=(const input_filter_split &) = delete;
 };
 
 };

@@ -120,10 +120,7 @@ srecord::output_file_four_packed_code::~output_file_four_packed_code()
 
 srecord::output_file_four_packed_code::output_file_four_packed_code(
         const std::string &a_file_name):
-    srecord::output_file(a_file_name),
-    pref_block_size(32),
-    put_byte_pos(0),
-    put_byte_value(0)
+    srecord::output_file(a_file_name)
 {
 }
 

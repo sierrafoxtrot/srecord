@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_spasm();
+    ~input_file_spasm() override = default;
 
     /**
       * The create_be class method is used to create new dynamically
@@ -64,13 +64,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -93,7 +93,7 @@ private:
       * The seen_some_input instance variable is used to remember whether
       * or not any data has been seen from this file to date.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The end instance variable is used to remember whether the
@@ -101,20 +101,21 @@ private:
       */
     endian_t end;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_file_spasm();
+    input_file_spasm() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_spasm(const input_file_spasm &);
+    input_file_spasm(const input_file_spasm &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_file_spasm &operator=(const input_file_spasm &);
+    input_file_spasm &operator=(const input_file_spasm &) = delete;
 };
 
 };

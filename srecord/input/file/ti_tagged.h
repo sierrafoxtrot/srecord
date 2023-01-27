@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_ti_tagged();
+    ~input_file_ti_tagged() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,13 +49,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -71,7 +71,7 @@ private:
       * We override bacsie the checksum is character based, not byte
       * based.
       */
-    int get_char();
+    int get_char() override;
 
     typedef input_file inherited;
 
@@ -85,28 +85,29 @@ private:
       * The address instance variable is used to remember where we are
       * up to in the input file.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The csum instance variable is used to remember the running
       * checksum.
       */
-    int csum;
+    int csum{0};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_ti_tagged() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_ti_tagged();
+    input_file_ti_tagged(const input_file_ti_tagged &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_ti_tagged(const input_file_ti_tagged &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_ti_tagged &operator=(const input_file_ti_tagged &);
+    input_file_ti_tagged &operator=(const input_file_ti_tagged &) = delete;
 };
 
 };

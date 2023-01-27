@@ -21,17 +21,8 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_os65v::~input_file_os65v()
-{
-}
-
-
 srecord::input_file_os65v::input_file_os65v(const std::string &a_file_name) :
-    srecord::input_file(a_file_name),
-    seen_some_input(false),
-    address(0),
-    state(0),
-    ignore_the_rest(false)
+    srecord::input_file(a_file_name)
 {
 }
 

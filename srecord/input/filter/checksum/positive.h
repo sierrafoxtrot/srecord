@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_checksum_positive();
+    ~input_filter_checksum_positive() override = default;
 
 private:
     /**
@@ -82,24 +82,25 @@ public:
 
 protected:
     // See base class for documentation.
-    sum_t calculate();
+    sum_t calculate() override;
 
-private:
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_checksum_positive();
+    input_filter_checksum_positive() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_checksum_positive(const input_filter_checksum_positive &);
+    input_filter_checksum_positive(
+        const input_filter_checksum_positive &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
     input_filter_checksum_positive &operator=(
-        const input_filter_checksum_positive &);
+        const input_filter_checksum_positive &) = delete;
 };
 
 };

@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_hexdump();
+    ~output_file_hexdump() override;
 
 private:
     /**
@@ -61,25 +61,25 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
@@ -87,7 +87,7 @@ private:
       * many columns of hex bytes to display on a single line.  It is
       * always a power of two.
       */
-    int number_of_columns;
+    int number_of_columns{0};
 
     /**
       * The row_cache_address instance variable is used to remember
@@ -95,33 +95,33 @@ private:
       * address of the beginning of the row, NOT the current byte.
       * The lower "number_of_columns" bits are always zero.
       */
-    unsigned long row_cache_address;
+    unsigned long row_cache_address{(unsigned long)-1};
 
     /**
       * The row_cache_address_mask instance variable is used to remember
       * the mask to calculate the column within the output line, give a
       * byte address.
       */
-    unsigned long row_cache_address_mask;
+    unsigned long row_cache_address_mask{0};
 
     /**
       * The row_cache_size instance variable is used to remember the
       * number of printing columns wide the output is.
       */
-    size_t row_cache_size;
+    size_t row_cache_size{0};
 
     /**
       * The row_cache instance variable is used to remember the text of
       * the line to be printed.  It contains ASCII hex representations
       * of the bytes "written" to this output.
       */
-    char *row_cache;
+    char *row_cache{nullptr};
 
     /**
       * The address_length instance variable is used to remember how
       * many bytes to emit when emitting addresses.
       */
-    int address_length;
+    int address_length{4};
 
     /**
       * The emit_byte method is used to emit a single byte.  It uses
@@ -140,20 +140,21 @@ private:
       */
     int columns_to_line_length(int cols) const;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_hexdump();
+    output_file_hexdump() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_hexdump(const output_file_hexdump &);
+    output_file_hexdump(const output_file_hexdump &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_file_hexdump &operator=(const output_file_hexdump &);
+    output_file_hexdump &operator=(const output_file_hexdump &) = delete;
 };
 
 };

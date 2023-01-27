@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_generator();
+    ~input_generator() override = default;
 
     /**
       * The constructor.
@@ -58,10 +58,10 @@ public:
 
 protected:
     // See base class for documentation
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation
-    void disable_checksum_validation();
+    void disable_checksum_validation() override;
 
     /**
       * The generate_data method is used to manufacture data for a
@@ -82,20 +82,21 @@ private:
       */
     interval range;
 
+public:
     /**
       * The default constructor.
       */
-    input_generator();
+    input_generator() = delete;
 
     /**
       * The copy constructor.
       */
-    input_generator(const input_generator &);
+    input_generator(const input_generator &) = delete;
 
     /**
       * The assignment operator.
       */
-    input_generator &operator=(const input_generator &);
+    input_generator &operator=(const input_generator &) = delete;
 };
 
 };

@@ -20,11 +20,6 @@
 #include <srecord/input/filter/checksum/negative.h>
 
 
-srecord::input_filter_checksum_negative::~input_filter_checksum_negative()
-{
-}
-
-
 srecord::input_filter_checksum_negative::input_filter_checksum_negative(
         const input::pointer &a1, int a2, int a3, endian_t a_end, int a5) :
     input_filter_checksum(a1, a2, a3, a_end, a5)

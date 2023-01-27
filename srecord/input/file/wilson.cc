@@ -21,16 +21,8 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_wilson::~input_file_wilson()
-{
-}
-
-
 srecord::input_file_wilson::input_file_wilson(const std::string &a_file_name) :
-    input_file(a_file_name),
-    garbage_warning(false),
-    seen_some_input(false),
-    termination_seen(false)
+    input_file(a_file_name)
 {
 }
 
