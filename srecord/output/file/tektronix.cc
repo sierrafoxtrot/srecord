@@ -21,17 +21,10 @@
 #include <srecord/record.h>
 
 
-srecord::output_file_tektronix::~output_file_tektronix()
-{
-    // make sure terminator is written
-}
-
-
 srecord::output_file_tektronix::output_file_tektronix(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    pref_block_size(32)
+    srecord::output_file(a_file_name)
 {
 }
 

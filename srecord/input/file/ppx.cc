@@ -23,20 +23,8 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_ppx::~input_file_ppx()
-{
-}
-
-
 srecord::input_file_ppx::input_file_ppx(const std::string &filename) :
-    input_file(filename),
-    state(0),
-    token(token_eof),
-    token_value(0),
-    address(0),
-    data_seen(false),
-    dsum(0),
-    buffer_length(0)
+    input_file(filename)
 {
 }
 

@@ -21,17 +21,10 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_idt::~input_file_idt()
-{
-}
-
-
 srecord::input_file_idt::input_file_idt(
     const std::string &a_file_name
 ) :
-    input_file(a_file_name),
-    data_count(0),
-    seen_some_input(false)
+    input_file(a_file_name)
 {
 }
 

@@ -33,9 +33,7 @@ srecord::output_file_signetics::~output_file_signetics()
 srecord::output_file_signetics::output_file_signetics(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    pref_block_size(32),
-    last_address(0)
+    srecord::output_file(a_file_name)
 {
 }
 

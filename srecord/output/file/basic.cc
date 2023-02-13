@@ -46,11 +46,7 @@ srecord::output_file_basic::~output_file_basic()
 
 
 srecord::output_file_basic::output_file_basic(const std::string &a_file_name) :
-    srecord::output_file(a_file_name),
-    taddr(0),
-    column(0),
-    current_address(0),
-    line_length(75)
+    srecord::output_file(a_file_name)
 {
 }
 

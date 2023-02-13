@@ -21,12 +21,6 @@
 #include <srecord/memory/walker/fletcher16.h>
 #include <srecord/record.h>
 
-
-srecord::input_filter_message_fletcher16::~input_filter_message_fletcher16()
-{
-}
-
-
 srecord::input_filter_message_fletcher16::input_filter_message_fletcher16(
     const input::pointer &a_deeper,
     unsigned long a_address,
@@ -34,10 +28,7 @@ srecord::input_filter_message_fletcher16::input_filter_message_fletcher16(
 ) :
     input_filter_message(a_deeper),
     address(a_address),
-    end(a_end),
-    sum1(0xFF),
-    sum2(0xFF),
-    answer(-1)
+    end(a_end)
 {
 }
 

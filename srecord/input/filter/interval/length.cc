@@ -19,12 +19,6 @@
 
 #include <srecord/input/filter/interval/length.h>
 
-
-srecord::input_filter_interval_length::~input_filter_interval_length()
-{
-}
-
-
 srecord::input_filter_interval_length::input_filter_interval_length(
         const pointer &a_deeper, long a_address, int a_length, endian_t a_end,
         int a_width, bool inclusive) :

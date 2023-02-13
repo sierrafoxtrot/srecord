@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_binary();
+    ~input_file_binary() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,13 +49,13 @@ public:
 
 protected:
     // See nase class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -70,25 +70,26 @@ private:
       * The address instance variable is used to remember where we are
       * up to in the file.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_binary() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_binary();
+    input_file_binary(const input_file_binary &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_binary(const input_file_binary &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_binary &operator=(const input_file_binary &);
+    input_file_binary &operator=(const input_file_binary &) = delete;
 };
 
 };

@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_ascii_hex();
+    ~output_file_ascii_hex() override;
 
 private:
     /**
@@ -60,66 +60,66 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
       * The address instance variable is used to remember where we are
       * up to in the output.  Used to limit the number of $A line emitted.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The column instance variable is used to remember which column
       * we are up to in the output.  Used to limit the length of lines
       * in the output.
       */
-    int column;
+    int column{0};
 
     /**
       * The pref_block_size instance variable is used to remember the
       * number of bytes in the preferred block size.
       */
-    int pref_block_size;
+    int pref_block_size{16};
 
     /**
       * The line_length instance variable is used to remember the
       * maximum length of text lines.
       */
-    int line_length;
+    int line_length{pref_block_size * 3 - 1};
 
     /**
       * The address_length instance variable is used to remember
       * how many bytes of addresses are are to emit.
       */
-    int address_length;
+    int address_length{2};
 
     /**
       * The start_code_emitted instance variable is used to remember
       * whether or not the start code (Ctrl-B) has been emitted.
       */
-    bool start_code_emitted;
+    bool start_code_emitted{false};
 
     /**
       * The end_code_emitted instance variable is used to remember
       * whether or not the end code (Ctrl-C) has been emitted.
       */
-    bool end_code_emitted;
+    bool end_code_emitted{false};
 
     /**
       * The emit_end_of_file method is used to write the ETX and
@@ -128,20 +128,21 @@ private:
       */
     void emit_end_of_file();
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_ascii_hex();
+    output_file_ascii_hex() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_ascii_hex(const output_file_ascii_hex &);
+    output_file_ascii_hex(const output_file_ascii_hex &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_file_ascii_hex &operator=(const output_file_ascii_hex &);
+    output_file_ascii_hex &operator=(const output_file_ascii_hex &) = delete;
 };
 
 };

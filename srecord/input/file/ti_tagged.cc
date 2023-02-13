@@ -23,17 +23,10 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_ti_tagged::~input_file_ti_tagged()
-{
-}
-
-
 srecord::input_file_ti_tagged::input_file_ti_tagged(
     const std::string &a_filename
 ) :
-    input_file(a_filename),
-    address(0),
-    csum(0)
+    input_file(a_filename)
 {
 }
 

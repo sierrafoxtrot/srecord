@@ -39,10 +39,7 @@ srecord::output_file_stewie::~output_file_stewie()
 srecord::output_file_stewie::output_file_stewie(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    data_count(0),
-    address_length(2),
-    preferred_block_size(128)
+    srecord::output_file(a_file_name)
 {
     if (line_termination == line_termination_native)
         line_termination = line_termination_binary;

@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_bitrev();
+    ~input_filter_bitrev() override = default;
 
 private:
     /**
@@ -57,23 +57,23 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
-private:
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_bitrev();
-
-    /**
-      * The copy constructor.  Do not use.
-      */
-    input_filter_bitrev(const input_filter_bitrev &);
+    input_filter_bitrev() = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The copy constructor.
       */
-    input_filter_bitrev &operator=(const input_filter_bitrev &);
+    input_filter_bitrev(const input_filter_bitrev &) = delete;
+
+    /**
+      * The assignment operator.
+      */
+    input_filter_bitrev &operator=(const input_filter_bitrev &) = delete;
 };
 
 };

@@ -33,13 +33,7 @@ srecord::output_file_hexdump::~output_file_hexdump()
 srecord::output_file_hexdump::output_file_hexdump(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    number_of_columns(0),
-    row_cache_address((unsigned long)-1),
-    row_cache_address_mask(0),
-    row_cache_size(0),
-    row_cache(0),
-    address_length(4)
+    srecord::output_file(a_file_name)
 {
     line_length_set(80);
 }

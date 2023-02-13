@@ -20,21 +20,8 @@
 #include <srecord/input/file/mif.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_mif::~input_file_mif()
-{
-}
-
-
 srecord::input_file_mif::input_file_mif(const std::string &a_file_name) :
-    srecord::input_file(a_file_name),
-    state(state_header),
-    address(0),
-    lex_radix(10),
-    lex_addr_radix(16),
-    lex_data_radix(16),
-    width(8),
-    width_in_bytes(1)
+    srecord::input_file(a_file_name)
 {
 }
 

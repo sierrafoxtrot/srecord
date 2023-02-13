@@ -35,7 +35,7 @@ public:
     /**
      * The destructor.
      */
-    virtual ~input_file_hp64k();
+    ~input_file_hp64k() override = default;
 
     /**
      * The create class method is used to create new dynamically
@@ -50,16 +50,16 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -71,12 +71,12 @@ private:
     input_file_hp64k(const std::string &file_name);
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
     /**
      * Number of parsed data records
      */
-    unsigned long rec_count;
+    unsigned long rec_count{0};
 
     /** Helper function: read two bytes, big-endian. Ret 1 if ok */
     bool read_u16be(uint16_t *dest);
@@ -93,22 +93,23 @@ private:
     /**
      * Parsing state. Files always have header, then PIR, then data records.
      */
-    enum { need_hdr, need_pir, data } state;
+    enum { need_hdr, need_pir, data } state{need_hdr};
+
+public:
+    /**
+     * The default constructor.
+     */
+    input_file_hp64k() = delete;
 
     /**
-     * The default constructor.  Do not use.
+     * The copy constructor.
      */
-    input_file_hp64k();
+    input_file_hp64k(const input_file_hp64k &) = delete;
 
     /**
-     * The copy constructor.  Do not use.
+     * The assignment operator.
      */
-    input_file_hp64k(const input_file_hp64k &);
-
-    /**
-     * The assignment operator.  Do not use.
-     */
-    input_file_hp64k &operator=(const input_file_hp64k &);
+    input_file_hp64k &operator=(const input_file_hp64k &) = delete;
 };
 
 };

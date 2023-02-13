@@ -21,11 +21,6 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_interval::~input_filter_interval()
-{
-}
-
-
 srecord::input_filter_interval::input_filter_interval(
     const input::pointer &a_deeper,
     long a_address,

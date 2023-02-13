@@ -20,19 +20,11 @@
 #include <srecord/input/file/four_packed_code.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_four_packed_code::~input_file_four_packed_code()
-{
-}
-
-
 srecord::input_file_four_packed_code::input_file_four_packed_code(
     const std::string &a_file_name
 ) :
-    srecord::input_file(a_file_name),
-    garbage_warning(false),
-    seen_some_input(false),
-    running_address(0)
+    srecord::input_file(a_file_name)
+
 {
 }
 

@@ -36,21 +36,7 @@
 #define POLYNOMIAL 0x04C11DB7
 
 
-srecord::stm32::~stm32()
-{
-}
-
-
-srecord::stm32::stm32() :
-    state(0xFFFFFFFF),
-    cnt(0)
-{
-}
-
-
-srecord::stm32::stm32(const stm32 &arg) :
-    state(arg.state),
-    cnt(0)
+srecord::stm32::stm32(const stm32 &arg) : state(arg.state)
 {
     while (cnt < arg.cnt)
     {

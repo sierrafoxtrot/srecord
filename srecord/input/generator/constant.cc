@@ -21,12 +21,6 @@
 
 #include <srecord/input/generator/constant.h>
 
-
-srecord::input_generator_constant::~input_generator_constant()
-{
-}
-
-
 srecord::input_generator_constant::input_generator_constant(
         const interval &a_range, unsigned char a_datum) :
     srecord::input_generator(a_range),

@@ -47,12 +47,7 @@ srecord::output_file_ppx::~output_file_ppx()
 srecord::output_file_ppx::output_file_ppx(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    started(false),
-    address(0),
-    line_length(80),
-    column(0),
-    dsum(0)
+    srecord::output_file(a_file_name)
 {
 }
 

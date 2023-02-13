@@ -39,7 +39,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_idt();
+    ~output_file_idt() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -53,25 +53,25 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &rec);
+    void write(const record &rec) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int nbytes);
+    void address_length_set(int nbytes) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
 private:
     /**
@@ -88,20 +88,20 @@ private:
       * number of output data lines have occurred to date.  This is used
       * at the end of the file to emit an S5 record.
       */
-    unsigned long data_count;
+    unsigned long data_count{0};
 
     /**
       * The pref_block_size instance variable is used to remember the
       * preferred number of data bytes (NOT encoded hex characters) to
       * be placed in each output line.
       */
-    int pref_block_size;
+    int pref_block_size{128};
 
     /**
       * The address_length instance variable is used to remember the
       * minimum number of address bytes to be emitted into output lines.
       */
-    int address_length;
+    int address_length{4};
 
     /**
       * The data_count_written instance variable is used to remember
@@ -110,7 +110,7 @@ private:
       * are circumstances where it will be needed when the file is
       * closed.
       */
-    bool data_count_written;
+    bool data_count_written{false};
 
     /**
       * The write_data_count method is used to write out a data count
@@ -136,23 +136,24 @@ private:
     void write_inner(int tag, unsigned long address, unsigned address_nbytes,
         const unsigned char *data, size_t data_nbytes);
 
+public:
     /**
       * The default constructor.
       * Do not use.
       */
-    output_file_idt();
+    output_file_idt() = delete;
 
     /**
       * The copy constructor.
       * Do not use.
       */
-    output_file_idt(const output_file_idt &);
+    output_file_idt(const output_file_idt &) = delete;
 
     /**
       * The assignment operator.
       * Do not use.
       */
-    output_file_idt &operator=(const output_file_idt &);
+    output_file_idt &operator=(const output_file_idt &) = delete;
 };
 
 };

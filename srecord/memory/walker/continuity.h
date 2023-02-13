@@ -39,14 +39,14 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_continuity();
+    ~memory_walker_continuity() override = default;
 
 private:
     /**
       * The default constructor.  It is private on purpose, use the
       * #create class method instead.
       */
-    memory_walker_continuity();
+    memory_walker_continuity() = default;
 
 public:
     /**
@@ -66,22 +66,24 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
 private:
-    unsigned long current_address;
-    bool data_seen;
-    int nholes;
+    unsigned long current_address{0};
+    bool data_seen{false};
+    int nholes{0};
 
+public:
     /**
       * The copy constructor.  No not use.
       */
-    memory_walker_continuity(const memory_walker_continuity &);
+    memory_walker_continuity(const memory_walker_continuity &) = delete;
 
     /**
       * The assignment operator.  No not use.
       */
-    memory_walker_continuity &operator=(const memory_walker_continuity &);
+    memory_walker_continuity &operator=(
+        const memory_walker_continuity &) = delete;
 };
 
 };

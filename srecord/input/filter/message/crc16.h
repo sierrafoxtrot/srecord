@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_message_crc16();
+    ~input_filter_message_crc16() override = default;
 
 private:
     /**
@@ -71,13 +71,13 @@ public:
 
 protected:
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    void process(const memory &input, record &output);
+    void process(const memory &input, record &output) override;
 
     // See base class for documentation.
-    const char *get_algorithm_name() const;
+    const char *get_algorithm_name() const override;
 
 private:
     /**
@@ -96,37 +96,40 @@ private:
       * The seed_mode instance variable is used to remember the desired
       * seed for the CRC16 calculation.  Defaults to CCITT.
       */
-    crc16::seed_mode_t seed_mode;
+    crc16::seed_mode_t seed_mode{crc16::seed_mode_ccitt};
 
     /**
       * The augment_flag instance variable is used to remember whether
       * or not the final 16-zero-bits augmentation should be applied to
       * the CRC.  Almost always true.
       */
-    bool augment_flag;
+    bool augment_flag{true};
 
-    unsigned short polynomial;
+    unsigned short polynomial{crc16::polynomial_ccitt};
 
     /**
       * The bitdir instance variable is used to remember the bit
       * direction of the CRC.
       */
-    crc16::bit_direction_t bitdir;
+    crc16::bit_direction_t bitdir{crc16::bit_direction_most_to_least};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_filter_message_crc16() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_message_crc16();
+    input_filter_message_crc16(
+        const input_filter_message_crc16 &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_filter_message_crc16(const input_filter_message_crc16 &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_filter_message_crc16 &operator=(const input_filter_message_crc16 &);
+    input_filter_message_crc16 &operator=(
+        const input_filter_message_crc16 &) = delete;
 };
 
 };

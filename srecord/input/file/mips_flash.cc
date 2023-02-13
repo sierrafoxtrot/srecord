@@ -21,22 +21,12 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_mips_flash::~input_file_mips_flash()
-{
-}
-
-
 srecord::input_file_mips_flash::input_file_mips_flash(
     const std::string &a_file_name,
     endian_t a_endian
 ) :
     input_file(a_file_name),
-    seen_some_input(false),
-    endian(a_endian),
-    address(0),
-    token(token_eof),
-    token_value(0),
-    seen_reset(false)
+    endian(a_endian)
 {
 }
 

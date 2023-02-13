@@ -23,14 +23,6 @@
 #include <srecord/record.h>
 
 
-srecord::record::record():
-    type(type_unknown),
-    address(0),
-    length(0)
-{
-}
-
-
 srecord::record::record(const srecord::record &arg) :
     type(arg.type),
     address(arg.address),
@@ -42,17 +34,14 @@ srecord::record::record(const srecord::record &arg) :
 
 
 srecord::record::record(type_t arg) :
-    type(arg),
-    address(0),
-    length(0)
+    type(arg)
 {
 }
 
 
 srecord::record::record(type_t a1, address_t a2) :
     type(a1),
-    address(a2),
-    length(0)
+    address(a2)
 {
 }
 
@@ -81,12 +70,6 @@ srecord::record::operator=(const srecord::record &arg)
     }
     return *this;
 }
-
-
-srecord::record::~record()
-{
-}
-
 
 size_t
 srecord::record::maximum_data_length(address_t address)

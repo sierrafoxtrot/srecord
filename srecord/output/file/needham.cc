@@ -34,11 +34,7 @@ srecord::output_file_needham::~output_file_needham()
 srecord::output_file_needham::output_file_needham(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    address(0),
-    column(0),
-    pref_block_size(16),
-    address_length(4)
+    srecord::output_file(a_file_name)
 {
 }
 

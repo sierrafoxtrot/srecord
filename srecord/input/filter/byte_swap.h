@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_byte_swap();
+    ~input_filter_byte_swap() override = default;
 
 private:
     /**
@@ -59,10 +59,10 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
 private:
     /**
@@ -75,29 +75,30 @@ private:
       * The buffer_pos instance variable is used to remember the byte
       * position within the buffer instance variable.
       */
-    size_t buffer_pos;
+    size_t buffer_pos{0};
 
     /**
       * The mask instance variable is used to remember the bit mask to
       * be xor-ed with the address to form the byte-swapped address.
       * It defaults to 1, but can be altered by command line option.
       */
-    record::address_t mask;
+    record::address_t mask{1};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_filter_byte_swap() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_byte_swap();
+    input_filter_byte_swap(const input_filter_byte_swap &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_filter_byte_swap(const input_filter_byte_swap &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_filter_byte_swap &operator=(const input_filter_byte_swap &);
+    input_filter_byte_swap &operator=(const input_filter_byte_swap &) = delete;
 };
 
 };

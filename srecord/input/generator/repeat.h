@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_generator_repeat();
+    ~input_generator_repeat() override;
 
 private:
     /**
@@ -69,13 +69,13 @@ public:
 
 protected:
     // See base class for documentation.
-    unsigned char generate_data(unsigned long address);
+    unsigned char generate_data(unsigned long address) override;
 
     // See base class for documentation.
-    std::string filename() const;
+    std::string filename() const override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
 private:
     /**
@@ -97,20 +97,21 @@ private:
       */
     size_t length;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_generator_repeat();
+    input_generator_repeat() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_generator_repeat(const input_generator_repeat &);
+    input_generator_repeat(const input_generator_repeat &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_generator_repeat &operator=(const input_generator_repeat &);
+    input_generator_repeat &operator=(const input_generator_repeat &) = delete;
 };
 
 };

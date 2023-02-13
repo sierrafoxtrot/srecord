@@ -30,14 +30,7 @@ srecord::output_file_ascii_hex::~output_file_ascii_hex()
 srecord::output_file_ascii_hex::output_file_ascii_hex(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    address(0),
-    column(0),
-    pref_block_size(16),
-    line_length(pref_block_size * 3 - 1),
-    address_length(2),
-    start_code_emitted(false),
-    end_code_emitted(false)
+    srecord::output_file(a_file_name)
 {
 }
 

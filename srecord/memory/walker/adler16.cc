@@ -21,16 +21,6 @@
 #include <srecord/output.h>
 
 
-srecord::memory_walker_adler16::~memory_walker_adler16()
-{
-}
-
-
-srecord::memory_walker_adler16::memory_walker_adler16()
-{
-}
-
-
 srecord::memory_walker_adler16::pointer
 srecord::memory_walker_adler16::create()
 {

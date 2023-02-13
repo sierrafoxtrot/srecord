@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_four_packed_code();
+    ~input_file_four_packed_code() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -50,13 +50,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -81,7 +81,7 @@ private:
       * bytes) at a time.  The usual get_word (etc) continue to work
       * without additional modifications.
       */
-    int get_byte();
+    int get_byte() override;
 
     /**
       * The get_digit method is used to fetch one base85 digit from
@@ -95,7 +95,7 @@ private:
       * 5-character (4-byte) input multiple.  (Only the get_byte
       * method may use this instance variable.)
       */
-    unsigned get_byte_pos;
+    unsigned get_byte_pos{};
 
     /**
       * The get_byte_value instance variable is used by the bet_byte
@@ -103,43 +103,45 @@ private:
       * input multiple.  (Only the get_byte method may use this
       * instance variable.)
       */
-    unsigned long get_byte_value;
+    unsigned long get_byte_value{};
 
     /**
       * The garbage_warning instance variable is used by the read
       * method to record whether or not a warning about non-format
       * lines has been issued (only one warning is issued per file).
       */
-    bool garbage_warning;
+    bool garbage_warning{false};
 
     /**
       * The seen_some_input instance variable is used by the read
       * and read_inner methods to record whether or not any valid
       * input has been seen.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The running_address instance variable method is used by the
       * read_inner method to record the current address.  This is
       * so that record types 1 and 2 can be processed accurately.
       */
-    unsigned long running_address;
+    unsigned long running_address{0};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_four_packed_code() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_four_packed_code();
+    input_file_four_packed_code(const input_file_four_packed_code &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_four_packed_code(const input_file_four_packed_code &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_four_packed_code &operator=(const input_file_four_packed_code &);
+    input_file_four_packed_code &operator=(
+        const input_file_four_packed_code &) = delete;
 };
 
 };

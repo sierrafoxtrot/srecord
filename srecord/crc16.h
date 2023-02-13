@@ -89,7 +89,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~crc16();
+    virtual ~crc16() = default;
 
     enum bit_direction_t
     {
@@ -180,7 +180,7 @@ private:
       * to improve efficiency.  It is filled in the the #calculate_table
       * method, called from the constructor.
       */
-    unsigned short table[256];
+    unsigned short table[256]{};
 
     /**
       * The calculate_table method is called by the constructor to fill

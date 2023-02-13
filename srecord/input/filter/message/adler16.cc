@@ -23,11 +23,6 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_message_adler16::~input_filter_message_adler16()
-{
-}
-
-
 srecord::input_filter_message_adler16::input_filter_message_adler16(
     const input::pointer &a_deeper,
     unsigned long a_address,

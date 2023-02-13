@@ -41,7 +41,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file();
+    ~input_file() override;
 
     /**
       * The guess class method is used to open a file of an unknown
@@ -69,13 +69,13 @@ public:
 
 protected:
     // See base class for documentation.
-    virtual std::string filename() const;
+    std::string filename() const override;
 
     // See base class for documentation.
-    virtual std::string filename_and_line() const;
+    std::string filename_and_line() const override;
 
     // See base class for documentation.
-    void disable_checksum_validation();
+    void disable_checksum_validation() override;
 
     /**
       * The constructor.  The input will be taken from the named file
@@ -252,7 +252,7 @@ private:
       * method to remember the current line number.  It us used by the
       * filename_and_line method to report the current file location.
       */
-    int line_number;
+    int line_number{1};
 
     /**
       * The prev_was_newline instance variable is used by the
@@ -263,7 +263,7 @@ private:
       * the the error message must be issued only when the whole
       * line has bean read in, including the newline.  error message.
       */
-    bool prev_was_newline;
+    bool prev_was_newline{false};
 
     /**
       * The vfp instance variable is used by the get_fp method to
@@ -272,7 +272,7 @@ private:
       * always go via the get_fp method.  This ensures the file has
       * been opened first!
       */
-    void *vfp;
+    void *vfp{nullptr};
 
 protected:
     /**
@@ -283,7 +283,7 @@ protected:
       * Always use the #checksum_get or #checksum_get16 methods to
       * read its value.
       */
-    int checksum;
+    int checksum{0};
 
     /**
       * The use_checksums method is used to determine whether or not to
@@ -300,7 +300,7 @@ private:
       * whether or not checksums should be ignored (true) or validated
       * (false).
       */
-    bool ignore_checksums;
+    bool ignore_checksums{ignore_checksums_default};
 
     /**
       * The ignore_checksums_default class variable is used to remember
@@ -319,20 +319,21 @@ private:
       */
     void *get_fp();
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_file();
+    input_file() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file(const input_file &);
+    input_file(const input_file &) = delete;
 
     /**
-      * the assignment operator.  Do not use.
+      * the assignment operator.
       */
-    input_file &operator=(const input_file &);
+    input_file &operator=(const input_file &) = delete;
 };
 
 };

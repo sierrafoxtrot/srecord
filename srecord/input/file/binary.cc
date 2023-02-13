@@ -21,14 +21,8 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_binary::~input_file_binary()
-{
-}
-
-
 srecord::input_file_binary::input_file_binary(const std::string &a_file_name) :
-    srecord::input_file(a_file_name),
-    address(0)
+    srecord::input_file(a_file_name)
 {
 }
 

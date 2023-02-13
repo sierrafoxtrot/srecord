@@ -29,10 +29,7 @@ srecord::output_file_intel::~output_file_intel()
 
 
 srecord::output_file_intel::output_file_intel(const std::string &a_file_name) :
-    srecord::output_file(a_file_name),
-    address_base(0),
-    pref_block_size(32),
-    mode(mode_linear)
+    srecord::output_file(a_file_name)
 {
     // The address base always has the lower 16 bits set to zero.
     // By making it be 1, we force the first data record to emit an

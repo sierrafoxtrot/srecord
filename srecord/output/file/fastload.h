@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_fastload();
+    ~output_file_fastload() override;
 
 private:
     /**
@@ -63,48 +63,48 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
       * The line_length instance variable is used to remember the
       * preferred line length for the output.
       */
-    int line_length;
+    int line_length{0};
 
     /**
       * The address instance variable is used to track the current
       * address location within the file.
       */
-    unsigned long address;
+    unsigned long address{~0UL};
 
     /**
       * The column instance variable is used to track the current output
       * column, to ensure that the lines don't exceed 80 characters.
       */
-    int column;
+    int column{0};
 
     /**
       * The bytes_since_checksum instance variable is used to track how
       * many bytes have ben emitted since the last checksum was issued.
       * Don't leave it too long, or the checksum isn't any use.
       */
-    int bytes_since_checksum;
+    int bytes_since_checksum{0};
 
     /**
       * The max_since_checksum instance variable is used to remember how
@@ -112,14 +112,14 @@ private:
       * such a way as to minimize line length.  There is no point going
       * over 256 bytes, because it's a simple 16-bit additive sum.
       */
-    int max_since_checksum;
+    int max_since_checksum{0};
 
     /**
       * The prev_was_command instance variable is used to track that was
       * last output, because a newline must be thrown between commands
       * and data, but not at any other time.
       */
-    bool prev_was_command;
+    bool prev_was_command{false};
 
     /**
       * The write_inner method is used to write a single line (record)
@@ -140,20 +140,21 @@ private:
       */
     void put_command(int c, unsigned long n, int ndigits);
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_fastload();
+    output_file_fastload() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_fastload(const output_file_fastload &);
+    output_file_fastload(const output_file_fastload &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_file_fastload &operator=(const output_file_fastload &);
+    output_file_fastload &operator=(const output_file_fastload &) = delete;
 };
 
 };

@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_ascii_hex();
+    ~input_file_ascii_hex() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,13 +49,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -76,40 +76,41 @@ private:
       * The garbage_warning instance variable is used to remember whether
       * a warning has already been issued if the file contains garbage.
       */
-    bool garbage_warning;
+    bool garbage_warning{false};
 
     /**
       * The seen_some_input instance variable is used to remember whether
       * any data has been seen in the input to date.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The address instance variable is used to remember where we are
       * up to in the input file, so it may be associated with data bytes.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The state instance variable is used to remember what state the
       * input is in at present.
       */
-    enum { state_initial, state_body, state_ignore } state;
+    enum { state_initial, state_body, state_ignore } state {state_initial};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_ascii_hex() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_ascii_hex();
+    input_file_ascii_hex(const input_file_ascii_hex &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_ascii_hex(const input_file_ascii_hex &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_ascii_hex &operator=(const input_file_ascii_hex &);
+    input_file_ascii_hex &operator=(const input_file_ascii_hex &) = delete;
 };
 
 };

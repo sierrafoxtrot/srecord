@@ -48,7 +48,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_compare();
+    ~memory_walker_compare() override = default;
 
 private:
     /**
@@ -77,7 +77,7 @@ public:
     static pointer create(const memory &other, bool check_wrong);
 
     // See base class for documentation.
-    virtual void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
     /**
       * The print method is used to print the results of the comparison
@@ -121,20 +121,21 @@ private:
       */
     interval wrong;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    memory_walker_compare();
+    memory_walker_compare() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    memory_walker_compare(const memory_walker_compare &);
+    memory_walker_compare(const memory_walker_compare &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    memory_walker_compare &operator=(const memory_walker_compare &);
+    memory_walker_compare &operator=(const memory_walker_compare &) = delete;
 };
 
 };

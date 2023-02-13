@@ -22,11 +22,6 @@
 #include <srecord/output.h>
 
 
-srecord::memory_walker_writer::~memory_walker_writer()
-{
-}
-
-
 srecord::memory_walker_writer::memory_walker_writer(
         const srecord::output::pointer &arg) :
     op(arg)

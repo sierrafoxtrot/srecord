@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_idt();
+    ~input_file_idt() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,16 +49,16 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -73,7 +73,7 @@ private:
       * The data_count instance variable is used to remember the number
       * of data lines has occurred so far in the input file.
       */
-    unsigned long data_count;
+    unsigned long data_count{0};
 
     /**
       * The read_inner method is used to read a record of input.
@@ -85,7 +85,7 @@ private:
       * The seen_some_input instance variable is used to remember where
       * any data has been seen in this file yet.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The record_format_error is a wrapper around #fatal_error to
@@ -93,20 +93,21 @@ private:
       */
     void record_format_error();
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_file_idt();
+    input_file_idt() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_idt(const input_file_idt &);
+    input_file_idt(const input_file_idt &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_file_idt &operator=(const input_file_idt &);
+    input_file_idt &operator=(const input_file_idt &) = delete;
 };
 
 };

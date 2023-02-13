@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_ppx();
+    ~output_file_ppx() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -47,22 +47,22 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
@@ -79,46 +79,47 @@ private:
       * The started instance variable is used to remember whether or not
       * we have emitted the start sequence.
       */
-    bool started;
+    bool started{false};
 
     /**
       * The address instance variable is used to remember the address of
       * the next data byte to be parsed.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The line_length instance variable is used to remember how long
       * the output lines are to be.
       */
-    int line_length;
+    int line_length{80};
 
     /**
       * The column instance variable is used to remember the current
       * output column.  Used for determining when to start a new line.
       */
-    int column;
+    int column{0};
 
     /**
       * The dsum instance variable is used to remember the simple sum of
       * all the data bytes, but not the address bytes.
       */
-    unsigned short dsum;
+    unsigned short dsum{0};
+
+public:
+    /**
+      * The default constructor.
+      */
+    output_file_ppx() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_ppx();
+    output_file_ppx(const output_file_ppx &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    output_file_ppx(const output_file_ppx &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    output_file_ppx &operator=(const output_file_ppx &);
+    output_file_ppx &operator=(const output_file_ppx &) = delete;
 };
 
 };

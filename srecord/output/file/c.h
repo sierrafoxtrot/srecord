@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_c();
+    ~output_file_c() override;
 
 private:
     /**
@@ -63,32 +63,32 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
       * The prefix instance variable is used to remember the variable
       * name prefix to be used in the output.
       */
-    std::string prefix;
+    std::string prefix{"eprom"};
 
     /**
       * The prefix instance variable is used to remember the definition
@@ -106,7 +106,7 @@ private:
       * The taddr instance variable is used to remember the
       * termination address, to be emitted in the footer.
       */
-    unsigned long taddr;
+    unsigned long taddr{0};
 
     /**
       * The range instance variable is used to remember the range
@@ -118,44 +118,44 @@ private:
       * The header_done instance variable is used t remember whether
       * the emit_header method has been called.
       */
-    bool header_done;
+    bool header_done{false};
 
     /**
       * The column instance variable is used to remember the current
       * printing column on the line.
       */
-    int column;
+    int column{0};
 
     /**
       * The current_address instance variable is used to remember
       * the current address that the file is positioned at.  This is
       * used to know whether we need to add padding.
       */
-    unsigned long current_address;
+    unsigned long current_address{0};
 
     /**
       * The line_length instance variable is used to remember the
       * maximum line length.  The output usually does not exceed it.
       */
-    int line_length;
+    int line_length{75};
 
     /**
       * The address_length instance variable is used to remember how
       * many bytes to emit when emitting addresses.
       */
-    int address_length;
+    int address_length{4};
 
     /**
       * The constant instance variable is used to remember whether or
       * not to use the "const" keyword.
       */
-    bool constant;
+    bool constant{true};
 
     /**
       * The include instance variable is used to remember whether or not
       * to generate an include file.
       */
-    bool include;
+    bool include{false};
 
     /**
       * The include_file_name instance variable is used to remember the
@@ -167,14 +167,14 @@ private:
       * The output_word instance variable is used to remember whether or not
       * the input bytes should be emitted as word.
       */
-    bool output_word;
+    bool output_word{false};
 
     /**
       * The hex_style instance variable is used to remember whether or
       * not we are to output number in hexadecimal (true) or decimal
       * (false).
       */
-    bool hex_style;
+    bool hex_style{true};
 
     /**
       * The section_style instance variable is used to remember whether
@@ -185,7 +185,7 @@ private:
       * and lengths are emitted, and the actual data is intended to be
       * relocated at run time.
       */
-    bool section_style;
+    bool section_style{false};
 
     /**
       * The emit_header method is used to emit the initial portion
@@ -215,20 +215,21 @@ private:
       */
     std::string format_address(unsigned long addr) const;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_c();
+    output_file_c() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_c(const output_file_c &);
+    output_file_c(const output_file_c &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_file_c &operator=(const output_file_c &);
+    output_file_c &operator=(const output_file_c &) = delete;
 };
 
 };

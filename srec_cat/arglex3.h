@@ -46,28 +46,38 @@ public:
     /**
       * The destructor.
       */
-    virtual ~srec_cat_arglex3();
+    ~srec_cat_arglex3() override = default;
 
     /**
       * The constructor.
       */
     srec_cat_arglex3(int, char **);
 
-private:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    srec_cat_arglex3();
+    srec_cat_arglex3() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    srec_cat_arglex3(const srec_cat_arglex3 &);
+    srec_cat_arglex3(const srec_cat_arglex3 &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    srec_cat_arglex3 &operator=(const srec_cat_arglex3 &);
+    srec_cat_arglex3 &operator=(const srec_cat_arglex3 &) = delete;
+
+    /**
+      * The move constructor
+      */
+    srec_cat_arglex3 ( srec_cat_arglex3 && ) = delete;
+
+    /**
+      * The move assignment operator
+      */
+    srec_cat_arglex3& operator=(srec_cat_arglex3&&) = delete;
+
 };
 
 #endif // PROG_SREC_CAT_ARGLEX3_H

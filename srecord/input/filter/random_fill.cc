@@ -23,11 +23,6 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_random_fill::~input_filter_random_fill()
-{
-}
-
-
 srecord::input_filter_random_fill::input_filter_random_fill(
         const srecord::input::pointer &a1, const interval &a3) :
     srecord::input_filter(a1),

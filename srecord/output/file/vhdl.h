@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_vhdl();
+    ~output_file_vhdl() override;
 
 private:
     /**
@@ -61,25 +61,25 @@ public:
 
 protected:
     // See base class for documentation
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
@@ -87,19 +87,19 @@ private:
       * many bytes to emit per output row.  This is because words are
       * packed into an array of values larger than a single byte.
       */
-    unsigned bytes_per_word;
+    unsigned bytes_per_word{1};
 
     /**
       * The prefix instance variable is used to remember the prefix of
       * the various names emitted into the output.
       */
-    std::string prefix;
+    std::string prefix{"eprom"};
 
     /**
       * The header_done instance variable is used to remember whether
       * the emit_header method has already been called.
       */
-    bool header_done;
+    bool header_done{false};
 
     /**
       * The emit_header method is used to emit the file header,
@@ -107,20 +107,21 @@ private:
       */
     void emit_header();
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_vhdl();
+    output_file_vhdl() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_vhdl(const output_file_vhdl &);
+    output_file_vhdl(const output_file_vhdl &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_file_vhdl &operator=(const output_file_vhdl &);
+    output_file_vhdl &operator=(const output_file_vhdl &) = delete;
 };
 
 };

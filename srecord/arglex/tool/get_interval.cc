@@ -47,6 +47,22 @@ srecord::arglex_tool::get_interval_factor(const char *name)
             return retval;
         }
 
+    case token_within:
+        {
+            token_next();
+            srecord::input::pointer ifp = get_input();
+            interval result = srecord::input_interval(ifp);
+            return result;
+        }
+
+    case token_over:
+        {
+            token_next();
+            srecord::input::pointer ifp = get_input();
+            interval result = srecord::input_interval(ifp);
+            return result.flatten();
+        }
+
     default:
         {
             if (!can_get_number())
@@ -77,22 +93,6 @@ srecord::arglex_tool::get_interval_factor(const char *name)
             }
             interval result(n1, n2);
             return result;
-        }
-
-    case token_within:
-        {
-            token_next();
-            srecord::input::pointer ifp = get_input();
-            interval result = srecord::input_interval(ifp);
-            return result;
-        }
-
-    case token_over:
-        {
-            token_next();
-            srecord::input::pointer ifp = get_input();
-            interval result = srecord::input_interval(ifp);
-            return result.flatten();
         }
     }
 }

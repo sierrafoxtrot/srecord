@@ -23,18 +23,8 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_ppb::~input_file_ppb()
-{
-}
-
-
 srecord::input_file_ppb::input_file_ppb(const std::string &filename) :
-    input_file(filename),
-    address(0),
-    data_seen(false),
-    packet_address(-1UL),
-    packet_length(0),
-    packet_used(0)
+    input_file(filename)
 {
 }
 

@@ -24,11 +24,6 @@
 #include <srecord/memory/walker/compare.h>
 
 
-srecord::memory_walker_compare::~memory_walker_compare()
-{
-}
-
-
 srecord::memory_walker_compare::memory_walker_compare(const srecord::memory &a1,
         bool a2) :
     other(a1),

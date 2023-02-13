@@ -33,7 +33,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_fastload();
+    ~input_file_fastload() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -48,13 +48,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -89,14 +89,14 @@ private:
       * The seen_some_input instance variable is used to
       * remember whether any input has been seen.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The address instance variable is used to represent the
       * current address within the file.  It is set by the /A command,
       * and advanced by the data, /B and /Z commands.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The expect_white_space method is used to ensure that while
@@ -105,20 +105,21 @@ private:
       */
     void expect_white_space();
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_file_fastload();
+    input_file_fastload() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_fastload(const input_file_fastload &);
+    input_file_fastload(const input_file_fastload &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_file_fastload &operator=(const input_file_fastload &);
+    input_file_fastload &operator=(const input_file_fastload &) = delete;
 };
 
 };

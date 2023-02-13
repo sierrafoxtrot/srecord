@@ -21,12 +21,6 @@
 #include <srecord/input/file/emon52.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_emon52::~input_file_emon52()
-{
-}
-
-
 srecord::input_file_emon52::input_file_emon52(const std::string &a_file_name) :
     srecord::input_file(a_file_name)
 {

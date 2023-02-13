@@ -22,19 +22,8 @@
 #include <srecord/input/file/ti_txt.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_ti_txt::~input_file_ti_txt()
-{
-}
-
-
 srecord::input_file_ti_txt::input_file_ti_txt(const std::string &a_file_name) :
-    input_file(a_file_name),
-    seen_some_input(false),
-    address(0),
-    token(token_start_up),
-    token_value(0),
-    address_warning(false)
+    input_file(a_file_name)
 {
 }
 

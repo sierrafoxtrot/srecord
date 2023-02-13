@@ -23,17 +23,11 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_spasm::~input_file_spasm()
-{
-}
-
-
 srecord::input_file_spasm::input_file_spasm(
     const std::string &a_file_name,
     endian_t a_end
 ) :
     input_file(a_file_name),
-    seen_some_input(false),
     end(a_end)
 {
 }

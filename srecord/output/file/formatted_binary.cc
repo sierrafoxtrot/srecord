@@ -37,10 +37,7 @@ srecord::output_file_formatted_binary::~output_file_formatted_binary()
 srecord::output_file_formatted_binary::output_file_formatted_binary(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    upper_bound(0),
-    address(0),
-    check_sum(0)
+    srecord::output_file(a_file_name)
 {
     if (line_termination == line_termination_native)
         line_termination = line_termination_binary;

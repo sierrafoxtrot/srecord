@@ -23,17 +23,10 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_needham::~input_file_needham()
-{
-}
-
-
 srecord::input_file_needham::input_file_needham(
     const std::string &a_file_name
 ) :
-    srecord::input_file(a_file_name),
-    seen_some_input(false),
-    address(0)
+    srecord::input_file(a_file_name)
 {
 }
 

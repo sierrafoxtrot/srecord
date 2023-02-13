@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_cosmac();
+    ~input_file_cosmac() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,13 +49,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -77,34 +77,35 @@ private:
       *   ,   have seen , character, discarding to \n, then resume sp state
       *   ;   have seen , character, discarding to \n, then resume M state
       */
-    char state;
+    char state{'\n'};
 
     /**
       * The address instance variable is used to remember what address
       * we are up to in the input.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The seen_some_input instance variable is used to remember whether
       * the file has any contents or not.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_cosmac() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_cosmac();
+    input_file_cosmac(const input_file_cosmac &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_cosmac(const input_file_cosmac &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_cosmac &operator=(const input_file_cosmac &);
+    input_file_cosmac &operator=(const input_file_cosmac &) = delete;
 };
 
 };

@@ -59,11 +59,6 @@ class fletcher16
 {
 public:
     /**
-      * The destructor.
-      */
-    virtual ~fletcher16();
-
-    /**
       * The default constructor.
       *
       * @param sum1
@@ -82,16 +77,6 @@ public:
       */
     fletcher16(unsigned char sum1 = 0, unsigned char sum2 = 0,
         int answer = -1, endian_t end = endian_little);
-
-    /**
-      * The copy constructor.
-      */
-    fletcher16(const fletcher16 &);
-
-    /**
-      * The assignment operator.
-      */
-    fletcher16 &operator=(const fletcher16 &);
 
     /**
       * The get method is used to obtain the running value of the cyclic

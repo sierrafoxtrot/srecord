@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_os65v();
+    ~input_file_os65v() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -50,15 +50,15 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
-private:
+public:
     /**
       * The constructor.
       *
@@ -68,19 +68,19 @@ private:
     input_file_os65v(const std::string &file_name);
 
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_file_os65v();
+    input_file_os65v() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_os65v(const input_file_os65v &);
+    input_file_os65v(const input_file_os65v &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_file_os65v &operator=(const input_file_os65v &);
+    input_file_os65v &operator=(const input_file_os65v &) = delete;
 
     /**
       * The read_inner method is used by the read method to get
@@ -92,26 +92,26 @@ private:
       * The seen_some_input instance variable is used to remember whether
       * or not some valid input has been seen.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The address instance variable is used to remember the current
       * address.  It is advanced for every byte read.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The state instance variable is used to member the current input
       * state (unknown, address, data).
       */
-    char state;
+    char state{0};
 
     /**
       * The ignore_the_rest instance variable is used to remember when
       * it is time to ignore the rest of the file.  This happens after a
       * "return to monitor" sequence, or after a "GO" command.
       */
-    bool ignore_the_rest;
+    bool ignore_the_rest{false};
 };
 
 };

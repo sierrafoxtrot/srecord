@@ -20,11 +20,6 @@
 #include <srecord/input/filter.h>
 
 
-srecord::input_filter::~input_filter()
-{
-}
-
-
 srecord::input_filter::input_filter(srecord::input::pointer arg) :
     ifp(arg)
 {

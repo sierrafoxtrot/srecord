@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_alignment();
+    ~memory_walker_alignment() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -60,10 +60,10 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
     // See base class for documentation.
-    void observe_end();
+    void observe_end() override;
 
 private:
     /**
@@ -75,26 +75,28 @@ private:
       */
     memory_walker_alignment(unsigned multiple);
 
-    unsigned multiple;
-    unsigned long current_address;
-    bool data_seen;
-    bool well_aligned;
+    unsigned multiple{2};
+    unsigned long current_address{0};
+    bool data_seen{false};
+    bool well_aligned{true};
 
+public:
     /**
       * The default constructor.
       * Do not use.
       */
-    memory_walker_alignment();
+    memory_walker_alignment() = delete;
 
     /**
       * The copy constructor.  No not use.
       */
-    memory_walker_alignment(const memory_walker_alignment &);
+    memory_walker_alignment(const memory_walker_alignment &) = delete;
 
     /**
       * The assignment operator.  No not use.
       */
-    memory_walker_alignment &operator=(const memory_walker_alignment &);
+    memory_walker_alignment &operator=(
+        const memory_walker_alignment &) = delete;
 };
 
 };

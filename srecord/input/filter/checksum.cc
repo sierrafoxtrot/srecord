@@ -33,7 +33,6 @@ srecord::input_filter_checksum::input_filter_checksum(
     checksum_address(a_checksum_address),
     length(a_length),
     end(a_end),
-    sum(0),
     width(a_width)
 {
     if (length < 0)
@@ -44,11 +43,6 @@ srecord::input_filter_checksum::input_filter_checksum(
         width = 1;
     else if (width > length)
         width = length;
-}
-
-
-srecord::input_filter_checksum::~input_filter_checksum()
-{
 }
 
 

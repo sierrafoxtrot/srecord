@@ -37,7 +37,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file();
+    ~output_file() override;
 
     /**
       * The default constructor.
@@ -55,7 +55,7 @@ public:
     output_file(const std::string &file_name);
 
     // See base class for documentation.
-    virtual std::string filename() const;
+    std::string filename() const override;
 
     /**
       * The enable_header class method is used to enable or disable
@@ -339,14 +339,14 @@ private:
       * filename_and_line methods to report the name of the input
       * file.  This makes for informative error messages.
       */
-    std::string file_name;
+    std::string file_name{"standard output"};
 
     /**
       * The line_number instance variable is used by the get_char
       * method to remember the current line number.  It us used by the
       * filename_and_line method to report the current file location.
       */
-    int line_number;
+    int line_number{1};
 
     /**
       * The vfp instance variable is used by the #get_fp method to
@@ -355,7 +355,7 @@ private:
       * always go via the #get_fp method.  This ensures the file has
       * been opened first!
       */
-    void *vfp;
+    void *vfp{nullptr};
 
 protected:
     /**
@@ -366,7 +366,7 @@ protected:
       * Always use the #checksum_get or #checksum_get16 methods to
       * read its value.
       */
-    int checksum;
+    int checksum{0};
 
     /**
       * The fatal_alignment_error method is used to report problems
@@ -403,14 +403,14 @@ private:
       * current position within the output file.  Set by the put_char
       * method, and the seek_to method.  Used by the seek_to method.
       */
-    unsigned long position;
+    unsigned long position{0};
 
     /**
       * The is_regular instance variable is used to remember whether
       * or not the file is a regular file.  This is set by the
       * set_is_regular method.  It is used by the seek_to method.
       */
-    bool is_regular;
+    bool is_regular{true};
 
     /**
       * The set_is_regular method shall be used whenever vfp is assigned,
@@ -437,15 +437,16 @@ private:
       */
     virtual bool is_binary() const;
 
+public:
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file(const output_file &);
+    output_file(const output_file &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_file &operator=(const output_file &);
+    output_file &operator=(const output_file &) = delete;
 };
 
 };

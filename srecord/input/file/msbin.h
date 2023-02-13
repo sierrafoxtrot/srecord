@@ -42,7 +42,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_msbin();
+    ~input_file_msbin() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -57,13 +57,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -78,7 +78,7 @@ private:
       * The header_read instance variable is used to remember whether
       * the file header was read already.
       */
-    bool header_read;
+    bool header_read{false};
 
     /**
       * The first_record_read instance variable is used to remember
@@ -86,70 +86,70 @@ private:
       *
       * While false, lowest_address and highest_address are not valid.
       */
-    bool first_record_read;
+    bool first_record_read{false};
 
     /**
       * The execution_start_record_seen instance variable is used to
       * remember whether we already read the execution start address
       * record, which is supposed to be the last record in a file.
       */
-    bool execution_start_record_seen;
+    bool execution_start_record_seen{false};
 
     /**
       * The last_record_warning instance variable is used to remember
       * whether a warning about extra records after the execution start
       * record was already issued.
       */
-    bool last_record_warning;
+    bool last_record_warning{false};
 
     /**
       * The address instance variable is used to remember the current
       * address.
       */
-    record::address_t address;
+    record::address_t address{0};
 
     /**
       * The remaining instance variable is used to remember the number
       * of bytes remaining in this record to be read.
       */
-    uint32_t remaining;
+    uint32_t remaining{0};
 
     /**
       * The record_checksum instance variable is used to remember the
       * checksum of the current record, as read from the record header.
       */
-    uint32_t record_checksum;
+    uint32_t record_checksum{0};
 
     /**
       * The running_checksum instance variable is used to remember the
       * checksum of the data read from this record so far.
       */
-    uint32_t running_checksum;
+    uint32_t running_checksum{0};
 
     /**
       * The image_start instance variable is used to remember the image
       * start, the lowest data address in the file, as read from the
       * file header.
       */
-    record::address_t image_start;
+    record::address_t image_start{};
 
     /**
       * The image_length instance variable is used to remember the image
       * length, as read from the file header.
       */
-    record::address_t image_length;
+    record::address_t image_length{};
 
     /**
       * The lowest_address instance variable is used to remember the
       * lowest address encountered in records read so far.
       */
-    record::address_t lowest_address;
+    record::address_t lowest_address{};
 
     /**
       * The highest_address instance variable is used to remember the
       * highest address encountered in records read so far.
       */
-    record::address_t highest_address;
+    record::address_t highest_address{};
 
     /**
       * The read_file_header method is used to read the (optional) magic
@@ -182,22 +182,23 @@ private:
     static uint32_t checksum(const unsigned char *data, size_t len);
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_msbin() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_msbin();
+    input_file_msbin(const input_file_msbin &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_msbin(const input_file_msbin &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_msbin &operator=(const input_file_msbin &);
+    input_file_msbin &operator=(const input_file_msbin &) = delete;
 };
 
 };

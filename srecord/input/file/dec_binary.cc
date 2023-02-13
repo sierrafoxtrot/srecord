@@ -21,17 +21,10 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_dec_binary::~input_file_dec_binary()
-{
-}
-
-
 srecord::input_file_dec_binary::input_file_dec_binary(
         const std::string &a_file_name) :
-    srecord::input_file(a_file_name),
-    current_pos(0),
-    current_length(0),
-    current_address(0)
+    srecord::input_file(a_file_name)
+
 {
 }
 

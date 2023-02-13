@@ -211,7 +211,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~arglex_tool();
+    ~arglex_tool() override = default;
 
     /**
       * The constructor.  Pass the argc and argv as given to main;
@@ -299,7 +299,7 @@ public:
     std::string get_string(const char *caption);
 
     // See base class for documentation.
-    void default_command_line_processing();
+    void default_command_line_processing() override;
 
     defcon_t get_redundant_bytes() const { return redundant_bytes; }
     defcon_t get_contradictory_bytes() const { return contradictory_bytes; }
@@ -375,7 +375,7 @@ private:
       * Only one use of the standard input may be made; the second
       * use will result in a fatal error.
       */
-    bool stdin_used;
+    bool stdin_used{false};
 
     /**
       * The stdout_used instance variable is used to remember whether
@@ -383,7 +383,7 @@ private:
       * Only one use of the standard output may be made; the second
       * use will result in a fatal error.
       */
-    bool stdout_used;
+    bool stdout_used{false};
 
     /**
       * The issue_sequence_warnings instance variable is used to
@@ -394,7 +394,7 @@ private:
       * from the command line, positive means enabled on the command
       * line.
       */
-    int issue_sequence_warnings;
+    int issue_sequence_warnings{-1};
 
     /**
       * The get_simple_input method is used to parse an input filename
@@ -454,29 +454,40 @@ private:
       * to do when faced with multiple identical byte values for a
       * memory address.
       */
-    defcon_t redundant_bytes;
+    defcon_t redundant_bytes{srecord::defcon_warning};
 
     /**
       * The contradictory_bytes instance variable is used to remember what
       * to do when faced with multiple different byte values for a
       * memory address.
       */
-    defcon_t contradictory_bytes;
+    defcon_t contradictory_bytes{srecord::defcon_fatal_error};
+
+public:
+    /**
+      * The default constructor.
+      */
+    arglex_tool() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    arglex_tool();
+    arglex_tool(const arglex_tool &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    arglex_tool(const arglex_tool &);
+    arglex_tool &operator=(const arglex_tool &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The move constructor
       */
-    arglex_tool &operator=(const arglex_tool &);
+    arglex_tool ( arglex_tool && ) = delete;
+
+    /**
+      * The move assignment operator
+      */
+    arglex_tool& operator=(arglex_tool&&) = delete;
 };
 
 };

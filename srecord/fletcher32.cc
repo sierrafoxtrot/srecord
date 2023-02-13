@@ -19,26 +19,6 @@
 #include <srecord/fletcher32.h>
 
 
-srecord::fletcher32::~fletcher32()
-{
-}
-
-
-srecord::fletcher32::fletcher32() :
-    sum1(0xFFFF),
-    sum2(0xFFFF)
-{
-    // See notes in the nextbuf() method, below.
-}
-
-
-srecord::fletcher32::fletcher32(const fletcher32 &rhs) :
-    sum1(rhs.sum1),
-    sum2(rhs.sum2)
-{
-}
-
-
 srecord::fletcher32 &
 srecord::fletcher32::operator=(const fletcher32 &rhs)
 {

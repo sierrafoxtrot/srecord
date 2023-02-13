@@ -31,12 +31,6 @@ srecord::input::input() :
 {
 }
 
-
-srecord::input::~input()
-{
-}
-
-
 void
 srecord::input::fatal_error(const char *fmt, ...)
     const

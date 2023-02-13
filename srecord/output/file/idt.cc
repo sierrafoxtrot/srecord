@@ -29,11 +29,7 @@ srecord::output_file_idt::~output_file_idt()
 srecord::output_file_idt::output_file_idt(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    data_count(0),
-    pref_block_size(128),
-    address_length(4),
-    data_count_written(false)
+    srecord::output_file(a_file_name)
 {
 }
 

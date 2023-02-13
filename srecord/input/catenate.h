@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_catenate();
+    ~input_catenate() override = default;
 
 private:
     /**
@@ -63,19 +63,19 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    std::string filename() const;
+    std::string filename() const override;
 
     // See base class for documentation.
-    std::string filename_and_line() const;
+    std::string filename_and_line() const override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    void disable_checksum_validation();
+    void disable_checksum_validation() override;
 
 private:
     /**
@@ -90,20 +90,21 @@ private:
       */
     pointer in2;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_catenate();
+    input_catenate() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_catenate(const input_catenate &);
+    input_catenate(const input_catenate &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_catenate &operator=(const input_catenate &);
+    input_catenate &operator=(const input_catenate &) = delete;
 };
 
 };

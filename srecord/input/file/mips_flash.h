@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_mips_flash();
+    ~input_file_mips_flash() override = default;
 
     /**
       * The create_be class method is used to create new dynamically
@@ -62,13 +62,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -92,7 +92,7 @@ private:
       * The seen_some_input instance variable is used to remember whether
       * or not any data has been seen from this file to date.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The endian instance variable is used to remember whether the
@@ -104,7 +104,7 @@ private:
       * The address instance variable is used to remember where we are
       * up to in the input file, for when we build the next data record.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The tokenizer method is used to determine the next token in the
@@ -129,35 +129,36 @@ private:
       * The token instance variable is used to remember the kind of
       * token was found by the preceding #tokenizer call.
       */
-    token_t token;
+    token_t token{token_eof};
 
     /**
       * The token_value instance variable is used to remember the value
       * of the number, if the preceding #tokenizer call saw a number.
       * Otherwise, its value is undefined.
       */
-    unsigned long token_value;
+    unsigned long token_value{0};
 
     /**
       * The seen_reset instance variable is used to remember
       * whether or not the initial '!R' token has already been seen.
       */
-    bool seen_reset;
+    bool seen_reset{false};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_mips_flash() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_mips_flash();
+    input_file_mips_flash(const input_file_mips_flash &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_mips_flash(const input_file_mips_flash &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_mips_flash &operator=(const input_file_mips_flash &);
+    input_file_mips_flash &operator=(const input_file_mips_flash &) = delete;
 };
 
 };

@@ -21,12 +21,6 @@
 #include <srecord/input/catenate.h>
 #include <srecord/record.h>
 
-
-srecord::input_catenate::~input_catenate()
-{
-}
-
-
 srecord::input_catenate::input_catenate(const pointer &a1, const pointer &a2) :
     in1(a1),
     in2(a2)

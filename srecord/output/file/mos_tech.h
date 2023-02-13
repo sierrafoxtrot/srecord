@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_mos_tech();
+    ~output_file_mos_tech() override;
 
 private:
     /**
@@ -61,22 +61,22 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
@@ -84,14 +84,14 @@ private:
       * size.  Set by the line_length_set() method.  Read by the
       * preferred_block_size_get() method.
       */
-    int pref_block_size;
+    int pref_block_size{24};
 
     /**
       * The data_record_count instance variable is used to remember the
       * number of data records present in the output.  This is used
       * when writing the end-of-file record.
       */
-    int data_record_count;
+    int data_record_count{0};
 
     /**
       * The write_inner method is used to write a single line (record)
@@ -100,20 +100,21 @@ private:
     void write_inner(int type, unsigned long addr, int addr_len,
         const void *data, int data_len);
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_mos_tech();
+    output_file_mos_tech() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_mos_tech(const output_file_mos_tech &);
+    output_file_mos_tech(const output_file_mos_tech &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_file_mos_tech &operator=(const output_file_mos_tech &);
+    output_file_mos_tech &operator=(const output_file_mos_tech &) = delete;
 };
 
 };

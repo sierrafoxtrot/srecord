@@ -27,12 +27,6 @@
 #include <srecord/record.h>
 #include <srecord/string.h>
 
-
-srecord::input_generator::~input_generator()
-{
-}
-
-
 srecord::input_generator::input_generator(const interval &a_range) :
     range(a_range)
 {

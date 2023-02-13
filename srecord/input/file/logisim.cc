@@ -25,18 +25,10 @@
 #include <srecord/input/file/logisim.h>
 #include <srecord/string.h>
 
-
-srecord::input_file_logisim::~input_file_logisim()
-{
-}
-
-
 srecord::input_file_logisim::input_file_logisim(
     const std::string &a_file_name
 ) :
-    input_file(a_file_name),
-    address(0),
-    state(state_line_one)
+    input_file(a_file_name)
 {
 }
 

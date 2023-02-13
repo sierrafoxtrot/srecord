@@ -23,11 +23,6 @@
 #include <srecord/record.h>
 
 
-srecord::output_file_wilson::~output_file_wilson()
-{
-}
-
-
 srecord::output_file_wilson::output_file_wilson(
     const std::string &a_file_name
 ) :

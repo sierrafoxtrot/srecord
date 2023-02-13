@@ -52,11 +52,6 @@ srecord::memory_chunk::operator=(const srecord::memory_chunk &arg)
 }
 
 
-srecord::memory_chunk::~memory_chunk()
-{
-}
-
-
 void
 srecord::memory_chunk::set(unsigned long offset, int datum)
 {

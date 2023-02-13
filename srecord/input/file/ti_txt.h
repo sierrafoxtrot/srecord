@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_ti_txt();
+    ~input_file_ti_txt() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,13 +49,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -67,22 +67,16 @@ private:
     input_file_ti_txt(const std::string &file_name);
 
     /**
-      * The garbage_warning instance variable is used to remember whether
-      * a warning has already been issued if the file contains garbage.
-      */
-    bool garbage_warning;
-
-    /**
       * The seen_some_input instance variable is used to remember whether
       * any data has been seen in the input to date.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The address instance variable is used to remember where we are
       * up to in the input file, so it may be associated with data bytes.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     enum token_t
     {
@@ -98,21 +92,21 @@ private:
       * the token instance variable is used to remember the type of the
       * most recent token, as determined by the get_next_token method.
       */
-    token_t token;
+    token_t token{token_start_up};
 
     /**
       * the token_value instance variable is used to remember the value
       * of the most recent token, as determined by the get_next_token
       * method.  Only meaningful for token_number, zero otherwise.
       */
-    unsigned long token_value;
+    unsigned long token_value{0};
 
     /**
       * The address_warning instance variable is used to remember
       * whether or not we have already warned about addresses which are
       * too large.
       */
-    bool address_warning;
+    bool address_warning{false};
 
     /**
       * The get_next_token method is used to partition the input into
@@ -121,20 +115,21 @@ private:
       */
     void get_next_token();
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_file_ti_txt();
+    input_file_ti_txt() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_ti_txt(const input_file_ti_txt &);
+    input_file_ti_txt(const input_file_ti_txt &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_file_ti_txt &operator=(const input_file_ti_txt &);
+    input_file_ti_txt &operator=(const input_file_ti_txt &) = delete;
 };
 
 };

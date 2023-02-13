@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_trs80();
+    ~input_file_trs80() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -53,29 +53,29 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &result);
+    bool read(record &result) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
       * The termination_seen instance variable is used to remember
       * whether or not a termination record has been seen yet.
       */
-    bool termination_seen;
+    bool termination_seen{false};
 
     /**
       * The data_seen instance variable is used to remember
       * whether or not a data record has been seen yet.
       */
-    bool data_seen;
+    bool data_seen{false};
 
     /**
       * A constructor.  The input is read from the named file (or
@@ -91,23 +91,24 @@ private:
       * update the checksum.  We over-ride the base implementation,
       * because we use raw bytes rather than two hex digits.
       */
-    int get_byte();
+    int get_byte() override;
 
     /**
       * The pending instance variable is used to remember the second
       * half of large data packets, in the case where they must be split.
       */
-    record *pending;
+    record *pending{0};
+
+public:
+    /**
+      * The copy constructor.
+      */
+    input_file_trs80(const input_file_trs80 &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_trs80(const input_file_trs80 &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_trs80 &operator=(const input_file_trs80 &);
+    input_file_trs80 &operator=(const input_file_trs80 &) = delete;
 };
 
 };

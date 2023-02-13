@@ -33,16 +33,6 @@
 #include <srecord/output.h>
 
 
-srecord::memory_walker_stm32::~memory_walker_stm32()
-{
-}
-
-
-srecord::memory_walker_stm32::memory_walker_stm32()
-{
-}
-
-
 srecord::memory_walker_stm32::pointer
 srecord::memory_walker_stm32::create()
 {

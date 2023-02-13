@@ -119,12 +119,6 @@ srecord::crc32::crc32(seed_mode_t seed_mode) :
 }
 
 
-srecord::crc32::crc32(const crc32 &arg) :
-    state(arg.state)
-{
-}
-
-
 srecord::crc32 &
 srecord::crc32::operator=(const crc32 &arg)
 {
@@ -134,12 +128,6 @@ srecord::crc32::operator=(const crc32 &arg)
     }
     return *this;
 }
-
-
-srecord::crc32::~crc32()
-{
-}
-
 
 static inline unsigned long
 UPDC32(unsigned char octet, unsigned long crc)

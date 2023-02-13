@@ -26,12 +26,6 @@
 // RFC 905 Annex B
 //
 
-
-srecord::fletcher16::~fletcher16()
-{
-}
-
-
 srecord::fletcher16::fletcher16(
     unsigned char a_sum1,
     unsigned char a_sum2,
@@ -56,30 +50,6 @@ srecord::fletcher16::fletcher16(
             answer &= 0x00FF;
     }
 }
-
-
-srecord::fletcher16::fletcher16(const fletcher16 &rhs) :
-    sum1(rhs.sum1),
-    sum2(rhs.sum2),
-    answer(rhs.answer),
-    end(rhs.end)
-{
-}
-
-
-srecord::fletcher16 &
-srecord::fletcher16::operator=(const fletcher16 &rhs)
-{
-    if (this != &rhs)
-    {
-        sum1 = rhs.sum1;
-        sum2 = rhs.sum2;
-        answer = rhs.answer;
-        end = rhs.end;
-    }
-    return *this;
-}
-
 
 void
 srecord::fletcher16::next(unsigned char ch)

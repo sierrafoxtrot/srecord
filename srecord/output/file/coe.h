@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_coe();
+    ~output_file_coe() override;
 
 private:
     /**
@@ -60,28 +60,28 @@ public:
 
 protected:
     // See base class for documentation
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation
-    void command_line(arglex_tool *cmdln);
+    void command_line(arglex_tool *cmdln) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
     // See base class for documentation.
-    void notify_upper_bound(unsigned long addr);
+    void notify_upper_bound(unsigned long addr) override;
 
 private:
     /**
@@ -89,50 +89,44 @@ private:
       * memory address to be written.  This is also used to detect holes
       * in the input data.
       */
-    unsigned long address;
-
-    /**
-      * The column instance variable is used to remember the output text
-      * column.  This is used to know when ti wrap lines.
-      */
-    int column;
+    unsigned long address{0};
 
     /**
       * The depth instance variable is used to remember how many bytes
       * of data there is.  Kind of broken, because we don't know this
       * when the header is actually printed.
       */
-    unsigned long depth;
+    unsigned long depth{0};
 
     /**
       * The width instance variable is used to remember how many bits
       * there are per data item.  Default to 8 (traditional bytes).
       */
-    unsigned width;
+    unsigned width{8};
 
     /**
       * The width_in_bytes instance variable is used to remember how
       * many bytes there are per data item.  Defaults to 1.
       */
-    unsigned width_in_bytes;
+    unsigned width_in_bytes{1};
 
     /**
       * The actual_depth instance variable is used to remember how many
       * bytes of data there were.  This is printed in the footer.
       */
-    unsigned long actual_depth;
+    unsigned long actual_depth{0};
 
     /**
       * The header_done instance variable is used to remember whether
       * the emit_header method has already been called.
       */
-    bool header_done;
+    bool header_done{false};
 
     /**
       * The pref_blk_sz instance variable is used to remember the
       * preferred block size, in bytes.
       */
-    int pref_blk_sz;
+    int pref_blk_sz{32};
 
     /**
       * The emit_header method is used to emit the file header,
@@ -146,22 +140,23 @@ private:
       * with commas, but to suppress the first comma before the first
       * data.
       */
-    bool got_data;
+    bool got_data{false};
+
+public:
+    /**
+      * The default constructor.
+      */
+    output_file_coe() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_coe();
+    output_file_coe(const output_file_coe &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    output_file_coe(const output_file_coe &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    output_file_coe &operator=(const output_file_coe &);
+    output_file_coe &operator=(const output_file_coe &) = delete;
 };
 
 };

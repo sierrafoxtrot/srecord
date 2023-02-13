@@ -35,8 +35,7 @@ srecord::output_file_dec_binary::~output_file_dec_binary()
 srecord::output_file_dec_binary::output_file_dec_binary(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    pref_block_size(preferred_block_size_calculate())
+    srecord::output_file(a_file_name)
 {
     if (line_termination == line_termination_native)
         line_termination = line_termination_binary;
@@ -157,29 +156,6 @@ srecord::output_file_dec_binary::preferred_block_size_get()
     const
 {
     return pref_block_size;
-}
-
-
-int
-srecord::output_file_dec_binary::preferred_block_size_calculate()
-{
-#if 0
-    //
-    // Because we don't cross BLOCK_SIZE boundaries, we need a number
-    // less than srecord::record::max_data_length that, when you add 7
-    // and double, gives
-    //
-    int max = BLOCK_SIZE;
-    for (;;)
-    {
-        if (max - 7 <= srecord::record::max_data_length)
-            return (max - 7);
-        max >>= 1;
-    }
-    return 1;
-#else
-    return srecord::record::max_data_length;
-#endif
 }
 
 

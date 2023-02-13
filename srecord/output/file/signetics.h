@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_signetics();
+    ~output_file_signetics() override;
 
 private:
     /**
@@ -63,28 +63,28 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
     /**
       * See base class for documentation.  We over-ride the base
       * implementation because signetics uses its own XOR-ROL algorithm.
       */
-    void checksum_add(unsigned char);
+    void checksum_add(unsigned char) override;
 
 private:
     /**
@@ -92,14 +92,14 @@ private:
       * size.  Set by the line_length_set() method.  Read by the
       * preferred_block_size_get() method.
       */
-    int pref_block_size;
+    int pref_block_size{32};
 
     /**
       * The last_address instance variable is used to remember the
       * address immediately beyond the last address of data in the file.
       * This is used to write the file termination record.
       */
-    unsigned long last_address;
+    unsigned long last_address{0};
 
     /**
       * The write_inner method is used to write one line/record to the
@@ -107,20 +107,21 @@ private:
       */
     void write_inner(int, unsigned long, int, const void *, int);
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_signetics();
+    output_file_signetics() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_signetics(const output_file_signetics &);
+    output_file_signetics(const output_file_signetics &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_file_signetics &operator=(const output_file_signetics &);
+    output_file_signetics &operator=(const output_file_signetics &) = delete;
 };
 
 };

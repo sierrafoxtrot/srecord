@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_tektronix_extended();
+    ~output_file_tektronix_extended() = default;
 
 private:
     /**
@@ -61,22 +61,22 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
@@ -84,13 +84,13 @@ private:
       * preferred number of data bytes (NOT encoded hex characters) to
       * be placed in each output line.
       */
-    int pref_block_size;
+    int pref_block_size{32};
 
     /**
       * The address_length instance variable is used to remember the
       * minimum number of address bytes to be emitted into output lines.
       */
-    int address_length;
+    int address_length{4};
 
     /**
       * The write_inner method is used to write a line of output.
@@ -109,21 +109,23 @@ private:
     void write_inner(int tag, unsigned long address, int address_nbytes,
         const void *data, int data_nbytes);
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_tektronix_extended();
+    output_file_tektronix_extended() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_tektronix_extended(const output_file_tektronix_extended &);
+    output_file_tektronix_extended(
+        const output_file_tektronix_extended &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
     output_file_tektronix_extended &operator=(
-        const output_file_tektronix_extended &);
+        const output_file_tektronix_extended &) = delete;
 };
 
 };

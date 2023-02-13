@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_four_packed_code();
+    ~output_file_four_packed_code() override;
 
 private:
     /**
@@ -61,22 +61,22 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
@@ -85,14 +85,14 @@ private:
       * preferred_block_size_get method.  Set by the line_length_set
       * method.
       */
-    int pref_block_size;
+    int pref_block_size{32};
 
     /**
       * The put_byte_pos instance variable is used by the put_byte
       * method to remember where we are positioned within each
       * 4-byte chunk.
       */
-    unsigned put_byte_pos;
+    unsigned put_byte_pos{0};
 
     /**
       * The put_byte_value instance variable is used by the put_byte
@@ -100,7 +100,7 @@ private:
       * At the end of 4 bytes, the 5-character base85 encoding
       * is issued.
       */
-    unsigned long put_byte_value;
+    unsigned long put_byte_value{0};
 
     /**
       * The write_inner method is used by the write method to
@@ -113,23 +113,24 @@ private:
       * See base class for documentation.  We over-ride this method
       * so that we can do the base85 encoding of each 4-byte chunk.
       */
-    void put_byte(unsigned char);
+    void put_byte(unsigned char) override;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_four_packed_code();
+    output_file_four_packed_code() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_four_packed_code(const output_file_four_packed_code &);
+    output_file_four_packed_code(const output_file_four_packed_code &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
     output_file_four_packed_code &operator=(
-        const output_file_four_packed_code &);
+        const output_file_four_packed_code &) = delete;
 };
 
 };

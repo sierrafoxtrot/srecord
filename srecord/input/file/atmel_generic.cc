@@ -23,15 +23,9 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_atmel_generic::~input_file_atmel_generic()
-{
-}
-
-
 srecord::input_file_atmel_generic::input_file_atmel_generic(
         const std::string &a_file_name, endian_t a_end) :
     srecord::input_file(a_file_name),
-    seen_some_input(false),
     end(a_end)
 {
 }

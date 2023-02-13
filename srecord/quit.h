@@ -35,22 +35,22 @@ public:
     /**
       * The destructor.
       */
-    virtual ~quit();
+    virtual ~quit() = default;
 
     /**
       * The default constructor.
       */
-    quit();
+    quit() = default;
 
     /**
       * The copy constructor.
       */
-    quit(const quit &);
+    quit(const quit &) = default;
 
     /**
       * The assignment operator.
       */
-    quit &operator=(const quit &);
+    quit &operator=(const quit &) = default;
 
     /**
       * The fatal_error method is used to report fatal errors.

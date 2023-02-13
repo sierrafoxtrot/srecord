@@ -30,15 +30,7 @@ srecord::input_file_intel16::~input_file_intel16()
 srecord::input_file_intel16::input_file_intel16(
     const std::string &a_file_name
 ) :
-    srecord::input_file(a_file_name),
-    data_record_count(0),
-    garbage_warning(false),
-    seen_some_input(false),
-    termination_seen(false),
-    mode(linear),
-    address_base(0),
-    pushback(0),
-    end_seen(false)
+    srecord::input_file(a_file_name)
 {
 }
 

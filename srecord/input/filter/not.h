@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_not();
+    ~input_filter_not() override = default;
 
 private:
     /**
@@ -59,23 +59,23 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
-private:
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_not();
-
-    /**
-      * The copy constructor.  Do not use.
-      */
-    input_filter_not(const input_filter_not &);
+    input_filter_not() = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The copy constructor.
       */
-    input_filter_not &operator=(const input_filter_not &);
+    input_filter_not(const input_filter_not &) = delete;
+
+    /**
+      * The assignment operator.
+      */
+    input_filter_not &operator=(const input_filter_not &) = delete;
 };
 
 };

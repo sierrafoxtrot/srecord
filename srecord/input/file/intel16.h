@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_intel16();
+    ~input_file_intel16() override;
 
     /**
       * The create class method is used to create new dynamically
@@ -50,13 +50,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -77,65 +77,66 @@ private:
       * The data_record_count instance variable is used to remember the
       * number of data records seen to date.
       */
-    int data_record_count;
+    int data_record_count{0};
 
     /**
       * The garbage_warning instance variable is used to remember whether
       * or not a warning has already been issued about garbage lines
       * of input.
       */
-    bool garbage_warning;
+    bool garbage_warning{false};
 
     /**
       * The seen_some_input instance variable is used to remember whether
       * or not the file contains any data.
       */
-    bool seen_some_input;
+    bool seen_some_input{false};
 
     /**
       * The termination_seen instance variable is used to remember
       * whether or not a termination record has been seen yet.
       */
-    bool termination_seen;
+    bool termination_seen{false};
 
     /**
       * The mode instance variable is used to remember what addressing
       * mode the file is currently in.
       */
-    enum { linear, segmented } mode;
+    enum { linear, segmented } mode{linear};
 
     /**
       * The address_base instance variable is used to remember the
       * segment base address when in segmented addressing mode.
       */
-    unsigned long address_base;
+    unsigned long address_base{0};
 
     /**
       * The pushback instance variable is used to remember the previous
       * record in the file.  This is needed in some instances, but not always.
       */
-    record *pushback;
+    record *pushback{nullptr};
 
     /**
       * The end_seen instance variable is used to remember whether or
       * not the end of file has been seen yet.
       */
-    bool end_seen;
+    bool end_seen{false};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_intel16() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_intel16();
+    input_file_intel16(const input_file_intel16 &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_file_intel16(const input_file_intel16 &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_intel16 &operator=(const input_file_intel16 &);
+    input_file_intel16 &operator=(const input_file_intel16 &) = delete;
 };
 
 };

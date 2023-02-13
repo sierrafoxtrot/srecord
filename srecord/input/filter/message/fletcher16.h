@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_message_fletcher16();
+    ~input_filter_message_fletcher16() override = default;
 
 private:
     /**
@@ -71,13 +71,13 @@ public:
 
 protected:
     // See base class for documentation.
-    void process(const memory &input, record &output);
+    void process(const memory &input, record &output) override;
 
     // See base class for documentation.
-    const char *get_algorithm_name() const;
+    const char *get_algorithm_name() const override;
 
     // See base class for documentation.
-    void command_line(srecord::arglex_tool *cmdln);
+    void command_line(srecord::arglex_tool *cmdln) override;
 
 private:
     /**
@@ -92,27 +92,29 @@ private:
       */
     endian_t end;
 
-    unsigned char sum1;
+    unsigned char sum1{0xFF};
 
-    unsigned char sum2;
+    unsigned char sum2{0xFF};
 
-    int answer;
+    int answer{-1};
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_message_fletcher16();
+    input_filter_message_fletcher16() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_message_fletcher16(const input_filter_message_fletcher16 &);
+    input_filter_message_fletcher16(
+        const input_filter_message_fletcher16 &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
     input_filter_message_fletcher16 &operator=(
-        const input_filter_message_fletcher16 &);
+        const input_filter_message_fletcher16 &) = delete;
 };
 
 };

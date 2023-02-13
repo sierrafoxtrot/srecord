@@ -34,7 +34,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_fairchild();
+    ~input_file_fairchild() override = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -49,13 +49,13 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
     // See base class for documentation.
-    const char *get_file_format_name() const;
+    const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    int format_option_number() const;
+    int format_option_number() const override;
 
 private:
     /**
@@ -71,47 +71,48 @@ private:
       * We override the one in the base class because the checksum is
       * nibble-based, not byte-based.
       */
-    int get_nibble();
+    int get_nibble() override;
 
     /**
       * The get_byte method gets a two hex-digit from input and assembles
       * them (big-endian) into a byte.  We override the one in the base
       * class because the checksum is nibble-based, not byte-based.
       */
-    int get_byte();
+    int get_byte() override;
 
     /**
       * The header_seen instance variable is used to member whether the
       * file header has been processed yet.
       */
-    bool header_seen;
+    bool header_seen{false};
 
     /**
       * The address instance variable is used to member the address at
       * the current point in the input file.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The file_contains_data instance variable is used to member
       * whether any data records have been seen yet.
       */
-    bool file_contains_data;
+    bool file_contains_data{false};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_file_fairchild() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_fairchild();
-
-    /**
-      * The copy constructor.  Do not use.
-      */
-    input_file_fairchild(const input_file_fairchild &);
+    input_file_fairchild(const input_file_fairchild &) = delete;
 
     /**
       * The assignment operator.
       */
-    input_file_fairchild &operator=(const input_file_fairchild &);
+    input_file_fairchild &operator=(const input_file_fairchild &) = delete;
 };
 
 };

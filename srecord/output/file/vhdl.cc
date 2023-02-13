@@ -36,10 +36,7 @@ srecord::output_file_vhdl::~output_file_vhdl()
 
 
 srecord::output_file_vhdl::output_file_vhdl(const std::string &a_file_name) :
-    srecord::output_file(a_file_name),
-    bytes_per_word(1),
-    prefix("eprom"),
-    header_done(false)
+    srecord::output_file(a_file_name)
 {
 }
 

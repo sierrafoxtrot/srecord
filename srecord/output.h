@@ -43,7 +43,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output();
+    virtual ~output() = default;
 
     /**
       * The write method is used to write a record onto an output.
@@ -207,18 +207,18 @@ protected:
     /**
       * The default constructor.  Only derived classes may use.
       */
-    output();
+    output() = default;
 
-private:
+public:
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output(const output &);
+    output(const output &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output &operator=(const output &);
+    output &operator=(const output &) = delete;
 };
 
 };

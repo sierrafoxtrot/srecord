@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_fletcher16();
+    ~memory_walker_fletcher16() override = default;
 
 private:
     /**
@@ -90,7 +90,9 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long address, const void *data, int data_size);
+    void observe(unsigned long address,
+                 const void *data,
+                 int data_size) override;
 
 private:
     /**
@@ -99,20 +101,22 @@ private:
       */
     fletcher16 checksum;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    memory_walker_fletcher16();
+    memory_walker_fletcher16() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    memory_walker_fletcher16(const memory_walker_fletcher16 &);
+    memory_walker_fletcher16(const memory_walker_fletcher16 &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    memory_walker_fletcher16 &operator=(const memory_walker_fletcher16 &);
+    memory_walker_fletcher16 &operator=(
+        const memory_walker_fletcher16 &) = delete;
 };
 
 };

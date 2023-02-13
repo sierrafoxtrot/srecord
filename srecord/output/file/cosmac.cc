@@ -20,20 +20,10 @@
 #include <srecord/output/file/cosmac.h>
 #include <srecord/record.h>
 
-srecord::output_file_cosmac::~output_file_cosmac()
-{
-}
-
-
 srecord::output_file_cosmac::output_file_cosmac(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    address(0),
-    address_length(4),
-    line_length(80),
-    column(0),
-    header_required(true)
+    srecord::output_file(a_file_name)
 {
 }
 

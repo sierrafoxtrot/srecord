@@ -44,7 +44,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_msbin();
+    ~output_file_msbin() override;
 
 private:
     /**
@@ -68,28 +68,28 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
     // See base class for documentation.
-    void notify_upper_bound(unsigned long addr);
+    void notify_upper_bound(unsigned long addr) override;
 
     // See base class for documentation.
-    bool is_binary() const;
+    bool is_binary() const override;
 
 private:
     /**
@@ -188,26 +188,26 @@ private:
       * Becomes true once we encounter a record of type
       * record::type_execution_start_address.
       */
-    bool start_address_set;
+    bool start_address_set{false};
 
     /**
       * The start_address instance variable is used to remember
       * the execution start address, taken from a record of type
       * record::type_execution_start_address.
       */
-    record::address_t start_address;
+    record::address_t start_address{0};
 
     /**
       * The upper_bound instance variable is used to remember the upper
       * bound address as received via the #notify_upper_bound method.
       */
-    record::address_t upper_bound;
+    record::address_t upper_bound{};
 
     /**
       * The beginning_of_file instance variable is used to remember
       * that we haven't written the file header yet.
       */
-    bool beginning_of_file;
+    bool beginning_of_file{true};
 
     /**
       * Type holding copies of records.
@@ -222,20 +222,21 @@ private:
       */
     record_vector pending_records;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_msbin();
+    output_file_msbin() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_msbin(const output_file_msbin &);
+    output_file_msbin(const output_file_msbin &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_msbin &operator=(const output_file_msbin &);
+    output_file_msbin &operator=(const output_file_msbin &) = delete;
 };
 
 };

@@ -21,11 +21,6 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_formatted_binary::~input_file_formatted_binary()
-{
-}
-
-
 srecord::input_file_formatted_binary::input_file_formatted_binary(
     const std::string &a_file_name
 ) :

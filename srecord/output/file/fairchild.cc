@@ -21,16 +21,10 @@
 #include <srecord/record.h>
 
 
-srecord::output_file_fairchild::~output_file_fairchild()
-{
-}
-
-
 srecord::output_file_fairchild::output_file_fairchild(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    address(~0UL)
+    srecord::output_file(a_file_name)
 {
 }
 

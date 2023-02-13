@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_os65v();
+    ~output_file_os65v() override;
 
 private:
     /**
@@ -61,38 +61,38 @@ public:
 
 protected:
     // See base class for documentation
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation
     const char *mode() const;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     /**
       * The address instance variable is used to remember the current
       * file location.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The output mode is either address mode ('.') or data mode ('/').
       * Initially the file is in an unidentified mode (NUL).
       */
-    char state;
+    char state{0};
 
     /**
       * The seen_start_address instance variable is used to remember
@@ -101,22 +101,23 @@ private:
       * is used to determine whether to emit the "return to monitor"
       * sequence, if a "GO" command has not been issued.
       */
-    bool seen_start_address;
+    bool seen_start_address{false};
+
+public:
+    /**
+      * The default constructor.
+      */
+    output_file_os65v() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * Copy constructor.
       */
-    output_file_os65v();
+    output_file_os65v(const output_file_os65v &) = delete;
 
     /**
-      * Copy constructor.  Do not use.
+      * Assignment operator.
       */
-    output_file_os65v(const output_file_os65v &);
-
-    /**
-      * Assignment operator.  Do not use.
-      */
-    output_file_os65v &operator=(const output_file_os65v &);
+    output_file_os65v &operator=(const output_file_os65v &) = delete;
 };
 
 };

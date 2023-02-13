@@ -20,11 +20,6 @@
 #include <srecord/input/filter/interval/minimum.h>
 
 
-srecord::input_filter_interval_minimum::~input_filter_interval_minimum()
-{
-}
-
-
 srecord::input_filter_interval_minimum::input_filter_interval_minimum(
         const pointer &a_deeper, long a_address, int a_length, endian_t a_end,
         bool inclusive) :

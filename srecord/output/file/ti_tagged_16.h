@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~output_file_ti_tagged_16();
+    ~output_file_ti_tagged_16() override;
 
 private:
     /**
@@ -61,25 +61,25 @@ public:
 
 protected:
     // See base class for documentation.
-    void write(const record &);
+    void write(const record &) override;
 
     // See base class for documentation.
-    void line_length_set(int);
+    void line_length_set(int) override;
 
     // See base class for documentation.
-    void address_length_set(int);
+    void address_length_set(int) override;
 
     // See base class for documentation.
-    int preferred_block_size_get() const;
+    int preferred_block_size_get() const override;
 
     // See base class for documentation.
-    bool preferred_block_size_set(int nbytes);
+    bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    void put_char(int);
+    void put_char(int) override;
 
     // See base class for documentation.
-    const char *format_name() const;
+    const char *format_name() const override;
 
 private:
     typedef output_file inherited;
@@ -88,27 +88,27 @@ private:
       * The address instance variable is used to remember the current
       * address within the output file.
       */
-    unsigned long address;
+    unsigned long address{0};
 
     /**
       * The column instance variable is used to remember the current
       * text column within the output file.  This is so that we can
       * decide when to throw a new line.
       */
-    int column;
+    int column{0};
 
     /**
       * The line_length instance variable is used to remember the maximum
       * permitted text line length.  This is so that we can decide when
       * to throw a new line.
       */
-    int line_length;
+    int line_length{74};
 
     /**
       * The csum instance variable is used to remember the 16-bit running
       * total of the bytes emitted so far.  It gets reset by put_eoln.
       */
-    int csum;
+    int csum{0};
 
     /**
       * The put_eoln method is used to output the line termination,
@@ -116,20 +116,22 @@ private:
       */
     void put_eoln();
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    output_file_ti_tagged_16();
+    output_file_ti_tagged_16() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    output_file_ti_tagged_16(const output_file_ti_tagged_16 &);
+    output_file_ti_tagged_16(const output_file_ti_tagged_16 &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    output_file_ti_tagged_16 &operator=(const output_file_ti_tagged_16 &);
+    output_file_ti_tagged_16 &operator=(
+        const output_file_ti_tagged_16 &) = delete;
 };
 
 };

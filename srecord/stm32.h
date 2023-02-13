@@ -45,12 +45,12 @@ public:
     /**
       * The destructor.
       */
-    virtual ~stm32();
+    virtual ~stm32() = default;
 
     /**
       * The default constructor.
       */
-    stm32();
+    stm32() = default;
 
     /**
       * The copy constructor.
@@ -95,18 +95,18 @@ private:
       * The state instance variable is used to remember the running
       * value of the 32-bit cyclic redundancy check.
       */
-    unsigned long state;
+    unsigned long state{0xFFFFFFFF};
 
     /**
       * Current counter of the byte feeding
       */
-    size_t cnt;
+    size_t cnt{0};
 
     /**
       * Buffer the incoming stream to build a word to feed to the
       * CRC generator.
       */
-    unsigned char buf[wordsize];
+    unsigned char buf[wordsize]{};
 };
 
 };

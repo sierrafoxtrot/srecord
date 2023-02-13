@@ -41,7 +41,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~crc32();
+    virtual ~crc32() = default;
 
     /**
       * The default constructor.
@@ -51,7 +51,7 @@ public:
     /**
       * The copy constructor.
       */
-    crc32(const crc32 &);
+    crc32(const crc32 &) = default;
 
     /**
       * The assignment operator.

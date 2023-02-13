@@ -21,11 +21,6 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_and::~input_filter_and()
-{
-}
-
-
 srecord::input_filter_and::input_filter_and(const input::pointer &a1,
         int a2) :
     input_filter(a1),

@@ -20,17 +20,8 @@
 #include <srecord/input/file/cosmac.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_cosmac::~input_file_cosmac()
-{
-}
-
-
 srecord::input_file_cosmac::input_file_cosmac(const std::string &a_file_name) :
-    input_file(a_file_name),
-    state('\n'),
-    address(0),
-    seen_some_input(false)
+    input_file(a_file_name)
 {
 }
 

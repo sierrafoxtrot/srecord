@@ -38,7 +38,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_random_fill();
+    ~input_filter_random_fill() override = default;
 
 private:
     /**
@@ -66,7 +66,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
 private:
     /**
@@ -81,20 +81,22 @@ private:
       */
     bool generate(record &record);
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_random_fill();
+    input_filter_random_fill() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_random_fill(const input_filter_random_fill &);
+    input_filter_random_fill(const input_filter_random_fill &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_filter_random_fill &operator=(const input_filter_random_fill &);
+    input_filter_random_fill &operator=(
+        const input_filter_random_fill &) = delete;
 };
 
 };

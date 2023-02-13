@@ -36,7 +36,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~quit_prefix();
+    ~quit_prefix() override = default;
 
     /**
       * A constructor.  The given handler is used to process the
@@ -53,10 +53,10 @@ public:
     quit_prefix(quit &deeper, const std::string &prefix);
 
     // See base class for documentation.
-    virtual void exit(int);
+    void exit(int) override;
 
     // See base class for documentation.
-    virtual void message_v(const char *, va_list);
+    void message_v(const char *, va_list) override;
 
 private:
     /**
@@ -72,20 +72,21 @@ private:
       */
     quit &deeper;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    quit_prefix();
+    quit_prefix() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    quit_prefix(const quit_prefix &);
+    quit_prefix(const quit_prefix &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    quit_prefix &operator=(const quit_prefix &);
+    quit_prefix &operator=(const quit_prefix &) = delete;
 };
 
 };

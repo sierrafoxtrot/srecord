@@ -21,16 +21,6 @@
 #include <srecord/memory/walker.h>
 
 
-srecord::memory_walker::memory_walker()
-{
-}
-
-
-srecord::memory_walker::~memory_walker()
-{
-}
-
-
 void
 srecord::memory_walker::notify_upper_bound(unsigned long)
 {

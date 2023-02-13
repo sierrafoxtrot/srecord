@@ -45,7 +45,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_unfill();
+    ~input_filter_unfill() override = default;
 
 private:
     /**
@@ -76,7 +76,7 @@ public:
 
 protected:
     // See base class for documentation.
-    bool read(record &record);
+    bool read(record &record) override;
 
 private:
     /**
@@ -102,22 +102,23 @@ private:
       * The fill_value instance variable is used to remember where we
       * are up to in the "buffer" instance variable.
       */
-    size_t buffer_pos;
+    size_t buffer_pos{0};
+
+public:
+    /**
+      * The default constructor.
+      */
+    input_filter_unfill() = delete;
 
     /**
-      * The default constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_unfill();
+    input_filter_unfill(const input_filter_unfill &) = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The assignment operator.
       */
-    input_filter_unfill(const input_filter_unfill &);
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_filter_unfill &operator=(const input_filter_unfill &);
+    input_filter_unfill &operator=(const input_filter_unfill &) = delete;
 };
 
 };

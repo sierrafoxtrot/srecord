@@ -35,10 +35,7 @@ srecord::output_file_ppb::~output_file_ppb()
 srecord::output_file_ppb::output_file_ppb(
     const std::string &a_file_name
 ) :
-    srecord::output_file(a_file_name),
-    address(-1UL),
-    buffer_length(0),
-    seen_some_data(false)
+    srecord::output_file(a_file_name)
 {
 }
 

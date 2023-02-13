@@ -39,7 +39,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_filter_message_gcrypt();
+    ~input_filter_message_gcrypt() override = default;
 
 private:
     /**
@@ -294,10 +294,10 @@ public:
 
 protected:
     // See base class for documentation.
-    void process(const memory &input, record &output);
+    void process(const memory &input, record &output) override;
 
     // See base class for documentation.
-    const char *get_algorithm_name() const;
+    const char *get_algorithm_name() const override;
 
 private:
     /**
@@ -318,20 +318,22 @@ private:
       */
     unsigned long address;
 
+public:
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_filter_message_gcrypt();
+    input_filter_message_gcrypt() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_filter_message_gcrypt(const input_filter_message_gcrypt &);
+    input_filter_message_gcrypt(const input_filter_message_gcrypt &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    input_filter_message_gcrypt &operator=(const input_filter_message_gcrypt &);
+    input_filter_message_gcrypt &operator=(
+        const input_filter_message_gcrypt &) = delete;
 };
 
 };

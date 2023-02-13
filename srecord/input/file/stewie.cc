@@ -21,18 +21,8 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_stewie::~input_file_stewie()
-{
-}
-
-
 srecord::input_file_stewie::input_file_stewie(const std::string &a_file_name) :
-    input_file(a_file_name),
-    data_count(0),
-    garbage_warning(false),
-    seen_some_input(false),
-    header_seen(false),
-    termination_seen(false)
+    input_file(a_file_name)
 {
 }
 

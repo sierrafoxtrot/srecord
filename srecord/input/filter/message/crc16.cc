@@ -24,21 +24,12 @@
 #include <srecord/record.h>
 
 
-srecord::input_filter_message_crc16::~input_filter_message_crc16()
-{
-}
-
-
 srecord::input_filter_message_crc16::input_filter_message_crc16(
         const input::pointer &deeper_arg, unsigned long address_arg,
         endian_t a_end) :
     input_filter_message(deeper_arg),
     address(address_arg),
-    end(a_end),
-    seed_mode(crc16::seed_mode_ccitt),
-    augment_flag(true),
-    polynomial(crc16::polynomial_ccitt),
-    bitdir(crc16::bit_direction_most_to_least)
+    end(a_end)
 {
 }
 

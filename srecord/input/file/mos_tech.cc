@@ -20,19 +20,10 @@
 #include <srecord/input/file/mos_tech.h>
 #include <srecord/record.h>
 
-
-srecord::input_file_mos_tech::~input_file_mos_tech()
-{
-}
-
-
 srecord::input_file_mos_tech::input_file_mos_tech(
     const std::string &a_file_name
 ) :
-    srecord::input_file(a_file_name),
-    garbage_warning(false),
-    seen_some_input(false),
-    data_record_count(0)
+    srecord::input_file(a_file_name)
 {
 }
 

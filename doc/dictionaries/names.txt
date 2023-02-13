@@ -108,6 +108,7 @@ Sadowski
 Schmitt
 SDSMAC
 Sean
+SeanAlling-DojoFive
 segfault
 Seitz
 Sergeev

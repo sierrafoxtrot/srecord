@@ -39,14 +39,14 @@ public:
     /**
       * The destructor.
       */
-    virtual ~memory_walker_adler32();
+    ~memory_walker_adler32() override = default;
 
 private:
     /**
       * The default constructor.  It is private on purpose, use the
       * #create method instead.
       */
-    memory_walker_adler32();
+    memory_walker_adler32()  = default;
 
 public:
     /**
@@ -63,7 +63,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int);
+    void observe(unsigned long, const void *, int) override;
 
 private:
     /**
@@ -72,15 +72,16 @@ private:
       */
     adler32 checksum;
 
+public:
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    memory_walker_adler32(const memory_walker_adler32 &);
+    memory_walker_adler32(const memory_walker_adler32 &) = delete;
 
     /**
-      * The assignment operator.  Do not use.
+      * The assignment operator.
       */
-    memory_walker_adler32 &operator=(const memory_walker_adler32 &);
+    memory_walker_adler32 &operator=(const memory_walker_adler32 &) = delete;
 };
 
 };

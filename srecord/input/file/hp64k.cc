@@ -49,16 +49,9 @@
 #include <cstdint>
 
 
-srecord::input_file_hp64k::~input_file_hp64k()
-{
-}
-
-
 srecord::input_file_hp64k::input_file_hp64k(
         const std::string &a_file_name) :
-    input_file(a_file_name),
-    rec_count(0),
-    state(need_hdr)
+    input_file(a_file_name)
 {
 }
 
