@@ -79,13 +79,13 @@ private:
       * The upper_bound instance variable is used to remember how long
       * the header said the file was going to be.
       */
-    unsigned long upper_bound;
+    uint32_t upper_bound;
 
     /**
       * The address instance variable is used to remember where we are
       * up to in extracting the data from the file.
       */
-    unsigned long address;
+    uint32_t address;
 
     /**
       * The trailer_seen instance variable is used to remember whether
@@ -97,7 +97,7 @@ private:
       * The check_sum instance variable is used to remember the simple
       * sum of the data bytes in the file.
       */
-    unsigned short check_sum;
+    uint16_t check_sum;
 
 public:
     /**

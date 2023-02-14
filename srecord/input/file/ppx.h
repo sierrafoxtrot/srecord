@@ -129,7 +129,7 @@ private:
       * The dsum instance variable is used to remember the simple sum of
       * the data bytes, and the data bytes alone.
       */
-    unsigned short dsum{0};
+    uint16_t dsum{0};
 
     /**
       * The buffer instance variable is used to remember the most recent

@@ -154,7 +154,7 @@ protected:
       * they have a special case.  Over-ride with caution, as it affects
       * many other methods.
       */
-    virtual void put_byte(unsigned char value);
+    virtual void put_byte(uint8_t value);
 
     /**
       * The put_word_be method is used to send a 16-bit value to the
@@ -176,7 +176,7 @@ protected:
       * three byte values are sent big-endian (most significant byte
       * first).
       */
-    virtual void put_3bytes_be(unsigned long value);
+    virtual void put_3bytes_be(uint32_t value);
 
     /**
       * The put_3bytes_le method is used to send a 24-bit value to the
@@ -184,7 +184,7 @@ protected:
       * three byte values are sent little-endian (least significant byte
       * first).
       */
-    virtual void put_3bytes_le(unsigned long value);
+    virtual void put_3bytes_le(uint32_t value);
 
     /**
       * The put_4bytes_be method is used to send a 32-bit value to the
@@ -192,7 +192,7 @@ protected:
       * four byte values are sent big-endian (most significant byte
       * first).
       */
-    virtual void put_4bytes_be(unsigned long value);
+    virtual void put_4bytes_be(uint32_t value);
 
     /**
       * The put_4bytes_le method is used to send a 32-bit value to the
@@ -200,7 +200,7 @@ protected:
       * four byte values are sent little-endian (least significant byte
       * first).
       */
-    virtual void put_4bytes_le(unsigned long value);
+    virtual void put_4bytes_le(uint32_t value);
 
     /**
       * The checksum_reset method is used to set the running checksum to
@@ -216,7 +216,7 @@ protected:
       * classes may override if they need to.  Do this with caution, as
       * it affects other methods.
       */
-    virtual void checksum_add(unsigned char n);
+    virtual void checksum_add(uint8_t n);
 
     /**
       * The checksum_get method is used to get the current value of the
@@ -238,7 +238,7 @@ protected:
       * The seek_to method is used to move the output position to the
       * specified location in the output file.
       */
-    void seek_to(unsigned long);
+    void seek_to(uint32_t);
 
     /**
       * The put_string method is used to send a nul-terminated C string
@@ -382,7 +382,7 @@ protected:
       * The fatal_hole_error method is used to report problems with
       * holes in the data, for formats that cannot cope with them.
       */
-    void fatal_hole_error(unsigned long lo, unsigned long hi);
+    void fatal_hole_error(uint32_t lo, uint32_t hi);
 
     /**
       * The data_address_too_large method is used to report fatal
@@ -403,7 +403,7 @@ private:
       * current position within the output file.  Set by the put_char
       * method, and the seek_to method.  Used by the seek_to method.
       */
-    unsigned long position{0};
+    uint32_t position{0};
 
     /**
       * The is_regular instance variable is used to remember whether

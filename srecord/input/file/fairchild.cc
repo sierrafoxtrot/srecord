@@ -100,7 +100,7 @@ srecord::input_file_fairchild::read(record &result)
         case 'X':
             {
                 checksum_reset();
-                unsigned char data[8];
+                uint8_t data[8];
                 for (int j = 0; j < 8; ++j)
                     data[j] = get_byte();
                 result = record(record::type_data, address, data, 8);

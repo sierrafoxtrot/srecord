@@ -88,7 +88,7 @@ private:
       * The address instance variable is used to remember the current
       * address within the output file.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The column instance variable is used to remember the current

@@ -41,8 +41,8 @@
 #include <srecord/crc32.h>
 
 
-static unsigned long ccitt_seed = 0xFFFFFFFF;
-static unsigned long xmodem_seed = 0;
+static uint32_t ccitt_seed = 0xFFFFFFFF;
+static uint32_t xmodem_seed = 0;
 
 
 //
@@ -79,7 +79,7 @@ static unsigned long xmodem_seed = 0;
 // logic; the shift must be unsigned (bring in zeroes).
 //
 
-static unsigned long table[256];
+static uint32_t table[256];
 
 
 static void
@@ -87,7 +87,7 @@ calculate_table()
 {
     for (unsigned b = 0; b < 256; ++b)
     {
-        unsigned long v = b;
+        uint32_t v = b;
         int i = 8;
         for (; --i >= 0; )
             v = (v & 1) ? ((v >> 1) ^ POLYNOMIAL) : (v >> 1);
@@ -96,7 +96,7 @@ calculate_table()
 }
 
 
-static unsigned long
+static uint32_t
 initial_state_from_seed_mode(srecord::crc32::seed_mode_t seed_mode)
 {
     switch (seed_mode)
@@ -129,8 +129,8 @@ srecord::crc32::operator=(const crc32 &arg)
     return *this;
 }
 
-static inline unsigned long
-UPDC32(unsigned char octet, unsigned long crc)
+static inline uint32_t
+UPDC32(uint8_t octet, uint32_t crc)
 {
     // The original code had this as a #define
     return table[(crc ^ octet) & 0xFF] ^ (crc >> 8);
@@ -138,7 +138,7 @@ UPDC32(unsigned char octet, unsigned long crc)
 
 
 void
-srecord::crc32::next(unsigned char x)
+srecord::crc32::next(uint8_t x)
 {
     state = UPDC32(x, state);
 }
@@ -147,7 +147,7 @@ srecord::crc32::next(unsigned char x)
 void
 srecord::crc32::nextbuf(const void *data, size_t nbytes)
 {
-    const auto *dp = (const unsigned char *)data;
+    const auto *dp = (const uint8_t *)data;
     while (nbytes > 0)
     {
         state = UPDC32(*dp, state);
@@ -157,7 +157,7 @@ srecord::crc32::nextbuf(const void *data, size_t nbytes)
 }
 
 
-unsigned long
+uint32_t
 srecord::crc32::get()
     const
 {
@@ -176,7 +176,7 @@ srecord::crc32::get()
     // To simulate this (or something very much like it) try
     //      srecord::cat <file> -lecrc32 <addr> -lecrc32 <addr+4>
     //
-    unsigned long temp = state;
+    uint32_t temp = state;
     temp = UPDC32( ~state    & 0xFF, temp);
     temp = UPDC32((~state >>  8) & 0xFF, temp);
     temp = UPDC32((~state >> 16) & 0xFF, temp);

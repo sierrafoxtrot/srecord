@@ -201,7 +201,7 @@ srecord::input_file_logisim::read_inner_job()
                 // 1-byte vs 2-byte or 4-byte items.  Also it
                 // doesn't specify endian-ness.
                 ep = 0;
-                unsigned long value = strtoul(seen_star, &ep, 16);
+                uint32_t value = strtoul(seen_star, &ep, 16);
                 if (seen_star == ep || *ep != '\0')
                     fatal_error("malformed datum");
                 datum_t job(address, count, value);

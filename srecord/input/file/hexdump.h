@@ -92,7 +92,7 @@ private:
       * address of the next data record.  This is set and advanced by
       * the #read method.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The data_seen instance variable is used to remember whether or

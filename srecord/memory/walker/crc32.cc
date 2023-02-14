@@ -36,7 +36,7 @@ srecord::memory_walker_crc32::create(crc32::seed_mode_t seed_mode)
 
 
 void
-srecord::memory_walker_crc32::observe(unsigned long, const void *data,
+srecord::memory_walker_crc32::observe(uint32_t, const void *data,
     int length)
 {
     checksum.nextbuf(data, length);

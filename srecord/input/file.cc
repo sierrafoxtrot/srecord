@@ -243,44 +243,44 @@ srecord::input_file::get_word_le()
 }
 
 
-unsigned long
+uint32_t
 srecord::input_file::get_3bytes_be()
 {
-    unsigned long b1 = get_byte();
-    unsigned long b2 = get_byte();
-    unsigned long b3 = get_byte();
+    uint32_t b1 = get_byte();
+    uint32_t b2 = get_byte();
+    uint32_t b3 = get_byte();
     return ((((b1 << 8) | b2) << 8) | b3);
 }
 
 
-unsigned long
+uint32_t
 srecord::input_file::get_3bytes_le()
 {
-    unsigned long b1 = get_byte();
-    unsigned long b2 = get_byte();
-    unsigned long b3 = get_byte();
+    uint32_t b1 = get_byte();
+    uint32_t b2 = get_byte();
+    uint32_t b3 = get_byte();
     return ((((b3 << 8) | b2) << 8) | b1);
 }
 
 
-unsigned long
+uint32_t
 srecord::input_file::get_4bytes_be()
 {
-    unsigned long b1 = get_byte();
-    unsigned long b2 = get_byte();
-    unsigned long b3 = get_byte();
-    unsigned long b4 = get_byte();
+    uint32_t b1 = get_byte();
+    uint32_t b2 = get_byte();
+    uint32_t b3 = get_byte();
+    uint32_t b4 = get_byte();
     return ((((((b1 << 8) | b2) << 8) | b3) << 8) | b4);
 }
 
 
-unsigned long
+uint32_t
 srecord::input_file::get_4bytes_le()
 {
-    unsigned long b1 = get_byte();
-    unsigned long b2 = get_byte();
-    unsigned long b3 = get_byte();
-    unsigned long b4 = get_byte();
+    uint32_t b1 = get_byte();
+    uint32_t b2 = get_byte();
+    uint32_t b3 = get_byte();
+    uint32_t b4 = get_byte();
     return ((((((b4 << 8) | b3) << 8) | b2) << 8) | b1);
 }
 
@@ -309,7 +309,7 @@ srecord::input_file::checksum_reset()
 
 
 void
-srecord::input_file::checksum_add(unsigned char n)
+srecord::input_file::checksum_add(uint8_t n)
 {
     checksum += n;
 }

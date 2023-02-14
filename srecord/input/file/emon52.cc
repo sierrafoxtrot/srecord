@@ -65,11 +65,11 @@ srecord::input_file_emon52::read(srecord::record &record)
     if (length == 0)
         fatal_error("data length of zero is not valid");
     skip_white_space();
-    unsigned long address = get_word_be();
+    uint32_t address = get_word_be();
     if (get_char() != ':')
         fatal_error("colon expected");
     checksum_reset();
-    unsigned char buffer[256];
+    uint8_t buffer[256];
     for (int j = 0; j < length; ++j)
     {
         skip_white_space();

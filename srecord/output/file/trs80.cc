@@ -50,7 +50,7 @@ srecord::output_file_trs80::create(const std::string &a_file_name)
 
 
 void
-srecord::output_file_trs80::put_byte(unsigned char n)
+srecord::output_file_trs80::put_byte(uint8_t n)
 {
     put_char(n);
     ++byte_offset;

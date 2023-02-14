@@ -531,7 +531,7 @@ srecord::arglex_tool::get_input()
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                uint32_t address;
                 get_address(name, address);
                 ifp =
                     input_filter_message_adler16::create
@@ -549,7 +549,7 @@ srecord::arglex_tool::get_input()
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                uint32_t address;
                 get_address(name, address);
                 ifp =
                     input_filter_message_adler32::create
@@ -596,7 +596,7 @@ srecord::arglex_tool::get_input()
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                uint32_t address;
                 int nbytes;
                 int width;
                 get_address_nbytes_width(name, address, nbytes, width);
@@ -618,7 +618,7 @@ srecord::arglex_tool::get_input()
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                uint32_t address;
                 int nbytes;
                 int width;
                 get_address_nbytes_width(name, address, nbytes, width);
@@ -640,7 +640,7 @@ srecord::arglex_tool::get_input()
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                uint32_t address;
                 int nbytes;
                 int width;
                 get_address_nbytes_width(name, address, nbytes, width);
@@ -662,7 +662,7 @@ srecord::arglex_tool::get_input()
                 endian_t end = get_endian_by_token();
                 const char *name = token_name();
                 token_next();
-                unsigned long address;
+                uint32_t address;
                 get_address(name, address);
                 ifp =
                     input_filter_message_crc16::create(ifp, address, end);
@@ -675,7 +675,7 @@ srecord::arglex_tool::get_input()
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                uint32_t address;
                 get_address(name, address);
                 ifp = input_filter_message_crc32::create(ifp, address, end);
             }
@@ -730,7 +730,7 @@ srecord::arglex_tool::get_input()
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                uint32_t address;
                 get_address(name, address);
                 ifp =
                     input_filter_message_fletcher16::create
@@ -748,7 +748,7 @@ srecord::arglex_tool::get_input()
                 const char *name = token_name();
                 endian_t end = get_endian_by_token();
                 token_next();
-                unsigned long address;
+                uint32_t address;
                 get_address(name, address);
                 ifp =
                     input_filter_message_fletcher32::create
@@ -765,7 +765,7 @@ srecord::arglex_tool::get_input()
                 // Undocumented, no gcrypt implementation, yet.
                 const char *name = token_name();
                 token_next();
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_gcrypt::create_haval
@@ -781,7 +781,7 @@ srecord::arglex_tool::get_input()
                 const char *name = token_name();
                 token_next();
                 std::string algo = get_string(name);
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 bool hmac = false;
                 ifp =
@@ -808,7 +808,7 @@ srecord::arglex_tool::get_input()
                 endian_t end = get_endian_by_token();
                 bool inclusive = get_inclusive_by_token();
                 token_next();
-                unsigned long address;
+                uint32_t address;
                 int nbytes;
                 int width;
                 get_address_nbytes_width(name, address, nbytes, width);
@@ -834,7 +834,7 @@ srecord::arglex_tool::get_input()
                 endian_t end = get_endian_by_token();
                 bool inclusive = get_inclusive_by_token();
                 token_next();
-                unsigned long address;
+                uint32_t address;
                 int nbytes;
                 get_address_and_nbytes(name, address, nbytes);
                 ifp =
@@ -858,7 +858,7 @@ srecord::arglex_tool::get_input()
                 endian_t end = get_endian_by_token();
                 bool inclusive = get_inclusive_by_token();
                 token_next();
-                unsigned long address;
+                uint32_t address;
                 int nbytes;
                 get_address_and_nbytes(name, address, nbytes);
                 ifp =
@@ -878,7 +878,7 @@ srecord::arglex_tool::get_input()
                 // Undocumented, no gcrypt implementation, yet.
                 const char *name = token_name();
                 token_next();
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 ifp = input_filter_message_gcrypt::create_md2(ifp, address);
             }
@@ -888,7 +888,7 @@ srecord::arglex_tool::get_input()
             {
                 const char *name = token_name();
                 token_next();
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 ifp = input_filter_message_gcrypt::create_md5(ifp, address);
             }
@@ -902,7 +902,7 @@ srecord::arglex_tool::get_input()
         case token_offset:
             {
                 token_next();
-                unsigned long amount = get_number("--offset");
+                uint32_t amount = get_number("--offset");
                 ifp = input_filter_offset::create(ifp, amount);
             }
             break;
@@ -927,7 +927,7 @@ srecord::arglex_tool::get_input()
             {
                 const char *name = token_name();
                 token_next();
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_gcrypt::create_rmd160
@@ -942,7 +942,7 @@ srecord::arglex_tool::get_input()
             {
                 const char *name = token_name();
                 token_next();
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 ifp = input_filter_message_gcrypt::create_sha1(ifp, address);
             }
@@ -952,7 +952,7 @@ srecord::arglex_tool::get_input()
             {
                 const char *name = token_name();
                 token_next();
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_gcrypt::create_sha224
@@ -967,7 +967,7 @@ srecord::arglex_tool::get_input()
             {
                 const char *name = token_name();
                 token_next();
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_gcrypt::create_sha256
@@ -982,7 +982,7 @@ srecord::arglex_tool::get_input()
             {
                 const char *name = token_name();
                 token_next();
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_gcrypt::create_sha384
@@ -997,7 +997,7 @@ srecord::arglex_tool::get_input()
             {
                 const char *name = token_name();
                 token_next();
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_gcrypt::create_sha512
@@ -1046,7 +1046,7 @@ srecord::arglex_tool::get_input()
                 const char *name = token_name();
                 endian_t endian = get_endian_by_token();
                 token_next();
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 ifp = input_filter_message_stm32::create(ifp, address, endian);
             }
@@ -1056,7 +1056,7 @@ srecord::arglex_tool::get_input()
             {
                 const char *name = token_name();
                 token_next();
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_gcrypt::create_tiger
@@ -1122,7 +1122,7 @@ srecord::arglex_tool::get_input()
             {
                 const char *name = token_name();
                 token_next();
-                unsigned long address = 0;
+                uint32_t address = 0;
                 get_address(name, address);
                 ifp =
                     input_filter_message_gcrypt::create_whirlpool

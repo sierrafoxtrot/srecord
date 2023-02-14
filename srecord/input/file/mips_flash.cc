@@ -146,7 +146,7 @@ srecord::input_file_mips_flash::read_inner(record &result)
         case token_number:
             if (endian == endian_big)
             {
-                unsigned char data[4];
+                uint8_t data[4];
                 data[0] = token_value >> 24;
                 data[1] = token_value >> 16;
                 data[2] = token_value >> 8;
@@ -155,7 +155,7 @@ srecord::input_file_mips_flash::read_inner(record &result)
             }
             else
             {
-                unsigned char data[4];
+                uint8_t data[4];
                 data[0] = token_value;
                 data[1] = token_value >> 8;
                 data[2] = token_value >> 16;

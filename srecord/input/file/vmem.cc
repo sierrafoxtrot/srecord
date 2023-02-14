@@ -56,12 +56,12 @@ srecord::input_file_vmem::read(srecord::record &record)
             {
                 address = (address << 4) + get_nibble();
                 c = peek_char();
-                if (c < 0 || !isxdigit((unsigned char)c))
+                if (c < 0 || !isxdigit((uint8_t)c))
                     break;
             }
             continue;
         }
-        if (isspace((unsigned char)c))
+        if (isspace((uint8_t)c))
             continue;
 
         if (c == '/')
@@ -110,13 +110,13 @@ srecord::input_file_vmem::read(srecord::record &record)
 
         // collect value
         get_char_undo(c);
-        unsigned char value[5];
+        uint8_t value[5];
         size_t nbytes = 0;
         while (nbytes < sizeof(value))
         {
             value[nbytes++] = get_byte();
             c = peek_char();
-            if (c < 0 || !isxdigit((unsigned char)c))
+            if (c < 0 || !isxdigit((uint8_t)c))
                 break;
         }
         switch (nbytes)

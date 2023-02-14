@@ -59,8 +59,8 @@ srecord::output_file_vhdl::command_line(srecord::arglex_tool *cmdln)
         if (a1 > 0)
         {
             auto a2 = (unsigned)a1;
-            if (a2 > sizeof(unsigned long))
-                a2 = sizeof(unsigned long);
+            if (a2 > sizeof(uint32_t))
+                a2 = sizeof(uint32_t);
             bytes_per_word = a2;
         }
     }
@@ -132,14 +132,14 @@ srecord::output_file_vhdl::write(const srecord::record &record)
             put_string("-- ");
             if (record.get_address() != 0)
             {
-                unsigned long addr = record.get_address();
-                put_stringf("%08lX: ", addr);
+                uint32_t addr = record.get_address();
+                put_stringf("%08X: ", addr);
             }
-            const unsigned char *cp = record.get_data();
-            const unsigned char *ep = cp + record.get_length();
+            const uint8_t *cp = record.get_data();
+            const uint8_t *ep = cp + record.get_length();
             while (cp < ep)
             {
-                unsigned char c = *cp++;
+                uint8_t c = *cp++;
                 if (c == '\n')
                 {
                     put_string("\n-- ");
@@ -179,10 +179,10 @@ srecord::output_file_vhdl::write(const srecord::record &record)
                 current_word = (current_word << 8) + record.get_data(j + k);
             put_stringf
             (
-                "  %lu => %s_entry(%lu),\n",
-                (unsigned long)((record.get_address() + j) / bytes_per_word),
+                "  %u => %s_entry(%u),\n",
+                (uint32_t)((record.get_address() + j) / bytes_per_word),
                 prefix.c_str(),
-                (unsigned long)current_word
+                (uint32_t)current_word
             );
         }
         break;

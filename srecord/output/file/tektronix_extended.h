@@ -106,7 +106,7 @@ private:
       * @param data_nbytes
       *     The number of bytes of payload.
       */
-    void write_inner(int tag, unsigned long address, int address_nbytes,
+    void write_inner(int tag, uint32_t address, int address_nbytes,
         const void *data, int data_nbytes);
 
 public:

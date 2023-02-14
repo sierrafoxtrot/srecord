@@ -27,7 +27,7 @@ srecord::memory_walker_fletcher32::create()
 
 
 void
-srecord::memory_walker_fletcher32::observe(unsigned long, const void *data,
+srecord::memory_walker_fletcher32::observe(uint32_t, const void *data,
     int length)
 {
     checksum.nextbuf(data, length);

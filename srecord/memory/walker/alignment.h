@@ -60,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int) override;
+    void observe(uint32_t, const void *, int) override;
 
     // See base class for documentation.
     void observe_end() override;
@@ -76,7 +76,7 @@ private:
     memory_walker_alignment(unsigned multiple);
 
     unsigned multiple{2};
-    unsigned long current_address{0};
+    uint32_t current_address{0};
     bool data_seen{false};
     bool well_aligned{true};
 

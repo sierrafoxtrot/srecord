@@ -47,7 +47,7 @@ srecord::input_file_ppx::get_next_token()
             token = token_eof;
             return;
         }
-        unsigned char c = sc;
+        uint8_t c = sc;
         switch (c)
         {
         case '*':

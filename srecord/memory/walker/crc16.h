@@ -56,7 +56,7 @@ private:
       *     the bit direction of the CRC.
       */
     memory_walker_crc16(crc16::seed_mode_t seed_mode, bool augment_flag,
-        unsigned short polynomial, crc16::bit_direction_t bitdir);
+        uint16_t polynomial, crc16::bit_direction_t bitdir);
 
 public:
     /**
@@ -73,7 +73,7 @@ public:
       *     the bit direction of the CRC
       */
     static pointer create(crc16::seed_mode_t seed_mode, bool augment_flag,
-        unsigned short polynomial, crc16::bit_direction_t bitdir);
+        uint16_t polynomial, crc16::bit_direction_t bitdir);
 
     /**
       * The get method is used to get the CRC16 checksum once all memory
@@ -83,7 +83,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int) override;
+    void observe(uint32_t, const void *, int) override;
 
 private:
     /**

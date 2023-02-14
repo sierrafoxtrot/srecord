@@ -67,7 +67,7 @@ public:
       * the memory_chunk::set method, to set the byte within
       * the chunk.
       */
-    void set(unsigned long address, int value);
+    void set(uint32_t address, int value);
 
     /**
       * The get method is used to fetch the value of the byte at
@@ -80,7 +80,7 @@ public:
       * the memory_chunk::get method, to get the byte within
       * the chunk.
       */
-    int get(unsigned long address) const;
+    int get(uint32_t address) const;
 
     /**
       * The set_p method is used to determine whether the byte at
@@ -91,7 +91,7 @@ public:
       * the memory_chunk::set_p method, to get the status of
       * the byte within the chunk.
       */
-    bool set_p(unsigned long address) const;
+    bool set_p(uint32_t address) const;
 
     /**
       * The walk method is used to apply a memory_walker derived
@@ -149,7 +149,7 @@ public:
       *
       * Calls the find_next_chunk() method.
       */
-    bool find_next_data(unsigned long &address, void *data,
+    bool find_next_data(uint32_t &address, void *data,
         size_t &nbytes) const;
 
     /**
@@ -181,7 +181,7 @@ public:
       * The set_execution_start_address method may be used to set the
       * execution start address record.
       */
-    void set_execution_start_address(unsigned long value);
+    void set_execution_start_address(uint32_t value);
 
     /**
       * The has_holes method may be used to determine whether or not the
@@ -198,13 +198,13 @@ public:
       * The get_lower_bound method is used to obtain the lower bound
       * (lowest address) of the memory image.
       */
-    unsigned long get_lower_bound() const;
+    uint32_t get_lower_bound() const;
 
     /**
       * The get_upper_bound method is used to obtain the upper bound
       * (maximum address plus one) of the memory image.
       */
-    unsigned long get_upper_bound() const;
+    uint32_t get_upper_bound() const;
 
    /**
       * The is_well_aligned method is used to test whether or not
@@ -259,7 +259,7 @@ private:
       *
       * Called by the get(), set() and set_p() methods.
       */
-    memory_chunk *find(unsigned long address) const;
+    memory_chunk *find(uint32_t address) const;
 
     /**
       * The cache instance variable is used to accelerate the find()
@@ -273,7 +273,7 @@ private:
       * byte, in cases where the walk() method is not appropriate.
       * Called by the find_next_data() method.
       */
-    memory_chunk *find_next_chunk(unsigned long) const;
+    memory_chunk *find_next_chunk(uint32_t) const;
 
     /**
       * The find_next_chunk_index instance variable is used by

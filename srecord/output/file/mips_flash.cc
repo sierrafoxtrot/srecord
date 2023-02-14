@@ -91,8 +91,8 @@ srecord::output_file_mips_flash::write(const srecord::record &record)
             return;
         for (size_t j = 0; j < record.get_length(); ++j)
         {
-            unsigned long byte_address = record.get_address() + j;
-            unsigned char byte = record.get_data(j);
+            uint32_t byte_address = record.get_address() + j;
+            uint8_t byte = record.get_data(j);
             bool new_sector =
                 !base_set || ((address >> 17) != (byte_address >> 17));
             bool new_address = !base_set || (address != byte_address);
@@ -123,9 +123,9 @@ srecord::output_file_mips_flash::write(const srecord::record &record)
             if (new_sector)
             {
                 // Started a new sector, by erasing it.
-                unsigned long sbase = address & ~0x1FFFF;
-                put_stringf(">%.5lxxxx ", sbase >> 12);
-                put_stringf("@%.8lx !E\n", sbase);
+                uint32_t sbase = address & ~0x1FFFF;
+                put_stringf(">%.5xxxx ", sbase >> 12);
+                put_stringf("@%.8x !E\n", sbase);
                 if (sbase != address)
                     new_address = true;
             }
@@ -139,13 +139,13 @@ srecord::output_file_mips_flash::write(const srecord::record &record)
                     fatal_alignment_error(4);
 
                 // Set new write address.
-                put_stringf("@%.8lx\n", address);
+                put_stringf("@%.8x\n", address);
             }
 
             if (new_address || new_sector || (address & 0x0FFF) == 0)
             {
                 // Update the display.
-                put_stringf(">%.8lx\n", address);
+                put_stringf(">%.8x\n", address);
             }
 
             ++address;
@@ -188,8 +188,8 @@ srecord::output_file_mips_flash::buffer_flush()
         return;
     if ((buffer_length & 3) != 0)
         fatal_alignment_error(4);
-    const unsigned char *end = buffer + buffer_length;
-    for (const unsigned char *bp = buffer; bp < end; bp += 4)
+    const uint8_t *end = buffer + buffer_length;
+    for (const uint8_t *bp = buffer; bp < end; bp += 4)
     {
         if (column)
         {

@@ -52,7 +52,7 @@ private:
       *     The byte order.
       */
     input_filter_message_fletcher16(const input::pointer &deeper,
-        unsigned long address, endian_t end);
+        uint32_t address, endian_t end);
 
 public:
     /**
@@ -66,7 +66,7 @@ public:
       * @param end
       *     The byte order.
       */
-    static pointer create(const input::pointer &deeper, unsigned long address,
+    static pointer create(const input::pointer &deeper, uint32_t address,
         endian_t end);
 
 protected:
@@ -84,7 +84,7 @@ private:
       * The address instance variable is used to remember where to place
       * the Fletcher 16 checksum in memory.
       */
-    unsigned long address;
+    uint32_t address;
 
     /**
       * The end instance variable is used to remember whether the byte
@@ -92,9 +92,9 @@ private:
       */
     endian_t end;
 
-    unsigned char sum1{0xFF};
+    uint8_t sum1{0xFF};
 
-    unsigned char sum2{0xFF};
+    uint8_t sum2{0xFF};
 
     int answer{-1};
 

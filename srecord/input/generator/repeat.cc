@@ -27,14 +27,14 @@ srecord::input_generator_repeat::~input_generator_repeat()
 
 
 srecord::input_generator_repeat::input_generator_repeat(
-        const interval &a_range, const unsigned char *a_data, size_t a_length) :
+        const interval &a_range, const uint8_t *a_data, size_t a_length) :
     srecord::input_generator(a_range),
     address(a_range.get_lowest()),
     data(0),
     length(a_length)
 {
     // assert(length > 0);
-    data = new unsigned char [length];
+    data = new uint8_t [length];
     for (size_t j = 0; j < length; ++j)
         data[j] = a_data[j];
 }
@@ -42,15 +42,15 @@ srecord::input_generator_repeat::input_generator_repeat(
 
 srecord::input::pointer
 srecord::input_generator_repeat::create(const interval &a_range,
-    unsigned char *a_data, size_t a_length)
+    uint8_t *a_data, size_t a_length)
 {
     return
         pointer(new srecord::input_generator_repeat(a_range, a_data, a_length));
 }
 
 
-unsigned char
-srecord::input_generator_repeat::generate_data(unsigned long addr)
+uint8_t
+srecord::input_generator_repeat::generate_data(uint32_t addr)
 {
     return data[(addr - address) % length];
 }

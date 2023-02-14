@@ -44,7 +44,7 @@ srecord::input_filter_interval::generate(record &result)
     if (length <= 0)
         return false;
     long value = calculate_result();
-    unsigned char chunk[8];
+    uint8_t chunk[8];
     record::encode(chunk, value, length, end);
     result = record(record::type_data, address, chunk, length);
     length = 0;

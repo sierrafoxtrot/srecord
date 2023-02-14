@@ -91,7 +91,7 @@ private:
       * The address instance variable is used to track the current
       * address location within the file.
       */
-    unsigned long address{~0UL};
+    uint32_t address{~0U};
 
     /**
       * The column instance variable is used to track the current output
@@ -125,20 +125,20 @@ private:
       * The write_inner method is used to write a single line (record)
       * to the file.  Use by the write() method.
       */
-    void write_inner(int type, unsigned long addr, int addr_len,
+    void write_inner(int type, uint32_t addr, int addr_len,
             const void *data, int data_len);
 
     /**
       * The put_number method is used to write the given value to the
       * output in base-64 (big endian) notation.
       */
-    void put_number(unsigned long value, int ndigits);
+    void put_number(uint32_t value, int ndigits);
 
     /**
       * The put_command method is used to write a command to the file,
       * including the leading '/' and the trailing newline.
       */
-    void put_command(int c, unsigned long n, int ndigits);
+    void put_command(int c, uint32_t n, int ndigits);
 
 public:
     /**

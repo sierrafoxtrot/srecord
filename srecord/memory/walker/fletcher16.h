@@ -90,7 +90,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long address,
+    void observe(uint32_t address,
                  const void *data,
                  int data_size) override;
 

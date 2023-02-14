@@ -28,7 +28,7 @@ srecord::memory_walker_continuity::create()
 
 
 void
-srecord::memory_walker_continuity::observe(unsigned long addr, const void *,
+srecord::memory_walker_continuity::observe(uint32_t addr, const void *,
     int nbytes)
 {
     if (data_seen)

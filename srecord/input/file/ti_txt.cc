@@ -136,7 +136,7 @@ srecord::input_file_ti_txt::read(record &result)
 #endif
             if (address >= (1 << 20) && !address_warning)
             {
-                warning("addresses (0x%08lX) too large", address);
+                warning("addresses (0x%08X) too large", address);
                 address_warning = true;
             }
             get_next_token();
@@ -145,12 +145,12 @@ srecord::input_file_ti_txt::read(record &result)
         case token_number:
             {
                 seen_some_input = true;
-                unsigned char buffer[record::max_data_length];
+                uint8_t buffer[record::max_data_length];
                 size_t n = 0;
                 for (;;)
                 {
                     if (token_value >= 256)
-                        fatal_error("byte value (%ld) too large", token_value);
+                        fatal_error("byte value (%d) too large", token_value);
                     buffer[n++] = token_value;
                     get_next_token();
                     if (n >= record::max_data_length)
@@ -160,7 +160,7 @@ srecord::input_file_ti_txt::read(record &result)
                 }
                 if (address >= (1 << 20) && !address_warning)
                 {
-                    warning("addresses (0x%08lX) too large", address);
+                    warning("addresses (0x%08X) too large", address);
                     address_warning = true;
                 }
                 result = record(record::type_data, address, buffer, n);

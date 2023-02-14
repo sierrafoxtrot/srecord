@@ -75,10 +75,10 @@ srecord::input_file_ascii_hex::read_inner(record &result)
         }
         if (isxdigit(c))
         {
-            unsigned char c = get_byte();
+            uint8_t c = get_byte();
             result = record(record::type_data, address, &c, 1);
             int sep = get_char();
-            if (sep >= 0 && !isspace((unsigned char)sep))
+            if (sep >= 0 && !isspace((uint8_t)sep))
                 fatal_error("not execution character");
             ++address;
             switch (peek_char())
@@ -113,7 +113,7 @@ srecord::input_file_ascii_hex::read_inner(record &result)
 
         case '$':
             int command = get_char();
-            unsigned long value = 0;
+            uint32_t value = 0;
             for (;;)
             {
                 value = (value << 4) + get_nibble();
@@ -134,8 +134,8 @@ srecord::input_file_ascii_hex::read_inner(record &result)
             case 'S':
                 if (use_checksums())
                 {
-                    unsigned short chk1 = checksum_get16();
-                    unsigned short chk2 = value & 0xFFFF;
+                    uint16_t chk1 = checksum_get16();
+                    uint16_t chk2 = value & 0xFFFF;
                     if (chk1 != chk2)
                     {
                         fatal_error

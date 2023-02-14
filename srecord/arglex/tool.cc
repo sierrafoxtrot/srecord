@@ -270,7 +270,7 @@ srecord::arglex_tool::can_get_number()
 
 
 void
-srecord::arglex_tool::get_address(const char *name, unsigned long &address)
+srecord::arglex_tool::get_address(const char *name, uint32_t &address)
 {
     if (!can_get_number())
     {
@@ -283,7 +283,7 @@ srecord::arglex_tool::get_address(const char *name, unsigned long &address)
 
 void
 srecord::arglex_tool::get_address_and_nbytes(const char *name,
-    unsigned long &address, int &nbytes)
+    uint32_t &address, int &nbytes)
 {
     if (!can_get_number())
     {
@@ -300,7 +300,7 @@ srecord::arglex_tool::get_address_and_nbytes(const char *name,
     {
         fatal_error
         (
-            "the %s address (0x%8.8lX) and byte count (%d) may not span the "
+            "the %s address (0x%8.8X) and byte count (%d) may not span the "
                 "top of memory",
             name,
             address,
@@ -313,7 +313,7 @@ srecord::arglex_tool::get_address_and_nbytes(const char *name,
 
 void
 srecord::arglex_tool::get_address_nbytes_width(const char *name,
-    unsigned long &address, int &nbytes, int &width)
+    uint32_t &address, int &nbytes, int &width)
 {
     address = get_number("address");
     nbytes = 4;
@@ -330,7 +330,7 @@ srecord::arglex_tool::get_address_nbytes_width(const char *name,
     {
         fatal_error
         (
-            "the %s address (0x%8.8lX) and byte count (%d) may not span the "
+            "the %s address (0x%8.8X) and byte count (%d) may not span the "
                 "top of memory",
             name,
             address,

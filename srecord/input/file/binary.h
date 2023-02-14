@@ -70,7 +70,7 @@ private:
       * The address instance variable is used to remember where we are
       * up to in the file.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     // See base class for documentation.
     bool is_binary() const override;

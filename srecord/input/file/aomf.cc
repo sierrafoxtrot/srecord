@@ -163,7 +163,7 @@ srecord::input_file_aomf::slurp()
             delete [] current_buffer;
         while (current_maximum < length)
             current_maximum = current_maximum * 2 + 64;
-        current_buffer = new unsigned char [current_maximum];
+        current_buffer = new uint8_t [current_maximum];
     }
     current_length = length;
     for (size_t j = 0; j < length; ++j)
@@ -180,7 +180,7 @@ srecord::input_file_aomf::read(srecord::record &record)
 {
     for (;;)
     {
-        unsigned char c;
+        uint8_t c;
         switch (state)
         {
         case expecting_header:
@@ -246,12 +246,12 @@ srecord::input_file_aomf::read(srecord::record &record)
                 current_address =
                     (
                         // strictly speaking, this byte should be ignored
-                        ((unsigned long)current_buffer[0] << 16)
+                        ((uint32_t)current_buffer[0] << 16)
                     |
                         // length is little-endian
-                        ((unsigned long)current_buffer[2] << 8)
+                        ((uint32_t)current_buffer[2] << 8)
                     |
-                        ((unsigned long)current_buffer[1])
+                        ((uint32_t)current_buffer[1])
                     );
                 current_pos = 3;
                 break;

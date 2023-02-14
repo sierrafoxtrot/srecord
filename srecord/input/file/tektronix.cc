@@ -91,7 +91,7 @@ srecord::input_file_tektronix::read_inner(srecord::record &record)
         return false;
     }
 
-    unsigned char buffer[255+5];
+    uint8_t buffer[255+5];
     checksum_reset();
     buffer[0] = get_byte();
     buffer[1] = get_byte();

@@ -86,7 +86,7 @@ protected:
     const char *format_name() const override;
 
     // See base class for documentation.
-    void notify_upper_bound(unsigned long addr) override;
+    void notify_upper_bound(uint32_t addr) override;
 
     // See base class for documentation.
     bool is_binary() const override;
@@ -120,7 +120,7 @@ private:
       * @param len
       *     The length of the data to be check-summed.
       */
-    static uint32_t checksum(const unsigned char *data, size_t len);
+    static uint32_t checksum(const uint8_t *data, size_t len);
 
     /**
       * The write_file_header method is used to write the file header

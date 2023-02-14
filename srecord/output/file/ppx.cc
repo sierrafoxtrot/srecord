@@ -81,8 +81,8 @@ srecord::output_file_ppx::write(const srecord::record &record)
         }
         for (size_t j = 0; j < record.get_length(); ++j)
         {
-            unsigned char data = record.get_data(j);
-            unsigned long data_address = record.get_address() + j;
+            uint8_t data = record.get_data(j);
+            uint32_t data_address = record.get_address() + j;
 
             if (data_address >= (1UL << 16))
                 data_address_too_large(record, 16);

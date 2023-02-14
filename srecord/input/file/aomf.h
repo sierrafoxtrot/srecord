@@ -84,7 +84,7 @@ private:
       * The current_buffer instance variable is used to remember the
       * base of an array which buffers the current input record.
       */
-    unsigned char *current_buffer{nullptr};
+    uint8_t *current_buffer{nullptr};
 
     /**
       * The current_length instance variable is used to remember
@@ -112,7 +112,7 @@ private:
       * we return a partial block, so that we always return the
       * correct load address.
       */
-    unsigned long current_address{0};
+    uint32_t current_address{0};
 
     enum state_t
     {

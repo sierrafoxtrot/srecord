@@ -63,7 +63,7 @@ private:
       * addresses less than this cause an "out of sequence" warning.
       * It is check and updated by the read() method.
       */
-    unsigned long last_address{0};
+    uint32_t last_address{0};
 
     /**
       * The warned instance variable is used to remember whether or not

@@ -27,7 +27,7 @@ srecord::string_quote_c(const std::string &arg)
     const char *cp = arg.c_str();
     for (;;)
     {
-        unsigned char c = *cp++;
+        uint8_t c = *cp++;
         switch (c)
         {
         case '\0':
@@ -55,7 +55,7 @@ srecord::string_quote_c(const std::string &arg)
             break;
 
         default:
-            if (isprint((unsigned char)c))
+            if (isprint((uint8_t)c))
                 result += c;
             else
             {

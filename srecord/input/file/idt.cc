@@ -54,7 +54,7 @@ srecord::input_file_idt::read_inner(record &result)
     int tag = get_nibble();
     if (tag < 0)
         record_format_error();
-    unsigned char csum = 0;
+    uint8_t csum = 0;
     int line_length = get_char();
     if (line_length < 0)
         record_format_error();

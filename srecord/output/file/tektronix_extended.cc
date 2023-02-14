@@ -38,11 +38,11 @@ srecord::output_file_tektronix_extended::create(const std::string &a_file_name)
 
 void
 srecord::output_file_tektronix_extended::write_inner(int tag,
-    unsigned long addr, int addr_nbytes, const void *data_p, int data_nbytes)
+    uint32_t addr, int addr_nbytes, const void *data_p, int data_nbytes)
 {
     if (addr_nbytes < address_length)
         addr_nbytes = address_length;
-    unsigned char buf[260];
+    uint8_t buf[260];
     int record_length = 6 + (addr_nbytes + data_nbytes) * 2;
     if (record_length >= 256)
     {
@@ -64,7 +64,7 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
     int j;
     for (j = 0; j < 2 * addr_nbytes; ++j)
         csum += buf[pos++] = (addr >> (4 * (2*addr_nbytes-1 - j))) & 15;
-    const auto *data = (const unsigned char *)data_p;
+    const auto *data = (const uint8_t *)data_p;
     for (j = 0; j < data_nbytes; ++j)
     {
         csum += buf[pos++] = (data[j] >> 4) & 15;
@@ -88,7 +88,7 @@ srecord::output_file_tektronix_extended::write_inner(int tag,
 
 
 static int
-addr_width(unsigned long n)
+addr_width(uint32_t n)
 {
     if (n < (1UL << 16))
         return 2;

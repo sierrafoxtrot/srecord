@@ -61,9 +61,9 @@
 // updcrc function:
 //     updcrc(0, updcrc(0, 0xFFFF))
 //
-static unsigned short const ccitt_seed = 0xFFFF;
-static unsigned short const broken_seed = 0x84CF;
-static unsigned short const xmodem_seed = 0;
+static uint16_t const ccitt_seed = 0xFFFF;
+static uint16_t const broken_seed = 0x84CF;
+static uint16_t const xmodem_seed = 0;
 
 
 void
@@ -75,7 +75,7 @@ srecord::crc16::calculate_table()
     {
         for (unsigned b = 0; b < 256; ++b)
         {
-            unsigned short v = b << 8;
+            uint16_t v = b << 8;
             for (unsigned j = 0; j < 8; ++j)
                 v = (v & 0x8000) ? ((v << 1) ^ polynomial) : (v << 1);
             table[b] = v;
@@ -86,7 +86,7 @@ srecord::crc16::calculate_table()
         polynomial = bitrev16(polynomial);
         for (unsigned b = 0; b < 256; ++b)
         {
-            unsigned short v = b;
+            uint16_t v = b;
             for (unsigned j = 0; j < 8; ++j)
                 v = (v & 1) ? ((v >> 1) ^ polynomial) : (v >> 1);
             table[b] = v;
@@ -116,7 +116,7 @@ state_from_seed_mode(srecord::crc16::seed_mode_t seed_mode)
 srecord::crc16::crc16(
     seed_mode_t seed_mode,
     bool a_augment,
-    unsigned short a_polynomial,
+    uint16_t a_polynomial,
     bit_direction_t a_bitdir
 ) :
     state(state_from_seed_mode(seed_mode)),
@@ -176,8 +176,8 @@ srecord::crc16::operator=(const crc16 &rhs)
 // 'A Straightforward CRC Implementation', for an explanation.
 //
 
-inline unsigned short
-srecord::crc16::updcrc(unsigned char c, unsigned short state)
+inline uint16_t
+srecord::crc16::updcrc(uint8_t c, uint16_t state)
     const
 {
     if (bitdir == bit_direction_most_to_least)
@@ -223,8 +223,8 @@ srecord::crc16::updcrc(unsigned char c, unsigned short state)
 // 'A Table-Driven Implementation', for an explanation.
 //
 
-inline unsigned short
-srecord::crc16::updcrc(unsigned char c, unsigned short state)
+inline uint16_t
+srecord::crc16::updcrc(uint8_t c, uint16_t state)
     const
 {
     if (bitdir == bit_direction_least_to_most)
@@ -251,8 +251,8 @@ srecord::crc16::updcrc(unsigned char c, unsigned short state)
 // 'A Slightly Mangled Table-Driven Implementation', for an explanation.
 //
 
-inline unsigned short
-srecord::crc16::updcrc(unsigned char c, unsigned short state)
+inline uint16_t
+srecord::crc16::updcrc(uint8_t c, uint16_t state)
     const
 {
     if (bitdir == bit_direction_least_to_most)
@@ -265,7 +265,7 @@ srecord::crc16::updcrc(unsigned char c, unsigned short state)
 
 
 void
-srecord::crc16::next(unsigned char ch)
+srecord::crc16::next(uint8_t ch)
 {
     state = updcrc(ch, state);
 }
@@ -274,7 +274,7 @@ srecord::crc16::next(unsigned char ch)
 void
 srecord::crc16::nextbuf(const void *data, size_t nbytes)
 {
-    auto *dp = (unsigned char *)data;
+    auto *dp = (uint8_t *)data;
     while (nbytes > 0)
     {
         state = updcrc(*dp++, state);
@@ -283,7 +283,7 @@ srecord::crc16::nextbuf(const void *data, size_t nbytes)
 }
 
 
-unsigned short
+uint16_t
 srecord::crc16::get()
     const
 {
@@ -323,7 +323,7 @@ srecord::crc16::print_table()
     else
         printf("%04X", bitrev16(polynomial));
     printf("\n */\n");
-    printf("const unsigned short table[256] =\n{\n");
+    printf("const uint16_t table[256] =\n{\n");
     for (size_t j = 0; j < 256; ++j)
     {
         if ((j & 7) == 0)

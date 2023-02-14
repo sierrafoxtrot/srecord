@@ -19,6 +19,8 @@
 #ifndef SRECORD_R250_H
 #define SRECORD_R250_H
 
+#include <cstdint>
+
 namespace srecord
 {
 
@@ -26,7 +28,7 @@ namespace srecord
   * The r250 function is used to produce a 32-bit random number.
   * It repeats every 2**256 samples, long enough for most purposes.
   */
-unsigned long r250();
+uint32_t r250();
 
 };
 

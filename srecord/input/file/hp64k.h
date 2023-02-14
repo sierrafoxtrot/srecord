@@ -76,7 +76,7 @@ private:
     /**
      * Number of parsed data records
      */
-    unsigned long rec_count{0};
+    uint32_t rec_count{0};
 
     /** Helper function: read two bytes, big-endian. Ret 1 if ok */
     bool read_u16be(uint16_t *dest);

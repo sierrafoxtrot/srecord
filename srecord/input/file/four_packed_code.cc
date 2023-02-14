@@ -144,7 +144,7 @@ srecord::input_file_four_packed_code::get_byte()
         get_byte_value = (((get_digit() * 85 + get_digit()) * 85 +
             get_digit()) * 85 + get_digit()) * 85 + get_digit();
     }
-    unsigned char c = get_byte_value >> ((3 - get_byte_pos++) * 8);
+    uint8_t c = get_byte_value >> ((3 - get_byte_pos++) * 8);
     checksum_add(c);
     return c;
 }
@@ -203,7 +203,7 @@ srecord::input_file_four_packed_code::read_inner(srecord::record &record)
         break;
     }
 
-    unsigned long address = get_4bytes_be();
+    uint32_t address = get_4bytes_be();
     switch (format_code)
     {
     case 0:
@@ -223,7 +223,7 @@ srecord::input_file_four_packed_code::read_inner(srecord::record &record)
         fatal_error("format code %d unknown", format_code);
     }
 
-    unsigned char buffer[256];
+    uint8_t buffer[256];
     for (int j = 0; j < length; ++j)
         buffer[j] = get_byte();
     if (use_checksums() && checksum_get() != 0)

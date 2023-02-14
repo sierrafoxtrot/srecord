@@ -45,7 +45,7 @@ read_one_line(const char *filename, FILE *fp, std::string &result)
         }
         if (c == '\n')
             return true;
-        result += (unsigned char)c;
+        result += (uint8_t)c;
     }
 }
 
@@ -76,7 +76,7 @@ check(const char *filename)
                 const char *cp = line.c_str();
                 for (;;)
                 {
-                    unsigned char c = *cp++;
+                    uint8_t c = *cp++;
                     switch (c)
                     {
                     case '\0':

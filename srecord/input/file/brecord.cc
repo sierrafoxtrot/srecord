@@ -41,12 +41,12 @@ srecord::input_file_brecord::read_inner(record &result)
     if (peek_char() < 0)
         return false;
 
-    unsigned long address = get_4bytes_be();
-    unsigned char length = get_byte();
+    uint32_t address = get_4bytes_be();
+    uint8_t length = get_byte();
     if (length & 0x20)
         fatal_error("read mode not supported");
     length &= 0x1F;
-    unsigned char data[32];
+    uint8_t data[32];
     for (unsigned j = 0; j < length; ++j)
         data[j] = get_byte();
     if (get_char() != '\n')

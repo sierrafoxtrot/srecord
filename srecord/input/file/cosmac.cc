@@ -121,7 +121,7 @@ srecord::input_file_cosmac::read(record &result)
                 continue;
             }
             get_char_undo(c);
-            unsigned char data = get_byte();
+            uint8_t data = get_byte();
             result = record(record::type_data, address, &data, 1);
             ++address;
             seen_some_input = true;

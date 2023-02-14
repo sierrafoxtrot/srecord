@@ -46,7 +46,7 @@ srecord::output_file_signetics::create(const std::string &a_file_name)
 
 
 void
-srecord::output_file_signetics::checksum_add(unsigned char n)
+srecord::output_file_signetics::checksum_add(uint8_t n)
 {
     checksum ^= n;
     checksum = (checksum << 1) | ((checksum >> 7) & 1);

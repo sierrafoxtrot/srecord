@@ -59,8 +59,8 @@ srecord::input_filter_byte_swap::read(srecord::record &record)
             buffer_pos = 0;
         }
 
-        unsigned long addr = (buffer.get_address() + buffer_pos) ^ mask;
-        unsigned char c = buffer.get_data(buffer_pos++);
+        uint32_t addr = (buffer.get_address() + buffer_pos) ^ mask;
+        uint8_t c = buffer.get_data(buffer_pos++);
         record = srecord::record(srecord::record::type_data, addr, &c, 1);
         return true;
     }

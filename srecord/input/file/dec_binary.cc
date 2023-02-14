@@ -121,7 +121,7 @@ srecord::input_file_dec_binary::read(srecord::record &record)
     //
     // Read as many bytes as possible into the buffer.
     //
-    unsigned char buffer[srecord::record::max_data_length];
+    uint8_t buffer[srecord::record::max_data_length];
     int nbytes = srecord::record::max_data_length;
     if (current_pos + nbytes > current_length)
         nbytes = current_length - current_pos;

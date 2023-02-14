@@ -29,7 +29,7 @@ srecord::memory_walker_adler16::create()
 
 
 void
-srecord::memory_walker_adler16::observe(unsigned long, const void *data,
+srecord::memory_walker_adler16::observe(uint32_t, const void *data,
     int length)
 {
     checksum.nextbuf(data, length);

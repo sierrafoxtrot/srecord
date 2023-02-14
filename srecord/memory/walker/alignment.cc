@@ -44,7 +44,7 @@ srecord::memory_walker_alignment::is_well_aligned()
 
 
 void
-srecord::memory_walker_alignment::observe(unsigned long address, const void *,
+srecord::memory_walker_alignment::observe(uint32_t address, const void *,
     int data_size)
 {
     if (data_seen && address != current_address)

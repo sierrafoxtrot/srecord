@@ -69,7 +69,7 @@ protected:
     const char *format_name() const override;
 
     // See base class for documentation.
-    void notify_upper_bound(unsigned long addr) override;
+    void notify_upper_bound(uint32_t addr) override;
 
     // See base class for documentation.
     void command_line(arglex_tool *cmdln) override;

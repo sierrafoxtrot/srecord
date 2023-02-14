@@ -92,7 +92,7 @@ private:
       * The taddr instance variable is used to remember the
       * termination address, to be emitted in the footer.
       */
-    unsigned long taddr{0};
+    uint32_t taddr{0};
 
     /**
       * The range instance variable is used to remember the range
@@ -111,7 +111,7 @@ private:
       * the current address that the file is positioned at.  This is
       * used to know whether we need to add padding.
       */
-    unsigned long current_address{0};
+    uint32_t current_address{0};
 
     /**
       * The line_length instance variable is used to remember the
@@ -148,7 +148,7 @@ private:
       * The emit_4byte method is used to emit a double word (4 Byte).  It uses
       * column to track the position, so as not to exceed line_length.
       */
-    void emit_4byte_array(unsigned long *);
+    void emit_4byte_array(uint32_t *);
 
     /**
       * The dot_style instance variable is used to remember whether or

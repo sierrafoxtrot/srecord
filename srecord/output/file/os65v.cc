@@ -84,12 +84,12 @@ srecord::output_file_os65v::write(const srecord::record &record)
         )
         {
             address = record.get_address();
-            put_stringf(".%04lX/", address);
+            put_stringf(".%04X/", address);
             state = '/';
         }
         for (size_t j = 0; j < record.get_length(); ++j)
         {
-            unsigned char n = record.get_data(j);
+            uint8_t n = record.get_data(j);
             if (address == 0x00FD && n == 0)
             {
                 // Actually, it's probably a bad idea to write on any of
@@ -119,7 +119,7 @@ srecord::output_file_os65v::write(const srecord::record &record)
             if (address != record.get_address() || state == 0)
             {
                 address = record.get_address();
-                put_stringf(".%04lX", address);
+                put_stringf(".%04X", address);
                 state = '.';
             }
             put_char('G');

@@ -61,7 +61,7 @@ srecord::output_file_ti_tagged::put_char(int c)
     }
     else
     {
-        csum += (unsigned char)c;
+        csum += (uint8_t)c;
         ++column;
     }
     inherited::put_char(c);
@@ -86,18 +86,18 @@ srecord::output_file_ti_tagged::write(const srecord::record &record)
         if (enable_header_flag)
         {
             put_stringf("K%4.4X", (unsigned)(5 + record.get_length()));
-            const unsigned char *cp = record.get_data();
-            const unsigned char *ep = cp + record.get_length();
+            const uint8_t *cp = record.get_data();
+            const uint8_t *ep = cp + record.get_length();
             while (cp < ep)
             {
-                unsigned char c = *cp++;
+                uint8_t c = *cp++;
                 if (!isprint(c))
                     c = ' ';
                 put_char(c);
             }
         }
         if (!enable_optional_address_flag)
-            address = (unsigned long)-1;
+            address = (uint32_t)-1;
         break;
 
     case srecord::record::type_data:

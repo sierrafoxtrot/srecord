@@ -116,7 +116,7 @@ srecord::input_file_motorola::read_inner(record &result)
     int line_length = get_byte();
     if (line_length < 1)
         fatal_error("line length invalid");
-    unsigned char buffer[256];
+    uint8_t buffer[256];
     for (int j = 0; j < line_length; ++j)
         buffer[j] = get_byte();
     if (use_checksums())

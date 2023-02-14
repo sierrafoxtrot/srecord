@@ -97,7 +97,7 @@ private:
       * The write_inner method is used to write a single line (record)
       * to the file.  Use by the write() method.
       */
-    void write_inner(int type, unsigned long addr, int addr_len,
+    void write_inner(int type, uint32_t addr, int addr_len,
         const void *data, int data_len);
 
 public:

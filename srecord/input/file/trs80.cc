@@ -89,7 +89,7 @@ srecord::input_file_trs80::read(srecord::record &result)
         unsigned payload_size = get_byte();
         if (rec_type == 0x01 && payload_size <= 2)
             payload_size += 256;
-        unsigned char payload[258];
+        uint8_t payload[258];
         for (unsigned j = 0; j < payload_size; ++j)
             payload[j] = get_byte();
 
@@ -100,7 +100,7 @@ srecord::input_file_trs80::read(srecord::record &result)
             {
                 assert(payload_size > 2);
                 long address = decode_word_le(payload);
-                const unsigned char *data = payload + 2;
+                const uint8_t *data = payload + 2;
                 unsigned data_size = payload_size - 2;
                 record::type_t type = record::type_data;
                 assert(data_size < 2 * record::max_data_length);
@@ -155,9 +155,9 @@ srecord::input_file_trs80::read(srecord::record &result)
 
                 // Get rid of unprintable characters (especially NUL)
                 {
-                    const unsigned char *ip = payload;
-                    const unsigned char *end = ip + payload_size;
-                    unsigned char *op = payload;
+                    const uint8_t *ip = payload;
+                    const uint8_t *end = ip + payload_size;
+                    uint8_t *op = payload;
                     while (ip < end)
                     {
                         if (isprint(*ip))

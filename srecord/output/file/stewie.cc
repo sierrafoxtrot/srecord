@@ -54,7 +54,7 @@ srecord::output_file_stewie::create(const std::string &a_file_name)
 
 
 void
-srecord::output_file_stewie::put_byte(unsigned char n)
+srecord::output_file_stewie::put_byte(uint8_t n)
 {
     put_char(n);
     checksum_add(n);
@@ -62,7 +62,7 @@ srecord::output_file_stewie::put_byte(unsigned char n)
 
 
 void
-srecord::output_file_stewie::write_inner(int tag, unsigned long address,
+srecord::output_file_stewie::write_inner(int tag, uint32_t address,
     int address_nbytes, const void *data, int data_nbytes)
 {
     //
@@ -81,7 +81,7 @@ srecord::output_file_stewie::write_inner(int tag, unsigned long address,
     //
     // Assemble the data for this record.
     //
-    unsigned char buffer[256];
+    uint8_t buffer[256];
     int line_length = address_nbytes + data_nbytes + 1;
     buffer[0] = line_length;
     srecord::record::encode_big_endian(buffer + 1, address, address_nbytes);

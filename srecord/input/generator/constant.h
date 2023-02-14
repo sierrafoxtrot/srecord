@@ -42,14 +42,14 @@ private:
     /**
       * The constructor.
       */
-    input_generator_constant(const interval &range, unsigned char datum);
+    input_generator_constant(const interval &range, uint8_t datum);
 
 public:
     /**
       * The create class method is used to create new dynamically
       * allocated instances of this class.
       */
-    static pointer create(const interval &range, unsigned char datum);
+    static pointer create(const interval &range, uint8_t datum);
 
 protected:
     // See base class for documentation.
@@ -59,14 +59,14 @@ protected:
     const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    unsigned char generate_data(unsigned long address) override;
+    uint8_t generate_data(uint32_t address) override;
 
 private:
     /**
       * The datum instance variable is used to remember the constant
       * byte value to be generated.
       */
-    unsigned char datum;
+    uint8_t datum;
 
 public:
     /**

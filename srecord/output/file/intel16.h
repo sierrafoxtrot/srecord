@@ -83,13 +83,13 @@ private:
       * The write_inner method is used to write a single line to the
       * output file.
       */
-    void write_inner(int, unsigned long, const void *, int);
+    void write_inner(int, uint32_t, const void *, int);
 
     /**
       * The address_base instance variable is used to remember the
       * current position within the output file
       */
-    unsigned long address_base{0};
+    uint32_t address_base{0};
 
     /**
       * The pref_block_size instance variable is used to remember the

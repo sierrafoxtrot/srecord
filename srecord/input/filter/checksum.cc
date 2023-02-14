@@ -51,7 +51,7 @@ srecord::input_filter_checksum::generate(record &result)
 {
     if (length <= 0)
         return false;
-    unsigned char chunk[sizeof(sum_t)];
+    uint8_t chunk[sizeof(sum_t)];
     sum_t value = calculate();
     record::encode(chunk, value, length, end);
     result = record(record::type_data, checksum_address, chunk, length);

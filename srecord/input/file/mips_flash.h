@@ -104,7 +104,7 @@ private:
       * The address instance variable is used to remember where we are
       * up to in the input file, for when we build the next data record.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The tokenizer method is used to determine the next token in the
@@ -136,7 +136,7 @@ private:
       * of the number, if the preceding #tokenizer call saw a number.
       * Otherwise, its value is undefined.
       */
-    unsigned long token_value{0};
+    uint32_t token_value{0};
 
     /**
       * The seen_reset instance variable is used to remember

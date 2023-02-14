@@ -23,7 +23,7 @@
 
 srecord::input_filter_message_fletcher16::input_filter_message_fletcher16(
     const input::pointer &a_deeper,
-    unsigned long a_address,
+    uint32_t a_address,
     endian_t a_end
 ) :
     input_filter_message(a_deeper),
@@ -35,7 +35,7 @@ srecord::input_filter_message_fletcher16::input_filter_message_fletcher16(
 
 srecord::input::pointer
 srecord::input_filter_message_fletcher16::create(
-    const input::pointer &a_deeper, unsigned long a_address,
+    const input::pointer &a_deeper, uint32_t a_address,
     endian_t a_end)
 {
     return
@@ -73,12 +73,12 @@ srecord::input_filter_message_fletcher16::process(const memory &input,
     memory_walker_fletcher16::pointer w =
         memory_walker_fletcher16::create(sum1, sum2, answer, end);
     input.walk(w);
-    unsigned short fletcher = w->get();
+    uint16_t fletcher = w->get();
 
     //
     // Turn the Fletcher-16 checksum into the first data record.
     //
-    unsigned char chunk[2];
+    uint8_t chunk[2];
     record::encode(chunk, fletcher, sizeof(chunk), end);
     output = record(record::type_data, address, chunk, sizeof(chunk));
 }

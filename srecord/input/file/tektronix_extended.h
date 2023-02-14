@@ -107,7 +107,7 @@ private:
       * The nibble_sum instance variable is usd to remember the running
       * checksum, of each nibble on the record line.
       */
-    unsigned char nibble_sum{0};
+    uint8_t nibble_sum{0};
 
 public:
     /**

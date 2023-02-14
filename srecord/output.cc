@@ -127,7 +127,7 @@ srecord::output::write_header(const srecord::record *rp)
 
 
 void
-srecord::output::write_data(unsigned long address, const void *data,
+srecord::output::write_data(uint32_t address, const void *data,
     size_t length)
 {
     const auto *data_p = (const srecord::record::data_t *)data;
@@ -169,7 +169,7 @@ srecord::output::write_execution_start_address(const srecord::record *rp)
 
 
 void
-srecord::output::notify_upper_bound(unsigned long)
+srecord::output::notify_upper_bound(uint32_t)
 {
 }
 
