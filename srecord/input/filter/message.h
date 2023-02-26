@@ -100,7 +100,7 @@ private:
       * The buffer_pos instance variable is used to remember where we
       * are up to in processing 'buffer'.
       */
-    unsigned long buffer_pos{0};
+    uint32_t buffer_pos{0};
 
     /**
       * The have_forwarded_header instance variable is used to remember

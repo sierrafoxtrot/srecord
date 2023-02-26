@@ -43,7 +43,7 @@ srecord::input_filter_sequence::read(srecord::record &record)
     if (record.get_type() == srecord::record::type_data)
     {
 #if 0
-        fprintf(stderr, "%s: %d: address = %08lX, length = %08X\n",
+        fprintf(stderr, "%s: %d: address = %08X, length = %08X\n",
             __FILE__, __LINE__,
             record.get_address(),
             record.get_length()
@@ -60,7 +60,7 @@ srecord::input_filter_sequence::read(srecord::record &record)
                 warning
                 (
                     "data records not in strictly ascending order "
-                        "(expected >= 0x%04lX, got 0x%04lX)",
+                        "(expected >= 0x%04X, got 0x%04lX)",
                     last_address,
                     long(record.get_address())
                 );

@@ -52,7 +52,7 @@ private:
       *     The byte order.
       */
     input_filter_message_adler32(const input::pointer &deeper,
-        unsigned long address, endian_t end);
+        uint32_t address, endian_t end);
 
 public:
     /**
@@ -67,7 +67,7 @@ public:
       *     The byte order.
       */
     static pointer create(const input::pointer &deeper,
-        unsigned long address, endian_t end);
+        uint32_t address, endian_t end);
 
 protected:
     // See base class for documentation.
@@ -81,7 +81,7 @@ private:
       * The address instance variable is used to remember where to place
       * the Adler 32 checksum in memory.
       */
-    unsigned long address;
+    uint32_t address;
 
     /**
       * The end instance variable is used to remember whether the byte

@@ -23,7 +23,7 @@
 #include <srecord/memory/walker.h>
 
 
-srecord::memory_chunk::memory_chunk(unsigned long arg) :
+srecord::memory_chunk::memory_chunk(uint32_t arg) :
     address(arg)
 {
     memset(data, 0, sizeof(data));
@@ -53,7 +53,7 @@ srecord::memory_chunk::operator=(const srecord::memory_chunk &arg)
 
 
 void
-srecord::memory_chunk::set(unsigned long offset, int datum)
+srecord::memory_chunk::set(uint32_t offset, int datum)
 {
     data[offset] = datum;
     mask[offset >> 3] |= (1 << (offset & 7));
@@ -78,7 +78,7 @@ srecord::memory_chunk::walk(srecord::memory_walker::pointer w)
 
 
 bool
-srecord::memory_chunk::find_next_data(unsigned long &ret_addr, void *ret_data,
+srecord::memory_chunk::find_next_data(uint32_t &ret_addr, void *ret_data,
         size_t &nbytes)
     const
 {
@@ -102,14 +102,14 @@ srecord::memory_chunk::find_next_data(unsigned long &ret_addr, void *ret_data,
 
 
 int
-srecord::memory_chunk::get(unsigned long offset)
+srecord::memory_chunk::get(uint32_t offset)
 {
     return data[offset];
 }
 
 
 bool
-srecord::memory_chunk::set_p(unsigned long offset)
+srecord::memory_chunk::set_p(uint32_t offset)
     const
 {
     return (0 != (mask[offset >> 3] & (1 << (offset & 7))));
@@ -131,7 +131,7 @@ srecord::memory_chunk::equal(const srecord::memory_chunk &lhs,
 }
 
 
-unsigned long
+uint32_t
 srecord::memory_chunk::get_upper_bound()
     const
 {
@@ -145,7 +145,7 @@ srecord::memory_chunk::get_upper_bound()
 }
 
 
-unsigned long
+uint32_t
 srecord::memory_chunk::get_lower_bound()
     const
 {

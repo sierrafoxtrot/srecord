@@ -55,17 +55,17 @@ srecord::output_file_cosmac::write(const srecord::record &record)
         if (header_required)
         {
             address = record.get_address();
-            put_stringf("!M%.*lX ", (int)address_length, address);
+            put_stringf("!M%.*X ", (int)address_length, address);
             column = address_length + 3;
             header_required = false;
 
             if (!enable_optional_address_flag)
-                address = (unsigned long)-1L;
+                address = (uint32_t)-1L;
         }
         if (address != record.get_address())
         {
             address = record.get_address();
-            put_stringf(";\n%.*lX ", (int)address_length, address);
+            put_stringf(";\n%.*X ", (int)address_length, address);
             column = address_length + 1;
         }
         for (size_t j = 0; j < record.get_length(); ++j)

@@ -54,7 +54,7 @@ srecord::output_file_needham::write(const srecord::record &record)
     case srecord::record::type_header:
         // ignore
         if (!enable_optional_address_flag)
-            address = (unsigned long)-1L;
+            address = (uint32_t)-1L;
         break;
 
     case srecord::record::type_data:
@@ -75,7 +75,7 @@ srecord::output_file_needham::write(const srecord::record &record)
                 width = 3;
             if (width < address_length)
                 width = address_length;
-            put_stringf("$A%0*lX,\n", width * 2, address);
+            put_stringf("$A%0*X,\n", width * 2, address);
             column = 0;
         }
         for (size_t j = 0; j < record.get_length(); ++j)

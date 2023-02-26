@@ -80,7 +80,7 @@ srecord::arglex::read_arguments_file(const char *filename)
         int sc = getc(fp);
         if (sc == EOF)
             break;
-        unsigned char c = sc;
+        uint8_t c = sc;
 
         //
         // Ignore white space between words.
@@ -144,10 +144,10 @@ srecord::arglex::compare(const char *formal, const char *actual)
 {
     for (;;)
     {
-        unsigned char ac = *actual++;
+        uint8_t ac = *actual++;
         if (isupper(ac))
             ac = tolower(ac);
-        unsigned char fc = *formal++;
+        uint8_t fc = *formal++;
         switch (fc)
         {
         case 0:

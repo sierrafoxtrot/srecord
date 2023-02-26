@@ -22,7 +22,7 @@
 
 
 void
-srecord::memory_walker::notify_upper_bound(unsigned long)
+srecord::memory_walker::notify_upper_bound(uint32_t)
 {
     // Do nothing.
 }

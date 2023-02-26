@@ -72,7 +72,7 @@ private:
       * The packet_address instance variable is used to remember the
       * address of the first byte in the most recently read packet.
       */
-    unsigned long packet_address{-1UL};
+    uint32_t packet_address{-1U};
 
     /**
       * The packet instance variable is used to remember the most recent

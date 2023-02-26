@@ -28,7 +28,7 @@ srecord::memory_walker_crc16::~memory_walker_crc16()
 
 
 srecord::memory_walker_crc16::memory_walker_crc16(crc16::seed_mode_t seed_mode,
-    bool augment_flag, unsigned short polynomial, crc16::bit_direction_t bitdir)
+    bool augment_flag, uint16_t polynomial, crc16::bit_direction_t bitdir)
 {
     checksum = new crc16(seed_mode, augment_flag, polynomial, bitdir);
 }
@@ -36,7 +36,7 @@ srecord::memory_walker_crc16::memory_walker_crc16(crc16::seed_mode_t seed_mode,
 
 srecord::memory_walker_crc16::pointer
 srecord::memory_walker_crc16::create(crc16::seed_mode_t arg1, bool a_augment,
-    unsigned short polynomial, crc16::bit_direction_t a_bitdir)
+    uint16_t polynomial, crc16::bit_direction_t a_bitdir)
 {
     return
         pointer
@@ -53,7 +53,7 @@ srecord::memory_walker_crc16::create(crc16::seed_mode_t arg1, bool a_augment,
 
 
 void
-srecord::memory_walker_crc16::observe(unsigned long, const void *data,
+srecord::memory_walker_crc16::observe(uint32_t, const void *data,
     int length)
 {
     checksum->nextbuf(data, length);

@@ -106,7 +106,7 @@ private:
       * byte address of the first byte of the output buffer.  Not
       * meaningful if #buffer_pos is zero.
       */
-    unsigned long buffer_address{0};
+    uint32_t buffer_address{0};
 
     /**
       * The buffer instance variable is used to remember the base
@@ -116,7 +116,7 @@ private:
       *
       * assert(!buffer == !buffer_max);
       */
-    unsigned char *buffer{0};
+    uint8_t *buffer{0};
 
     /**
       * The buffer_pos instance variable is used to remember how many

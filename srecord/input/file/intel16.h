@@ -108,7 +108,7 @@ private:
       * The address_base instance variable is used to remember the
       * segment base address when in segmented addressing mode.
       */
-    unsigned long address_base{0};
+    uint32_t address_base{0};
 
     /**
       * The pushback instance variable is used to remember the previous

@@ -90,13 +90,13 @@ private:
       * We override the one in the base class because the checksum is
       * nibble-based, not byte-based.
       */
-    void put_byte(unsigned char) override;
+    void put_byte(uint8_t) override;
 
     /**
       * The address instance variable is used to remember the current
       * memory position within the output.
       */
-    unsigned long address{~0UL};
+    uint32_t address{~0U};
 
 public:
     /**

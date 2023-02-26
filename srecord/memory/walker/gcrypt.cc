@@ -33,7 +33,7 @@ srecord::memory_walker_gcrypt::create(gcry_md_hd_t a_handle)
 
 
 void
-srecord::memory_walker_gcrypt::observe(unsigned long, const void *data,
+srecord::memory_walker_gcrypt::observe(uint32_t, const void *data,
     int length)
 {
 #ifdef HAVE_LIBGCRYPT

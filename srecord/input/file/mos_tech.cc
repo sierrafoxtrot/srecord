@@ -109,8 +109,8 @@ srecord::input_file_mos_tech::read_inner(srecord::record &record)
         return false;
     }
 
-    unsigned long address = get_word_be();
-    unsigned char buffer[256];
+    uint32_t address = get_word_be();
+    uint8_t buffer[256];
     for (int j = 0; j < length; ++j)
         buffer[j] = get_byte();
     int csumX = checksum_get16();

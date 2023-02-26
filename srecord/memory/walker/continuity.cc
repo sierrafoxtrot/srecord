@@ -20,15 +20,8 @@
 
 #include <srecord/memory/walker/continuity.h>
 
-srecord::memory_walker_continuity::pointer
-srecord::memory_walker_continuity::create()
-{
-    return pointer(new srecord::memory_walker_continuity());
-}
-
-
 void
-srecord::memory_walker_continuity::observe(unsigned long addr, const void *,
+srecord::memory_walker_continuity::observe(uint32_t addr, const void *,
     int nbytes)
 {
     if (data_seen)

@@ -20,6 +20,8 @@
 #ifndef SRECORD_ENDIAN_H
 #define SRECORD_ENDIAN_H
 
+#include <cstdint>
+
 namespace srecord
 {
 
@@ -42,32 +44,32 @@ const char *endian_to_string(endian_t x);
 
 /**
   * The decode_word_be function is used to decode a big-endian 2-byte
-  * data buffer into an unsigned short value.
+  * data buffer into an uint16_t value.
   *
   * @param data
   *     The data to be decoded
   */
-unsigned short decode_word_be(const unsigned char *data);
+uint16_t decode_word_be(const uint8_t *data);
 
 /**
   * The decode_word_le function is used to decode a little-endian 2-byte
-  * data buffer into an unsigned short value.
+  * data buffer into an uint16_t value.
   *
   * @param data
   *     The data to be decoded
   */
-unsigned short decode_word_le(const unsigned char *data);
+uint16_t decode_word_le(const uint8_t *data);
 
 /**
   * The decode_word_le function is used to decode a little-endian 2-byte
-  * data buffer into an unsigned short value.
+  * data buffer into an uint16_t value.
   *
   * @param data
   *     The data to be decoded
   * @param order
   *     The order of the bytes to be decoded.
   */
-unsigned short endian_decode_word(const unsigned char *data, endian_t order);
+uint16_t endian_decode_word(const uint8_t *data, endian_t order);
 
 };
 

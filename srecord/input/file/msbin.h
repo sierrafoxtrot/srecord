@@ -179,7 +179,7 @@ private:
       * @param len
       *     The length in bytes of the data to be check-summed.
       */
-    static uint32_t checksum(const unsigned char *data, size_t len);
+    static uint32_t checksum(const uint8_t *data, size_t len);
 
     // See base class for documentation.
     bool is_binary() const override;

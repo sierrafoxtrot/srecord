@@ -88,7 +88,7 @@ private:
       * The address instance variable is used to remember where we are
       * up to in the input file, so it may be associated with data bytes.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The state instance variable is used to remember what state the

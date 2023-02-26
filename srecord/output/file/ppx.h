@@ -85,7 +85,7 @@ private:
       * The address instance variable is used to remember the address of
       * the next data byte to be parsed.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The line_length instance variable is used to remember how long
@@ -103,7 +103,7 @@ private:
       * The dsum instance variable is used to remember the simple sum of
       * all the data bytes, but not the address bytes.
       */
-    unsigned short dsum{0};
+    uint16_t dsum{0};
 
 public:
     /**

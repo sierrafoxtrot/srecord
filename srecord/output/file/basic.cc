@@ -34,14 +34,14 @@ srecord::output_file_basic::~output_file_basic()
 
     if (enable_footer_flag)
     {
-        put_stringf("REM termination = %lu\n", taddr);
-        unsigned long start = range.get_lowest();
-        put_stringf("REM start = %lu\n", start);
-        unsigned long finish = range.get_highest();
-        put_stringf("REM finish = %lu\n", finish);
+        put_stringf("REM termination = %u\n", taddr);
+        uint32_t start = range.get_lowest();
+        put_stringf("REM start = %u\n", start);
+        uint32_t finish = range.get_highest();
+        put_stringf("REM finish = %u\n", finish);
     }
-    unsigned long len = range.get_highest() - range.get_lowest();
-    put_stringf("REM length = %lu\n", len);
+    uint32_t len = range.get_highest() - range.get_lowest();
+    put_stringf("REM length = %u\n", len);
 }
 
 
@@ -62,7 +62,7 @@ void
 srecord::output_file_basic::emit_byte(int n)
 {
     char buffer[8];
-    sprintf(buffer, "%d", (unsigned char)n);
+    sprintf(buffer, "%d", (uint8_t)n);
     int len = strlen(buffer);
     if (column && column + 1 + len > line_length)
     {
@@ -98,8 +98,8 @@ srecord::output_file_basic::write(const srecord::record &record)
         // emit header records as comments in the file
         {
             bool bol = true;
-            const unsigned char *cp = record.get_data();
-            const unsigned char *ep = cp + record.get_length();
+            const uint8_t *cp = record.get_data();
+            const uint8_t *ep = cp + record.get_length();
             while (cp < ep)
             {
             int c = *cp++;

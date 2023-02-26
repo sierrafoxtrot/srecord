@@ -44,7 +44,7 @@ srecord::output_file_binary::write(const srecord::record &record)
     if (record.get_type() != srecord::record::type_data)
         return;
     seek_to(record.get_address());
-    const unsigned char *data = record.get_data();
+    const uint8_t *data = record.get_data();
     int length = record.get_length();
     while (length-- > 0)
         put_char(*data++);

@@ -33,7 +33,7 @@
 
 srecord::input_filter_message_stm32::input_filter_message_stm32(
     const input::pointer &a_deeper,
-    unsigned long a_address,
+    uint32_t a_address,
     endian_t a_end
 ) :
     input_filter_message(a_deeper),
@@ -45,7 +45,7 @@ srecord::input_filter_message_stm32::input_filter_message_stm32(
 
 srecord::input::pointer
 srecord::input_filter_message_stm32::create(const input::pointer &a_deeper,
-    unsigned long a_address, endian_t a_end)
+    uint32_t a_address, endian_t a_end)
 {
     return
         pointer
@@ -69,14 +69,14 @@ srecord::input_filter_message_stm32::process(const memory &input,
     // Now STM32 the bytes in order from lowest address to highest.
     // (Holes are ignored, not filled, warning already issued.)
     //
-    memory_walker_stm32::pointer w = memory_walker_stm32::create();
+    auto w = std::make_shared<memory_walker_stm32>();
     input.walk(w);
-    unsigned long crc = w->get();
+    uint32_t crc = w->get();
 
     //
     // Turn the CRC into the first data record.
     //
-    unsigned char chunk[4];
+    uint8_t chunk[4];
     record::encode(chunk, crc, sizeof(chunk), end);
     output = record(record::type_data, address, chunk, sizeof(chunk));
 }

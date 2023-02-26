@@ -45,7 +45,7 @@ srecord::output_file_tektronix::put_nibble(int n)
 
 
 void
-srecord::output_file_tektronix::put_byte(unsigned char n)
+srecord::output_file_tektronix::put_byte(uint8_t n)
 {
     // This differs from srecord::output_file::put_byte only in that it
     // doesn't add to the checksum.
@@ -55,7 +55,7 @@ srecord::output_file_tektronix::put_byte(unsigned char n)
 
 
 void
-srecord::output_file_tektronix::write_inner(unsigned long address,
+srecord::output_file_tektronix::write_inner(uint32_t address,
     const void *data, int data_nbytes)
 {
     //
@@ -68,7 +68,7 @@ srecord::output_file_tektronix::write_inner(unsigned long address,
     // Emit the line as hexadecimal text.
     //
     put_char('/');
-    unsigned char tmp[2];
+    uint8_t tmp[2];
     srecord::record::encode_big_endian(tmp, address, 2);
     checksum_reset();
     put_byte(tmp[0]);
@@ -78,7 +78,7 @@ srecord::output_file_tektronix::write_inner(unsigned long address,
     if (data_nbytes)
     {
         checksum_reset();
-        const auto *data_p = (const unsigned char *)data;
+        const auto *data_p = (const uint8_t *)data;
         for (int j = 0; j < data_nbytes; ++j)
             put_byte(data_p[j]);
         put_byte(checksum_get());
@@ -118,10 +118,10 @@ srecord::output_file_tektronix::write(const srecord::record &record)
         {
             if (record.get_address() >= (1UL << 16))
             {
-                unsigned long addr = record.get_address();
+                uint32_t addr = record.get_address();
                 fatal_error
                 (
-                    "execution start address (0x%08lX > 0xFFFF) too large",
+                    "execution start address (0x%08X > 0xFFFF) too large",
                     addr
                 );
             }

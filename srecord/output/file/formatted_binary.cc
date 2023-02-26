@@ -52,7 +52,7 @@ srecord::output_file_formatted_binary::create(const std::string &a_file_name)
 
 
 void
-srecord::output_file_formatted_binary::notify_upper_bound(unsigned long arg)
+srecord::output_file_formatted_binary::notify_upper_bound(uint32_t arg)
 {
     upper_bound = arg;
     if (upper_bound == 0)
@@ -109,7 +109,7 @@ srecord::output_file_formatted_binary::write(const srecord::record &record)
                 put_char(0xFF);
                 ++address;
             }
-            const unsigned char *data = record.get_data();
+            const uint8_t *data = record.get_data();
             int length = record.get_length();
             while (length-- > 0)
             {

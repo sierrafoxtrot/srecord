@@ -82,7 +82,7 @@ private:
       * The address instance variable is used to remember where we are
       * up to in the output.  Used to limit the number of $A line emitted.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The column instance variable is used to remember which column

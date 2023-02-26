@@ -69,7 +69,7 @@ private:
     bool read_inner(record &);
     bool garbage_warning{};
     bool seen_some_input{false};
-    unsigned long address{0};
+    uint32_t address{0};
 
 public:
     /**

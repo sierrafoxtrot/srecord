@@ -76,7 +76,7 @@ private:
       * The address instance variable is used to remember where we are
       * up to in the input file, so it may be associated with data bytes.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     enum token_t
     {
@@ -99,7 +99,7 @@ private:
       * of the most recent token, as determined by the get_next_token
       * method.  Only meaningful for token_number, zero otherwise.
       */
-    unsigned long token_value{0};
+    uint32_t token_value{0};
 
     /**
       * The address_warning instance variable is used to remember

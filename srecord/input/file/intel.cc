@@ -98,7 +98,7 @@ srecord::input_file_intel::read_inner(srecord::record &record)
         //
         // Looks like a real Intel-hex line.
         //
-        unsigned char buffer[255+5];
+        uint8_t buffer[255+5];
         checksum_reset();
         buffer[0] = get_byte();
         buffer[1] = get_byte();

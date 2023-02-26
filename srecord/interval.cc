@@ -770,7 +770,7 @@ to_string(srecord::interval::data_t x)
     if (x >= 0x1000000)
         width += 2;
     char buffer[20];
-    snprintf(buffer, sizeof(buffer), "0x%0*lX", width, (unsigned long)x);
+    snprintf(buffer, sizeof(buffer), "0x%0*X", width, (uint32_t)x);
     return buffer;
 }
 

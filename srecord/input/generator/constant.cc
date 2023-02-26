@@ -22,7 +22,7 @@
 #include <srecord/input/generator/constant.h>
 
 srecord::input_generator_constant::input_generator_constant(
-        const interval &a_range, unsigned char a_datum) :
+        const interval &a_range, uint8_t a_datum) :
     srecord::input_generator(a_range),
     datum(a_datum)
 {
@@ -31,14 +31,14 @@ srecord::input_generator_constant::input_generator_constant(
 
 srecord::input::pointer
 srecord::input_generator_constant::create(const interval &a_range,
-    unsigned char a_datum)
+    uint8_t a_datum)
 {
     return pointer(new srecord::input_generator_constant(a_range, a_datum));
 }
 
 
-unsigned char
-srecord::input_generator_constant::generate_data(unsigned long)
+uint8_t
+srecord::input_generator_constant::generate_data(uint32_t)
 {
     return datum;
 }

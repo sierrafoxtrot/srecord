@@ -60,7 +60,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void notify_upper_bound(long unsigned) override;
+    void notify_upper_bound(uint32_t) override;
 
     // See base class for documentation.
     void write(const record &) override;
@@ -88,19 +88,19 @@ private:
       * The upper_bound instance variable is used to remember the upper
       * bound of memory addresses (maximum address plus one).
       */
-    unsigned long upper_bound{0};
+    uint32_t upper_bound{0};
 
     /**
       * The address instance variable is used to remember the current
       * output address, to know if padding is required.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The check_sum instance variable is used to remember the running
       * sum of data bytes written to date.
       */
-    unsigned short check_sum{0};
+    uint16_t check_sum{0};
 
 public:
     /**

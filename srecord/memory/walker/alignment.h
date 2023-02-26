@@ -33,8 +33,6 @@ class memory_walker_alignment:
     public memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker_alignment> pointer;
-
     /**
       * The destructor.
       */
@@ -60,12 +58,19 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int) override;
+    void observe(uint32_t, const void *, int) override;
 
     // See base class for documentation.
     void observe_end() override;
 
 private:
+
+    unsigned multiple{2};
+    uint32_t current_address{0};
+    bool data_seen{false};
+    bool well_aligned{true};
+
+public:
     /**
       * The constructor.
       * It is private on purpose, use the #create class method instead.
@@ -74,18 +79,6 @@ private:
       *     The multiple of bytes we expect for alignment.
       */
     memory_walker_alignment(unsigned multiple);
-
-    unsigned multiple{2};
-    unsigned long current_address{0};
-    bool data_seen{false};
-    bool well_aligned{true};
-
-public:
-    /**
-      * The default constructor.
-      * Do not use.
-      */
-    memory_walker_alignment() = delete;
 
     /**
       * The copy constructor.  No not use.

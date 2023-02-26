@@ -84,7 +84,7 @@ protected:
       * See base class for documentation.  We over-ride the base
       * implementation because signetics uses its own XOR-ROL algorithm.
       */
-    void checksum_add(unsigned char) override;
+    void checksum_add(uint8_t) override;
 
 private:
     /**
@@ -99,13 +99,13 @@ private:
       * address immediately beyond the last address of data in the file.
       * This is used to write the file termination record.
       */
-    unsigned long last_address{0};
+    uint32_t last_address{0};
 
     /**
       * The write_inner method is used to write one line/record to the
       * output.  It is called by the write() method.
       */
-    void write_inner(int, unsigned long, int, const void *, int);
+    void write_inner(int, uint32_t, int, const void *, int);
 
 public:
     /**

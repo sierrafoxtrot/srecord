@@ -103,7 +103,7 @@ private:
       * input multiple.  (Only the get_byte method may use this
       * instance variable.)
       */
-    unsigned long get_byte_value{};
+    uint32_t get_byte_value{};
 
     /**
       * The garbage_warning instance variable is used by the read
@@ -124,7 +124,7 @@ private:
       * read_inner method to record the current address.  This is
       * so that record types 1 and 2 can be processed accurately.
       */
-    unsigned long running_address{0};
+    uint32_t running_address{0};
 
 public:
     /**

@@ -81,7 +81,7 @@ protected:
     const char *format_name() const override;
 
     // See base class for documentation.
-    void notify_upper_bound(unsigned long addr) override;
+    void notify_upper_bound(uint32_t addr) override;
 
 private:
     /**
@@ -89,7 +89,7 @@ private:
       * memory address to be written.  This is also used to detect holes
       * in the input data.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The column instance variable is used to remember the output text
@@ -102,7 +102,7 @@ private:
       * of data there is.  Kind of broken, because we don't know this
       * when the header is actually printed.
       */
-    unsigned long depth{0};
+    uint32_t depth{0};
 
     /**
       * The width instance variable is used to remember how many bits
@@ -120,7 +120,7 @@ private:
       * The actual_depth instance variable is used to remember how many
       * bytes of data there were.  This is printed in the footer.
       */
-    unsigned long actual_depth{0};
+    uint32_t actual_depth{0};
 
     /**
       * The header_done instance variable is used to remember whether

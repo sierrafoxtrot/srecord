@@ -82,7 +82,7 @@ protected:
     bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    void put_byte(unsigned char) override;
+    void put_byte(uint8_t) override;
 
     // See base class for documentation.
     const char *format_name() const override;
@@ -110,7 +110,7 @@ private:
       * @param data_nbytes
       *     The number of bytes of payload.
       */
-    void write_inner(int tag, unsigned long address, const void *data,
+    void write_inner(int tag, uint32_t address, const void *data,
         int data_nbytes);
 
 public:

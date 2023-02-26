@@ -56,8 +56,8 @@ srecord::input_file_ppb::get_packet()
     if (c != SOH)
         packet_format_error();
 
-    unsigned char hdr[8];
-    unsigned char csum = 0;
+    uint8_t hdr[8];
+    uint8_t csum = 0;
     for (int n = 0; n < 8; ++n)
     {
         c = get_char();
@@ -90,12 +90,12 @@ srecord::input_file_ppb::get_packet()
             c = get_char();
             if (c < 0)
                 packet_format_error();
-            if (c != (unsigned char)-csum && use_checksums())
+            if (c != (uint8_t)-csum && use_checksums())
             {
                 fatal_error
                 (
                     "intermediate checksum mismatch (expected %d, read %d)",
-                    (unsigned char)-csum,
+                    (uint8_t)-csum,
                     c
                 );
             }
@@ -109,12 +109,12 @@ srecord::input_file_ppb::get_packet()
     c = get_char();
     if (c < 0)
         packet_format_error();
-    if (c != (unsigned char)-csum && use_checksums())
+    if (c != (uint8_t)-csum && use_checksums())
     {
         fatal_error
         (
             "packet checksum mismatch (expected %d, read %d)",
-            (unsigned char)-csum,
+            (uint8_t)-csum,
             c
         );
     }

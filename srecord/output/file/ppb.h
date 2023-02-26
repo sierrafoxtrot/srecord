@@ -82,13 +82,13 @@ private:
       * The address instance variable is used to remember the address of
       * the next data byte to be parsed.
       */
-    unsigned long address{-1UL};
+    uint32_t address{-1U};
 
     /**
       * The buffer instance variable is used to remember the accumulated
       * data bytes to be written to the file.
       */
-    unsigned char buffer[8192]{};
+    uint8_t buffer[8192]{};
 
     /**
       * The buffer_length instance variable is used to remember how many
@@ -112,19 +112,19 @@ private:
       * The packet method is used to write out the #buffer as an
       * appropriately constructed packet.
       */
-    void packet(unsigned long address, const unsigned char *data,
+    void packet(uint32_t address, const uint8_t *data,
         size_t data_size);
 
     /**
       * The put_bin_4be method is used to write out 4 binary bytes of a
       * 32-bit value, big endian ordering.
       */
-    void put_bin_4be(unsigned long value);
+    void put_bin_4be(uint32_t value);
 
     /**
       * 8-bit checksum a 4 byte sequence.
       */
-    unsigned char sum_ulong(unsigned long value, unsigned char sum);
+    uint8_t sum_ulong(uint32_t value, uint8_t sum);
 
 public:
     /**

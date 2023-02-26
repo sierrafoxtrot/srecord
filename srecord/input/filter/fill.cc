@@ -64,7 +64,7 @@ srecord::input_filter_fill::generate(record &result)
     size_t fill_block_size = 256;
     if (!filler_block)
     {
-        filler_block = new unsigned char [fill_block_size];
+        filler_block = new uint8_t [fill_block_size];
         memset(filler_block, filler_value, fill_block_size);
     }
     rec_len = chunk.get_highest() - chunk.get_lowest();

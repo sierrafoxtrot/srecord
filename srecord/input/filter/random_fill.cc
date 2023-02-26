@@ -44,7 +44,7 @@ srecord::input_filter_random_fill::generate(srecord::record &record)
 {
     if (range.empty())
         return false;
-    unsigned char buffer[srecord::record::max_data_length];
+    uint8_t buffer[srecord::record::max_data_length];
     interval::data_t lo = range.get_lowest();
     interval::data_t hi = lo + sizeof(buffer);
     if (hi < lo)

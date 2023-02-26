@@ -23,8 +23,8 @@
 #include <srecord/r250.h>
 #include <srecord/sizeof.h>
 
-static  unsigned long   buf[250];
-static  unsigned long   *pos;
+static  uint32_t   buf[250];
+static  uint32_t   *pos;
 
 
 static inline int
@@ -39,13 +39,13 @@ rand32()
 {
     return
         (
-            ((unsigned long)rand8() << 24)
+            ((uint32_t)rand8() << 24)
         |
-            ((unsigned long)rand8() << 16)
+            ((uint32_t)rand8() << 16)
         |
-            ((unsigned long)rand8() << 8)
+            ((uint32_t)rand8() << 8)
         |
-            (unsigned long)rand8()
+            (uint32_t)rand8()
         );
 }
 
@@ -73,14 +73,14 @@ r250_init()
     //
     // initialise contents of array
     //
-    unsigned long *bp;
+    uint32_t *bp;
     for (bp = buf; bp < ENDOF(buf); ++bp)
         *bp = rand32();
 
     //
     // make sure the bits are linearly independent
     //
-    unsigned long bit;
+    uint32_t bit;
     for (bit = 1, bp = buf + 3; bit; bp += 11, bit <<= 1)
     {
         if (bp >= ENDOF(buf))
@@ -90,16 +90,16 @@ r250_init()
 }
 
 
-unsigned long
+uint32_t
 srecord::r250()
 {
     if (!ready)
         r250_init();
-    unsigned long *other = pos + 103;
+    uint32_t *other = pos + 103;
     if (other >= ENDOF(buf))
         other -= SIZEOF(buf);
     *pos ^= *other;
-    unsigned long result = *pos++;
+    uint32_t result = *pos++;
     if (pos >= ENDOF(buf))
         pos = buf;
     return result;

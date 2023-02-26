@@ -41,7 +41,7 @@ srecord::input_file_hexdump::get_next_token()
         int sc = get_char();
         if (sc < 0)
             return token_eof;
-        unsigned char c = sc;
+        uint8_t c = sc;
         switch (c)
         {
         case '\n':
@@ -133,7 +133,7 @@ srecord::input_file_hexdump::read(record &result)
             break;
         }
 
-        unsigned char data[16];
+        uint8_t data[16];
         unsigned nbytes = 0;
         bool could_be_an_address = true;
         for (;;)

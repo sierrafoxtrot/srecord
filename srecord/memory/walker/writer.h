@@ -60,10 +60,10 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int) override;
+    void observe(uint32_t, const void *, int) override;
 
     // See base class for documentation.
-    void notify_upper_bound(long unsigned) override;
+    void notify_upper_bound(uint32_t) override;
 
     // See base class for documentation.
     void observe_header(const record *) override;

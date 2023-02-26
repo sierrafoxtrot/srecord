@@ -33,15 +33,8 @@
 #include <srecord/output.h>
 
 
-srecord::memory_walker_stm32::pointer
-srecord::memory_walker_stm32::create()
-{
-    return pointer(new srecord::memory_walker_stm32());
-}
-
-
 void
-srecord::memory_walker_stm32::observe(unsigned long, const void *data,
+srecord::memory_walker_stm32::observe(uint32_t, const void *data,
     int length)
 {
     checksum.nextbuf(data, length);

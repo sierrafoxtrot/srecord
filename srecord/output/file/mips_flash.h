@@ -93,7 +93,7 @@ private:
       * The write_inner method is used to write a single line (record)
       * to the file.  Use by the write() method.
       */
-    void write_inner(int type, unsigned long addr, int addr_len,
+    void write_inner(int type, uint32_t addr, int addr_len,
         const void *data, int data_len);
 
     /**
@@ -106,13 +106,13 @@ private:
       * The address instance variable is used to remember the address at
       * which the next byte is to be placed.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The base instance variable is used to remember the base address
       * of the current flash segment.
       */
-    unsigned long base{0};
+    uint32_t base{0};
 
     /**
       * The base_set instance variable is used to remember whether or
@@ -125,7 +125,7 @@ private:
       * The buffer instance variable is used to remember the accumulated
       * data so far.  Must be a multiple of 4 bytes long.
       */
-    unsigned char buffer[256]{};
+    uint8_t buffer[256]{};
 
     /**
       * The buffer_length instance variable is used to remember how many

@@ -71,7 +71,7 @@ srecord::input_filter_split::read(srecord::record &record)
         srecord::record::address_t phase = addr % modulus;
         if (phase < width)
         {
-            unsigned char c = buffer.get_data(buffer_pos++);
+            uint8_t c = buffer.get_data(buffer_pos++);
             //
             // Because the offset was made positive by
             // subtracting it from the modulus (to avoid

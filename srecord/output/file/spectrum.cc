@@ -44,16 +44,16 @@ srecord::output_file_spectrum::create(const std::string &a_file_name)
 
 
 void
-srecord::output_file_spectrum::put_decimal(unsigned long n)
+srecord::output_file_spectrum::put_decimal(uint32_t n)
 {
-    put_stringf("%4.4lu", n);
+    put_stringf("%4.4u", n);
 }
 
 
 void
-srecord::output_file_spectrum::put_binary(unsigned char n)
+srecord::output_file_spectrum::put_binary(uint8_t n)
 {
-    for (unsigned char bit = 0x80; bit; bit >>= 1)
+    for (uint8_t bit = 0x80; bit; bit >>= 1)
     {
         put_char((n & bit) ? '1' : '0');
     }
@@ -72,7 +72,7 @@ srecord::output_file_spectrum::write(const srecord::record &record)
 
     case srecord::record::type_data:
         {
-            unsigned long address = record.get_address();
+            uint32_t address = record.get_address();
             int length = record.get_length();
             for (int j = 0; j < length; ++j)
             {

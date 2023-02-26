@@ -84,7 +84,7 @@ private:
       * are up to in the output.  Used to limit the number of @ lines
       * emitted.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The address_set instance variable is used to remember whether or
@@ -131,7 +131,7 @@ private:
       * considering the line_length and throwing a newline if necessary.
       * The address is advanced by one.  The column is adjusted, too.
       */
-    void put_byte_wrap(unsigned char c);
+    void put_byte_wrap(uint8_t c);
 
 public:
     /**

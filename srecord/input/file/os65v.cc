@@ -60,7 +60,7 @@ srecord::input_file_os65v::read_inner(srecord::record &record)
                 // It could be an address or a data byte.
                 //
                 get_char_undo(c);
-                unsigned long n = 0;
+                uint32_t n = 0;
                 for (;;)
                 {
                     n = (n << 4) | get_nibble();
@@ -91,7 +91,7 @@ srecord::input_file_os65v::read_inner(srecord::record &record)
                         ignore_the_rest = true;
                         return false;
                     }
-                    unsigned char buf[1];
+                    uint8_t buf[1];
                     buf[0] = n;
                     record =
                         srecord::record

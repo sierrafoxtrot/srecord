@@ -32,7 +32,7 @@ srecord::fletcher32::operator=(const fletcher32 &rhs)
 
 
 void
-srecord::fletcher32::next(unsigned char x)
+srecord::fletcher32::next(uint8_t x)
 {
     sum1 += x;
     sum2 += sum1;
@@ -68,7 +68,7 @@ srecord::fletcher32::nextbuf(const void *vdata, size_t nbytes)
     // overflow.  Any smaller value is also permissible; 256 may be
     // convenient in many cases.
     //
-    const auto *data = (const unsigned char *)vdata;
+    const auto *data = (const uint8_t *)vdata;
     size_t len = nbytes;
     while (len)
     {
@@ -91,7 +91,7 @@ srecord::fletcher32::nextbuf(const void *vdata, size_t nbytes)
 }
 
 
-unsigned long
+uint32_t
 srecord::fletcher32::get()
     const
 {

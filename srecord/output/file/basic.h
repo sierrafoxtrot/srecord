@@ -83,7 +83,7 @@ private:
       * The taddr instance variable is used to remember the
       * termination address, to be emitted in the footer.
       */
-    unsigned long taddr{0};
+    uint32_t taddr{0};
 
     /**
       * The range instance variable is used to remember the range
@@ -102,7 +102,7 @@ private:
       * the current address that the file is positioned at.  This is
       * used to know whether we need to add padding.
       */
-    unsigned long current_address{0};
+    uint32_t current_address{0};
 
     /**
       * The line_length instance variable is used to remember the

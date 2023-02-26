@@ -47,7 +47,7 @@ srecord::output_file_ti_txt::create(const std::string &a_file_name)
 
 
 void
-srecord::output_file_ti_txt::put_byte_wrap(unsigned char c)
+srecord::output_file_ti_txt::put_byte_wrap(uint8_t c)
 {
     if (column && column + 3 > line_length)
     {
@@ -96,7 +96,7 @@ srecord::output_file_ti_txt::write(const srecord::record &record)
             if (width < address_length)
                 width = address_length;
             width *= 2;
-            put_stringf("@%0*lX\n", width, address);
+            put_stringf("@%0*X\n", width, address);
         }
         for (size_t j = 0; j < record.get_length(); ++j)
         {

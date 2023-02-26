@@ -34,26 +34,10 @@ class memory_walker_adler32:
     public memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker_adler32> pointer;
-
     /**
       * The destructor.
       */
     ~memory_walker_adler32() override = default;
-
-private:
-    /**
-      * The default constructor.  It is private on purpose, use the
-      * #create method instead.
-      */
-    memory_walker_adler32()  = default;
-
-public:
-    /**
-      * The create class method is used to create new dynamically
-      * allocated instances of this class.
-      */
-    static pointer create();
 
     /**
       * The get method is used to get the ADLER32 checksum once all memory
@@ -63,7 +47,7 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int) override;
+    void observe(uint32_t, const void *, int) override;
 
 private:
     /**
@@ -82,6 +66,12 @@ public:
       * The assignment operator.
       */
     memory_walker_adler32 &operator=(const memory_walker_adler32 &) = delete;
+
+    /**
+      * The default constructor.  It is private on purpose, use the
+      * #create method instead.
+      */
+    memory_walker_adler32()  = default;
 };
 
 };

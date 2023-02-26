@@ -43,7 +43,7 @@ main(int argc, char **argv)
     int address_length = 0;
     std::string header;
     bool header_set = false;
-    unsigned long execution_start_address = 0;
+    uint32_t execution_start_address = 0;
     bool execution_start_address_set = false;
     int output_block_size = 0;
     bool output_block_packing = false;

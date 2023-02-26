@@ -33,7 +33,7 @@ nibble(unsigned x)
 
 
 static bool
-needs_quoting(unsigned char x)
+needs_quoting(uint8_t x)
 {
     if (x == '%')
         return true;
@@ -52,7 +52,7 @@ srecord::string_url_encode(const std::string &text)
     std::stringstream result;
     while (cur < end)
     {
-        unsigned char c = *cur++;
+        uint8_t c = *cur++;
         if (needs_quoting(c))
         {
             result << '%';

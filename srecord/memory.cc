@@ -98,7 +98,7 @@ srecord::memory::copy(const srecord::memory &rhs)
 
 
 srecord::memory_chunk *
-srecord::memory::find(unsigned long address)
+srecord::memory::find(uint32_t address)
     const
 {
     //
@@ -156,32 +156,32 @@ srecord::memory::find(unsigned long address)
 
 
 void
-srecord::memory::set(unsigned long address, int datum)
+srecord::memory::set(uint32_t address, int datum)
 {
-    unsigned long address_hi = address / srecord::memory_chunk::size;
-    unsigned long address_lo = address % srecord::memory_chunk::size;
+    uint32_t address_hi = address / srecord::memory_chunk::size;
+    uint32_t address_lo = address % srecord::memory_chunk::size;
     srecord::memory_chunk *mcp = find(address_hi);
     mcp->set(address_lo, datum);
 }
 
 
 int
-srecord::memory::get(unsigned long address)
+srecord::memory::get(uint32_t address)
     const
 {
-    unsigned long address_hi = address / srecord::memory_chunk::size;
-    unsigned long address_lo = address % srecord::memory_chunk::size;
+    uint32_t address_hi = address / srecord::memory_chunk::size;
+    uint32_t address_lo = address % srecord::memory_chunk::size;
     srecord::memory_chunk *mcp = find(address_hi);
     return mcp->get(address_lo);
 }
 
 
 bool
-srecord::memory::set_p(unsigned long address)
+srecord::memory::set_p(uint32_t address)
     const
 {
-    unsigned long address_hi = address / srecord::memory_chunk::size;
-    unsigned long address_lo = address % srecord::memory_chunk::size;
+    uint32_t address_hi = address / srecord::memory_chunk::size;
+    uint32_t address_lo = address % srecord::memory_chunk::size;
     srecord::memory_chunk *mcp = find(address_hi);
     return mcp->set_p(address_lo);
 }
@@ -215,7 +215,7 @@ srecord::memory::compare(const srecord::memory &lhs, const srecord::memory &rhs)
 }
 
 
-unsigned long
+uint32_t
 srecord::memory::get_lower_bound()
     const
 {
@@ -225,7 +225,7 @@ srecord::memory::get_lower_bound()
 }
 
 
-unsigned long
+uint32_t
 srecord::memory::get_upper_bound()
     const
 {
@@ -375,7 +375,7 @@ operator != (const srecord::memory &lhs, const srecord::memory &rhs)
 
 
 srecord::memory_chunk *
-srecord::memory::find_next_chunk(unsigned long address)
+srecord::memory::find_next_chunk(uint32_t address)
     const
 {
     //
@@ -406,10 +406,10 @@ srecord::memory::find_next_chunk(unsigned long address)
 
 
 bool
-srecord::memory::find_next_data(unsigned long &address, void *data,
+srecord::memory::find_next_data(uint32_t &address, void *data,
     size_t &nbytes) const
 {
-    unsigned long address_hi = address / srecord::memory_chunk::size;
+    uint32_t address_hi = address / srecord::memory_chunk::size;
     for (;;)
     {
         srecord::memory_chunk *mcp = find_next_chunk(address_hi);
@@ -461,7 +461,7 @@ srecord::memory::get_execution_start_address()
 
 
 void
-srecord::memory::set_execution_start_address(unsigned long addr)
+srecord::memory::set_execution_start_address(uint32_t addr)
 {
     delete execution_start_address;
     execution_start_address =
@@ -479,8 +479,7 @@ bool
 srecord::memory::has_holes()
     const
 {
-    srecord::memory_walker_continuity::pointer sniffer =
-        srecord::memory_walker_continuity::create();
+    auto sniffer = std::make_shared<memory_walker_continuity>();
     walk(sniffer);
     return (!sniffer->is_continuous());
 }
@@ -492,8 +491,7 @@ srecord::memory::is_well_aligned(unsigned multiple)
 {
     if (multiple < 2)
         return true;
-    srecord::memory_walker_alignment::pointer sniffer =
-        srecord::memory_walker_alignment::create(multiple);
+    auto sniffer = std::make_shared<memory_walker_alignment>(multiple);
     walk(sniffer);
     return sniffer->is_well_aligned();
 }

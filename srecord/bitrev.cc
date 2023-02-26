@@ -19,7 +19,7 @@
 #include <srecord/bitrev.h>
 
 
-static unsigned char table[256] =
+static uint8_t table[256] =
 {
     0x00, 0x80, 0x40, 0xC0, 0x20, 0xA0, 0x60, 0xE0,
     0x10, 0x90, 0x50, 0xD0, 0x30, 0xB0, 0x70, 0xF0,
@@ -56,94 +56,94 @@ static unsigned char table[256] =
 };
 
 
-unsigned char
-srecord::bitrev8(unsigned char value)
+uint8_t
+srecord::bitrev8(uint8_t value)
 {
     return table[value];
 }
 
 
-unsigned short
-srecord::bitrev16(unsigned short value)
+uint16_t
+srecord::bitrev16(uint16_t value)
 {
     // could make this faster with a table,
     // but is it worth it?
-    unsigned char hi1(value >> 8);
-    unsigned char lo1(value);
-    unsigned short hi2(bitrev8(lo1));
-    unsigned char lo2(bitrev8(hi1));
+    uint8_t hi1(value >> 8);
+    uint8_t lo1(value);
+    uint16_t hi2(bitrev8(lo1));
+    uint8_t lo2(bitrev8(hi1));
     // hi2 must have same type as return
     return ((hi2 << 8) | lo2);
 }
 
 
-unsigned long
-srecord::bitrev24(unsigned long value)
+uint32_t
+srecord::bitrev24(uint32_t value)
 {
-    unsigned char hi1(value >> 16);
-    unsigned short lo1(value);
-    unsigned long hi2(bitrev16(lo1));
-    unsigned char lo2(bitrev8(hi1));
+    uint8_t hi1(value >> 16);
+    uint16_t lo1(value);
+    uint32_t hi2(bitrev16(lo1));
+    uint8_t lo2(bitrev8(hi1));
     // hi2 must have same type as return
     return ((hi2 << 8) | lo2);
 }
 
 
-unsigned long
-srecord::bitrev32(unsigned long value)
+uint32_t
+srecord::bitrev32(uint32_t value)
 {
-    unsigned short hi1(value >> 16);
-    unsigned short lo1(value);
-    unsigned long hi2(bitrev16(lo1));
-    unsigned short lo2(bitrev16(hi1));
+    uint16_t hi1(value >> 16);
+    uint16_t lo1(value);
+    uint32_t hi2(bitrev16(lo1));
+    uint16_t lo2(bitrev16(hi1));
     // hi2 must have same type as return
     return ((hi2 << 16) | lo2);
 }
 
 
-unsigned long long
-srecord::bitrev40(unsigned long long value)
+uint64_t
+srecord::bitrev40(uint64_t value)
 {
-    unsigned char hi1(value >> 32);
-    unsigned long lo1(value);
-    unsigned long long hi2(bitrev32(lo1));
-    unsigned char lo2(bitrev8(hi1));
+    uint8_t hi1(value >> 32);
+    uint32_t lo1(value);
+    uint64_t hi2(bitrev32(lo1));
+    uint8_t lo2(bitrev8(hi1));
     // hi2 must have same type as return
     return ((hi2 << 8) | lo2);
 }
 
 
-unsigned long long
-srecord::bitrev48(unsigned long long value)
+uint64_t
+srecord::bitrev48(uint64_t value)
 {
-    unsigned short hi1(value >> 32);
-    unsigned long lo1(value);
-    unsigned long long hi2(bitrev32(lo1));
-    unsigned short lo2(bitrev16(hi1));
+    uint16_t hi1(value >> 32);
+    uint32_t lo1(value);
+    uint64_t hi2(bitrev32(lo1));
+    uint16_t lo2(bitrev16(hi1));
     // hi2 must have same type as return
     return ((hi2 << 16) | lo2);
 }
 
 
-unsigned long long
-srecord::bitrev56(unsigned long long value)
+uint64_t
+srecord::bitrev56(uint64_t value)
 {
-    unsigned long hi1(value >> 32);
-    unsigned long lo1(value);
-    unsigned long long hi2(bitrev32(lo1));
-    unsigned long lo2(bitrev24(hi1));
+    uint32_t hi1(value >> 32);
+    uint32_t lo1(value);
+    uint64_t hi2(bitrev32(lo1));
+    uint32_t lo2(bitrev24(hi1));
     // hi2 must have same type as return
     return ((hi2 << 24) | lo2);
 }
 
 
-unsigned long long
-srecord::bitrev64(unsigned long long value)
+uint64_t
+srecord::bitrev64(uint64_t value)
 {
-    unsigned long hi1(value >> 32);
-    unsigned long lo1(value);
-    unsigned long long hi2 = bitrev32(lo1);
-    unsigned long lo2 = bitrev32(hi1);
+    uint32_t hi1(value >> 32);
+    uint32_t lo1(value);
+    uint64_t hi2 = bitrev32(lo1);
+    uint32_t lo2 = bitrev32(hi1);
     // hi2 must have same type as return
     return ((hi2 << 32) | lo2);
 }

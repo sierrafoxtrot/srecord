@@ -63,8 +63,8 @@ srecord::output_file_ppb::write(const srecord::record &record)
     case srecord::record::type_data:
         for (size_t j = 0; j < record.get_length(); ++j)
         {
-            unsigned char data = record.get_data(j);
-            unsigned long data_address = record.get_address() + j;
+            uint8_t data = record.get_data(j);
+            uint32_t data_address = record.get_address() + j;
 
             if (data_address != address)
             {
@@ -125,7 +125,7 @@ srecord::output_file_ppb::format_name()
 
 
 void
-srecord::output_file_ppb::put_bin_4be(unsigned long value)
+srecord::output_file_ppb::put_bin_4be(uint32_t value)
 {
     put_char(value >> 24);
     put_char(value >> 16);
@@ -134,8 +134,8 @@ srecord::output_file_ppb::put_bin_4be(unsigned long value)
 }
 
 
-unsigned char
-srecord::output_file_ppb::sum_ulong(unsigned long value, unsigned char sum)
+uint8_t
+srecord::output_file_ppb::sum_ulong(uint32_t value, uint8_t sum)
 {
     sum += (value >> 24);
     sum += (value >> 16);
@@ -147,8 +147,8 @@ srecord::output_file_ppb::sum_ulong(unsigned long value, unsigned char sum)
 
 
 void
-srecord::output_file_ppb::packet(unsigned long address,
-    const unsigned char *data, size_t data_size)
+srecord::output_file_ppb::packet(uint32_t address,
+    const uint8_t *data, size_t data_size)
 {
     enum { SOH = 1 };
     enum { CSLEN = 1024 };
@@ -157,7 +157,7 @@ srecord::output_file_ppb::packet(unsigned long address,
     put_bin_4be(data_size);
     put_bin_4be(address);
 
-    unsigned char chksum = sum_ulong(data_size, 0);
+    uint8_t chksum = sum_ulong(data_size, 0);
     chksum = sum_ulong(address, chksum);
 
     for (size_t j = 0; j < data_size; ++j)

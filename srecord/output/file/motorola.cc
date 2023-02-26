@@ -92,7 +92,7 @@ srecord::output_file_motorola::command_line(srecord::arglex_tool *cmdln)
 
 
 void
-srecord::output_file_motorola::write_inner(int tag, unsigned long address,
+srecord::output_file_motorola::write_inner(int tag, uint32_t address,
     int address_nbytes, const void *data, int data_nbytes)
 {
     //
@@ -111,7 +111,7 @@ srecord::output_file_motorola::write_inner(int tag, unsigned long address,
     //
     // Assemble the data for this line.
     //
-    unsigned char buffer[256];
+    uint8_t buffer[256];
     int line_length = address_nbytes + data_nbytes + 1;
     buffer[0] = line_length;
     srecord::record::encode_big_endian(buffer + 1, address, address_nbytes);
@@ -162,14 +162,14 @@ srecord::output_file_motorola::write(const srecord::record &record)
     // Make sure the address is nicely aligned.
     // FIXME: cope with this more elegantly.
     //
-    unsigned long shifted_address = record.get_address();
+    uint32_t shifted_address = record.get_address();
     if (address_shift)
     {
         if (shifted_address & ((1 << address_shift) - 1))
         {
             fatal_error
             (
-                "address 0x%04lX not aligned on %d byte boundary",
+                "address 0x%04X not aligned on %d byte boundary",
                 shifted_address,
                 (1 << address_shift)
             );

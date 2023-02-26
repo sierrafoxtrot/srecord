@@ -22,6 +22,7 @@
 #include <cstddef>
 
 #include <srecord/endian.h>
+#include <cstdint>
 
 namespace srecord
 {
@@ -75,19 +76,19 @@ public:
       *     The endian-ness of the checksum.  This is needed to
       *     manipulate the answer.  Ignored if @p answer is ignored.
       */
-    fletcher16(unsigned char sum1 = 0, unsigned char sum2 = 0,
+    fletcher16(uint8_t sum1 = 0, uint8_t sum2 = 0,
         int answer = -1, endian_t end = endian_little);
 
     /**
       * The get method is used to obtain the running value of the cyclic
       * redundancy check.
       */
-    unsigned short get() const;
+    uint16_t get() const;
 
     /**
       * The next method is used to advance the state by one byte.
       */
-    void next(unsigned char);
+    void next(uint8_t);
 
     /**
       * The nextbuf method is used to advance the state by a series of bytes.
@@ -106,7 +107,7 @@ private:
       * an 8-bit value for convenience, see #nextbuf implementation for
       * details.
       */
-    unsigned short sum1;
+    uint16_t sum1;
 
     /**
       * The sum2 instance variable is used to remember the running
@@ -114,7 +115,7 @@ private:
       * value rather than an 8-bit value for convenience, see #nextbuf
       * implementation for details.
       */
-    unsigned short sum2;
+    uint16_t sum2;
 
     /**
       * The answer instance variable is used to remember the desired

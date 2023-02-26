@@ -19,22 +19,22 @@
 #include <srecord/endian.h>
 
 
-unsigned short
-srecord::decode_word_le(const unsigned char *data)
+uint16_t
+srecord::decode_word_le(const uint8_t *data)
 {
     return (data[0] | (data[1] << 8));
 }
 
 
-unsigned short
-srecord::decode_word_be(const unsigned char *data)
+uint16_t
+srecord::decode_word_be(const uint8_t *data)
 {
     return ((data[0] << 8) | data[1]);
 }
 
 
-unsigned short
-srecord::endian_decode_word(const unsigned char *data, endian_t order)
+uint16_t
+srecord::endian_decode_word(const uint8_t *data, endian_t order)
 {
     return
         (

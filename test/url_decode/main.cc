@@ -49,7 +49,7 @@ test_url_decode()
         if (!fgets(buf, sizeof(buf), stdin))
             break;
         size_t len = strlen(buf);
-        while (len > 0 && isspace((unsigned char)buf[len - 1]))
+        while (len > 0 && isspace((uint8_t)buf[len - 1]))
             --len;
         std::string s(buf, len);
         printf("%s\n", srecord::string_url_decode(s).c_str());
@@ -66,7 +66,7 @@ test_url_encode()
         if (!fgets(buf, sizeof(buf), stdin))
             break;
         size_t len = strlen(buf);
-        while (len > 0 && isspace((unsigned char)buf[len - 1]))
+        while (len > 0 && isspace((uint8_t)buf[len - 1]))
             --len;
         std::string s(buf, len);
         printf("%s\n", srecord::string_url_encode(s).c_str());
@@ -94,7 +94,7 @@ main(int argc, char **argv)
         if (c == -1)
             break;
 
-        switch ((unsigned char)c)
+        switch ((uint8_t)c)
         {
         case 'd':
             func = test_url_decode;

@@ -42,8 +42,8 @@ srecord::output_file_idt::create(const std::string &a_file_name)
 
 
 void
-srecord::output_file_idt::write_inner(int tag, unsigned long address,
-    unsigned address_nbytes, const unsigned char *data, size_t data_nbytes)
+srecord::output_file_idt::write_inner(int tag, uint32_t address,
+    unsigned address_nbytes, const uint8_t *data, size_t data_nbytes)
 {
     //
     // Make sure the line is not too long.
@@ -52,23 +52,23 @@ srecord::output_file_idt::write_inner(int tag, unsigned long address,
     {
         fatal_error
         (
-            "data length (%d+%ld>254) too long",
+            "data length (%d+%d>254) too long",
             address_nbytes,
-            (unsigned long)data_nbytes
+            (uint32_t)data_nbytes
         );
     }
 
     // intro
     put_char('S');
     put_nibble(tag);
-    unsigned char line_length = address_nbytes + data_nbytes + 1;
+    uint8_t line_length = address_nbytes + data_nbytes + 1;
     put_char(line_length);
-    unsigned char csum = line_length;
+    uint8_t csum = line_length;
 
     // address
     for (unsigned j = 0; j < address_nbytes; ++j)
     {
-        unsigned char c = address >> (8 * (address_nbytes - 1 - j));
+        uint8_t c = address >> (8 * (address_nbytes - 1 - j));
         put_char(c);
         csum += c;
     }
@@ -76,7 +76,7 @@ srecord::output_file_idt::write_inner(int tag, unsigned long address,
     // data
     for (unsigned j = 0; j < data_nbytes; ++j)
     {
-        unsigned char c = data[j];
+        uint8_t c = data[j];
         put_char(c);
         csum += c;
     }
@@ -116,7 +116,7 @@ srecord::output_file_idt::write(const srecord::record &record)
     //
     // Make sure the address is nicely aligned.
     //
-    unsigned long addr = record.get_address();
+    uint32_t addr = record.get_address();
 
     switch (record.get_type())
     {

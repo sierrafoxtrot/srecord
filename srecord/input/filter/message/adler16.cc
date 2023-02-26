@@ -25,7 +25,7 @@
 
 srecord::input_filter_message_adler16::input_filter_message_adler16(
     const input::pointer &a_deeper,
-    unsigned long a_address,
+    uint32_t a_address,
     endian_t a_end
 ) :
     input_filter_message(a_deeper),
@@ -37,7 +37,7 @@ srecord::input_filter_message_adler16::input_filter_message_adler16(
 
 srecord::input::pointer
 srecord::input_filter_message_adler16::create(const input::pointer &a_deeper,
-    unsigned long a_address, endian_t a_end)
+    uint32_t a_address, endian_t a_end)
 {
     return
         pointer
@@ -56,14 +56,14 @@ srecord::input_filter_message_adler16::process(const memory &input,
     // lowest address to highest.  (Holes are ignored, not filled,
     // warning already issued.)
     //
-    memory_walker_adler16::pointer w = memory_walker_adler16::create();
+    auto  w = std::make_shared<memory_walker_adler16>();
     input.walk(w);
-    unsigned short adler = w->get();
+    uint16_t adler = w->get();
 
     //
     // Turn the Adler-16 checksum into the first data record.
     //
-    unsigned char chunk[2];
+    uint8_t chunk[2];
     record::encode(chunk, adler, sizeof(chunk), end);
     output = record(record::type_data, address, chunk, sizeof(chunk));
 }

@@ -77,7 +77,7 @@ public:
     static pointer create(const memory &other, bool check_wrong);
 
     // See base class for documentation.
-    void observe(unsigned long, const void *, int) override;
+    void observe(uint32_t, const void *, int) override;
 
     /**
       * The print method is used to print the results of the comparison

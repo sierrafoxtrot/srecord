@@ -27,7 +27,7 @@ srecord::output_file_mif::~output_file_mif()
     emit_header();
     put_stringf("END;\n");
     if (enable_header_flag && actual_depth != depth)
-        put_stringf("-- DEPTH = %lu;\n", actual_depth / width_in_bytes);
+        put_stringf("-- DEPTH = %u;\n", actual_depth / width_in_bytes);
 }
 
 
@@ -86,7 +86,7 @@ srecord::output_file_mif::command_line(srecord::arglex_tool *cmdln)
 
 
 void
-srecord::output_file_mif::notify_upper_bound(unsigned long addr)
+srecord::output_file_mif::notify_upper_bound(uint32_t addr)
 {
     depth = addr;
     actual_depth = addr;
@@ -109,13 +109,13 @@ srecord::output_file_mif::emit_header()
         );
         if (actual_depth != 0)
         {
-            put_stringf("DEPTH = %lu;\n", actual_depth / width_in_bytes);
+            put_stringf("DEPTH = %u;\n", actual_depth / width_in_bytes);
         }
         else
         {
             put_stringf
             (
-                "DEPTH = %lu; "
+                "DEPTH = %u; "
                     "-- see comment at end of file for the actual size\n",
                 depth / width_in_bytes
             );
@@ -147,14 +147,14 @@ srecord::output_file_mif::write(const srecord::record &record)
             put_string("-- ");
             if (record.get_address() != 0)
             {
-                unsigned long addr = record.get_address();
-                put_stringf("%04lX: ", addr);
+                uint32_t addr = record.get_address();
+                put_stringf("%04X: ", addr);
             }
-            const unsigned char *cp = record.get_data();
-            const unsigned char *ep = cp + record.get_length();
+            const uint8_t *cp = record.get_data();
+            const uint8_t *ep = cp + record.get_length();
             while (cp < ep)
             {
-                unsigned char c = *cp++;
+                uint8_t c = *cp++;
                 if (c == '\n')
                 {
                     put_string("\n-- ");
@@ -170,12 +170,12 @@ srecord::output_file_mif::write(const srecord::record &record)
 
     case srecord::record::type_data:
         {
-            unsigned long addr = record.get_address();
+            uint32_t addr = record.get_address();
             unsigned len = record.get_length();
             if ((addr % width_in_bytes) || (len % width_in_bytes))
                 fatal_alignment_error(width_in_bytes);
             emit_header();
-            put_stringf("%04lX:", addr / width_in_bytes);
+            put_stringf("%04X:", addr / width_in_bytes);
             for (unsigned j = 0; j < len; ++j)
             {
                 if ((j % width_in_bytes) == 0)
@@ -184,7 +184,7 @@ srecord::output_file_mif::write(const srecord::record &record)
             }
             put_stringf(";\n");
 
-            unsigned long d = addr + len;
+            uint32_t d = addr + len;
             if (actual_depth < d)
                 actual_depth = d;
         }
@@ -193,16 +193,16 @@ srecord::output_file_mif::write(const srecord::record &record)
     case srecord::record::type_data_count:
         if (enable_data_count_flag)
         {
-            unsigned long addr = record.get_address();
-            put_stringf("-- data record count = %lu\n", addr);
+            uint32_t addr = record.get_address();
+            put_stringf("-- data record count = %u\n", addr);
         }
         break;
 
     case srecord::record::type_execution_start_address:
         if (enable_goto_addr_flag)
         {
-            unsigned long addr = record.get_address();
-            put_stringf("-- start address = %04lX\n", addr);
+            uint32_t addr = record.get_address();
+            put_stringf("-- start address = %04X\n", addr);
         }
         break;
     }

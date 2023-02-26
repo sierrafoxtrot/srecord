@@ -39,7 +39,7 @@ srecord::output_file_aomf::create(const std::string &a_file_name)
 
 
 void
-srecord::output_file_aomf::emit_record(int type, const unsigned char *data,
+srecord::output_file_aomf::emit_record(int type, const uint8_t *data,
     size_t length)
 {
     checksum_reset();
@@ -62,7 +62,7 @@ srecord::output_file_aomf::module_header_record(const char *name)
     //     0xFE -> PL/M-51
     //     0xFF -> RL51
     //
-    unsigned char buffer[1 + 255 + 2];
+    uint8_t buffer[1 + 255 + 2];
     size_t len = strlen(name);
     if (len > 255)
         len = 255;
@@ -75,11 +75,11 @@ srecord::output_file_aomf::module_header_record(const char *name)
 
 
 void
-srecord::output_file_aomf::content_record(unsigned long address,
-    const unsigned char *data, size_t len)
+srecord::output_file_aomf::content_record(uint32_t address,
+    const uint8_t *data, size_t len)
 {
     const size_t maxlen = 4 * srecord::record::max_data_length;
-    auto *buffer = new unsigned char[maxlen + 3];
+    auto *buffer = new uint8_t[maxlen + 3];
 
     while (len > 0)
     {
@@ -101,7 +101,7 @@ srecord::output_file_aomf::content_record(unsigned long address,
 void
 srecord::output_file_aomf::module_end_record(const char *name)
 {
-    unsigned char buffer[1 + 255 + 4];
+    uint8_t buffer[1 + 255 + 4];
     size_t len = strlen(name);
     if (len > 255)
         len = 255;
@@ -116,7 +116,7 @@ srecord::output_file_aomf::module_end_record(const char *name)
 
 
 void
-srecord::output_file_aomf::put_byte(unsigned char n)
+srecord::output_file_aomf::put_byte(uint8_t n)
 {
     checksum_add(n);
     put_char(n);

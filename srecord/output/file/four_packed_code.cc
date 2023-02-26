@@ -23,7 +23,7 @@
 #include <srecord/record.h>
 
 
-static unsigned char digit[] = {
+static uint8_t digit[] = {
     '%',                        //  0
     '&',                        //  1
     '\'',                       //  2
@@ -133,9 +133,9 @@ srecord::output_file_four_packed_code::create(const std::string &a_file_name)
 
 
 void
-srecord::output_file_four_packed_code::put_byte(unsigned char n)
+srecord::output_file_four_packed_code::put_byte(uint8_t n)
 {
-    put_byte_value |= (unsigned long)n << ((3 - put_byte_pos) << 3);
+    put_byte_value |= (uint32_t)n << ((3 - put_byte_pos) << 3);
     ++put_byte_pos;
     if (put_byte_pos >= 4)
     {
@@ -160,7 +160,7 @@ srecord::output_file_four_packed_code::put_byte(unsigned char n)
 
 
 void
-srecord::output_file_four_packed_code::write_inner(unsigned long address,
+srecord::output_file_four_packed_code::write_inner(uint32_t address,
     const void *data, int data_nbytes)
 {
     //
@@ -172,7 +172,7 @@ srecord::output_file_four_packed_code::write_inner(unsigned long address,
     //
     // Assemble the data for this line using format code zero
     //
-    unsigned char buffer[261]; // Worst case is 252 byte length plus header
+    uint8_t buffer[261]; // Worst case is 252 byte length plus header
     buffer[0] = 0; // checksum field
     buffer[1] = 4 + data_nbytes; // byte count field
     buffer[2] = 0; // format code, first byte
