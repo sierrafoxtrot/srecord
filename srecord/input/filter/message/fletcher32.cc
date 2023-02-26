@@ -55,8 +55,7 @@ srecord::input_filter_message_fletcher32::process(const memory &input,
     // lowest address to highest.  (Holes are ignored, not filled,
     // warning issued already.)
     //
-    memory_walker_fletcher32::pointer w =
-        memory_walker_fletcher32::create();
+    auto w = std::make_shared<memory_walker_fletcher32>();
     input.walk(w);
     uint32_t fletcher = w->get();
 

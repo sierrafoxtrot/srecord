@@ -69,7 +69,7 @@ srecord::input_filter_message_stm32::process(const memory &input,
     // Now STM32 the bytes in order from lowest address to highest.
     // (Holes are ignored, not filled, warning already issued.)
     //
-    memory_walker_stm32::pointer w = memory_walker_stm32::create();
+    auto w = std::make_shared<memory_walker_stm32>();
     input.walk(w);
     uint32_t crc = w->get();
 

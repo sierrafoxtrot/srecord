@@ -19,13 +19,6 @@
 #include <srecord/memory/walker/fletcher32.h>
 #include <srecord/output.h>
 
-srecord::memory_walker_fletcher32::pointer
-srecord::memory_walker_fletcher32::create()
-{
-    return pointer(new srecord::memory_walker_fletcher32());
-}
-
-
 void
 srecord::memory_walker_fletcher32::observe(uint32_t, const void *data,
     int length)

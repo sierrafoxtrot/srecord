@@ -479,8 +479,7 @@ bool
 srecord::memory::has_holes()
     const
 {
-    srecord::memory_walker_continuity::pointer sniffer =
-        srecord::memory_walker_continuity::create();
+    auto sniffer = std::make_shared<memory_walker_continuity>();
     walk(sniffer);
     return (!sniffer->is_continuous());
 }
@@ -492,8 +491,7 @@ srecord::memory::is_well_aligned(unsigned multiple)
 {
     if (multiple < 2)
         return true;
-    srecord::memory_walker_alignment::pointer sniffer =
-        srecord::memory_walker_alignment::create(multiple);
+    auto sniffer = std::make_shared<memory_walker_alignment>(multiple);
     walk(sniffer);
     return sniffer->is_well_aligned();
 }

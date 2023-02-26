@@ -34,26 +34,16 @@ class memory_walker_continuity:
     public memory_walker
 {
 public:
-    typedef std::shared_ptr<memory_walker_continuity> pointer;
-
     /**
       * The destructor.
       */
     ~memory_walker_continuity() override = default;
 
-private:
     /**
       * The default constructor.  It is private on purpose, use the
       * #create class method instead.
       */
     memory_walker_continuity() = default;
-
-public:
-    /**
-      * The create class method is used to create new dynamically
-      * allocated instances of class.
-      */
-    static pointer create();
 
     /**
       * The is_continuous method is used to get the results of the

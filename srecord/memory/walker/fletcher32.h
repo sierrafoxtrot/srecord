@@ -40,19 +40,11 @@ public:
       */
     ~memory_walker_fletcher32() override  = default;
 
-private:
     /**
       * The default constructor.  It is private on purpose, use the
       * #create method instead.
       */
     memory_walker_fletcher32() = default;
-
-public:
-    /**
-      * The create class method is used to create new dynamically
-      * allocated instances of this class.
-      */
-    static pointer create();
 
     /**
       * The get method is used to get the Fletcher-32 checksum once all memory
