@@ -21,13 +21,6 @@
 #include <srecord/output.h>
 
 
-srecord::memory_walker_adler16::pointer
-srecord::memory_walker_adler16::create()
-{
-    return pointer(new srecord::memory_walker_adler16());
-}
-
-
 void
 srecord::memory_walker_adler16::observe(uint32_t, const void *data,
     int length)

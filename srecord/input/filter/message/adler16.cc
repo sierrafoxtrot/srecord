@@ -56,7 +56,7 @@ srecord::input_filter_message_adler16::process(const memory &input,
     // lowest address to highest.  (Holes are ignored, not filled,
     // warning already issued.)
     //
-    memory_walker_adler16::pointer w = memory_walker_adler16::create();
+    auto  w = std::make_shared<memory_walker_adler16>();
     input.walk(w);
     uint16_t adler = w->get();
 

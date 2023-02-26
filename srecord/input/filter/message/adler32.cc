@@ -56,8 +56,8 @@ srecord::input_filter_message_adler32::process(const memory &input,
     // lowest address to highest.  (Holes are ignored, not filled,
     // warning issued already.)
     //
-    memory_walker_adler32::pointer w =
-        memory_walker_adler32::create();
+    auto w = std::make_shared<memory_walker_adler32>();
+
     input.walk(w);
     uint32_t adler = w->get();
 
