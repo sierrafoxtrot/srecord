@@ -134,20 +134,20 @@ srecord::input_file_intel::read_inner(srecord::record &record)
                 if
                 (
                     (
-                        (long long)address_base + address_field
+                        (uint64_t)address_base + address_field
                     <
-                        ((long long)1 << 32)
+                        ((uint64_t)1 << 32)
                     )
                 &&
                     (
-                        (long long)address_base + address_field + buffer[0]
+                        (uint64_t)address_base + address_field + buffer[0]
                     >
-                        ((long long)1 << 32)
+                        ((uint64_t)1 << 32)
                     )
                 )
                 {
                     int split =
-                        ((long long)1 << 32) - address_base - address_field;
+                        ((uint64_t)1 << 32) - address_base - address_field;
                     pushback =
                         new srecord::record
                         (

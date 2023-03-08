@@ -18,7 +18,9 @@
 
 #include <srecord/adler32.h>
 
-uint32_t srecord::adler32::get() const
+uint32_t
+srecord::adler32::get()
+    const
 {
     return ((((uint32_t)sum_b) << 16) | sum_a);
 }

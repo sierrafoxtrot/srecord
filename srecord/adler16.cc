@@ -18,13 +18,16 @@
 
 #include <srecord/adler16.h>
 
-uint16_t srecord::adler16::get() const
+uint16_t
+srecord::adler16::get()
+    const
 {
     return ((((uint16_t)sum_b) << 8) | sum_a);
 }
 
 
-void srecord::adler16::next(uint8_t c)
+void
+srecord::adler16::next(uint8_t c)
 {
     // This is not portable to int=16-bit machines
     sum_a = (sum_a + c) % 251;
@@ -32,7 +35,8 @@ void srecord::adler16::next(uint8_t c)
 }
 
 
-void srecord::adler16::nextbuf(const void *data, size_t nbytes)
+void
+srecord::adler16::nextbuf(const void *data, size_t nbytes)
 {
     const auto *dp = (const uint8_t *)data;
     while (nbytes > 0)

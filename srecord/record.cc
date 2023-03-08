@@ -28,9 +28,8 @@ srecord::record::record(const srecord::record &arg) :
     address(arg.address),
     length(arg.length)
 {
-    if (arg.length > 0) {
+    if (arg.length > 0)
         memcpy(data, arg.data, arg.length);
-}
 }
 
 
