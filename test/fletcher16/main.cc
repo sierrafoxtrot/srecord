@@ -34,8 +34,8 @@ usage()
 int
 main(int argc, char **argv)
 {
-    unsigned char sum1 = 0xFF;
-    unsigned char sum2 = 0xFF;
+    uint8_t sum1 = 0xFF;
+    uint8_t sum2 = 0xFF;
     int answer = -1;
     if (argc == 2 && argv[1][0] == '-')
         return 0;

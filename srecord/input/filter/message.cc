@@ -113,8 +113,8 @@ srecord::input_filter_message::read(record &result)
     //
     if (!naked)
     {
-        unsigned long ret_address = buffer_pos;
-        unsigned char data[64];
+        uint32_t ret_address = buffer_pos;
+        uint8_t data[64];
         size_t nbytes = sizeof(data);
         if (buffer.find_next_data(ret_address, data, nbytes))
         {

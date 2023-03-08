@@ -52,7 +52,7 @@ srecord::input_file_needham::read(srecord::record &record)
         }
         if (isxdigit(c))
         {
-            unsigned char c = get_byte();
+            uint8_t c = get_byte();
             record =
                 srecord::record
                 (

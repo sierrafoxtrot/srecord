@@ -89,7 +89,7 @@ srecord::output_file_ascii_hex::write(const srecord::record &record)
             start_code_emitted = true;
 
             if (!enable_optional_address_flag)
-                address = (unsigned long)-1L;
+                address = (uint32_t)-1L;
         }
         if (address != record.get_address())
         {
@@ -125,7 +125,7 @@ srecord::output_file_ascii_hex::write(const srecord::record &record)
             // Now write out the new address.  It is important not to
             // disturb the checksum, so don't use the put_byte method.
             //
-            put_stringf("$A%0*lX,\n", address_width, address);
+            put_stringf("$A%0*X,\n", address_width, address);
             column = 0;
         }
         for (size_t j = 0; j < record.get_length(); ++j)

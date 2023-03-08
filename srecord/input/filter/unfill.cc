@@ -60,8 +60,8 @@ srecord::input_filter_unfill::read(srecord::record &record)
         }
 
         int first_pos = buffer_pos;
-        unsigned long addr = buffer.get_address() + buffer_pos;
-        unsigned char c = buffer.get_data(buffer_pos++);
+        uint32_t addr = buffer.get_address() + buffer_pos;
+        uint8_t c = buffer.get_data(buffer_pos++);
         if (c == fill_value)
         {
             //

@@ -100,20 +100,20 @@ private:
       * At the end of 4 bytes, the 5-character base85 encoding
       * is issued.
       */
-    unsigned long put_byte_value{0};
+    uint32_t put_byte_value{0};
 
     /**
       * The write_inner method is used by the write method to
       * write a single line of output.
       */
-    void write_inner(unsigned long address, const void *data,
+    void write_inner(uint32_t address, const void *data,
         int data_length);
 
     /**
       * See base class for documentation.  We over-ride this method
       * so that we can do the base85 encoding of each 4-byte chunk.
       */
-    void put_byte(unsigned char) override;
+    void put_byte(uint8_t) override;
 
 public:
     /**

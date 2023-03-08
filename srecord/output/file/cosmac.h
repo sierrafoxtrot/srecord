@@ -82,7 +82,7 @@ private:
       * The address instance variable is used to remember the current
       * output address, so that file size can be optimized.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The address_length is used to remember the preferred number of

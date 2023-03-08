@@ -41,7 +41,7 @@ srecord::memory_walker_fletcher16::create(int a_sum1, int a_sum2,
 
 
 void
-srecord::memory_walker_fletcher16::observe(unsigned long, const void *data,
+srecord::memory_walker_fletcher16::observe(uint32_t, const void *data,
     int data_size)
 {
     checksum.nextbuf(data, data_size);

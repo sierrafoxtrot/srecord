@@ -244,7 +244,7 @@ public:
       * The get_number method is used to parse a numeric value from the
       * command line.
       */
-    unsigned long get_number(const char *caption);
+    uint32_t get_number(const char *caption);
 
     /**
       * The get_number method is used to parse a numeric value
@@ -257,7 +257,7 @@ public:
       * @param max
       *     The maximum acceptable value (inclusive)
       */
-    unsigned long get_number(const char *caption, long min, long max);
+    uint32_t get_number(const char *caption, long min, long max);
 
     /**
       * The can_get_number method is used to determine if it is possible
@@ -345,7 +345,7 @@ private:
       * line) a fatal error will be issued and the method call will
       * not return.
       */
-    void get_address(const char *err_msg_caption, unsigned long &addr);
+    void get_address(const char *err_msg_caption, uint32_t &addr);
 
     /**
       * The get_address_and_nbytes method is used to parse an address
@@ -356,7 +356,7 @@ private:
       * not return.
       */
     void get_address_and_nbytes(const char *err_msg_caption,
-            unsigned long &addr, int &nbytes);
+            uint32_t &addr, int &nbytes);
 
     /**
       * The get_address_nbytes_width method is used to parse an address
@@ -367,7 +367,7 @@ private:
       * not return.
       */
     void get_address_nbytes_width(const char *err_msg_caption,
-        unsigned long &addr, int &nbytes, int &width);
+        uint32_t &addr, int &nbytes, int &width);
 
     /**
       * The stdin_used instance variable is used to remember whether

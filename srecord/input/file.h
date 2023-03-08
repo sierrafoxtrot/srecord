@@ -172,7 +172,7 @@ protected:
       * and the three byte values are assembles big-endian (most
       * significant byte first).
       */
-    unsigned long get_3bytes_be();
+    uint32_t get_3bytes_be();
 
     /**
       * The get_3bytes_le method is used to fetch a 24-bit value from
@@ -180,7 +180,7 @@ protected:
       * three byte values are assembled little-endian (least significant
       * byte first).
       */
-    unsigned long get_3bytes_le();
+    uint32_t get_3bytes_le();
 
     /**
       * The get_4bytes_be method is used to fetch a 32-bit value from
@@ -188,7 +188,7 @@ protected:
       * and the four byte values are assembled big-endian (most
       * significant byte first).
       */
-    unsigned long get_4bytes_be();
+    uint32_t get_4bytes_be();
 
     /**
       * The get_4bytes_le method is used to fetch a 32-bit value from
@@ -196,7 +196,7 @@ protected:
       * four byte values are assembled little-endian (least significant
       * byte first).
       */
-    unsigned long get_4bytes_le();
+    uint32_t get_4bytes_le();
 
     /**
       * The checksum_get method is used to get the current value of
@@ -218,7 +218,7 @@ protected:
       * The checksum_add method is used to add another 8-bit value
       * to the running checksum.
       */
-    virtual void checksum_add(unsigned char n);
+    virtual void checksum_add(uint8_t n);
 
     /**
       * The checksum_rest method is used to set the running checksum

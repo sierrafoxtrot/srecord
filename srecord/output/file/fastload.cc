@@ -55,10 +55,10 @@ srecord::output_file_fastload::create(const std::string &a_filename)
 
 
 void
-srecord::output_file_fastload::put_number(unsigned long n, int min_digits)
+srecord::output_file_fastload::put_number(uint32_t n, int min_digits)
 {
-    unsigned char buffer[20];
-    unsigned char *bp = buffer;
+    uint8_t buffer[20];
+    uint8_t *bp = buffer;
     while (n || min_digits > 0)
     {
         *bp++ = n & 63;
@@ -77,7 +77,7 @@ srecord::output_file_fastload::put_number(unsigned long n, int min_digits)
 
 
 static int
-number_width(unsigned long n)
+number_width(uint32_t n)
 {
     int result = 0;
     while (n)
@@ -90,7 +90,7 @@ number_width(unsigned long n)
 
 
 void
-srecord::output_file_fastload::put_command(int c, unsigned long n, int ndigits)
+srecord::output_file_fastload::put_command(int c, uint32_t n, int ndigits)
 {
     int width = number_width(n);
     if (width < ndigits)
@@ -120,7 +120,7 @@ srecord::output_file_fastload::write(const srecord::record &record)
     case srecord::record::type_header:
         // This format can't do header records
         if (!enable_optional_address_flag)
-            address = (unsigned long)-1L;
+            address = (uint32_t)-1L;
         break;
 
     case srecord::record::type_data:
@@ -147,13 +147,13 @@ srecord::output_file_fastload::write(const srecord::record &record)
                 checksum_reset();
                 bytes_since_checksum = 0;
             }
-            unsigned char n1 = record.get_data(j);
+            uint8_t n1 = record.get_data(j);
             checksum_add(n1);
-            unsigned char n2 = record.get_data(j + 1);
+            uint8_t n2 = record.get_data(j + 1);
             checksum_add(n2);
-            unsigned char n3 = record.get_data(j + 2);
+            uint8_t n3 = record.get_data(j + 2);
             checksum_add(n3);
-            unsigned long n = (n1 << 16) | (n2 << 8) | n3;
+            uint32_t n = (n1 << 16) | (n2 << 8) | n3;
             if (column + 4 > line_length || prev_was_command)
             {
                 put_char('\n');
@@ -165,9 +165,9 @@ srecord::output_file_fastload::write(const srecord::record &record)
         }
         for (; j < record.get_length(); ++j)
         {
-            unsigned char n = record.get_data(j);
+            uint8_t n = record.get_data(j);
             checksum_add(n);
-            put_command('B', (unsigned long)n, 2);
+            put_command('B', (uint32_t)n, 2);
             bytes_since_checksum++;
         }
         address += record.get_length();

@@ -277,7 +277,7 @@ srecord::input_file_mif::get_radix()
 bool
 srecord::input_file_mif::read(srecord::record &record)
 {
-    unsigned char buffer[srecord::record::max_data_length];
+    uint8_t buffer[srecord::record::max_data_length];
     size_t bufpos = 0;
     unsigned address_range = 0;
 
@@ -351,12 +351,12 @@ srecord::input_file_mif::read(srecord::record &record)
                 {
                     if (lex_addr() != token_number)
                         syntax_error("start of address range expected");
-                    unsigned long address_lo = token_value;
+                    uint32_t address_lo = token_value;
                     if (lex_addr() != token_dotdot)
                         syntax_error("dot dot (..) expected");
                     if (lex_addr() != token_number)
                         syntax_error("end of address range expected");
-                    unsigned long address_hi = token_value;
+                    uint32_t address_hi = token_value;
                     if (address_hi < address_lo)
                         syntax_error("address range backwards");
                     address_range = address_hi + 1 - address_lo;
@@ -417,9 +417,9 @@ srecord::input_file_mif::read(srecord::record &record)
                             // deliberately memcpy onto self
                             // to repeat the data in the buffer
                             size_t nbytes = address_range - bufpos;
-                            const unsigned char *end = buffer + address_range;
-                            const unsigned char *in = buffer;
-                            unsigned char *out = buffer + bufpos;
+                            const uint8_t *end = buffer + address_range;
+                            const uint8_t *in = buffer;
+                            uint8_t *out = buffer + bufpos;
                             while (out < end)
                                 *out++ = *in++;
                             bufpos += nbytes;

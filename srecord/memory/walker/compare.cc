@@ -40,13 +40,13 @@ srecord::memory_walker_compare::create(const srecord::memory &a1, bool a2)
 
 
 void
-srecord::memory_walker_compare::observe(unsigned long addr, const void *p,
+srecord::memory_walker_compare::observe(uint32_t addr, const void *p,
     int len)
 {
     interval wrongTemp;
     interval unsetTemp;
 
-    auto *data = (unsigned char *)p;
+    auto *data = (uint8_t *)p;
     for (int j = 0; j < len; ++j)
     {
         if (other.set_p(addr + j))

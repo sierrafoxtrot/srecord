@@ -92,14 +92,14 @@ private:
       * because DEC Binary records can be significantly longer than
       * other formats.
       */
-    unsigned long current_pos{0};
+    uint32_t current_pos{0};
 
     /**
       * The current_length instance variable is used to remember
       * the length of the current record.  It is zero if there is no
       * "current" record.
       */
-    unsigned long current_length{0};
+    uint32_t current_length{0};
 
     /**
       * The current_address instance variable is used to track the
@@ -107,7 +107,7 @@ private:
       * we return a partial block, so that we always return the
       * correct load address.
       */
-    unsigned long current_address{0};
+    uint32_t current_address{0};
 
 public:
     /**

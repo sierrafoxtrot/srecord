@@ -36,7 +36,7 @@ srecord::input_file_signetics::create(const std::string &a_file_name)
 
 
 void
-srecord::input_file_signetics::checksum_add(unsigned char n)
+srecord::input_file_signetics::checksum_add(uint8_t n)
 {
     checksum ^= n;
     checksum = (checksum << 1) | ((checksum >> 7) & 1);
@@ -93,7 +93,7 @@ srecord::input_file_signetics::read_inner(srecord::record &record)
     }
 
     checksum_reset();
-    unsigned char buffer[256];
+    uint8_t buffer[256];
     for (int j = 0; j < length; ++j)
         buffer[j] = get_byte();
 

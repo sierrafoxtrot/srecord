@@ -98,7 +98,7 @@ public:
       * The address instance variable is used to remember the current
       * address.  It is advanced for every byte read.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The state instance variable is used to member the current input

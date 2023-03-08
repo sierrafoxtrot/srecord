@@ -60,15 +60,15 @@ srecord::output_file_asm::~output_file_asm()
             x2.first_interval_only();
             x -= x2;
 
-            unsigned long val = x2.get_lowest();
+            uint32_t val = x2.get_lowest();
             char buffer[20];
             // We do it this way, rather than just making argument 3 a
             // (?:) conditional, so that the compiler can tell us when
             // we get the types wrong.  (Besides, it will optimize.)
             if (hex_style)
-                snprintf(buffer, sizeof(buffer), "0x%8.8lX", val);
+                snprintf(buffer, sizeof(buffer), "0x%8.8X", val);
             else
-                snprintf(buffer, sizeof(buffer), "%lu", val);
+                snprintf(buffer, sizeof(buffer), "%u", val);
             long len = strlen(buffer);
 
             if (column && column + len + 2 > line_length)
@@ -126,14 +126,14 @@ srecord::output_file_asm::~output_file_asm()
             x -= x2;
             ++nsections;
 
-            unsigned long slen = x2.get_highest() - x2.get_lowest();
+            uint32_t slen = x2.get_highest() - x2.get_lowest();
             if (output_word)
                 slen /= 2;
             char buffer[30];
             if (hex_style)
-                snprintf(buffer, sizeof(buffer), "0x%8.8lX", slen);
+                snprintf(buffer, sizeof(buffer), "0x%8.8X", slen);
             else
-                snprintf(buffer, sizeof(buffer), "%lu", slen);
+                snprintf(buffer, sizeof(buffer), "%u", slen);
             long len = strlen(buffer);
             if (column && column + len + 2 > line_length)
             {
@@ -182,13 +182,13 @@ srecord::output_file_asm::~output_file_asm()
 
     if (enable_footer_flag)
     {
-        unsigned long hi = range.get_highest();
-        put_stringf("; upper bound = 0x%4.4lX\n", hi);
-        unsigned long lo = range.get_lowest();
-        put_stringf("; lower bound = 0x%4.4lX\n", lo);
+        uint32_t hi = range.get_highest();
+        put_stringf("; upper bound = 0x%4.4X\n", hi);
+        uint32_t lo = range.get_lowest();
+        put_stringf("; lower bound = 0x%4.4X\n", lo);
     }
-    unsigned long len = range.get_highest() - range.get_lowest();
-    put_stringf("; length =      0x%4.4lX\n", len);
+    uint32_t len = range.get_highest() - range.get_lowest();
+    put_stringf("; length =      0x%4.4X\n", len);
 
     if (section_style)
     {
@@ -277,9 +277,9 @@ srecord::output_file_asm::emit_byte(int n)
 {
     char buffer[8];
     if (hex_style)
-        sprintf(buffer, "0x%2.2X", (unsigned char)n);
+        sprintf(buffer, "0x%2.2X", (uint8_t)n);
     else
-        sprintf(buffer, "%u", (unsigned char)n);
+        sprintf(buffer, "%u", (uint8_t)n);
     int len = strlen(buffer);
     if (column && (column + 1 + len) > line_length)
     {
@@ -315,9 +315,9 @@ srecord::output_file_asm::emit_word(unsigned int n)
 {
     char buffer[16];
     if (hex_style)
-        snprintf(buffer, sizeof(buffer), "0x%4.4X", (unsigned short)n);
+        snprintf(buffer, sizeof(buffer), "0x%4.4X", (uint16_t)n);
     else
-        snprintf(buffer, sizeof(buffer), "%u", (unsigned short)n);
+        snprintf(buffer, sizeof(buffer), "%u", (uint16_t)n);
     int len = strlen(buffer);
     if (column && (column + 1 + len) > line_length)
     {
@@ -361,8 +361,8 @@ srecord::output_file_asm::write(const srecord::record & record)
         // emit header records as comments in the file
         {
             bool bol = true;
-            const unsigned char *cp = record.get_data();
-            const unsigned char *ep = cp + record.get_length();
+            const uint8_t *cp = record.get_data();
+            const uint8_t *ep = cp + record.get_length();
             while (cp < ep)
             {
                 int c = *cp++;
@@ -403,7 +403,7 @@ srecord::output_file_asm::write(const srecord::record & record)
             }
 
             if (!enable_optional_address_flag)
-                current_address = (unsigned long)-1L;
+                current_address = (uint32_t)-1L;
         }
 
         if (current_address != record.get_address())
@@ -424,7 +424,7 @@ srecord::output_file_asm::write(const srecord::record & record)
                     put_stringf
                     (
                         "; To avoid this next %s directive, use the "
-                            "--offset -0x%lX filter.\n",
+                            "--offset -0x%X filter.\n",
                         org,
                         current_address
                     );
@@ -439,7 +439,7 @@ srecord::output_file_asm::write(const srecord::record & record)
                         org
                     );
                 }
-                put_stringf("        %-7s %lu\n", org, current_address);
+                put_stringf("        %-7s %u\n", org, current_address);
             }
         }
         if (output_word)
@@ -455,10 +455,10 @@ srecord::output_file_asm::write(const srecord::record & record)
             //
             for (int j = 0; j < len; j += 2)
             {
-                unsigned char n1 = record.get_data(j);
-                unsigned char n2 = record.get_data(j + 1);
+                uint8_t n1 = record.get_data(j);
+                uint8_t n2 = record.get_data(j + 1);
                 // little-endian
-                unsigned short n = n1 + (n2 << 8);
+                uint16_t n = n1 + (n2 << 8);
                 emit_word(n);
             }
         }
@@ -487,7 +487,7 @@ srecord::output_file_asm::write(const srecord::record & record)
                 put_char('\n');
                 column = 0;
             }
-            put_stringf("; execution start address = 0x%4.4lX\n", taddr);
+            put_stringf("; execution start address = 0x%4.4X\n", taddr);
         }
         break;
     }

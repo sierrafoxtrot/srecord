@@ -91,7 +91,7 @@ private:
       * number of output data lines have occurred to date.  This is used
       * at the end of the file to emit an S5 record.
       */
-    unsigned long data_count{0};
+    uint32_t data_count{0};
 
     /**
       * The pref_block_size instance variable is used to remember the
@@ -148,7 +148,7 @@ private:
       * @param data_nbytes
       *     The number of bytes of payload.
       */
-    void write_inner(int tag, unsigned long address, int address_nbytes,
+    void write_inner(int tag, uint32_t address, int address_nbytes,
         const void *data, int data_nbytes);
 
 public:

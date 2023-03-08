@@ -68,8 +68,8 @@ srecord::stm32::operator=(const stm32 &arg)
 // The STM32 hardware CRC calculation uses CRC polynomial 0x04C11DB7
 // and operates only on words.
 //
-static unsigned long
-stm32_crc(unsigned long crc, unsigned long data)
+static uint32_t
+stm32_crc(uint32_t crc, uint32_t data)
 {
     crc ^= data;
     for (int j = 0; j < 32; ++j)
@@ -86,7 +86,7 @@ stm32_crc(unsigned long crc, unsigned long data)
 void
 srecord::stm32::generator()
 {
-    unsigned long data = 0;
+    uint32_t data = 0;
     for (size_t j = 0; j < wordsize; j++)
         data |= (buf[j] << (8 * j));
     state = stm32_crc(state, data);
@@ -95,7 +95,7 @@ srecord::stm32::generator()
 
 
 void
-srecord::stm32::next(unsigned char x)
+srecord::stm32::next(uint8_t x)
 {
     buf[cnt++] = x;
     if (cnt == wordsize)
@@ -106,7 +106,7 @@ srecord::stm32::next(unsigned char x)
 void
 srecord::stm32::nextbuf(const void *data, size_t nbytes)
 {
-    const auto *dp = (const unsigned char *)data;
+    const auto *dp = (const uint8_t *)data;
     while (nbytes > 0)
     {
         --nbytes;
@@ -115,7 +115,7 @@ srecord::stm32::nextbuf(const void *data, size_t nbytes)
 }
 
 
-unsigned long
+uint32_t
 srecord::stm32::get()
     const
 {

@@ -94,7 +94,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
     case srecord::arglex_tool::token_constant_be:
         {
             cmdln->token_next();
-            unsigned long datum =
+            uint32_t datum =
                 cmdln->get_number("--generate --b-e-constant <datum>");
             int length =
                 cmdln->get_number("--generate --b-e-constant <length>");
@@ -106,17 +106,17 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
                     length
                 );
             }
-            unsigned long over = (1UL << (8U * length)) - 1;
+            uint32_t over = (1UL << (8U * length)) - 1;
             if (length < 4 && datum > over)
             {
                 cmdln->fatal_error
                 (
-                    "datum %lu out of range [0..%lu]",
+                    "datum %u out of range [0..%u]",
                     datum,
                     over
                 );
             }
-            unsigned char data[4];
+            uint8_t data[4];
             data[3] = datum;
             data[2] = datum >> 8;
             data[1] = datum >> 16;
@@ -134,7 +134,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
     case srecord::arglex_tool::token_constant_le:
         {
             cmdln->token_next();
-            unsigned long datum =
+            uint32_t datum =
                 cmdln->get_number("--generate --l-e-constant <datum>");
             int length =
                 cmdln->get_number("--generate --l-e-constant <length>");
@@ -146,17 +146,17 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
                     length
                 );
             }
-            unsigned long over = (1UL << (8U * length)) - 1;
+            uint32_t over = (1UL << (8U * length)) - 1;
             if (length < 4 && datum > over)
             {
                 cmdln->fatal_error
                 (
-                    "datum %lu out of range [0..%lu]",
+                    "datum %u out of range [0..%u]",
                     datum,
                     over
                 );
             }
-            unsigned char data[4];
+            uint8_t data[4];
             data[0] = datum;
             data[1] = datum >> 8;
             data[2] = datum >> 16;
@@ -193,7 +193,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
             cmdln->token_next();
             size_t length = 0;
             size_t maxlen = 16;
-            auto *data = new unsigned char [maxlen];
+            auto *data = new uint8_t [maxlen];
             for (;;)
             {
                 //
@@ -208,7 +208,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
                 if (length >= maxlen)
                 {
                     size_t new_maxlen = maxlen * 2 + 16;
-                    auto *new_data = new unsigned char [new_maxlen];
+                    auto *new_data = new uint8_t [new_maxlen];
                     memcpy(new_data, data, length);
                     delete [] data;
                     data = new_data;
@@ -276,7 +276,7 @@ srecord::input_generator::create(srecord::arglex_tool *cmdln)
                     srecord::input_generator_repeat::create
                     (
                         range,
-                        (unsigned char *)s.c_str(),
+                        (uint8_t *)s.c_str(),
                         s.size()
                     );
                 break;

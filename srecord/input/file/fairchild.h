@@ -90,7 +90,7 @@ private:
       * The address instance variable is used to member the address at
       * the current point in the input file.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The file_contains_data instance variable is used to member

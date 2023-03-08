@@ -35,8 +35,8 @@ srecord::input_generator_random::create(const interval &a_range)
 }
 
 
-unsigned char
-srecord::input_generator_random::generate_data(unsigned long)
+uint8_t
+srecord::input_generator_random::generate_data(uint32_t)
 {
     return r250();
 }

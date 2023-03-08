@@ -73,7 +73,7 @@ private:
       * The data_count instance variable is used to remember the number
       * of data lines has occurred so far in the input file.
       */
-    unsigned long data_count{0};
+    uint32_t data_count{0};
 
     /**
       * The read_inner method is used to read a record of input.

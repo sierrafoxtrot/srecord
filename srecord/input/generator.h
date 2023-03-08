@@ -72,7 +72,7 @@ protected:
       * @returns
       *     one byte of data
       */
-    virtual unsigned char generate_data(unsigned long address) = 0;
+    virtual uint8_t generate_data(uint32_t address) = 0;
 
 private:
     /**

@@ -25,7 +25,7 @@
 
 
 srecord::input_filter_message_crc16::input_filter_message_crc16(
-        const input::pointer &deeper_arg, unsigned long address_arg,
+        const input::pointer &deeper_arg, uint32_t address_arg,
         endian_t a_end) :
     input_filter_message(deeper_arg),
     address(address_arg),
@@ -36,7 +36,7 @@ srecord::input_filter_message_crc16::input_filter_message_crc16(
 
 srecord::input::pointer
 srecord::input_filter_message_crc16::create(const input::pointer &a_deeper,
-    unsigned long a_address, endian_t a_end)
+    uint32_t a_address, endian_t a_end)
 {
     return
         pointer
@@ -146,7 +146,7 @@ srecord::input_filter_message_crc16::process(const memory &buffer,
     //
     // Turn the CRC into the first data record.
     //
-    unsigned char chunk[2];
+    uint8_t chunk[2];
     record::encode(chunk, crc, sizeof(chunk), end);
     result = record(record::type_data, address, chunk, sizeof(chunk));
 }

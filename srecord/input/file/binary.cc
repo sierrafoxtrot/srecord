@@ -55,7 +55,7 @@ srecord::input_file_binary::read(srecord::record &record)
     if (c < 0)
         return false;
     int length = 0;
-    unsigned char data[srecord::record::max_data_length];
+    uint8_t data[srecord::record::max_data_length];
     for (;;)
     {
         data[length++] = c;

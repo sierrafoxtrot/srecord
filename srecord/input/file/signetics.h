@@ -61,7 +61,7 @@ protected:
       * See base class for documentation.  We over-ride this method
       * because signetics uses its own XOR-ROL checksum algorithm.
       */
-    void checksum_add(unsigned char) override;
+    void checksum_add(uint8_t) override;
 
 public:
     /**

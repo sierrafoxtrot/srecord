@@ -70,7 +70,7 @@ srecord::input_file_ti_tagged_16::read(record &result)
         case '*':
             {
                 // followed by 2 data characters (1 data byte)
-                unsigned char data[1];
+                uint8_t data[1];
                 data[0] = get_byte();
                 result = record(record::type_data, address, data, 1);
                 ++address;
@@ -124,7 +124,7 @@ srecord::input_file_ti_tagged_16::read(record &result)
 
         case 'B':
             {
-                unsigned char data[2];
+                uint8_t data[2];
                 data[0] = get_byte();
                 data[1] = get_byte();
                 result = record(record::type_data, address, data, 2);
@@ -149,7 +149,7 @@ srecord::input_file_ti_tagged_16::read(record &result)
                 }
                 n -= 5;
                 int max = 250;
-                auto *buffer = new unsigned char [max];
+                auto *buffer = new uint8_t [max];
                 for (int j = 0; j < n; ++j)
                 {
                     c = get_char();

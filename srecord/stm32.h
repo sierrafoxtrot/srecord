@@ -29,6 +29,7 @@
 #define SRECORD_STM32_H
 
 #include <cstddef>
+#include <cstdint>
 
 namespace srecord
 {
@@ -66,12 +67,12 @@ public:
       * The get method is used to obtain the running value of the cyclic
       * redundancy check.
       */
-    unsigned long get() const;
+    uint32_t get() const;
 
     /**
       * The next method is used to advance the state by one byte.
       */
-    void next(unsigned char c);
+    void next(uint8_t c);
 
     /**
       * The nextbuf method is used to advance the state by a series of bytes.
@@ -95,7 +96,7 @@ private:
       * The state instance variable is used to remember the running
       * value of the 32-bit cyclic redundancy check.
       */
-    unsigned long state{0xFFFFFFFF};
+    uint32_t state{0xFFFFFFFF};
 
     /**
       * Current counter of the byte feeding
@@ -106,7 +107,7 @@ private:
       * Buffer the incoming stream to build a word to feed to the
       * CRC generator.
       */
-    unsigned char buf[wordsize]{};
+    uint8_t buf[wordsize]{};
 };
 
 };

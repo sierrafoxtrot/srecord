@@ -56,7 +56,7 @@ srecord::output_file_hexdump::command_line(srecord::arglex_tool *)
 void
 srecord::output_file_hexdump::row_cache_print()
 {
-    if (row_cache_address == (unsigned long)(-1))
+    if (row_cache_address == (uint32_t)(-1))
         return;
     char *cp = row_cache;
     char *ep = cp + row_cache_size;
@@ -66,7 +66,7 @@ srecord::output_file_hexdump::row_cache_print()
         put_char(*cp++);
     put_char('\n');
     memset(row_cache, ' ', row_cache_size);
-    row_cache_address = (unsigned long)-1;
+    row_cache_address = (uint32_t)-1;
 }
 
 
@@ -100,10 +100,10 @@ hex(char *buffer, long value, int nbytes)
 
 
 void
-srecord::output_file_hexdump::emit_byte(unsigned long address,
-    unsigned char data)
+srecord::output_file_hexdump::emit_byte(uint32_t address,
+    uint8_t data)
 {
-    if (row_cache_address != (unsigned long)(-1))
+    if (row_cache_address != (uint32_t)(-1))
     {
         if (row_cache_address != (address & ~row_cache_address_mask))
         {
@@ -111,7 +111,7 @@ srecord::output_file_hexdump::emit_byte(unsigned long address,
             row_cache_print();
         }
     }
-    if (row_cache_address == (unsigned long)(-1))
+    if (row_cache_address == (uint32_t)(-1))
     {
         row_cache_address = address & ~row_cache_address_mask;
         hex(row_cache, row_cache_address, address_length);
@@ -142,7 +142,7 @@ srecord::output_file_hexdump::write(const srecord::record &record)
 
     case srecord::record::type_data:
         {
-            unsigned long a = record.get_address();
+            uint32_t a = record.get_address();
             for (size_t j = 0; j < record.get_length(); ++j)
                 emit_byte(a + j, record.get_data(j));
         }

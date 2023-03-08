@@ -53,7 +53,7 @@ public:
     /**
       * The constructor.
       */
-    memory_chunk(unsigned long address);
+    memory_chunk(uint32_t address);
 
     /**
       * The copy constructor.
@@ -74,19 +74,19 @@ public:
       * The set method is used to set the byte at the given offset within
       * the chunk.
       */
-    void set(unsigned long offset, int value);
+    void set(uint32_t offset, int value);
 
     /**
       * The get method is used to get the value at the given offset
       * within the chunk.
       */
-    int get(unsigned long offset);
+    int get(uint32_t offset);
 
     /**
       * The get_p method is used to determine whether the byte at the
       * given offset within the chunk contains valid data.
       */
-    bool set_p(unsigned long) const;
+    bool set_p(uint32_t) const;
 
     /**
       * The walk method is used to iterate across all of the bytes which
@@ -99,7 +99,7 @@ public:
       * chunk.  This is NOT the address of the first byte, it is the
       * chunk number.  To calculate the byte address, multiply by size.
       */
-    unsigned long get_address() const { return address; }
+    uint32_t get_address() const { return address; }
 
     /**
       * The equal class method is used to determine whether two memory
@@ -112,21 +112,21 @@ public:
       * The find_next_data method is used when iterating across all of
       * the bytes set within the chunk.
       */
-    bool find_next_data(unsigned long &, void *, size_t &) const;
+    bool find_next_data(uint32_t &, void *, size_t &) const;
 
     /**
       * The get_upper_bound method is used to determine the upper bound
       * (offset of last byte with valid data, plus one) of the chunk.
       * It returns a memory byte address, NOT the chunk offset.
       */
-    unsigned long get_upper_bound() const;
+    uint32_t get_upper_bound() const;
 
     /**
       * The get_lower_bound method is used to determine the lower bound
       * (offset of first byte with valid data) of the chunk.
       * It returns a memory byte address, NOT the chunk offset.
       */
-    unsigned long get_lower_bound() const;
+    uint32_t get_lower_bound() const;
 
 private:
     /**
@@ -134,18 +134,18 @@ private:
       * the first byte, it is the chunk number.  To calculate the byte
       * address, multiply by size.
       */
-    unsigned long address;
+    uint32_t address;
 
     /**
       * The data array is used to remember the values of valid data bytes.
       */
-    unsigned char data[size]{};
+    uint8_t data[size]{};
 
     /**
       * The mask array is used to remember which values in the data
       * array contain valid values.
       */
-    unsigned char mask[(size + 7) / 8]{};
+    uint8_t mask[(size + 7) / 8]{};
 
 public:
     /**

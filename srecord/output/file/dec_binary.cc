@@ -50,7 +50,7 @@ srecord::output_file_dec_binary::create(const std::string &a_file_name)
 
 
 void
-srecord::output_file_dec_binary::put_byte(unsigned char n)
+srecord::output_file_dec_binary::put_byte(uint8_t n)
 {
     checksum_add(n);
     put_char(n);

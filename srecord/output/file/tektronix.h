@@ -79,7 +79,7 @@ protected:
     void put_nibble(int);
 
     // See base class for documentation.
-    void put_byte(unsigned char) override;
+    void put_byte(uint8_t) override;
 
     // See base class for documentation.
     const char *format_name() const override;
@@ -102,7 +102,7 @@ private:
       * @param data_nbytes
       *     The number of bytes of payload.
       */
-    void write_inner(unsigned long address, const void *data, int data_nbytes);
+    void write_inner(uint32_t address, const void *data, int data_nbytes);
 
 public:
     /**

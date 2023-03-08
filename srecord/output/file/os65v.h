@@ -86,7 +86,7 @@ private:
       * The address instance variable is used to remember the current
       * file location.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The output mode is either address mode ('.') or data mode ('/').

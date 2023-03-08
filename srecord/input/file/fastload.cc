@@ -114,10 +114,10 @@ srecord::input_file_fastload::get_digit()
 }
 
 
-unsigned long
+uint32_t
 srecord::input_file_fastload::get_number(int min_digits, int max_digits)
 {
-    unsigned long result = 0;
+    uint32_t result = 0;
     for (int ndigits = 0; ndigits < max_digits; ++ndigits)
     {
         int c = get_digit();
@@ -158,12 +158,12 @@ srecord::input_file_fastload::expect_white_space()
 bool
 srecord::input_file_fastload::read_inner(srecord::record &record)
 {
-    unsigned long n;
-    unsigned char data[srecord::record::max_data_length];
-    unsigned long data_address = address;
+    uint32_t n;
+    uint8_t data[srecord::record::max_data_length];
+    uint32_t data_address = address;
     srecord::record::type_t type;
     int data_length = 0;
-    unsigned char the_byte;
+    uint8_t the_byte;
     for (;;)
     {
         switch (peek_char())
@@ -255,7 +255,7 @@ srecord::input_file_fastload::read_inner(srecord::record &record)
                 n = get_number(1, 6);
                 expect_white_space();
                 if (n >= srecord::record::max_data_length)
-                    fatal_error("clearing too many bytes (%lu)", n);
+                    fatal_error("clearing too many bytes (%u)", n);
                 memset(data, 0, n);
                 type = srecord::record::type_data;
                 record = srecord::record(type, address, data, n);

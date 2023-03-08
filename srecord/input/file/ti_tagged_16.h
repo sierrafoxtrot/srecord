@@ -85,7 +85,7 @@ private:
       * The address instance variable is used to remember where we are
       * up to in the input file.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The csum instance variable is used to remember the running

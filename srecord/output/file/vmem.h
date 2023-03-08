@@ -92,7 +92,7 @@ private:
       * The address instance variable is used to remember where we are
       * up to in the output.
       */
-    unsigned long address;
+    uint32_t address;
 
     /**
       * The column instance variable is used to remember which column

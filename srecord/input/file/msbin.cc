@@ -37,20 +37,20 @@ srecord::input_file_msbin::~input_file_msbin()
         {
             warning
             (
-                "image address header field is wrong (header = 0x%08lX, "
-                    "actual = 0x%08lX)",
-                (unsigned long)image_start,
-                (unsigned long)lowest_address
+                "image address header field is wrong (header = 0x%08X, "
+                    "actual = 0x%08X)",
+                (uint32_t)image_start,
+                (uint32_t)lowest_address
             );
         }
         if (highest_address - lowest_address + 1 != image_length)
         {
             warning
             (
-                "image length header field is wrong (header = 0x%08lX, "
-                    "actual = 0x%08lX)",
-                (unsigned long)image_length,
-                (unsigned long)(highest_address - lowest_address + 1)
+                "image length header field is wrong (header = 0x%08X, "
+                    "actual = 0x%08X)",
+                (uint32_t)image_length,
+                (uint32_t)(highest_address - lowest_address + 1)
             );
         }
     }
@@ -73,7 +73,7 @@ srecord::input_file_msbin::create(const std::string &a_file_name)
 uint32_t
 srecord::input_file_msbin::read_dword_le()
 {
-    unsigned char c[sizeof(uint32_t)];
+    uint8_t c[sizeof(uint32_t)];
 
     for (size_t i = 0; i < sizeof(c); ++i)
     {
@@ -81,8 +81,8 @@ srecord::input_file_msbin::read_dword_le()
         if (j < 0)
             fatal_error("short input file");
 
-        assert(j <= std::numeric_limits<unsigned char>::max());
-        c[i] = (unsigned char)j;
+        assert(j <= std::numeric_limits<uint8_t>::max());
+        c[i] = (uint8_t)j;
     }
 
     return record::decode_little_endian(c, sizeof(c));
@@ -93,18 +93,18 @@ void
 srecord::input_file_msbin::read_file_header()
 {
     // Optional magic
-    static const unsigned char Magic[7] =
+    static const uint8_t Magic[7] =
         { 'B', '0', '0', '0', 'F', 'F', '\n' };
 
     // +1 so that buff can be reused for two dwords in case the magic is missing
-    unsigned char buff[sizeof(Magic) + 1];
+    uint8_t buff[sizeof(Magic) + 1];
     for (size_t i = 0; i < sizeof(Magic); ++i)
     {
         int j = get_char();
         if (j < 0)
             fatal_error("short input file");
 
-        assert(j <= std::numeric_limits<unsigned char>::max());
+        assert(j <= std::numeric_limits<uint8_t>::max());
         buff[i] = j;
     }
 
@@ -147,7 +147,7 @@ srecord::input_file_msbin::read_file_header()
 
 
 uint32_t
-srecord::input_file_msbin::checksum(const unsigned char *data, size_t len)
+srecord::input_file_msbin::checksum(const uint8_t *data, size_t len)
 {
     uint32_t sum = 0;
 
@@ -228,8 +228,8 @@ srecord::input_file_msbin::read(record &result)
             fatal_error
             (
                 "checksum of the execution start record is not 0, as "
-                    "required by specification (0x%08lX != 0x00000000)",
-                (unsigned long)record_checksum
+                    "required by specification (0x%08X != 0x00000000)",
+                (uint32_t)record_checksum
             );
         }
 
@@ -244,7 +244,7 @@ srecord::input_file_msbin::read(record &result)
 
     // Data record
     // Read (part) of the record
-    unsigned char data[record::max_data_length];
+    uint8_t data[record::max_data_length];
     const size_t to_read =
         std::min(remaining, (uint32_t)record::max_data_length);
 
@@ -258,7 +258,7 @@ srecord::input_file_msbin::read(record &result)
     size_t read = 0;
     while (read < to_read)
     {
-        assert(c <= std::numeric_limits<unsigned char>::max());
+        assert(c <= std::numeric_limits<uint8_t>::max());
         data[read++] = c;
         if (read >= to_read)
             break;
@@ -284,9 +284,9 @@ srecord::input_file_msbin::read(record &result)
         {
             fatal_error
             (
-                "wrong record checksum (0x%08lX != 0x%08lX)",
-                (unsigned long)running_checksum,
-                (unsigned long)record_checksum
+                "wrong record checksum (0x%08X != 0x%08X)",
+                (uint32_t)running_checksum,
+                (uint32_t)record_checksum
             );
         }
     }

@@ -78,7 +78,7 @@ srecord::output_filter::format_name()
 
 
 void
-srecord::output_filter::notify_upper_bound(unsigned long addr)
+srecord::output_filter::notify_upper_bound(uint32_t addr)
 {
     deeper->notify_upper_bound(addr);
 }

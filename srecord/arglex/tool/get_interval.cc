@@ -74,8 +74,8 @@ srecord::arglex_tool::get_interval_factor(const char *name)
                 );
                 // NOTREACHED
             }
-            unsigned long n1 = get_number("address range minimum");
-            unsigned long n2 = 0;
+            uint32_t n1 = get_number("address range minimum");
+            uint32_t n2 = 0;
             if (can_get_number())
             {
                 n2 = get_number("address range maximum");
@@ -84,7 +84,7 @@ srecord::arglex_tool::get_interval_factor(const char *name)
             {
                 fatal_error
                 (
-                    "the %s range %lu..%lu is invalid",
+                    "the %s range %u..%u is invalid",
                     name,
                     n1,
                     n2

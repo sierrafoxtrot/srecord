@@ -66,7 +66,7 @@ public:
       * A suitable data record will be produced.  The #write method
       * will be called.
       */
-    virtual void write_data(unsigned long, const void *, size_t);
+    virtual void write_data(uint32_t, const void *, size_t);
 
     /**
       * The write_execution_start_address method is used to write an
@@ -189,7 +189,7 @@ public:
       * @param addr
       *     One past the highest used memory byte.
       */
-    virtual void notify_upper_bound(unsigned long addr);
+    virtual void notify_upper_bound(uint32_t addr);
 
     /**
       * The command_line method is used by arglex_srec::get_output when

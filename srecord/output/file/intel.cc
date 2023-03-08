@@ -45,7 +45,7 @@ srecord::output_file_intel::create(const std::string &a_file_name)
 
 
 void
-srecord::output_file_intel::write_inner(int tag, unsigned long address,
+srecord::output_file_intel::write_inner(int tag, uint32_t address,
     const void *data, int data_nbytes)
 {
     //
@@ -60,12 +60,12 @@ srecord::output_file_intel::write_inner(int tag, unsigned long address,
     put_char(':');
     checksum_reset();
     put_byte(data_nbytes);
-    unsigned char tmp[2];
+    uint8_t tmp[2];
     srecord::record::encode_big_endian(tmp, address, 2);
     put_byte(tmp[0]);
     put_byte(tmp[1]);
     put_byte(tag);
-    const auto *data_p = (const unsigned char *)data;
+    const auto *data_p = (const uint8_t *)data;
     for (int j = 0; j < data_nbytes; ++j)
         put_byte(data_p[j]);
     put_byte(-checksum_get());
@@ -76,7 +76,7 @@ srecord::output_file_intel::write_inner(int tag, unsigned long address,
 void
 srecord::output_file_intel::write(const srecord::record &record)
 {
-    unsigned char tmp[4];
+    uint8_t tmp[4];
     switch (record.get_type())
     {
     case srecord::record::type_header:

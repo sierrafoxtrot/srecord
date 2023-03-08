@@ -49,9 +49,9 @@ srecord::input_file_spectrum::get_decimal()
             format_error:
             fatal_error("decimal number expected");
         }
-        if (isspace((unsigned char)c))
+        if (isspace((uint8_t)c))
             continue;
-        if (!isdigit((unsigned char)c))
+        if (!isdigit((uint8_t)c))
             goto format_error;
         break;
     }
@@ -61,7 +61,7 @@ srecord::input_file_spectrum::get_decimal()
         c = get_char();
         if (c < 0)
             break;
-        if (!isdigit((unsigned char)c))
+        if (!isdigit((uint8_t)c))
         {
             get_char_undo(c);
             break;
@@ -91,9 +91,9 @@ srecord::input_file_spectrum::get_binary()
             format_error:
             fatal_error("binary number expected");
         }
-        if (isspace((unsigned char)c))
+        if (isspace((uint8_t)c))
             continue;
-        if (!is_binary_digit((unsigned char)c))
+        if (!is_binary_digit((uint8_t)c))
             goto format_error;
         break;
     }
@@ -154,14 +154,14 @@ srecord::input_file_spectrum::read(srecord::record &record)
             trailer_seen = true;
             return false;
         }
-        if (isspace((unsigned char)c))
+        if (isspace((uint8_t)c))
             continue;
         get_char_undo(c);
         break;
     }
 
-    unsigned long address = get_decimal();
-    unsigned char data = get_binary();
+    uint32_t address = get_decimal();
+    uint8_t data = get_binary();
     record = srecord::record(srecord::record::type_data, address, &data, 1);
     file_contains_data = true;
     return true;

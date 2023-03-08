@@ -47,7 +47,7 @@ srecord::quit_normal::message_v(const char *fmt, va_list ap)
     char *cp = buf;
     for (;;)
     {
-        unsigned char c = *cp++;
+        uint8_t c = *cp++;
         if (!c)
             break;
         if (isspace(c) || !isprint(c))

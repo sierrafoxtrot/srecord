@@ -44,7 +44,7 @@ srecord::output_filter_reblock::output_filter_reblock(
     // will fill it up before we deeper->write it, this will minimize
     // the number of memmove() calls.
     buffer_max = 1 << 14;
-    buffer = new unsigned char [buffer_max];
+    buffer = new uint8_t [buffer_max];
 
     assert(buffer_max > 2 * record::max_data_length);
 }

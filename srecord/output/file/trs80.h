@@ -97,13 +97,13 @@ private:
       * method also tracks the byte_offset, so that we can align to
       * specific boundaries.  Calls the checksum_add() method.
       */
-    void put_byte(unsigned char) override;
+    void put_byte(uint8_t) override;
 
     /**
       * The byte_offset instance variable is used to track the location
       * in the output file.  Maintained by the put_byte() method.
       */
-    unsigned long byte_offset{};
+    uint32_t byte_offset{};
 
     /**
       * The pref_block_size is used to remember the preferred

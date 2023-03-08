@@ -82,7 +82,7 @@ private:
       * The address instance variable is used to remember where in the
       * file the output has reached.  This is used to fill gaps.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The column instance variable is used to remember the column of

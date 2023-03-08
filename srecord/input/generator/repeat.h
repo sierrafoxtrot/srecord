@@ -49,7 +49,7 @@ private:
       * @param length
       *     The length of the array of data to be repeated.
       */
-    input_generator_repeat(const interval &range, const unsigned char *data,
+    input_generator_repeat(const interval &range, const uint8_t *data,
         size_t length);
 
 public:
@@ -64,12 +64,12 @@ public:
       * @param length
       *     The length of the array of data to be repeated.
       */
-    static pointer create(const interval &range, unsigned char *data,
+    static pointer create(const interval &range, uint8_t *data,
         size_t length);
 
 protected:
     // See base class for documentation.
-    unsigned char generate_data(unsigned long address) override;
+    uint8_t generate_data(uint32_t address) override;
 
     // See base class for documentation.
     std::string filename() const override;
@@ -83,13 +83,13 @@ private:
       * the generated data, so that modulo arithmetic will align the
       * data repeats.
       */
-    unsigned long address;
+    uint32_t address;
 
     /**
       * The data instance variable is used to remember the base of a
       * dynamically allocated array of data to be repeated.
       */
-    unsigned char *data;
+    uint8_t *data;
 
     /**
       * The length instance variable is used to remember the length of

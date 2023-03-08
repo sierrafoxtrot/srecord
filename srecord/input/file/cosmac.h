@@ -83,7 +83,7 @@ private:
       * The address instance variable is used to remember what address
       * we are up to in the input.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The seen_some_input instance variable is used to remember whether

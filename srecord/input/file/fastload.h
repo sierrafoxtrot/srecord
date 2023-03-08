@@ -83,7 +83,7 @@ private:
       * The ordering is big-endian, but like ordinary decimal numbers.
       * Four digits is 24 bits.
       */
-    unsigned long get_number(int min_digits, int max_digits);
+    uint32_t get_number(int min_digits, int max_digits);
 
     /**
       * The seen_some_input instance variable is used to
@@ -96,7 +96,7 @@ private:
       * current address within the file.  It is set by the /A command,
       * and advanced by the data, /B and /Z commands.
       */
-    unsigned long address{0};
+    uint32_t address{0};
 
     /**
       * The expect_white_space method is used to ensure that while

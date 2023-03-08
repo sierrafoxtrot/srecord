@@ -55,7 +55,7 @@ srecord::input_file_atmel_generic::read_inner(srecord::record &record)
     int address = get_3bytes_be();
     if (get_char() != ':')
         fatal_error("colon expected");
-    unsigned char data[2];
+    uint8_t data[2];
     if (end == endian_big)
     {
         data[1] = get_byte();

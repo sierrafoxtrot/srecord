@@ -77,7 +77,7 @@ protected:
     bool preferred_block_size_set(int nbytes) override;
 
     // See base class for documentation.
-    void put_byte(unsigned char) override;
+    void put_byte(uint8_t) override;
 
     // See base class for documentation.
     const char *format_name() const override;
@@ -87,7 +87,7 @@ private:
       * The data_count instance variable is used to remember how many
       * data records have occurred so far in the output file.
       */
-    unsigned long data_count{0};
+    uint32_t data_count{0};
 
     /**
       * The address_length instance variable is used to remember the
@@ -104,7 +104,7 @@ private:
     /**
       * Write a data record.
       */
-    void write_inner(int, unsigned long, int, const void *, int);
+    void write_inner(int, uint32_t, int, const void *, int);
 
 public:
     /**

@@ -188,7 +188,7 @@ srecord::output_file::put_nibble(int n)
 
 
 void
-srecord::output_file::put_byte(unsigned char n)
+srecord::output_file::put_byte(uint8_t n)
 {
     put_nibble(n >> 4);
     put_nibble(n);
@@ -213,7 +213,7 @@ srecord::output_file::put_word_le(int n)
 
 
 void
-srecord::output_file::put_3bytes_be(unsigned long n)
+srecord::output_file::put_3bytes_be(uint32_t n)
 {
     put_byte(n >> 16);
     put_byte(n >> 8);
@@ -222,7 +222,7 @@ srecord::output_file::put_3bytes_be(unsigned long n)
 
 
 void
-srecord::output_file::put_3bytes_le(unsigned long n)
+srecord::output_file::put_3bytes_le(uint32_t n)
 {
     put_byte(n);
     put_byte(n >> 8);
@@ -231,7 +231,7 @@ srecord::output_file::put_3bytes_le(unsigned long n)
 
 
 void
-srecord::output_file::put_4bytes_be(unsigned long n)
+srecord::output_file::put_4bytes_be(uint32_t n)
 {
     put_byte(n >> 24);
     put_byte(n >> 16);
@@ -241,7 +241,7 @@ srecord::output_file::put_4bytes_be(unsigned long n)
 
 
 void
-srecord::output_file::put_4bytes_le(unsigned long n)
+srecord::output_file::put_4bytes_le(uint32_t n)
 {
     put_byte(n);
     put_byte(n >> 8);
@@ -271,14 +271,14 @@ srecord::output_file::checksum_reset()
 }
 
 void
-srecord::output_file::checksum_add(unsigned char n)
+srecord::output_file::checksum_add(uint8_t n)
 {
     checksum += n;
 }
 
 
 void
-srecord::output_file::seek_to(unsigned long address)
+srecord::output_file::seek_to(uint32_t address)
 {
     //
     // Seeking on non-regular files is problematic.  Avoid doing
@@ -314,7 +314,7 @@ srecord::output_file::seek_to(unsigned long address)
                 ((double)address / (double)(1UL << 30))
             );
         }
-        fatal_error_errno("seek 0x%lX", address);
+        fatal_error_errno("seek 0x%X", address);
     }
     position = address;
 }
@@ -426,12 +426,12 @@ srecord::output_file::set_is_regular()
 
 
 void
-srecord::output_file::fatal_hole_error(unsigned long lo, unsigned long hi)
+srecord::output_file::fatal_hole_error(uint32_t lo, uint32_t hi)
 {
     fatal_error
     (
         "The %s output format is unable to cope with holes in the data,"
-        "however there is a hole at 0x%04lX..0x%04lX.",
+        "however there is a hole at 0x%04X..0x%04X.",
         format_name(),
         lo,
         hi - 1
@@ -474,16 +474,16 @@ void
 srecord::output_file::data_address_too_large(const srecord::record &record,
     unsigned nbits) const
 {
-    unsigned long lo = record.get_address();
-    unsigned long hi = lo + record.get_length() - 1;
+    uint32_t lo = record.get_address();
+    uint32_t hi = lo + record.get_length() - 1;
     assert(nbits <= 32);
     if (nbits > 0)
     {
         int prec = (nbits + 3) / 4;
         fatal_error
         (
-            "data address range (0x%.*lX..0x%.*lX) is too large, "
-                "the available range is only (0x%.*lx..0x%.*lX)",
+            "data address range (0x%.*X..0x%.*X) is too large, "
+                "the available range is only (0x%.*lX..0x%.*lX)",
             prec,
             lo,
             prec,
@@ -494,5 +494,5 @@ srecord::output_file::data_address_too_large(const srecord::record &record,
             (1UL << nbits) - 1
         );
     }
-    fatal_error("data address (0x%lX..0x%lX) too large", lo, hi);
+    fatal_error("data address (0x%X..0x%X) too large", lo, hi);
 }

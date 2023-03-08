@@ -85,7 +85,7 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
         int tag = get_nibble();
         --length;
 
-        unsigned char csum_expected = get_byte();
+        uint8_t csum_expected = get_byte();
         // except the checksum itself
         nibble_sum -= ((csum_expected >> 4) & 15) + (csum_expected & 15);
         length -= 2;
@@ -114,7 +114,7 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
             );
         }
 
-        unsigned long address = 0;
+        uint32_t address = 0;
         while (addr_len > 0)
         {
             int n = get_nibble();
@@ -125,7 +125,7 @@ srecord::input_file_tektronix_extended::read_inner(srecord::record &record)
         if (length & 1)
             fatal_error("data length invalid (%d is odd)", length);
 
-        unsigned char buffer[125];
+        uint8_t buffer[125];
         for (int j = 0; j * 2 < length; ++j)
         {
             int n = get_byte();

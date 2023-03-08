@@ -20,6 +20,7 @@
 #define SRECORD_ADLER16_H
 
 #include <cstddef>
+#include <cstdint>
 
 namespace srecord
 {
@@ -35,12 +36,12 @@ public:
     /**
       * The get method is used to obtain the running value of the checksum.
       */
-    unsigned short get() const;
+    uint16_t get() const;
 
     /**
       * The next method is used to advance the state by one byte.
       */
-    void next(unsigned char);
+    void next(uint8_t);
 
     /**
       * The nextbuf method is used to advance the state by a series of bytes.
@@ -52,15 +53,15 @@ private:
       * The sum_a instance variable is used to remember the sum of bytes
       * scanned.
       */
-    unsigned char sum_a{1};
+    uint8_t sum_a{1};
 
     /**
       * The sum_b instance variable is used to remember the sum of the
       * sum of bytes scanned.
       */
-    unsigned char sum_b{0};
+    uint8_t sum_b{0};
 };
 
-};
+}  // namespace srecord
 
 #endif // SRECORD_ADLER16_H

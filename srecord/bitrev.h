@@ -19,6 +19,8 @@
 #ifndef SRECORD_BITREV_H
 #define SRECORD_BITREV_H
 
+#include <cstdint>
+
 namespace srecord
 {
 
@@ -29,7 +31,7 @@ namespace srecord
   * @param value
   *     The value to be reversed.
   */
-unsigned char bitrev8(unsigned char value);
+uint8_t bitrev8(uint8_t value);
 
 /**
   * The bitrev16 function is used to reverse the order of the bits in an
@@ -38,7 +40,7 @@ unsigned char bitrev8(unsigned char value);
   * @param value
   *     The value to be reversed.
   */
-unsigned short bitrev16(unsigned short value);
+uint16_t bitrev16(uint16_t value);
 
 /**
   * The bitrev24 function is used to reverse the order of the bits in an
@@ -47,7 +49,7 @@ unsigned short bitrev16(unsigned short value);
   * @param value
   *     The value to be reversed.
   */
-unsigned long bitrev24(unsigned long value);
+uint32_t bitrev24(uint32_t value);
 
 /**
   * The bitrev32 function is used to reverse the order of the bits in an
@@ -56,7 +58,7 @@ unsigned long bitrev24(unsigned long value);
   * @param value
   *     The value to be reversed.
   */
-unsigned long bitrev32(unsigned long value);
+uint32_t bitrev32(uint32_t value);
 
 /**
   * The bitrev40 function is used to reverse the order of the bits in an
@@ -65,7 +67,7 @@ unsigned long bitrev32(unsigned long value);
   * @param value
   *     The value to be reversed.
   */
-unsigned long long bitrev40(unsigned long long value);
+uint64_t bitrev40(uint64_t value);
 
 /**
   * The bitrev48 function is used to reverse the order of the bits in an
@@ -74,7 +76,7 @@ unsigned long long bitrev40(unsigned long long value);
   * @param value
   *     The value to be reversed.
   */
-unsigned long long bitrev48(unsigned long long value);
+uint64_t bitrev48(uint64_t value);
 
 /**
   * The bitrev56 function is used to reverse the order of the bits in an
@@ -83,7 +85,7 @@ unsigned long long bitrev48(unsigned long long value);
   * @param value
   *     The value to be reversed.
   */
-unsigned long long bitrev56(unsigned long long value);
+uint64_t bitrev56(uint64_t value);
 
 /**
   * The bitrev64 function is used to reverse the order of the bits in an
@@ -92,7 +94,7 @@ unsigned long long bitrev56(unsigned long long value);
   * @param value
   *     The value to be reversed.
   */
-unsigned long long bitrev64(unsigned long long value);
+uint64_t bitrev64(uint64_t value);
 
 };
 

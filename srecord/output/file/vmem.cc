@@ -151,14 +151,14 @@ srecord::output_file_vmem::write(const srecord::record &record)
             put_string("/* ");
             if (record.get_address() != 0)
             {
-                unsigned long addr = record.get_address();
-                put_stringf("%08lX: ", addr);
+                uint32_t addr = record.get_address();
+                put_stringf("%08X: ", addr);
             }
-            const unsigned char *cp = record.get_data();
-            const unsigned char *ep = cp + record.get_length();
+            const uint8_t *cp = record.get_data();
+            const uint8_t *ep = cp + record.get_length();
             while (cp < ep)
             {
-                unsigned char c = *cp++;
+                uint8_t c = *cp++;
                 if (c == '\n')
                     put_stringf("\n * ");
                 else if (isprint(c) || isspace(c))
@@ -172,7 +172,7 @@ srecord::output_file_vmem::write(const srecord::record &record)
             put_string(" */\n");
         }
         if (!enable_optional_address_flag)
-            address = (unsigned long)-1L;
+            address = (uint32_t)-1L;
         break;
 
     case srecord::record::type_data:
@@ -216,7 +216,7 @@ srecord::output_file_vmem::write(const srecord::record &record)
             // address is an address, and not a data byte.
             //
             if (column == 0)
-                put_stringf("@%08lX", address >> width_shift);
+                put_stringf("@%08X", address >> width_shift);
 
             //
             // Put a space between each word

@@ -68,7 +68,7 @@ srecord::string_url_decode(const std::string &text)
     std::stringstream result;
     while (cur < end)
     {
-        unsigned char c = *cur++;
+        uint8_t c = *cur++;
         if (c == '%')
         {
             if (end - cur >= 1 && *cur == '%')

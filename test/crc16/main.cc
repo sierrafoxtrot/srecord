@@ -56,7 +56,7 @@ main(int argc, char **argv)
     srecord::progname_set(argv[0]);
     srecord::crc16::seed_mode_t seed_mode = srecord::crc16::seed_mode_ccitt;
     bool augment = true;
-    unsigned short polynomial = srecord::crc16::polynomial_ccitt;
+    uint16_t polynomial = srecord::crc16::polynomial_ccitt;
     bool print_table = false;
     srecord::crc16::bit_direction_t bitdir =
         srecord::crc16::bit_direction_most_to_least;

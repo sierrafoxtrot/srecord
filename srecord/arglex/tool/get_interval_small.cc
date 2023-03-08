@@ -34,7 +34,7 @@ srecord::arglex_tool::get_interval_small(const char *caption)
     }
     if (!big_range_ok)
     {
-        long long c = result.coverage();
+        uint64_t c = result.coverage();
         if (c > (1LL << 30))
         {
             fatal_error

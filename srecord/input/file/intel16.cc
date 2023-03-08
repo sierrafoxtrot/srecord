@@ -100,7 +100,7 @@ srecord::input_file_intel16::read_inner(record &result)
         //
         // Looks like a real Intel-hex line.
         //
-        unsigned char buffer[255*2+5];
+        uint8_t buffer[255*2+5];
         checksum_reset();
         buffer[0] = get_byte();
         unsigned nbytes = buffer[0] << 1;
@@ -139,20 +139,20 @@ srecord::input_file_intel16::read_inner(record &result)
                 if
                 (
                     (
-                        (long long)address_base + address_field
+                        (uint64_t)address_base + address_field
                     <
-                        ((long long)1 << 32)
+                        ((uint64_t)1 << 32)
                     )
                 &&
                     (
-                        (long long)address_base + address_field + nbytes
+                        (uint64_t)address_base + address_field + nbytes
                     >
-                        ((long long)1 << 32)
+                        ((uint64_t)1 << 32)
                     )
                 )
                 {
                     int split =
-                        ((long long)1 << 32) - address_base - address_field;
+                        ((uint64_t)1 << 32) - address_base - address_field;
                     pushback =
                         new record
                         (

@@ -25,7 +25,7 @@
 
 srecord::input_filter_message_crc32::input_filter_message_crc32(
     const input::pointer &a_deeper,
-    unsigned long a_address,
+    uint32_t a_address,
     endian_t a_end
 ) :
     input_filter_message(a_deeper),
@@ -38,7 +38,7 @@ srecord::input_filter_message_crc32::input_filter_message_crc32(
 
 srecord::input::pointer
 srecord::input_filter_message_crc32::create(const input::pointer &a_deeper,
-    unsigned long a_address, endian_t a_end)
+    uint32_t a_address, endian_t a_end)
 {
     return
         pointer
@@ -83,12 +83,12 @@ srecord::input_filter_message_crc32::process(const memory &input,
     memory_walker_crc32::pointer w =
         memory_walker_crc32::create(seed_mode);
     input.walk(w);
-    unsigned long crc = w->get();
+    uint32_t crc = w->get();
 
     //
     // Turn the CRC into the first data record.
     //
-    unsigned char chunk[4];
+    uint8_t chunk[4];
     record::encode(chunk, crc, sizeof(chunk), end);
     output = record(record::type_data, address, chunk, sizeof(chunk));
 }

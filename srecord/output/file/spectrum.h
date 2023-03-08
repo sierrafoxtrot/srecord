@@ -84,14 +84,14 @@ private:
       * the output, as a decimal (base 10) number.  It will have at
       * least four digits.
       */
-    void put_decimal(unsigned long);
+    void put_decimal(uint32_t);
 
     /**
       * The put_binary method is used to write the binary data to the
       * output, as a binary (base 2) number.  It will have exactly
       * eight digits.
       */
-    void put_binary(unsigned char);
+    void put_binary(uint8_t);
 
 public:
     /**

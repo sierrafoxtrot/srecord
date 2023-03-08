@@ -59,7 +59,7 @@ protected:
     const char *get_file_format_name() const override;
 
     // See base class for documentation.
-    unsigned char generate_data(unsigned long address) override;
+    uint8_t generate_data(uint32_t address) override;
 
 public:
     /**

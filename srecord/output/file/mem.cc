@@ -28,7 +28,7 @@ srecord::output_file_mem::~output_file_mem()
     if (column)
         put_char('\n');
     if (enable_header_flag && actual_depth != depth)
-        put_stringf("#Depth=%lu;\n", actual_depth / width_in_bytes);
+        put_stringf("#Depth=%u;\n", actual_depth / width_in_bytes);
 }
 
 
@@ -87,7 +87,7 @@ srecord::output_file_mem::command_line(srecord::arglex_tool *cmdln)
 
 
 void
-srecord::output_file_mem::notify_upper_bound(unsigned long addr)
+srecord::output_file_mem::notify_upper_bound(uint32_t addr)
 {
     depth = addr;
     actual_depth = addr;
@@ -109,7 +109,7 @@ srecord::output_file_mem::emit_header()
         put_stringf("#Format=Hex\n"); // Bin | Hex | AddrHex
         if (actual_depth != 0)
         {
-            put_stringf("#Depth=%lu\n", actual_depth / width_in_bytes);
+            put_stringf("#Depth=%u\n", actual_depth / width_in_bytes);
         }
         put_stringf("#Width=%d\n", width);
         // 0: binary, 1: octal, 3: decimal, 3: hexadecimal
@@ -155,11 +155,11 @@ srecord::output_file_mem::write(const srecord::record &record)
             // Output the header record as a comment.
             emit_header();
 
-            const unsigned char *cp = record.get_data();
-            const unsigned char *ep = cp + record.get_length();
+            const uint8_t *cp = record.get_data();
+            const uint8_t *ep = cp + record.get_length();
             while (cp < ep)
             {
-                unsigned char c = *cp++;
+                uint8_t c = *cp++;
                 if (c == '\n')
                 {
                     if (column == 0)
@@ -176,8 +176,8 @@ srecord::output_file_mem::write(const srecord::record &record)
                     column = 2;
                     if (record.get_address() != 0)
                     {
-                        unsigned long addr = record.get_address();
-                        put_stringf("%04lX: ", addr);
+                        uint32_t addr = record.get_address();
+                        put_stringf("%04X: ", addr);
                         column += 6;
                     }
                 }
@@ -194,7 +194,7 @@ srecord::output_file_mem::write(const srecord::record &record)
 
     case srecord::record::type_data:
         {
-            unsigned long addr = record.get_address();
+            uint32_t addr = record.get_address();
             unsigned len = record.get_length();
             if (address != addr)
                 fatal_hole_error(address, addr);
@@ -238,8 +238,8 @@ srecord::output_file_mem::write(const srecord::record &record)
                 put_char('\n');
                 column = 0;
             }
-            unsigned long addr = record.get_address();
-            put_stringf("# data record count = %lu\n", addr);
+            uint32_t addr = record.get_address();
+            put_stringf("# data record count = %u\n", addr);
         }
         break;
 
@@ -251,8 +251,8 @@ srecord::output_file_mem::write(const srecord::record &record)
                 put_char('\n');
                 column = 0;
             }
-            unsigned long addr = record.get_address();
-            put_stringf("# execution start address = %04lX\n", addr);
+            uint32_t addr = record.get_address();
+            put_stringf("# execution start address = %04X\n", addr);
         }
         break;
     }

@@ -27,8 +27,8 @@
 //
 
 srecord::fletcher16::fletcher16(
-    unsigned char a_sum1,
-    unsigned char a_sum2,
+    uint8_t a_sum1,
+    uint8_t a_sum2,
     int a_answer,
     endian_t a_end
 ) :
@@ -52,7 +52,7 @@ srecord::fletcher16::fletcher16(
 }
 
 void
-srecord::fletcher16::next(unsigned char ch)
+srecord::fletcher16::next(uint8_t ch)
 {
     // reduction step to reduce sums to 8 bits
     sum1 += ch;
@@ -88,7 +88,7 @@ srecord::fletcher16::nextbuf(const void *vdata, size_t nbytes)
     //   overflow in 16 bits. Any smaller value is also permissible; 16
     //   may be convenient in many cases.
     //
-    const auto *data = (const unsigned char *)vdata;
+    const auto *data = (const uint8_t *)vdata;
     size_t len = nbytes;
     while (len)
     {
@@ -111,7 +111,7 @@ srecord::fletcher16::nextbuf(const void *vdata, size_t nbytes)
 }
 
 
-unsigned short
+uint16_t
 srecord::fletcher16::get()
     const
 {
@@ -129,8 +129,8 @@ srecord::fletcher16::get()
         // bytes of eeprom.  (Note: 0xFF in final byte (f1 or f2) is
         // equivalent to 0x00 due to modulo 255 arithmetic.)
         //
-        unsigned char f2;
-        unsigned char f1;
+        uint8_t f2;
+        uint8_t f1;
         if (end == endian_big)
         {
             f1 = answer >> 8;
@@ -144,10 +144,10 @@ srecord::fletcher16::get()
 
 #if 1
         // The following code assumes sum1a and sum2a are 16-bits, or
-        // more.  If you make them char or unsigned char, you will get
+        // more.  If you make them char or uint8_t, you will get
         // the wrong answer.
-        unsigned short sum1a = sum1;
-        unsigned short sum2a = sum2;
+        uint16_t sum1a = sum1;
+        uint16_t sum2a = sum2;
 
         int tmp = int(f2) - int(f1) - int(sum2a) - int(sum1a);
         tmp = (tmp & 0xff) + (tmp >> 8);
@@ -158,18 +158,18 @@ srecord::fletcher16::get()
         return (((sum1a & 0xFF) << 8) | (sum2a & 0xFF));
 #else
         // exhaustive search
-        for (unsigned short c1 = 0; c1 < 256; ++c1)
+        for (uint16_t c1 = 0; c1 < 256; ++c1)
         {
-            unsigned short sum1a = sum1 + c1;
-            unsigned short sum2a = sum2 + sum1a;
+            uint16_t sum1a = sum1 + c1;
+            uint16_t sum2a = sum2 + sum1a;
             sum1a = (sum1a & 0xFF) + (sum1a >> 8);
             sum2a = (sum2a & 0xFF) + (sum2a >> 8);
 
-            for (unsigned short c2 = 0; c2 < 256; ++c2)
+            for (uint16_t c2 = 0; c2 < 256; ++c2)
             {
 
-                unsigned short sum1b = sum1a + c2;
-                unsigned short sum2b = sum2a + sum1b;
+                uint16_t sum1b = sum1a + c2;
+                uint16_t sum2b = sum2a + sum1b;
                 sum1b = (sum1b & 0xFF) + (sum1b >> 8);
                 sum2b = (sum2b & 0xFF) + (sum2b >> 8);
 

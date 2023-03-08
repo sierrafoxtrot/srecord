@@ -95,14 +95,14 @@ private:
       * address of the beginning of the row, NOT the current byte.
       * The lower "number_of_columns" bits are always zero.
       */
-    unsigned long row_cache_address{(unsigned long)-1};
+    uint32_t row_cache_address{(uint32_t)-1};
 
     /**
       * The row_cache_address_mask instance variable is used to remember
       * the mask to calculate the column within the output line, give a
       * byte address.
       */
-    unsigned long row_cache_address_mask{0};
+    uint32_t row_cache_address_mask{0};
 
     /**
       * The row_cache_size instance variable is used to remember the
@@ -127,7 +127,7 @@ private:
       * The emit_byte method is used to emit a single byte.  It uses
       * column to track the position, so as not to exceed line_length.
       */
-    void emit_byte(unsigned long address, unsigned char data);
+    void emit_byte(uint32_t address, uint8_t data);
 
     /**
       * The row_cache_print method is used to print the row cache to the

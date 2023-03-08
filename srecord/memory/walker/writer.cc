@@ -37,14 +37,14 @@ srecord::memory_walker_writer::create(const srecord::output::pointer &arg)
 
 
 void
-srecord::memory_walker_writer::notify_upper_bound(unsigned long address)
+srecord::memory_walker_writer::notify_upper_bound(uint32_t address)
 {
     op->notify_upper_bound(address);
 }
 
 
 void
-srecord::memory_walker_writer::observe(unsigned long address, const void *data,
+srecord::memory_walker_writer::observe(uint32_t address, const void *data,
     int length)
 {
     op->write_data(address, data, length);

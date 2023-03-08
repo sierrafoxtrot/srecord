@@ -142,7 +142,7 @@ srecord::input_file_formatted_binary::read(record &result)
     long datalen = upper_bound - address;
     if (datalen > record::max_data_length)
         datalen = record::max_data_length;
-    unsigned char data[record::max_data_length];
+    uint8_t data[record::max_data_length];
     for (long j = 0; j < datalen; ++j)
     {
         int c = get_char();

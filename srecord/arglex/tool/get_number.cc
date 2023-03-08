@@ -23,11 +23,11 @@
 #include <srecord/input/interval.h>
 
 
-unsigned long
+uint32_t
 srecord::arglex_tool::get_number(const char *caption)
 {
-    unsigned long value = 0;
-    unsigned long multiple;
+    uint32_t value = 0;
+    uint32_t multiple;
     interval over;
 
     switch (token_cur())
@@ -132,7 +132,7 @@ srecord::arglex_tool::get_number(const char *caption)
 }
 
 
-unsigned long
+uint32_t
 srecord::arglex_tool::get_number(const char *caption, long minimum,
     long maximum)
 {

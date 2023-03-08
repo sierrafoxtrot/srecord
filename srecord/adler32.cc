@@ -18,16 +18,16 @@
 
 #include <srecord/adler32.h>
 
-unsigned long
+uint32_t
 srecord::adler32::get()
     const
 {
-    return ((((unsigned long)sum_b) << 16) | sum_a);
+    return ((((uint32_t)sum_b) << 16) | sum_a);
 }
 
 
 void
-srecord::adler32::next(unsigned char c)
+srecord::adler32::next(uint8_t c)
 {
     // This is not portable to int=16-bit machines
     sum_a = (sum_a + c) % 65521;
@@ -38,7 +38,7 @@ srecord::adler32::next(unsigned char c)
 void
 srecord::adler32::nextbuf(const void *data, size_t nbytes)
 {
-    const auto *dp = (const unsigned char *)data;
+    const auto *dp = (const uint8_t *)(data);
     while (nbytes > 0)
     {
         next(*dp);

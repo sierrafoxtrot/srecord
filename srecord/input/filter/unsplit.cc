@@ -60,8 +60,8 @@ srecord::input_filter_unsplit::read(srecord::record &record)
             buffer_pos = 0;
         }
 
-        unsigned long addr = buffer.get_address() + buffer_pos;
-        unsigned char c = buffer.get_data(buffer_pos++);
+        uint32_t addr = buffer.get_address() + buffer_pos;
+        uint8_t c = buffer.get_data(buffer_pos++);
         int phase = addr % width;
         addr = (addr / width) * modulus + phase + offset;
         record = srecord::record(srecord::record::type_data, addr, &c, 1);

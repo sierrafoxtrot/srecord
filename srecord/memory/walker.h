@@ -52,7 +52,7 @@ public:
       * @param data_size
       *     The size, in bytes, of this chunk of memory.
       */
-    virtual void observe(unsigned long address, const void *data,
+    virtual void observe(uint32_t address, const void *data,
         int data_size) = 0;
 
     /**
@@ -70,7 +70,7 @@ public:
       * @param address
       *     The address of the byte immediately beyond the used memory.
       */
-    virtual void notify_upper_bound(unsigned long address);
+    virtual void notify_upper_bound(uint32_t address);
 
     /**
       * The observe_header method is used to inform the walker of the

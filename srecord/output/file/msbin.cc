@@ -69,7 +69,7 @@ srecord::output_file_msbin::create(const std::string &a_file_name)
 void
 srecord::output_file_msbin::write_dword_le(uint32_t d)
 {
-    unsigned char c[sizeof(uint32_t)];
+    uint8_t c[sizeof(uint32_t)];
 
     srecord::record::encode_little_endian(c, d, sizeof(c));
 
@@ -79,7 +79,7 @@ srecord::output_file_msbin::write_dword_le(uint32_t d)
 
 
 uint32_t
-srecord::output_file_msbin::checksum(const unsigned char *data, size_t len)
+srecord::output_file_msbin::checksum(const uint8_t *data, size_t len)
 {
     uint32_t sum = 0;
 
@@ -94,7 +94,7 @@ void
 srecord::output_file_msbin::write_file_header(uint32_t start, uint32_t length)
 {
     // Write magic
-    static const unsigned char Magic[7] =
+    static const uint8_t Magic[7] =
         { 'B', '0', '0', '0', 'F', 'F', '\n' };
     for (size_t i = 0; i < sizeof(Magic); ++i)
         put_char(Magic[i]);
@@ -118,7 +118,7 @@ srecord::output_file_msbin::write_record_header(uint32_t addr, uint32_t length,
 void
 srecord::output_file_msbin::write_record_data(const record &r)
 {
-    const unsigned char *data = r.get_data();
+    const uint8_t *data = r.get_data();
     size_t length = r.get_length();
     while (length-- > 0)
         put_char(*data++);
@@ -230,7 +230,7 @@ srecord::output_file_msbin::append_pending_record(const record &r)
 
 
 void
-srecord::output_file_msbin::notify_upper_bound(unsigned long addr)
+srecord::output_file_msbin::notify_upper_bound(uint32_t addr)
 {
     upper_bound = addr;
 }
@@ -251,8 +251,8 @@ srecord::output_file_msbin::write(const srecord::record &record)
     case srecord::record::type_data:
         if (beginning_of_file)
         {
-            const unsigned long start = record.get_address();
-            const unsigned long length = upper_bound - start;
+            const uint32_t start = record.get_address();
+            const uint32_t length = upper_bound - start;
             write_file_header(start, length);
             beginning_of_file = false;
         }

@@ -66,10 +66,10 @@ public:
 
 protected:
     // See base class for documentation.
-    void observe(unsigned long, const void *, int) override;
+    void observe(uint32_t, const void *, int) override;
 
 private:
-    unsigned long current_address{0};
+    uint32_t current_address{0};
     bool data_seen{false};
     int nholes{0};
 

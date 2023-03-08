@@ -84,7 +84,7 @@ private:
       * of a dynamically allocated array of bytes, used to construct
       * filler block records.
       */
-    unsigned char *filler_block{nullptr};
+    uint8_t *filler_block{nullptr};
 
     /**
       * The range instance variable is used to remember the range of
