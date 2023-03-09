@@ -34,6 +34,7 @@
 #include <srecord/input/file/fastload.h>
 #include <srecord/input/file/formatted_binary.h>
 #include <srecord/input/file/four_packed_code.h>
+#include <srecord/input/file/efinix_bit.h>
 #include <srecord/input/file/hexdump.h>
 #include <srecord/input/file/hp64k.h>
 #include <srecord/input/file/idt.h>
@@ -313,6 +314,11 @@ srecord::arglex_tool::get_simple_input()
     case token_dec_binary:
         token_next();
         ifp = input_file_dec_binary::create(fn);
+        break;
+
+    case token_efinix_bit:
+        token_next();
+        ifp = input_file_efinix_bit::create(fn);
         break;
 
     case token_emon52:

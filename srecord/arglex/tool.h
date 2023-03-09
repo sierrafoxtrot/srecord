@@ -88,6 +88,7 @@ public:
         token_crop,
         token_dec_binary,
         token_eeprom,
+        token_efinix_bit,
         token_emon52,
         token_exclude,
         token_exclusive_length,

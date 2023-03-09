@@ -90,6 +90,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-Disable_Sequence_Warnings", token_sequence_warnings_disable, },
         { "-Dot_STyle", token_style_dot, },
         { "-EEPROM", token_eeprom, },
+        { "-EFinix_bit", token_efinix_bit, },
         { "-Elektor_Monitor52", token_emon52, },
         { "-Enable_Sequence_Warnings", token_sequence_warnings_enable, },
         { "-Exclude", token_exclude, },
