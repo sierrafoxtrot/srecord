@@ -51,6 +51,7 @@ The SRecord package understands a number of file formats:
 * **Texas Instruments ti-txt**: input/output; used by bootstrap loader of *TI MSP430*
 * **TRS-80**: input/output; used by *The Radio Shack*
 * **VHDL**: output only
+* **VHDL textio**: output only; suitable for loading with `textio.read()` into a bit_vector
 * **Verilog VMEM**: input/output; suitable for loading with `$readmemh()`
 * **Wilson**: input/output; mysterious type of EPROM writer
 

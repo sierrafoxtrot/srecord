@@ -199,6 +199,7 @@ public:
         token_union,
         token_unsplit,
         token_vhdl,
+        token_vhdl_textio,
         token_vmem,
         token_whirlpool,
         token_wilson,

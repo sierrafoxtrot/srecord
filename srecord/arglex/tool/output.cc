@@ -60,6 +60,7 @@
 #include <srecord/output/file/ti_txt.h>
 #include <srecord/output/file/trs80.h>
 #include <srecord/output/file/vhdl.h>
+#include <srecord/output/file/vhdl_textio.h>
 #include <srecord/output/file/vmem.h>
 #include <srecord/output/file/wilson.h>
 
@@ -333,6 +334,11 @@ srecord::arglex_tool::get_output()
     case token_vhdl:
         token_next();
         ofp = srecord::output_file_vhdl::create(fn);
+        break;
+
+    case token_vhdl_textio:
+        token_next();
+        ofp = srecord::output_file_vhdl_textio::create(fn);
         break;
 
     case token_vmem:
