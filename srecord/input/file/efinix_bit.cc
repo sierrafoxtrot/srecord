@@ -24,12 +24,6 @@
 #include <srecord/record.h>
 
 
-srecord::input_file_efinix_bit::~input_file_efinix_bit()
-{
-    // check termination?
-}
-
-
 srecord::input_file_efinix_bit::input_file_efinix_bit(
     const std::string &a_filename
 ) :
@@ -65,7 +59,7 @@ bool srecord::input_file_efinix_bit::read(record &record)
             done = true;
             break;        }
 
-        int c = get_byte(); /* get two hey digits */
+        int c = get_byte(); /* get two hex digits */
         data[length++] = c;
 
         c = get_char(); // newline
@@ -90,7 +84,7 @@ srecord::input_file_efinix_bit::get_file_format_name()
 
 
 int
-srecord::input_file_efinix_bit::format_option_number(void)
+srecord::input_file_efinix_bit::format_option_number()
     const
 {
     return arglex_tool::token_efinix_bit;

@@ -35,7 +35,7 @@ public:
     /**
       * The destructor.
       */
-    virtual ~input_file_efinix_bit();
+    virtual ~input_file_efinix_bit() = default;
 
     /**
       * The create class method is used to create new dynamically
@@ -56,7 +56,7 @@ protected:
     const char *get_file_format_name() const;
 
     // See base class for documentation.
-    int format_option_number(void) const;
+    int format_option_number() const;
 
 private:
     /**
@@ -71,19 +71,19 @@ private:
     bool done;
 
     /**
-      * The default constructor.  Do not use.
+      * The default constructor.
       */
-    input_file_efinix_bit();
+    input_file_efinix_bit() = delete;
 
     /**
-      * The copy constructor.  Do not use.
+      * The copy constructor.
       */
-    input_file_efinix_bit(const input_file_efinix_bit &);
+    input_file_efinix_bit(const input_file_efinix_bit &) = delete;
 
     /**
       * The assignment operator.  Do not use.
       */
-    input_file_efinix_bit &operator=(const input_file_efinix_bit &);
+    input_file_efinix_bit &operator=(const input_file_efinix_bit &) = delete;
 };
 
 };
