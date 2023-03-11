@@ -32,6 +32,7 @@ Doxygen
 dpkg
 diffutils
 Dragonball
+Efinix
 Elektor
 Elektuur
 EPROM

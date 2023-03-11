@@ -48,6 +48,20 @@ public:
       */
     static pointer create(const std::string &file_name);
 
+    /**
+      * The default constructor.
+      */
+    input_file_efinix_bit() = delete;
+
+    /**
+      * The copy constructor.
+      */
+    input_file_efinix_bit(const input_file_efinix_bit &) = delete;
+
+    /**
+      * The assignment operator.  Do not use.
+      */
+    input_file_efinix_bit &operator=(const input_file_efinix_bit &) = delete;
 protected:
     // See base class for documentation.
     bool read(record &record);
@@ -69,21 +83,6 @@ private:
 
     unsigned long address;
     bool done;
-
-    /**
-      * The default constructor.
-      */
-    input_file_efinix_bit() = delete;
-
-    /**
-      * The copy constructor.
-      */
-    input_file_efinix_bit(const input_file_efinix_bit &) = delete;
-
-    /**
-      * The assignment operator.  Do not use.
-      */
-    input_file_efinix_bit &operator=(const input_file_efinix_bit &) = delete;
 };
 
 };
