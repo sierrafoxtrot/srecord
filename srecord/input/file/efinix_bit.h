@@ -25,8 +25,7 @@ namespace srecord {
 
 /**
   * The srecord::input_file_efinix_bit class is used to represent the parse
-  * state when reading an efinix .bit or .hex file. These files are generated
-  * by the Efinity IDE from efinix.
+  * state when reading an efinix .bit or .hex file.
   */
 class input_file_efinix_bit:
     public input_file
