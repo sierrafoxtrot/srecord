@@ -26,8 +26,8 @@ namespace srecord
 {
 
 /**
-  * The srecord::output_file_vhdl_textio class is used to represent the state out
-  * an output file in VHDL format.
+  * The srecord::output_file_vhdl_textio class is used to represent the
+  * state out an output file in VHDL textio format.
   */
 class output_file_vhdl_textio:
     public output_file
@@ -79,7 +79,7 @@ protected:
     const char *format_name() const override;
 
     // See base class for documentation.
-    void address_length_set(int nbytes) override {}
+    void address_length_set(int /*nbytes*/) override {}
 
 private:
     /**
@@ -95,7 +95,8 @@ private:
       */
     unsigned gen_bits_per_word{8};
 
-    static void prepend_bits(record::data_t inp, size_t nbits, std::string &line);
+    static void append_bits(record::data_t inp, size_t nbits,
+                            std::string &line);
 
 public:
     /**
@@ -111,7 +112,7 @@ public:
     /**
       * The assignment operator.
       */
-    output_file_vhdl_textio &operator=(const output_file_vhdl_textio &) = delete;
+    output_file_vhdl_textio &operator=(const output_file_vhdl_textio&) = delete;
 };
 
 };

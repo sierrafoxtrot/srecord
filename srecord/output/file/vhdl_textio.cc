@@ -24,7 +24,9 @@
 #include <srecord/progname.h>
 
 
-srecord::output_file_vhdl_textio::output_file_vhdl_textio(const std::string &a_file_name) :
+srecord::output_file_vhdl_textio::output_file_vhdl_textio(
+	const std::string &a_file_name)
+:
     srecord::output_file(a_file_name)
 {
 }
@@ -45,7 +47,8 @@ srecord::output_file_vhdl_textio::command_line(srecord::arglex_tool *cmdln)
         int in_width = cmdln->get_number("input_width");
         if (in_width % 8)
         {
-            warning("input width %d is not a multiple of 8, rounding up!\n", in_width);
+            warning("input width (%d) is not a multiple of 8, rounding up!\n",
+                    in_width);
             in_width += in_width % 8;
         }
 
@@ -55,7 +58,8 @@ srecord::output_file_vhdl_textio::command_line(srecord::arglex_tool *cmdln)
             out_width = cmdln->get_number("output_width");
             if (out_width > in_width)
             {
-                warning("output width %d is greater than input width!\n", out_width, in_width);
+                warning("output width (%d) is greater than input width (%d)!\n",
+                        out_width, in_width);
                 out_width = in_width;
             }
         }
@@ -65,15 +69,14 @@ srecord::output_file_vhdl_textio::command_line(srecord::arglex_tool *cmdln)
 }
 
 void
-srecord::output_file_vhdl_textio::prepend_bits(srecord::record::data_t data, size_t nbits, std::string &line)
+srecord::output_file_vhdl_textio::append_bits(srecord::record::data_t data,
+                                              size_t nbits, std::string &line)
 {
-    for (size_t i = 0; i < nbits ; ++i)
+    for (srecord::record::data_t mask = 1 << (nbits - 1);
+        mask;
+        mask = mask >> 1)
     {
-        if (data % 2)
-            line = "1" + line;
-        else
-            line = "0" + line;
-        data /= 2;
+        line += (data & mask) ? "1" : "0";
     }
 }
 
@@ -99,18 +102,18 @@ srecord::output_file_vhdl_textio::write(const srecord::record &record)
 
         for (size_t j = 0; j < record.get_length(); j += consume_bytes_per_word)
         {
-            std::string line = "\n";
+            std::string line;
             unsigned num_bits = gen_bits_per_word;
-            srecord::record::address_t current_word = 0;
-            for (unsigned k = 0; k < consume_bytes_per_word; ++k)
+            size_t consume_bits = num_bits % 8U;
+            if (!consume_bits) consume_bits = 8U;
+            for (unsigned k = consume_bytes_per_word; k; --k)
             {
-                prepend_bits(record.get_data(j + k), std::min(num_bits, 8u), line);
-                num_bits -= 8;
+                append_bits(record.get_data(j + k - 1), consume_bits, line);
+                consume_bits = 8U;
             }
-            put_string(line);
+            put_string(line.append("\n"));
         }
         break;
-
     }
 }
 
