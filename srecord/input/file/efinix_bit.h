@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000, 2002, 2003, 2006-2008, 2010, 2011, 2013 Peter Miller
+// Copyright (C) 2023 Daniel Anselmi
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -61,6 +61,7 @@ public:
       * The assignment operator.  Do not use.
       */
     input_file_efinix_bit &operator=(const input_file_efinix_bit &) = delete;
+
 protected:
     // See base class for documentation.
     bool read(record &record);
@@ -80,7 +81,17 @@ private:
       */
     input_file_efinix_bit(const std::string &file_name);
 
-    unsigned long address;
+    /**
+      * The address instance variable is used to remember the current
+      * address of the next data record.  This is set and advanced by
+      * the #read method.
+      */
+    uint32_t address;
+
+    /**
+      * The done instance variable is used to remember that we
+      * don't expect more input data.
+      */
     bool done;
 };
 

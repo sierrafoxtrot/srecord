@@ -1,6 +1,6 @@
 //
 // srecord - manipulate eprom load files
-// Copyright (C) 2000, 2002, 2003, 2005-2008, 2010, 2011, 2013 Peter Miller
+// Copyright (C) 2023 Daniel Anselmi
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published by
@@ -28,8 +28,6 @@ srecord::input_file_efinix_bit::input_file_efinix_bit(
     const std::string &a_filename
 ) :
     input_file(a_filename),
-    //garbage_warning(false),
-    //seen_some_input(false),
     address(0),
     done(false)
 {
@@ -50,21 +48,22 @@ bool srecord::input_file_efinix_bit::read(record &record)
         return false;
 
     int length = 0;
-    unsigned char data[srecord::record::max_data_length];
+    srecord::record::data_t data[srecord::record::max_data_length];
 
     for (;;)
     {
         if (peek_char() == EOF)
         {
             done = true;
-            break;        }
+            break;
+        }
 
-        int c = get_byte(); /* get two hex digits */
+        srecord::record::data_t c = get_byte(); /* get two hex digits */
         data[length++] = c;
 
         c = get_char(); // newline
         if (c != '\n')
-            return false;
+            fatal_error("expecting newline at col 3");
 
         if (length >= (int)sizeof(data))
             break;
