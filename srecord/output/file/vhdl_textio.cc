@@ -25,7 +25,7 @@
 
 
 srecord::output_file_vhdl_textio::output_file_vhdl_textio(
-	const std::string &a_file_name)
+    const std::string &a_file_name)
 :
     srecord::output_file(a_file_name)
 {
