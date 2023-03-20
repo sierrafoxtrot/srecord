@@ -91,7 +91,7 @@ private:
     /**
       * The gen_bits_per_word instance variable is used to remember how
       * many bits to generate on each output row.
-      * must be smaller than consume_bits_per_word
+      * must be smaller or equal to consume_bytes_per_word * 8
       */
     unsigned gen_bits_per_word{8};
 
