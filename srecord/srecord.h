@@ -31,6 +31,7 @@
 #include <srecord/input/file/cosmac.h>
 #include <srecord/input/file/dec_binary.h>
 #include <srecord/input/file/emon52.h>
+#include <srecord/input/file/efinix_bit.h>
 #include <srecord/input/file/fairchild.h>
 #include <srecord/input/file/fastload.h>
 #include <srecord/input/file/formatted_binary.h>

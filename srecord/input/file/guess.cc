@@ -27,6 +27,7 @@
 #include <srecord/input/file/brecord.h>
 #include <srecord/input/file/dec_binary.h>
 #include <srecord/input/file/emon52.h>
+#include <srecord/input/file/efinix_bit.h>
 #include <srecord/input/file/fairchild.h>
 #include <srecord/input/file/fastload.h>
 #include <srecord/input/file/formatted_binary.h>
@@ -71,6 +72,7 @@ static func_p table[] =
     srecord::input_file_brecord::create,
     srecord::input_file_dec_binary::create,
     srecord::input_file_emon52::create,
+    srecord::input_file_efinix_bit::create,
     srecord::input_file_fairchild::create,
     srecord::input_file_fastload::create,
     srecord::input_file_formatted_binary::create,

@@ -79,10 +79,13 @@ The RCA Cosmac Elf format is understood for both reading and writing.
 .TP
 DEC Binary
 The DEC Binary (XXDP) format is understood for both reading and writing.
+.\" ----------  E  ---------------------------------------------------------
 .TP
 Elektor Monitor (EMON52)
 The EMON52 format is understood for both reading and writing.
-.\" ----------  E  ---------------------------------------------------------
+.TP
+Efinix Bitstream
+The Efinix bitstream format is understood for reading only.
 .\" ----------  F  ---------------------------------------------------------
 .TP
 Fairchild Fairbug
