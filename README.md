@@ -20,6 +20,7 @@ The SRecord package understands a number of file formats:
 * **COE**: output only; Extension `.coe`; also known as **Xilinx Coefficient File** format
 * **Cosmac**: input/output; also known as **RCA Cosmac Elf** format
 * **DEC Binary (XXDP)**: input/output
+* **Efinix hex/bit**: input;
 * **Elektor Monitor (EMON52)**: input/output
 * **Fairchild Fairbug**: input/output
 * **Formatted Binary**: input/output
