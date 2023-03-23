@@ -20,6 +20,8 @@ cmake_minimum_required(VERSION 3.22)
 project(srecord VERSION "1.65")
 set(CMAKE_BUILD_TYPE Release)
 
+option(SRecord_ENABLE_DOCS "Enable documentation generation" OFF)
+
 # Headers are all relative to project root
 include_directories(./)
 
@@ -45,7 +47,7 @@ include(packaging)
 # libsrecord
 add_subdirectory(srecord)
 
-# Build srecord executables
+# Build srecord executablesF
 add_custom_target(srecord-executables)
 add_custom_target(srecord-executables-version DEPENDS srecord-executables)
 foreach(p IN ITEMS srec_cat srec_cmp srec_info)
@@ -62,8 +64,24 @@ endforeach()
 enable_testing()
 add_subdirectory(test)
 
-# Documentation & Man Pages
-add_subdirectory(doc)
+
+
+if(SRecord_ENABLE_DOCS OR (CMAKE_BUILD_TYPE STREQUAL "Release"))
+  # Use CMakes built in rule for Doxygen
+  find_package(Doxygen)
+  if(NOT DOXYGEN_FOUND)
+    message(FATAL_ERROR "Unable to find Doxygen")
+  else()
+    set(SRecord_INTERNAL_ENABLE_DOCS YES)
+  endif()
+else()
+  set(SRecord_INTERNAL_ENABLE_DOCS NO)
+endif()
+
+if(SRecord_INTERNAL_ENABLE_DOCS)
+  # Documentation & Man Pages
+  add_subdirectory(doc)
+endif()
 
 # Package SRecord
 include(CPack)

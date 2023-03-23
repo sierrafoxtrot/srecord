@@ -44,7 +44,9 @@ configure_file(config.h.in config.h @ONLY)
 configure_file(patchlevel.h.in patchlevel.h @ONLY)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-# Generate doxygen content
-doxygen_add_docs(doxygen
-                 ${LIB_SRECORD_HDR}
-                 ALL)
+if(SRecord_INTERNAL_ENABLE_DOCS)
+  # Generate doxygen content
+  doxygen_add_docs(doxygen
+                   ${LIB_SRECORD_HDR}
+                   ALL)
+endif()
