@@ -214,6 +214,10 @@ VHDL
 It is possible to write VHDL file.
 This is only supported for output.
 .TP 8n
+VHDL textio
+It is possible to write VHDL textio file.
+This is only supported for output.
+.TP 8n
 Verilog VMEM
 It is possible to write a Verilog VMEM file suitable for loading with
 \f[CW]$readmemh()\fP.  This format is supported for reading and writing.

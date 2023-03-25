@@ -144,6 +144,7 @@
 #include <srecord/output/file/ti_txt.h>
 #include <srecord/output/file/trs80.h>
 #include <srecord/output/file/vhdl.h>
+#include <srecord/output/file/vhdl_textio.h>
 #include <srecord/output/file/vmem.h>
 #include <srecord/output/file/wilson.h>
 #include <srecord/quit.h>
