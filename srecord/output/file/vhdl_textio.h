@@ -95,6 +95,11 @@ private:
       */
     unsigned gen_bits_per_word{8};
 
+    /**
+      * helper function to append nbits from inp to line
+      * converts nbits from byte data_t inp to a string of '0' and '1',
+      * appending each to the string line.
+      */
     static void append_bits(record::data_t inp, size_t nbits,
                             std::string &line);
 

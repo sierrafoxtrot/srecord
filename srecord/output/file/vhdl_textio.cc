@@ -16,7 +16,6 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include <algorithm>
 #include <srecord/arglex/tool.h>
 #include <srecord/interval.h>
 #include <srecord/output/file/vhdl_textio.h>
@@ -105,7 +104,8 @@ srecord::output_file_vhdl_textio::write(const srecord::record &record)
             std::string line;
             unsigned num_bits = gen_bits_per_word;
             size_t consume_bits = num_bits % 8U;
-            if (!consume_bits) consume_bits = 8U;
+            if (!consume_bits)
+                consume_bits = 8U;
             for (unsigned k = consume_bytes_per_word; k; --k)
             {
                 append_bits(record.get_data(j + k - 1), consume_bits, line);
@@ -121,12 +121,12 @@ srecord::output_file_vhdl_textio::write(const srecord::record &record)
 bool
 srecord::output_file_vhdl_textio::preferred_block_size_set(int nbytes)
 {
-    // this looks really wrong, from vhdl.cc ???
-    if (nbytes > 1 || nbytes > record::max_data_length)
+    if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
 
     if (consume_bytes_per_word > 1 && nbytes % consume_bytes_per_word)
         return false;
+
     return true;
 }
 
