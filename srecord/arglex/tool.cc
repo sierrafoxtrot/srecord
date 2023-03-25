@@ -220,6 +220,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-Un_Fill", token_unfill, },
         { "-Un_SPlit", token_unsplit, },
         { "-VHdl", token_vhdl, },
+        { "-VHdl_Textio", token_vhdl_textio, },
         { "-VMem", token_vmem, },
         { "-WHIrlpool", token_whirlpool },
         { "-WILson", token_wilson, },

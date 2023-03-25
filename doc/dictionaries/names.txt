@@ -61,6 +61,7 @@ Hanspeter
 Heilig
 hexdump
 INHX
+inout
 Interix
 Izzet
 Jens
@@ -132,6 +133,7 @@ Telegraphique
 Telephonique
 Tewie
 texlive
+textio
 tkdiff
 tkenc
 tmac
