@@ -215,10 +215,14 @@ srecord::output_file_vhdl::address_length_set(int)
 bool
 srecord::output_file_vhdl::preferred_block_size_set(int nbytes)
 {
-    if (nbytes > 1 || nbytes > record::max_data_length)
+    // Simple bounds check for zero length, negative or too large
+    if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
+
+    // Output blocks must be a multiple of the word length
     if (bytes_per_word > 1 && 0 != (nbytes % bytes_per_word))
         return false;
+
     return true;
 }
 

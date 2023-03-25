@@ -70,6 +70,14 @@ if test $? -ne 0; then fail; fi
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
+# Test for block sizes > 1 (default)
+srec_cat test.in -o test.out -vhdl 1 --address-length=4 \
+	 --output-block-size=2
+if test $? -ne 0; then fail; fi
+
+diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
 #
 # The things tested here, worked.
 # No other guarantees are made.
