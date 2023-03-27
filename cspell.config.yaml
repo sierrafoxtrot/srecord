@@ -81,6 +81,7 @@ flagWords:
 # Some may be fixed by using better variable names in the code.
 words:
   - ABBE
+  - ABCDEFGHIJKLMNOPQRSTUVWXYZ
   - abbrev
   - abchp
   - ADCCP
@@ -240,6 +241,7 @@ words:
   - sortflag
   - spasmle
   - sprintf
+  - stringf
   - stuvwxyz
   - substr
   - tekext
