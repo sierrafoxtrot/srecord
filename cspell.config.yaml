@@ -81,7 +81,7 @@ flagWords:
 # Some may be fixed by using better variable names in the code.
 words:
   - ABBE
-  - ABCDEFGHIJKLMNOPQRSTUVWXYZ
+  - ABCDEFGHIJKLMNOPQRSTUVWXY
   - abbrev
   - abchp
   - ADCCP
