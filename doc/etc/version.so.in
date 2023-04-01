@@ -1,3 +1,4 @@
 .ds V) @srecord_VERSION@
 .ds Y) @COPYRIGHT_YEARS@
 .ds C) @CMAKE_MINIMUM_REQUIRED_VERSION@
+.ds G) @GIT_SHA1@

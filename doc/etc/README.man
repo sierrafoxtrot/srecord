@@ -375,7 +375,7 @@ Windows binaries.
 .ne 1i
 .SH COPYRIGHT
 .I srecord
-version \*(V)
+version \*(V) [\*(G)]
 .br
 Copyright
 .if t \(co
