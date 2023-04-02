@@ -31,9 +31,9 @@ This format is used by the Ohio Scientific 65A monitor. This
 family of machines includes the Superboard II, C2, C4, C8,
 and Challenger III, when operated with a serial console.
 .PP
-The file and each subsequent data block starts with a \[lq]R\[rq] to ensure 
+The file and each subsequent data block starts with a \[lq]R\[rq] to ensure
 command mode.
-A load operation is initiated with a \[lq]L\[rq], then a 4\[hy]digit hex 
+A load operation is initiated with a \[lq]L\[rq], then a 4\[hy]digit hex
 address.
 There is no need for additional address specifications unless there are gaps in
 the data file.
@@ -51,7 +51,7 @@ into a terminal.
 .LP
 Data loading is concluded with a \[lq]R\[rq] to return to command mode.
 If an address to start execution is specified, then it is entered into addresses
-0x012E and 0x012F, followed by a \[lq]R\[rq] to return to command mode, and a 
+0x012E and 0x012F, followed by a \[lq]R\[rq] to return to command mode, and a
 \[lq]G\[rq] to transfer execution to the specified address.
 .SS Size Multiplier
 In general, binary data will expand in sized by approximately 2.3 times
