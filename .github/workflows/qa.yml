@@ -151,7 +151,17 @@ jobs:
         working-directory: build
         run: ninja man-html web-site
 
-      - name: Link check
-        uses: filiph/linkcheck@2.0.23
+       - name: Link check
+      # disable action until https://github.com/tylerbutler/linkcheck-bin/issues/1 is released
+          uses: filiph/linkcheck@2.0.23
           with:
-            arguments: https://srecord.sourceforge.net/
+            arguments: 'https://srecord.sourceforge.net/'
+
+        #with:
+        #  arguments: '-i sitemap.prod.txt'
+#        run: |
+#          curl -sL https://github.com/filiph/linkcheck/releases/download/2.0.20/linkcheck-2.0.20-linux-x64.tar.gz | tar xvzf - linkcheck/linkcheck --strip 1
+          # Check links from production sitemap to ensure no publish links are broken
+#          ./linkcheck -i sitemap.prod.txt
+          # Check links from other products to ensure no links are broken
+#          ./linkcheck -i product-links.prod.txt
