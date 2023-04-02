@@ -1,8 +1,0 @@
----
-name: Link Checker
-on: [push, pull_request]
-
-jobs:
-  check:
-    name: Check links with linkcheck
-    uses: filiph/linkcheck@2.0.23
