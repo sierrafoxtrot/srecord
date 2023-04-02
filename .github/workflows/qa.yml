@@ -150,3 +150,6 @@ jobs:
       - name: Web Site
         working-directory: build
         run: ninja man-html web-site
+
+      - name: Link check
+        uses: filiph/linkcheck@2.0.23
