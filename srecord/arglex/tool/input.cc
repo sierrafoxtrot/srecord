@@ -47,6 +47,7 @@
 #include <srecord/input/file/motorola.h>
 #include <srecord/input/file/msbin.h>
 #include <srecord/input/file/needham.h>
+#include <srecord/input/file/os65a.h>
 #include <srecord/input/file/os65v.h>
 #include <srecord/input/file/ppb.h>
 #include <srecord/input/file/ppx.h>
@@ -414,6 +415,11 @@ srecord::arglex_tool::get_simple_input()
     case token_ohio_scientific:
         token_next();
         ifp = input_file_os65v::create(fn);
+        break;
+
+    case token_os65a:
+        token_next();
+        ifp = input_file_os65a::create(fn);
         break;
 
     case token_ppx:

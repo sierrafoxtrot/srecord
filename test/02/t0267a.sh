@@ -55,6 +55,26 @@ fi
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
 
+mv test.out test.in
+if test $? -ne 0; then no_result; fi
+
+cat > test.ok << 'fubar'
+S00600004844521B
+S111000048656C6C6F2C20576F726C64210A7B
+S5030001FB
+S9031000EC
+fubar
+if test $? -ne 0; then no_result; fi
+
+srec_cat test.in -os65a -o test.out -header HDR > LOG 2>&1
+if test $? -ne 0; then
+	cat LOG
+	fail
+fi
+
+diff test.ok test.out
+if test $? -ne 0; then fail; fi
+
 #
 # The things tested here, worked.
 # No other guarantees are made.
