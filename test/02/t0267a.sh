@@ -33,7 +33,10 @@ if test $? -ne 0; then no_result; fi
 
 # This is the actual test
 srec_cat test.in -o test.out -os65a -eol=nl -disable=esa > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+	cat LOG
+	fail 
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
@@ -44,7 +47,10 @@ if test $? -ne 0; then no_result; fi
 
 # This is the actual test
 srec_cat test.in -o test.out -os65a -eol=nl > LOG 2>&1
-if test $? -ne 0; then cat LOG; fail; fi
+if test $? -ne 0; then
+	cat LOG 
+	fail 
+fi
 
 diff test.ok test.out
 if test $? -ne 0; then fail; fi
