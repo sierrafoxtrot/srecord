@@ -84,7 +84,7 @@ srecord::input_file_os65a::read_inner(srecord::record &record)
                 // different chunks. Not likely, but permissable.
                 go_address_low = get_byte();
                 go_address_low_loaded = true;
-                warning("PC value written in two separate bytes");
+                warning("PC value written in two separate load commands");
             }
 
             continue;
