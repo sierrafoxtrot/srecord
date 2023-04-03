@@ -81,7 +81,7 @@ srecord::input_file_os65a::read_inner(srecord::record &record)
             if (address == 0x012F)
             {
                 // This would be an unusual case where the PC is loaded in two
-                // different chunks. Not likely, but permissable.
+                // different chunks. Not likely, but permissible.
                 go_address_low = get_byte();
                 go_address_low_loaded = true;
                 warning("PC value written in two separate load commands");
@@ -95,7 +95,7 @@ srecord::input_file_os65a::read_inner(srecord::record &record)
 
             if (!go_address_high_loaded || !go_address_low_loaded)
             {
-                warning("GO command found, but program counter not initialized!");
+                warning("GO command found, but PC not initialized!");
             }
 
             address = (go_address_high << 8) | go_address_low;
@@ -141,7 +141,7 @@ srecord::input_file_os65a::read_inner(srecord::record &record)
                 // At this point, we know we've gotten the first letter of a
                 // byte in hex.
                 get_char_undo(c);
-                
+
                 uint8_t buf[1];
                 buf[0] = get_byte();
                 record =
