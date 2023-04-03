@@ -125,7 +125,6 @@ private:
         state_load_address, // Loading memory address
         state_load_data,    // Loading memory data
         state_pch_loaded,   // PC high byte loaded
-        state_pcl_loaded,   // PC low byte loaded
         state_command,      // In command mode
         state_go            // GO command emitted
     };
