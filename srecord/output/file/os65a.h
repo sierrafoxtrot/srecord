@@ -103,13 +103,13 @@ private:
     state_t state;
 
     // The default constructor. Do not use.
-    output_file_os65a();
+    output_file_os65a() = delete;
 
     // Copy constructor. Do not use.
-    output_file_os65a(const output_file_os65a &);
+    output_file_os65a(const output_file_os65a &) = delete;
 
     // Assignment operator. Do not use.
-    output_file_os65a &operator=(const output_file_os65a &);
+    output_file_os65a &operator=(const output_file_os65a &) = delete;
 };
 
 };
