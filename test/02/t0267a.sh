@@ -48,7 +48,7 @@ if test $? -ne 0; then no_result; fi
 # This is the actual test
 srec_cat test.in -o test.out -os65a -eol=nl > LOG 2>&1
 if test $? -ne 0; then
-    cat LOG 
+    cat LOG
     fail
 fi
 
