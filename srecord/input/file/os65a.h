@@ -133,7 +133,7 @@ private:
     bool go_address_low_loaded;
 
     /**
-      * Processing state enumeration. The follwing states are possible:
+      * Processing state enumeration. The following states are possible:
       *
       *     state_null          NULL initial state
       *     state_load_address  Loading address
