@@ -107,29 +107,56 @@ public:
     bool ignore_the_rest{false};
 
 private:
-    // Current file location
+    /**
+      * Current file location.
+      */
     uint16_t address;
 
-    // High and low program counter addresses, used with GO
+    /**
+      * GO command's address, high byte.
+      */
     uint8_t go_address_high;
+
+    /**
+      * GO command's address, low byte.
+      */
     uint8_t go_address_low;
 
-    // State tracking for the PC high and low bytes
+    /**
+      * State of the GO address's high byte.
+      */
     bool go_address_high_loaded;
+
+    /**
+      * State of the GO address's low byte.
+      */
     bool go_address_low_loaded;
 
-    // Processing state
+    /**
+      * Processing state enumeration. The follwing states are possible:
+      *
+      *     state_null          NULL initial state
+      *     state_load_address  Loading address
+      *     state_load_data     Loading data
+      *     state_pch_loaded    High byte of GO address loaded
+      *     state_command       In command mode
+      *     state_go            GO command emitted
+      *
+      * These states correspond to possible states of the OSI 65A ROM monitor.
+      */
     enum state_t
     {
-        state_null,         // NULL initial state
-        state_load_address, // Loading memory address
-        state_load_data,    // Loading memory data
-        state_pch_loaded,   // PC high byte loaded
-        state_command,      // In command mode
-        state_go            // GO command emitted
+        state_null,
+        state_load_address,
+        state_load_data,
+        state_pch_loaded,
+        state_command,
+        state_go
     };
 
-    // Hold our current state, see above.
+    /**
+      * The current state we're in.
+      */
     state_t state;
 };
 

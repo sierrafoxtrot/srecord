@@ -37,7 +37,9 @@ class output_file_os65a:
     public output_file
 {
 public:
-    // The destructor
+    /**
+      * The destructor.
+      */
     virtual ~output_file_os65a();
 
 private:
@@ -61,6 +63,21 @@ public:
      */
     static pointer create(const std::string &file_name);
 
+    /**
+      * The default constructor.
+      */
+    output_file_os65a() = delete;
+
+    /**
+      * The copy constructor.
+      */
+    output_file_os65a(const output_file_os65a &) = delete;
+
+    /**
+      * The assignment operator.
+      */
+    output_file_os65a &operator=(const output_file_os65a &) = delete;
+
 protected:
     // See base class for documentation
     void write(const record &);
@@ -78,38 +95,44 @@ protected:
     bool preferred_block_size_set(int nbytes);
 
     // See base class for documentation
-    const char *mode(void) const;
+    const char *mode() const;
 
     // See base class for documentation.
     const char *format_name() const;
 
 private:
-    // Preferred bytes per block
+    /**
+      * Preferred output block size.
+      */
     int pref_block_size;
 
-    // Current file location
+    /**
+      * Current file location.
+      */
     unsigned long address;
 
-    // Processing state
+    /**
+      * Processing state enumeration. The follwing states are possible:
+      *
+      *     state_null      NULL initial state
+      *     state_load      Loading memory
+      *     state_command   In command mode
+      *     state_go        GO command emitted
+      *
+      * These states correspond to possible states of the OSI 65A ROM monitor.
+      */
     enum state_t
     {
-        state_null,     // NULL initial state
-        state_load,     // Loading memory
-        state_command,  // In command mode
-        state_go        // GO command emitted
+        state_null,
+        state_load,
+        state_command,
+        state_go
     };
 
-    // Hold our current state, see above.
+    /**
+      * The current state we're in.
+      */
     state_t state;
-
-    // The default constructor. Do not use.
-    output_file_os65a() = delete;
-
-    // Copy constructor. Do not use.
-    output_file_os65a(const output_file_os65a &) = delete;
-
-    // Assignment operator. Do not use.
-    output_file_os65a &operator=(const output_file_os65a &) = delete;
 };
 
 };
