@@ -19,9 +19,9 @@
 .so etc/version.so
 .hy 0
 .ad l
+.XX "" "The README file"
 .SH NAME
 SRecord \- manipulate EPROM load files
-.XX "" "The README file"
 .SH DESCRIPTION
 The \f[I]SRecord\fP package is a collection of powerful tools for
 manipulating EPROM load files.
@@ -421,8 +421,8 @@ Peter Miller;E\[hy]Mail:;pmiller@opensource.org.au
 .TE
 .br
 .bp
-.SH RELEASE NOTES
 .XX "" "Release Notes"
+.SH RELEASE NOTES
 This section details the various features and bug fixes of the various
 releases.  For excruciating and complete detail, and also credits for
 those of you who have generously sent me suggestions and bug reports,

@@ -17,9 +17,9 @@
 .\"     <http://www.gnu.org/licenses/>.
 .\"
 .TH "New Format" "SRecord" "SRecord" "Reference Manual"
+.XX "" "How to add a new file format"
 .SH NAME
 How to add a new file format
-.XX "" "How to add a new file format"
 .SH DESCRIPTION
 This section describes how to add a new file format.  It's mostly a
 set of reminders for the maintainer.  If you want a format added to

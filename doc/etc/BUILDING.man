@@ -20,9 +20,9 @@
 .if n .hy 0
 .if n .ad l
 .if n .nr IN 8n
+.XX "" "How to build SRecord"
 .SH NAME
 How to build SRecord
-.XX "" "How to build SRecord"
 .SH SPACE REQUIREMENTS
 You will need about 3MB to unpack and build the
 .I SRecord
