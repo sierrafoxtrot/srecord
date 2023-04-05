@@ -1,0 +1,78 @@
+'\" t
+.\"     srecord - manipulate eprom load files
+.\"     Copyright (C) 2002, 2004, 2006-2009 Peter Miller
+.\"
+.\"		OS65A module Copyright (c) 2022, 2023 Glitch Works, LLC
+.\"		http://www.glitchwrks.com/
+.\"
+.\"     This program is free software; you can redistribute it and/or modify
+.\"     it under the terms of the GNU General Public License as published by
+.\"     the Free Software Foundation; either version 3 of the License, or
+.\"     (at your option) any later version.
+.\"
+.\"     This program is distributed in the hope that it will be useful,
+.\"     but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"     GNU General Public License for more details.
+.\"
+.\"     You should have received a copy of the GNU General Public License
+.\"     along with this program. If not, see
+.\"     <http://www.gnu.org/licenses/>.
+.\"
+.ds n) srec_os65a
+.TH \*(n) 5 SRecord "Reference Manual"
+.SH NAME
+srec_os65a \- Ohio Scientific 65A monitor load format
+.if require_index \{
+.XX "srec_os65a(5)" "Ohio Scientific 65A monitor load format"
+.\}
+.SH DESCRIPTION
+This format is used by the Ohio Scientific 65A monitor. This
+family of machines includes the Superboard II, C2, C4, C8,
+and Challenger III, when operated with a serial console.
+.PP
+The file and each subsequent data block starts with a \[lq]R\[rq] to ensure
+command mode.
+A load operation is initiated with a \[lq]L\[rq], then a 4\[hy]digit hex
+address.
+There is no need for additional address specifications unless there are gaps in
+the data file.
+.LP
+If no address information is provided, data is assumed to start at 0x0000.
+To omit the initial address, use \[lq]-enable optional_address\[rq].
+It is not advisable to overwrite data in the first 512 bytes of memory space
+without extreme care.
+.LP
+Each data byte is represented as two hexadecimal characters.
+The 65A monitor ignores all non-hexadecimal or command characters, but default
+formatting is 32 bytes per line, with a carriage return, line feed combination
+(0x0D, 0x0A) at the end of line. This provides clean formatting when pasting
+into a terminal.
+.LP
+Data loading is concluded with a \[lq]R\[rq] to return to command mode.
+If an address to start execution is specified, then it is entered into addresses
+0x012E and 0x012F, followed by a \[lq]R\[rq] to return to command mode, and a
+\[lq]G\[rq] to transfer execution to the specified address.
+.SS Size Multiplier
+In general, binary data will expand in sized by approximately 2.3 times
+when represented with this format.
+.\" ------------------------------------------------------------------------
+.br
+.ne 2i
+.SH EXAMPLE
+Here is an example Ohio Scientific 65A monitor load file.
+It contains the data \[lq]Hello, World\[rq] to be loaded at address 0x1000,
+with execution at 0x1010.
+.LP
+RL1000
+.br
+48656C6C6F2C20576F726C64
+.br
+RL012E1010RG
+.LP
+When loading into the 65A monitor, \[lq]R\[rq] will not be shown, and
+will be replaced with a carriage return, line feed combination.
+.RE
+.\" ------------------------------------------------------------------------
+.ds n) srec_cat
+.so man1/z_copyright.so

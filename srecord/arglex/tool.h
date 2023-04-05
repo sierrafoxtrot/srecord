@@ -149,6 +149,7 @@ public:
         token_offset,
         token_ohio_scientific,
         token_or,
+        token_os65a,
         token_output,
         token_output_word,
         token_over,

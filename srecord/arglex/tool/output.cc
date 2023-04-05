@@ -46,6 +46,7 @@
 #include <srecord/output/file/motorola.h>
 #include <srecord/output/file/msbin.h>
 #include <srecord/output/file/needham.h>
+#include <srecord/output/file/os65a.h>
 #include <srecord/output/file/os65v.h>
 #include <srecord/output/file/ppb.h>
 #include <srecord/output/file/ppx.h>
@@ -264,6 +265,11 @@ srecord::arglex_tool::get_output()
     case token_ohio_scientific:
         token_next();
         ofp = srecord::output_file_os65v::create(fn);
+        break;
+
+    case token_os65a:
+        token_next();
+        ofp = srecord::output_file_os65a::create(fn);
         break;
 
     case token_ppb:

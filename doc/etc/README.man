@@ -162,8 +162,11 @@ The Needham Electronics ASCII file format is understood for both reading
 and writing.
 .\" ----------  O  ---------------------------------------------------------
 .TP 8n
+OS65A
+The Ohio Scientific 65A format is understood for both reading and writing.
+.TP 8n
 OS65V
-The Ohio Scientific hexadecimal format is understood for both reading
+The Ohio Scientific 65V hexadecimal format is understood for both reading
 and writing.
 .\" ----------  P  ---------------------------------------------------------
 .TP 8n

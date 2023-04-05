@@ -44,6 +44,7 @@
 #include <srecord/input/file/motorola.h>
 #include <srecord/input/file/msbin.h>
 #include <srecord/input/file/needham.h>
+#include <srecord/input/file/os65a.h>
 #include <srecord/input/file/os65v.h>
 #include <srecord/input/file/ppb.h>
 #include <srecord/input/file/ppx.h>
@@ -87,6 +88,7 @@ static func_p table[] =
     srecord::input_file_mos_tech::create,
     srecord::input_file_motorola::create,
     srecord::input_file_needham::create,
+    srecord::input_file_os65a::create,
     srecord::input_file_os65v::create,
     srecord::input_file_ppb::create,
     srecord::input_file_ppx::create,

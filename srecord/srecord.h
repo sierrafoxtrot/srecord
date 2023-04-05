@@ -44,6 +44,7 @@
 #include <srecord/input/file/mos_tech.h>
 #include <srecord/input/file/msbin.h>
 #include <srecord/input/file/needham.h>
+#include <srecord/input/file/os65a.h>
 #include <srecord/input/file/os65v.h>
 #include <srecord/input/file/ppb.h>
 #include <srecord/input/file/ppx.h>
@@ -129,6 +130,7 @@
 #include <srecord/output/file/mos_tech.h>
 #include <srecord/output/file/msbin.h>
 #include <srecord/output/file/needham.h>
+#include <srecord/output/file/os65a.h>
 #include <srecord/output/file/os65v.h>
 #include <srecord/output/file/ppb.h>
 #include <srecord/output/file/ppx.h>
