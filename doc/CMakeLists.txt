@@ -175,6 +175,7 @@ function(add_doc TARGET SOURCE DEPS)
         COMMAND
             sh ${CMAKE_CURRENT_SOURCE_DIR}/script/groff.sh
             -T ps                  # Output device
+            -d paper=a4 -P-pa4     # Consistent paper size
             -man                   # Macro Package man
             -m pdfmark             # Macro Package pdfmark
             # Order of preprocessors may be important
