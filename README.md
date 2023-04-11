@@ -25,6 +25,7 @@ The SRecord package understands a number of file formats:
 * **Fairchild Fairbug**: input/output
 * **Formatted Binary**: input/output
 * **Four Packed Code (FPC)**: input/output
+* **Gowin fs**: input;
 * **Hexdump**: output only; a simple hexdump
 * **HP64000 Absolute**: input only
 * **IDT/sim**: input/output

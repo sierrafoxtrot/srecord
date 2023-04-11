@@ -112,6 +112,7 @@ public:
         token_four_packed_code,
         token_gcrypt,
         token_generator,
+        token_gowin_fs,
         token_guess,
         token_haval,
         token_hexdump,
