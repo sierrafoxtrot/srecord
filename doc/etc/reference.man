@@ -127,6 +127,7 @@ with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .\" Before the TOC to avoid wrong output when moving the TOC up with psselect:
 .\" - metadata would contain BUILDING's values otherwise
+.\" - the last PDF outline entry would wrongly be positioned at the beginning
 .pdfsync
 .\"
 .\" ----------  Include the Table of Contents  --------------------------------
@@ -134,6 +135,8 @@ with this program. If not, see <http://www.gnu.org/licenses/>.
 .if o .bp \" because .TH is going to throw another one
 .nr % 1000
 .TH "Table of Contents" "SRecord" "SRecord" "Reference Manual"
+.pdfbookmark 1 Table of Contents
+.pdfsync
 .\"
 .\"     -----
 .\" This next section redefines the page footer to use roman numbering
