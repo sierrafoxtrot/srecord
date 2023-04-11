@@ -176,6 +176,7 @@ function(add_doc TARGET SOURCE DEPS)
             sh ${CMAKE_CURRENT_SOURCE_DIR}/script/groff.sh
             -T ps                  # Output device
             -man                   # Macro Package man
+            -m pdfmark             # Macro Package pdfmark
             # Order of preprocessors may be important
             -t                     # Preprocess with tbl
             -s                     # Preprocess with soelim, with search paths:

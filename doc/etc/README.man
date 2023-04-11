@@ -17,6 +17,12 @@
 .\"
 .TH "Read Me" SRecord SRecord "Reference Manual"
 .so etc/version.so
+.pdfinfo /Title SRecord Read Me
+.pdfinfo /Author Scott Finneran, Peter Miller
+.pdfinfo /Subject Overview of SRecord version \*(V) [\*(G)]
+.pdfinfo /Keywords SRecord README changelog releases
+.pdfsync
+.\" ---------------------------------------------------------------------------
 .hy 0
 .ad l
 .XX "" "The README file"

@@ -18,6 +18,12 @@
 .\"
 .TH "Change Log" SRecord SRecord "Change Log"
 .so etc/version.so
+.pdfinfo /Title SRecord Change Log
+.pdfinfo /Author Scott Finneran, Peter Miller
+.pdfinfo /Subject Release notes up to SRecord version \*(V) [\*(G)]
+.pdfinfo /Keywords SRecord changelog releases
+.pdfsync
+.\" ---------------------------------------------------------------------------
 .hy 0
 .ad l
 .SH RELEASE NOTES
