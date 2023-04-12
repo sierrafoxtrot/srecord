@@ -20,6 +20,7 @@
 
 # Configuration
 configure_file(etc/version.so.in etc/version.so @ONLY)
+set(VERSION_DEF ${CMAKE_CURRENT_BINARY_DIR}/etc/version.so)
 
 # Target directories
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
@@ -215,12 +216,25 @@ function(add_doc TARGET SOURCE DEPS)
     set(DOC_TARGETS ${DOC_TARGETS} PARENT_SCOPE)
 endfunction()
 
-add_doc(${CMAKE_CURRENT_BINARY_DIR}/BUILDING.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/BUILDING.man "")
-add_doc(${CMAKE_CURRENT_BINARY_DIR}/README.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/README.man "${NEW_CHANGES}")
-add_doc(${CMAKE_CURRENT_BINARY_DIR}/change_log.pdf ${CMAKE_CURRENT_SOURCE_DIR}/etc/change_log.man "${NEW_CHANGES}")
+add_doc(${CMAKE_CURRENT_BINARY_DIR}/BUILDING.pdf
+        ${CMAKE_CURRENT_SOURCE_DIR}/etc/BUILDING.man
+        "${VERSION_DEF}")
+add_doc(${CMAKE_CURRENT_BINARY_DIR}/README.pdf
+        ${CMAKE_CURRENT_SOURCE_DIR}/etc/README.man
+        "${VERSION_DEF};${NEW_CHANGES}")
+add_doc(${CMAKE_CURRENT_BINARY_DIR}/change_log.pdf
+        ${CMAKE_CURRENT_SOURCE_DIR}/etc/change_log.man
+        "${VERSION_DEF};${NEW_CHANGES}")
 add_doc(${CMAKE_CURRENT_BINARY_DIR}/reference-${srecord_VERSION_MAJOR}.${srecord_VERSION_MINOR}.pdf
         ${CMAKE_CURRENT_SOURCE_DIR}/etc/reference.man
-        "${REF_PARTS};${NEW_CHANGES}")
+        "${VERSION_DEF};${NEW_CHANGES};${REF_PARTS};${MAN_COMMON};\
+${CMAKE_CURRENT_SOURCE_DIR}/etc/ref-toc.so;\
+${CMAKE_CURRENT_SOURCE_DIR}/etc/README.man;\
+${CMAKE_CURRENT_SOURCE_DIR}/etc/BUILDING.man;\
+${CMAKE_CURRENT_SOURCE_DIR}/etc/new-file-format.so;\
+${CMAKE_CURRENT_SOURCE_DIR}/etc/new-filter.so;\
+${CMAKE_CURRENT_SOURCE_DIR}/etc/coding-style.so")
+
 add_custom_target(doco ALL DEPENDS ${DOC_TARGETS})
 
 # Installation
