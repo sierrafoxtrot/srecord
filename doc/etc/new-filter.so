@@ -17,9 +17,9 @@
 .\"     <http://www.gnu.org/licenses/>.
 .\"
 .TH "New Filter" "SRecord" "SRecord" "Reference Manual"
+.XX "" "How to add a new filter"
 .SH NAME
 How to add a new filter
-.XX "" "How to add a new filter"
 .SH DESCRIPTION
 This section describes how to add a new filter.  It's mostly a set
 of reminders for the maintainer.  If you want a filter added to the

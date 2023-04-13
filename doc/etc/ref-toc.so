@@ -22,6 +22,7 @@
 .\" arguments, first is the page title, the second is the page
 .\" description.  The current page number in the \n% register is
 .\" consulted to obtain the page number.
+.\" Also the PDF outline entries are inserted here.
 .\"
 .de XX
 .ds Page*Of*\\$1 \\n%
@@ -37,6 +38,8 @@
 .rm toc*num
 .ev
 .di
+.ie '\?\\$1\?'\?\?' .pdfbookmark 1 \\$2
+.el                 .pdfbookmark 1 \\$1 - \\$2
 ..
 .\" ----------  TC  -----------------------------------------------------------
 .\"

@@ -17,12 +17,18 @@
 .\"
 .TH Build SRecord SRecord "Reference Manual"
 .so etc/version.so
+.pdfinfo /Title SRecord Build Instructions
+.pdfinfo /Author Scott Finneran, Peter Miller
+.pdfinfo /Subject How to build SRecord version \*(V) [\*(G)]
+.pdfinfo /Keywords SRecord setup building testing installing packaging
+.pdfsync
+.\" ---------------------------------------------------------------------------
 .if n .hy 0
 .if n .ad l
 .if n .nr IN 8n
+.XX "" "How to build SRecord"
 .SH NAME
 How to build SRecord
-.XX "" "How to build SRecord"
 .SH SPACE REQUIREMENTS
 You will need about 3MB to unpack and build the
 .I SRecord

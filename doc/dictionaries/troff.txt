@@ -32,3 +32,7 @@ Pmkdir
 Ppacman
 Psrec
 Psudo
+pdfbookmark
+pdfinfo
+pdfsync
+pdfview

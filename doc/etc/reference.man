@@ -115,11 +115,31 @@ with this program. If not, see <http://www.gnu.org/licenses/>.
 .\"
 .so etc/ref-parts.so
 .\"
+.\" ----------  Add the PDF metadata  -----------------------------------------
+.\"
+.\" After inclusion of README/BUILDING to overwrite their metadata.
+.pdfinfo /Title SRecord Reference Manual
+.pdfinfo /Author Scott Finneran, Peter Miller
+.pdfinfo /Subject Detailed description of SRecord version \*(V) [\*(G)]
+.pdfinfo /Keywords SRecord srec_cat srec_cmp srec_info
+.\"
+.\" Request to display the outline by default.
+.pdfview /PageMode /UseOutlines
+.\"
+.\" ----------  Flush the pdfmark cache ---------------------------------------
+.\"
+.\" Before the TOC to avoid wrong output when moving the TOC up with psselect:
+.\" - metadata would contain BUILDING's values otherwise
+.\" - the last PDF outline entry would wrongly be positioned at the beginning
+.pdfsync
+.\"
 .\" ----------  Include the Table of Contents  --------------------------------
 .\"
 .if o .bp \" because .TH is going to throw another one
 .nr % 1000
 .TH "Table of Contents" "SRecord" "SRecord" "Reference Manual"
+.pdfbookmark 1 Table of Contents
+.pdfsync
 .\"
 .\"     -----
 .\" This next section redefines the page footer to use roman numbering
