@@ -35,6 +35,7 @@
 #include <srecord/input/file/formatted_binary.h>
 #include <srecord/input/file/four_packed_code.h>
 #include <srecord/input/file/efinix_bit.h>
+#include <srecord/input/file/gowin_fs.h>
 #include <srecord/input/file/hexdump.h>
 #include <srecord/input/file/hp64k.h>
 #include <srecord/input/file/idt.h>
@@ -345,6 +346,11 @@ srecord::arglex_tool::get_simple_input()
     case token_four_packed_code:
         token_next();
         ifp = input_file_four_packed_code::create(fn);
+        break;
+
+    case token_gowin_fs:
+        token_next();
+        ifp = input_file_gowin_fs::create(fn);
         break;
 
     case token_guess:

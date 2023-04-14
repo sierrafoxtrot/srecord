@@ -119,6 +119,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-GENerate", token_generator },
         { "-GENerator", token_generator },
         { "-Gnu_CRypt", token_gcrypt }, // undocumented
+        { "-GOwin_fs", token_gowin_fs },
         { "-GUess", token_guess, },
         { "-HAVal", token_haval, },
         { "-HEXadecimal_Dump", token_hexdump, },

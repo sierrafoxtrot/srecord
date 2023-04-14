@@ -36,6 +36,7 @@
 #include <srecord/input/file/fastload.h>
 #include <srecord/input/file/formatted_binary.h>
 #include <srecord/input/file/four_packed_code.h>
+#include <srecord/input/file/gowin_fs.h>
 #include <srecord/input/file/intel.h>
 #include <srecord/input/file/logisim.h>
 #include <srecord/input/file/mem.h>

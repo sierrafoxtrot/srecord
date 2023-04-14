@@ -57,6 +57,7 @@ Giancristofaro
 Gracic
 GraphViz
 groff
+Gowin
 Hanspeter
 Heilig
 hexdump

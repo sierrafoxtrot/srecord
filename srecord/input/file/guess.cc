@@ -32,6 +32,7 @@
 #include <srecord/input/file/fastload.h>
 #include <srecord/input/file/formatted_binary.h>
 #include <srecord/input/file/four_packed_code.h>
+#include <srecord/input/file/gowin_fs.h>
 #include <srecord/input/file/hexdump.h>
 #include <srecord/input/file/hp64k.h>
 #include <srecord/input/file/idt.h>
@@ -78,6 +79,7 @@ static func_p table[] =
     srecord::input_file_fastload::create,
     srecord::input_file_formatted_binary::create,
     srecord::input_file_four_packed_code::create,
+    srecord::input_file_gowin_fs::create,
     srecord::input_file_hp64k::create,
     srecord::input_file_idt::create,
     srecord::input_file_intel::create,
