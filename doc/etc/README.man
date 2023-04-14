@@ -103,6 +103,9 @@ The Formatted Binary format is understood for both reading and writing.
 Four Packed Code (FPC)
 The FPC format is understood for both reading and writing.
 .\" ----------  G  ---------------------------------------------------------
+.TP
+Gowin Bitstream
+The Gowin bitstream format is understood for reading only.
 .\" ----------  H  ---------------------------------------------------------
 .TP
 Hexdump
