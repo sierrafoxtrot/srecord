@@ -159,6 +159,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-MsBin", token_msbin, },
         { "-MULTiple", token_multiple, },
         { "-Needham_Hexadecimal", token_needham_hex, },
+        { "-Nibble_Swap", token_nibble_swap, },
         { "-NOT", token_not, },
         { "-Not_AUGment", token_crc16_augment_not },
         { "-Not_CONSTant", token_constant_not, },

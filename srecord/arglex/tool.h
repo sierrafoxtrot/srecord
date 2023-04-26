@@ -146,6 +146,7 @@ public:
         token_msbin,
         token_multiple,
         token_needham_hex,
+        token_nibble_swap,
         token_not,
         token_offset,
         token_ohio_scientific,

@@ -316,6 +316,10 @@ minimum
 The \f[I]minimum\fP filter may be used to insert the minimum data address
 into the data.
 .\" ----------  N  ---------------------------------------------------------
+.\"             nibble swap
+.TP 8n
+\fB\-Nibble_Swap\fP
+This filter may be used to swap upper and lower nibbles of each byte.
 .\" ----------  O  ---------------------------------------------------------
 .TP 8n
 offset

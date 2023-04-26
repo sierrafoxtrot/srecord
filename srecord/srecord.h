@@ -84,6 +84,7 @@
 #include <srecord/input/filter/message/fletcher16.h>
 #include <srecord/input/filter/message/fletcher32.h>
 #include <srecord/input/filter/message/gcrypt.h>
+#include <srecord/input/filter/nibble_swap.h>
 #include <srecord/input/filter/not.h>
 #include <srecord/input/filter/offset.h>
 #include <srecord/input/filter/or.h>
