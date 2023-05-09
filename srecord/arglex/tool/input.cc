@@ -83,6 +83,7 @@
 #include <srecord/input/filter/message/fletcher16.h>
 #include <srecord/input/filter/message/fletcher32.h>
 #include <srecord/input/filter/message/gcrypt.h>
+#include <srecord/input/filter/nibble_swap.h>
 #include <srecord/input/filter/not.h>
 #include <srecord/input/filter/offset.h>
 #include <srecord/input/filter/or.h>
@@ -910,6 +911,11 @@ srecord::arglex_tool::get_input()
                 get_address(name, address);
                 ifp = input_filter_message_gcrypt::create_md5(ifp, address);
             }
+            break;
+
+        case token_nibble_swap:
+            token_next();
+            ifp = input_filter_nibble_swap::create(ifp);
             break;
 
         case token_not:
