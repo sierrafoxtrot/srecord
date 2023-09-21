@@ -17,6 +17,7 @@
 //
 
 #include <sstream>
+#include <cstdint>
 #include <cstring>
 
 #include <srecord/string.h>
