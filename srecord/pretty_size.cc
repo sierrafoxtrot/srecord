@@ -17,6 +17,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#include <cstdint>
 #include <cstdio>
 
 #include <srecord/pretty_size.h>
