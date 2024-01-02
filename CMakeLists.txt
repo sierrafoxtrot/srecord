@@ -33,9 +33,9 @@ include(InstallRequiredSystemLibraries)
 include(GNUInstallDirs)
 
 # FHS compliant paths for Linux installation
-if(NOT WIN32 AND CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-#  set(CMAKE_INSTALL_PREFIX "/opt/${PROJECT_NAME}")
-  set(CMAKE_INSTALL_PREFIX "/usr")
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT
+        AND NOT WIN32 AND CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+  set(CMAKE_INSTALL_PREFIX "/usr" CACHE PATH "Install prefix" FORCE)
 endif()
 
 # Pull in the rest of the pieces
