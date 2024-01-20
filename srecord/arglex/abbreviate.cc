@@ -17,7 +17,7 @@
 //
 
 #include <srecord/arglex.h>
-
+#include <cstdint>
 
 std::string
 srecord::arglex::abbreviate(const char *s)
