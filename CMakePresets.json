@@ -1,0 +1,76 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 25,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+          "name": "cmake-pedantic",
+          "hidden": true,
+          "warnings": {
+            "dev": false,
+            "uninitialized": false,
+            "systemVars": false
+          },
+          "errors": {
+            "deprecated": true
+          }
+        },
+        {
+          "name": "ci-build",
+          "binaryDir": "${sourceDir}/build",
+          "hidden": true
+        },
+        {
+            "name": "ninja",
+            "generator": "Ninja",
+            "hidden": true
+          },
+        {
+            "name": "default",
+            "displayName": "Basic configuration",
+            "inherits": ["ci-build", "cmake-pedantic", "ninja"]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "default-config-preset",
+            "hidden": true,
+            "configurePreset": "default"
+        },
+        {
+            "name": "clean",
+            "displayName": "Debug build",
+            "targets" : "clean",
+            "inherits": ["default-config-preset"]
+        },
+        {
+            "name": "srecord-executables",
+            "displayName": "Debug build",
+            "targets" : "srecord-executables",
+            "inherits": ["default-config-preset"]
+        },
+        {
+            "name": "srecord-executables-version",
+            "displayName": "Debug build",
+            "inherits": ["default-config-preset"],
+            "targets" : "srecord-executables-version"
+        },
+        {
+            "name": "prepare-test",
+            "displayName": "Debug build",
+            "inherits": ["default-config-preset"],
+            "targets" : "prepare-test"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "test",
+            "configurePreset": "default",
+            "output": {"outputOnFailure": true, "outputJUnitFile": "ctest.junit.xml"}
+
+        }
+    ]
+}

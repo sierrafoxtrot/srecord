@@ -17,6 +17,7 @@
 //
 
 #include <cassert>
+#include <cstdint>
 
 #include <srecord/arglex/tool.h>
 #include <srecord/input/file/ppx.h>
@@ -47,7 +48,7 @@ srecord::input_file_ppx::get_next_token()
             token = token_eof;
             return;
         }
-        uint8_t c = sc;
+        std::uint8_t c = sc;
         switch (c)
         {
         case '*':

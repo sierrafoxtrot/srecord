@@ -24,6 +24,7 @@
 #include <cstring>
 #include <iostream>
 #include <unistd.h>
+#include <cstdint>
 
 #include <srecord/arglex.h>
 #include <srecord/progname.h>
@@ -80,7 +81,7 @@ srecord::arglex::read_arguments_file(const char *filename)
         int sc = getc(fp);
         if (sc == EOF)
             break;
-        uint8_t c = sc;
+        std::uint8_t c = sc;
 
         //
         // Ignore white space between words.
@@ -144,10 +145,10 @@ srecord::arglex::compare(const char *formal, const char *actual)
 {
     for (;;)
     {
-        uint8_t ac = *actual++;
+        std::uint8_t ac = *actual++;
         if (isupper(ac))
             ac = tolower(ac);
-        uint8_t fc = *formal++;
+        std::uint8_t fc = *formal++;
         switch (fc)
         {
         case 0:
