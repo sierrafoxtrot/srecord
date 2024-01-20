@@ -25,7 +25,7 @@ srecord::arglex::abbreviate(const char *s)
     std::string result;
     for (;;)
     {
-        uint8_t c = *s++;
+        std::uint8_t c = *s++;
         switch (c)
         {
         case '\0':

@@ -144,10 +144,10 @@ srecord::arglex::compare(const char *formal, const char *actual)
 {
     for (;;)
     {
-        uint8_t ac = *actual++;
+        std::uint8_t ac = *actual++;
         if (isupper(ac))
             ac = tolower(ac);
-        uint8_t fc = *formal++;
+        std::uint8_t fc = *formal++;
         switch (fc)
         {
         case 0:
