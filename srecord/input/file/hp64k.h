@@ -21,6 +21,7 @@
 #define LIB_INPUT_FILE_HP64K
 
 #include <srecord/input/file.h>
+#include <cstdint>
 
 namespace srecord {
 
