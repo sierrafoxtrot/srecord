@@ -41,7 +41,7 @@ srecord::input_file_hexdump::get_next_token()
         int sc = get_char();
         if (sc < 0)
             return token_eof;
-        uint8_t c = sc;
+        std::uint8_t c = sc;
         switch (c)
         {
         case '\n':

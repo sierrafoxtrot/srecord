@@ -36,24 +36,22 @@ jobs:
             -Wextra
           SRecord_CMake_Flags: >-
             -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
-        run: cmake -G Ninja -S . -B build ${SRecord_CMake_Flags}
+        run: cmake --preset default --fresh ${SRecord_CMake_Flags}
         # cSpell:enable
 
       - name: Build
-        working-directory: build
         run: ninja -k 0 srecord-executables
 
       - name: Smoke test
-        working-directory: build
-        run: ninja srecord-executables-version
+        run: cmake --build  --preset srecord-executables-version
 
       - name: Build test prerequisites
-        working-directory: build
-        run: ninja prepare-test
+        run: cmake --build  --preset prepare-test
 
       - name: Test
         working-directory: build
         run: ctest --output-on-failure --output-junit ctest.junit.xml
+
 
       - name: clang-tidy
         if: always()
@@ -92,24 +90,22 @@ jobs:
             -Wno-implicit-fallthrough
           SRecord_CMake_Flags: >-
             -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
-        run: cmake -G Ninja -S . -B build ${SRecord_CMake_Flags}
+        run:  cmake --preset default --fresh ${SRecord_CMake_Flags}
         # cSpell:enable
 
       - name: Build
-        working-directory: build
         run: ninja -k 0 srecord-executables
 
       - name: Smoke test
-        working-directory: build
-        run: ninja srecord-executables-version
+        run: cmake --build srecord-executables-version
 
       - name: Build test prerequisites
-        working-directory: build
-        run: ninja prepare-test
+        run: cmake --build prepare-test
 
       - name: Test
         working-directory: build
         run: ctest --output-on-failure --output-junit ctest.junit.xml
+
 
   docs:
     name: Documentation
