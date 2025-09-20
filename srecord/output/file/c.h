@@ -21,6 +21,8 @@
 #ifndef SRECORD_OUTPUT_FILE_C_H
 #define SRECORD_OUTPUT_FILE_C_H
 
+#include <cstdint>
+
 #include <srecord/output/file.h>
 #include <srecord/interval.h>
 
@@ -164,10 +166,34 @@ private:
     std::string include_file_name;
 
     /**
-      * The output_word instance variable is used to remember whether or not
-      * the input bytes should be emitted as word.
+      * The output_type instance variable is used to remember what C data type
+      * the input bytes should be emitted as.
       */
-    bool output_word{false};
+    enum {
+      output_byte,
+      output_unsigned_short,
+      output_uint16_t,
+      output_uint32_t,
+      output_uint64_t,
+    } output_type{output_byte};
+
+    /**
+     * bytes_per_word is a const function that returns how many bytes are in
+     * an output word based on the output_type instance variable.
+     */
+    unsigned bytes_per_word() const;
+
+    /**
+     * output_c_type returns a string that evalutates to the C variable type of
+     * the resulting generated array based on the output_type instance
+     * vairable.
+     */
+    char const * output_c_type() const;
+
+    /**
+     * max_word_value returns an output word with all of the bits set.
+     */
+    uint64_t max_word_value() const;
 
     /**
       * The hex_style instance variable is used to remember whether or
@@ -195,16 +221,10 @@ private:
     void emit_header();
 
     /**
-      * The emit_byte method is used to emit a single byte.  It uses
+      * The emit_word method is used to emit a single word.  It uses
       * column to track the position, so as not to exceed line_length.
       */
-    void emit_byte(int);
-
-    /**
-      * The emit_byte method is used to emit a single byte.  It uses
-      * column to track the position, so as not to exceed line_length.
-      */
-    void emit_word(unsigned int);
+    void emit_word(uint64_t);
 
     /**
       * The format_address method is used to format an address, taking

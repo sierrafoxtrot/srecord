@@ -18,6 +18,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#include <cinttypes>
 #include <cstdio>
 #include <cstring>
 
@@ -77,10 +78,7 @@ srecord::output_file_c::~output_file_c()
     emit_header();
     if (range.empty())
     {
-        if (output_word)
-            emit_word(0xFFFF);
-        else
-            emit_byte(0xFF);
+        emit_word(max_word_value());
     }
     if (column)
     {
@@ -136,7 +134,7 @@ srecord::output_file_c::~output_file_c()
         // emit list of section word addresses
         // (assuming memory addresses are word-wide).
         //
-        if (output_word)
+        if (output_type != output_byte)
         {
             if (constant)
                 put_string("const ");
@@ -148,7 +146,7 @@ srecord::output_file_c::~output_file_c()
                 interval x2 = x;
                 x2.first_interval_only();
                 x -= x2;
-                unsigned long address = x2.get_lowest() / 2;
+                unsigned long address = x2.get_lowest() / bytes_per_word();
 
                 std::string s = format_address(address);
                 int len = s.size();
@@ -195,8 +193,7 @@ srecord::output_file_c::~output_file_c()
             unsigned long length = x2.get_highest() - x2.get_lowest();
             ++nsections;
 
-            if (output_word)
-                length /= 2;
+            length /= bytes_per_word();
             std::string s = format_address(length);
             int len = s.size();
 
@@ -322,6 +319,8 @@ srecord::output_file_c::~output_file_c()
             fatal_error_errno("open %s", include_file_name.c_str());
         fprintf(fp, "#ifndef %s\n", insulation.c_str());
         fprintf(fp, "#define %s\n", insulation.c_str());
+        if((output_type != output_byte) && (output_type != output_unsigned_short))
+            fprintf(fp, "#include <stdint.h>\n");
         fprintf(fp, "\n");
         if (enable_goto_addr_flag)
         {
@@ -360,12 +359,7 @@ srecord::output_file_c::~output_file_c()
         fprintf(fp, "extern ");
         if (constant)
             fprintf(fp, "const ");
-        fprintf(fp, "unsigned ");
-        if (output_word)
-            fprintf(fp, "short");
-        else
-            fprintf(fp, "char");
-        fprintf(fp, " %s[];\n", prefix.c_str());
+        fprintf(fp, "%s %s[];\n", output_c_type(), prefix.c_str());
         if (section_style)
         {
             fprintf(fp, "extern ");
@@ -373,7 +367,7 @@ srecord::output_file_c::~output_file_c()
                 fprintf(fp, "const ");
             fprintf(fp, "unsigned long");
             fprintf(fp, " %s_address[];\n", prefix.c_str());
-            if (output_word)
+            if (output_type != output_byte)
             {
                 fprintf(fp, "extern ");
                 if (constant)
@@ -492,7 +486,30 @@ srecord::output_file_c::command_line(srecord::arglex_tool *cmdln)
 
         case srecord::arglex_tool::token_output_word:
             cmdln->token_next();
-            output_word = true;
+            if (cmdln->token_cur() == arglex::token_number)
+            {
+                int word_len = cmdln->value_number();
+                cmdln->token_next();
+                switch(word_len){
+                    case 2:
+                    case 16:
+                        output_type = output_uint16_t;
+                        break;
+                    case 4:
+                    case 32:
+                        output_type = output_uint32_t;
+                        break;
+                    case 8:
+                    case 64:
+                        output_type = output_uint64_t;
+                        break;
+                    default:
+                        fatal_error("word length %d not understood", word_len);
+                        // NOTREACHED
+                }
+            } else {
+                output_type = output_unsigned_short;
+            }
             break;
 
         case srecord::arglex_tool::token_style_hexadecimal:
@@ -536,12 +553,30 @@ srecord::output_file_c::command_line(srecord::arglex_tool *cmdln)
     }
 }
 
+char const *
+srecord::output_file_c::output_c_type() const
+{
+    switch(output_type){
+        case output_uint16_t:
+            return "uint16_t";
+        case output_uint32_t:
+            return "uint32_t";
+        case output_uint64_t:
+            return "uint64_t";
+        case output_unsigned_short:
+            return "unsigned short";
+        default:
+            return "unsigned char";
+    }
+}
 
 void
 srecord::output_file_c::emit_header()
 {
     if (header_done)
         return;
+    if((output_type != output_byte) && (output_type != output_unsigned_short))
+        put_string("#include <stdint.h>\n");
 
     if (header_prefix.length() > 0)
     {
@@ -550,10 +585,7 @@ srecord::output_file_c::emit_header()
     }
     if (constant)
         put_stringf("const ");
-    if (output_word)
-        put_string("unsigned short");
-    else
-        put_string("unsigned char");
+    put_string(output_c_type());
     put_char(' ');
     put_string(prefix.c_str());
     put_string("[] ");
@@ -567,42 +599,40 @@ srecord::output_file_c::emit_header()
     column = 0;
 }
 
-
-void
-srecord::output_file_c::emit_byte(int n)
+uint64_t 
+srecord::output_file_c::max_word_value() const
 {
-    char buffer[30];
-    if (hex_style)
-        snprintf(buffer, sizeof(buffer), "0x%2.2X", (unsigned char)n);
-    else
-        snprintf(buffer, sizeof(buffer), "%u", (unsigned char)n);
-    int len = strlen(buffer);
-
-    if (column && column + 2 + len > line_length)
-    {
-        put_char('\n');
-        column = 0;
+    switch(output_type){
+    case output_unsigned_short:
+    case output_uint16_t:
+        return UINT16_MAX;
+    case output_uint32_t:
+        return UINT32_MAX;
+    case output_uint64_t:
+        return UINT64_MAX;
+    default:
+    case output_byte:
+        return UINT8_MAX;
     }
-    if (column)
-    {
-        put_char(' ');
-        ++column;
-    }
-    put_string(buffer);
-    column += len;
-    put_char(',');
-    ++column;
 }
 
-
 void
-srecord::output_file_c::emit_word(unsigned int n)
+srecord::output_file_c::emit_word(uint64_t n)
 {
     char buffer[30];
-    if (hex_style)
-        snprintf(buffer, sizeof(buffer), "0x%4.4X", (unsigned short)n);
-    else
-        snprintf(buffer, sizeof(buffer), "%u", (unsigned short)n);
+    if (hex_style) {
+        if(bytes_per_word() == 8) {
+            snprintf(buffer, sizeof(buffer), "0x%16.16" PRIX64, n);
+        } else if (bytes_per_word() == 4) {
+            snprintf(buffer, sizeof(buffer), "0x%8.8" PRIX64, n);
+        } else if (bytes_per_word() == 2) {
+            snprintf(buffer, sizeof(buffer), "0x%4.4" PRIX64, n);
+        } else {
+            snprintf(buffer, sizeof(buffer), "0x%2.2" PRIX64, n);
+        }
+    } else {
+        snprintf(buffer, sizeof(buffer), "%" PRIu64, n);
+    }
     int len = strlen(buffer);
 
     if (column && column + 2 + len > line_length)
@@ -670,54 +700,36 @@ srecord::output_file_c::write(const srecord::record &record)
         break;
 
     case srecord::record::type_data:
-        emit_header();
-        if (output_word)
         {
-            if ((record.get_address() & 1) || (record.get_length() & 1))
-                fatal_alignment_error(2);
+            emit_header();
+            unsigned const word_size = bytes_per_word();
+            if ((record.get_address() & (word_size - 1)) || (record.get_length() & (word_size - 1)))
+                fatal_alignment_error(word_size);
 
             unsigned long min = record.get_address();
             unsigned long max = record.get_address() + record.get_length();
             if (!section_style && !range.empty())
             {
-                // assert(current_address <= min);
+                // Fill gaps in data with words with all bits set
                 while (current_address < min)
                 {
-                    emit_word(0xFFFF);
-                    current_address += 2;
+                    emit_word(max_word_value());
+                    current_address += word_size;
                 }
             }
 
             range += interval(min, max);
 
-            for (size_t j = 0; j < record.get_length(); j += 2)
+            for (size_t j = 0; j < record.get_length(); j += word_size)
             {
-                unsigned char n1 = record.get_data(j);
-                unsigned char n2 = record.get_data(j + 1);
-                // little endian
-                unsigned short n = n1 + (n2 << 8);
-                emit_word(n);
-            }
-            current_address = max;
-        }
-        else
-        {
-            unsigned long min = record.get_address();
-            unsigned long max = record.get_address() + record.get_length();
-            if (!section_style && !range.empty())
-            {
-                // assert(current_address <= min);
-                while (current_address < min)
-                {
-                    emit_byte(0xFF);
-                    ++current_address;
+                // Read a word as little endian
+                uint64_t w = 0u;
+                for(size_t k = 0u; k < word_size; k++){
+                    uint64_t shiftin = record.get_data(j + k);
+                    w = w | (shiftin << (8 * k));
                 }
-            }
 
-            range += interval(min, max);
-            for (size_t j = 0; j < record.get_length(); ++j)
-            {
-                emit_byte(record.get_data(j));
+                emit_word(w);
             }
             current_address = max;
         }
@@ -769,11 +781,27 @@ srecord::output_file_c::preferred_block_size_set(int nbytes)
 {
     if (nbytes < 1 || nbytes > record::max_data_length)
         return false;
-    if (output_word && (nbytes & 1))
+    if (nbytes & (bytes_per_word()-1))
         return false;
     return true;
 }
 
+unsigned
+srecord::output_file_c::bytes_per_word() const
+{
+    switch(output_type) {
+    case output_unsigned_short:
+    case output_uint16_t:
+        return 2;
+    case output_uint32_t:
+        return 4;
+    case output_uint64_t:
+        return 8;
+    case output_byte:
+    default:
+        return 1;
+    }
+}
 
 int
 srecord::output_file_c::preferred_block_size_get()
@@ -783,9 +811,7 @@ srecord::output_file_c::preferred_block_size_get()
     // Use the largest we can get,
     // but be careful about words.
     //
-    if (output_word)
-        return (srecord::record::max_data_length & ~1);
-    return srecord::record::max_data_length;
+    return (srecord::record::max_data_length & ~(bytes_per_word()-1));
 }
 
 
@@ -793,5 +819,17 @@ const char *
 srecord::output_file_c::format_name()
     const
 {
-    return (output_word ? "C-Array (16-bit)" : "C-Array (8-bit)");
+    switch(output_type){
+    case output_unsigned_short:
+        return "C-Array (16-bit)";
+    case output_uint16_t:
+        return "C-Array (uint16_t)";
+    case output_uint32_t:
+        return "C-Array (uint32_t)";
+    case output_uint64_t:
+        return "C-Array (uint64_t)";
+    case output_byte:
+    default:
+        return "C-Array (8-bit)";
+    }
 }

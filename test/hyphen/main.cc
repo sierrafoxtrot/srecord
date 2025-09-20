@@ -18,6 +18,7 @@
 
 #include <cstdint>
 #include <cstdio>
+#include <cstdint>
 #include <cstdlib>
 #include <getopt.h>
 #include <string>

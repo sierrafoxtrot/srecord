@@ -198,9 +198,15 @@ into the read\[hy]only segment in embedded systems).
 These options ask for an compressed c\[hy]array whose memory
 gaps will not be filled.
 .TP 8n
-\fB\-Output_Word\fP
+\fB\-Output_Word\fP [ \f[I]width\fP ]
 This option asks for an output which is in words not in
-bytes.  This is little endian, so you may need to
+bytes.  This is little endian, so you may need to use the \-byte\[hy]swap
+filter to get the byte order you want.
+
+The optional \f[I]width\fP argument sets the number of bytes in each word. If
+width is not specified, this defaults to 2 byte words. If width is specified,
+then the output array will be declared using an appropriate fixed width integer
+type.
 .TP 8n
 \fB\-PREfix\fP \f[I]string\fP
 This option allows a string to be prepended to the array definition. This
