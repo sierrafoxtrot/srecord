@@ -81,3 +81,12 @@ m4/lt~obsolete.m4
 
 # clangd
 .cache/*
+/_build/
+.clangd
+.clang-format
+CLAUDE.md
+
+#eclipse
+.cproject
+.project
+

@@ -54,6 +54,11 @@ public:
     stm32() = default;
 
     /**
+     * to support STM32H7x
+     */
+    stm32(uint32_t init, uint32_t xor_out);
+
+    /**
       * The copy constructor.
       */
     stm32(const stm32 &);
@@ -96,7 +101,8 @@ private:
       * The state instance variable is used to remember the running
       * value of the 32-bit cyclic redundancy check.
       */
-    uint32_t state{0xFFFFFFFF};
+    uint32_t state{0xFFFFFFFF}; // for regular STM32, 0 for FLASH CRC
+    uint32_t xor_out_{0};	// 0 for regular STM32, 0x55555555 for FLASH CRC
 
     /**
       * Current counter of the byte feeding

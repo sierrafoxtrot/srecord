@@ -60,6 +60,17 @@ public:
     static pointer create();
 
     /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class with custom CRC parameters.
+      *
+      * @param init
+      *     The initial CRC state value.
+      * @param xor_out
+      *     The value XORed into each word result.
+      */
+    static pointer create(uint32_t init, uint32_t xor_out);
+
+    /**
       * The get method is used to get the CRC32 (STM32) checksum once
       * all memory chunks have been processed by calls to our observe
       * method.
@@ -76,6 +87,12 @@ private:
       * It is private on purpose, use the #create class method instead.
       */
     memory_walker_stm32() = default;
+
+    /**
+      * The parameterized constructor.
+      * It is private on purpose, use the #create class method instead.
+      */
+    memory_walker_stm32(uint32_t init, uint32_t xor_out);
 
     /**
       * The checksum instance variable is used to remember the running

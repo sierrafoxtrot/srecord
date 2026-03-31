@@ -209,6 +209,7 @@ srecord::arglex_tool::arglex_tool(int argc, char **argv) :
         { "-STewie", token_stewie, },
         { "-STM32_Big_Endian", token_stm32_crc_be },
         { "-STM32_Little_Endian", token_stm32_crc_le },
+        { "-STM32H7x", token_stm32h7_flashcrc },
         { "-STM32", token_stm32_crc_le }, // put after others
         { "-SUBtract", token_minus, },
         { "-S_record", token_motorola, },

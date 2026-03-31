@@ -34,11 +34,15 @@
 srecord::input_filter_message_stm32::input_filter_message_stm32(
     const input::pointer &a_deeper,
     uint32_t a_address,
-    endian_t a_end
+    endian_t a_end,
+    uint32_t a_init,
+    uint32_t a_xor_out
 ) :
     input_filter_message(a_deeper),
     address(a_address),
-    end(a_end)
+    end(a_end),
+    init(a_init),
+    xor_out(a_xor_out)
 {
 }
 
@@ -50,7 +54,21 @@ srecord::input_filter_message_stm32::create(const input::pointer &a_deeper,
     return
         pointer
         (
-            new input_filter_message_stm32(a_deeper, a_address, a_end)
+            new input_filter_message_stm32(a_deeper, a_address, a_end,
+                0xFFFFFFFF, 0)
+        );
+}
+
+
+srecord::input::pointer
+srecord::input_filter_message_stm32::create(const input::pointer &a_deeper,
+    uint32_t a_address, endian_t a_end, uint32_t a_init, uint32_t a_xor_out)
+{
+    return
+        pointer
+        (
+            new input_filter_message_stm32(a_deeper, a_address, a_end,
+                a_init, a_xor_out)
         );
 }
 
@@ -69,7 +87,7 @@ srecord::input_filter_message_stm32::process(const memory &input,
     // Now STM32 the bytes in order from lowest address to highest.
     // (Holes are ignored, not filled, warning already issued.)
     //
-    memory_walker_stm32::pointer w = memory_walker_stm32::create();
+    memory_walker_stm32::pointer w = memory_walker_stm32::create(init, xor_out);
     input.walk(w);
     uint32_t crc = w->get();
 

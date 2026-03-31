@@ -40,6 +40,20 @@ srecord::memory_walker_stm32::create()
 }
 
 
+srecord::memory_walker_stm32::memory_walker_stm32(uint32_t init,
+    uint32_t xor_out) :
+    checksum(init, xor_out)
+{
+}
+
+
+srecord::memory_walker_stm32::pointer
+srecord::memory_walker_stm32::create(uint32_t init, uint32_t xor_out)
+{
+    return pointer(new srecord::memory_walker_stm32(init, xor_out));
+}
+
+
 void
 srecord::memory_walker_stm32::observe(uint32_t, const void *data,
     int length)

@@ -188,6 +188,7 @@ public:
         token_stewie,
         token_stm32_crc_be,
         token_stm32_crc_le,
+        token_stm32h7_flashcrc,
         token_style_dot,
         token_style_hexadecimal,
         token_style_hexadecimal_not,

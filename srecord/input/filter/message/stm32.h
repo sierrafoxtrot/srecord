@@ -59,9 +59,13 @@ private:
       *     where to place the checksum
       * @param end
       *     The byte order.
+      * @param init
+      *     The initial CRC state value.
+      * @param xor_out
+      *     The value XORed into each word result.
       */
     input_filter_message_stm32(const input::pointer &deeper,
-        uint32_t address, endian_t end);
+        uint32_t address, endian_t end, uint32_t init, uint32_t xor_out);
 
 public:
     /**
@@ -77,6 +81,24 @@ public:
       */
     static pointer create(const input::pointer &deeper, uint32_t address,
         endian_t end);
+
+    /**
+      * The create class method is used to create new dynamically
+      * allocated instances of this class with custom CRC parameters.
+      *
+      * @param deeper
+      *     The incoming data source to be filtered
+      * @param address
+      *     where to place the checksum
+      * @param end
+      *     The byte order.
+      * @param init
+      *     The initial CRC state value.
+      * @param xor_out
+      *     The value XORed into each word result.
+      */
+    static pointer create(const input::pointer &deeper, uint32_t address,
+        endian_t end, uint32_t init, uint32_t xor_out);
 
 protected:
     // See base class for documentation.
@@ -103,6 +125,18 @@ private:
       * order is big-endian or little-endian.
       */
     endian_t end;
+
+    /**
+      * The init instance variable is used to remember the initial CRC
+      * state value.
+      */
+    uint32_t init;
+
+    /**
+      * The xor_out instance variable is used to remember the value
+      * XORed into each word result.
+      */
+    uint32_t xor_out;
 
 public:
     /**

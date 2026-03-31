@@ -35,7 +35,6 @@
 //
 #define POLYNOMIAL 0x04C11DB7
 
-
 srecord::stm32::stm32(const stm32 &arg) : state(arg.state)
 {
     while (cnt < arg.cnt)
@@ -45,6 +44,8 @@ srecord::stm32::stm32(const stm32 &arg) : state(arg.state)
     }
 }
 
+srecord::stm32::stm32(uint32_t init, uint32_t xor_out)
+    : state(init), xor_out_(xor_out) {}
 
 srecord::stm32 &
 srecord::stm32::operator=(const stm32 &arg)
@@ -69,7 +70,7 @@ srecord::stm32::operator=(const stm32 &arg)
 // and operates only on words.
 //
 static uint32_t
-stm32_crc(uint32_t crc, uint32_t data)
+stm32_crc(uint32_t crc, uint32_t data, uint32_t xor_out)
 {
     crc ^= data;
     for (int j = 0; j < 32; ++j)
@@ -79,6 +80,7 @@ stm32_crc(uint32_t crc, uint32_t data)
         else
             crc = (crc << 1);
     }
+    crc ^= xor_out;		// for FLASH CRC
     return crc;
 }
 
@@ -89,7 +91,7 @@ srecord::stm32::generator()
     uint32_t data = 0;
     for (size_t j = 0; j < wordsize; j++)
         data |= (buf[j] << (8 * j));
-    state = stm32_crc(state, data);
+    state = stm32_crc(state, data, xor_out_);
     cnt = 0;
 }
 
